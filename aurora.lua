@@ -3069,6 +3069,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		CalendarCreateEventInviteButton:SetPoint("TOPLEFT", CalendarCreateEventInviteEdit, "TOPRIGHT", 1, 1)
 		CalendarClassButton1:SetPoint("TOPLEFT", CalendarClassButtonContainer, "TOPLEFT", 5, 0)
 
+		CalendarCreateEventHourDropDown:SetWidth(80)
+		CalendarCreateEventMinuteDropDown:SetWidth(80)
+		CalendarCreateEventAMPMDropDown:SetWidth(90)
+
 		local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton"}
 		for i = 1, #cbuttons do
 			local cbutton = _G[cbuttons[i]]
@@ -3086,6 +3090,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinDropDown(CalendarCreateEventTypeDropDown)
 		F.ReskinDropDown(CalendarCreateEventHourDropDown)
 		F.ReskinDropDown(CalendarCreateEventMinuteDropDown)
+		F.ReskinDropDown(CalendarCreateEventAMPMDropDown)
 		F.ReskinInput(CalendarCreateEventTitleEdit)
 		F.ReskinInput(CalendarCreateEventInviteEdit)
 		F.ReskinArrow(CalendarPrevMonthButton, 1)
