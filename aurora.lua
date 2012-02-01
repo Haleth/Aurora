@@ -1,5 +1,3 @@
-local alpha = .5 -- controls the backdrop opacity (0 = invisible, 1 = solid)
-
 -- [[ Core ]]
 
 local addon, core = ...
@@ -420,6 +418,10 @@ local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
 	if addon == "Aurora" then
+	
+		if alpha == nil then
+			alpha = .5; --Set alpha first time
+		end
 
 		-- [[ Headers ]]
 
@@ -4780,6 +4782,19 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 	end
 end)
+
+SLASH_AURORA1 = "/aurora"
+function SlashCmdList.AURORA(msg)
+	if tonumber(msg) ~= nil then
+		alpha = msg
+		print("Aurora: Alpha is now " .. alpha)
+		print("Aurora: Reload the UI to see the change")
+	else
+		print("Aurora: Usage: /aurora [alpha]")
+		print("Aurora: e.g. /aurora 0.5")
+		print("Aurora: Alpha is currently " .. alpha);
+	end
+end
 
 -- [[ Mac Options ]]
 
