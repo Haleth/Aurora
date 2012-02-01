@@ -2,6 +2,7 @@
 ## Title: Aurora
 ## Notes: Minimalistic window themes.
 ## Author: Haleth/Freethinker
+## SavedVariables: alpha
 ## Version: 3.5
 
 aurora.lua
