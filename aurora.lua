@@ -100,6 +100,14 @@ else
 	r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
 end
 
+F.CreateGradient = function(f)
+	local tex = f:CreateTexture(nil, "BACKGROUND")
+	tex:SetPoint("TOPLEFT")
+	tex:SetPoint("BOTTOMRIGHT")
+	tex:SetTexture(C.media.backdrop)
+	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+end
+
 local function StartGlow(f)
 	f:SetBackdropColor(r, g, b, .1)
 	f:SetBackdropBorderColor(r, g, b)
@@ -133,11 +141,7 @@ F.Reskin = function(f, noGlow)
 
 	F.CreateBD(f, .0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
-	tex:SetPoint("TOPLEFT")
-	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+	F.CreateGradient(f)
 
 	if not noGlow then
 		f.glow = CreateFrame("Frame", nil, f)
@@ -288,11 +292,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 
 	F.CreateBD(f, 0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
-	tex:SetPoint("TOPLEFT")
-	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+	F.CreateGradient(f)
 
 	local text = f:CreateFontString(nil, "OVERLAY")
 	text:SetFont("Fonts\\ARIALN.TTF", 14, "THINOUTLINE")
@@ -311,11 +311,7 @@ F.ReskinInput = function(f, height, width)
 	_G[frame.."Right"]:Hide()
 	F.CreateBD(f, 0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
-	tex:SetPoint("TOPLEFT")
-	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+	F.CreateGradient(f)
 
 	if height then f:SetHeight(height) end
 	if width then f:SetWidth(width) end
