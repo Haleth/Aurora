@@ -1678,6 +1678,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 						frame:HookScript("OnEnter", function()
 							F.CreateBD(frame.bg)
 						end)
+
+						frame:HookScript("OnShow", function()
+							F.CreateBD(frame.bg)
+						end)
 					end
 
 					_G["AchievementAlertFrame"..i.."Glow"]:Hide()
