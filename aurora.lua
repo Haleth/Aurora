@@ -210,12 +210,12 @@ F.ReskinScroll = function(f)
 	
 	up:SetDisabledTexture(C.media.backdrop)
 	local dis1 = up:GetDisabledTexture()
-	dis1:SetVertexColor(0, 0, 0, .3)
+	dis1:SetVertexColor(0, 0, 0, .4)
 	dis1:SetDrawLayer("OVERLAY")
 	
 	down:SetDisabledTexture(C.media.backdrop)
 	local dis2 = down:GetDisabledTexture()
-	dis2:SetVertexColor(0, 0, 0, .3)
+	dis2:SetVertexColor(0, 0, 0, .4)
 	dis2:SetDrawLayer("OVERLAY")
 
 	local uptex = up:CreateTexture(nil, "ARTWORK")
@@ -252,7 +252,7 @@ F.ReskinDropDown = function(f)
 	
 	down:SetDisabledTexture(C.media.backdrop)
 	local dis = down:GetDisabledTexture()
-	dis:SetVertexColor(0, 0, 0, .3)
+	dis:SetVertexColor(0, 0, 0, .4)
 	dis:SetDrawLayer("OVERLAY")
 	dis:SetAllPoints()
 
