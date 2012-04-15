@@ -5110,7 +5110,7 @@ Delay:SetScript("OnEvent", function()
 			local bu = _G["LootButton"..i]
 			local ic = _G["LootButton"..i.."IconTexture"]
 			_G["LootButton"..i.."IconQuestTexture"]:SetAlpha(0)
-			local _, _, _, _, _, _, _, bg = bu:GetRegions()
+			_G["LootButton"..i.."NameFrame"]:Hide()
 
 			bu:SetNormalTexture("")
 			bu:SetPushedTexture("")
@@ -5123,8 +5123,6 @@ Delay:SetScript("OnEvent", function()
 
 			ic:SetTexCoord(.08, .92, .08, .92)
 			ic.bg = F.CreateBG(ic)
-
-			bg:Hide()
 		end
 
 		hooksecurefunc("LootFrame_UpdateButton", function(index)
