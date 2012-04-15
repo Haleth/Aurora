@@ -4840,6 +4840,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				first = false
 			end
 		end)
+	elseif addon == "Recount" then
+		hooksecurefunc(LibStub("LibDropdown-1.0"), "OpenAce3Menu", function()
+			F.CreateBD(LibDropdownFrame0, alpha)
+		end)
 	end
 end)
 
