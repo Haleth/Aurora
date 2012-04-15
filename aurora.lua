@@ -4841,6 +4841,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 	elseif addon == "Recount" then
+		if IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop") then return end
+		
 		hooksecurefunc(LibStub("LibDropdown-1.0"), "OpenAce3Menu", function()
 			F.CreateBD(LibDropdownFrame0, alpha)
 		end)
