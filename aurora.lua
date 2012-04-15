@@ -3115,12 +3115,18 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.CreateBD(hline)
 		end
 
-		CalendarContextMenu:SetBackdrop(nil)
-		local bg = CreateFrame("Frame", nil, CalendarContextMenu)
-		bg:SetPoint("TOPLEFT")
-		bg:SetPoint("BOTTOMRIGHT")
-		bg:SetFrameLevel(CalendarContextMenu:GetFrameLevel()-1)
-		F.CreateBD(bg)
+		if not(IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop")) then
+			local tooltips = {CalendarContextMenu, CalendarInviteStatusContextMenu}
+
+			for _, tooltip in pairs(tooltips) do
+				tooltip:SetBackdrop(nil)
+				local bg = CreateFrame("Frame", nil, tooltip)
+				bg:SetPoint("TOPLEFT", 2, -2)
+				bg:SetPoint("BOTTOMRIGHT", -1, 2)
+				bg:SetFrameLevel(tooltip:GetFrameLevel()-1)
+				F.CreateBD(bg)
+			end
+		end
 
 		CalendarViewEventFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", -8, -24)
 		CalendarViewHolidayFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", -8, -24)
