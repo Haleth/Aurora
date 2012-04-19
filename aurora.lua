@@ -34,9 +34,9 @@ F.dummy = function() end
 
 F.CreateBD = function(f, a)
 	f:SetBackdrop({
-		bgFile = C.media.backdrop, 
-		edgeFile = C.media.backdrop, 
-		edgeSize = 1, 
+		bgFile = C.media.backdrop,
+		edgeFile = C.media.backdrop,
+		edgeSize = 1,
 	})
 	f:SetBackdropColor(0, 0, 0, a or alpha)
 	f:SetBackdropBorderColor(0, 0, 0)
@@ -94,7 +94,7 @@ end
 
 local _, class = UnitClass("player")
 local r, g, b
-if CUSTOM_CLASS_COLORS then 
+if CUSTOM_CLASS_COLORS then
 	r, g, b = CUSTOM_CLASS_COLORS[class].r, CUSTOM_CLASS_COLORS[class].g, CUSTOM_CLASS_COLORS[class].b
 else
 	r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
@@ -204,15 +204,15 @@ F.ReskinScroll = function(f)
 
 	up:SetWidth(17)
 	down:SetWidth(17)
-	
+
 	F.Reskin(up)
 	F.Reskin(down)
-	
+
 	up:SetDisabledTexture(C.media.backdrop)
 	local dis1 = up:GetDisabledTexture()
 	dis1:SetVertexColor(0, 0, 0, .4)
 	dis1:SetDrawLayer("OVERLAY")
-	
+
 	down:SetDisabledTexture(C.media.backdrop)
 	local dis2 = down:GetDisabledTexture()
 	dis2:SetVertexColor(0, 0, 0, .4)
@@ -249,7 +249,7 @@ F.ReskinDropDown = function(f)
 	down:SetPoint("RIGHT", -18, 2)
 
 	F.Reskin(down)
-	
+
 	down:SetDisabledTexture(C.media.backdrop)
 	local dis = down:GetDisabledTexture()
 	dis:SetVertexColor(0, 0, 0, .4)
@@ -320,7 +320,7 @@ end
 F.ReskinArrow = function(f, direction)
 	f:SetSize(18, 18)
 	F.Reskin(f)
-	
+
 	f:SetDisabledTexture(C.media.backdrop)
 	local dis = f:GetDisabledTexture()
 	dis:SetVertexColor(0, 0, 0, .3)
@@ -329,7 +329,7 @@ F.ReskinArrow = function(f, direction)
 	local tex = f:CreateTexture(nil, "ARTWORK")
 	tex:SetSize(8, 8)
 	tex:SetPoint("CENTER")
-	
+
 	if direction == 1 then
 		tex:SetTexture("Interface\\AddOns\\Aurora\\arrow-left-active")
 	elseif direction == 2 then
@@ -363,12 +363,12 @@ F.ReskinRadio = function(f)
 	f:SetNormalTexture("")
 	f:SetHighlightTexture(C.media.backdrop)
 	f:SetCheckedTexture(C.media.backdrop)
-	
+
 	local hl = f:GetHighlightTexture()
 	hl:SetPoint("TOPLEFT", 5, -5)
 	hl:SetPoint("BOTTOMRIGHT", -5, 5)
 	hl:SetVertexColor(r, g, b, .2)
-	
+
 	local ch = f:GetCheckedTexture()
 	ch:SetPoint("TOPLEFT", 5, -5)
 	ch:SetPoint("BOTTOMRIGHT", -5, 5)
@@ -585,7 +585,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinCheck(LFGInvitePopupRoleButtonTank:GetChildren())
 		F.ReskinCheck(LFGInvitePopupRoleButtonHealer:GetChildren())
 		F.ReskinCheck(LFGInvitePopupRoleButtonDPS:GetChildren())
-		
+
 		-- [[ Radio buttons ]]
 
 		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton", "ReportPlayerNameDialogArenaTeamNameCheckButton"}
@@ -597,9 +597,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				print(radiobuttons[i].." was not found.")
 			end
 		end
-		
+
 		-- [[ Backdrop frames ]]
-			
+
 		F.SetBD(FriendsFrame)
 		F.SetBD(QuestLogFrame, 6, -9, -2, 6)
 		F.SetBD(QuestFrame, 6, -15, -26, 64)
@@ -829,8 +829,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					button.highlight.SetPoint = F.dummy
 					button.highlight:SetTexture(r, g, b, .2)
 					button.highlight.SetTexture = F.dummy
-					button.categoryMiddle:SetAlpha(0)	
-					button.categoryLeft:SetAlpha(0)	
+					button.categoryMiddle:SetAlpha(0)
+					button.categoryLeft:SetAlpha(0)
 					button.categoryRight:SetAlpha(0)
 
 					if button.icon and button.icon:GetTexture() then
@@ -860,13 +860,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					_G["ReputationBar"..i.."LeftLine"]:SetAlpha(0)
 					_G["ReputationBar"..i.."BottomLine"]:SetAlpha(0)
 					_G["ReputationBar"..i.."ReputationBarHighlight1"]:SetTexture(nil)
-					_G["ReputationBar"..i.."ReputationBarHighlight2"]:SetTexture(nil)	
+					_G["ReputationBar"..i.."ReputationBarHighlight2"]:SetTexture(nil)
 					_G["ReputationBar"..i.."ReputationBarAtWarHighlight1"]:SetTexture(nil)
 					_G["ReputationBar"..i.."ReputationBarAtWarHighlight2"]:SetTexture(nil)
 					_G["ReputationBar"..i.."ReputationBarLeftTexture"]:SetTexture(nil)
 					_G["ReputationBar"..i.."ReputationBarRightTexture"]:SetTexture(nil)
-				end		
-			end		
+				end
+			end
 		end
 
 		ReputationFrame:HookScript("OnShow", UpdateFactionSkins)
@@ -1141,7 +1141,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				icon:SetPoint("TOPLEFT", 2, -2)
 				icon:SetPoint("BOTTOMRIGHT", -2, 2)
 				F.CreateBG(icon)
-			end					
+			end
 		end
 
 		for i = 1, 2 do
@@ -1321,7 +1321,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					navButton:ClearAllPoints()
 					navButton:SetPoint("LEFT", lastNav, "RIGHT", 1, 0)
 				end
-			end			
+			end
 		end
 
 		hooksecurefunc("NavBar_AddButton", function(self, buttonData)
@@ -1577,7 +1577,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					questLogTitle.bg:SetSize(13, 13)
 					questLogTitle.bg:SetPoint("LEFT", 4, 0)
 					questLogTitle.bg:SetFrameLevel(questLogTitle:GetFrameLevel()-1)
-					F.CreateBD(questLogTitle.bg, 0)	
+					F.CreateBD(questLogTitle.bg, 0)
 
 					questLogTitle.tex = questLogTitle:CreateTexture(nil, "BACKGROUND")
 					questLogTitle.tex:SetAllPoints(questLogTitle.bg)
@@ -1731,7 +1731,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			for i = 1, MAX_ACHIEVEMENT_ALERTS do
 				local frame = _G["AchievementAlertFrame"..i]
 
-				if frame then			
+				if frame then
 					frame:SetAlpha(1)
 					frame.SetAlpha = F.dummy
 
@@ -1741,7 +1741,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 						frame.bg:SetPoint("BOTTOMRIGHT", _G[frame:GetName().."Background"], "BOTTOMRIGHT", -2, 8)
 						frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
 						F.CreateBD(frame.bg)
-						
+
 						frame:HookScript("OnEnter", function()
 							F.CreateBD(frame.bg)
 						end)
@@ -1762,7 +1762,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					_G["AchievementAlertFrame"..i.."Unlocked"]:SetShadowOffset(1, -1)
 
 					_G["AchievementAlertFrame"..i.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
-					_G["AchievementAlertFrame"..i.."IconOverlay"]:Hide()	
+					_G["AchievementAlertFrame"..i.."IconOverlay"]:Hide()
 
 					if not frame.iconreskinned then
 						F.CreateBG(_G["AchievementAlertFrame"..i.."IconTexture"])
@@ -2353,7 +2353,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("UpdateProfessionButton", function(self)
-			self.spellString:SetTextColor(1, 1, 1);	
+			self.spellString:SetTextColor(1, 1, 1);
 			self.subSpellString:SetTextColor(1, 1, 1)
 		end)
 
@@ -2793,7 +2793,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinArrow(BrowseNextPageButton, 2)
 		F.ReskinCheck(IsUsableCheckButton)
 		F.ReskinCheck(ShowOnPlayerCheckButton)
-		
+
 		BrowsePrevPageButton:GetRegions():SetPoint("LEFT", BrowsePrevPageButton, "RIGHT", 2, 0)
 
 		-- seriously, consistency
@@ -3033,17 +3033,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["AchievementFrameStatsContainerButton"..i.."HeaderMiddle"]:SetAlpha(0)
 			_G["AchievementFrameStatsContainerButton"..i.."HeaderRight"]:SetAlpha(0)
 		end
-		
+
 		AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", AchievementFrameComparison, "TOPRIGHT", 39, 25)
-		
+
 		local headerbg = CreateFrame("Frame", nil, AchievementFrameComparisonHeader)
 		headerbg:SetPoint("TOPLEFT", 20, -20)
 		headerbg:SetPoint("BOTTOMRIGHT", -28, -5)
 		headerbg:SetFrameLevel(AchievementFrameComparisonHeader:GetFrameLevel()-1)
 		F.CreateBD(headerbg, .25)
-		
+
 		local summaries = {AchievementFrameComparisonSummaryPlayer, AchievementFrameComparisonSummaryFriend}
-		
+
 		for _, frame in pairs(summaries) do
 			frame:SetBackdrop(nil)
 			local bg = CreateFrame("Frame", nil, frame)
@@ -3054,7 +3054,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		local bars = {AchievementFrameComparisonSummaryPlayerStatusBar, AchievementFrameComparisonSummaryFriendStatusBar}
-		
+
 		for _, bar in pairs(bars) do
 			local name = bar:GetName()
 			bar:SetStatusBarTexture(C.media.backdrop)
@@ -3066,17 +3066,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G[name.."Title"]:SetTextColor(1, 1, 1)
 			_G[name.."Title"]:SetPoint("LEFT", bar, "LEFT", 6, 0)
 			_G[name.."Text"]:SetPoint("RIGHT", bar, "RIGHT", -5, 0)
-			
+
 			local bg = CreateFrame("Frame", nil, bar)
 			bg:SetPoint("TOPLEFT", -1, 1)
 			bg:SetPoint("BOTTOMRIGHT", 1, -1)
 			bg:SetFrameLevel(bar:GetFrameLevel()-1)
 			F.CreateBD(bg, .25)
 		end
-		
+
 		for i = 1, 9 do
 			local buttons = {_G["AchievementFrameComparisonContainerButton"..i.."Player"], _G["AchievementFrameComparisonContainerButton"..i.."Friend"]}
-			
+
 			for _, button in pairs(buttons) do
 				button:DisableDrawLayer("BORDER")
 				local bg = CreateFrame("Frame", nil, button)
@@ -3088,7 +3088,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			local bd = _G["AchievementFrameComparisonContainerButton"..i.."PlayerBackground"]
 			bd:SetTexture(C.media.backdrop)
 			bd:SetVertexColor(0, 0, 0, .25)
-			
+
 			local bd = _G["AchievementFrameComparisonContainerButton"..i.."FriendBackground"]
 			bd:SetTexture(C.media.backdrop)
 			bd:SetVertexColor(0, 0, 0, .25)
@@ -3105,11 +3105,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["AchievementFrameComparisonContainerButton"..i.."FriendTitleBackground"]:Hide()
 			_G["AchievementFrameComparisonContainerButton"..i.."FriendGlow"]:Hide()
 			_G["AchievementFrameComparisonContainerButton"..i.."FriendIconOverlay"]:Hide()
-			
+
 			local ic = _G["AchievementFrameComparisonContainerButton"..i.."PlayerIconTexture"]
 			ic:SetTexCoord(.08, .92, .08, .92)
 			F.CreateBG(ic)
-			
+
 			local ic = _G["AchievementFrameComparisonContainerButton"..i.."FriendIconTexture"]
 			ic:SetTexCoord(.08, .92, .08, .92)
 			F.CreateBG(ic)
@@ -3166,24 +3166,24 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinCheck(KeyBindingFrameCharacterButton)
 	elseif addon == "Blizzard_Calendar" then
 		CalendarFrame:DisableDrawLayer("BORDER")
-		
+
 		for i = 1, 9 do
 			select(i, CalendarViewEventFrame:GetRegions()):Hide()
 		end
 		select(15, CalendarViewEventFrame:GetRegions()):Hide()
-		
+
 		for i = 1, 9 do
 			select(i, CalendarViewHolidayFrame:GetRegions()):Hide()
 			select(i, CalendarViewRaidFrame:GetRegions()):Hide()
 		end
-		
+
 		for i = 1, 3 do
 			select(i, CalendarCreateEventTitleFrame:GetRegions()):Hide()
 			select(i, CalendarViewEventTitleFrame:GetRegions()):Hide()
 			select(i, CalendarViewHolidayTitleFrame:GetRegions()):Hide()
 			select(i, CalendarViewRaidTitleFrame:GetRegions()):Hide()
 		end
-		
+
 		for i = 1, 42 do
 			_G["CalendarDayButton"..i.."DarkFrame"]:SetAlpha(.5)
 			local bu = _G["CalendarDayButton"..i]
@@ -3195,11 +3195,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			hl:SetPoint("TOPLEFT", -1, 1)
 			hl:SetPoint("BOTTOMRIGHT")
 		end
-		
+
 		for i = 1, 7 do
 			_G["CalendarWeekday"..i.."Background"]:SetAlpha(0)
 		end
-		
+
 		CalendarViewEventDivider:Hide()
 		CalendarCreateEventDivider:Hide()
 		CalendarViewEventInviteList:GetRegions():Hide()
@@ -3247,17 +3247,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(CalendarCreateEventInviteList, .25)
 		F.CreateBD(CalendarCreateEventDescriptionContainer, .25)
 		F.CreateBD(CalendarEventPickerFrame, .25)
-		
+
 		CalendarWeekdaySelectedTexture:SetVertexColor(r, g, b)
-		
+
 		hooksecurefunc("CalendarFrame_SetToday", function()
 			CalendarTodayFrame:SetAllPoints()
 		end)
-		
+
 		CalendarTodayFrame:SetScript("OnUpdate", nil)
 		CalendarTodayTextureGlow:Hide()
 		CalendarTodayTexture:Hide()
-		
+
 		CalendarTodayFrame:SetBackdrop({
 			edgeFile = C.media.backdrop,
 			edgeSize = 1,
@@ -3394,7 +3394,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		EncounterJournalInstanceSelectBG:Hide()
 		EncounterJournalNavBar:GetRegions():Hide()
 		EncounterJournalNavBarOverlay:Hide()
-		EncounterJournalBg:Hide() 
+		EncounterJournalBg:Hide()
 		EncounterJournalTitleBg:Hide()
 		EncounterJournalInsetBg:Hide()
 		EncounterJournalInstanceSelectDungeonTabMid:Hide()
@@ -3504,7 +3504,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		hooksecurefunc("EncounterJournal_ToggleHeaders", function()
-			for i = 1, 50 do 
+			for i = 1, 50 do
 				local name = "EncounterJournalInfoHeader"..i
 				local header = _G[name]
 
@@ -4098,7 +4098,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			bu:GetHighlightTexture():SetVertexColor(r, g, b, .2)
 
 			bu.bg = F.CreateBG(bu.icon)
-		end			
+		end
 
 		local tcoords = {
 			["WARRIOR"]     = {0.02, 0.23, 0.02, 0.23},
@@ -4738,7 +4738,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		all.bg:SetSize(13, 13)
 		all.bg:SetPoint("LEFT", 4, 0)
 		all.bg:SetFrameLevel(all:GetFrameLevel()-1)
-		F.CreateBD(all.bg, 0)	
+		F.CreateBD(all.bg, 0)
 
 		all.tex = all:CreateTexture(nil, "BACKGROUND")
 		all.tex:SetAllPoints(all.bg)
@@ -4794,7 +4794,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					skillButton.bg:SetSize(13, 13)
 					skillButton.bg:SetPoint("LEFT", 4, 0)
 					skillButton.bg:SetFrameLevel(skillButton:GetFrameLevel()-1)
-					F.CreateBD(skillButton.bg, 0)	
+					F.CreateBD(skillButton.bg, 0)
 
 					skillButton.tex = skillButton:CreateTexture(nil, "BACKGROUND")
 					skillButton.tex:SetAllPoints(skillButton.bg)
@@ -4828,7 +4828,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 						skillButton.bg:Hide()
 						skillButton.tex:Hide()
 						skillButton.minus:Hide()
-						skillButton.plus:Hide()	
+						skillButton.plus:Hide()
 					end
 				end
 
@@ -5041,7 +5041,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 	elseif addon == "Recount" then
 		if IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop") then return end
-		
+
 		hooksecurefunc(LibStub("LibDropdown-1.0"), "OpenAce3Menu", function()
 			F.CreateBD(LibDropdownFrame0, alpha)
 		end)
@@ -5055,7 +5055,7 @@ if IsMacClient() then
 	MacOptionsFrameHeader:SetTexture("")
 	MacOptionsFrameHeader:ClearAllPoints()
 	MacOptionsFrameHeader:SetPoint("TOP", MacOptionsFrame, 0, 0)
- 
+
 	F.CreateBD(MacOptionsFrameMovieRecording, .25)
 	F.CreateBD(MacOptionsITunesRemote, .25)
 	F.CreateBD(MacOptionsFrameMisc, .25)
@@ -5074,24 +5074,24 @@ if IsMacClient() then
 		F.ReskinCheck(_G["MacOptionsFrameCheckButton"..i])
 	end
 	F.ReskinSlider(MacOptionsFrameQualitySlider)
- 
+
 	MacOptionsButtonCompress:SetWidth(136)
- 
+
 	MacOptionsFrameCancel:SetWidth(96)
 	MacOptionsFrameCancel:SetHeight(22)
 	MacOptionsFrameCancel:ClearAllPoints()
 	MacOptionsFrameCancel:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 107, 0)
- 
+
 	MacOptionsFrameOkay:SetWidth(96)
 	MacOptionsFrameOkay:SetHeight(22)
 	MacOptionsFrameOkay:ClearAllPoints()
 	MacOptionsFrameOkay:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 5, 0)
- 
+
 	MacOptionsButtonKeybindings:SetWidth(96)
 	MacOptionsButtonKeybindings:SetHeight(22)
 	MacOptionsButtonKeybindings:ClearAllPoints()
 	MacOptionsButtonKeybindings:SetPoint("LEFT", MacOptionsFrameDefaults, "RIGHT", 5, 0)
- 
+
 	MacOptionsFrameDefaults:SetWidth(96)
 	MacOptionsFrameDefaults:SetHeight(22)
 end
@@ -5151,8 +5151,8 @@ Delay:SetScript("OnEvent", function()
 		mapbg:SetPoint("TOPLEFT", -1 / scale, 1 / scale)
 		mapbg:SetPoint("BOTTOMRIGHT", 1 / scale, -1 / scale)
 		mapbg:SetFrameLevel(0)
-		mapbg:SetBackdrop({ 
-			bgFile = C.media.backdrop, 
+		mapbg:SetBackdrop({
+			bgFile = C.media.backdrop,
 		})
 		mapbg:SetBackdropColor(0, 0, 0)
 
