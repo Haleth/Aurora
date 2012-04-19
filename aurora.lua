@@ -268,11 +268,7 @@ F.ReskinDropDown = function(f)
 	bg:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bg, 0)
 
-	local tex = bg:CreateTexture(nil, "BACKGROUND")
-	tex:SetPoint("TOPLEFT")
-	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+	F.CreateGradient(bg)
 end
 
 F.ReskinClose = function(f, a1, p, a2, x, y)
@@ -398,11 +394,7 @@ F.ReskinSlider = function(f)
 	bd:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bd, 0)
 
-	local tex = bd:CreateTexture(nil, "BACKGROUND")
-	tex:SetPoint("TOPLEFT")
-	tex:SetPoint("BOTTOMRIGHT")
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+	F.CreateGradient(bd)
 
 	local slider = select(4, f:GetRegions())
 	slider:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
@@ -1824,11 +1816,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			bu:DisableDrawLayer("ARTWORK")
 			F.CreateBD(bu, 0)
 
-			local tex = bu:CreateTexture(nil, "BACKGROUND")
-			tex:SetPoint("TOPLEFT")
-			tex:SetPoint("BOTTOMRIGHT")
-			tex:SetTexture(C.media.backdrop)
-			tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+			F.CreateGradient(bu)
 		end
 
 		HelpFrameCharacterStuckHearthstone:SetSize(56, 56)
@@ -2818,11 +2806,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		bg:SetFrameLevel(BrowseDropDown:GetFrameLevel(-1))
 		F.CreateBD(bg, 0)
 
-		local tex = bg:CreateTexture(nil, "BACKGROUND")
-		tex:SetPoint("TOPLEFT")
-		tex:SetPoint("BOTTOMRIGHT")
-		tex:SetTexture(C.media.backdrop)
-		tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+		F.CreateGradient(bg)
 
 		local inputs = {"BrowseMinLevel", "BrowseMaxLevel", "BrowseBidPriceGold", "BrowseBidPriceSilver", "BrowseBidPriceCopper", "BidBidPriceGold", "BidBidPriceSilver", "BidBidPriceCopper", "StartPriceGold", "StartPriceSilver", "StartPriceCopper", "BuyoutPriceGold", "BuyoutPriceSilver", "BuyoutPriceCopper", "AuctionsStackSizeEntry", "AuctionsNumStacksEntry"}
 		for i = 1, #inputs do
@@ -3280,11 +3264,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		bd:SetFrameLevel(CalendarFilterFrame:GetFrameLevel()-1)
 		F.CreateBD(bd, 0)
 
-		local tex = bd:CreateTexture(nil, "BACKGROUND")
-		tex:SetPoint("TOPLEFT")
-		tex:SetPoint("BOTTOMRIGHT")
-		tex:SetTexture(C.media.backdrop)
-		tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+		F.CreateGradient(bd)
 
 		local downtex = CalendarFilterButton:CreateTexture(nil, "ARTWORK")
 		downtex:SetTexture("Interface\\AddOns\\Aurora\\arrow-down-active")
