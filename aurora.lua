@@ -109,6 +109,7 @@ F.CreateGradient = function(f)
 end
 
 local function StartGlow(f)
+	if not f:IsEnabled() then return end
 	f:SetBackdropColor(r, g, b, .1)
 	f:SetBackdropBorderColor(r, g, b)
 	F.CreatePulse(f.glow)
