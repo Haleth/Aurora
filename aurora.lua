@@ -463,7 +463,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if bd then
 				F.CreateBD(bd)
 			else
-				print(bds[i].." was not found.")
+				print("Aurora: "..bds[i].." was not found.")
 			end
 		end
 
@@ -473,7 +473,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if bd then
 				F.CreateBD(bd, .25)
 			else
-				print(lightbds[i].." was not found.")
+				print("Aurora: "..lightbds[i].." was not found.")
 			end
 		end
 
@@ -485,7 +485,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if scrollbar then
 				F.ReskinScroll(scrollbar)
 			else
-				print(scrollbars[i].." was not found.")
+				print("Aurora: "..scrollbars[i].." was not found.")
 			end
 		end
 
@@ -497,7 +497,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if dropdown then
 				F.ReskinDropDown(dropdown)
 			else
-				print(dropdowns[i].." was not found.")
+				print("Aurora: "..dropdowns[i].." was not found.")
 			end
 		end
 
@@ -509,7 +509,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if input then
 				F.ReskinInput(input)
 			else
-				print(inputs[i].." was not found.")
+				print("Aurora: "..inputs[i].." was not found.")
 			end
 		end
 
@@ -557,7 +557,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if checkbox then
 				F.ReskinCheck(checkbox)
 			else
-				print(checkboxes[i].." was not found.")
+				print("Aurora: "..checkboxes[i].." was not found.")
 			end
 		end
 
@@ -587,7 +587,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if radiobutton then
 				F.ReskinRadio(radiobutton)
 			else
-				print(radiobuttons[i].." was not found.")
+				print("Aurora: "..radiobuttons[i].." was not found.")
 			end
 		end
 
@@ -2476,7 +2476,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if reskinbutton then
 				F.Reskin(reskinbutton)
 			else
-				print(buttons[i].." was not found.")
+				print("Aurora: "..buttons[i].." was not found.")
 			end
 		end
 
