@@ -300,7 +300,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
  	f:HookScript("OnLeave", function(self) text:SetTextColor(1, 1, 1) end)
 end
 
-F.ReskinInput = function(f, height, width)
+F.ReskinInput = function(f, height, width, leftOff, rightOff)
 	local frame = f:GetName()
 	_G[frame.."Left"]:Hide()
 	if _G[frame.."Middle"] then _G[frame.."Middle"]:Hide() end
@@ -308,7 +308,13 @@ F.ReskinInput = function(f, height, width)
 	_G[frame.."Right"]:Hide()
 	F.CreateBD(f, 0)
 
-	F.CreateGradient(f)
+	local bd = CreateFrame("Frame", nil, f)
+	bd:SetPoint("TOPLEFT", leftOff or -2, 0)
+	bd:SetPoint("BOTTOMRIGHT", rightOff or 0, 0)
+	bd:SetFrameLevel(f:GetFrameLevel()-1)
+	F.CreateBD(bd, 0)
+
+	F.CreateGradient(bd)
 
 	if height then f:SetHeight(height) end
 	if width then f:SetWidth(width) end
@@ -503,7 +509,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Input frames ]]
 
-		local inputs = {"AddFriendNameEditBox", "PVPTeamManagementFrameWeeklyDisplay", "SendMailNameEditBox", "SendMailSubjectEditBox", "SendMailMoneyGold", "SendMailMoneySilver", "SendMailMoneyCopper", "StaticPopup1MoneyInputFrameGold", "StaticPopup1MoneyInputFrameSilver", "StaticPopup1MoneyInputFrameCopper", "StaticPopup2MoneyInputFrameGold", "StaticPopup2MoneyInputFrameSilver", "StaticPopup2MoneyInputFrameCopper", "GearManagerDialogPopupEditBox", "FriendsFrameBroadcastInput", "HelpFrameKnowledgebaseSearchBox", "ChannelFrameDaughterFrameChannelName", "ChannelFrameDaughterFrameChannelPassword", "BagItemSearchBox", "BankItemSearchBox", "TradePlayerInputMoneyFrameGold", "TradePlayerInputMoneyFrameSilver", "TradePlayerInputMoneyFrameCopper", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame"}
+		local inputs = {"AddFriendNameEditBox", "PVPTeamManagementFrameWeeklyDisplay", "SendMailNameEditBox", "SendMailSubjectEditBox", "SendMailMoneyGold", "SendMailMoneySilver", "SendMailMoneyCopper", "StaticPopup1MoneyInputFrameGold", "StaticPopup1MoneyInputFrameSilver", "StaticPopup1MoneyInputFrameCopper", "StaticPopup2MoneyInputFrameGold", "StaticPopup2MoneyInputFrameSilver", "StaticPopup2MoneyInputFrameCopper", "GearManagerDialogPopupEditBox", "HelpFrameKnowledgebaseSearchBox", "ChannelFrameDaughterFrameChannelName", "ChannelFrameDaughterFrameChannelPassword", "BagItemSearchBox", "BankItemSearchBox", "TradePlayerInputMoneyFrameGold", "TradePlayerInputMoneyFrameSilver", "TradePlayerInputMoneyFrameCopper", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame"}
 		for i = 1, #inputs do
 			local input = _G[inputs[i]]
 			if input then
@@ -513,6 +519,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
+		F.ReskinInput(FriendsFrameBroadcastInput, nil, nil, 0)
 		F.ReskinInput(StaticPopup1EditBox, 20)
 		F.ReskinInput(StaticPopup2EditBox, 20)
 		F.ReskinInput(PVPBannerFrameEditBox, 20)
@@ -3167,6 +3174,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			select(i, CalendarViewEventTitleFrame:GetRegions()):Hide()
 			select(i, CalendarViewHolidayTitleFrame:GetRegions()):Hide()
 			select(i, CalendarViewRaidTitleFrame:GetRegions()):Hide()
+			select(i, CalendarMassInviteTitleFrame:GetRegions()):Hide()
 		end
 
 		for i = 1, 42 do
@@ -3193,6 +3201,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		select(5, CalendarViewEventCloseButton:GetRegions()):Hide()
 		select(5, CalendarViewHolidayCloseButton:GetRegions()):Hide()
 		select(5, CalendarViewRaidCloseButton:GetRegions()):Hide()
+		select(5, CalendarMassInviteCloseButton:GetRegions()):Hide()
 		CalendarCreateEventBackground:Hide()
 		CalendarCreateEventFrameButtonBackground:Hide()
 		CalendarCreateEventMassInviteButtonBorder:Hide()
@@ -3219,6 +3228,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		CalendarFilterFrameLeft:Hide()
 		CalendarFilterFrameMiddle:Hide()
 		CalendarFilterFrameRight:Hide()
+			CalendarMassInviteFrameDivider:Hide()
 
 		F.SetBD(CalendarFrame, 12, 0, -9, 4)
 		F.CreateBD(CalendarViewEventFrame)
@@ -3226,12 +3236,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(CalendarViewRaidFrame)
 		F.CreateBD(CalendarCreateEventFrame)
 		F.CreateBD(CalendarClassTotalsButton)
-		F.CreateBD(CalendarTexturePickerFrame, .7)
+		F.CreateBD(CalendarTexturePickerFrame)
 		F.CreateBD(CalendarViewEventInviteList, .25)
 		F.CreateBD(CalendarViewEventDescriptionContainer, .25)
 		F.CreateBD(CalendarCreateEventInviteList, .25)
 		F.CreateBD(CalendarCreateEventDescriptionContainer, .25)
 		F.CreateBD(CalendarEventPickerFrame, .25)
+		F.CreateBD(CalendarMassInviteFrame)
 
 		CalendarWeekdaySelectedTexture:SetVertexColor(r, g, b)
 
@@ -3311,8 +3322,20 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		CalendarCreateEventHourDropDown:SetWidth(80)
 		CalendarCreateEventMinuteDropDown:SetWidth(80)
 		CalendarCreateEventAMPMDropDown:SetWidth(90)
+		
+		local line = CalendarMassInviteFrame:CreateTexture(nil, "BACKGROUND")
+		line:SetSize(240, 1)
+		line:SetPoint("TOP", CalendarMassInviteFrame, "TOP", 0, -150)
+		line:SetTexture(C.media.backdrop)
+		line:SetVertexColor(0, 0, 0)
+		
+		CalendarMassInviteFrame:ClearAllPoints()
+		CalendarMassInviteFrame:SetPoint("BOTTOMLEFT", CalendarCreateEventCreateButton, "TOPRIGHT", 10, 0)
+		
+		CalendarTexturePickerFrame:ClearAllPoints()
+		CalendarTexturePickerFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", 311, -24)
 
-		local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton"}
+		local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton", "CalendarMassInviteGuildAcceptButton", "CalendarMassInviteArenaButton2", "CalendarMassInviteArenaButton3", "CalendarMassInviteArenaButton5"}
 		for i = 1, #cbuttons do
 			local cbutton = _G[cbuttons[i]]
 			F.Reskin(cbutton)
@@ -3323,6 +3346,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinClose(CalendarViewEventCloseButton)
 		F.ReskinClose(CalendarViewHolidayCloseButton)
 		F.ReskinClose(CalendarViewRaidCloseButton)
+		F.ReskinClose(CalendarMassInviteCloseButton)
 		F.ReskinScroll(CalendarTexturePickerScrollBar)
 		F.ReskinScroll(CalendarViewEventInviteListScrollFrameScrollBar)
 		F.ReskinScroll(CalendarViewEventDescriptionScrollFrameScrollBar)
@@ -3331,8 +3355,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinDropDown(CalendarCreateEventHourDropDown)
 		F.ReskinDropDown(CalendarCreateEventMinuteDropDown)
 		F.ReskinDropDown(CalendarCreateEventAMPMDropDown)
+		F.ReskinDropDown(CalendarMassInviteGuildRankMenu)
 		F.ReskinInput(CalendarCreateEventTitleEdit)
 		F.ReskinInput(CalendarCreateEventInviteEdit)
+		F.ReskinInput(CalendarMassInviteGuildMinLevelEdit)
+		F.ReskinInput(CalendarMassInviteGuildMaxLevelEdit)
 		F.ReskinArrow(CalendarPrevMonthButton, 1)
 		F.ReskinArrow(CalendarNextMonthButton, 2)
 		CalendarPrevMonthButton:SetSize(19, 19)
@@ -3877,6 +3904,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		GuildRecruitmentRolesFrameBg:Hide()
 		GuildRecruitmentLevelFrameBg:Hide()
 		GuildRecruitmentCommentFrameBg:Hide()
+		GuildRecruitmentDeclineButton_LeftSeparator:Hide()
+		GuildRecruitmentInviteButton_RightSeparator:Hide()
 
 		GuildFrame:DisableDrawLayer("BACKGROUND")
 		GuildFrame:DisableDrawLayer("BORDER")
@@ -4828,7 +4857,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinScroll(TradeSkillDetailScrollFrameScrollBar)
 		F.ReskinScroll(TradeSkillListScrollFrameScrollBar)
 		F.ReskinScroll(TradeSkillGuildCraftersFrameScrollBar)
-		F.ReskinInput(TradeSkillInputBox)
+		F.ReskinInput(TradeSkillInputBox, nil, nil, -2, 2)
 		F.ReskinInput(TradeSkillFrameSearchBox)
 		F.ReskinArrow(TradeSkillDecrementButton, 1)
 		F.ReskinArrow(TradeSkillIncrementButton, 2)
