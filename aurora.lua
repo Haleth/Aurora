@@ -1,5 +1,4 @@
-local alpha = .5 -- controls the backdrop opacity (0 = invisible, 1 = solid)
-local enableFont = true -- modify default game fonts
+local alpha
 
 -- [[ Core ]]
 
@@ -9,6 +8,8 @@ core[1] = {} -- F, functions
 core[2] = {} -- C, constants/config
 
 Aurora = core
+
+AuroraConfig = {}
 
 local F, C = unpack(select(2, ...))
 
@@ -32,6 +33,23 @@ C.media = {
 	["glow"] = "Interface\\AddOns\\Aurora\\glow",
 }
 
+C.defaults = {
+	["alpha"] = 0.5,
+	["enableFont"] = true,
+}
+
+C.frames = {}
+
+-- [[ Functions ]]
+
+local _, class = UnitClass("player")
+local r, g, b
+if CUSTOM_CLASS_COLORS then
+	r, g, b = CUSTOM_CLASS_COLORS[class].r, CUSTOM_CLASS_COLORS[class].g, CUSTOM_CLASS_COLORS[class].b
+else
+	r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
+end
+
 F.dummy = function() end
 
 F.CreateBD = function(f, a)
@@ -42,6 +60,7 @@ F.CreateBD = function(f, a)
 	})
 	f:SetBackdropColor(0, 0, 0, a or alpha)
 	f:SetBackdropBorderColor(0, 0, 0)
+	if not a then tinsert(C.frames, f) end
 end
 
 F.CreateBG = function(frame)
@@ -90,16 +109,6 @@ F.CreatePulse = function(frame, speed, mult, alpha)
 			self.mult = self.mult*-1
 		end
 	end)
-end
-
--- [[ Addon core ]]
-
-local _, class = UnitClass("player")
-local r, g, b
-if CUSTOM_CLASS_COLORS then
-	r, g, b = CUSTOM_CLASS_COLORS[class].r, CUSTOM_CLASS_COLORS[class].g, CUSTOM_CLASS_COLORS[class].b
-else
-	r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
 end
 
 F.CreateGradient = function(f)
@@ -446,6 +455,13 @@ Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
 	if addon == "Aurora" then
 
+		-- [[ Load Variables ]]
+		
+		if AuroraConfig.alpha == nil then AuroraConfig.alpha = C.defaults.alpha end
+		if AuroraConfig.enableFont == nil then AuroraConfig.enableFont = C.defaults.enableFont end
+		
+		alpha = AuroraConfig.alpha
+
 		-- [[ Headers ]]
 
 		local header = {"GameMenuFrame", "InterfaceOptionsFrame", "AudioOptionsFrame", "VideoOptionsFrame", "ChatConfigFrame", "ColorPickerFrame"}
@@ -487,7 +503,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Scroll bars ]]
 
-		local scrollbars = {"FriendsFrameFriendsScrollFrameScrollBar", "QuestLogScrollFrameScrollBar", "QuestLogDetailScrollFrameScrollBar", "CharacterStatsPaneScrollBar", "PVPHonorFrameTypeScrollFrameScrollBar", "PVPHonorFrameInfoScrollFrameScrollBar", "LFDQueueFrameSpecificListScrollFrameScrollBar", "GossipGreetingScrollFrameScrollBar", "HelpFrameKnowledgebaseScrollFrameScrollBar", "HelpFrameReportBugScrollFrameScrollBar", "HelpFrameSubmitSuggestionScrollFrameScrollBar", "HelpFrameTicketScrollFrameScrollBar", "PaperDollTitlesPaneScrollBar", "PaperDollEquipmentManagerPaneScrollBar", "SendMailScrollFrameScrollBar", "OpenMailScrollFrameScrollBar", "RaidInfoScrollFrameScrollBar", "ReputationListScrollFrameScrollBar", "FriendsFriendsScrollFrameScrollBar", "HelpFrameGM_ResponseScrollFrame1ScrollBar", "HelpFrameGM_ResponseScrollFrame2ScrollBar", "HelpFrameKnowledgebaseScrollFrame2ScrollBar", "WhoListScrollFrameScrollBar", "QuestProgressScrollFrameScrollBar", "QuestRewardScrollFrameScrollBar", "QuestDetailScrollFrameScrollBar", "QuestGreetingScrollFrameScrollBar", "QuestNPCModelTextScrollFrameScrollBar", "GearManagerDialogPopupScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar", "WarGamesFrameScrollFrameScrollBar", "WarGamesFrameInfoScrollFrameScrollBar", "WorldStateScoreScrollFrameScrollBar", "ItemTextScrollFrameScrollBar", "ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar"}
+		local scrollbars = {"FriendsFrameFriendsScrollFrameScrollBar", "QuestLogScrollFrameScrollBar", "QuestLogDetailScrollFrameScrollBar", "CharacterStatsPaneScrollBar", "PVPHonorFrameTypeScrollFrameScrollBar", "PVPHonorFrameInfoScrollFrameScrollBar", "LFDQueueFrameSpecificListScrollFrameScrollBar", "GossipGreetingScrollFrameScrollBar", "HelpFrameKnowledgebaseScrollFrameScrollBar", "HelpFrameReportBugScrollFrameScrollBar", "HelpFrameSubmitSuggestionScrollFrameScrollBar", "HelpFrameTicketScrollFrameScrollBar", "PaperDollTitlesPaneScrollBar", "PaperDollEquipmentManagerPaneScrollBar", "SendMailScrollFrameScrollBar", "OpenMailScrollFrameScrollBar", "RaidInfoScrollFrameScrollBar", "ReputationListScrollFrameScrollBar", "FriendsFriendsScrollFrameScrollBar", "HelpFrameGM_ResponseScrollFrame1ScrollBar", "HelpFrameGM_ResponseScrollFrame2ScrollBar", "HelpFrameKnowledgebaseScrollFrame2ScrollBar", "WhoListScrollFrameScrollBar", "QuestProgressScrollFrameScrollBar", "QuestRewardScrollFrameScrollBar", "QuestDetailScrollFrameScrollBar", "QuestGreetingScrollFrameScrollBar", "QuestNPCModelTextScrollFrameScrollBar", "GearManagerDialogPopupScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar", "WarGamesFrameScrollFrameScrollBar", "WarGamesFrameInfoScrollFrameScrollBar", "WorldStateScoreScrollFrameScrollBar", "ItemTextScrollFrameScrollBar", "ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar", "ChannelRosterScrollFrameScrollBar"}
 		for i = 1, #scrollbars do
 			local scrollbar = _G[scrollbars[i]]
 			if scrollbar then
@@ -668,7 +684,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		
 		-- [[ Fonts ]]
 		
-		if enableFont then
+		if AuroraConfig.enableFont then
 			local font = C.media.font
 
 			RaidWarningFrame.slot1:SetFont(font, 20, "OUTLINE")
@@ -1353,7 +1369,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			ic:SetTexCoord(.15, .85, .15, .85)
 
 			ic:ClearAllPoints()
-			ic:SetPoint("RIGHT", bu, "RIGHT", -2, -2)
+			ic:SetPoint("TOPRIGHT", bu, "TOPRIGHT", -2, -2)
 			ic.SetPoint = F.dummy
 
 			inv:SetAlpha(0)
@@ -1381,7 +1397,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		hooksecurefunc("FriendsFrame_UpdateFriends", UpdateScroll)
 		FriendsFrameFriendsScrollFrame:HookScript("OnVerticalScroll", UpdateScroll)
-
 
 		local whobg = CreateFrame("Frame", nil, WhoFrameEditBoxInset)
 		whobg:SetPoint("TOPLEFT")
