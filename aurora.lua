@@ -27,10 +27,15 @@ C.classcolours = {
 }
 
 C.media = {
+	["arrowUp"] = "Interface\\AddOns\\Aurora\\media\\arrow-up-active",
+	["arrowDown"] = "Interface\\AddOns\\Aurora\\media\\arrow-down-active",
+	["arrowLeft"] = "Interface\\AddOns\\Aurora\\media\\arrow-left-active",
+	["arrowRight"] = "Interface\\AddOns\\Aurora\\media\\arrow-right-active",
 	["backdrop"] = "Interface\\ChatFrame\\ChatFrameBackground",
-	["checked"] = "Interface\\AddOns\\Aurora\\CheckButtonHilight",
-	["font"] = "Interface\\AddOns\\Aurora\\font.ttf",
-	["glow"] = "Interface\\AddOns\\Aurora\\glow",
+	["checked"] = "Interface\\AddOns\\Aurora\\media\\CheckButtonHilight",
+	["font"] = "Interface\\AddOns\\Aurora\\media\\font.ttf",
+	["glow"] = "Interface\\AddOns\\Aurora\\media\\glow",
+	["quest"] = "Interface\\AddOns\\Aurora\\media\\quest",
 }
 
 C.defaults = {
@@ -231,13 +236,13 @@ F.ReskinScroll = function(f)
 	dis2:SetDrawLayer("OVERLAY")
 
 	local uptex = up:CreateTexture(nil, "ARTWORK")
-	uptex:SetTexture("Interface\\AddOns\\Aurora\\arrow-up-active")
+	uptex:SetTexture(C.media.arrowUp)
 	uptex:SetSize(8, 8)
 	uptex:SetPoint("CENTER")
 	uptex:SetVertexColor(1, 1, 1)
 
 	local downtex = down:CreateTexture(nil, "ARTWORK")
-	downtex:SetTexture("Interface\\AddOns\\Aurora\\arrow-down-active")
+	downtex:SetTexture(C.media.arrowDown)
 	downtex:SetSize(8, 8)
 	downtex:SetPoint("CENTER")
 	downtex:SetVertexColor(1, 1, 1)
@@ -269,7 +274,7 @@ F.ReskinDropDown = function(f)
 	dis:SetAllPoints()
 
 	local downtex = down:CreateTexture(nil, "ARTWORK")
-	downtex:SetTexture("Interface\\AddOns\\Aurora\\arrow-down-active")
+	downtex:SetTexture(C.media.arrowDown)
 	downtex:SetSize(8, 8)
 	downtex:SetPoint("CENTER")
 	downtex:SetVertexColor(1, 1, 1)
@@ -345,9 +350,9 @@ F.ReskinArrow = function(f, direction)
 	tex:SetPoint("CENTER")
 
 	if direction == 1 then
-		tex:SetTexture("Interface\\AddOns\\Aurora\\arrow-left-active")
+		tex:SetTexture(C.media.arrowLeft)
 	elseif direction == 2 then
-		tex:SetTexture("Interface\\AddOns\\Aurora\\arrow-right-active")
+		tex:SetTexture(C.media.arrowRight)
 	end
 end
 
@@ -567,11 +572,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("CharacterFrame_Expand", function()
-			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture("Interface\\AddOns\\Aurora\\arrow-left-active")
+			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture(C.media.arrowLeft)
 		end)
 
 		hooksecurefunc("CharacterFrame_Collapse", function()
-			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture("Interface\\AddOns\\Aurora\\arrow-right-active")
+			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture(C.media.arrowRight)
 		end)
 
 		-- [[ Check boxes ]]
@@ -2904,7 +2909,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(BrowseDropDownButton)
 
 		local downtex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
-		downtex:SetTexture("Interface\\AddOns\\FreeUI\\media\\arrow-down-active")
+		downtex:SetTexture(C.media.arrowDown)
 		downtex:SetSize(8, 8)
 		downtex:SetPoint("CENTER")
 		downtex:SetVertexColor(1, 1, 1)
@@ -3380,7 +3385,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateGradient(bd)
 
 		local downtex = CalendarFilterButton:CreateTexture(nil, "ARTWORK")
-		downtex:SetTexture("Interface\\AddOns\\Aurora\\arrow-down-active")
+		downtex:SetTexture(C.media.arrowDown)
 		downtex:SetSize(8, 8)
 		downtex:SetPoint("CENTER")
 		downtex:SetVertexColor(1, 1, 1)
@@ -5342,7 +5347,7 @@ Delay:SetScript("OnEvent", function()
 				icon:SetPoint("BOTTOMRIGHT", -1, 1)
 				icon:SetTexCoord(.08, .92, .08, .92)
 
-				quest:SetTexture("Interface\\AddOns\\Aurora\\quest")
+				quest:SetTexture(C.media.quest)
 				quest:SetVertexColor(1, 0, 0)
 				quest:SetTexCoord(0.05, .955, 0.05, .965)
 				quest.SetTexture = F.dummy
@@ -5387,7 +5392,7 @@ Delay:SetScript("OnEvent", function()
 			icon:SetPoint("BOTTOMRIGHT", -1, 1)
 			icon:SetTexCoord(.08, .92, .08, .92)
 
-			quest:SetTexture("Interface\\AddOns\\Aurora\\quest")
+			quest:SetTexture(C.media.quest)
 			quest:SetVertexColor(1, 0, 0)
 			quest:SetTexCoord(0.05, .955, 0.05, .965)
 			quest.SetTexture = F.dummy
