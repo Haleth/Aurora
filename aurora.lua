@@ -248,6 +248,16 @@ F.ReskinScroll = function(f)
 	downtex:SetVertexColor(1, 1, 1)
 end
 
+local function colourArrow(f)
+	if f:IsEnabled() then
+		f.downtex:SetVertexColor(0, .76, 1)
+	end
+end
+
+local function clearArrow(f)
+	f.downtex:SetVertexColor(1, 1, 1)
+end
+
 F.ReskinDropDown = function(f)
 	local frame = f:GetName()
 
@@ -265,7 +275,7 @@ F.ReskinDropDown = function(f)
 	down:ClearAllPoints()
 	down:SetPoint("RIGHT", -18, 2)
 
-	F.Reskin(down)
+	F.Reskin(down, true)
 
 	down:SetDisabledTexture(C.media.backdrop)
 	local dis = down:GetDisabledTexture()
@@ -278,7 +288,11 @@ F.ReskinDropDown = function(f)
 	downtex:SetSize(8, 8)
 	downtex:SetPoint("CENTER")
 	downtex:SetVertexColor(1, 1, 1)
-
+	down.downtex = downtex
+	
+	down:HookScript("OnEnter", colourArrow)
+	down:HookScript("OnLeave", clearArrow)
+	
 	local bg = CreateFrame("Frame", nil, f)
 	bg:SetPoint("TOPLEFT", 16, -4)
 	bg:SetPoint("BOTTOMRIGHT", -18, 8)
@@ -286,6 +300,14 @@ F.ReskinDropDown = function(f)
 	F.CreateBD(bg, 0)
 
 	F.CreateGradient(bg)
+end
+
+local function colourClose(f)
+	f.text:SetTextColor(1, .1, .1)
+end
+
+local function clearClose(f)
+	f.text:SetTextColor(1, 1, 1)
 end
 
 F.ReskinClose = function(f, a1, p, a2, x, y)
@@ -312,8 +334,8 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 	text:SetPoint("CENTER", 1, 1)
 	text:SetText("x")
 
-	f:HookScript("OnEnter", function(self) text:SetTextColor(1, .1, .1) end)
- 	f:HookScript("OnLeave", function(self) text:SetTextColor(1, 1, 1) end)
+	f:HookScript("OnEnter", colourClose)
+ 	f:HookScript("OnLeave", clearClose)
 end
 
 F.ReskinInput = function(f, height, width, leftOff, rightOff)
@@ -669,7 +691,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		
 		-- Dropdown lists
 
-		local function SkinDropDownList(level, index)
+		hooksecurefunc("UIDropDownMenu_CreateFrames", function(level, index)
 			for i = 1, UIDROPDOWNMENU_MAXLEVELS do
 				local menu = _G["DropDownList"..i.."MenuBackdrop"]
 				local backdrop = _G["DropDownList"..i.."Backdrop"]
@@ -679,9 +701,34 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					backdrop.reskinned = true
 				end
 			end
-		end
+		end)
 
-		hooksecurefunc("UIDropDownMenu_CreateFrames", SkinDropDownList)
+		hooksecurefunc("ToggleDropDownMenu", function(level, _, dropDownFrame, anchorName)
+			if not level then level = 1 end	
+			
+			local listFrame = _G["DropDownList"..level]
+			
+			if level == 1 then
+				if not anchorName then
+					listFrame:SetPoint("TOPLEFT", dropDownFrame, "BOTTOMLEFT", 16, 9)
+					listFrame:SetPoint("TOPRIGHT", dropDownFrame, "BOTTOMRIGHT", -18, 9)
+				elseif anchorName ~= "cursor" then
+					-- this part might be a bit unreliable
+					local _, _, relPoint, xOff, yOff = listFrame:GetPoint()
+					if relPoint == "BOTTOMLEFT" and xOff == 0 and yOff == 5 then
+						listFrame:SetPoint("TOPLEFT", anchorName, "BOTTOMLEFT", 16, 9)
+						listFrame:SetPoint("TOPRIGHT", anchorName, "BOTTOMRIGHT", -18, 9)
+					end
+				end
+			else
+				local point, anchor, relPoint = listFrame:GetPoint()
+				if point:find("RIGHT") then
+					listFrame:SetPoint(point, anchor, relPoint, -14, 0)
+				else
+					listFrame:SetPoint(point, anchor, relPoint, 9, 0)
+				end
+			end
+		end)
 		
 		-- [[ Fonts ]]
 		
@@ -3881,6 +3928,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, NUM_GUILDBANK_ICONS_PER_ROW * NUM_GUILDBANK_ICON_ROWS do
 			local bu = _G["GuildBankPopupButton"..i]
 			
+			bu:SetCheckedTexture(C.media.checked)
 			select(2, bu:GetRegions()):Hide()
 			
 			_G["GuildBankPopupButton"..i.."Icon"]:SetTexCoord(.08, .92, .08, .92)
