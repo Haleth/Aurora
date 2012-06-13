@@ -4026,7 +4026,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(GuildLogContainer, .25)
 		F.CreateBD(GuildNewsFiltersFrame)
 		F.CreateBD(GuildTextEditFrame)
-		F.CreateSD(GuildTextEditFrame)
 		F.CreateBD(GuildTextEditContainer, .25)
 		F.CreateBD(GuildRecruitmentInterestFrame, .25)
 		F.CreateBD(GuildRecruitmentAvailabilityFrame, .25)
@@ -4170,6 +4169,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		GuildNewsFiltersFrame:SetPoint("TOPLEFT", GuildFrame, "TOPRIGHT", 1, -20)
 		GuildMemberDetailFrame:SetPoint("TOPLEFT", GuildFrame, "TOPRIGHT", 1, -28)
 		GuildLogFrame:SetPoint("TOPLEFT", GuildFrame, "TOPRIGHT", 1, 0)
+		GuildTextEditFrame:SetPoint("TOPLEFT", GuildFrame, "TOPRIGHT", 1, 0)
 
 		for i = 1, 5 do
 			local bu = _G["GuildInfoFrameApplicantsContainerButton"..i]
