@@ -344,7 +344,6 @@ F.ReskinInput = function(f, height, width, leftOff, rightOff)
 	if _G[frame.."Middle"] then _G[frame.."Middle"]:Hide() end
 	if _G[frame.."Mid"] then _G[frame.."Mid"]:Hide() end
 	_G[frame.."Right"]:Hide()
-	F.CreateBD(f, 0)
 
 	local bd = CreateFrame("Frame", nil, f)
 	bd:SetPoint("TOPLEFT", leftOff or -2, 0)
