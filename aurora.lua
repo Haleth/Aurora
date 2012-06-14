@@ -333,6 +333,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 	text:SetFont("Fonts\\ARIALN.TTF", 14, "THINOUTLINE")
 	text:SetPoint("CENTER", 1, 1)
 	text:SetText("x")
+	f.text = text
 
 	f:HookScript("OnEnter", colourClose)
  	f:HookScript("OnLeave", clearClose)
