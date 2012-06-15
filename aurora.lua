@@ -332,7 +332,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 	F.CreateGradient(f)
 
 	local text = f:CreateFontString(nil, "OVERLAY")
-	text:SetFont("Fonts\\ARIALN.TTF", 14, "THINOUTLINE")
+	text:SetFont(C.media.font, 14, "THINOUTLINE")
 	text:SetPoint("CENTER", 1, 1)
 	text:SetText("x")
 	f.text = text
