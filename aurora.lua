@@ -41,6 +41,8 @@ C.media = {
 C.defaults = {
 	["alpha"] = 0.5,
 	["enableFont"] = true,
+	["useCustomColour"] = false,
+	["customColour"] = {r = 1, g = 1, b = 1},
 }
 
 C.frames = {}
@@ -482,8 +484,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		
 		if AuroraConfig.alpha == nil then AuroraConfig.alpha = C.defaults.alpha end
 		if AuroraConfig.enableFont == nil then AuroraConfig.enableFont = C.defaults.enableFont end
+		if AuroraConfig.useCustomColour == nil then AuroraConfig.useCustomColour = C.defaults.useCustomColour end
+		if AuroraConfig.customColour == nil then AuroraConfig.customColour = C.defaults.customColour end
 		
 		alpha = AuroraConfig.alpha
+		
+		if AuroraConfig.useCustomColour then
+			r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+		end
 
 		-- [[ Headers ]]
 
