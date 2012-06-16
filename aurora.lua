@@ -5052,6 +5052,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 		end)
+		
+		TradeSkillCollapseAllButton:SetDisabledTexture("")
 
 		TradeSkillIncrementButton:SetPoint("RIGHT", TradeSkillCreateButton, "LEFT", -9, 0)
 
