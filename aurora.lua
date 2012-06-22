@@ -40,9 +40,13 @@ C.media = {
 
 C.defaults = {
 	["alpha"] = 0.5,
+	["bags"] = true,
 	["enableFont"] = true,
+	["loot"] = true,
 	["useCustomColour"] = false,
 	["customColour"] = {r = 1, g = 1, b = 1},
+	["map"] = true,
+	["tooltips"] = true,
 }
 
 C.frames = {}
@@ -486,10 +490,18 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Load Variables ]]
 		
-		if AuroraConfig.alpha == nil then AuroraConfig.alpha = C.defaults.alpha end
-		if AuroraConfig.enableFont == nil then AuroraConfig.enableFont = C.defaults.enableFont end
-		if AuroraConfig.useCustomColour == nil then AuroraConfig.useCustomColour = C.defaults.useCustomColour end
-		if AuroraConfig.customColour == nil then AuroraConfig.customColour = C.defaults.customColour end
+		for key, value in pairs(C.defaults) do
+			if AuroraConfig[key] == nil then
+				if type(value) == "table" then
+					AuroraConfig[key] = {}
+					for k, v in pairs(value) do
+						AuroraConfig[key][k] = value[k]
+					end
+				else
+					AuroraConfig[key] = value
+				end
+			end
+		end
 		
 		alpha = AuroraConfig.alpha
 		
@@ -5415,7 +5427,7 @@ Delay:RegisterEvent("PLAYER_ENTERING_WORLD")
 Delay:SetScript("OnEvent", function()
 	Delay:UnregisterEvent("PLAYER_ENTERING_WORLD")
 
-	if not(IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop")) then
+	if AuroraConfig.tooltips == true and not(IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop")) then
 		local tooltips = {
 			"GameTooltip",
 			"ItemRefTooltip",
@@ -5481,7 +5493,7 @@ Delay:SetScript("OnEvent", function()
 		F.CreateBD(FriendsTooltip)
 	end
 
-	if not(IsAddOnLoaded("MetaMap") or IsAddOnLoaded("m_Map") or IsAddOnLoaded("Mapster")) then
+	if AuroraConfig.map == true and not(IsAddOnLoaded("MetaMap") or IsAddOnLoaded("m_Map") or IsAddOnLoaded("Mapster")) then
 		WorldMapFrameMiniBorderLeft:SetAlpha(0)
 		WorldMapFrameMiniBorderRight:SetAlpha(0)
 
@@ -5546,7 +5558,7 @@ Delay:SetScript("OnEvent", function()
 		F.ReskinCheck(WorldMapTrackQuest)
 	end
 
-	if not(IsAddOnLoaded("Baggins") or IsAddOnLoaded("Stuffing") or IsAddOnLoaded("Combuctor") or IsAddOnLoaded("cargBags") or IsAddOnLoaded("famBags") or IsAddOnLoaded("ArkInventory") or IsAddOnLoaded("Bagnon")) then
+	if AuroraConfig.bags == true and not(IsAddOnLoaded("Baggins") or IsAddOnLoaded("Stuffing") or IsAddOnLoaded("Combuctor") or IsAddOnLoaded("cargBags") or IsAddOnLoaded("famBags") or IsAddOnLoaded("ArkInventory") or IsAddOnLoaded("Bagnon")) then
 		for i = 1, 12 do
 			local con = _G["ContainerFrame"..i]
 
@@ -5636,7 +5648,7 @@ Delay:SetScript("OnEvent", function()
 		end
 	end
 
-	if not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
+	if AuroraConfig.loot == true and not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
 		LootFramePortraitOverlay:Hide()
 		select(2, LootFrame:GetRegions()):Hide()
 		F.ReskinClose(LootCloseButton, "CENTER", LootFrame, "TOPRIGHT", -81, -26)
