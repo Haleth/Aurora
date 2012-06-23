@@ -5238,6 +5238,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(bg, .25)
 
 		ClassTrainerFrameSkillStepButton:SetHighlightTexture(nil)
+		
+		local dis = select(6, ClassTrainerFrameSkillStepButton:GetRegions())
+		dis:Hide()
+		dis.Show = F.dummy
+		
 		select(7, ClassTrainerFrameSkillStepButton:GetRegions()):SetAlpha(0)
 
 		local check = select(4, ClassTrainerFrameSkillStepButton:GetRegions())
