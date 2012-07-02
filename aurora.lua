@@ -19,6 +19,7 @@ C.classcolours = {
 	["PALADIN"] = { r = 1, g = 0.22, b = 0.52 },
 	["PRIEST"] = { r = 0.8, g = 0.87, b = .9 },
 	["MAGE"] = { r = 0, g = 0.76, b = 1 },
+	["MONK"] = {r = 0.0, g = 1.00 , b = 0.59},
 	["ROGUE"] = { r = 1, g = 0.91, b = 0.2 },
 	["DRUID"] = { r = 1, g = 0.49, b = 0.04 },
 	["SHAMAN"] = { r = 0, g = 0.6, b = 0.6 };
@@ -1971,8 +1972,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		QuestLogScrollFrame:HookScript("OnVerticalScroll", updateQuest)
 		QuestLogScrollFrame:HookScript("OnMouseWheel", updateQuest)
 		
-		hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, portrait, text, name, x, y)
-			QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x+4, y)
+		hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, _, _, _, x, y)
+			QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x+6, y)
 		end)
 		
 		local questButtons = {"QuestLogFrameAbandonButton", "QuestLogFramePushQuestButton", "QuestLogFrameTrackButton", "QuestLogFrameCancelButton", "QuestFrameAcceptButton", "QuestFrameDeclineButton", "QuestFrameCompleteQuestButton", "QuestFrameCompleteButton", "QuestFrameGoodbyeButton", "QuestFrameGreetingGoodbyeButton", "QuestLogFrameCompleteButton"}
@@ -2381,6 +2382,25 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		TutorialFrameOkayButton:SetBackdropColor(0, 0, 0, .25)
 		TutorialFramePrevButton:SetBackdropColor(0, 0, 0, .25)
 		TutorialFrameNextButton:SetBackdropColor(0, 0, 0, .25)
+		
+		-- Loot history
+		
+		for i = 1, 9 do
+			select(i, LootHistoryFrame:GetRegions()):Hide()
+		end
+		LootHistoryFrameScrollFrame:GetRegions():Hide()
+		
+		LootHistoryFrame.ResizeButton:SetPoint("TOP", LootHistoryFrame, "BOTTOM", 0, -1)
+		LootHistoryFrame.ResizeButton:SetFrameStrata("LOW")
+		
+		F.ReskinArrow(LootHistoryFrame.ResizeButton, "down")
+		LootHistoryFrame.ResizeButton:SetSize(32, 12)
+		
+		F.CreateBD(LootHistoryFrame)
+		F.CreateSD(LootHistoryFrame)
+			
+		F.ReskinClose(LootHistoryFrame.CloseButton)
+		F.ReskinScroll(LootHistoryFrameScrollFrameScrollBar)
 
 		-- [[ Hide regions ]]
 
