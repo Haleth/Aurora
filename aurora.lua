@@ -36,7 +36,6 @@ C.media = {
 	["checked"] = "Interface\\AddOns\\Aurora\\media\\CheckButtonHilight",
 	["font"] = "Interface\\AddOns\\Aurora\\media\\font.ttf",
 	["glow"] = "Interface\\AddOns\\Aurora\\media\\glow",
-	["quest"] = "Interface\\AddOns\\Aurora\\media\\quest",
 }
 
 C.defaults = {
@@ -4945,6 +4944,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		MountJournalListScrollFrame:HookScript("OnVerticalScroll", updateScroll)
 		MountJournalListScrollFrame:HookScript("OnMouseWheel", updateScroll)
 		
+		PetJournalParentTab2:SetPoint("LEFT", PetJournalParentTab1, "RIGHT", -15, 0)
+		
 		F.CreateBD(PetJournalParent)
 		F.CreateSD(PetJournalParent)
 		F.CreateBD(MountJournal.MountCount, .25)
@@ -5814,6 +5815,8 @@ Delay:SetScript("OnEvent", function()
 	end
 
 	if AuroraConfig.bags == true and not(IsAddOnLoaded("Baggins") or IsAddOnLoaded("Stuffing") or IsAddOnLoaded("Combuctor") or IsAddOnLoaded("cargBags") or IsAddOnLoaded("famBags") or IsAddOnLoaded("ArkInventory") or IsAddOnLoaded("Bagnon")) then
+		BackpackTokenFrame:GetRegions():Hide()
+	
 		for i = 1, 12 do
 			local con = _G["ContainerFrame"..i]
 
@@ -5825,7 +5828,8 @@ Delay:SetScript("OnEvent", function()
 				local item = "ContainerFrame"..i.."Item"..k
 				local button = _G[item]
 				local icon = _G[item.."IconTexture"]
-				local quest = _G[item.."IconQuestTexture"]
+				
+				_G[item.."IconQuestTexture"]:SetAlpha(0)
 
 				button:SetNormalTexture("")
 				button:SetPushedTexture("")
@@ -5833,11 +5837,6 @@ Delay:SetScript("OnEvent", function()
 				icon:SetPoint("TOPLEFT", 1, -1)
 				icon:SetPoint("BOTTOMRIGHT", -1, 1)
 				icon:SetTexCoord(.08, .92, .08, .92)
-
-				quest:SetTexture(C.media.quest)
-				quest:SetVertexColor(1, 0, 0)
-				quest:SetTexCoord(0.05, .955, 0.05, .965)
-				quest.SetTexture = F.dummy
 
 				F.CreateBD(button, 0)
 			end
@@ -5851,13 +5850,36 @@ Delay:SetScript("OnEvent", function()
 			F.ReskinClose(_G["ContainerFrame"..i.."CloseButton"], "TOPRIGHT", con, "TOPRIGHT", -6, -6)
 		end
 
-		BackpackTokenFrame:GetRegions():Hide()
-
 		for i = 1, 3 do
 			local ic = _G["BackpackTokenFrameToken"..i.."Icon"]
 			ic:SetDrawLayer("OVERLAY")
 			ic:SetTexCoord(.08, .92, .08, .92)
 			F.CreateBG(ic)
+		end
+		
+		if not IsAddOnLoaded("oGlow") then
+			hooksecurefunc("ContainerFrame_Update", function(frame)
+				local name = frame:GetName()
+				local bu
+				for i = 1, frame.size do
+					bu = _G[name.."Item"..i]
+					if _G[name.."Item"..i.."IconQuestTexture"]:IsShown() then
+						bu:SetBackdropBorderColor(1, 0, 0)
+					else
+						bu:SetBackdropBorderColor(0, 0, 0)
+					end
+				end
+			end)
+			
+			hooksecurefunc("BankFrameItemButton_Update", function(bu)
+				if not bu.isBag then
+					if _G[bu:GetName().."IconQuestTexture"]:IsShown() then
+						bu:SetBackdropBorderColor(1, 0, 0)
+					else
+						bu:SetBackdropBorderColor(0, 0, 0)
+					end
+				end
+			end)
 		end
 
 		F.SetBD(BankFrame)
@@ -5876,7 +5898,8 @@ Delay:SetScript("OnEvent", function()
 			local item = "BankFrameItem"..i
 			local button = _G[item]
 			local icon = _G[item.."IconTexture"]
-			local quest = _G[item.."IconQuestTexture"]
+
+			_G[item.."IconQuestTexture"]:SetAlpha(0)
 
 			button:SetNormalTexture("")
 			button:SetPushedTexture("")
@@ -5884,11 +5907,6 @@ Delay:SetScript("OnEvent", function()
 			icon:SetPoint("TOPLEFT", 1, -1)
 			icon:SetPoint("BOTTOMRIGHT", -1, 1)
 			icon:SetTexCoord(.08, .92, .08, .92)
-
-			quest:SetTexture(C.media.quest)
-			quest:SetVertexColor(1, 0, 0)
-			quest:SetTexCoord(0.05, .955, 0.05, .965)
-			quest.SetTexture = F.dummy
 
 			F.CreateBD(button, 0)
 		end
