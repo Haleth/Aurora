@@ -628,23 +628,23 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		F.ReskinCheck(LFDQueueFrameRoleButtonTank:GetChildren())
-		F.ReskinCheck(LFDQueueFrameRoleButtonHealer:GetChildren())
-		F.ReskinCheck(LFDQueueFrameRoleButtonDPS:GetChildren())
-		F.ReskinCheck(LFDQueueFrameRoleButtonLeader:GetChildren())
-		F.ReskinCheck(LFRQueueFrameRoleButtonTank:GetChildren())
-		F.ReskinCheck(LFRQueueFrameRoleButtonHealer:GetChildren())
-		F.ReskinCheck(LFRQueueFrameRoleButtonDPS:GetChildren())
-		F.ReskinCheck(LFDRoleCheckPopupRoleButtonTank:GetChildren())
-		F.ReskinCheck(LFDRoleCheckPopupRoleButtonHealer:GetChildren())
-		F.ReskinCheck(LFDRoleCheckPopupRoleButtonDPS:GetChildren())
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonTank:GetChildren())
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonHealer:GetChildren())
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonDPS:GetChildren())
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonLeader:GetChildren())
-		F.ReskinCheck(LFGInvitePopupRoleButtonTank:GetChildren())
-		F.ReskinCheck(LFGInvitePopupRoleButtonHealer:GetChildren())
-		F.ReskinCheck(LFGInvitePopupRoleButtonDPS:GetChildren())
+		F.ReskinCheck(LFDQueueFrameRoleButtonTank.checkButton)
+		F.ReskinCheck(LFDQueueFrameRoleButtonHealer.checkButton)
+		F.ReskinCheck(LFDQueueFrameRoleButtonDPS.checkButton)
+		F.ReskinCheck(LFDQueueFrameRoleButtonLeader.checkButton)
+		F.ReskinCheck(LFRQueueFrameRoleButtonTank.checkButton)
+		F.ReskinCheck(LFRQueueFrameRoleButtonHealer.checkButton)
+		F.ReskinCheck(LFRQueueFrameRoleButtonDPS.checkButton)
+		F.ReskinCheck(LFDRoleCheckPopupRoleButtonTank.checkButton)
+		F.ReskinCheck(LFDRoleCheckPopupRoleButtonHealer.checkButton)
+		F.ReskinCheck(LFDRoleCheckPopupRoleButtonDPS.checkButton)
+		F.ReskinCheck(RaidFinderQueueFrameRoleButtonTank.checkButton)
+		F.ReskinCheck(RaidFinderQueueFrameRoleButtonHealer.checkButton)
+		F.ReskinCheck(RaidFinderQueueFrameRoleButtonDPS.checkButton)
+		F.ReskinCheck(RaidFinderQueueFrameRoleButtonLeader.checkButton)
+		F.ReskinCheck(LFGInvitePopupRoleButtonTank.checkButton)
+		F.ReskinCheck(LFGInvitePopupRoleButtonHealer.checkButton)
+		F.ReskinCheck(LFGInvitePopupRoleButtonDPS.checkButton)
 
 		-- [[ Radio buttons ]]
 
@@ -657,6 +657,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				print("Aurora: "..radiobuttons[i].." was not found.")
 			end
 		end
+		
+		F.ReskinRadio(RolePollPopupRoleButtonTank.checkButton)
+		F.ReskinRadio(RolePollPopupRoleButtonHealer.checkButton)
+		F.ReskinRadio(RolePollPopupRoleButtonDPS.checkButton)
 
 		-- [[ Backdrop frames ]]
 
@@ -4694,17 +4698,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			select(i, InspectModelFrame:GetRegions()):Hide()
 		end
 		for i = 1, 4 do
-			select(i, InspectTalentFrame:GetRegions()):Hide()
 			local tab = _G["InspectFrameTab"..i]
 			F.CreateTab(tab)
 			if i ~= 1 then
 				tab:SetPoint("LEFT", _G["InspectFrameTab"..i-1], "RIGHT", -15, 0)
-			end
-		end
-		for i = 1, 3 do
-			for j = 1, 6 do
-				select(j, _G["InspectTalentFrameTab"..i]:GetRegions()):Hide()
-				select(j, _G["InspectTalentFrameTab"..i]:GetRegions()).Show = F.dummy
 			end
 		end
 		InspectFramePortraitFrame:Hide()
@@ -4712,9 +4709,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		InspectFrameTopRightCorner:Hide()
 		InspectPVPFrameBG:SetAlpha(0)
 		InspectPVPFrameBottom:SetAlpha(0)
-		InspectTalentFramePointsBarBorderLeft:Hide()
-		InspectTalentFramePointsBarBorderMiddle:Hide()
-		InspectTalentFramePointsBarBorderRight:Hide()
 
 		local slots = {
 			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
