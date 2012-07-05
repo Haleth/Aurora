@@ -2256,6 +2256,20 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		TutorialFrameOkayButton:SetBackdropColor(0, 0, 0, .25)
 		TutorialFramePrevButton:SetBackdropColor(0, 0, 0, .25)
 		TutorialFrameNextButton:SetBackdropColor(0, 0, 0, .25)
+		
+		-- BN conversation
+		
+		BNConversationInviteDialogHeader:SetTexture("")
+		
+		F.CreateBD(BNConversationInviteDialog)
+		F.CreateBD(BNConversationInviteDialogList, .25)
+		
+		F.Reskin(BNConversationInviteDialogInviteButton)
+		F.Reskin(BNConversationInviteDialogCancelButton)
+		F.ReskinScroll(BNConversationInviteDialogListScrollFrameScrollBar)
+		for i = 1, BN_CONVERSATION_INVITE_NUM_DISPLAYED do
+			F.ReskinCheck(_G["BNConversationInviteDialogListFriend"..i].checkButton)
+		end
 
 		-- [[ Hide regions ]]
 
