@@ -674,7 +674,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.SetBD(GuildRegistrarFrame, 6, -15, -26, 64)
 		F.SetBD(PetitionFrame, 6, -15, -26, 64)
 		F.SetBD(SpellBookFrame)
-		F.SetBD(LFDParentFrame)
 		F.SetBD(CharacterFrame)
 		F.SetBD(PVPFrame)
 		F.SetBD(PVPBannerFrame)
@@ -1155,36 +1154,32 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 		end)
+		
+		-- PVE frame
+		
+		PVEFrame:DisableDrawLayer("BORDER")
+		PVEFrame:DisableDrawLayer("ARTWORK")
+		PVEFrameLeftInset:DisableDrawLayer("BORDER")
+		
+		PVEFrameBg:Hide()
+		PVEFrameTitleBg:Hide()
+		PVEFramePortrait:Hide()
+		PVEFramePortraitFrame:Hide()
+		PVEFrameTopRightCorner:Hide()
+		PVEFrameTopBorder:Hide()
+		PVEFrameLeftInsetBg:Hide()
+		PVEFrame.shadows:Hide()
+		
+		PVEFrameTab2:SetPoint("LEFT", PVEFrameTab1, "RIGHT", -15, 0)
+		
+		F.SetBD(PVEFrame)
+		F.CreateTab(PVEFrameTab1)
+		F.CreateTab(PVEFrameTab2)
+		F.ReskinClose(PVEFrameCloseButton)
 
 		-- LFD frame
 
-		--[[LFDQueueFrameCapBarProgress:SetTexture(C.media.backdrop)
-		LFDQueueFrameCapBarCap1:SetTexture(C.media.backdrop)
-		LFDQueueFrameCapBarCap2:SetTexture(C.media.backdrop)
-
-		LFDQueueFrameCapBarLeft:Hide()
-		LFDQueueFrameCapBarMiddle:Hide()
-		LFDQueueFrameCapBarRight:Hide()
-		LFDQueueFrameCapBarBG:SetTexture(nil)
-
-		LFDQueueFrameCapBar.backdrop = CreateFrame("Frame", nil, LFDQueueFrameCapBar)
-		LFDQueueFrameCapBar.backdrop:SetPoint("TOPLEFT", LFDQueueFrameCapBar, "TOPLEFT", -1, -2)
-		LFDQueueFrameCapBar.backdrop:SetPoint("BOTTOMRIGHT", LFDQueueFrameCapBar, "BOTTOMRIGHT", 1, 2)
-		LFDQueueFrameCapBar.backdrop:SetFrameLevel(0)
-		F.CreateBD(LFDQueueFrameCapBar.backdrop)
-
-		for i = 1, 2 do
-			local bu = _G["LFDQueueFrameCapBarCap"..i.."Marker"]
-			_G["LFDQueueFrameCapBarCap"..i.."MarkerTexture"]:Hide()
-
-			local cap = bu:CreateTexture(nil, "OVERLAY")
-			cap:SetSize(1, 14)
-			cap:SetPoint("CENTER")
-			cap:SetTexture(C.media.backdrop)
-			cap:SetVertexColor(0, 0, 0)
-		end]]
-
-		LFDQueueFrameRandomScrollFrame:SetWidth(304)
+		--LFDQueueFrameRandomScrollFrame:SetWidth(304)
 
 		local function ReskinRewards()
 			for i = 1, LFD_MAX_REWARDS do
@@ -1564,15 +1559,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		MerchantGuildBankRepairButton:SetPushedTexture("")
 		F.CreateBG(MerchantGuildBankRepairButton)
-		MerchantGuildBankRepairButtonIcon:SetTexCoord(0.61, 0.82, 0.1, 0.52)
+		MerchantGuildBankRepairButtonIcon:SetTexCoord(0.595, 0.8125, 0.06, 0.52)
 
 		MerchantRepairAllButton:SetPushedTexture("")
 		F.CreateBG(MerchantRepairAllButton)
-		MerchantRepairAllIcon:SetTexCoord(0.34, 0.1, 0.34, 0.535, 0.535, 0.1, 0.535, 0.535)
+		MerchantRepairAllIcon:SetTexCoord(0.31375, 0.53, 0.06, 0.52)
 
 		MerchantRepairItemButton:SetPushedTexture("")
 		F.CreateBG(MerchantRepairItemButton)
-		local ic = MerchantRepairItemButton:GetRegions():SetTexCoord(0.04, 0.24, 0.06, 0.5)
+		MerchantRepairItemButton:GetRegions():SetTexCoord(0.035, 0.25125, 0.08, 0.505)
 
 		hooksecurefunc("MerchantFrame_UpdateCurrencies", function()
 			for i = 1, MAX_MERCHANT_CURRENCIES do
