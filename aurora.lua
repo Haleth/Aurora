@@ -665,7 +665,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- [[ Backdrop frames ]]
 
 		F.SetBD(FriendsFrame)
-		F.SetBD(OpenMailFrame, 10, -12, -34, 74)
 		F.SetBD(DressUpFrame, 10, -12, -34, 74)
 		F.SetBD(TaxiFrame, 3, -23, -5, 3)
 		F.SetBD(TradeFrame, 10, -12, -30, 52)
@@ -966,29 +965,30 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Mail frame
 		
-		F.CreateBD(MailFrame)
-		F.CreateSD(MailFrame)
-		
 		MailFrameInset:DisableDrawLayer("BORDER")
 		SendMailMoneyInset:DisableDrawLayer("BORDER")
+		OpenMailFrameInset:DisableDrawLayer("BORDER")
 		InboxFrame:GetRegions():Hide()
 		MailFrameInsetBg:Hide()
 		MailFrameTopBorder:Hide()
 		MailFrameTopTileStreaks:Hide()
+		OpenMailFrameBg:Hide()
+		OpenMailFrameInsetBg:Hide()
 		SendMailMoneyBg:Hide()
 		SendMailMoneyInsetBg:Hide()
-		
+		OpenMailFrameIcon:Hide()	
+		OpenMailHorizontalBarLeft:Hide()
+		select(18, MailFrame:GetRegions()):Hide()
+		select(26, OpenMailFrame:GetRegions()):Hide()
 		for i = 10, 14 do
 			select(i, MailFrame:GetRegions()):Hide()
 		end
-		
 		for i = 15, 17 do
 			select(i, MailFrame:GetRegions()):SetAlpha(0)
 		end
-		
-		select(18, MailFrame:GetRegions()):Hide()
-
-		F.ReskinClose(MailFrameCloseButton)
+		for i = 1, 17 do
+			select(i, OpenMailFrame:GetRegions()):Hide()	
+		end
 
 		OpenMailLetterButton:SetNormalTexture("")
 		OpenMailLetterButton:SetPushedTexture("")
@@ -1068,6 +1068,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 		end)
+		
+		F.CreateBD(MailFrame)
+		F.CreateSD(MailFrame)
+		F.CreateBD(OpenMailFrame)
+		F.CreateSD(OpenMailFrame)
+		F.ReskinClose(MailFrameCloseButton)
+		F.ReskinClose(OpenMailFrameCloseButton)
 
 		-- Currency frame
 
@@ -2524,7 +2531,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, #bglayers do
 			_G[bglayers[i]]:DisableDrawLayer("BACKGROUND")
 		end
-		local borderlayers = {"FriendsFrame", "FriendsFrameInset", "WhoFrameListInset", "WhoFrameEditBoxInset", "ChannelFrameLeftInset", "ChannelFrameRightInset", "SpellBookFrame", "SpellBookFrameInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrame", "CharacterFrameInset", "CharacterFrameInsetRight", "MerchantFrame", "PVPFrame", "PVPFrameInset", "PVPConquestFrameInfoButton", "PVPFrameTopInset", "PVPTeamManagementFrame", "PVPBannerFrame", "PVPBannerFrameInset", "TabardFrame", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "TaxiFrame", "ItemTextFrame", "CharacterModelFrame", "OpenMailFrame", "WorldStateScoreFrame", "WorldStateScoreFrameInset", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "RaidParentFrame", "RaidParentFrameInset", "RaidFinderFrameRoleInset", "LFRQueueFrameRoleInset", "LFRQueueFrameListInset", "LFRQueueFrameCommentInset"}
+		local borderlayers = {"FriendsFrame", "FriendsFrameInset", "WhoFrameListInset", "WhoFrameEditBoxInset", "ChannelFrameLeftInset", "ChannelFrameRightInset", "SpellBookFrame", "SpellBookFrameInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrame", "CharacterFrameInset", "CharacterFrameInsetRight", "MerchantFrame", "PVPFrame", "PVPFrameInset", "PVPConquestFrameInfoButton", "PVPFrameTopInset", "PVPTeamManagementFrame", "PVPBannerFrame", "PVPBannerFrameInset", "TabardFrame", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "TaxiFrame", "ItemTextFrame", "CharacterModelFrame", "WorldStateScoreFrame", "WorldStateScoreFrameInset", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "RaidParentFrame", "RaidParentFrameInset", "RaidFinderFrameRoleInset", "LFRQueueFrameRoleInset", "LFRQueueFrameListInset", "LFRQueueFrameCommentInset"}
 		for i = 1, #borderlayers do
 			_G[borderlayers[i]]:DisableDrawLayer("BORDER")
 		end
@@ -2559,9 +2566,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["TabardFrameCustomization"..i.."Middle"]:Hide()
 			_G["TabardFrameCustomization"..i.."Right"]:Hide()
 		end
-		OpenMailFrameIcon:Hide()
-		OpenMailHorizontalBarLeft:Hide()
-		select(13, OpenMailFrame:GetRegions()):Hide()
 		OpenStationeryBackgroundLeft:Hide()
 		OpenStationeryBackgroundRight:Hide()
 		for i = 4, 7 do
@@ -2786,7 +2790,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		GameFontBlackMedium:SetTextColor(1, 1, 1)
 		QuestFont:SetTextColor(1, 1, 1)
+		MailFont_Large:SetTextColor(1, 1, 1)
+		MailFont_Large:SetShadowColor(0, 0, 0)
+		MailFont_Large:SetShadowOffset(1, -1)
 		MailTextFontNormal:SetTextColor(1, 1, 1)
+		MailTextFontNormal:SetShadowOffset(1, -1)
+		MailTextFontNormal:SetShadowColor(0, 0, 0)
 		InvoiceTextFontNormal:SetTextColor(1, 1, 1)
 		InvoiceTextFontSmall:SetTextColor(1, 1, 1)
 		SpellBookPageText:SetTextColor(.8, .8, .8)
