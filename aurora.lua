@@ -786,7 +786,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			
 			if level == 1 then
 				if not anchorName then
-					listFrame:SetPoint("TOPLEFT", dropDownFrame, "BOTTOMLEFT", 16, 9)
+					local xOffset = dropDownFrame.xOffset and dropDownFrame.xOffset or 16
+					local yOffset = dropDownFrame.yOffset and dropDownFrame.yOffset or 9
+					local point = dropDownFrame.point and dropDownFrame.point or "TOPLEFT"
+					local relativeTo = dropDownFrame.relativeTo and dropDownFrame.relativeTo or dropDownFrame
+					local relativePoint = dropDownFrame.relativePoint and dropDownFrame.relativePoint or "BOTTOMLEFT"
+					listFrame:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
 				elseif anchorName ~= "cursor" then
 					-- this part might be a bit unreliable
 					local _, _, relPoint, xOff, yOff = listFrame:GetPoint()
