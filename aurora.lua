@@ -763,7 +763,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			
 			if level == 1 then
 				if not anchorName then
-					listFrame:SetPoint("TOPLEFT", dropDownFrame, "BOTTOMLEFT", 16, 9)
+					local xOffset = dropDownFrame.xOffset and dropDownFrame.xOffset or 16
+					local yOffset = dropDownFrame.yOffset and dropDownFrame.yOffset or 9
+					local point = dropDownFrame.point and dropDownFrame.point or "TOPLEFT"
+					local relativeTo = dropDownFrame.relativeTo and dropDownFrame.relativeTo or dropDownFrame
+					local relativePoint = dropDownFrame.relativePoint and dropDownFrame.relativePoint or "BOTTOMLEFT"
+					listFrame:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
 				elseif anchorName ~= "cursor" then
 					-- this part might be a bit unreliable
 					local _, _, relPoint, xOff, yOff = listFrame:GetPoint()
@@ -1172,6 +1177,35 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		
 		PVEFrameTab2:SetPoint("LEFT", PVEFrameTab1, "RIGHT", -15, 0)
 		
+		GroupFinderFrameGroupButton1.icon:SetTexture("Interface\\Icons\\INV_Helmet_08")
+		GroupFinderFrameGroupButton2.icon:SetTexture("Interface\\Icons\\inv_helmet_06")
+		GroupFinderFrameGroupButton3.icon:SetTexture("Interface\\Icons\\Icon_Scenarios")
+		
+		local function onEnter(self)
+			self:SetBackdropColor(r, g, b, .2)
+		end
+		
+		local function onLeave(self)
+			self:SetBackdropColor(0, 0, 0, 0)
+		end
+	
+		for i = 1, 3 do
+			local bu = GroupFinderFrame["groupButton"..i]
+
+			bu.ring:Hide()
+			bu.bg:Hide()
+			
+			F.Reskin(bu, true)			
+			bu:SetScript("OnEnter", onEnter)
+			bu:SetScript("OnLeave", onLeave)
+
+			bu.icon:SetTexCoord(.08, .92, .08, .92)
+			bu.icon:SetPoint("LEFT", bu, "LEFT")
+			bu.icon:SetDrawLayer("OVERLAY")
+			bu.icon.bg = F.CreateBG(bu.icon)
+			bu.icon.bg:SetDrawLayer("ARTWORK")
+		end
+		
 		F.SetBD(PVEFrame)
 		F.CreateTab(PVEFrameTab1)
 		F.CreateTab(PVEFrameTab2)
@@ -1214,28 +1248,33 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		hooksecurefunc("LFDQueueFrameRandom_UpdateFrame", ReskinRewards)
 
 		for i = 1, NUM_LFD_CHOICE_BUTTONS do
-			F.ReskinCheck(_G["LFDQueueFrameSpecificListButton"..i.."EnableButton"])
-			F.ReskinExpandOrCollapse(_G["LFDQueueFrameSpecificListButton"..i.."ExpandOrCollapseButton"])
+			F.ReskinCheck(_G["LFDQueueFrameSpecificListButton"..i].enableButton)
+			F.ReskinExpandOrCollapse(_G["LFDQueueFrameSpecificListButton"..i].expandOrCollapseButton)
 		end
+		
+		--for i = 1, NUM_SCENARIO_CHOICE_BUTTONS do
+			F.ReskinCheck(ScenarioQueueFrameSpecificButton1.enableButton)
+			F.ReskinExpandOrCollapse(ScenarioQueueFrameSpecificButton1.expandOrCollapseButton)		
+		--end
 
 		for i = 1, NUM_LFR_CHOICE_BUTTONS do
-			local bu = _G["LFRQueueFrameSpecificListButton"..i.."EnableButton"]
+			local bu = _G["LFRQueueFrameSpecificListButton"..i].enableButton
 			F.ReskinCheck(bu)
 			bu.SetNormalTexture = F.dummy
 			bu.SetPushedTexture = F.dummy
 
-			F.ReskinExpandOrCollapse(_G["LFRQueueFrameSpecificListButton"..i.."ExpandOrCollapseButton"])
+			F.ReskinExpandOrCollapse(_G["LFRQueueFrameSpecificListButton"..i].expandOrCollapseButton)
 		end
 
-		--[[hooksecurefunc("LFDQueueFrameSpecificListButton_SetDungeon", function(button, dungeonID)
+		hooksecurefunc("LFGDungeonListButton_SetDungeon", function(button, dungeonID)
 			local isCollapsed = LFGCollapseList[dungeonID]
 
-			if isCollapsed then
+			if LFGCollapseList[dungeonID] then
 				button.expandOrCollapseButton.plus:Show()
 			else
 				button.expandOrCollapseButton.plus:Hide()
 			end
-		end)]]
+		end)
 
 		hooksecurefunc("LFRQueueFrameSpecificListButton_SetDungeon", function(button, dungeonID)
 			local isCollapsed = LFGCollapseList[dungeonID]
@@ -1248,18 +1287,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Raid Finder
 
-		for i = 1, 2 do
-			local tab = _G["LFRParentFrameSideTab"..i]
-			tab:GetRegions():Hide()
-			tab:SetCheckedTexture(C.media.checked)
-			if i == 1 then
-				local a1, p, a2, x, y = tab:GetPoint()
-				tab:SetPoint(a1, p, a2, x + 11, y)
-			end
-			F.CreateBG(tab)
-			F.CreateSD(tab, 5, 0, 0, 0, 1, 1)
-			select(2, tab:GetRegions()):SetTexCoord(.08, .92, .08, .92)
-		end
+		RaidFinderFrameBottomInset:DisableDrawLayer("BORDER")
+		RaidFinderFrameBottomInsetBg:Hide()
+		RaidFinderFrameBtnCornerRight:Hide()
+		RaidFinderFrameButtonBottomBorder:Hide()
 
 		for i = 1, LFD_MAX_REWARDS do
 			local button = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i]
@@ -1287,6 +1318,57 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					button.reskinned = true
 				end
 			end
+		end
+
+
+		-- Scenario finder
+
+		ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
+		ScenarioFinderFrame.TopTileStreaks:Hide()
+		ScenarioFinderFrameBtnCornerRight:Hide()
+		ScenarioFinderFrameButtonBottomBorder:Hide()
+		ScenarioQueueFrame.Bg:Hide()
+		ScenarioFinderFrameInset:GetRegions():Hide()
+
+		F.Reskin(ScenarioQueueFrameFindGroupButton)
+		F.ReskinDropDown(ScenarioQueueFrameTypeDropDown)
+		
+		-- Raid frame (social frame)
+
+		F.Reskin(RaidFrameRaidBrowserButton)
+		F.ReskinCheck(RaidFrameAllAssistCheckButton)
+
+		-- Looking for raid
+
+		LFRBrowseFrameRoleInset:DisableDrawLayer("BORDER")
+		RaidBrowserFrameBg:Hide()
+		LFRQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
+		LFRQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
+		LFRBrowseFrameRoleInsetBg:Hide()
+		
+		for i = 1, 14 do
+			if i ~= 6 and i ~= 8 then
+				select(i, RaidBrowserFrame:GetRegions()):Hide()
+			end
+		end
+		
+		F.CreateBD(RaidBrowserFrame)
+		F.CreateSD(RaidBrowserFrame)
+		F.ReskinClose(RaidBrowserFrameCloseButton)
+		F.ReskinScroll(LFRQueueFrameSpecificListScrollFrameScrollBar)
+		F.ReskinScroll(LFRQueueFrameCommentScrollFrameScrollBar)
+		
+		for i = 1, 2 do
+			local tab = _G["LFRParentFrameSideTab"..i]
+			tab:GetRegions():Hide()
+			tab:SetCheckedTexture(C.media.checked)
+			if i == 1 then
+				local a1, p, a2, x, y = tab:GetPoint()
+				tab:SetPoint(a1, p, a2, x + 11, y)
+			end
+			F.CreateBG(tab)
+			F.CreateSD(tab, 5, 0, 0, 0, 1, 1)
+			select(2, tab:GetRegions()):SetTexCoord(.08, .92, .08, .92)
 		end
 
 		-- Spellbook frame
@@ -2888,8 +2970,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		ChatConfigFrameOkayButton:SetPoint("TOPRIGHT", ChatConfigBackgroundFrame, "BOTTOMRIGHT", 0, -4)
 		FriendsFrameStatusDropDown:ClearAllPoints()
 		FriendsFrameStatusDropDown:SetPoint("TOPLEFT", FriendsFrame, "TOPLEFT", 10, -28)
-		RaidFrameConvertToRaidButton:ClearAllPoints()
-		RaidFrameConvertToRaidButton:SetPoint("TOPLEFT", RaidFrame, "TOPLEFT", 38, -35)
 		ReputationDetailFrame:SetPoint("TOPLEFT", ReputationFrame, "TOPRIGHT", 1, -28)
 		PaperDollEquipmentManagerPaneEquipSet:SetWidth(PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
 		PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
@@ -2927,7 +3007,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		FriendsFrameTitleText:SetPoint("TOP", FriendsFrame, "TOP", 0, -8)
 		VideoOptionsFrameOkay:SetPoint("BOTTOMRIGHT", VideoOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
 		InterfaceOptionsFrameOkay:SetPoint("BOTTOMRIGHT", InterfaceOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
-		RaidFrameRaidInfoButton:SetPoint("LEFT", RaidFrameConvertToRaidButton, "RIGHT", 67, 12)
 
 		-- [[ Tabs ]]
 
@@ -3855,6 +3934,42 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		CalendarPrevMonthButton:SetSize(19, 19)
 		CalendarNextMonthButton:SetSize(19, 19)
 		F.ReskinCheck(CalendarCreateEventLockEventCheck)
+	elseif addon == "Blizzard_ChallengesUI" then
+		ChallengesFrameInset:DisableDrawLayer("BORDER")
+		ChallengesFrameInsetBg:Hide()
+		ChallengesFrameDetails.bg:Hide()
+		select(2, ChallengesFrameDetails:GetRegions()):Hide()
+		select(9, ChallengesFrameDetails:GetRegions()):Hide()
+		select(10, ChallengesFrameDetails:GetRegions()):Hide()
+		select(11, ChallengesFrameDetails:GetRegions()):Hide()
+		
+		local bg = CreateFrame("Frame", nil, ChallengesFrameDetails)
+		bg:SetPoint("TOPLEFT", 1, -73)
+		bg:SetSize(332, 49)
+		bg:SetFrameLevel(ChallengesFrameDetails:GetFrameLevel())
+		F.CreateBD(bg, .25)
+		
+		ChallengesFrameDungeonButton1:SetPoint("TOPLEFT", ChallengesFrame, "TOPLEFT", 8, -83)
+		
+		for i = 1, 9 do
+			local bu = ChallengesFrame["button"..i]
+			F.CreateBD(bu, .25)
+			bu:SetHighlightTexture("")
+			bu.selectedTex:SetTexture(C.media.backdrop)
+			bu.selectedTex:SetAlpha(.2)
+			bu.selectedTex:SetPoint("TOPLEFT", 1, -1)
+			bu.selectedTex:SetPoint("BOTTOMRIGHT", -1, 1)
+		end
+		
+		for i = 1, 3 do
+			local rewardsRow = ChallengesFrame["RewardRow"..i]
+			for j = 1, 2 do
+				local bu = rewardsRow["Reward"..j]
+				
+				bu.Icon:SetTexCoord(.08, .92, .08, .92)
+				F.CreateBG(bu.Icon)
+			end
+		end
 	elseif addon == "Blizzard_DebugTools" then
 		ScriptErrorsFrame:SetScale(UIParent:GetScale())
 		ScriptErrorsFrame:SetSize(386, 274)
@@ -5054,7 +5169,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
 	elseif addon == "Blizzard_RaidUI" then
 		F.Reskin(RaidFrameReadyCheckButton)
-		F.ReskinCheck(RaidFrameAllAssistCheckButton)
 	elseif addon == "Blizzard_ReforgingUI" then
 		F.CreateBD(ReforgingFrame)
 		F.CreateSD(ReforgingFrame)
