@@ -1495,15 +1495,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		MerchantGuildBankRepairButton:SetPushedTexture("")
 		F.CreateBG(MerchantGuildBankRepairButton)
-		MerchantGuildBankRepairButtonIcon:SetTexCoord(0.595, 0.8125, 0.06, 0.52)
-
+		MerchantGuildBankRepairButtonIcon:SetTexCoord(0.595, 0.8075, 0.05, 0.52)
+		
 		MerchantRepairAllButton:SetPushedTexture("")
 		F.CreateBG(MerchantRepairAllButton)
 		MerchantRepairAllIcon:SetTexCoord(0.31375, 0.53, 0.06, 0.52)
-
+	
 		MerchantRepairItemButton:SetPushedTexture("")
 		F.CreateBG(MerchantRepairItemButton)
-		MerchantRepairItemButton:GetRegions():SetTexCoord(0.035, 0.25125, 0.08, 0.505)
+		local ic = MerchantRepairItemButton:GetRegions()
+		ic:SetTexture("Interface\\Icons\\INV_Hammer_20")
+		ic:SetTexCoord(.08, .92, .08, .92)
 
 		hooksecurefunc("MerchantFrame_UpdateCurrencies", function()
 			for i = 1, MAX_MERCHANT_CURRENCIES do
