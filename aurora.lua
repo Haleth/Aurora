@@ -101,33 +101,33 @@ F.CreateSD = function(parent, size, r, g, b, alpha, offset)
 	sd:SetAlpha(alpha or 1)
 end
 
-F.CreatePulse = function(frame, speed, mult, alpha)
-	frame.speed = speed or .05
-	frame.mult = mult or 1
-	frame.alpha = alpha or 1
-	frame.tslu = 0
-	frame:SetScript("OnUpdate", function(self, elapsed)
-		self.tslu = self.tslu + elapsed
-		if self.tslu > self.speed then
-			self.tslu = 0
-			self:SetAlpha(self.alpha)
-		end
-		self.alpha = self.alpha - elapsed*self.mult
-		if self.alpha < 0 and self.mult > 0 then
-			self.mult = self.mult*-1
-			self.alpha = 0
-		elseif self.alpha > 1 and self.mult < 0 then
-			self.mult = self.mult*-1
-		end
-	end)
-end
-
 F.CreateGradient = function(f)
 	local tex = f:CreateTexture(nil, "BACKGROUND")
 	tex:SetPoint("TOPLEFT")
 	tex:SetPoint("BOTTOMRIGHT")
 	tex:SetTexture(C.media.backdrop)
 	tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+end
+
+F.CreatePulse = function(frame)
+	local speed = .05
+	local mult = 1
+	local alpha = 1
+	local last = 0
+	frame:SetScript("OnUpdate", function(self, elapsed)
+		last = last + elapsed
+		if last > speed then
+			last = 0
+			self:SetAlpha(alpha)
+		end
+		alpha = alpha - elapsed*mult
+		if alpha < 0 and mult > 0 then
+			mult = mult*-1
+			alpha = 0
+		elseif alpha > 1 and mult < 0 then
+			mult = mult*-1
+		end
+	end)
 end
 
 local function StartGlow(f)
@@ -2857,7 +2857,55 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(PetitionFrameSignButton)
 		F.Reskin(PetitionFrameRequestButton)
 		F.Reskin(PetitionFrameRenameButton)
-		F.Reskin(PetitionFrameCancelButton) 
+		F.Reskin(PetitionFrameCancelButton)
+		
+		-- Mac options
+		
+		if IsMacClient() then
+			F.CreateBD(MacOptionsFrame)
+			MacOptionsFrameHeader:SetTexture("")
+			MacOptionsFrameHeader:ClearAllPoints()
+			MacOptionsFrameHeader:SetPoint("TOP", MacOptionsFrame, 0, 0)
+
+			F.CreateBD(MacOptionsFrameMovieRecording, .25)
+			F.CreateBD(MacOptionsITunesRemote, .25)
+			F.CreateBD(MacOptionsFrameMisc, .25)
+
+			F.Reskin(MacOptionsButtonKeybindings)
+			F.Reskin(MacOptionsButtonCompress)
+			F.Reskin(MacOptionsFrameCancel)
+			F.Reskin(MacOptionsFrameOkay)
+			F.Reskin(MacOptionsFrameDefaults)
+
+			F.ReskinDropDown(MacOptionsFrameResolutionDropDown)
+			F.ReskinDropDown(MacOptionsFrameFramerateDropDown)
+			F.ReskinDropDown(MacOptionsFrameCodecDropDown)
+
+			for i = 1, 10 do
+				F.ReskinCheck(_G["MacOptionsFrameCheckButton"..i])
+			end
+			F.ReskinSlider(MacOptionsFrameQualitySlider)
+
+			MacOptionsButtonCompress:SetWidth(136)
+
+			MacOptionsFrameCancel:SetWidth(96)
+			MacOptionsFrameCancel:SetHeight(22)
+			MacOptionsFrameCancel:ClearAllPoints()
+			MacOptionsFrameCancel:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 107, 0)
+
+			MacOptionsFrameOkay:SetWidth(96)
+			MacOptionsFrameOkay:SetHeight(22)
+			MacOptionsFrameOkay:ClearAllPoints()
+			MacOptionsFrameOkay:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 5, 0)
+
+			MacOptionsButtonKeybindings:SetWidth(96)
+			MacOptionsButtonKeybindings:SetHeight(22)
+			MacOptionsButtonKeybindings:ClearAllPoints()
+			MacOptionsButtonKeybindings:SetPoint("LEFT", MacOptionsFrameDefaults, "RIGHT", 5, 0)
+
+			MacOptionsFrameDefaults:SetWidth(96)
+			MacOptionsFrameDefaults:SetHeight(22)
+		end
 
 		-- [[ Hide regions ]]
 
@@ -4575,25 +4623,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinClose(GMSurveyCloseButton, "TOPRIGHT", GMSurveyFrame, "TOPRIGHT", -36, -4)
 		F.ReskinScroll(GMSurveyScrollFrameScrollBar)
 	elseif addon == "Blizzard_GuildBankUI" then
-		local bg = CreateFrame("Frame", nil, GuildBankFrame)
-		bg:SetPoint("TOPLEFT", 10, -8)
-		bg:SetPoint("BOTTOMRIGHT", 0, 6)
-		bg:SetFrameLevel(GuildBankFrame:GetFrameLevel()-1)
-		F.CreateBD(bg)
-		F.CreateSD(bg)
-
-		GuildBankPopupFrame:SetPoint("TOPLEFT", GuildBankFrame, "TOPRIGHT", 2, -30)
-
-		local bd = CreateFrame("Frame", nil, GuildBankPopupFrame)
-		bd:SetPoint("TOPLEFT")
-		bd:SetPoint("BOTTOMRIGHT", -28, 26)
-		bd:SetFrameLevel(GuildBankPopupFrame:GetFrameLevel()-1)
-		F.CreateBD(bd)
-		F.CreateBD(GuildBankPopupEditBox, .25)
+		GuildBankFrame:DisableDrawLayer("BACKGROUND")
+		GuildBankFrame:DisableDrawLayer("BORDER")
+		GuildBankFrame:DisableDrawLayer("OVERLAY")
+		GuildBankTabTitle:SetDrawLayer("ARTWORK")
 
 		GuildBankEmblemFrame:Hide()
 		GuildBankPopupFrameTopLeft:Hide()
 		GuildBankPopupFrameBottomLeft:Hide()
+		GuildBankMoneyFrameBackground:Hide()
 		select(2, GuildBankPopupFrame:GetRegions()):Hide()
 		select(4, GuildBankPopupFrame:GetRegions()):Hide()
 		GuildBankPopupNameLeft:Hide()
@@ -4601,18 +4639,26 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		GuildBankPopupNameRight:Hide()
 		GuildBankPopupScrollFrame:GetRegions():Hide()
 		select(2, GuildBankPopupScrollFrame:GetRegions()):Hide()
-		GuildBankTabTitleBackground:SetAlpha(0)
-		GuildBankTabTitleBackgroundLeft:SetAlpha(0)
-		GuildBankTabTitleBackgroundRight:SetAlpha(0)
-		GuildBankTabLimitBackground:SetAlpha(0)
-		GuildBankTabLimitBackgroundLeft:SetAlpha(0)
-		GuildBankTabLimitBackgroundRight:SetAlpha(0)
-		GuildBankFrameLeft:Hide()
-		GuildBankFrameRight:Hide()
 		local a, b = GuildBankTransactionsScrollFrame:GetRegions()
 		a:Hide()
 		b:Hide()
-
+		a, b = GuildBankInfoScrollFrame:GetRegions()
+		a:Hide()
+		b:Hide()
+		
+		F.SetBD(GuildBankFrame)
+		F.Reskin(GuildBankFrameWithdrawButton)
+		F.Reskin(GuildBankFrameDepositButton)
+		F.Reskin(GuildBankFramePurchaseButton)
+		F.Reskin(GuildBankPopupOkayButton)
+		F.Reskin(GuildBankPopupCancelButton)
+		F.Reskin(GuildBankInfoSaveButton)
+		F.ReskinClose(GuildBankFrame.CloseButton)
+		F.ReskinScroll(GuildBankTransactionsScrollFrameScrollBar)
+		F.ReskinScroll(GuildBankInfoScrollFrameScrollBar)
+		F.ReskinScroll(GuildBankPopupScrollFrameScrollBar)
+		F.ReskinInput(GuildItemSearchBox)
+		
 		for i = 1, 4 do
 			local tab = _G["GuildBankFrameTab"..i]
 			F.CreateTab(tab)
@@ -4622,23 +4668,23 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		GuildBankFrameWithdrawButton:ClearAllPoints()
+		local bd = CreateFrame("Frame", nil, GuildBankPopupFrame)
+		bd:SetPoint("TOPLEFT")
+		bd:SetPoint("BOTTOMRIGHT", -28, 26)
+		bd:SetFrameLevel(GuildBankPopupFrame:GetFrameLevel()-1)
+		F.CreateBD(bd)
+		F.CreateBD(GuildBankPopupEditBox, .25)
+		
+		GuildBankPopupFrame:SetPoint("TOPLEFT", GuildBankFrame, "TOPRIGHT", 2, -30)
+		
 		GuildBankFrameWithdrawButton:SetPoint("RIGHT", GuildBankFrameDepositButton, "LEFT", -1, 0)
 
 		for i = 1, NUM_GUILDBANK_COLUMNS do
 			_G["GuildBankColumn"..i]:GetRegions():Hide()
 			for j = 1, NUM_SLOTS_PER_GUILDBANK_GROUP do
-				local bu = _G["GuildBankColumn"..i.."Button"..j]
-				bu:SetPushedTexture("")
-
+				_G["GuildBankColumn"..i.."Button"..j]:SetPushedTexture("")
 				_G["GuildBankColumn"..i.."Button"..j.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
 				_G["GuildBankColumn"..i.."Button"..j.."NormalTexture"]:SetAlpha(0)
-
-				local bg = CreateFrame("Frame", nil, bu)
-				bg:SetPoint("TOPLEFT", -1, 1)
-				bg:SetPoint("BOTTOMRIGHT", 1, -1)
-				bg:SetFrameLevel(bu:GetFrameLevel()-1)
-				F.CreateBD(bg, 0)
 			end
 		end
 
@@ -4670,20 +4716,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			
 			F.CreateBG(_G["GuildBankPopupButton"..i.."Icon"])
 		end
-
-		F.Reskin(GuildBankFrameWithdrawButton)
-		F.Reskin(GuildBankFrameDepositButton)
-		F.Reskin(GuildBankFramePurchaseButton)
-		F.Reskin(GuildBankPopupOkayButton)
-		F.Reskin(GuildBankPopupCancelButton)
-		F.Reskin(GuildBankInfoSaveButton)
-		
-		local GuildBankClose = select(14, GuildBankFrame:GetChildren())
-		F.ReskinClose(GuildBankClose, "TOPRIGHT", GuildBankFrame, "TOPRIGHT", -4, -12)
-		F.ReskinScroll(GuildBankTransactionsScrollFrameScrollBar)
-		F.ReskinScroll(GuildBankInfoScrollFrameScrollBar)
-		F.ReskinScroll(GuildBankPopupScrollFrameScrollBar)
-		F.ReskinInput(GuildItemSearchBox)
 	elseif addon == "Blizzard_GuildControlUI" then
 		F.SetBD(GuildControlUI, 0, 0, 0, -28)
 		F.CreateBD(GuildControlUIRankBankFrameInset, .25)
@@ -5376,46 +5408,83 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 		for i = 1, 9 do
 			select(i, MountJournal.MountCount:GetRegions()):Hide()
+			select(i, PetJournal.PetCount:GetRegions()):Hide()
 		end
-
+		
 		MountJournal.LeftInset:Hide()
-		MountJournal.RightInset:Hide()
+		MountJournal.RightInset:Hide()		
+		PetJournal.LeftInset:Hide()
+		PetJournal.RightInset:Hide()
 		MountJournal.MountDisplay:GetRegions():Hide()
 		MountJournal.MountDisplay.ShadowOverlay:Hide()
+		PetJournalFilterButtonLeft:Hide()
+		PetJournalFilterButtonRight:Hide()
+		PetJournalFilterButtonMiddle:Hide()
+		PetJournalTutorialButton.Ring:Hide()
 		
-		local buttons = MountJournal.ListScrollFrame.buttons
-		for i = 1, #buttons do
-			local bu = buttons[i]
-			
-			bu:GetRegions():Hide()
-			bu.selectedTexture:SetAlpha(0)
-			bu:SetHighlightTexture("")
-			
-			local bg = CreateFrame("Frame", nil, bu)
-			bg:SetPoint("TOPLEFT", 0, -1)
-			bg:SetPoint("BOTTOMRIGHT", 0, 1)
-			bg:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-			bu.bg = bg
-			
-			bu.icon:SetTexCoord(.08, .92, .08, .92)
-			bu.icon:SetDrawLayer("OVERLAY")
-			F.CreateBG(bu.icon)
-			
-			bu.name:SetParent(bg)
-			
-			bu.DragButton:GetRegions():SetTexture(C.media.checked)
+		F.CreateBD(PetJournalParent)
+		F.CreateSD(PetJournalParent)
+		F.CreateBD(MountJournal.MountCount, .25)
+		F.CreateBD(PetJournal.PetCount, .25)
+		F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
+		
+		F.Reskin(MountJournalMountButton)
+		F.Reskin(PetJournalSummonButton)
+		F.Reskin(PetJournalFindBattle)
+		F.Reskin(PetJournalFilterButton)
+		F.CreateTab(PetJournalParentTab1)
+		F.CreateTab(PetJournalParentTab2)
+		F.ReskinClose(PetJournalParentCloseButton)
+		F.ReskinScroll(MountJournalListScrollFrameScrollBar)
+		F.ReskinScroll(PetJournalListScrollFrameScrollBar)
+		F.ReskinInput(PetJournalSearchBox)
+		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
+		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
+		
+		PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
+		
+		PetJournalParentTab2:SetPoint("LEFT", PetJournalParentTab1, "RIGHT", -15, 0)
+		
+		PetJournalHealPetButtonBorder:Hide()
+		PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+		F.CreateBG(PetJournal.HealPetButton)
+		
+		local scrollFrames = {MountJournal.ListScrollFrame.buttons, PetJournal.listScroll.buttons}
+		for _, scrollFrame in pairs(scrollFrames) do
+			for i = 1, #scrollFrame do
+				local bu = scrollFrame[i]
+				
+				bu:GetRegions():Hide()
+				bu:SetHighlightTexture("")
+				
+				bu.selectedTexture:SetPoint("TOPLEFT", 0, -1)
+				bu.selectedTexture:SetPoint("BOTTOMRIGHT", 0, 1)
+				bu.selectedTexture:SetTexture(C.media.backdrop)
+				bu.selectedTexture:SetVertexColor(r, g, b, .2)
+				
+				local bg = CreateFrame("Frame", nil, bu)
+				bg:SetPoint("TOPLEFT", 0, -1)
+				bg:SetPoint("BOTTOMRIGHT", 0, 1)
+				bg:SetFrameLevel(bu:GetFrameLevel()-1)
+				F.CreateBD(bg, .25)
+				bu.bg = bg
+				
+				bu.icon:SetTexCoord(.08, .92, .08, .92)
+				bu.icon:SetDrawLayer("OVERLAY")
+				F.CreateBG(bu.icon)
+				
+				bu.name:SetParent(bg)
+				
+				if bu.DragButton then
+					bu.DragButton:GetRegions():SetTexture(C.media.checked)
+				end
+			end
 		end
 		
 		local function updateScroll()
 			local buttons = MountJournal.ListScrollFrame.buttons
 			for i = 1, #buttons do
 				local bu = buttons[i]
-				if bu.selectedTexture:IsShown() then
-					bu.bg:SetBackdropColor(r, g, b, .25)
-				else
-					bu.bg:SetBackdropColor(0, 0, 0, .25)
-				end
 				if i == 2 then
 					bu:SetPoint("TOPLEFT", buttons[i-1], "BOTTOMLEFT", 0, -1)
 				elseif i > 2 then
@@ -5427,21 +5496,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		hooksecurefunc("MountJournal_UpdateMountList", updateScroll)
 		MountJournalListScrollFrame:HookScript("OnVerticalScroll", updateScroll)
 		MountJournalListScrollFrame:HookScript("OnMouseWheel", updateScroll)
-		
-		PetJournalParentTab2:SetPoint("LEFT", PetJournalParentTab1, "RIGHT", -15, 0)
-		
-		F.CreateBD(PetJournalParent)
-		F.CreateSD(PetJournalParent)
-		F.CreateBD(MountJournal.MountCount, .25)
-		F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
-		
-		F.Reskin(MountJournalMountButton)
-		F.CreateTab(PetJournalParentTab1)
-		F.CreateTab(PetJournalParentTab2)
-		F.ReskinClose(PetJournalParentCloseButton)
-		F.ReskinScroll(MountJournalListScrollFrameScrollBar)
-		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
-		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
 	elseif addon == "Blizzard_ReforgingUI" then
 		F.CreateBD(ReforgingFrame)
 		F.CreateSD(ReforgingFrame)
@@ -6125,54 +6179,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 	end
 end)
-
--- [[ Mac Options ]]
-
-if IsMacClient() then
-	F.CreateBD(MacOptionsFrame)
-	MacOptionsFrameHeader:SetTexture("")
-	MacOptionsFrameHeader:ClearAllPoints()
-	MacOptionsFrameHeader:SetPoint("TOP", MacOptionsFrame, 0, 0)
-
-	F.CreateBD(MacOptionsFrameMovieRecording, .25)
-	F.CreateBD(MacOptionsITunesRemote, .25)
-	F.CreateBD(MacOptionsFrameMisc, .25)
-
-	F.Reskin(MacOptionsButtonKeybindings)
-	F.Reskin(MacOptionsButtonCompress)
-	F.Reskin(MacOptionsFrameCancel)
-	F.Reskin(MacOptionsFrameOkay)
-	F.Reskin(MacOptionsFrameDefaults)
-
-	F.ReskinDropDown(MacOptionsFrameResolutionDropDown)
-	F.ReskinDropDown(MacOptionsFrameFramerateDropDown)
-	F.ReskinDropDown(MacOptionsFrameCodecDropDown)
-
-	for i = 1, 10 do
-		F.ReskinCheck(_G["MacOptionsFrameCheckButton"..i])
-	end
-	F.ReskinSlider(MacOptionsFrameQualitySlider)
-
-	MacOptionsButtonCompress:SetWidth(136)
-
-	MacOptionsFrameCancel:SetWidth(96)
-	MacOptionsFrameCancel:SetHeight(22)
-	MacOptionsFrameCancel:ClearAllPoints()
-	MacOptionsFrameCancel:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 107, 0)
-
-	MacOptionsFrameOkay:SetWidth(96)
-	MacOptionsFrameOkay:SetHeight(22)
-	MacOptionsFrameOkay:ClearAllPoints()
-	MacOptionsFrameOkay:SetPoint("LEFT", MacOptionsButtonKeybindings, "RIGHT", 5, 0)
-
-	MacOptionsButtonKeybindings:SetWidth(96)
-	MacOptionsButtonKeybindings:SetHeight(22)
-	MacOptionsButtonKeybindings:ClearAllPoints()
-	MacOptionsButtonKeybindings:SetPoint("LEFT", MacOptionsFrameDefaults, "RIGHT", 5, 0)
-
-	MacOptionsFrameDefaults:SetWidth(96)
-	MacOptionsFrameDefaults:SetHeight(22)
-end
 
 local Delay = CreateFrame("Frame")
 Delay:RegisterEvent("PLAYER_ENTERING_WORLD")
