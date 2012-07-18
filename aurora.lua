@@ -5506,6 +5506,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				if bu.DragButton then
 					bu.DragButton.ActiveTexture:SetTexture(C.media.checked)
 				else
+					bu.dragButton.ActiveTexture:SetTexture(C.media.checked)
 					bu.levelBG:SetAlpha(0)
 					bu.level:SetFontObject(GameFontNormal)
 					bu.level:SetTextColor(1, 1, 1)
