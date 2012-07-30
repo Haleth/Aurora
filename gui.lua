@@ -29,9 +29,7 @@ local function createToggleBox(parent, name, value, text)
 	local f = CreateFrame("CheckButton", name, parent, "InterfaceOptionsCheckButtonTemplate")
 	f.value = value
 
-	local label = f:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-	label:SetPoint("LEFT", f, "RIGHT", 1, 1)
-	label:SetText(text)
+	f.Text:SetText(text)
 
 	f:SetScript("OnClick", toggle)
 
