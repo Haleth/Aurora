@@ -1777,7 +1777,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local slots = {
 			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
 			"Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
-			"SecondaryHand", "Ranged", "Tabard",
+			"SecondaryHand", "Tabard",
 		}
 
 		for i = 1, #slots do
@@ -1793,8 +1793,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		select(10, CharacterMainHandSlot:GetRegions()):Hide()
-		select(10, CharacterRangedSlot:GetRegions()):Hide()
-		select(11, CharacterRangedSlot:GetRegions()):Hide()
 		select(10, CharacterSecondaryHandSlot:GetRegions()):Hide()
 
 		hooksecurefunc("PaperDollItemSlotButton_Update", function()
@@ -5198,7 +5196,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local slots = {
 			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
 			"Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
-			"SecondaryHand", "Ranged", "Tabard",
+			"SecondaryHand", "Tabard",
 		}
 
 		for i = 1, #slots do
@@ -5233,7 +5231,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		TransmogrifyFrameButtonFrameMoneyRight:Hide()
 		TransmogrifyFrameButtonFrameMoneyMiddle:Hide()
 
-		local slots = {"Head", "Shoulder", "Chest", "Waist", "Legs", "Feet", "Wrist", "Hands", "Back", "MainHand", "SecondaryHand", "Ranged"}
+		local slots = {"Head", "Shoulder", "Chest", "Waist", "Legs", "Feet", "Wrist", "Hands", "Back", "MainHand", "SecondaryHand"}
 
 		for i = 1, #slots do
 			local slot = _G["TransmogrifyFrame"..slots[i].."Slot"]
