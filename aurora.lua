@@ -3870,7 +3870,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			ch:SetNormalTexture("")
 			ch:SetPushedTexture("")
-			ch:SetHighlightTexture(C.media.texture)
+			ch:SetHighlightTexture(C.media.backdrop)
 
 			local hl = ch:GetHighlightTexture()
 			hl:SetPoint("TOPLEFT", 4, -4)
