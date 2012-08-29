@@ -1868,6 +1868,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				local slot = _G["Character"..slots[i].."Slot"]
 				local ic = _G["Character"..slots[i].."SlotIconTexture"]
 
+				if i == 18 then i = 19 end
+
 				if GetInventoryItemLink("player", i) then
 					ic:SetAlpha(1)
 					slot.bg:SetAlpha(1)
