@@ -510,11 +510,23 @@ F.ReskinPortraitFrame = function(f, isButtonFrame)
 end
 
 F.CreateBDFrame = function(f, a)
-	local bg = CreateFrame("Frame", nil, f)
-	bg:SetPoint("TOPLEFT", -1, 1)
-	bg:SetPoint("BOTTOMRIGHT", 1, -1)
-	bg:SetFrameLevel(f:GetFrameLevel()-1)
-	F.CreateBD(bg, a or alpha)
+	local frame
+	if f:GetObjectType() == "Texture" then
+		frame = f:GetParent()
+	else
+		frame = f
+	end
+
+	local lvl = frame:GetFrameLevel()
+
+	local bg = CreateFrame("Frame", nil, frame)
+	bg:SetPoint("TOPLEFT", f, -1, 1)
+	bg:SetPoint("BOTTOMRIGHT", f, 1, -1)
+	bg:SetFrameLevel(lvl == 0 and 1 or lvl - 1)
+
+	F.CreateBD(bg, a or .5)
+
+	return bg
 end
 
 local Skin = CreateFrame("Frame", nil, UIParent)
@@ -4760,6 +4772,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		GlyphFrameBackground:Hide()
 		GlyphFrameSideInset:DisableDrawLayer("BACKGROUND")
 		GlyphFrameSideInset:DisableDrawLayer("BORDER")
+		GlyphFrame.specRing:SetTexture("")
 		F.CreateBG(GlyphFrameClearInfoFrame)
 		GlyphFrameClearInfoFrameIcon:SetTexCoord(.08, .92, .08, .92)
 
@@ -4769,6 +4782,50 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["GlyphFrameHeader"..i.."Right"]:Hide()
 
 		end
+
+		F.CreateBDFrame(GlyphFrame.specIcon, 0)
+		GlyphFrame.specIcon:SetTexCoord(.08, .92, .08, .92)
+
+		local function onUpdate(self)
+			local id = self:GetID()
+			if GlyphMatchesSocket(id) then
+				self.bg:SetBackdropBorderColor(r, g, b)
+			else
+				self.bg:SetBackdropBorderColor(0, 0, 0)
+			end
+		end
+
+		for i = 1, NUM_GLYPH_SLOTS do
+			local glyph = _G["GlyphFrameGlyph"..i]
+
+			glyph.ring:SetAlpha(0)
+			glyph.glyph:SetTexCoord(.08, .92, .08, .92)
+			glyph.highlight:SetTexture("")
+
+			glyph.bg = F.CreateBDFrame(glyph.glyph, .25)
+
+			glyph:HookScript("OnUpdate", onUpdate)
+		end
+
+		hooksecurefunc("GlyphFrame_Update", function()
+			local spec = GetSpecialization(_, _, PlayerTalentFrame.talentGroup)
+			if spec then
+				local _, _, _, icon = GetSpecializationInfo(spec, false, self.isPet)
+				GlyphFrame.specIcon:SetTexture(icon)
+			end
+		end)
+
+		hooksecurefunc("GlyphFrameGlyph_UpdateSlot", function(self)
+			local id = self:GetID();
+			local talentGroup = PlayerTalentFrame and PlayerTalentFrame.talentGroup
+			local enabled, glyphType, glyphTooltipIndex, glyphSpell, iconFilename = GetGlyphSocketInfo(id, talentGroup)
+
+			if not glyphType then return end
+
+			if enabled and glyphSpell and iconFilename then
+				self.glyph:SetTexture(iconFilename)
+			end
+		end)
 
 		for i = 1, #GlyphFrame.scrollFrame.buttons do
 			local bu = _G["GlyphFrameScrollFrameButton"..i]
@@ -4789,7 +4846,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			local check = select(2, bu:GetRegions())
 			check:SetPoint("TOPLEFT", 39, -3)
 			check:SetPoint("BOTTOMRIGHT", -1, 3)
-			check:SetTexture(C.media.backdrop)
+			check:SetTexture(C.media.texture)
 			check:SetVertexColor(r, g, b, .2)
 
 			F.CreateBG(ic)
