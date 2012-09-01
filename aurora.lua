@@ -6869,7 +6869,7 @@ Delay:SetScript("OnEvent", function()
 			f:SetPoint("TOPLEFT", 8, -4)
 			f:SetPoint("BOTTOMRIGHT", -4, 3)
 			f:SetFrameLevel(con:GetFrameLevel()-1)
-			F.CreateBD(f, .6)
+			F.CreateBD(f)
 
 			F.ReskinClose(_G["ContainerFrame"..i.."CloseButton"], "TOPRIGHT", con, "TOPRIGHT", -6, -6)
 		end
