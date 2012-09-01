@@ -2904,6 +2904,24 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			frame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
 		end)
 
+		LootHistoryDropDown.initialize = function(self)
+			local info = UIDropDownMenu_CreateInfo();
+			info.isTitle = 1;
+			info.text = MASTER_LOOTER;
+			info.fontObject = GameFontNormalLeft;
+			info.notCheckable = 1;
+			UIDropDownMenu_AddButton(info);
+
+			info = UIDropDownMenu_CreateInfo();
+			info.notCheckable = 1;
+			local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx);
+			local classColor = C.classcolours[class];
+			local colorCode = string.format("|cFF%02x%02x%02x",  classColor.r*255,  classColor.g*255,  classColor.b*255);
+			info.text = string.format(MASTER_LOOTER_GIVE_TO, colorCode..name.."|r");
+			info.func = LootHistoryDropDown_OnClick;
+			UIDropDownMenu_AddButton(info);
+		end
+
 		-- Master looter frame
 
 		for i = 1, 9 do
