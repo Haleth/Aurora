@@ -2875,6 +2875,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinScroll(LootHistoryFrameScrollFrameScrollBar)
 
 		hooksecurefunc("LootHistoryFrame_UpdateItemFrame", function(self, frame)
+			local rollID, _, _, isDone, winnerIdx = C_LootHistory.GetItem(frame.itemIdx)
+			local expanded = self.expandedRolls[rollID]
+
 			if not frame.styled then
 				frame.Divider:Hide()
 				frame.NameBorderLeft:Hide()
@@ -2895,13 +2898,25 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				frame.styled = true
 			end
 
+			if isDone and not expanded and winnerIdx then
+				local name, class = C_LootHistory.GetPlayerInfo(frame.itemIdx, winnerIdx)
+				if name then
+					local colour = C.classcolours[class]
+					frame.WinnerName:SetVertexColor(colour.r, colour.g, colour.b)
+				end
+			end
+
 			frame.bg:SetVertexColor(frame.IconBorder:GetVertexColor())
-			frame.ToggleButton.plus:SetShown(not self.expandedRolls[C_LootHistory.GetItem(frame.itemIdx)])
+			frame.ToggleButton.plus:SetShown(not expanded)
 		end)
 
 		hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, frame)
-			local colour = C.classcolours[select(2, UnitClass(frame.PlayerName:GetText()))]
-			frame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
+			local name, class = C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
+
+			if name then
+				local colour = C.classcolours[class]
+				playerFrame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
+			end
 		end)
 
 		LootHistoryDropDown.initialize = function(self)
