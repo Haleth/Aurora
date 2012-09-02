@@ -2910,7 +2910,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			frame.ToggleButton.plus:SetShown(not expanded)
 		end)
 
-		hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, frame)
+		hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, playerFrame)
 			local name, class = C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
 
 			if name then
@@ -6991,6 +6991,15 @@ Delay:SetScript("OnEvent", function()
 			end
 		end)
 
+		LootFrameDownButton:ClearAllPoints()
+		LootFrameDownButton:SetPoint("BOTTOMRIGHT", -8, 6)
+		LootFramePrev:ClearAllPoints()
+		LootFramePrev:SetPoint("LEFT", LootFrameUpButton, "RIGHT", 4, 0)
+		LootFrameNext:ClearAllPoints()
+		LootFrameNext:SetPoint("RIGHT", LootFrameDownButton, "LEFT", -4, 0)
+
+		F.ReskinArrow(LootFrameUpButton, "up")
+		F.ReskinArrow(LootFrameDownButton, "down")
 		F.ReskinClose(LootFrameCloseButton)
 	end
 end)
