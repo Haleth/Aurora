@@ -2947,11 +2947,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, playerFrame)
-			local name, class = C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
+			if playerFrame.playerIdx then
+				local name, class = C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
 
-			if name then
-				local colour = C.classcolours[class]
-				playerFrame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
+				if name then
+					local colour = C.classcolours[class]
+					playerFrame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
+				end
 			end
 		end)
 
