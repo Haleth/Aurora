@@ -7022,27 +7022,28 @@ Delay:SetScript("OnEvent", function()
 
 		select(19, LootFrame:GetRegions()):SetPoint("TOP", LootFrame, "TOP", 0, -7)
 
-		for i = 1, LOOTFRAME_NUMBUTTONS do
-			local bu = _G["LootButton"..i]
-			local ic = _G["LootButton"..i.."IconTexture"]
-			_G["LootButton"..i.."IconQuestTexture"]:SetAlpha(0)
-			_G["LootButton"..i.."NameFrame"]:Hide()
-
-			bu:SetNormalTexture("")
-			bu:SetPushedTexture("")
-
-			local bd = CreateFrame("Frame", nil, bu)
-			bd:SetPoint("TOPLEFT")
-			bd:SetPoint("BOTTOMRIGHT", 114, 0)
-			bd:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bd, .25)
-
-			ic:SetTexCoord(.08, .92, .08, .92)
-			ic.bg = F.CreateBG(ic)
-		end
-
 		hooksecurefunc("LootFrame_UpdateButton", function(index)
 			local ic = _G["LootButton"..index.."IconTexture"]
+
+			if not ic.bg then
+				local bu = _G["LootButton"..index]
+
+				_G["LootButton"..index.."IconQuestTexture"]:SetAlpha(0)
+				_G["LootButton"..index.."NameFrame"]:Hide()
+
+				bu:SetNormalTexture("")
+				bu:SetPushedTexture("")
+
+				local bd = CreateFrame("Frame", nil, bu)
+				bd:SetPoint("TOPLEFT")
+				bd:SetPoint("BOTTOMRIGHT", 114, 0)
+				bd:SetFrameLevel(bu:GetFrameLevel()-1)
+				F.CreateBD(bd, .25)
+
+				ic:SetTexCoord(.08, .92, .08, .92)
+				ic.bg = F.CreateBG(ic)
+			end
+
 			if select(6, GetLootSlotInfo(index)) then
 				ic.bg:SetVertexColor(1, 0, 0)
 			else
