@@ -2478,6 +2478,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		DungeonCompletionAlertFrame1.dungeonTexture:SetPoint("BOTTOMLEFT", DungeonCompletionAlertFrame1, "BOTTOMLEFT", 13, 13)
 		DungeonCompletionAlertFrame1.dungeonTexture.SetPoint = F.dummy
 
+		DungeonCompletionAlertFrame1.shine:Hide()
+		DungeonCompletionAlertFrame1.shine.Show = F.dummy
+		DungeonCompletionAlertFrame1.glow:Hide()
+		DungeonCompletionAlertFrame1.glow.Show = F.dummy
+
 		hooksecurefunc("DungeonCompletionAlertFrame_ShowAlert", function()
 			for i = 1, 3 do
 				local bu = _G["DungeonCompletionAlertFrame1Reward"..i]
@@ -2494,7 +2499,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Challenge popup
 
-		local function SkinChallengePopUp()
+		hooksecurefunc("AlertFrame_SetChallengeModeAnchors", function()
 			local frame = ChallengeModeAlertFrame1
 
 			if frame then
@@ -2521,16 +2526,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				ChallengeModeAlertFrame1Shine.Show = F.dummy
 				ChallengeModeAlertFrame1GlowFrame:Hide()
 				ChallengeModeAlertFrame1GlowFrame.Show = F.dummy
-				ChallengeModeAlertFrame1GlowFrame.glow:Hide()
-				ChallengeModeAlertFrame1GlowFrame.Show = F.dummy
 				ChallengeModeAlertFrame1Border:Hide()
 				ChallengeModeAlertFrame1Border.Show = F.dummy
 
 				ChallengeModeAlertFrame1DungeonTexture:SetTexCoord(.08, .92, .08, .92)
 			end
-		end
-
-		hooksecurefunc("AlertFrame_SetChallengeModeAnchors", SkinChallengePopUp)
+		end)
 
 		-- Scenario alert
 
@@ -2562,8 +2563,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				ScenarioAlertFrame1Shine:Hide()
 				ScenarioAlertFrame1Shine.Show = F.dummy
 				ScenarioAlertFrame1GlowFrame:Hide()
-				ScenarioAlertFrame1GlowFrame.Show = F.dummy
-				ScenarioAlertFrame1GlowFrame.glow:Hide()
 				ScenarioAlertFrame1GlowFrame.Show = F.dummy
 
 				ScenarioAlertFrame1DungeonTexture:SetTexCoord(.08, .92, .08, .92)
