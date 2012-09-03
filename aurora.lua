@@ -606,7 +606,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Dropdowns ]]
 
-		local dropdowns = {"FriendsFrameStatusDropDown", "LFDQueueFrameTypeDropDown", "LFRBrowseFrameRaidDropDown", "WhoFrameDropDown", "FriendsFriendsFrameDropDown", "RaidFinderQueueFrameSelectionDropDown", "WorldMapShowDropDown", "Advanced_GraphicsAPIDropDown"}
+		local dropdowns = {"LFDQueueFrameTypeDropDown", "LFRBrowseFrameRaidDropDown", "WhoFrameDropDown", "FriendsFriendsFrameDropDown", "RaidFinderQueueFrameSelectionDropDown", "WorldMapShowDropDown", "Advanced_GraphicsAPIDropDown"}
 		for i = 1, #dropdowns do
 			local dropdown = _G[dropdowns[i]]
 			if dropdown then
@@ -1710,9 +1710,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Friends Frame
 
-		F.ReskinPortraitFrame(FriendsFrame, true)
-
 		FriendsFrameIcon:Hide()
+
+		F.ReskinPortraitFrame(FriendsFrame, true)
+		F.Reskin(FriendsFrameAddFriendButton)
+		F.Reskin(FriendsFrameSendMessageButton)
+		F.Reskin(FriendsFrameIgnorePlayerButton)
+		F.Reskin(FriendsFrameUnsquelchButton)
+		F.Reskin(FriendsFrameMutePlayerButton)
+		F.ReskinDropDown(FriendsFrameStatusDropDown)
 
 		for i = 1, FRIENDS_TO_DISPLAY do
 			local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
@@ -1760,18 +1766,51 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		local whobg = CreateFrame("Frame", nil, WhoFrameEditBoxInset)
-		whobg:SetPoint("TOPLEFT")
-		whobg:SetPoint("BOTTOMRIGHT", -1, 1)
-		whobg:SetFrameLevel(WhoFrameEditBoxInset:GetFrameLevel()-1)
-		F.CreateBD(whobg, .25)
+		FriendsFrameStatusDropDown:ClearAllPoints()
+		FriendsFrameStatusDropDown:SetPoint("TOPLEFT", FriendsFrame, "TOPLEFT", 10, -28)
 
 		FriendsTabHeaderSoRButton:SetPushedTexture("")
 		FriendsTabHeaderSoRButtonIcon:SetTexCoord(.08, .92, .08, .92)
-		local sorbg = CreateFrame("Frame", nil, FriendsTabHeaderSoRButton)
-		sorbg:SetPoint("TOPLEFT", -1, 1)
-		sorbg:SetPoint("BOTTOMRIGHT", 1, -1)
-		F.CreateBD(sorbg, 0)
+		local SoRBg = CreateFrame("Frame", nil, FriendsTabHeaderSoRButton)
+		SoRBg:SetPoint("TOPLEFT", -1, 1)
+		SoRBg:SetPoint("BOTTOMRIGHT", 1, -1)
+		F.CreateBD(SoRBg, 0)
+
+		FriendsFrameBattlenetFrame:GetRegions():Hide()
+		F.CreateBD(FriendsFrameBattlenetFrame, .25)
+
+		FriendsFrameBattlenetFrame.Tag:SetParent(FriendsListFrame)
+		FriendsFrameBattlenetFrame.Tag:SetPoint("TOP", FriendsFrame, "TOP", 0, -8)
+
+		hooksecurefunc("FriendsFrame_CheckBattlenetStatus", function()
+			if BNFeaturesEnabled() then
+				local frame = FriendsFrameBattlenetFrame
+
+				frame.BroadcastButton:Hide()
+
+				if BNConnected() then
+					frame:Hide()
+					FriendsFrameBroadcastInput:Show()
+					FriendsFrameBroadcastInput_UpdateDisplay()
+				end
+			end
+		end)
+
+		hooksecurefunc("FriendsFrame_Update", function()
+			if FriendsFrame.selectedTab == 1 and FriendsTabHeader.selectedTab == 1 and FriendsFrameBattlenetFrame.Tag:IsShown() then
+				FriendsFrameTitleText:Hide()
+			else
+				FriendsFrameTitleText:Show()
+			end
+		end)
+
+		local whoBg = CreateFrame("Frame", nil, WhoFrameEditBoxInset)
+		whoBg:SetPoint("TOPLEFT")
+		whoBg:SetPoint("BOTTOMRIGHT", -1, 1)
+		whoBg:SetFrameLevel(WhoFrameEditBoxInset:GetFrameLevel()-1)
+		F.CreateBD(whoBg, .25)
+
+		-- Battletag invite frame
 
 		for i = 1, 9 do
 			select(i, BattleTagInviteFrame.NoteFrame:GetRegions()):Hide()
@@ -1786,36 +1825,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(cancel)
 
 		F.ReskinScroll(BattleTagInviteFrameScrollFrameScrollBar)
-
-		FriendsFrameBattlenetFrame:GetRegions():Hide()
-		F.CreateBD(FriendsFrameBattlenetFrame, .25)
-
-		FriendsFrameBattlenetFrame.BroadcastButton:SetSize(22, 22)
-		F.Reskin(FriendsFrameBattlenetFrame.BroadcastButton)
-		FriendsFrameBattlenetFrame.BroadcastButton:SetNormalTexture("Interface\\FriendsFrame\\UI-Toast-ToastIcons")
-		FriendsFrameBattlenetFrame.BroadcastButton.SetNormalTexture = F.dummy
-		FriendsFrameBattlenetFrame.BroadcastButton.SetPushedTexture = F.dummy
-		local nt = FriendsFrameBattlenetFrame.BroadcastButton:GetNormalTexture()
-		nt:SetTexCoord(0, .25, 0, .5)
-		nt:SetVertexColor(BATTLENET_FONT_COLOR.r, BATTLENET_FONT_COLOR.g, BATTLENET_FONT_COLOR.b)
-
-		FriendsFrameBattlenetFrame.BroadcastFrame:SetPoint("TOPLEFT", -109, -24)
-
-		for i = 1, 9 do
-			select(i, FriendsFrameBattlenetFrame.BroadcastFrame.ScrollFrame:GetRegions()):Hide()
-		end
-
-		-- why?
-		FriendsFrameBattlenetFrame.BroadcastFrame:HookScript("OnShow", function(self)
-			self:GetRegions():Hide()
-		end)
-
-		F.CreateBD(FriendsFrameBattlenetFrame.BroadcastFrame)
-		F.CreateBD(FriendsFrameBattlenetFrame.BroadcastFrame.ScrollFrame, 0)
-		F.CreateGradient(FriendsFrameBattlenetFrame.BroadcastFrame.ScrollFrame)
-		F.Reskin(FriendsFrameBattlenetFrame.BroadcastFrame.ScrollFrame.UpdateButton)
-		F.Reskin(FriendsFrameBattlenetFrame.BroadcastFrame.ScrollFrame.CancelButton)
-		F.ReskinScroll(FriendsFrameBattlenetFrame.BroadcastFrame.ScrollFrame.ScrollBar)
 
 		-- Nav Bar
 
@@ -3543,8 +3552,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		ChatConfigFrameDefaultButton:SetWidth(125)
 		ChatConfigFrameDefaultButton:SetPoint("TOPLEFT", ChatConfigCategoryFrame, "BOTTOMLEFT", 0, -4)
 		ChatConfigFrameOkayButton:SetPoint("TOPRIGHT", ChatConfigBackgroundFrame, "BOTTOMRIGHT", 0, -4)
-		FriendsFrameStatusDropDown:ClearAllPoints()
-		FriendsFrameStatusDropDown:SetPoint("TOPLEFT", FriendsFrame, "TOPLEFT", 10, -28)
 		ReputationDetailFrame:SetPoint("TOPLEFT", ReputationFrame, "TOPRIGHT", 1, -28)
 		PaperDollEquipmentManagerPaneEquipSet:SetWidth(PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
 		PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
@@ -3607,7 +3614,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		local buttons = {"VideoOptionsFrameOkay", "VideoOptionsFrameCancel", "VideoOptionsFrameDefaults", "VideoOptionsFrameApply", "AudioOptionsFrameOkay", "AudioOptionsFrameCancel", "AudioOptionsFrameDefaults", "InterfaceOptionsFrameDefaults", "InterfaceOptionsFrameOkay", "InterfaceOptionsFrameCancel", "ChatConfigFrameOkayButton", "ChatConfigFrameDefaultButton", "DressUpFrameCancelButton", "DressUpFrameResetButton", "WhoFrameWhoButton", "WhoFrameAddFriendButton", "WhoFrameGroupInviteButton", "SendMailMailButton", "SendMailCancelButton", "OpenMailReplyButton", "OpenMailDeleteButton", "OpenMailCancelButton", "OpenMailReportSpamButton", "ChannelFrameNewButton", "RaidFrameRaidInfoButton", "RaidFrameConvertToRaidButton", "GearManagerDialogPopupOkay", "GearManagerDialogPopupCancel", "StackSplitOkayButton", "StackSplitCancelButton", "GameMenuButtonHelp", "GameMenuButtonOptions", "GameMenuButtonUIOptions", "GameMenuButtonKeybindings", "GameMenuButtonMacros", "GameMenuButtonLogout", "GameMenuButtonQuit", "GameMenuButtonContinue", "GameMenuButtonMacOptions", "FriendsFrameAddFriendButton", "FriendsFrameSendMessageButton", "LFDQueueFrameFindGroupButton", "LFRQueueFrameFindGroupButton", "LFRQueueFrameAcceptCommentButton", "PVPFrameLeftButton", "PVPFrameRightButton", "AddFriendEntryFrameAcceptButton", "AddFriendEntryFrameCancelButton", "FriendsFriendsSendRequestButton", "FriendsFriendsCloseButton", "ColorPickerOkayButton", "ColorPickerCancelButton", "FriendsFrameIgnorePlayerButton", "FriendsFrameUnsquelchButton", "LFGDungeonReadyDialogEnterDungeonButton", "LFGDungeonReadyDialogLeaveQueueButton", "LFRBrowseFrameSendMessageButton", "LFRBrowseFrameInviteButton", "LFRBrowseFrameRefreshButton", "LFDRoleCheckPopupAcceptButton", "LFDRoleCheckPopupDeclineButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "FriendsFramePendingButton1AcceptButton", "FriendsFramePendingButton1DeclineButton", "RaidInfoExtendButton", "RaidInfoCancelButton", "PaperDollEquipmentManagerPaneEquipSet", "PaperDollEquipmentManagerPaneSaveSet", "PVPBannerFrameAcceptButton", "PVPColorPickerButton1", "PVPColorPickerButton2", "PVPColorPickerButton3", "HelpFrameButton1", "HelpFrameButton2", "HelpFrameButton3", "HelpFrameButton4", "HelpFrameButton5", "HelpFrameButton16", "HelpFrameButton6", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpTopIssues", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "RolePollPopupAcceptButton", "HelpFrameTicketSubmit", "HelpFrameTicketCancel", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "GMChatOpenLog", "HelpFrameKnowledgebaseNavBarHomeButton", "AddFriendInfoFrameContinueButton", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "ChannelFrameDaughterFrameOkayButton", "ChannelFrameDaughterFrameCancelButton", "WarGameStartButton", "PendingListInfoFrameContinueButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "InterfaceOptionsHelpPanelResetTutorials", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "SideDressUpModelResetButton", "LFGInvitePopupAcceptButton", "LFGInvitePopupDeclineButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "ScrollOfResurrectionSelectionFrameAcceptButton", "ScrollOfResurrectionSelectionFrameCancelButton", "ScrollOfResurrectionFrameAcceptButton", "ScrollOfResurrectionFrameCancelButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton", "HelpFrameOpenTicketHelpItemRestoration"}
+		local buttons = {"VideoOptionsFrameOkay", "VideoOptionsFrameCancel", "VideoOptionsFrameDefaults", "VideoOptionsFrameApply", "AudioOptionsFrameOkay", "AudioOptionsFrameCancel", "AudioOptionsFrameDefaults", "InterfaceOptionsFrameDefaults", "InterfaceOptionsFrameOkay", "InterfaceOptionsFrameCancel", "ChatConfigFrameOkayButton", "ChatConfigFrameDefaultButton", "DressUpFrameCancelButton", "DressUpFrameResetButton", "WhoFrameWhoButton", "WhoFrameAddFriendButton", "WhoFrameGroupInviteButton", "SendMailMailButton", "SendMailCancelButton", "OpenMailReplyButton", "OpenMailDeleteButton", "OpenMailCancelButton", "OpenMailReportSpamButton", "ChannelFrameNewButton", "RaidFrameRaidInfoButton", "RaidFrameConvertToRaidButton", "GearManagerDialogPopupOkay", "GearManagerDialogPopupCancel", "StackSplitOkayButton", "StackSplitCancelButton", "GameMenuButtonHelp", "GameMenuButtonOptions", "GameMenuButtonUIOptions", "GameMenuButtonKeybindings", "GameMenuButtonMacros", "GameMenuButtonLogout", "GameMenuButtonQuit", "GameMenuButtonContinue", "GameMenuButtonMacOptions", "LFDQueueFrameFindGroupButton", "LFRQueueFrameFindGroupButton", "LFRQueueFrameAcceptCommentButton", "PVPFrameLeftButton", "PVPFrameRightButton", "AddFriendEntryFrameAcceptButton", "AddFriendEntryFrameCancelButton", "FriendsFriendsSendRequestButton", "FriendsFriendsCloseButton", "ColorPickerOkayButton", "ColorPickerCancelButton", "LFGDungeonReadyDialogEnterDungeonButton", "LFGDungeonReadyDialogLeaveQueueButton", "LFRBrowseFrameSendMessageButton", "LFRBrowseFrameInviteButton", "LFRBrowseFrameRefreshButton", "LFDRoleCheckPopupAcceptButton", "LFDRoleCheckPopupDeclineButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "FriendsFramePendingButton1AcceptButton", "FriendsFramePendingButton1DeclineButton", "RaidInfoExtendButton", "RaidInfoCancelButton", "PaperDollEquipmentManagerPaneEquipSet", "PaperDollEquipmentManagerPaneSaveSet", "PVPBannerFrameAcceptButton", "PVPColorPickerButton1", "PVPColorPickerButton2", "PVPColorPickerButton3", "HelpFrameButton1", "HelpFrameButton2", "HelpFrameButton3", "HelpFrameButton4", "HelpFrameButton5", "HelpFrameButton16", "HelpFrameButton6", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpTopIssues", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "RolePollPopupAcceptButton", "HelpFrameTicketSubmit", "HelpFrameTicketCancel", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "GMChatOpenLog", "HelpFrameKnowledgebaseNavBarHomeButton", "AddFriendInfoFrameContinueButton", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "ChannelFrameDaughterFrameOkayButton", "ChannelFrameDaughterFrameCancelButton", "WarGameStartButton", "PendingListInfoFrameContinueButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "InterfaceOptionsHelpPanelResetTutorials", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "SideDressUpModelResetButton", "LFGInvitePopupAcceptButton", "LFGInvitePopupDeclineButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "ScrollOfResurrectionSelectionFrameAcceptButton", "ScrollOfResurrectionSelectionFrameCancelButton", "ScrollOfResurrectionFrameAcceptButton", "ScrollOfResurrectionFrameCancelButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton", "HelpFrameOpenTicketHelpItemRestoration"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then
@@ -5002,7 +5009,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			local check = select(2, bu:GetRegions())
 			check:SetPoint("TOPLEFT", 39, -3)
 			check:SetPoint("BOTTOMRIGHT", -1, 3)
-			check:SetTexture(C.media.texture)
+			check:SetTexture(C.media.backdrop)
 			check:SetVertexColor(r, g, b, .2)
 
 			F.CreateBG(ic)
