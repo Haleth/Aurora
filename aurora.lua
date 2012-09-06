@@ -7007,14 +7007,7 @@ Delay:SetScript("OnEvent", function()
 	end
 
 	if AuroraConfig.loot == true and not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
-		F.CreateBD(LootFrame)
-
-		LootFrame:DisableDrawLayer("BORDER")
-		LootFrameInset:DisableDrawLayer("BORDER")
-		LootFrame:DisableDrawLayer("OVERLAY")
-		LootFrameBg:Hide()
-		LootFrameTitleBg:Hide()
-		LootFrameInsetBg:Hide()
+		LootFramePortraitOverlay:Hide()
 
 		select(19, LootFrame:GetRegions()):SetPoint("TOP", LootFrame, "TOP", 0, -7)
 
@@ -7054,8 +7047,8 @@ Delay:SetScript("OnEvent", function()
 		LootFrameNext:ClearAllPoints()
 		LootFrameNext:SetPoint("RIGHT", LootFrameDownButton, "LEFT", -4, 0)
 
+		F.ReskinPortraitFrame(LootFrame, true)
 		F.ReskinArrow(LootFrameUpButton, "up")
 		F.ReskinArrow(LootFrameDownButton, "down")
-		F.ReskinClose(LootFrameCloseButton)
 	end
 end)
