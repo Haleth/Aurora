@@ -7127,7 +7127,7 @@ Delay:SetScript("OnEvent", function()
 				edgeFile = C.media.backdrop,
 				edgeSize = UIParent:GetScale(),
 			})
-			frame:SetBackdropColor(0, 0, 0, .5)
+			frame:SetBackdropColor(0, 0, 0, alpha)
 			frame:SetBackdropBorderColor(0, 0, 0)
 		end
 
