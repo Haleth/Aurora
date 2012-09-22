@@ -5594,21 +5594,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		InspectPVPTeam2:DisableDrawLayer("BACKGROUND")
 		InspectPVPTeam3:DisableDrawLayer("BACKGROUND")
 
+		InspectTalentFrame:GetRegions():Hide()
+		select(2, InspectTalentFrame:GetRegions()):Hide()
 		InspectGuildFrameBG:Hide()
 		for i = 1, 5 do
 			select(i, InspectModelFrame:GetRegions()):Hide()
 		end
 		InspectPVPFrameBG:SetAlpha(0)
 		InspectPVPFrameBottom:SetAlpha(0)
-
-
-		for i = 1, 4 do
-			local tab = _G["InspectFrameTab"..i]
-			F.CreateTab(tab)
-			if i ~= 1 then
-				tab:SetPoint("LEFT", _G["InspectFrameTab"..i-1], "RIGHT", -15, 0)
-			end
-		end
+		select(9, InspectMainHandSlot:GetRegions()):Hide()
 
 		local slots = {
 			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
@@ -5618,52 +5612,94 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, #slots do
 			local slot = _G["Inspect"..slots[i].."Slot"]
-			slot:DisableDrawLayer("BACKGROUND")
+			_G["Inspect"..slots[i].."SlotFrame"]:Hide()
+
 			slot:SetNormalTexture("")
 			slot:SetPushedTexture("")
-			slot.bd = CreateFrame("Frame", nil, slot)
-			slot.bd:SetPoint("TOPLEFT", -1, 1)
-			slot.bd:SetPoint("BOTTOMRIGHT", 1, -1)
-			slot.bd:SetFrameLevel(0)
-			F.CreateBD(slot.bd, .25)
 			_G["Inspect"..slots[i].."SlotIconTexture"]:SetTexCoord(.08, .92, .08, .92)
 		end
 
-		F.ReskinPortraitFrame(InspectFrame, true)
-	elseif addon == "Blizzard_ItemAlterationUI" then
-		F.SetBD(TransmogrifyFrame)
-		TransmogrifyArtFrame:DisableDrawLayer("BACKGROUND")
-		TransmogrifyArtFrame:DisableDrawLayer("BORDER")
-		TransmogrifyArtFramePortraitFrame:Hide()
-		TransmogrifyArtFramePortrait:Hide()
-		TransmogrifyArtFrameTopBorder:Hide()
-		TransmogrifyArtFrameTopRightCorner:Hide()
-		TransmogrifyModelFrameMarbleBg:Hide()
-		select(2, TransmogrifyModelFrame:GetRegions()):Hide()
-		TransmogrifyModelFrameLines:Hide()
-		TransmogrifyFrameButtonFrame:GetRegions():Hide()
-		TransmogrifyFrameButtonFrameButtonBorder:Hide()
-		TransmogrifyFrameButtonFrameButtonBottomBorder:Hide()
-		TransmogrifyFrameButtonFrameMoneyLeft:Hide()
-		TransmogrifyFrameButtonFrameMoneyRight:Hide()
-		TransmogrifyFrameButtonFrameMoneyMiddle:Hide()
+		InspectTalentFrame.InspectSpec.ring:Hide()
 
-		local slots = {"Head", "Shoulder", "Chest", "Waist", "Legs", "Feet", "Wrist", "Hands", "Back", "MainHand", "SecondaryHand"}
+		for i = 1, 6 do
+			local row = InspectTalentFrame.InspectTalents["tier"..i]
+			for j = 1, 3 do
+				local bu = row["talent"..j]
 
-		for i = 1, #slots do
-			local slot = _G["TransmogrifyFrame"..slots[i].."Slot"]
-			if slot then
-				local ic = _G["TransmogrifyFrame"..slots[i].."SlotIconTexture"]
-				_G["TransmogrifyFrame"..slots[i].."SlotBorder"]:Hide()
-				_G["TransmogrifyFrame"..slots[i].."SlotGrabber"]:Hide()
+				bu.Slot:Hide()
+				bu.border:SetTexture("")
 
-				ic:SetTexCoord(.08, .92, .08, .92)
-				F.CreateBD(slot, 0)
+				bu.icon:SetDrawLayer("ARTWORK")
+				bu.icon:SetTexCoord(.08, .92, .08, .92)
+
+				F.CreateBG(bu.icon)
 			end
 		end
 
-		F.Reskin(TransmogrifyApplyButton)
-		F.ReskinClose(TransmogrifyArtFrameCloseButton)
+		InspectTalentFrame.InspectSpec.specIcon:SetTexCoord(.08, .92, .08, .92)
+		F.CreateBG(InspectTalentFrame.InspectSpec.specIcon)
+
+		local function updateIcon(self)
+			local spec = nil
+			if INSPECTED_UNIT ~= nil then
+				spec = GetInspectSpecialization(INSPECTED_UNIT)
+			end
+			if spec ~= nil and spec > 0 then
+				local role1 = GetSpecializationRoleByID(spec)
+				if role1 ~= nil then
+					local _, _, _, icon = GetSpecializationInfoByID(spec)
+					self.specIcon:SetTexture(icon)
+				end
+			end
+		end
+
+		InspectTalentFrame.InspectSpec:HookScript("OnShow", updateIcon)
+		InspectTalentFrame:HookScript("OnEvent", function(self, event, unit)
+			if not InspectFrame:IsShown() then return end
+			if event == "INSPECT_READY" and InspectFrame.unit and UnitGUID(InspectFrame.unit) == unit then
+				updateIcon(self.InspectSpec)
+			end
+		end)
+
+		local function updateGlyph(self, clear)
+			local id = self:GetID()
+			local talentGroup = PlayerTalentFrame and PlayerTalentFrame.talentGroup
+			local enabled, glyphType, glyphTooltipIndex, glyphSpell, iconFilename = GetGlyphSocketInfo(id, talentGroup, true, INSPECTED_UNIT);
+
+			if not glyphType then return end
+
+			if enabled and glyphSpell and not clear then
+				if iconFilename then
+					self.glyph:SetTexture(iconFilename)
+				else
+					self.glyph:SetTexture("Interface\\Spellbook\\UI-Glyph-Rune1")
+				end
+			end
+		end
+
+		hooksecurefunc("InspectGlyphFrameGlyph_UpdateSlot", updateGlyph)
+
+		for i = 1, 6 do
+			local glyph = InspectTalentFrame.InspectGlyphs["Glyph"..i]
+
+			glyph:HookScript("OnShow", updateGlyph)
+
+			glyph.ring:Hide()
+
+			glyph.glyph:SetDrawLayer("ARTWORK")
+			glyph.glyph:SetTexCoord(.08, .92, .08, .92)
+			F.CreateBDFrame(glyph.glyph)
+		end
+
+		for i = 1, 4 do
+			local tab = _G["InspectFrameTab"..i]
+			F.CreateTab(tab)
+			if i ~= 1 then
+				tab:SetPoint("LEFT", _G["InspectFrameTab"..i-1], "RIGHT", -15, 0)
+			end
+		end
+
+		F.ReskinPortraitFrame(InspectFrame, true)
 	elseif addon == "Blizzard_ItemSocketingUI" then
 		ItemSocketingFrame:DisableDrawLayer("BORDER")
 		ItemSocketingFrame:DisableDrawLayer("ARTWORK")
