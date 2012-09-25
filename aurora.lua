@@ -2585,7 +2585,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		local function onUpdate(self)
-			self:GetParent().bg:SetAlpha(self:GetParent():GetAlpha())
+			self.bg:SetAlpha(self:GetAlpha())
 		end
 
 		hooksecurefunc("LootWonAlertFrame_ShowAlert", function()
@@ -2602,8 +2602,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					frame:HookScript("OnShow", showHideBg)
 					frame:HookScript("OnHide", showHideBg)
-					frame.animIn:SetScript("OnUpdate", onUpdate)
-					frame.waitAndAnimOut:SetScript("OnUpdate", onUpdate)
+					frame:HookScript("OnUpdate", onUpdate)
+					frame:HookScript("OnUpdate", onUpdate)
 
 					frame.Background:Hide()
 					frame.IconBorder:Hide()
@@ -2632,8 +2632,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					frame:HookScript("OnShow", showHideBg)
 					frame:HookScript("OnHide", showHideBg)
-					frame.animIn:SetScript("OnUpdate", onUpdate)
-					frame.waitAndAnimOut:SetScript("OnUpdate", onUpdate)
+					frame:HookScript("OnUpdate", onUpdate)
+					frame:HookScript("OnUpdate", onUpdate)
 
 					frame.Background:Hide()
 					frame.IconBorder:Hide()
@@ -2653,8 +2653,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					local icon = _G["CriteriaAlertFrame"..i.."IconTexture"]
 
 					frame.bg = CreateFrame("Frame", nil, UIParent)
-					frame.bg:SetPoint("TOPLEFT", icon, -10, 5)
-					frame.bg:SetPoint("BOTTOMRIGHT", icon, 240, -8)
+					frame.bg:SetPoint("TOPLEFT", icon, -6, 5)
+					frame.bg:SetPoint("BOTTOMRIGHT", icon, 236, -8)
 					frame.bg:SetFrameStrata("DIALOG")
 					frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
 					frame.bg:SetShown(frame:IsShown())
@@ -2662,8 +2662,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					frame:SetScript("OnShow", showHideBg)
 					frame:SetScript("OnHide", showHideBg)
-					frame.animIn:SetScript("OnUpdate", onUpdate)
-					frame.waitAndAnimOut:SetScript("OnUpdate", onUpdate)
+					frame:HookScript("OnUpdate", onUpdate)
+					frame:HookScript("OnUpdate", onUpdate)
 
 					_G["CriteriaAlertFrame"..i.."Background"]:Hide()
 					_G["CriteriaAlertFrame"..i.."IconOverlay"]:Hide()
