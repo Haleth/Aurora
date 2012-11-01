@@ -3274,6 +3274,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.ReskinClose(button.CloseButton)
 		end
 
+		-- Cinematic popup
+
+		CinematicFrameCloseDialog:SetScale(UIParent:GetScale())
+		F.CreateBD(CinematicFrameCloseDialog)
+		F.CreateSD(CinematicFrameCloseDialog)
+		F.Reskin(CinematicFrameCloseDialogConfirmButton)
+		F.Reskin(CinematicFrameCloseDialogResumeButton)
+
 		-- [[ Hide regions ]]
 
 		local bglayers = {"SpellBookFrame", "LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "PVPTeamManagementFrame", "PVPTeamManagementFrameHeader1", "PVPTeamManagementFrameHeader2", "PVPTeamManagementFrameHeader3", "PVPTeamManagementFrameHeader4", "PVPBannerFrame", "PVPBannerFrameInset", "LFRQueueFrame", "LFRBrowseFrame", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "EquipmentFlyoutFrameButtons", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
