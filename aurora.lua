@@ -6260,6 +6260,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinClose(PetJournalParentCloseButton)
 		F.ReskinScroll(MountJournalListScrollFrameScrollBar)
 		F.ReskinScroll(PetJournalListScrollFrameScrollBar)
+		F.ReskinInput(MountJournalSearchBox)
 		F.ReskinInput(PetJournalSearchBox)
 		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
 		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
@@ -6343,12 +6344,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		PetJournalPetCardBG:Hide()
 		card.AbilitiesBG:SetAlpha(0)
 		card.PetInfo.levelBG:SetAlpha(0)
+		card.PetInfo.qualityBorder:SetAlpha(0)
 
 		card.PetInfo.level:SetFontObject(GameFontNormal)
 		card.PetInfo.level:SetTextColor(1, 1, 1)
 
 		card.PetInfo.icon:SetTexCoord(.08, .92, .08, .92)
-		F.CreateBG(card.PetInfo.icon)
+		card.PetInfo.icon.bg = F.CreateBG(card.PetInfo.icon)
 
 		F.CreateBD(card, .25)
 
@@ -6374,12 +6376,20 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.CreateBG(bu.icon)
 		end
 
+		hooksecurefunc("PetJournal_UpdatePetCard", function(self)
+			local r, g, b = self.PetInfo.qualityBorder:GetVertexColor()
+			if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
+
+			self.PetInfo.icon.bg:SetVertexColor(r, g, b)
+		end)
+
 		for i = 1, 3 do
 			local bu = PetJournal.Loadout["Pet"..i]
 
 			_G["PetJournalLoadoutPet"..i.."BG"]:Hide()
 
 			bu.iconBorder:SetAlpha(0)
+			bu.qualityBorder:SetAlpha(0)
 			bu.levelBG:SetAlpha(0)
 			bu.helpFrame:GetRegions():Hide()
 
@@ -6435,6 +6445,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			for i = 1, 3 do
 				local bu = PetJournal.Loadout["Pet"..i]
 				bu.icon.bg:SetShown(not bu.helpFrame:IsShown())
+
+				local r, g, b = bu.qualityBorder:GetVertexColor()
+				if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
+
+				bu.icon.bg:SetBackdropBorderColor(r, g, b)
+
 				bu.dragButton:SetEnabled(not bu.helpFrame:IsShown())
 			end
 		end)
@@ -6445,8 +6461,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 2 do
 			local bu = PetJournal.SpellSelect["Spell"..i]
 
-			bu:SetPushedTexture("")
 			bu:SetCheckedTexture(C.media.checked)
+			bu:SetPushedTexture("")
 
 			bu.icon:SetDrawLayer("ARTWORK")
 			bu.icon:SetTexCoord(.08, .92, .08, .92)
