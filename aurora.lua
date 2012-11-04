@@ -47,6 +47,7 @@ C.defaults = {
 	["useCustomColour"] = false,
 	["customColour"] = {r = 1, g = 1, b = 1},
 	["map"] = true,
+	["qualityColour"] = true,
 	["tooltips"] = true,
 }
 
@@ -2009,19 +2010,29 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		EquipmentFlyoutFrameButtons:HookScript("OnShow", function(self)
-			for i = 1, 10 do
-				local bu = _G["EquipmentFlyoutFrameButton"..i]
-				if bu and not bu.reskinned then
-					bu:SetNormalTexture("")
-					bu:SetPushedTexture("")
-					F.CreateBG(bu)
+		hooksecurefunc("EquipmentFlyout_DisplayButton", function(button)
+			if not button.styled then
+				button:SetNormalTexture("")
+				button:SetPushedTexture("")
+				button.bg = F.CreateBG(button)
 
-					_G["EquipmentFlyoutFrameButton"..i.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
+				button.icon:SetTexCoord(.08, .92, .08, .92)
 
-					bu.reskinned = true
-				end
+				button.reskinned = true
+			end
 
+			if AuroraConfig.qualityColour then
+				local location = button.location
+				if not location then return end
+				if location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION then return end
+
+				local id = EquipmentManager_GetItemInfoByLocation(location)
+				local _, _, quality = GetItemInfo(id)
+				local r, g, b = GetItemQualityColor(quality)
+
+				if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
+
+				button.bg:SetVertexColor(r, g, b)
 			end
 		end)
 

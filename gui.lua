@@ -92,6 +92,9 @@ mapBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
 local tooltipsBox = createToggleBox(gui, "AuroraOptionsTooltips", "tooltips", "Enable Tooltips")
 tooltipsBox:SetPoint("LEFT", mapBox, "RIGHT", 90, 0)
 
+local qualityColourBox = createToggleBox(gui, "AuroraOptionsQualityColour", "qualityColour", "Enable item quality colours")
+qualityColourBox:SetPoint("LEFT", tooltipsBox, "RIGHT", 90, 0)
+
 local reloadText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 reloadText:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -60)
 reloadText:SetText("These settings require a UI reload.")
