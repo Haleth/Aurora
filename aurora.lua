@@ -2969,7 +2969,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- because gradient alpha and OnUpdate doesn't work for some reason...
 
-		select(15, TutorialFrameOkayButton:GetRegions()):Hide()
+		select(14, TutorialFrameOkayButton:GetRegions()):Hide()
 		select(15, TutorialFramePrevButton:GetRegions()):Hide()
 		select(15, TutorialFrameNextButton:GetRegions()):Hide()
 		select(14, TutorialFrameCloseButton:GetRegions()):Hide()
