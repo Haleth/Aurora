@@ -5803,8 +5803,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local UpdateIcons = function()
 			local index
 			local offset = HybridScrollFrame_GetOffset(GuildRosterContainer)
-			local totalMembers, onlineMembers = GetNumGuildMembers()
-			local visibleMembers = onlineMembers
+			local totalMembers, onlineMembers, onlineAndMobileMembers = GetNumGuildMembers()
+			local visibleMembers = onlineAndMobileMembers
 			local numbuttons = #GuildRosterContainer.buttons
 			if GetGuildRosterShowOffline() then
 				visibleMembers = totalMembers
