@@ -1171,6 +1171,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
+		F.ReskinScroll(TokenFrameContainerScrollBar)
+
 		-- Reputation frame
 
 		local function UpdateFactionSkins()
