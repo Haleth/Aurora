@@ -7201,7 +7201,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local firstInfo = true
 		hooksecurefunc(DBM.InfoFrame, "Show", function()
 			if firstInfo then
-				F.CreateBD(DBMInfoFrame)
+				DBMInfoFrame:SetBackdrop(nil)
+				local bd = CreateFrame("Frame", nil, DBMInfoFrame)
+				bd:SetPoint("TOPLEFT")
+				bd:SetPoint("BOTTOMRIGHT")
+				bd:SetFrameLevel(DBMInfoFrame:GetFrameLevel()-1)
+				F.CreateBD(bd)
+
 				firstInfo = false
 			end
 		end)
@@ -7209,7 +7215,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local firstRange = true
 		hooksecurefunc(DBM.RangeCheck, "Show", function()
 			if firstRange then
-				F.CreateBD(DBMRangeCheck)
+				DBMRangeCheck:SetBackdrop(nil)
+				local bd = CreateFrame("Frame", nil, DBMRangeCheck)
+				bd:SetPoint("TOPLEFT")
+				bd:SetPoint("BOTTOMRIGHT")
+				bd:SetFrameLevel(DBMRangeCheck:GetFrameLevel()-1)
+				F.CreateBD(bd)
+
 				firstRange = false
 			end
 		end)
