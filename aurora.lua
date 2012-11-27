@@ -3187,8 +3187,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					bu.styled = true
 				end
-
-				bu.icon.bg:SetVertexColor(bu.name:GetVertexColor())
 			end
 		end)
 
