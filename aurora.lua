@@ -7595,6 +7595,8 @@ Delay:SetScript("OnEvent", function()
 				local region = select(i, frame:GetRegions())
 				if region:GetObjectType() == "Texture" then
 					region:SetTexture(nil)
+				elseif region:GetObjectType() == "FontString" then
+					region:SetFont(C.media.font, 13)
 				end
 			end
 
