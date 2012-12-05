@@ -1350,6 +1350,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		RaidFinderFrameBottomInsetBg:Hide()
 		RaidFinderFrameBtnCornerRight:Hide()
 		RaidFinderFrameButtonBottomBorder:Hide()
+		RaidFinderQueueFrameScrollFrameScrollBackground:Hide()
+		RaidFinderQueueFrameScrollFrameScrollBackgroundTopLeft:Hide()
+		RaidFinderQueueFrameScrollFrameScrollBackgroundBottomRight:Hide()
 
 		for i = 1, LFD_MAX_REWARDS do
 			local button = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i]
@@ -1375,6 +1378,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
+		F.ReskinScroll(RaidFinderQueueFrameScrollFrameScrollBar)
 
 		-- Scenario finder
 
@@ -1382,6 +1386,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		ScenarioFinderFrame.TopTileStreaks:Hide()
 		ScenarioFinderFrameBtnCornerRight:Hide()
 		ScenarioFinderFrameButtonBottomBorder:Hide()
+		ScenarioQueueFrameRandomScrollFrameScrollBackground:Hide()
+		ScenarioQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
+		ScenarioQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
 		ScenarioQueueFrame.Bg:Hide()
 		ScenarioFinderFrameInset:GetRegions():Hide()
 
@@ -1417,6 +1424,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.Reskin(ScenarioQueueFrameFindGroupButton)
 		F.ReskinDropDown(ScenarioQueueFrameTypeDropDown)
+		F.ReskinScroll(ScenarioQueueFrameRandomScrollFrameScrollBar)
 
 		-- Raid frame (social frame)
 
