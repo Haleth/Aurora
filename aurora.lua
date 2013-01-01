@@ -7138,6 +7138,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					bu.icon:SetTexCoord(.08, .92, .08, .92)
 					F.CreateBG(bu.icon)
+
+					bu.styled = true
 				end
 			end
 		end)
