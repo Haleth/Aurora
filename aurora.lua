@@ -3577,8 +3577,21 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -1, 0)
 		ChatConfigCombatSettingsFiltersCopyFilterButton:SetPoint("RIGHT", ChatConfigCombatSettingsFiltersAddFilterButton, "LEFT", -1, 0)
-			ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, 0)
+		ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, 0)
 		ChatConfigMoveFilterDownButton:SetPoint("LEFT", ChatConfigMoveFilterUpButton, "RIGHT", 1, 0)
+
+		-- Level up display
+
+		LevelUpDisplaySide:HookScript("OnShow", function(self)
+			for i = 1, #self.unlockList do
+				local f = _G["LevelUpDisplaySideUnlockFrame"..i]
+
+				if not f.restyled then
+					f.icon:SetTexCoord(.08, .92, .08, .92)
+					F.CreateBG(f.icon)
+				end
+			end
+		end)
 
 		-- [[ Hide regions ]]
 
