@@ -7082,6 +7082,18 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
+		local function colourExpandOrCollapse(f)
+			if f:IsEnabled() then
+				f.plus:SetVertexColor(r, g, b)
+				f.minus:SetVertexColor(r, g, b)
+			end
+		end
+
+		local function clearExpandOrCollapse(f)
+			f.plus:SetVertexColor(1, 1, 1)
+			f.minus:SetVertexColor(1, 1, 1)
+		end
+
 		local function styleSkillButton(skillButton)
 			skillButton:SetNormalTexture("")
 			skillButton.SetNormalTexture = F.dummy
