@@ -2072,7 +2072,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 				button.icon:SetTexCoord(.08, .92, .08, .92)
 
-				button.reskinned = true
+				button.styled = true
 			end
 
 			if AuroraConfig.qualityColour then
