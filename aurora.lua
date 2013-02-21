@@ -177,7 +177,7 @@ F.Reskin = function(f, noGlow)
 	end
 end
 
-F.CreateTab = function(f)
+F.ReskinTab = function(f)
 	f:DisableDrawLayer("BACKGROUND")
 
 	local bg = CreateFrame("Frame", nil, f)
@@ -1283,8 +1283,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		F.ReskinPortraitFrame(PVEFrame)
-		F.CreateTab(PVEFrameTab1)
-		F.CreateTab(PVEFrameTab2)
+		F.ReskinTab(PVEFrameTab1)
+		F.ReskinTab(PVEFrameTab2)
 
 		-- LFD frame
 
@@ -3312,7 +3312,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinScroll(WorldStateScoreScrollFrameScrollBar)
 
 		for i = 1, 3 do
-			F.CreateTab(_G["WorldStateScoreFrameTab"..i])
+			F.ReskinTab(_G["WorldStateScoreFrameTab"..i])
 		end
 
 		-- Item text
@@ -3959,20 +3959,20 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- [[ Tabs ]]
 
 		for i = 1, 5 do
-			F.CreateTab(_G["SpellBookFrameTabButton"..i])
+			F.ReskinTab(_G["SpellBookFrameTabButton"..i])
 		end
 
 		for i = 1, 4 do
-			F.CreateTab(_G["FriendsFrameTab"..i])
-			F.CreateTab(_G["PVPFrameTab"..i])
+			F.ReskinTab(_G["FriendsFrameTab"..i])
+			F.ReskinTab(_G["PVPFrameTab"..i])
 			if _G["CharacterFrameTab"..i] then
-				F.CreateTab(_G["CharacterFrameTab"..i])
+				F.ReskinTab(_G["CharacterFrameTab"..i])
 			end
 		end
 
 		for i = 1, 2 do
-			F.CreateTab(_G["MerchantFrameTab"..i])
-			F.CreateTab(_G["MailFrameTab"..i])
+			F.ReskinTab(_G["MerchantFrameTab"..i])
+			F.ReskinTab(_G["MailFrameTab"..i])
 		end
 
 		-- [[ Buttons ]]
@@ -4135,7 +4135,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		for i = 1, 3 do
-			F.CreateTab(_G["AuctionFrameTab"..i])
+			F.ReskinTab(_G["AuctionFrameTab"..i])
 		end
 
 		local abuttons = {"BrowseBidButton", "BrowseBuyoutButton", "BrowseCloseButton", "BrowseSearchButton", "BrowseResetButton", "BidBidButton", "BidBuyoutButton", "BidCloseButton", "AuctionsCloseButton", "AuctionsCancelAuctionButton", "AuctionsCreateAuctionButton", "AuctionsNumStacksMaxButton", "AuctionsStackSizeMaxButton"}
@@ -4388,7 +4388,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 3 do
 			local tab = _G["AchievementFrameTab"..i]
 			if tab then
-				F.CreateTab(tab)
+				F.ReskinTab(tab)
 			end
 		end
 
@@ -5480,7 +5480,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, 4 do
 			local tab = _G["GuildBankFrameTab"..i]
-			F.CreateTab(tab)
+			F.ReskinTab(tab)
 
 			if i ~= 1 then
 				tab:SetPoint("LEFT", _G["GuildBankFrameTab"..i-1], "RIGHT", -15, 0)
@@ -5670,7 +5670,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(GuildRecruitmentRolesFrame, .25)
 		F.CreateBD(GuildRecruitmentLevelFrame, .25)
 		for i = 1, 5 do
-			F.CreateTab(_G["GuildFrameTab"..i])
+			F.ReskinTab(_G["GuildFrameTab"..i])
 		end
 		GuildFrameTabardBackground:Hide()
 		GuildFrameTabardEmblem:Hide()
@@ -6093,7 +6093,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, 4 do
 			local tab = _G["InspectFrameTab"..i]
-			F.CreateTab(tab)
+			F.ReskinTab(tab)
 			if i ~= 1 then
 				tab:SetPoint("LEFT", _G["InspectFrameTab"..i-1], "RIGHT", -15, 0)
 			end
@@ -6445,8 +6445,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(PetJournalSummonButton)
 		F.Reskin(PetJournalFindBattle)
 		F.Reskin(PetJournalFilterButton)
-		F.CreateTab(PetJournalParentTab1)
-		F.CreateTab(PetJournalParentTab2)
+		F.ReskinTab(PetJournalParentTab1)
+		F.ReskinTab(PetJournalParentTab2)
 		F.ReskinClose(PetJournalParentCloseButton)
 		F.ReskinScroll(MountJournalListScrollFrameScrollBar)
 		F.ReskinScroll(PetJournalListScrollFrameScrollBar)
@@ -6808,7 +6808,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		for i = 1, NUM_TALENT_FRAME_TABS do
 			local tab = _G["PlayerTalentFrameTab"..i]
-			F.CreateTab(tab)
+			F.ReskinTab(tab)
 		end
 
 		PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.ring:Hide()
