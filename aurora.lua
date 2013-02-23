@@ -586,11 +586,29 @@ F.ReskinColourSwatch = function(f)
 	bg:SetPoint("BOTTOMRIGHT", -2, 2)
 end
 
+-- [[ Module handling ]]
+
+C.Modules = {}
+C.Modules["Aurora"] = {}
+
 local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
-	if addon == "Aurora" then
+	for module, moduleFunc in pairs(C.modules) do
+		if type(moduleFunc) == "function" then
+			if module == addon then
+				moduleFunc()
+			end
+		elseif type(moduleFunc) == "table" then
+			if module == addon then
+				for _, moduleFunc in pairs(C.modules[module]) do
+					moduleFunc()
+				end
+			end
+		end
+	end
 
+	if addon == "Aurora" then
 		-- [[ Load Variables ]]
 
 		for key, value in pairs(C.defaults) do
@@ -3988,680 +4006,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 	-- [[ Load on Demand Addons ]]
 
-	elseif addon == "Blizzard_ArchaeologyUI" then
-		F.SetBD(ArchaeologyFrame)
-		F.Reskin(ArchaeologyFrameArtifactPageSolveFrameSolveButton)
-		F.Reskin(ArchaeologyFrameArtifactPageBackButton)
-		ArchaeologyFramePortrait:Hide()
-		ArchaeologyFrame:DisableDrawLayer("BACKGROUND")
-		ArchaeologyFrame:DisableDrawLayer("BORDER")
-		ArchaeologyFrame:DisableDrawLayer("OVERLAY")
-		ArchaeologyFrameInset:DisableDrawLayer("BACKGROUND")
-		ArchaeologyFrameInset:DisableDrawLayer("BORDER")
-		ArchaeologyFrameSummaryPageTitle:SetTextColor(1, 1, 1)
-		ArchaeologyFrameArtifactPageHistoryTitle:SetTextColor(1, 1, 1)
-		ArchaeologyFrameArtifactPageHistoryScrollChildText:SetTextColor(1, 1, 1)
-		ArchaeologyFrameHelpPageTitle:SetTextColor(1, 1, 1)
-		ArchaeologyFrameHelpPageDigTitle:SetTextColor(1, 1, 1)
-		ArchaeologyFrameHelpPageHelpScrollHelpText:SetTextColor(1, 1, 1)
-		ArchaeologyFrameCompletedPage:GetRegions():SetTextColor(1, 1, 1)
-		ArchaeologyFrameCompletedPageTitle:SetTextColor(1, 1, 1)
-		ArchaeologyFrameCompletedPageTitleTop:SetTextColor(1, 1, 1)
-		ArchaeologyFrameCompletedPageTitleMid:SetTextColor(1, 1, 1)
-		ArchaeologyFrameCompletedPagePageText:SetTextColor(1, 1, 1)
-
-		for i = 1, ARCHAEOLOGY_MAX_RACES do
-			_G["ArchaeologyFrameSummaryPageRace"..i]:GetRegions():SetTextColor(1, 1, 1)
-		end
-		for i = 1, ARCHAEOLOGY_MAX_COMPLETED_SHOWN do
-			local bu = _G["ArchaeologyFrameCompletedPageArtifact"..i]
-			bu:GetRegions():Hide()
-			select(2, bu:GetRegions()):Hide()
-			select(3, bu:GetRegions()):SetTexCoord(.08, .92, .08, .92)
-			select(4, bu:GetRegions()):SetTextColor(1, 1, 1)
-			select(5, bu:GetRegions()):SetTextColor(1, 1, 1)
-			local bg = CreateFrame("Frame", nil, bu)
-			bg:SetPoint("TOPLEFT", -1, 1)
-			bg:SetPoint("BOTTOMRIGHT", 1, -1)
-			bg:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-			local vline = CreateFrame("Frame", nil, bu)
-			vline:SetPoint("LEFT", 44, 0)
-			vline:SetSize(1, 44)
-			F.CreateBD(vline)
-		end
-
-		ArchaeologyFrameInfoButton:SetPoint("TOPLEFT", 3, -3)
-
-		F.ReskinDropDown(ArchaeologyFrameRaceFilter)
-		F.ReskinClose(ArchaeologyFrameCloseButton)
-		F.ReskinScroll(ArchaeologyFrameArtifactPageHistoryScrollScrollBar)
-		F.ReskinArrow(ArchaeologyFrameCompletedPagePrevPageButton, "left")
-		F.ReskinArrow(ArchaeologyFrameCompletedPageNextPageButton, "right")
-		ArchaeologyFrameCompletedPagePrevPageButtonIcon:Hide()
-		ArchaeologyFrameCompletedPageNextPageButtonIcon:Hide()
-
-		ArchaeologyFrameRankBarBorder:Hide()
-		ArchaeologyFrameRankBarBackground:Hide()
-		ArchaeologyFrameRankBarBar:SetTexture(C.media.backdrop)
-		ArchaeologyFrameRankBarBar:SetGradient("VERTICAL", 0, .65, 0, 0, .75, 0)
-		ArchaeologyFrameRankBar:SetHeight(14)
-		F.CreateBD(ArchaeologyFrameRankBar, .25)
-
-		ArchaeologyFrameArtifactPageSolveFrameStatusBarBarBG:Hide()
-		local bar = select(3, ArchaeologyFrameArtifactPageSolveFrameStatusBar:GetRegions())
-		bar:SetTexture(C.media.backdrop)
-		bar:SetGradient("VERTICAL", .65, .25, 0, .75, .35, .1)
-
-		local bg = CreateFrame("Frame", nil, ArchaeologyFrameArtifactPageSolveFrameStatusBar)
-		bg:SetPoint("TOPLEFT", -1, 1)
-		bg:SetPoint("BOTTOMRIGHT", 1, -1)
-		bg:SetFrameLevel(0)
-		F.CreateBD(bg, .25)
-
-		ArchaeologyFrameArtifactPageIcon:SetTexCoord(.08, .92, .08, .92)
-		F.CreateBG(ArchaeologyFrameArtifactPageIcon)
-	elseif addon == "Blizzard_AuctionUI" then
-		F.SetBD(AuctionFrame, 2, -10, 0, 10)
-		F.CreateBD(AuctionProgressFrame)
-
-		AuctionProgressBar:SetStatusBarTexture(C.media.backdrop)
-		local ABBD = CreateFrame("Frame", nil, AuctionProgressBar)
-		ABBD:SetPoint("TOPLEFT", -1, 1)
-		ABBD:SetPoint("BOTTOMRIGHT", 1, -1)
-		ABBD:SetFrameLevel(AuctionProgressBar:GetFrameLevel()-1)
-		F.CreateBD(ABBD, .25)
-
-		AuctionProgressBarIcon:SetTexCoord(.08, .92, .08, .92)
-		F.CreateBG(AuctionProgressBarIcon)
-
-		AuctionProgressBarText:ClearAllPoints()
-		AuctionProgressBarText:SetPoint("CENTER", 0, 1)
-
-		F.ReskinClose(AuctionProgressFrameCancelButton, "LEFT", AuctionProgressBar, "RIGHT", 4, 0)
-		select(14, AuctionProgressFrameCancelButton:GetRegions()):SetPoint("CENTER", 0, 2)
-
-		AuctionFrame:DisableDrawLayer("ARTWORK")
-		AuctionPortraitTexture:Hide()
-		for i = 1, 4 do
-			select(i, AuctionProgressFrame:GetRegions()):Hide()
-		end
-		AuctionProgressBarBorder:Hide()
-		BrowseFilterScrollFrame:GetRegions():Hide()
-		select(2, BrowseFilterScrollFrame:GetRegions()):Hide()
-		BrowseScrollFrame:GetRegions():Hide()
-		select(2, BrowseScrollFrame:GetRegions()):Hide()
-		BidScrollFrame:GetRegions():Hide()
-		select(2, BidScrollFrame:GetRegions()):Hide()
-		AuctionsScrollFrame:GetRegions():Hide()
-		select(2, AuctionsScrollFrame:GetRegions()):Hide()
-		BrowseQualitySort:DisableDrawLayer("BACKGROUND")
-		BrowseLevelSort:DisableDrawLayer("BACKGROUND")
-		BrowseDurationSort:DisableDrawLayer("BACKGROUND")
-		BrowseHighBidderSort:DisableDrawLayer("BACKGROUND")
-		BrowseCurrentBidSort:DisableDrawLayer("BACKGROUND")
-		BidQualitySort:DisableDrawLayer("BACKGROUND")
-		BidLevelSort:DisableDrawLayer("BACKGROUND")
-		BidDurationSort:DisableDrawLayer("BACKGROUND")
-		BidBuyoutSort:DisableDrawLayer("BACKGROUND")
-		BidStatusSort:DisableDrawLayer("BACKGROUND")
-		BidBidSort:DisableDrawLayer("BACKGROUND")
-		AuctionsQualitySort:DisableDrawLayer("BACKGROUND")
-		AuctionsDurationSort:DisableDrawLayer("BACKGROUND")
-		AuctionsHighBidderSort:DisableDrawLayer("BACKGROUND")
-		AuctionsBidSort:DisableDrawLayer("BACKGROUND")
-
-		for i = 1, NUM_FILTERS_TO_DISPLAY do
-			_G["AuctionFilterButton"..i]:SetNormalTexture("")
-		end
-
-		for i = 1, 3 do
-			F.ReskinTab(_G["AuctionFrameTab"..i])
-		end
-
-		local abuttons = {"BrowseBidButton", "BrowseBuyoutButton", "BrowseCloseButton", "BrowseSearchButton", "BrowseResetButton", "BidBidButton", "BidBuyoutButton", "BidCloseButton", "AuctionsCloseButton", "AuctionsCancelAuctionButton", "AuctionsCreateAuctionButton", "AuctionsNumStacksMaxButton", "AuctionsStackSizeMaxButton"}
-		for i = 1, #abuttons do
-			local reskinbutton = _G[abuttons[i]]
-			if reskinbutton then
-				F.Reskin(reskinbutton)
-			end
-		end
-
-		BrowseCloseButton:ClearAllPoints()
-		BrowseCloseButton:SetPoint("BOTTOMRIGHT", AuctionFrameBrowse, "BOTTOMRIGHT", 66, 13)
-		BrowseBuyoutButton:ClearAllPoints()
-		BrowseBuyoutButton:SetPoint("RIGHT", BrowseCloseButton, "LEFT", -1, 0)
-		BrowseBidButton:ClearAllPoints()
-		BrowseBidButton:SetPoint("RIGHT", BrowseBuyoutButton, "LEFT", -1, 0)
-		BidBuyoutButton:ClearAllPoints()
-		BidBuyoutButton:SetPoint("RIGHT", BidCloseButton, "LEFT", -1, 0)
-		BidBidButton:ClearAllPoints()
-		BidBidButton:SetPoint("RIGHT", BidBuyoutButton, "LEFT", -1, 0)
-		AuctionsCancelAuctionButton:ClearAllPoints()
-		AuctionsCancelAuctionButton:SetPoint("RIGHT", AuctionsCloseButton, "LEFT", -1, 0)
-
-		-- Blizz needs to be more consistent
-
-		BrowseBidPriceSilver:SetPoint("LEFT", BrowseBidPriceGold, "RIGHT", 1, 0)
-		BrowseBidPriceCopper:SetPoint("LEFT", BrowseBidPriceSilver, "RIGHT", 1, 0)
-		BidBidPriceSilver:SetPoint("LEFT", BidBidPriceGold, "RIGHT", 1, 0)
-		BidBidPriceCopper:SetPoint("LEFT", BidBidPriceSilver, "RIGHT", 1, 0)
-		StartPriceSilver:SetPoint("LEFT", StartPriceGold, "RIGHT", 1, 0)
-		StartPriceCopper:SetPoint("LEFT", StartPriceSilver, "RIGHT", 1, 0)
-		BuyoutPriceSilver:SetPoint("LEFT", BuyoutPriceGold, "RIGHT", 1, 0)
-		BuyoutPriceCopper:SetPoint("LEFT", BuyoutPriceSilver, "RIGHT", 1, 0)
-
-		for i = 1, NUM_BROWSE_TO_DISPLAY do
-			local bu = _G["BrowseButton"..i]
-			local it = _G["BrowseButton"..i.."Item"]
-			local ic = _G["BrowseButton"..i.."ItemIconTexture"]
-
-			if bu and it then
-				it:SetNormalTexture("")
-				it:SetPushedTexture("")
-
-				ic:SetTexCoord(.08, .92, .08, .92)
-
-				F.CreateBG(it)
-
-				_G["BrowseButton"..i.."Left"]:Hide()
-				select(6, _G["BrowseButton"..i]:GetRegions()):Hide()
-				_G["BrowseButton"..i.."Right"]:Hide()
-
-				local bd = CreateFrame("Frame", nil, bu)
-				bd:SetPoint("TOPLEFT")
-				bd:SetPoint("BOTTOMRIGHT", 0, 5)
-				bd:SetFrameLevel(bu:GetFrameLevel()-1)
-				F.CreateBD(bd, .25)
-
-				bu:SetHighlightTexture(C.media.backdrop)
-				local hl = bu:GetHighlightTexture()
-				hl:SetVertexColor(r, g, b, .2)
-				hl:ClearAllPoints()
-				hl:SetPoint("TOPLEFT", 0, -1)
-				hl:SetPoint("BOTTOMRIGHT", -1, 6)
-			end
-		end
-
-		for i = 1, NUM_BIDS_TO_DISPLAY do
-			local bu = _G["BidButton"..i]
-			local it = _G["BidButton"..i.."Item"]
-			local ic = _G["BidButton"..i.."ItemIconTexture"]
-
-			it:SetNormalTexture("")
-			it:SetPushedTexture("")
-
-			ic:SetTexCoord(.08, .92, .08, .92)
-
-			F.CreateBG(it)
-
-			_G["BidButton"..i.."Left"]:Hide()
-			select(6, _G["BidButton"..i]:GetRegions()):Hide()
-			_G["BidButton"..i.."Right"]:Hide()
-
-			local bd = CreateFrame("Frame", nil, bu)
-			bd:SetPoint("TOPLEFT")
-			bd:SetPoint("BOTTOMRIGHT", 0, 5)
-			bd:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bd, .25)
-
-			bu:SetHighlightTexture(C.media.backdrop)
-			local hl = bu:GetHighlightTexture()
-			hl:SetVertexColor(r, g, b, .2)
-			hl:ClearAllPoints()
-			hl:SetPoint("TOPLEFT", 0, -1)
-			hl:SetPoint("BOTTOMRIGHT", -1, 6)
-		end
-
-		for i = 1, NUM_AUCTIONS_TO_DISPLAY do
-			local bu = _G["AuctionsButton"..i]
-			local it = _G["AuctionsButton"..i.."Item"]
-			local ic = _G["AuctionsButton"..i.."ItemIconTexture"]
-
-			it:SetNormalTexture("")
-			it:SetPushedTexture("")
-
-			ic:SetTexCoord(.08, .92, .08, .92)
-
-			F.CreateBG(it)
-
-			_G["AuctionsButton"..i.."Left"]:Hide()
-			select(5, _G["AuctionsButton"..i]:GetRegions()):Hide()
-			_G["AuctionsButton"..i.."Right"]:Hide()
-
-			local bd = CreateFrame("Frame", nil, bu)
-			bd:SetPoint("TOPLEFT")
-			bd:SetPoint("BOTTOMRIGHT", 0, 5)
-			bd:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bd, .25)
-
-			bu:SetHighlightTexture(C.media.backdrop)
-			local hl = bu:GetHighlightTexture()
-			hl:SetVertexColor(r, g, b, .2)
-			hl:ClearAllPoints()
-			hl:SetPoint("TOPLEFT", 0, -1)
-			hl:SetPoint("BOTTOMRIGHT", -1, 6)
-		end
-
-		local auctionhandler = CreateFrame("Frame")
-		auctionhandler:RegisterEvent("NEW_AUCTION_UPDATE")
-		auctionhandler:SetScript("OnEvent", function()
-			local _, _, _, _, _, _, _, _, _, _, _, _, _, AuctionsItemButtonIconTexture = AuctionsItemButton:GetRegions() -- blizzard, please name your textures
-			if AuctionsItemButtonIconTexture then
-				AuctionsItemButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
-				AuctionsItemButtonIconTexture:SetPoint("TOPLEFT", 1, -1)
-				AuctionsItemButtonIconTexture:SetPoint("BOTTOMRIGHT", -1, 1)
-			end
-		end)
-
-		F.CreateBD(AuctionsItemButton, .25)
-		local _, AuctionsItemButtonNameFrame = AuctionsItemButton:GetRegions()
-		AuctionsItemButtonNameFrame:Hide()
-
-		F.ReskinClose(AuctionFrameCloseButton, "TOPRIGHT", AuctionFrame, "TOPRIGHT", -4, -14)
-		F.ReskinScroll(BrowseScrollFrameScrollBar)
-		F.ReskinScroll(AuctionsScrollFrameScrollBar)
-		F.ReskinScroll(BrowseFilterScrollFrameScrollBar)
-		F.ReskinDropDown(PriceDropDown)
-		F.ReskinDropDown(DurationDropDown)
-		F.ReskinInput(BrowseName)
-		F.ReskinArrow(BrowsePrevPageButton, "left")
-		F.ReskinArrow(BrowseNextPageButton, "right")
-		F.ReskinCheck(IsUsableCheckButton)
-		F.ReskinCheck(ShowOnPlayerCheckButton)
-
-		BrowsePrevPageButton:GetRegions():SetPoint("LEFT", BrowsePrevPageButton, "RIGHT", 2, 0)
-
-		-- seriously, consistency
-		BrowseDropDownLeft:SetAlpha(0)
-		BrowseDropDownMiddle:SetAlpha(0)
-		BrowseDropDownRight:SetAlpha(0)
-
-		local a1, p, a2, x, y = BrowseDropDownButton:GetPoint()
-		BrowseDropDownButton:SetPoint(a1, p, a2, x, y-4)
-		BrowseDropDownButton:SetSize(16, 16)
-		F.Reskin(BrowseDropDownButton, true)
-
-		BrowseDropDownButton:HookScript("OnEnter", colourArrow)
-		BrowseDropDownButton:HookScript("OnLeave", clearArrow)
-
-		local downtex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
-		downtex:SetTexture(C.media.arrowDown)
-		downtex:SetSize(8, 8)
-		downtex:SetPoint("CENTER")
-		downtex:SetVertexColor(1, 1, 1)
-		BrowseDropDownButton.downtex = downtex
-
-		local bg = CreateFrame("Frame", nil, BrowseDropDown)
-		bg:SetPoint("TOPLEFT", 16, -5)
-		bg:SetPoint("BOTTOMRIGHT", 109, 11)
-		bg:SetFrameLevel(BrowseDropDown:GetFrameLevel(-1))
-		F.CreateBD(bg, 0)
-
-		F.CreateGradient(bg)
-
-		local inputs = {"BrowseMinLevel", "BrowseMaxLevel", "BrowseBidPriceGold", "BrowseBidPriceSilver", "BrowseBidPriceCopper", "BidBidPriceGold", "BidBidPriceSilver", "BidBidPriceCopper", "StartPriceGold", "StartPriceSilver", "StartPriceCopper", "BuyoutPriceGold", "BuyoutPriceSilver", "BuyoutPriceCopper", "AuctionsStackSizeEntry", "AuctionsNumStacksEntry"}
-		for i = 1, #inputs do
-			F.ReskinInput(_G[inputs[i]])
-		end
-	elseif addon == "Blizzard_AchievementUI" then
-		F.CreateBD(AchievementFrame)
-		F.CreateSD(AchievementFrame)
-		AchievementFrameCategories:SetBackdrop(nil)
-		AchievementFrameSummary:SetBackdrop(nil)
-		for i = 1, 17 do
-			select(i, AchievementFrame:GetRegions()):Hide()
-		end
-		AchievementFrameSummaryBackground:Hide()
-		AchievementFrameSummary:GetChildren():Hide()
-		AchievementFrameCategoriesContainerScrollBarBG:SetAlpha(0)
-		for i = 1, 4 do
-			select(i, AchievementFrameHeader:GetRegions()):Hide()
-		end
-		AchievementFrameHeaderRightDDLInset:SetAlpha(0)
-		select(2, AchievementFrameAchievements:GetChildren()):Hide()
-		AchievementFrameAchievementsBackground:Hide()
-		select(3, AchievementFrameAchievements:GetRegions()):Hide()
-		AchievementFrameStatsBG:Hide()
-		AchievementFrameSummaryAchievementsHeaderHeader:Hide()
-		AchievementFrameSummaryCategoriesHeaderTexture:Hide()
-		select(3, AchievementFrameStats:GetChildren()):Hide()
-		select(5, AchievementFrameComparison:GetChildren()):Hide()
-		AchievementFrameComparisonHeaderBG:Hide()
-		AchievementFrameComparisonHeaderPortrait:Hide()
-		AchievementFrameComparisonHeaderPortraitBg:Hide()
-		AchievementFrameComparisonBackground:Hide()
-		AchievementFrameComparisonDark:SetAlpha(0)
-		AchievementFrameComparisonSummaryPlayerBackground:Hide()
-		AchievementFrameComparisonSummaryFriendBackground:Hide()
-
-		local first = 1
-		hooksecurefunc("AchievementFrameCategories_Update", function()
-			if first == 1 then
-				for i = 1, 19 do
-					_G["AchievementFrameCategoriesContainerButton"..i.."Background"]:Hide()
-				end
-				first = 0
-			end
-		end)
-
-		AchievementFrameHeaderPoints:SetPoint("TOP", AchievementFrame, "TOP", 0, -6)
-		AchievementFrameFilterDropDown:SetPoint("TOPRIGHT", AchievementFrame, "TOPRIGHT", -98, 1)
-		AchievementFrameFilterDropDownText:ClearAllPoints()
-		AchievementFrameFilterDropDownText:SetPoint("CENTER", -10, 1)
-
-		AchievementFrameSummaryCategoriesStatusBar:SetStatusBarTexture(C.media.backdrop)
-		AchievementFrameSummaryCategoriesStatusBar:GetStatusBarTexture():SetGradient("VERTICAL", 0, .4, 0, 0, .6, 0)
-		AchievementFrameSummaryCategoriesStatusBarLeft:Hide()
-		AchievementFrameSummaryCategoriesStatusBarMiddle:Hide()
-		AchievementFrameSummaryCategoriesStatusBarRight:Hide()
-		AchievementFrameSummaryCategoriesStatusBarFillBar:Hide()
-		AchievementFrameSummaryCategoriesStatusBarTitle:SetTextColor(1, 1, 1)
-		AchievementFrameSummaryCategoriesStatusBarTitle:SetPoint("LEFT", AchievementFrameSummaryCategoriesStatusBar, "LEFT", 6, 0)
-		AchievementFrameSummaryCategoriesStatusBarText:SetPoint("RIGHT", AchievementFrameSummaryCategoriesStatusBar, "RIGHT", -5, 0)
-
-		local bg = CreateFrame("Frame", nil, AchievementFrameSummaryCategoriesStatusBar)
-		bg:SetPoint("TOPLEFT", -1, 1)
-		bg:SetPoint("BOTTOMRIGHT", 1, -1)
-		bg:SetFrameLevel(AchievementFrameSummaryCategoriesStatusBar:GetFrameLevel()-1)
-		F.CreateBD(bg, .25)
-
-		for i = 1, 3 do
-			local tab = _G["AchievementFrameTab"..i]
-			if tab then
-				F.ReskinTab(tab)
-			end
-		end
-
-		for i = 1, 7 do
-			local bu = _G["AchievementFrameAchievementsContainerButton"..i]
-			bu:DisableDrawLayer("BORDER")
-
-			bu.background:SetTexture(C.media.backdrop)
-			bu.background:SetVertexColor(0, 0, 0, .25)
-
-			bu.description:SetTextColor(.9, .9, .9)
-			bu.description.SetTextColor = F.dummy
-			bu.description:SetShadowOffset(1, -1)
-			bu.description.SetShadowOffset = F.dummy
-
-			_G["AchievementFrameAchievementsContainerButton"..i.."TitleBackground"]:Hide()
-			_G["AchievementFrameAchievementsContainerButton"..i.."Glow"]:Hide()
-			_G["AchievementFrameAchievementsContainerButton"..i.."RewardBackground"]:SetAlpha(0)
-			_G["AchievementFrameAchievementsContainerButton"..i.."PlusMinus"]:SetAlpha(0)
-			_G["AchievementFrameAchievementsContainerButton"..i.."Highlight"]:SetAlpha(0)
-			_G["AchievementFrameAchievementsContainerButton"..i.."IconOverlay"]:Hide()
-			_G["AchievementFrameAchievementsContainerButton"..i.."GuildCornerL"]:SetAlpha(0)
-			_G["AchievementFrameAchievementsContainerButton"..i.."GuildCornerR"]:SetAlpha(0)
-
-			local bg = CreateFrame("Frame", nil, bu)
-			bg:SetPoint("TOPLEFT", 2, -2)
-			bg:SetPoint("BOTTOMRIGHT", -2, 2)
-			F.CreateBD(bg, 0)
-
-			bu.icon.texture:SetTexCoord(.08, .92, .08, .92)
-			F.CreateBG(bu.icon.texture)
-
-			-- can't get a backdrop frame to appear behind the checked texture for some reason
-
-			local ch = bu.tracked
-
-			ch:SetNormalTexture("")
-			ch:SetPushedTexture("")
-			ch:SetHighlightTexture(C.media.backdrop)
-
-			local hl = ch:GetHighlightTexture()
-			hl:SetPoint("TOPLEFT", 4, -4)
-			hl:SetPoint("BOTTOMRIGHT", -4, 4)
-			hl:SetVertexColor(r, g, b, .2)
-
-			local check = ch:GetCheckedTexture()
-			check:SetDesaturated(true)
-			check:SetVertexColor(r, g, b)
-
-			local tex = ch:CreateTexture(nil, "BACKGROUND")
-			tex:SetPoint("TOPLEFT", 4, -4)
-			tex:SetPoint("BOTTOMRIGHT", -4, 4)
-			tex:SetTexture(C.media.backdrop)
-			tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
-
-			local left = ch:CreateTexture(nil, "BACKGROUND")
-			left:SetWidth(1)
-			left:SetTexture(0, 0, 0)
-			left:SetPoint("TOPLEFT", tex, -1, 1)
-			left:SetPoint("BOTTOMLEFT", tex, -1, -1)
-
-			local right = ch:CreateTexture(nil, "BACKGROUND")
-			right:SetWidth(1)
-			right:SetTexture(0, 0, 0)
-			right:SetPoint("TOPRIGHT", tex, 1, 1)
-			right:SetPoint("BOTTOMRIGHT", tex, 1, -1)
-
-			local top = ch:CreateTexture(nil, "BACKGROUND")
-			top:SetHeight(1)
-			top:SetTexture(0, 0, 0)
-			top:SetPoint("TOPLEFT", tex, -1, 1)
-			top:SetPoint("TOPRIGHT", tex, 1, -1)
-
-			local bottom = ch:CreateTexture(nil, "BACKGROUND")
-			bottom:SetHeight(1)
-			bottom:SetTexture(0, 0, 0)
-			bottom:SetPoint("BOTTOMLEFT", tex, -1, -1)
-			bottom:SetPoint("BOTTOMRIGHT", tex, 1, -1)
-		end
-
-		hooksecurefunc("AchievementButton_DisplayAchievement", function(button, category, achievement)
-			local _, _, _, completed = GetAchievementInfo(category, achievement)
-			if completed then
-				if button.accountWide then
-					button.label:SetTextColor(0, .6, 1)
-				else
-					button.label:SetTextColor(.9, .9, .9)
-				end
-			else
-				if button.accountWide then
-					button.label:SetTextColor(0, .3, .5)
-				else
-					button.label:SetTextColor(.65, .65, .65)
-				end
-			end
-		end)
-
-		hooksecurefunc("AchievementObjectives_DisplayCriteria", function(objectivesFrame, id)
-			for i = 1, GetAchievementNumCriteria(id) do
-				local name = _G["AchievementFrameCriteria"..i.."Name"]
-				if name and select(2, name:GetTextColor()) == 0 then
-					name:SetTextColor(1, 1, 1)
-				end
-
-				local bu = _G["AchievementFrameMeta"..i]
-				if bu and select(2, bu.label:GetTextColor()) == 0 then
-					bu.label:SetTextColor(1, 1, 1)
-				end
-			end
-		end)
-
-		hooksecurefunc("AchievementButton_GetProgressBar", function(index)
-			local bar = _G["AchievementFrameProgressBar"..index]
-			if not bar.reskinned then
-				bar:SetStatusBarTexture(C.media.backdrop)
-
-				_G["AchievementFrameProgressBar"..index.."BG"]:SetTexture(0, 0, 0, .25)
-				_G["AchievementFrameProgressBar"..index.."BorderLeft"]:Hide()
-				_G["AchievementFrameProgressBar"..index.."BorderCenter"]:Hide()
-				_G["AchievementFrameProgressBar"..index.."BorderRight"]:Hide()
-
-				local bg = CreateFrame("Frame", nil, bar)
-				bg:SetPoint("TOPLEFT", -1, 1)
-				bg:SetPoint("BOTTOMRIGHT", 1, -1)
-				F.CreateBD(bg, 0)
-
-				bar.reskinned = true
-			end
-		end)
-
-		hooksecurefunc("AchievementFrameSummary_UpdateAchievements", function()
-			for i = 1, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
-				local bu = _G["AchievementFrameSummaryAchievement"..i]
-
-				if bu.accountWide then
-					bu.label:SetTextColor(0, .6, 1)
-				else
-					bu.label:SetTextColor(.9, .9, .9)
-				end
-
-				if not bu.reskinned then
-					bu:DisableDrawLayer("BORDER")
-
-					local bd = _G["AchievementFrameSummaryAchievement"..i.."Background"]
-
-					bd:SetTexture(C.media.backdrop)
-					bd:SetVertexColor(0, 0, 0, .25)
-
-					_G["AchievementFrameSummaryAchievement"..i.."TitleBackground"]:Hide()
-					_G["AchievementFrameSummaryAchievement"..i.."Glow"]:Hide()
-					_G["AchievementFrameSummaryAchievement"..i.."Highlight"]:SetAlpha(0)
-					_G["AchievementFrameSummaryAchievement"..i.."IconOverlay"]:Hide()
-
-					local text = _G["AchievementFrameSummaryAchievement"..i.."Description"]
-					text:SetTextColor(.9, .9, .9)
-					text.SetTextColor = F.dummy
-					text:SetShadowOffset(1, -1)
-					text.SetShadowOffset = F.dummy
-
-					local bg = CreateFrame("Frame", nil, bu)
-					bg:SetPoint("TOPLEFT", 2, -2)
-					bg:SetPoint("BOTTOMRIGHT", -2, 2)
-					F.CreateBD(bg, 0)
-
-					local ic = _G["AchievementFrameSummaryAchievement"..i.."IconTexture"]
-					ic:SetTexCoord(.08, .92, .08, .92)
-					F.CreateBG(ic)
-
-					bu.reskinned = true
-				end
-			end
-		end)
-
-		for i = 1, 10 do
-			local bu = _G["AchievementFrameSummaryCategoriesCategory"..i]
-			local bar = bu:GetStatusBarTexture()
-			local label = _G["AchievementFrameSummaryCategoriesCategory"..i.."Label"]
-
-			bu:SetStatusBarTexture(C.media.backdrop)
-			bar:SetGradient("VERTICAL", 0, .4, 0, 0, .6, 0)
-			label:SetTextColor(1, 1, 1)
-			label:SetPoint("LEFT", bu, "LEFT", 6, 0)
-
-			local bg = CreateFrame("Frame", nil, bu)
-			bg:SetPoint("TOPLEFT", -1, 1)
-			bg:SetPoint("BOTTOMRIGHT", 1, -1)
-			bg:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-
-			_G["AchievementFrameSummaryCategoriesCategory"..i.."Left"]:Hide()
-			_G["AchievementFrameSummaryCategoriesCategory"..i.."Middle"]:Hide()
-			_G["AchievementFrameSummaryCategoriesCategory"..i.."Right"]:Hide()
-			_G["AchievementFrameSummaryCategoriesCategory"..i.."FillBar"]:Hide()
-			_G["AchievementFrameSummaryCategoriesCategory"..i.."ButtonHighlight"]:SetAlpha(0)
-			_G["AchievementFrameSummaryCategoriesCategory"..i.."Text"]:SetPoint("RIGHT", bu, "RIGHT", -5, 0)
-		end
-
-		for i = 1, 20 do
-			_G["AchievementFrameStatsContainerButton"..i.."BG"]:Hide()
-			_G["AchievementFrameStatsContainerButton"..i.."BG"].Show = F.dummy
-			_G["AchievementFrameStatsContainerButton"..i.."HeaderLeft"]:SetAlpha(0)
-			_G["AchievementFrameStatsContainerButton"..i.."HeaderMiddle"]:SetAlpha(0)
-			_G["AchievementFrameStatsContainerButton"..i.."HeaderRight"]:SetAlpha(0)
-		end
-
-		AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", AchievementFrameComparison, "TOPRIGHT", 39, 25)
-
-		local headerbg = CreateFrame("Frame", nil, AchievementFrameComparisonHeader)
-		headerbg:SetPoint("TOPLEFT", 20, -20)
-		headerbg:SetPoint("BOTTOMRIGHT", -28, -5)
-		headerbg:SetFrameLevel(AchievementFrameComparisonHeader:GetFrameLevel()-1)
-		F.CreateBD(headerbg, .25)
-
-		local summaries = {AchievementFrameComparisonSummaryPlayer, AchievementFrameComparisonSummaryFriend}
-
-		for _, frame in pairs(summaries) do
-			frame:SetBackdrop(nil)
-			local bg = CreateFrame("Frame", nil, frame)
-			bg:SetPoint("TOPLEFT", 2, -2)
-			bg:SetPoint("BOTTOMRIGHT", -2, 0)
-			bg:SetFrameLevel(frame:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-		end
-
-		local bars = {AchievementFrameComparisonSummaryPlayerStatusBar, AchievementFrameComparisonSummaryFriendStatusBar}
-
-		for _, bar in pairs(bars) do
-			local name = bar:GetName()
-			bar:SetStatusBarTexture(C.media.backdrop)
-			bar:GetStatusBarTexture():SetGradient("VERTICAL", 0, .4, 0, 0, .6, 0)
-			_G[name.."Left"]:Hide()
-			_G[name.."Middle"]:Hide()
-			_G[name.."Right"]:Hide()
-			_G[name.."FillBar"]:Hide()
-			_G[name.."Title"]:SetTextColor(1, 1, 1)
-			_G[name.."Title"]:SetPoint("LEFT", bar, "LEFT", 6, 0)
-			_G[name.."Text"]:SetPoint("RIGHT", bar, "RIGHT", -5, 0)
-
-			local bg = CreateFrame("Frame", nil, bar)
-			bg:SetPoint("TOPLEFT", -1, 1)
-			bg:SetPoint("BOTTOMRIGHT", 1, -1)
-			bg:SetFrameLevel(bar:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-		end
-
-		for i = 1, 9 do
-			local buttons = {_G["AchievementFrameComparisonContainerButton"..i.."Player"], _G["AchievementFrameComparisonContainerButton"..i.."Friend"]}
-
-			for _, button in pairs(buttons) do
-				button:DisableDrawLayer("BORDER")
-				local bg = CreateFrame("Frame", nil, button)
-				bg:SetPoint("TOPLEFT", 2, -3)
-				bg:SetPoint("BOTTOMRIGHT", -2, 2)
-				F.CreateBD(bg, 0)
-			end
-
-			local bd = _G["AchievementFrameComparisonContainerButton"..i.."PlayerBackground"]
-			bd:SetTexture(C.media.backdrop)
-			bd:SetVertexColor(0, 0, 0, .25)
-
-			local bd = _G["AchievementFrameComparisonContainerButton"..i.."FriendBackground"]
-			bd:SetTexture(C.media.backdrop)
-			bd:SetVertexColor(0, 0, 0, .25)
-
-			local text = _G["AchievementFrameComparisonContainerButton"..i.."PlayerDescription"]
-			text:SetTextColor(.9, .9, .9)
-			text.SetTextColor = F.dummy
-			text:SetShadowOffset(1, -1)
-			text.SetShadowOffset = F.dummy
-
-			_G["AchievementFrameComparisonContainerButton"..i.."PlayerTitleBackground"]:Hide()
-			_G["AchievementFrameComparisonContainerButton"..i.."PlayerGlow"]:Hide()
-			_G["AchievementFrameComparisonContainerButton"..i.."PlayerIconOverlay"]:Hide()
-			_G["AchievementFrameComparisonContainerButton"..i.."FriendTitleBackground"]:Hide()
-			_G["AchievementFrameComparisonContainerButton"..i.."FriendGlow"]:Hide()
-			_G["AchievementFrameComparisonContainerButton"..i.."FriendIconOverlay"]:Hide()
-
-			local ic = _G["AchievementFrameComparisonContainerButton"..i.."PlayerIconTexture"]
-			ic:SetTexCoord(.08, .92, .08, .92)
-			F.CreateBG(ic)
-
-			local ic = _G["AchievementFrameComparisonContainerButton"..i.."FriendIconTexture"]
-			ic:SetTexCoord(.08, .92, .08, .92)
-			F.CreateBG(ic)
-		end
-
-		F.ReskinClose(AchievementFrameCloseButton)
-		F.ReskinScroll(AchievementFrameAchievementsContainerScrollBar)
-		F.ReskinScroll(AchievementFrameStatsContainerScrollBar)
-		F.ReskinScroll(AchievementFrameCategoriesContainerScrollBar)
-		F.ReskinScroll(AchievementFrameComparisonContainerScrollBar)
-		F.ReskinDropDown(AchievementFrameFilterDropDown)
 	elseif addon == "Blizzard_BarbershopUI" then
 		F.SetBD(BarberShopFrame, 44, -75, -40, 44)
 		BarberShopFrameBackground:Hide()
@@ -6465,7 +5809,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 				bu.icon:SetTexCoord(.08, .92, .08, .92)
 				bu.icon:SetDrawLayer("OVERLAY")
-				F.CreateBG(bu.icon)
+				bu.icon.bg = F.CreateBG(bu.icon)
 
 				bu.name:SetParent(bg)
 
@@ -6484,10 +5828,25 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			local buttons = MountJournal.ListScrollFrame.buttons
 			for i = 1, #buttons do
 				local bu = buttons[i]
-				if i == 2 then
-					bu:SetPoint("TOPLEFT", buttons[i-1], "BOTTOMLEFT", 0, -1)
-				elseif i > 2 then
-					bu:SetPoint("TOPLEFT", buttons[i-1], "BOTTOMLEFT", 0, 0)
+				if bu.index ~= nil then
+					if i == 1 then
+						bu.bg:SetPoint("TOPLEFT", 0, -1)
+						bu.bg:SetPoint("BOTTOMRIGHT", -1, 1)
+						bu.selectedTexture:SetPoint("TOPLEFT", 0, -1)
+						bu.selectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+					else
+						bu.bg:SetPoint("TOPLEFT", 0, -1)
+						bu.bg:SetPoint("BOTTOMRIGHT", 0, 1)
+						bu.selectedTexture:SetPoint("TOPLEFT", 0, -1)
+						bu.selectedTexture:SetPoint("BOTTOMRIGHT", 0, 1)
+					end
+					bu.bg:Show()
+					bu.icon:Show()
+					bu.icon.bg:Show()
+				else
+					bu.bg:Hide()
+					bu.icon:Hide()
+					bu.icon.bg:Hide()
 				end
 			end
 		end
@@ -6645,7 +6004,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			local petButtons = PetJournal.listScroll.buttons
 			if petButtons then
 				for i = 1, #petButtons do
-					local index = petButtons[i].index
+					local bu = petButtons[i]
+
+					local index = bu.index
 					if index then
 						local petID, _, isOwned = C_PetJournal.GetPetInfoByIndex(index)
 
@@ -6654,13 +6015,21 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 							if rarity then
 								local color = ITEM_QUALITY_COLORS[rarity-1]
-								petButtons[i].name:SetTextColor(color.r, color.g, color.b)
+								bu.name:SetTextColor(color.r, color.g, color.b)
 							else
-								petButtons[i].name:SetTextColor(1, 1, 1)
+								bu.name:SetTextColor(1, 1, 1)
 							end
 						else
-							petButtons[i].name:SetTextColor(.5, .5, .5)
+							bu.name:SetTextColor(.5, .5, .5)
 						end
+					end
+
+					if i == 1 then
+						bu.selectedTexture:SetPoint("TOPLEFT", 0, -1)
+						bu.selectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+					else
+						bu.selectedTexture:SetPoint("TOPLEFT", 0, -1)
+						bu.selectedTexture:SetPoint("BOTTOMRIGHT", 0, 1)
 					end
 				end
 			end
