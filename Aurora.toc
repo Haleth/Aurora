@@ -8,6 +8,20 @@
 aurora.lua
 gui.lua
 
+AddOns\Blizzard_AchievementUI.lua
 AddOns\Blizzard_ArchaeologyUI.lua
 AddOns\Blizzard_AuctionUI.lua
-AddOns\Blizzard_AchievementUI.lua
+AddOns\Blizzard_BarbershopUI.lua
+AddOns\Blizzard_BattlefieldMinimap.lua
+AddOns\Blizzard_BindingUI.lua
+AddOns\Blizzard_BlackMarketUI.lua
+AddOns\Blizzard_Calendar.lua
+AddOns\Blizzard_ChallengesUI.lua
+AddOns\Blizzard_DebugTools.lua
+AddOns\Blizzard_EncounterJournal.lua
+AddOns\Blizzard_GlyphUI.lua
+AddOns\Blizzard_GMSurveyUI.lua
+AddOns\Blizzard_GuildBankUI.lua
+AddOns\Blizzard_GuildControlUI.lua
+AddOns\Blizzard_GuildUI.lua
+AddOns\Blizzard_InspectUI.lua

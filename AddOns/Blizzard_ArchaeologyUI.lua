@@ -1,6 +1,6 @@
 local F, C = unpack(select(2, ...))
 
-C.Modules["Blizzard_AchievementUI"] = function()
+C.modules["Blizzard_AchievementUI"] = function()
 	F.SetBD(ArchaeologyFrame)
 	F.Reskin(ArchaeologyFrameArtifactPageSolveFrameSolveButton)
 	F.Reskin(ArchaeologyFrameArtifactPageBackButton)

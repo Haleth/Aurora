@@ -1,4 +1,6 @@
-C.Modules["Blizzard_AuctionUI"] = function()
+local F, C = unpack(select(2, ...))
+
+C.modules["Blizzard_AuctionUI"] = function()
 	F.SetBD(AuctionFrame, 2, -10, 0, 10)
 	F.CreateBD(AuctionProgressFrame)
 
@@ -183,7 +185,7 @@ C.Modules["Blizzard_AuctionUI"] = function()
 	local auctionhandler = CreateFrame("Frame")
 	auctionhandler:RegisterEvent("NEW_AUCTION_UPDATE")
 	auctionhandler:SetScript("OnEvent", function()
-		local _, _, _, _, _, _, _, _, _, _, _, _, _, AuctionsItemButtonIconTexture = AuctionsItemButton:GetRegions() -- blizzard, please name your textures
+		local AuctionsItemButtonIconTexture = select(14, AuctionsItemButton:GetRegions()) -- blizzard, please name your textures
 		if AuctionsItemButtonIconTexture then
 			AuctionsItemButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
 			AuctionsItemButtonIconTexture:SetPoint("TOPLEFT", 1, -1)
@@ -219,9 +221,6 @@ C.Modules["Blizzard_AuctionUI"] = function()
 	BrowseDropDownButton:SetSize(16, 16)
 	F.Reskin(BrowseDropDownButton, true)
 
-	BrowseDropDownButton:HookScript("OnEnter", colourArrow)
-	BrowseDropDownButton:HookScript("OnLeave", clearArrow)
-
 	local downtex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
 	downtex:SetTexture(C.media.arrowDown)
 	downtex:SetSize(8, 8)
@@ -236,6 +235,12 @@ C.Modules["Blizzard_AuctionUI"] = function()
 	F.CreateBD(bg, 0)
 
 	F.CreateGradient(bg)
+
+	local colourArrow = F.colourArrow
+	local clearArrow = F.clearArrow
+
+	BrowseDropDownButton:HookScript("OnEnter", colourArrow)
+	BrowseDropDownButton:HookScript("OnLeave", clearArrow)
 
 	local inputs = {"BrowseMinLevel", "BrowseMaxLevel", "BrowseBidPriceGold", "BrowseBidPriceSilver", "BrowseBidPriceCopper", "BidBidPriceGold", "BidBidPriceSilver", "BidBidPriceCopper", "StartPriceGold", "StartPriceSilver", "StartPriceCopper", "BuyoutPriceGold", "BuyoutPriceSilver", "BuyoutPriceCopper", "AuctionsStackSizeEntry", "AuctionsNumStacksEntry"}
 	for i = 1, #inputs do

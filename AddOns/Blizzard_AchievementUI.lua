@@ -1,4 +1,6 @@
-C.Modules["Blizzard_AchievementUI"] = function()
+local F, C = unpack(select(2, ...))
+
+C.modules["Blizzard_AchievementUI"] = function()
 	F.CreateBD(AchievementFrame)
 	F.CreateSD(AchievementFrame)
 	AchievementFrameCategories:SetBackdrop(nil)
