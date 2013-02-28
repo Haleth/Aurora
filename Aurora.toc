@@ -27,3 +27,17 @@ AddOns\Blizzard_GuildUI.lua
 AddOns\Blizzard_InspectUI.lua
 AddOns\Blizzard_ItemAlterationUI.lua
 AddOns\Blizzard_ItemSocketingUI.lua
+AddOns\Blizzard_ItemUpgradeUI.lua
+AddOns\Blizzard_LookingForGuildUI.lua
+AddOns\Blizzard_MacroUI.lua
+AddOns\Blizzard_PetJournal.lua
+AddOns\Blizzard_PVPUI.lua
+AddOns\Blizzard_QuestChoice.lua
+AddOns\Blizzard_ReforgingUI.lua
+AddOns\Blizzard_TalentUI.lua
+AddOns\Blizzard_TimeManager.lua
+AddOns\Blizzard_TradeSkillUI.lua
+AddOns\Blizzard_TrainerUI.lua
+AddOns\Blizzard_VoidStorageUI.lua
+AddOns\DBM-Core.lua
+AddOns\Recount.lua
