@@ -56,10 +56,13 @@ C.frames = {}
 -- [[ Functions ]]
 
 local _, class = UnitClass("player")
+
 if CUSTOM_CLASS_COLORS then
 	C.classcolours = CUSTOM_CLASS_COLORS
 end
+
 local r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
+C.class = {r, g, b}
 
 F.dummy = function() end
 
