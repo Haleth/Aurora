@@ -25,3 +25,5 @@ AddOns\Blizzard_GuildBankUI.lua
 AddOns\Blizzard_GuildControlUI.lua
 AddOns\Blizzard_GuildUI.lua
 AddOns\Blizzard_InspectUI.lua
+AddOns\Blizzard_ItemAlterationUI.lua
+AddOns\Blizzard_ItemSocketingUI.lua
