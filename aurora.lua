@@ -63,7 +63,6 @@ if CUSTOM_CLASS_COLORS then
 end
 
 local r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
-C.class = {r, g, b}
 
 F.dummy = function() end
 
@@ -624,20 +623,6 @@ C.modules["Aurora"] = {}
 local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
-	for module, moduleFunc in pairs(C.modules) do
-		if type(moduleFunc) == "function" then
-			if module == addon then
-				moduleFunc()
-			end
-		elseif type(moduleFunc) == "table" then
-			if module == addon then
-				for _, moduleFunc in pairs(C.modules[module]) do
-					moduleFunc()
-				end
-			end
-		end
-	end
-
 	if addon == "Aurora" then
 		-- [[ Load Variables ]]
 
@@ -662,6 +647,23 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 		-- for modules
 		C.r, C.g, C.b = r, g, b
+	end
+
+	for module, moduleFunc in pairs(C.modules) do
+		if type(moduleFunc) == "function" then
+			if module == addon then
+				moduleFunc()
+			end
+		elseif type(moduleFunc) == "table" then
+			if module == addon then
+				for _, moduleFunc in pairs(C.modules[module]) do
+					moduleFunc()
+				end
+			end
+		end
+	end
+
+	if addon == "Aurora" then
 
 		-- [[ Headers ]]
 
@@ -986,113 +988,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		-- [[ Fonts ]]
-
-		if AuroraConfig.enableFont then
-			local font = C.media.font
-
-			RaidWarningFrame.slot1:SetFont(font, 20, "OUTLINE")
-			RaidWarningFrame.slot2:SetFont(font, 20, "OUTLINE")
-			RaidBossEmoteFrame.slot1:SetFont(font, 20, "OUTLINE")
-			RaidBossEmoteFrame.slot2:SetFont(font, 20, "OUTLINE")
-
-			STANDARD_TEXT_FONT = font
-			UNIT_NAME_FONT     = font
-			DAMAGE_TEXT_FONT   = font
-			NAMEPLATE_FONT     = font
-
-			AchievementFont_Small:SetFont(font, 10)
-			AchievementFont_Small:SetShadowColor(0, 0, 0)
-			AchievementFont_Small:SetShadowOffset(1, -1)
-			CoreAbilityFont:SetFont(font, 32)
-			CoreAbilityFont:SetShadowColor(0, 0, 0)
-			CoreAbilityFont:SetShadowOffset(1, -1)
-			DestinyFontHuge:SetFont(font, 32)
-			DestinyFontHuge:SetShadowColor(0, 0, 0)
-			DestinyFontHuge:SetShadowOffset(1, -1)
-			DestinyFontLarge:SetFont(font, 18)
-			DestinyFontLarge:SetShadowColor(0, 0, 0)
-			DestinyFontLarge:SetShadowOffset(1, -1)
-			FriendsFont_Normal:SetFont(font, 12)
-			FriendsFont_Small:SetFont(font, 10)
-			FriendsFont_Large:SetFont(font, 14)
-			FriendsFont_UserText:SetFont(font, 11)
-			GameFont_Gigantic:SetFont(font, 32)
-			GameTooltipHeader:SetFont(font, 14)
-			GameTooltipHeader:SetShadowColor(0, 0, 0)
-			GameTooltipHeader:SetShadowOffset(1, -1)
-			InvoiceFont_Small:SetFont(font, 10)
-			InvoiceFont_Small:SetShadowColor(0, 0, 0)
-			InvoiceFont_Small:SetShadowOffset(1, -1)
-			InvoiceFont_Med:SetFont(font, 12)
-			InvoiceFont_Med:SetShadowColor(0, 0, 0)
-			InvoiceFont_Med:SetShadowOffset(1, -1)
-			MailFont_Large:SetFont(font, 15)
-			NumberFont_OutlineThick_Mono_Small:SetFont(font, 12, "OUTLINE")
-			NumberFont_Outline_Huge:SetFont(font, 30, "OUTLINE")
-			NumberFont_Outline_Large:SetFont(font, 16, "OUTLINE")
-			NumberFont_Outline_Med:SetFont(font, 14, "OUTLINE")
-			NumberFont_Shadow_Med:SetFont(font, 14)
-			NumberFont_Shadow_Small:SetFont(font, 12)
-			QuestFont_Shadow_Small:SetFont(font, 14)
-			QuestFont_Large:SetFont(font, 15)
-			QuestFont_Large:SetShadowColor(0, 0, 0)
-			QuestFont_Large:SetShadowOffset(1, -1)
-			QuestFont_Shadow_Huge:SetFont(font, 17)
-			QuestFont_Super_Huge:SetFont(font, 24)
-			QuestFont_Super_Huge:SetShadowColor(0, 0, 0)
-			QuestFont_Super_Huge:SetShadowOffset(1, -1)
-			ReputationDetailFont:SetFont(font, 10)
-			SpellFont_Small:SetFont(font, 10)
-			SpellFont_Small:SetShadowColor(0, 0, 0)
-			SpellFont_Small:SetShadowOffset(1, -1)
-			SystemFont_InverseShadow_Small:SetFont(font, 10)
-			SystemFont_Large:SetFont(font, 16)
-			SystemFont_Large:SetShadowColor(0, 0, 0)
-			SystemFont_Large:SetShadowOffset(1, -1)
-			SystemFont_Huge1:SetFont(font, 20)
-			SystemFont_Huge1:SetShadowColor(0, 0, 0)
-			SystemFont_Huge1:SetShadowOffset(1, -1)
-			SystemFont_Med1:SetFont(font, 12)
-			SystemFont_Med1:SetShadowColor(0, 0, 0)
-			SystemFont_Med1:SetShadowOffset(1, -1)
-			SystemFont_Med2:SetFont(font, 13)
-			SystemFont_Med2:SetShadowColor(0, 0, 0)
-			SystemFont_Med2:SetShadowOffset(1, -1)
-			SystemFont_Med3:SetFont(font, 14)
-			SystemFont_Med3:SetShadowColor(0, 0, 0)
-			SystemFont_Med3:SetShadowOffset(1, -1)
-			SystemFont_OutlineThick_WTF:SetFont(font, 32, "THICKOUTLINE")
-			SystemFont_OutlineThick_Huge2:SetFont(font, 22, "THICKOUTLINE")
-			SystemFont_OutlineThick_Huge4:SetFont(font, 26, "THICKOUTLINE")
-			SystemFont_Outline_Small:SetFont(font, 10, "OUTLINE")
-			SystemFont_Outline:SetFont(font, 13, "OUTLINE")
-			SystemFont_Shadow_Large:SetFont(font, 16)
-			SystemFont_Shadow_Large_Outline:SetFont(font, 16)
-			SystemFont_Shadow_Med1:SetFont(font, 12)
-			SystemFont_Shadow_Med2:SetFont(font, 13)
-			SystemFont_Shadow_Med3:SetFont(font, 14)
-			SystemFont_Shadow_Outline_Huge2:SetFont(font, 22, "OUTLINE")
-			SystemFont_Shadow_Huge1:SetFont(font, 20)
-			SystemFont_Shadow_Huge3:SetFont(font, 25)
-			SystemFont_Shadow_Small:SetFont(font, 10)
-			SystemFont_Small:SetFont(font, 10)
-			SystemFont_Small:SetShadowColor(0, 0, 0)
-			SystemFont_Small:SetShadowOffset(1, -1)
-			SystemFont_Tiny:SetFont(font, 9)
-			SystemFont_Tiny:SetShadowColor(0, 0, 0)
-			SystemFont_Tiny:SetShadowOffset(1, -1)
-			Tooltip_Med:SetFont(font, 12)
-			Tooltip_Med:SetShadowColor(0, 0, 0)
-			Tooltip_Med:SetShadowOffset(1, -1)
-			Tooltip_Small:SetFont(font, 10)
-			Tooltip_Small:SetShadowColor(0, 0, 0)
-			Tooltip_Small:SetShadowOffset(1, -1)
-
-			-- Why?
-			HelpFrameKnowledgebaseNavBarHomeButtonText:SetFont(font, 12)
-		end
-
 		-- [[ Custom skins ]]
 
 		-- Pet stuff
@@ -1337,66 +1232,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 		end)
-
-		-- PVE frame
-
-		PVEFrame:DisableDrawLayer("ARTWORK")
-		PVEFrameLeftInset:DisableDrawLayer("BORDER")
-		PVEFrameBlueBg:Hide()
-		PVEFrameLeftInsetBg:Hide()
-		PVEFrame.shadows:Hide()
-		select(24, PVEFrame:GetRegions()):Hide()
-		select(25, PVEFrame:GetRegions()):Hide()
-
-		PVEFrameTab2:SetPoint("LEFT", PVEFrameTab1, "RIGHT", -15, 0)
-
-		GroupFinderFrameGroupButton1.icon:SetTexture("Interface\\Icons\\INV_Helmet_08")
-		GroupFinderFrameGroupButton2.icon:SetTexture("Interface\\Icons\\inv_helmet_06")
-		GroupFinderFrameGroupButton3.icon:SetTexture("Interface\\Icons\\Icon_Scenarios")
-
-		local function onMouseDown(self)
-			self.icon:SetSize(64, 64)
-		end
-
-		local function onMouseUp(self)
-			self.icon:SetSize(66, 66)
-		end
-
-		for i = 1, 3 do
-			local bu = GroupFinderFrame["groupButton"..i]
-
-			bu.ring:Hide()
-			bu.bg:SetTexture(C.media.backdrop)
-			bu.bg:SetVertexColor(r, g, b, .2)
-			bu.bg:SetAllPoints()
-
-			F.Reskin(bu, true)
-
-			bu.icon:SetTexCoord(.08, .92, .08, .92)
-			bu.icon:SetPoint("LEFT", bu, "LEFT")
-			bu.icon:SetDrawLayer("OVERLAY")
-			bu.icon.bg = F.CreateBG(bu.icon)
-			bu.icon.bg:SetDrawLayer("ARTWORK")
-
-			bu:HookScript("OnMouseDown", onMouseDown)
-			bu:HookScript("OnMouseUp", onMouseUp)
-		end
-
-		hooksecurefunc("GroupFinderFrame_SelectGroupButton", function(index)
-			local self = GroupFinderFrame
-			for i = 1, 3 do
-				local button = self["groupButton"..i]
-				if i == index then
-					button.bg:Show()
-				else
-					button.bg:Hide()
-				end
-			end
-		end)
-
-		F.ReskinPortraitFrame(PVEFrame)
-		F.ReskinTab(PVEFrameTab1)
-		F.ReskinTab(PVEFrameTab2)
 
 		-- LFD frame
 
