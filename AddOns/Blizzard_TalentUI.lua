@@ -1,8 +1,8 @@
 local F, C = unpack(select(2, ...))
 
-local r, g, b = unpack(C.class)
-
 C.modules["Blizzard_TalentUI"] = function()
+	local r, g, b = C.r, C.g, C.b
+
 	PlayerTalentFrameTalents:DisableDrawLayer("BORDER")
 	PlayerTalentFrameTalentsBg:Hide()
 	PlayerTalentFrameActiveSpecTabHighlight:SetTexture("")

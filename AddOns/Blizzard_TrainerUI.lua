@@ -1,8 +1,8 @@
 local F, C = unpack(select(2, ...))
 
-local r, g, b = unpack(C.class)
-
 C.modules["Blizzard_TrainerUI"] = function()
+	local r, g, b = C.r, C.g, C.b
+
 	ClassTrainerFrameBottomInset:DisableDrawLayer("BORDER")
 	ClassTrainerFrame.BG:Hide()
 	ClassTrainerFrameBottomInsetBg:Hide()

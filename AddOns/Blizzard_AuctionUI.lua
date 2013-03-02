@@ -1,6 +1,8 @@
 local F, C = unpack(select(2, ...))
 
 C.modules["Blizzard_AuctionUI"] = function()
+	local r, g, b = C.r, C.g, C.b
+
 	F.SetBD(AuctionFrame, 2, -10, 0, 10)
 	F.CreateBD(AuctionProgressFrame)
 

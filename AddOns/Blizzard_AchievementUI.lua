@@ -1,6 +1,8 @@
 local F, C = unpack(select(2, ...))
 
 C.modules["Blizzard_AchievementUI"] = function()
+	local r, g, b = C.r, C.g, C.b
+
 	F.CreateBD(AchievementFrame)
 	F.CreateSD(AchievementFrame)
 	AchievementFrameCategories:SetBackdrop(nil)
@@ -69,6 +71,8 @@ C.modules["Blizzard_AchievementUI"] = function()
 		end
 	end
 
+	local gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha = unpack(AuroraConfig.gradientAlpha)
+
 	for i = 1, 7 do
 		local bu = _G["AchievementFrameAchievementsContainerButton"..i]
 		bu:DisableDrawLayer("BORDER")
@@ -119,7 +123,7 @@ C.modules["Blizzard_AchievementUI"] = function()
 		tex:SetPoint("TOPLEFT", 4, -4)
 		tex:SetPoint("BOTTOMRIGHT", -4, 4)
 		tex:SetTexture(C.media.backdrop)
-		tex:SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+		tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
 
 		local left = ch:CreateTexture(nil, "BACKGROUND")
 		left:SetWidth(1)

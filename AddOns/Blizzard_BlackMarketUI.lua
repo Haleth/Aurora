@@ -1,8 +1,8 @@
 local F, C = unpack(select(2, ...))
 
-local r, g, b = unpack(C.class)
-
 C.modules["Blizzard_BlackMarketUI"] = function()
+		local r, g, b = C.r, C.g, C.b
+
 		BlackMarketFrame:DisableDrawLayer("BACKGROUND")
 		BlackMarketFrame:DisableDrawLayer("BORDER")
 		BlackMarketFrame:DisableDrawLayer("OVERLAY")

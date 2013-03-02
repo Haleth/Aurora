@@ -1,8 +1,8 @@
 local F, C = unpack(select(2, ...))
 
-local r, g, b = unpack(C.class)
-
 C.modules["Blizzard_LookingForGuildUI"] = function()
+	local r, g, b = C.r, C.g, C.b
+
 	F.SetBD(LookingForGuildFrame)
 	F.CreateBD(LookingForGuildInterestFrame, .25)
 	LookingForGuildInterestFrameBg:Hide()
