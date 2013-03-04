@@ -17,14 +17,6 @@ tinsert(C.modules["Aurora"], function()
 	GroupFinderFrameGroupButton2.icon:SetTexture("Interface\\Icons\\inv_helmet_06")
 	GroupFinderFrameGroupButton3.icon:SetTexture("Interface\\Icons\\Icon_Scenarios")
 
-	local function onMouseDown(self)
-		self.icon:SetSize(64, 64)
-	end
-
-	local function onMouseUp(self)
-		self.icon:SetSize(66, 66)
-	end
-
 	for i = 1, 3 do
 		local bu = GroupFinderFrame["groupButton"..i]
 
@@ -40,9 +32,6 @@ tinsert(C.modules["Aurora"], function()
 		bu.icon:SetDrawLayer("OVERLAY")
 		bu.icon.bg = F.CreateBG(bu.icon)
 		bu.icon.bg:SetDrawLayer("ARTWORK")
-
-		bu:HookScript("OnMouseDown", onMouseDown)
-		bu:HookScript("OnMouseUp", onMouseUp)
 	end
 
 	hooksecurefunc("GroupFinderFrame_SelectGroupButton", function(index)
