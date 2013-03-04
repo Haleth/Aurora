@@ -114,6 +114,8 @@ F.CreateGradient = function(f)
 	tex:SetPoint("BOTTOMRIGHT", -1, 1)
 	tex:SetTexture(C.media.backdrop)
 	tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
+
+	return tex
 end
 
 F.CreatePulse = function(frame)
