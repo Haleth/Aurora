@@ -1763,7 +1763,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, FRIENDS_TO_DISPLAY do
 			local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
 			local ic = bu.gameIcon
-			local inv = _G["FriendsFrameFriendsScrollFrameButton"..i.."TravelPassButton"]
+
+			bu.background:Hide()
+			bu.travelPassButton:SetAlpha(0)
+			bu.travelPassButton:EnableMouse(false)
 
 			bu:SetHighlightTexture(C.media.backdrop)
 			bu:GetHighlightTexture():SetVertexColor(.24, .56, 1, .2)
@@ -1771,27 +1774,16 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			ic:SetSize(22, 22)
 			ic:SetTexCoord(.15, .85, .15, .85)
 
-			inv:SetAlpha(0)
-			inv:EnableMouse(false)
-
-			_G["FriendsFrameFriendsScrollFrameButton"..i.."Background"]:Hide()
+			bu.bg = CreateFrame("Frame", nil, bu)
+			bu.bg:SetAllPoints(ic)
+			F.CreateBD(bu.bg, 0)
 		end
 
 		local function UpdateScroll()
 			for i = 1, FRIENDS_TO_DISPLAY do
 				local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
-				if not bu.bg then
-					bu.bg = CreateFrame("Frame", nil, bu)
-					bu.bg:SetPoint("TOPLEFT", bu.gameIcon)
-					bu.bg:SetPoint("BOTTOMRIGHT", bu.gameIcon)
-					F.CreateBD(bu.bg, 0)
-				end
+
 				if bu.gameIcon:IsShown() then
-					if i == 1 then
-						bu.bg:SetPoint("BOTTOMRIGHT", bu.gameIcon, 0, -1)
-					else
-						bu.bg:SetPoint("BOTTOMRIGHT", bu.gameIcon)
-					end
 					bu.bg:Show()
 					bu.gameIcon:SetPoint("TOPRIGHT", bu, "TOPRIGHT", -2, -2)
 				else
@@ -1799,6 +1791,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 		end
+
+		local bu1 = FriendsFrameFriendsScrollFrameButton1
+		bu1.bg:SetPoint("BOTTOMRIGHT", bu1.gameIcon, 0, -1)
 
 		hooksecurefunc("FriendsFrame_UpdateFriends", UpdateScroll)
 		hooksecurefunc(FriendsFrameFriendsScrollFrame, "update", UpdateScroll)
