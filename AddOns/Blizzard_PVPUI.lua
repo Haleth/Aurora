@@ -33,6 +33,7 @@ C.modules["Blizzard_PVPUI"] = function()
 
 		bu.Background:SetAllPoints()
 		bu.Background:SetTexture(r, g, b, .2)
+		bu.Background:Hide()
 
 		icon:SetTexCoord(.08, .92, .08, .92)
 		icon:SetPoint("LEFT", bu, "LEFT")
@@ -291,6 +292,7 @@ C.modules["Blizzard_PVPUI"] = function()
 
 		bu.Background:SetTexture(r, g, b, .2)
 		bu.Background:SetAllPoints()
+		bu.Background:Hide()
 
 		F.Reskin(bu, true)
 	end
