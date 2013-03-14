@@ -43,3 +43,4 @@ AddOns\Recount.lua
 
 FrameXML\Fonts.lua
 FrameXML\PVEFrame.lua
+FrameXML\StaticPopup.lua
