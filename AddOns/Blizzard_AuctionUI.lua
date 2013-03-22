@@ -56,8 +56,15 @@ C.modules["Blizzard_AuctionUI"] = function()
 		_G["AuctionFilterButton"..i]:SetNormalTexture("")
 	end
 
-	for i = 1, 3 do
-		F.ReskinTab(_G["AuctionFrameTab"..i])
+	do
+		local i = 1
+		local tab = _G["AuctionFrameTab"..i]
+
+		while tab do
+			F.ReskinTab(tab)
+			i = i + 1
+			tab = _G["AuctionFrameTab"..i]
+		end
 	end
 
 	local abuttons = {"BrowseBidButton", "BrowseBuyoutButton", "BrowseCloseButton", "BrowseSearchButton", "BrowseResetButton", "BidBidButton", "BidBuyoutButton", "BidCloseButton", "AuctionsCloseButton", "AuctionsCancelAuctionButton", "AuctionsCreateAuctionButton", "AuctionsNumStacksMaxButton", "AuctionsStackSizeMaxButton"}
