@@ -223,12 +223,12 @@ C.modules["Blizzard_AuctionUI"] = function()
 	BrowseDropDownButton:SetSize(16, 16)
 	F.Reskin(BrowseDropDownButton, true)
 
-	local downtex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
-	downtex:SetTexture(C.media.arrowDown)
-	downtex:SetSize(8, 8)
-	downtex:SetPoint("CENTER")
-	downtex:SetVertexColor(1, 1, 1)
-	BrowseDropDownButton.downtex = downtex
+	local tex = BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture(C.media.arrowDown)
+	tex:SetSize(8, 8)
+	tex:SetPoint("CENTER")
+	tex:SetVertexColor(1, 1, 1)
+	BrowseDropDownButton.tex = tex
 
 	local bg = CreateFrame("Frame", nil, BrowseDropDown)
 	bg:SetPoint("TOPLEFT", 16, -5)
