@@ -329,7 +329,9 @@ F.ReskinDropDown = function(f)
 	bg:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bg, 0)
 
-	F.CreateGradient(bg)
+	local gradient = F.CreateGradient(f)
+	gradient:SetPoint("TOPLEFT", bg, 1, -1)
+	gradient:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 end
 
 local function colourClose(f)
@@ -398,7 +400,9 @@ F.ReskinInput = function(f, height, width)
 	bd:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bd, 0)
 
-	F.CreateGradient(bd)
+	local gradient = F.CreateGradient(f)
+	gradient:SetPoint("TOPLEFT", bd, 1, -1)
+	gradient:SetPoint("BOTTOMRIGHT", bd, -1, 1)
 
 	if height then f:SetHeight(height) end
 	if width then f:SetWidth(width) end
