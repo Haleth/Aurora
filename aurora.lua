@@ -783,24 +783,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		F.ReskinCheck(LFDQueueFrameRoleButtonTank.checkButton)
-		F.ReskinCheck(LFDQueueFrameRoleButtonHealer.checkButton)
-		F.ReskinCheck(LFDQueueFrameRoleButtonDPS.checkButton)
-		F.ReskinCheck(LFDQueueFrameRoleButtonLeader.checkButton)
-		F.ReskinCheck(LFRQueueFrameRoleButtonTank.checkButton)
-		F.ReskinCheck(LFRQueueFrameRoleButtonHealer.checkButton)
-		F.ReskinCheck(LFRQueueFrameRoleButtonDPS.checkButton)
-		F.ReskinCheck(LFDRoleCheckPopupRoleButtonTank.checkButton)
-		F.ReskinCheck(LFDRoleCheckPopupRoleButtonHealer.checkButton)
-		F.ReskinCheck(LFDRoleCheckPopupRoleButtonDPS.checkButton)
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonTank.checkButton)
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonHealer.checkButton)
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonDPS.checkButton)
-		F.ReskinCheck(RaidFinderQueueFrameRoleButtonLeader.checkButton)
-		F.ReskinCheck(LFGInvitePopupRoleButtonTank.checkButton)
-		F.ReskinCheck(LFGInvitePopupRoleButtonHealer.checkButton)
-		F.ReskinCheck(LFGInvitePopupRoleButtonDPS.checkButton)
-
 		-- [[ Radio buttons ]]
 
 		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton", "ReportPlayerNameDialogArenaTeamNameCheckButton", "SendMailSendMoneyButton", "SendMailCODButton"}
