@@ -230,11 +230,9 @@ F.ReskinScroll = function(f)
 	bu.bg:SetPoint("BOTTOMRIGHT", bu, 0, 4)
 	F.CreateBD(bu.bg, 0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
+	local tex = F.CreateGradient(f)
 	tex:SetPoint("TOPLEFT", bu.bg, 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", bu.bg, -1, 1)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
 
 	local up = _G[frame.."ScrollUpButton"]
 	local down = _G[frame.."ScrollDownButton"]
@@ -442,11 +440,9 @@ F.ReskinCheck = function(f)
 	bd:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bd, 0)
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
+	local tex = F.CreateGradient(f)
 	tex:SetPoint("TOPLEFT", 5, -5)
 	tex:SetPoint("BOTTOMRIGHT", -5, 5)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
 
 	local ch = f:GetCheckedTexture()
 	ch:SetDesaturated(true)
@@ -478,11 +474,9 @@ F.ReskinRadio = function(f)
 	F.CreateBD(bd, 0)
 	f.bd = bd
 
-	local tex = f:CreateTexture(nil, "BACKGROUND")
+	local tex = F.CreateGradient(f)
 	tex:SetPoint("TOPLEFT", 4, -4)
 	tex:SetPoint("BOTTOMRIGHT", -4, 4)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
 
 	f:HookScript("OnEnter", colourRadio)
 	f:HookScript("OnLeave", clearRadio)
@@ -2285,10 +2279,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					questLogTitle.bg:SetFrameLevel(questLogTitle:GetFrameLevel()-1)
 					F.CreateBD(questLogTitle.bg, 0)
 
-					questLogTitle.tex = questLogTitle:CreateTexture(nil, "BACKGROUND")
+					questLogTitle.tex = F.CreateGradient(questLogTitle)
 					questLogTitle.tex:SetAllPoints(questLogTitle.bg)
-					questLogTitle.tex:SetTexture(C.media.backdrop)
-					questLogTitle.tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
 
 					questLogTitle.minus = questLogTitle:CreateTexture(nil, "OVERLAY")
 					questLogTitle.minus:SetSize(7, 1)
