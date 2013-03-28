@@ -1,7 +1,7 @@
 local F, C = unpack(select(2, ...))
 
 tinsert(C.modules["Aurora"], function()
-	LFGDungeonReadyDialogRoleIconTexture:SetTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
+	LFGDungeonReadyDialogRoleIconTexture:SetTexture(C.media.roleIcons)
 
 	for i = 1, 2 do
 		local reward = _G["LFGDungeonReadyDialogRewardsFrameReward"..i]
@@ -66,8 +66,8 @@ tinsert(C.modules["Aurora"], function()
 			roleButton.background:SetTexture("")
 		end
 
-		roleButton.cover:SetTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
-		roleButton:SetNormalTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
+		roleButton.cover:SetTexture(C.media.roleIcons)
+		roleButton:SetNormalTexture(C.media.roleIcons)
 
 		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
 

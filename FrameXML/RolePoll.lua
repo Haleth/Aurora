@@ -7,8 +7,8 @@ tinsert(C.modules["Aurora"], function()
 	F.ReskinClose(RolePollPopupCloseButton)
 
 	for _, roleButton in pairs({RolePollPopupRoleButtonTank, RolePollPopupRoleButtonHealer, RolePollPopupRoleButtonDPS}) do
-		roleButton.cover:SetTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
-		roleButton:SetNormalTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
+		roleButton.cover:SetTexture(C.media.roleIcons)
+		roleButton:SetNormalTexture(C.media.roleIcons)
 
 		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
 

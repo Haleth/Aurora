@@ -46,8 +46,8 @@ C.modules["Blizzard_LookingForGuildUI"] = function()
 	LookingForGuildFrameTopRightCorner:Hide()
 
 	for _, roleButton in pairs({LookingForGuildTankButton, LookingForGuildHealerButton, LookingForGuildDamagerButton}) do
-		roleButton.cover:SetTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
-		roleButton:SetNormalTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
+		roleButton.cover:SetTexture(C.media.roleIcons)
+		roleButton:SetNormalTexture(C.media.roleIcons)
 
 		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
 
