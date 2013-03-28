@@ -66,6 +66,7 @@ tinsert(C.modules["Aurora"], function()
 			roleButton.background:SetTexture("")
 		end
 
+		roleButton.cover:SetTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
 		roleButton:SetNormalTexture("Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES")
 
 		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
