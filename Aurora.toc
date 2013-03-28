@@ -44,4 +44,5 @@ AddOns\Recount.lua
 FrameXML\Fonts.lua
 FrameXML\LFGFrame.lua
 FrameXML\PVEFrame.lua
+FrameXML\RolePoll.lua
 FrameXML\StaticPopup.lua
