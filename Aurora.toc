@@ -42,6 +42,7 @@ AddOns\Blizzard_VoidStorageUI.lua
 AddOns\Recount.lua
 
 FrameXML\Fonts.lua
+FrameXML\LFDFrame.lua
 FrameXML\LFGFrame.lua
 FrameXML\PVEFrame.lua
 FrameXML\RolePoll.lua

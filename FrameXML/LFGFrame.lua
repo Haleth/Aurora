@@ -61,6 +61,21 @@ tinsert(C.modules["Aurora"], function()
 		end
 	end)
 
+	F.CreateBD(LFGDungeonReadyDialog)
+	LFGDungeonReadyDialog.SetBackdrop = F.dummy
+	F.CreateSD(LFGDungeonReadyDialog)
+	F.CreateBD(LFGInvitePopup)
+	F.CreateSD(LFGInvitePopup)
+	F.CreateBD(LFGDungeonReadyStatus)
+	F.CreateSD(LFGDungeonReadyStatus)
+
+	F.Reskin(LFGDungeonReadyDialogEnterDungeonButton)
+	F.Reskin(LFGDungeonReadyDialogLeaveQueueButton)
+	F.Reskin(LFGInvitePopupAcceptButton)
+	F.Reskin(LFGInvitePopupDeclineButton)
+	F.ReskinClose(LFGDungeonReadyDialogCloseButton)
+	F.ReskinClose(LFGDungeonReadyStatusCloseButton)
+
 	for _, roleButton in pairs({LFDQueueFrameRoleButtonTank, LFDQueueFrameRoleButtonHealer, LFDQueueFrameRoleButtonDPS, LFDQueueFrameRoleButtonLeader, LFRQueueFrameRoleButtonTank, LFRQueueFrameRoleButtonHealer, LFRQueueFrameRoleButtonDPS, LFDRoleCheckPopupRoleButtonTank, LFDRoleCheckPopupRoleButtonHealer, LFDRoleCheckPopupRoleButtonDPS, RaidFinderQueueFrameRoleButtonTank, RaidFinderQueueFrameRoleButtonHealer, RaidFinderQueueFrameRoleButtonDPS, RaidFinderQueueFrameRoleButtonLeader, LFGInvitePopupRoleButtonTank, LFGInvitePopupRoleButtonHealer, LFGInvitePopupRoleButtonDPS}) do
 		if roleButton.background then
 			roleButton.background:SetTexture("")
