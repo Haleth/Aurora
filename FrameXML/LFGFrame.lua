@@ -1,7 +1,20 @@
 local F, C = unpack(select(2, ...))
 
 tinsert(C.modules["Aurora"], function()
+	LFGDungeonReadyDialogBackground:Hide()
+	LFGDungeonReadyDialogBottomArt:Hide()
+	LFGDungeonReadyDialogFiligree:Hide()
+
 	LFGDungeonReadyDialogRoleIconTexture:SetTexture(C.media.roleIcons)
+	LFGDungeonReadyDialogRoleIconLeaderIcon:SetTexture(C.media.roleIcons)
+	LFGDungeonReadyDialogRoleIconLeaderIcon:SetTexCoord(0, 0.296875, 0.015625, 0.2875)
+
+	do
+		local leaderBg = F.CreateBG(LFGDungeonReadyDialogRoleIconLeaderIcon)
+		leaderBg:SetDrawLayer("ARTWORK", 2)
+		leaderBg:SetPoint("TOPLEFT", LFGDungeonReadyDialogRoleIconLeaderIcon, 2, 0)
+		leaderBg:SetPoint("BOTTOMRIGHT", LFGDungeonReadyDialogRoleIconLeaderIcon, -3, 4)
+	end
 
 	for i = 1, 2 do
 		local reward = _G["LFGDungeonReadyDialogRewardsFrameReward"..i]
@@ -184,7 +197,7 @@ tinsert(C.modules["Aurora"], function()
 	end
 
 	do
-		local roleButtons = {LFGDungeonReadyStatusGroupedTank, LFGDungeonReadyStatusGroupedHealerLFGDungeonReadyStatusGroupedDamager}
+		local roleButtons = {LFGDungeonReadyStatusGroupedTank, LFGDungeonReadyStatusGroupedHealer, LFGDungeonReadyStatusGroupedDamager, LFGDungeonReadyStatusRolelessReady}
 
 		for i = 1, 5 do
 			tinsert(roleButtons, _G["LFGDungeonReadyStatusIndividualPlayer"..i])
@@ -222,6 +235,8 @@ tinsert(C.modules["Aurora"], function()
 			bottom:SetPoint("BOTTOMRIGHT", -7, 8)
 		end
 	end
+
+	LFGDungeonReadyStatusRolelessReady.texture:SetTexCoord(0.5234375, 0.78750, 0, 0.25875)
 
 	hooksecurefunc("LFG_SetRoleIconIncentive", function(roleButton, incentiveIndex)
 		if incentiveIndex then
