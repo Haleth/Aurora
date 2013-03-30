@@ -45,6 +45,11 @@ C.modules["Blizzard_ArchaeologyUI"] = function()
 
 	ArchaeologyFrameInfoButton:SetPoint("TOPLEFT", 3, -3)
 
+	ArchaeologyFrameSummarytButton:SetPoint("TOPLEFT", ArchaeologyFrame, "TOPRIGHT", 1, -50)
+	ArchaeologyFrameSummarytButton:SetFrameLevel(ArchaeologyFrame:GetFrameLevel()-1)
+	ArchaeologyFrameCompletedButton:SetPoint("TOPLEFT", ArchaeologyFrame, "TOPRIGHT", 1, -120)
+	ArchaeologyFrameCompletedButton:SetFrameLevel(ArchaeologyFrame:GetFrameLevel()-1)
+
 	F.ReskinDropDown(ArchaeologyFrameRaceFilter)
 	F.ReskinClose(ArchaeologyFrameCloseButton)
 	F.ReskinScroll(ArchaeologyFrameArtifactPageHistoryScrollScrollBar)
