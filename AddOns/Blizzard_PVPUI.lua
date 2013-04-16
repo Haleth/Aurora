@@ -424,7 +424,7 @@ C.modules["Blizzard_PVPUI"] = function()
 			for i=1, #team do
 				if (team[i].online) then
 					local color = C.classcolours[team[i].class]
-					info.text = color..team[i].name..FONT_COLOR_CODE_CLOSE;
+					info.text = ConvertRGBtoColorString(color)..team[i].name..FONT_COLOR_CODE_CLOSE;
 					info.func = function (menu, name) InviteToGroup(name); end
 					info.arg1 = team[i].name;
 					info.disabled = nil;
