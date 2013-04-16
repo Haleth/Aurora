@@ -116,7 +116,8 @@ tinsert(C.modules["Aurora"], function()
 		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
 
 		for i = 1, 2 do
-			local left = roleButton:CreateTexture(nil, "OVERLAY")
+			local left = roleButton:CreateTexture()
+			left:SetDrawLayer("OVERLAY", i)
 			left:SetWidth(1)
 			left:SetTexture(C.media.backdrop)
 			left:SetVertexColor(0, 0, 0)
@@ -124,7 +125,8 @@ tinsert(C.modules["Aurora"], function()
 			left:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
 			roleButton["leftLine"..i] = left
 
-			local right = roleButton:CreateTexture(nil, "OVERLAY")
+			local right = roleButton:CreateTexture()
+			right:SetDrawLayer("OVERLAY", i)
 			right:SetWidth(1)
 			right:SetTexture(C.media.backdrop)
 			right:SetVertexColor(0, 0, 0)
@@ -132,7 +134,8 @@ tinsert(C.modules["Aurora"], function()
 			right:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
 			roleButton["rightLine"..i] = right
 
-			local top = roleButton:CreateTexture(nil, "OVERLAY")
+			local top = roleButton:CreateTexture()
+			top:SetDrawLayer("OVERLAY", i)
 			top:SetHeight(1)
 			top:SetTexture(C.media.backdrop)
 			top:SetVertexColor(0, 0, 0)
@@ -140,7 +143,8 @@ tinsert(C.modules["Aurora"], function()
 			top:SetPoint("TOPRIGHT", roleButton, -6, -5)
 			roleButton["topLine"..i] = top
 
-			local bottom = roleButton:CreateTexture(nil, "OVERLAY")
+			local bottom = roleButton:CreateTexture()
+			bottom:SetDrawLayer("OVERLAY", i)
 			bottom:SetHeight(1)
 			bottom:SetTexture(C.media.backdrop)
 			bottom:SetVertexColor(0, 0, 0)
@@ -148,6 +152,11 @@ tinsert(C.modules["Aurora"], function()
 			bottom:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
 			roleButton["bottomLine"..i] = bottom
 		end
+
+		roleButton.leftLine2:Hide()
+		roleButton.rightLine2:Hide()
+		roleButton.topLine2:Hide()
+		roleButton.bottomLine2:Hide()
 
 		local shortageBorder = roleButton.shortageBorder
 		if shortageBorder then
@@ -175,39 +184,33 @@ tinsert(C.modules["Aurora"], function()
 
 		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
 
-		for i = 1, 2 do
-			local left = roleButton:CreateTexture(nil, "OVERLAY")
-			left:SetWidth(1)
-			left:SetTexture(C.media.backdrop)
-			left:SetVertexColor(0, 0, 0)
-			left:SetPoint("TOPLEFT", roleButton, 9, -7)
-			left:SetPoint("BOTTOMLEFT", roleButton, 9, 11)
-			roleButton["leftLine"..i] = left
+		local left = roleButton:CreateTexture(nil, "OVERLAY")
+		left:SetWidth(1)
+		left:SetTexture(C.media.backdrop)
+		left:SetVertexColor(0, 0, 0)
+		left:SetPoint("TOPLEFT", roleButton, 9, -7)
+		left:SetPoint("BOTTOMLEFT", roleButton, 9, 11)
 
-			local right = roleButton:CreateTexture(nil, "OVERLAY")
-			right:SetWidth(1)
-			right:SetTexture(C.media.backdrop)
-			right:SetVertexColor(0, 0, 0)
-			right:SetPoint("TOPRIGHT", roleButton, -9, -7)
-			right:SetPoint("BOTTOMRIGHT", roleButton, -9, 11)
-			roleButton["rightLine"..i] = right
+		local right = roleButton:CreateTexture(nil, "OVERLAY")
+		right:SetWidth(1)
+		right:SetTexture(C.media.backdrop)
+		right:SetVertexColor(0, 0, 0)
+		right:SetPoint("TOPRIGHT", roleButton, -9, -7)
+		right:SetPoint("BOTTOMRIGHT", roleButton, -9, 11)
 
-			local top = roleButton:CreateTexture(nil, "OVERLAY")
-			top:SetHeight(1)
-			top:SetTexture(C.media.backdrop)
-			top:SetVertexColor(0, 0, 0)
-			top:SetPoint("TOPLEFT", roleButton, 9, -7)
-			top:SetPoint("TOPRIGHT", roleButton, -9, -7)
-			roleButton["topLine"..i] = top
+		local top = roleButton:CreateTexture(nil, "OVERLAY")
+		top:SetHeight(1)
+		top:SetTexture(C.media.backdrop)
+		top:SetVertexColor(0, 0, 0)
+		top:SetPoint("TOPLEFT", roleButton, 9, -7)
+		top:SetPoint("TOPRIGHT", roleButton, -9, -7)
 
-			local bottom = roleButton:CreateTexture(nil, "OVERLAY")
-			bottom:SetHeight(1)
-			bottom:SetTexture(C.media.backdrop)
-			bottom:SetVertexColor(0, 0, 0)
-			bottom:SetPoint("BOTTOMLEFT", roleButton, 9, 11)
-			bottom:SetPoint("BOTTOMRIGHT", roleButton, -9, 11)
-			roleButton["bottomLine"..i] = bottom
-		end
+		local bottom = roleButton:CreateTexture(nil, "OVERLAY")
+		bottom:SetHeight(1)
+		bottom:SetTexture(C.media.backdrop)
+		bottom:SetVertexColor(0, 0, 0)
+		bottom:SetPoint("BOTTOMLEFT", roleButton, 9, 11)
+		bottom:SetPoint("BOTTOMRIGHT", roleButton, -9, 11)
 
 		F.ReskinCheck(roleButton.checkButton)
 	end
