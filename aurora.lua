@@ -807,7 +807,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local FrameBDs = {"GameMenuFrame", "InterfaceOptionsFrame", "VideoOptionsFrame", "AudioOptionsFrame", "ChatConfigFrame", "StackSplitFrame", "AddFriendFrame", "FriendsFriendsFrame", "ColorPickerFrame", "ReadyCheckFrame", "GuildInviteFrame", "ChannelFrameDaughterFrame"}
 		for i = 1, #FrameBDs do
-			FrameBD = _G[FrameBDs[i]]
+			local FrameBD = _G[FrameBDs[i]]
 			F.CreateBD(FrameBD)
 			F.CreateSD(FrameBD)
 		end
