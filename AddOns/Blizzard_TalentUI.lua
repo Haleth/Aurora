@@ -104,7 +104,7 @@ C.modules["Blizzard_TalentUI"] = function()
 	-- Annoying animation stuff
 
 	local function fixGradient(self)
-		select(self.numRegion, self:GetParent():GetRegions()):SetGradientAlpha("VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35)
+		select(self.numRegion, self:GetParent():GetRegions()):SetGradientAlpha(unpack(AuroraConfig.gradientAlpha))
 	end
 
 	local function onPlay(self)
