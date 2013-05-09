@@ -36,15 +36,16 @@ C.media = {
 	["checked"] = "Interface\\AddOns\\Aurora\\media\\CheckButtonHilight",
 	["font"] = "Interface\\AddOns\\Aurora\\media\\font.ttf",
 	["glow"] = "Interface\\AddOns\\Aurora\\media\\glow",
+	["gradient"] = "Interface\\AddOns\\Aurora\\media\\gradient",
 	["roleIcons"] = "Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES",
 }
 
 C.defaults = {
 	["alpha"] = 0.5,
 	["bags"] = true,
+	["buttonColour"] = {.3, .3, .3, .3},
 	["chatBubbles"] = true,
 	["enableFont"] = true,
-	["gradientAlpha"] = {"VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35},
 	["loot"] = true,
 	["useCustomColour"] = false,
 		["customColour"] = {r = 1, g = 1, b = 1},
@@ -107,14 +108,14 @@ end
 
 -- we assign these after loading variables for caching
 -- otherwise we call an extra unpack() every time
-local gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha
+local buttonR, buttonG, buttonB, buttonA
 
 F.CreateGradient = function(f)
 	local tex = f:CreateTexture(nil, "BORDER")
 	tex:SetPoint("TOPLEFT", 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", -1, 1)
-	tex:SetTexture(C.media.backdrop)
-	tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
+	tex:SetTexture(C.media.gradient)
+	tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
 
 	return tex
 end
@@ -652,7 +653,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		alpha = AuroraConfig.alpha
-		gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha = unpack(AuroraConfig.gradientAlpha)
+		buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonColour)
 
 		if AuroraConfig.useCustomColour then
 			r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b

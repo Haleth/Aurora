@@ -101,32 +101,7 @@ C.modules["Blizzard_TalentUI"] = function()
 		PlayerTalentFrameSpecialization["specButton"..i].specIcon:SetTexture(icon)
 	end
 
-	-- Annoying animation stuff
-
-	local function fixGradient(self)
-		select(self.numRegion, self:GetParent():GetRegions()):SetGradientAlpha(unpack(AuroraConfig.gradientAlpha))
-	end
-
-	local function onPlay(self)
-		self:Stop()
-		self.numRegions = self:GetParent():GetNumRegions()
-		self:SetScript("OnUpdate", fixGradient)
-	end
-
-	local function onFinished(self)
-		self:SetScript("OnUpdate", nil)
-		fixGradient(self)
-	end
-
-	PlayerTalentFrameSpecializationLearnButton.FlashAnim.numRegion = 18
-	PlayerTalentFrameSpecializationLearnButton.FlashAnim:SetScript("OnPlay", onPlay)
-	PlayerTalentFrameSpecializationLearnButton.FlashAnim:SetScript("OnFinished", onFinished)
-	PlayerTalentFrameTalentsLearnButton.FlashAnim.numRegion = 18
-	PlayerTalentFrameTalentsLearnButton.FlashAnim:SetScript("OnPlay", onPlay)
-	PlayerTalentFrameTalentsLearnButton.FlashAnim:SetScript("OnFinished", onFinished)
-	PlayerTalentFrameSpecializationLearnButton.FlashAnim:SetLooping("NONE")
 	PlayerTalentFrameSpecializationLearnButton.Flash:SetTexture("")
-	PlayerTalentFrameTalentsLearnButton.FlashAnim:SetLooping("NONE")
 	PlayerTalentFrameTalentsLearnButton.Flash:SetTexture("")
 
 	local buttons = {"PlayerTalentFrameSpecializationSpecButton", "PlayerTalentFramePetSpecializationSpecButton"}
@@ -140,9 +115,6 @@ C.modules["Blizzard_TalentUI"] = function()
 			bu.learnedTex:SetPoint("TOPLEFT", 1, -1)
 			bu.learnedTex:SetPoint("BOTTOMRIGHT", -1, 1)
 			_G[name..i.."Glow"]:SetTexture("")
-			bu.animLearn.numRegion = 20
-			bu.animLearn:SetScript("OnPlay", onPlay)
-			bu.animLearn:SetScript("OnFinished", onFinished)
 
 			F.Reskin(bu, true)
 

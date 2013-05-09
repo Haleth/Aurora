@@ -87,8 +87,6 @@ C.modules["Blizzard_TradeSkillUI"] = function()
 	local colourExpandOrCollapse = F.colourExpandOrCollapse
 	local clearExpandOrCollapse = F.clearExpandOrCollapse
 
-	local gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha = unpack(AuroraConfig.gradientAlpha)
-
 	local function styleSkillButton(skillButton)
 		skillButton:SetNormalTexture("")
 		skillButton.SetNormalTexture = F.dummy
@@ -100,11 +98,9 @@ C.modules["Blizzard_TradeSkillUI"] = function()
 		skillButton.bg:SetFrameLevel(skillButton:GetFrameLevel()-1)
 		F.CreateBD(skillButton.bg, 0)
 
-		skillButton.tex = skillButton:CreateTexture(nil, "BACKGROUND")
+		skillButton.tex = F.CreateGradient(skillButton)
 		skillButton.tex:SetPoint("TOPLEFT", skillButton.bg, 1, -1)
 		skillButton.tex:SetPoint("BOTTOMRIGHT", skillButton.bg, -1, 1)
-		skillButton.tex:SetTexture(C.media.backdrop)
-		skillButton.tex:SetGradientAlpha(gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha)
 
 		skillButton.minus = skillButton:CreateTexture(nil, "OVERLAY")
 		skillButton.minus:SetSize(7, 1)
