@@ -44,6 +44,7 @@ C.defaults = {
 	["alpha"] = 0.5,
 	["bags"] = true,
 	["buttonColour"] = {.3, .3, .3, .3},
+	["buttonColourGradient"] = true,
 	["chatBubbles"] = true,
 	["enableFont"] = true,
 	["loot"] = true,
@@ -109,12 +110,13 @@ end
 -- we assign these after loading variables for caching
 -- otherwise we call an extra unpack() every time
 local buttonR, buttonG, buttonB, buttonA
+local buttonColourGradient
 
 F.CreateGradient = function(f)
 	local tex = f:CreateTexture(nil, "BORDER")
 	tex:SetPoint("TOPLEFT", 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", -1, 1)
-	tex:SetTexture(C.media.gradient)
+	tex:SetTexture(buttonColourGradient and C.media.gradient or C.media.backdrop)
 	tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
 
 	return tex
@@ -654,6 +656,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		alpha = AuroraConfig.alpha
 		buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonColour)
+		buttonColourGradient = AuroraConfig.buttonColourGradient
 
 		if AuroraConfig.useCustomColour then
 			r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
