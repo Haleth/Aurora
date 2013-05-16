@@ -617,6 +617,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 	if addon == "Aurora" then
 		-- [[ Load Variables ]]
 
+		-- remove deprecated or corrupt variables
+		for key, value in pairs(AuroraConfig) do
+			if C.defaults[key] == nil then
+				AuroraConfig[key] = nil
+			end
+		end
+
+		-- load or init variables
 		for key, value in pairs(C.defaults) do
 			if AuroraConfig[key] == nil then
 				if type(value) == "table" then
