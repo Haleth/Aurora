@@ -28,7 +28,8 @@ C.modules["Blizzard_EncounterJournal"] = function()
 			select(i, EncounterJournalInstanceSelectDungeonTab:GetRegions()):SetAlpha(0)
 			select(i, EncounterJournalInstanceSelectRaidTab:GetRegions()):SetAlpha(0)
 		end
-		EncounterJournalEncounterFrameModelFrameShadow:Hide()
+		EncounterJournalEncounterFrameInfoModelFrameShadow:Hide()
+		EncounterJournalEncounterFrameInfoModelFrame.dungeonBG:Hide()
 		EncounterJournalEncounterFrameInfoDifficultyUpLeft:SetAlpha(0)
 		EncounterJournalEncounterFrameInfoDifficultyUpRIGHT:SetAlpha(0)
 		EncounterJournalEncounterFrameInfoDifficultyDownLeft:SetAlpha(0)
@@ -50,8 +51,10 @@ C.modules["Blizzard_EncounterJournal"] = function()
 		EncounterJournalEncounterFrameInfoBossTab:SetPoint("TOPRIGHT", EncounterJournalEncounterFrame, "TOPRIGHT", 75, 20)
 		EncounterJournalEncounterFrameInfoLootTab:ClearAllPoints()
 		EncounterJournalEncounterFrameInfoLootTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoBossTab, "BOTTOM", 0, -4)
+		EncounterJournalEncounterFrameInfoModelTab:ClearAllPoints()
+		EncounterJournalEncounterFrameInfoModelTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoLootTab, "BOTTOM", 0, -4)
 
-		local tabs = {EncounterJournalEncounterFrameInfoBossTab, EncounterJournalEncounterFrameInfoLootTab}
+		local tabs = {EncounterJournalEncounterFrameInfoBossTab, EncounterJournalEncounterFrameInfoLootTab, EncounterJournalEncounterFrameInfoModelTab}
 		for _, tab in pairs(tabs) do
 			tab:SetScale(.75)
 
@@ -72,11 +75,14 @@ C.modules["Blizzard_EncounterJournal"] = function()
 
 		EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1:SetNormalTexture("")
 		EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1:SetHighlightTexture("")
+		EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1:SetPushedTexture("")
 
-		local bg = CreateFrame("Frame", nil, EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1)
-		bg:SetPoint("TOPLEFT", 4, -4)
-		bg:SetPoint("BOTTOMRIGHT", -5, 3)
-		F.CreateBD(bg, 0)
+		do
+			local bg = CreateFrame("Frame", nil, EncounterJournalInstanceSelectScrollFrameScrollChildInstanceButton1)
+			bg:SetPoint("TOPLEFT", 4, -4)
+			bg:SetPoint("BOTTOMRIGHT", -5, 3)
+			F.CreateBD(bg, 0)
+		end
 
 		local index = 2
 
@@ -87,6 +93,7 @@ C.modules["Blizzard_EncounterJournal"] = function()
 
 				bu:SetNormalTexture("")
 				bu:SetHighlightTexture("")
+				bu:SetPushedTexture("")
 
 				local bg = CreateFrame("Frame", nil, bu)
 				bg:SetPoint("TOPLEFT", 4, -4)
@@ -106,7 +113,7 @@ C.modules["Blizzard_EncounterJournal"] = function()
 		EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollChildDescription:SetShadowOffset(1, -1)
 		EncounterJournalEncounterFrameInfoEncounterTitle:SetTextColor(1, 1, 1)
 
-		F.CreateBDFrame(EncounterJournalEncounterFrameModelFrame, .25)
+		F.CreateBDFrame(EncounterJournalEncounterFrameInfoModelFrame, .25)
 
 		hooksecurefunc("EncounterJournal_DisplayInstance", function()
 			local bossIndex = 1;
@@ -236,6 +243,7 @@ C.modules["Blizzard_EncounterJournal"] = function()
 		F.ReskinInput(EncounterJournalSearchBox)
 		F.ReskinScroll(EncounterJournalInstanceSelectScrollFrameScrollBar)
 		F.ReskinScroll(EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollBar)
+		F.ReskinScroll(EncounterJournalEncounterFrameInfoBossesScrollFrameScrollBar)
 		F.ReskinScroll(EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollBar)
 		F.ReskinScroll(EncounterJournalEncounterFrameInfoLootScrollFrameScrollBar)
 		F.ReskinScroll(EncounterJournalSearchResultsScrollFrameScrollBar)

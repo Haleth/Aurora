@@ -98,9 +98,6 @@ C.modules["Blizzard_PVPUI"] = function()
 		bu.SelectedTexture:SetAllPoints()
 	end
 
-	BonusFrame.CallToArmsButton:SetPoint("TOP", BonusFrame.RandomBGButton, "BOTTOM", 0, -1)
-	BonusFrame.WorldPVP2Button:SetPoint("TOP", BonusFrame.WorldPVP1Button, "BOTTOM", 0, -1)
-
 	BonusFrame.BattlegroundReward1.Amount:SetPoint("RIGHT", BonusFrame.BattlegroundReward1.Icon, "LEFT", -2, 0)
 	BonusFrame.BattlegroundReward1.Icon:SetTexCoord(.08, .92, .08, .92)
 	BonusFrame.BattlegroundReward1.Icon:SetSize(16, 16)
@@ -124,6 +121,65 @@ C.modules["Blizzard_PVPUI"] = function()
 			frame.Icon:SetTexture("Interface\\Icons\\PVPCurrency-Honor-"..englishFaction)
 		end
 	end)
+
+	-- Role buttons
+
+	local RoleInset = HonorFrame.RoleInset
+
+	RoleInset:DisableDrawLayer("BACKGROUND")
+	RoleInset:DisableDrawLayer("BORDER")
+
+	for _, roleButton in pairs({RoleInset.HealerIcon, RoleInset.TankIcon, RoleInset.DPSIcon}) do
+		roleButton.cover:SetTexture(C.media.roleIcons)
+		roleButton:SetNormalTexture(C.media.roleIcons)
+
+		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
+
+		for i = 1, 2 do
+			local left = roleButton:CreateTexture()
+			left:SetDrawLayer("OVERLAY", i)
+			left:SetWidth(1)
+			left:SetTexture(C.media.backdrop)
+			left:SetVertexColor(0, 0, 0)
+			left:SetPoint("TOPLEFT", roleButton, 6, -4)
+			left:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
+			roleButton["leftLine"..i] = left
+
+			local right = roleButton:CreateTexture()
+			right:SetDrawLayer("OVERLAY", i)
+			right:SetWidth(1)
+			right:SetTexture(C.media.backdrop)
+			right:SetVertexColor(0, 0, 0)
+			right:SetPoint("TOPRIGHT", roleButton, -6, -4)
+			right:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
+			roleButton["rightLine"..i] = right
+
+			local top = roleButton:CreateTexture()
+			top:SetDrawLayer("OVERLAY", i)
+			top:SetHeight(1)
+			top:SetTexture(C.media.backdrop)
+			top:SetVertexColor(0, 0, 0)
+			top:SetPoint("TOPLEFT", roleButton, 6, -4)
+			top:SetPoint("TOPRIGHT", roleButton, -6, -4)
+			roleButton["topLine"..i] = top
+
+			local bottom = roleButton:CreateTexture()
+			bottom:SetDrawLayer("OVERLAY", i)
+			bottom:SetHeight(1)
+			bottom:SetTexture(C.media.backdrop)
+			bottom:SetVertexColor(0, 0, 0)
+			bottom:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
+			bottom:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
+			roleButton["bottomLine"..i] = bottom
+		end
+
+		roleButton.leftLine2:Hide()
+		roleButton.rightLine2:Hide()
+		roleButton.topLine2:Hide()
+		roleButton.bottomLine2:Hide()
+
+		F.ReskinCheck(roleButton.checkButton)
+	end
 
 	-- Honor frame specific
 

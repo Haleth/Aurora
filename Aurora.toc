@@ -1,8 +1,8 @@
-## Interface: 50200
+## Interface: 50300
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Freethinker
-## Version: 4.5.3
+## Version: 4.6
 ## SavedVariables: AuroraConfig
 
 aurora.lua
