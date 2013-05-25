@@ -683,7 +683,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Simple backdrops ]]
 
-		local bds = {"AutoCompleteBox", "BNToastFrame", "TicketStatusFrameButton", "GearManagerDialogPopup", "TokenFramePopup", "RaidInfoFrame", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog", "QueueStatusFrame"}
+		local bds = {"AutoCompleteBox", "TicketStatusFrameButton", "GearManagerDialogPopup", "TokenFramePopup", "RaidInfoFrame", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog", "QueueStatusFrame"}
 
 		for i = 1, #bds do
 			local bd = _G[bds[i]]
@@ -1804,6 +1804,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(FriendsFrameUnsquelchButton)
 		F.Reskin(FriendsFrameMutePlayerButton)
 		F.ReskinDropDown(FriendsFrameStatusDropDown)
+
+		-- Battlenet toast frame
+
+		F.CreateBD(BNToastFrame)
+		F.CreateBD(BNToastFrame.TooltipFrame)
+		BNToastFrameCloseButton:SetAlpha(0)
 
 		-- Battletag invite frame
 
@@ -3687,7 +3693,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		MerchantNextPageButton:GetRegions():Hide()
 		select(2, MerchantPrevPageButton:GetRegions()):Hide()
 		select(2, MerchantNextPageButton:GetRegions()):Hide()
-		BNToastFrameCloseButton:SetAlpha(0)
 		LFDQueueFrameRandomScrollFrameScrollBackground:Hide()
 		ChannelFrameDaughterFrameCorner:Hide()
 		LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
