@@ -43,11 +43,11 @@ C.media = {
 C.defaults = {
 	["alpha"] = 0.5,
 	["bags"] = true,
-	["buttonColour"] = {.3, .3, .3, .3},
-	["buttonColourGradient"] = true,
+	["buttonGradientColour"] = {.3, .3, .3, .3},
+	["buttonSolidColour"] = {.2, .2, .2, 1},
+	["useButtonGradientColour"] = true,
 	["chatBubbles"] = true,
 	["enableFont"] = true,
-	["gradientAlpha"] = {"VERTICAL", 0, 0, 0, .3, .35, .35, .35, .35},
 	["loot"] = true,
 	["useCustomColour"] = false,
 		["customColour"] = {r = 1, g = 1, b = 1},
@@ -128,7 +128,7 @@ F.CreateGradient = function(f)
 	local tex = f:CreateTexture(nil, "BORDER")
 	tex:SetPoint("TOPLEFT", 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", -1, 1)
-	tex:SetTexture(buttonColourGradient and C.media.gradient or C.media.backdrop)
+	tex:SetTexture(useButtonGradientColour and C.media.gradient or C.media.backdrop)
 	tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
 
 	return tex
@@ -137,7 +137,7 @@ end
 local function colourButton(f)
 	if not f:IsEnabled() then return end
 
-	if buttonColourGradient then
+	if useButtonGradientColour then
 		f:SetBackdropColor(r, g, b, .3)
 	else
 		f.tex:SetVertexColor(r / 4, g / 4, b / 4)
@@ -147,7 +147,7 @@ local function colourButton(f)
 end
 
 local function clearButton(f)
-	if buttonColourGradient then
+	if useButtonGradientColour then
 		f:SetBackdropColor(0, 0, 0, 0)
 	else
 		f.tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
@@ -651,8 +651,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		alpha = AuroraConfig.alpha
-		buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonColour)
-		buttonColourGradient = AuroraConfig.buttonColourGradient
+		useButtonGradientColour = AuroraConfig.useButtonGradientColour
+
+		if useButtonGradientColour then
+			buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonGradientColour)
+		else
+			buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonSolidColour)
+		end
 
 		if AuroraConfig.useCustomColour then
 			r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
