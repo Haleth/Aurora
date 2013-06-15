@@ -1410,6 +1410,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		hooksecurefunc("SpellButton_UpdateButton", function(self)
+			if SpellBookFrame.bookType == BOOKTYPE_PROFESSION then return end
+
 			local slot, slotType = SpellBook_GetSpellBookSlot(self);
 			local name = self:GetName();
 			local subSpellString = _G[name.."SubSpellName"]
