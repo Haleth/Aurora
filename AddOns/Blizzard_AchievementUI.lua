@@ -85,8 +85,6 @@ C.modules["Blizzard_AchievementUI"] = function()
 		end
 	end
 
-	local gradOr, startR, startG, startB, startAlpha, endR, endG, endB, endAlpha = unpack(AuroraConfig.gradientAlpha)
-
 	for i = 1, 7 do
 		local bu = _G["AchievementFrameAchievementsContainerButton"..i]
 		bu:DisableDrawLayer("BORDER")
