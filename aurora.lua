@@ -747,7 +747,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Input frames ]]
 
-		local inputs = {"AddFriendNameEditBox", "SendMailNameEditBox", "SendMailSubjectEditBox", "SendMailMoneyGold", "SendMailMoneySilver", "SendMailMoneyCopper", "GearManagerDialogPopupEditBox", "HelpFrameKnowledgebaseSearchBox", "ChannelFrameDaughterFrameChannelName", "ChannelFrameDaughterFrameChannelPassword", "BagItemSearchBox", "BankItemSearchBox", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame"}
+		local inputs = {"AddFriendNameEditBox", "GearManagerDialogPopupEditBox", "HelpFrameKnowledgebaseSearchBox", "ChannelFrameDaughterFrameChannelName", "ChannelFrameDaughterFrameChannelPassword", "BagItemSearchBox", "BankItemSearchBox", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame"}
 		for i = 1, #inputs do
 			local input = _G[inputs[i]]
 			if input then
@@ -1086,6 +1086,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		bgmoney:SetFrameLevel(OpenMailMoneyButton:GetFrameLevel()-1)
 		F.CreateBD(bgmoney)
 
+		SendMailSubjectEditBox:SetPoint("TOPLEFT", SendMailNameEditBox, "BOTTOMLEFT", 0, -1)
+
 		for i = 1, INBOXITEMS_TO_DISPLAY do
 			local it = _G["MailItem"..i]
 			local bu = _G["MailItem"..i.."Button"]
@@ -1147,6 +1149,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.ReskinPortraitFrame(MailFrame, true)
 		F.ReskinPortraitFrame(OpenMailFrame, true)
+		F.ReskinPortraitFrame(MailFrame, true)
+		F.ReskinPortraitFrame(OpenMailFrame, true)
+		F.ReskinInput(SendMailNameEditBox, 20)
+		F.ReskinInput(SendMailSubjectEditBox)
+		F.ReskinInput(SendMailMoneyGold)
+		F.ReskinInput(SendMailMoneySilver)
+		F.ReskinInput(SendMailMoneyCopper)
 
 		-- Currency frame
 
@@ -2212,6 +2221,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			line:SetPoint("RIGHT", ic, 1, 0)
 			F.CreateBD(line)
 		end
+
+		QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
 
 		for i = 1, MAX_NUM_ITEMS do
 			local bu = _G["QuestInfoItem"..i]
