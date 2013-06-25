@@ -45,5 +45,6 @@ FrameXML\Fonts.lua
 FrameXML\LFDFrame.lua
 FrameXML\LFGFrame.lua
 FrameXML\PVEFrame.lua
+FrameXML\QueueStatusFrame.lua
 FrameXML\RolePoll.lua
 FrameXML\StaticPopup.lua
