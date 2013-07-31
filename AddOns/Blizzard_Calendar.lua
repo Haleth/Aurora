@@ -114,7 +114,7 @@ C.modules["Blizzard_Calendar"] = function()
 
 		local tcoords = CLASS_ICON_TCOORDS[class]
 		local ic = bu:GetNormalTexture()
-		ic:SetTexCoord(tcoords[1] + 0.018, tcoords[2] - 0.025, tcoords[3] + 0.018, tcoords[4] - 0.025)
+		ic:SetTexCoord(tcoords[1] + 0.022, tcoords[2] - 0.025, tcoords[3] + 0.022, tcoords[4] - 0.025)
 	end
 
 	local bd = CreateFrame("Frame", nil, CalendarFilterFrame)
