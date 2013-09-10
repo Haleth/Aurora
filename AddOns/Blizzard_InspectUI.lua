@@ -2,9 +2,6 @@ local F, C = unpack(select(2, ...))
 
 C.modules["Blizzard_InspectUI"] = function()
 		InspectModelFrame:DisableDrawLayer("OVERLAY")
-		InspectPVPTeam1:DisableDrawLayer("BACKGROUND")
-		InspectPVPTeam2:DisableDrawLayer("BACKGROUND")
-		InspectPVPTeam3:DisableDrawLayer("BACKGROUND")
 
 		InspectTalentFrame:GetRegions():Hide()
 		select(2, InspectTalentFrame:GetRegions()):Hide()
@@ -12,8 +9,6 @@ C.modules["Blizzard_InspectUI"] = function()
 		for i = 1, 5 do
 			select(i, InspectModelFrame:GetRegions()):Hide()
 		end
-		InspectPVPFrameBG:SetAlpha(0)
-		InspectPVPFrameBottom:SetAlpha(0)
 		select(9, InspectMainHandSlot:GetRegions()):Hide()
 
 		local slots = {

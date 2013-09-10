@@ -700,7 +700,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Simple backdrops ]]
 
-		local bds = {"AutoCompleteBox", "TicketStatusFrameButton", "GearManagerDialogPopup", "TokenFramePopup", "RaidInfoFrame", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog"}
+		local bds = {"AutoCompleteBox", "TicketStatusFrameButton", "GearManagerDialogPopup", "TokenFramePopup", "RaidInfoFrame", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog", "QueueStatusFrame"}
 
 		for i = 1, #bds do
 			local bd = _G[bds[i]]
@@ -793,7 +793,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Radio buttons ]]
 
-		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton", "ReportPlayerNameDialogArenaTeamNameCheckButton", "SendMailSendMoneyButton", "SendMailCODButton"}
+		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton", "SendMailSendMoneyButton", "SendMailCODButton"}
 		for i = 1, #radiobuttons do
 			local radiobutton = _G[radiobuttons[i]]
 			if radiobutton then
@@ -1253,100 +1253,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinScroll(ReputationListScrollFrameScrollBar)
 
 		select(3, ReputationDetailFrame:GetRegions()):Hide()
-
-		-- Raid Finder
-
-		RaidFinderFrameBottomInset:DisableDrawLayer("BORDER")
-		RaidFinderFrameBottomInsetBg:Hide()
-		RaidFinderFrameBtnCornerRight:Hide()
-		RaidFinderFrameButtonBottomBorder:Hide()
-		RaidFinderQueueFrameScrollFrameScrollBackground:Hide()
-		RaidFinderQueueFrameScrollFrameScrollBackgroundTopLeft:Hide()
-		RaidFinderQueueFrameScrollFrameScrollBackgroundBottomRight:Hide()
-
-		for i = 1, LFD_MAX_REWARDS do
-			local button = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i]
-
-			if button then
-				local icon = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i.."IconTexture"]
-				local cta = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i.."ShortageBorder"]
-				local count = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i.."Count"]
-				local na = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i.."NameFrame"]
-
-				F.CreateBG(icon)
-				icon:SetTexCoord(.08, .92, .08, .92)
-				icon:SetDrawLayer("OVERLAY")
-				count:SetDrawLayer("OVERLAY")
-				na:SetTexture(0, 0, 0, .25)
-				na:SetSize(118, 39)
-				cta:SetAlpha(0)
-
-				button.bg2 = CreateFrame("Frame", nil, button)
-				button.bg2:SetPoint("TOPLEFT", na, "TOPLEFT", 10, 0)
-				button.bg2:SetPoint("BOTTOMRIGHT", na, "BOTTOMRIGHT")
-				F.CreateBD(button.bg2, 0)
-			end
-		end
-
-		F.ReskinScroll(RaidFinderQueueFrameScrollFrameScrollBar)
-
-		-- Scenario finder
-
-		ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
-		ScenarioFinderFrame.TopTileStreaks:Hide()
-		ScenarioFinderFrameBtnCornerRight:Hide()
-		ScenarioFinderFrameButtonBottomBorder:Hide()
-		ScenarioQueueFrameRandomScrollFrameScrollBackground:Hide()
-		ScenarioQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
-		ScenarioQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
-		ScenarioQueueFrameSpecificScrollFrameScrollBackgroundTopLeft:Hide()
-		ScenarioQueueFrameSpecificScrollFrameScrollBackgroundBottomRight:Hide()
-		ScenarioQueueFrame.Bg:Hide()
-		ScenarioFinderFrameInset:GetRegions():Hide()
-
-		ScenarioQueueFrameRandomScrollFrame:SetWidth(304)
-
-		hooksecurefunc("ScenarioQueueFrameRandom_UpdateFrame", function()
-			for i = 1, 2 do
-				local button = _G["ScenarioQueueFrameRandomScrollFrameChildFrameItem"..i]
-
-				if button and not button.styled then
-					local icon = _G["ScenarioQueueFrameRandomScrollFrameChildFrameItem"..i.."IconTexture"]
-					local cta = _G["ScenarioQueueFrameRandomScrollFrameChildFrameItem"..i.."ShortageBorder"]
-					local count = _G["ScenarioQueueFrameRandomScrollFrameChildFrameItem"..i.."Count"]
-					local na = _G["ScenarioQueueFrameRandomScrollFrameChildFrameItem"..i.."NameFrame"]
-
-					F.CreateBG(icon)
-					icon:SetTexCoord(.08, .92, .08, .92)
-					icon:SetDrawLayer("OVERLAY")
-					count:SetDrawLayer("OVERLAY")
-					na:SetTexture(0, 0, 0, .25)
-					na:SetSize(118, 39)
-					cta:SetAlpha(0)
-
-					button.bg2 = CreateFrame("Frame", nil, button)
-					button.bg2:SetPoint("TOPLEFT", na, "TOPLEFT", 10, 0)
-					button.bg2:SetPoint("BOTTOMRIGHT", na, "BOTTOMRIGHT")
-					F.CreateBD(button.bg2, 0)
-
-					button.styled = true
-				end
-			end
-		end)
-
-		local bonusValor = ScenarioQueueFrameRandomScrollFrameChildFrameBonusValor
-		bonusValor.Border:Hide()
-		bonusValor.Icon:SetTexCoord(.08, .92, .08, .92)
-		bonusValor.Icon:SetPoint("CENTER", bonusValor.Border, -3, 0)
-		bonusValor.Icon:SetSize(24, 24)
-		bonusValor.BonusText:SetPoint("LEFT", bonusValor.Border, "RIGHT", -5, -1)
-		F.CreateBG(bonusValor.Icon)
-
-		F.Reskin(ScenarioQueueFrameFindGroupButton)
-		F.Reskin(ScenarioQueueFrameRandomScrollFrameChildFrame.bonusRepFrame.ChooseButton)
-		F.ReskinDropDown(ScenarioQueueFrameTypeDropDown)
-		F.ReskinScroll(ScenarioQueueFrameRandomScrollFrameScrollBar)
-		F.ReskinScroll(ScenarioQueueFrameSpecificScrollFrameScrollBar)
 
 		-- Raid frame (social frame)
 
@@ -2014,17 +1920,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		-- Equipment flyout
-
-		local navFrame = EquipmentFlyoutFrame.NavigationFrame
-
-		EquipmentFlyoutFrameButtons.bg1:SetAlpha(0)
-		EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
-		Test2:Hide() -- wat
-
-		navFrame:SetWidth(204)
-		navFrame:SetPoint("TOPLEFT", EquipmentFlyoutFrameButtons, "BOTTOMLEFT", 1, 0)
-
 		hooksecurefunc("EquipmentFlyout_DisplayButton", function(button)
 			if not button.styled then
 				button:SetNormalTexture("")
@@ -2039,25 +1934,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if AuroraConfig.qualityColour then
 				local location = button.location
 				if not location then return end
+				if location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION then return end
 
-				local r, g, b
+				local id = EquipmentManager_GetItemInfoByLocation(location)
+				local _, _, quality = GetItemInfo(id)
+				local r, g, b = GetItemQualityColor(quality)
 
-				if location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION then
-					r, g, b = 0, 0, 0
-				else
-					local _, _, quality = GetItemInfo(EquipmentManager_GetItemInfoByLocation(location))
-					r, g, b = GetItemQualityColor(quality)
-
-					if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
-				end
+				if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
 
 				button.bg:SetVertexColor(r, g, b)
 			end
 		end)
-
-		F.CreateBD(EquipmentFlyoutFrame.NavigationFrame)
-		F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.PrevButton, "left")
-		F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.NextButton, "right")
 
 		-- Quest Frame
 
@@ -2438,315 +2325,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		hooksecurefunc("UIParent_ManageFramePositions", CaptureBar)
 
-		-- Achievement popup
-
-		local function fixBg(f)
-			if f:GetObjectType() == "AnimationGroup" then
-				f = f:GetParent()
-			end
-			f.bg:SetBackdropColor(0, 0, 0, AuroraConfig.alpha)
-		end
-
-		hooksecurefunc("AlertFrame_FixAnchors", function()
-			for i = 1, MAX_ACHIEVEMENT_ALERTS do
-				local frame = _G["AchievementAlertFrame"..i]
-
-				if frame then
-					frame:SetAlpha(1)
-					frame.SetAlpha = F.dummy
-
-					local ic = _G["AchievementAlertFrame"..i.."Icon"]
-					local texture = _G["AchievementAlertFrame"..i.."IconTexture"]
-					local guildName = _G["AchievementAlertFrame"..i.."GuildName"]
-
-					ic:ClearAllPoints()
-					ic:SetPoint("LEFT", frame, "LEFT", -26, 0)
-
-					if not frame.bg then
-						frame.bg = CreateFrame("Frame", nil, frame)
-						frame.bg:SetPoint("TOPLEFT", texture, -10, 12)
-						frame.bg:SetPoint("BOTTOMRIGHT", texture, "BOTTOMRIGHT", 240, -12)
-						frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
-						F.CreateBD(frame.bg)
-
-						frame:HookScript("OnEnter", fixBg)
-						frame:HookScript("OnShow", fixBg)
-						frame.animIn:HookScript("OnFinished", fixBg)
-						F.CreateBD(frame.bg)
-
-						F.CreateBG(texture)
-
-						_G["AchievementAlertFrame"..i.."Background"]:Hide()
-						_G["AchievementAlertFrame"..i.."IconOverlay"]:Hide()
-						_G["AchievementAlertFrame"..i.."GuildBanner"]:SetTexture("")
-						_G["AchievementAlertFrame"..i.."GuildBorder"]:SetTexture("")
-						_G["AchievementAlertFrame"..i.."OldAchievement"]:SetTexture("")
-
-						guildName:ClearAllPoints()
-						guildName:SetPoint("TOPLEFT", 50, -14)
-						guildName:SetPoint("TOPRIGHT", -50, -14)
-
-						_G["AchievementAlertFrame"..i.."Unlocked"]:SetTextColor(1, 1, 1)
-						_G["AchievementAlertFrame"..i.."Unlocked"]:SetShadowOffset(1, -1)
-					end
-
-					frame.glow:Hide()
-					frame.shine:Hide()
-					frame.glow.Show = F.dummy
-					frame.shine.Show = F.dummy
-
-					texture:SetTexCoord(.08, .92, .08, .92)
-
-					if guildName:IsShown() then
-						_G["AchievementAlertFrame"..i.."Shield"]:SetPoint("TOPRIGHT", -10, -22)
-					end
-				end
-			end
-		end)
-
-		-- Guild challenges
-
-		local challenge = CreateFrame("Frame", nil, GuildChallengeAlertFrame)
-		challenge:SetPoint("TOPLEFT", 8, -12)
-		challenge:SetPoint("BOTTOMRIGHT", -8, 13)
-		challenge:SetFrameLevel(GuildChallengeAlertFrame:GetFrameLevel()-1)
-		F.CreateBD(challenge)
-		F.CreateBG(GuildChallengeAlertFrameEmblemBackground)
-
-		GuildChallengeAlertFrameGlow:SetTexture("")
-		GuildChallengeAlertFrameShine:SetTexture("")
-		GuildChallengeAlertFrameEmblemBorder:SetTexture("")
-
-		-- Dungeon completion rewards
-
-		local bg = CreateFrame("Frame", nil, DungeonCompletionAlertFrame1)
-		bg:SetPoint("TOPLEFT", 6, -14)
-		bg:SetPoint("BOTTOMRIGHT", -6, 6)
-		bg:SetFrameLevel(DungeonCompletionAlertFrame1:GetFrameLevel()-1)
-		F.CreateBD(bg)
-
-		DungeonCompletionAlertFrame1DungeonTexture:SetDrawLayer("ARTWORK")
-		DungeonCompletionAlertFrame1DungeonTexture:SetTexCoord(.02, .98, .02, .98)
-		F.CreateBG(DungeonCompletionAlertFrame1DungeonTexture)
-
-		DungeonCompletionAlertFrame1.dungeonArt1:SetAlpha(0)
-		DungeonCompletionAlertFrame1.dungeonArt2:SetAlpha(0)
-		DungeonCompletionAlertFrame1.dungeonArt3:SetAlpha(0)
-		DungeonCompletionAlertFrame1.dungeonArt4:SetAlpha(0)
-		DungeonCompletionAlertFrame1.raidArt:SetAlpha(0)
-
-		DungeonCompletionAlertFrame1.dungeonTexture:SetPoint("BOTTOMLEFT", DungeonCompletionAlertFrame1, "BOTTOMLEFT", 13, 13)
-		DungeonCompletionAlertFrame1.dungeonTexture.SetPoint = F.dummy
-
-		DungeonCompletionAlertFrame1.shine:Hide()
-		DungeonCompletionAlertFrame1.shine.Show = F.dummy
-		DungeonCompletionAlertFrame1.glow:Hide()
-		DungeonCompletionAlertFrame1.glow.Show = F.dummy
-
-		hooksecurefunc("DungeonCompletionAlertFrame_ShowAlert", function()
-			local bu = DungeonCompletionAlertFrame1Reward1
-			local index = 1
-
-			while bu do
-				if not bu.styled then
-					_G["DungeonCompletionAlertFrame1Reward"..index.."Border"]:Hide()
-
-					bu.texture:SetTexCoord(.08, .92, .08, .92)
-					F.CreateBG(bu.texture)
-
-					bu.styled = true
-				end
-
-				index = index + 1
-				bu = _G["DungeonCompletionAlertFrame1Reward"..index]
-			end
-		end)
-
-		-- Challenge popup
-
-		hooksecurefunc("AlertFrame_SetChallengeModeAnchors", function()
-			local frame = ChallengeModeAlertFrame1
-
-			if frame then
-				frame:SetAlpha(1)
-				frame.SetAlpha = F.dummy
-
-				if not frame.bg then
-					frame.bg = CreateFrame("Frame", nil, frame)
-					frame.bg:SetPoint("TOPLEFT", ChallengeModeAlertFrame1DungeonTexture, -12, 12)
-					frame.bg:SetPoint("BOTTOMRIGHT", ChallengeModeAlertFrame1DungeonTexture, 243, -12)
-					frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
-					F.CreateBD(frame.bg)
-
-					frame:HookScript("OnEnter", fixBg)
-					frame:HookScript("OnShow", fixBg)
-					frame.animIn:HookScript("OnFinished", fixBg)
-
-					F.CreateBG(ChallengeModeAlertFrame1DungeonTexture)
-				end
-
-				frame:GetRegions():Hide()
-
-				ChallengeModeAlertFrame1Shine:Hide()
-				ChallengeModeAlertFrame1Shine.Show = F.dummy
-				ChallengeModeAlertFrame1GlowFrame:Hide()
-				ChallengeModeAlertFrame1GlowFrame.Show = F.dummy
-				ChallengeModeAlertFrame1Border:Hide()
-				ChallengeModeAlertFrame1Border.Show = F.dummy
-
-				ChallengeModeAlertFrame1DungeonTexture:SetTexCoord(.08, .92, .08, .92)
-			end
-		end)
-
-		-- Scenario alert
-
-		hooksecurefunc("AlertFrame_SetScenarioAnchors", function()
-			local frame = ScenarioAlertFrame1
-
-			if frame then
-				frame:SetAlpha(1)
-				frame.SetAlpha = F.dummy
-
-				if not frame.bg then
-					frame.bg = CreateFrame("Frame", nil, frame)
-					frame.bg:SetPoint("TOPLEFT", ScenarioAlertFrame1DungeonTexture, -12, 12)
-					frame.bg:SetPoint("BOTTOMRIGHT", ScenarioAlertFrame1DungeonTexture, 244, -12)
-					frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
-					F.CreateBD(frame.bg)
-
-					frame:HookScript("OnEnter", fixBg)
-					frame:HookScript("OnShow", fixBg)
-					frame.animIn:HookScript("OnFinished", fixBg)
-
-					F.CreateBG(ScenarioAlertFrame1DungeonTexture)
-					ScenarioAlertFrame1DungeonTexture:SetDrawLayer("OVERLAY")
-				end
-
-				frame:GetRegions():Hide()
-				select(3, frame:GetRegions()):Hide()
-
-				ScenarioAlertFrame1Shine:Hide()
-				ScenarioAlertFrame1Shine.Show = F.dummy
-				ScenarioAlertFrame1GlowFrame:Hide()
-				ScenarioAlertFrame1GlowFrame.Show = F.dummy
-
-				ScenarioAlertFrame1DungeonTexture:SetTexCoord(.08, .92, .08, .92)
-			end
-		end)
-
-		hooksecurefunc("ScenarioAlertFrame_ShowAlert", function()
-			local bu = ScenarioAlertFrame1Reward1
-			local index = 1
-
-			while bu do
-				if not bu.styled then
-					_G["ScenarioAlertFrame1Reward"..index.."Border"]:Hide()
-
-					bu.texture:SetTexCoord(.08, .92, .08, .92)
-					F.CreateBG(bu.texture)
-
-					bu.styled = true
-				end
-
-				index = index + 1
-				bu = _G["ScenarioAlertFrame1Reward"..index]
-			end
-		end)
-
-		-- Loot won alert
-
-		-- I still don't know why I can't parent bg to frame
-		local function showHideBg(self)
-			self.bg:SetShown(self:IsShown())
-		end
-
-		local function onUpdate(self)
-			self.bg:SetAlpha(self:GetAlpha())
-		end
-
-		hooksecurefunc("LootWonAlertFrame_SetUp", function(frame)
-			if not frame.bg then
-				frame.bg = CreateFrame("Frame", nil, UIParent)
-				frame.bg:SetPoint("TOPLEFT", frame, 10, -10)
-				frame.bg:SetPoint("BOTTOMRIGHT", frame, -10, 10)
-				frame.bg:SetFrameStrata("DIALOG")
-				frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
-				frame.bg:SetShown(frame:IsShown())
-				F.CreateBD(frame.bg)
-
-				frame:HookScript("OnShow", showHideBg)
-				frame:HookScript("OnHide", showHideBg)
-				frame:HookScript("OnUpdate", onUpdate)
-
-				frame.Background:Hide()
-				frame.IconBorder:Hide()
-				frame.glow:SetTexture("")
-				frame.shine:SetTexture("")
-
-				frame.Icon:SetTexCoord(.08, .92, .08, .92)
-				F.CreateBG(frame.Icon)
-			end
-		end)
-
-		-- Money won alert
-
-		hooksecurefunc("MoneyWonAlertFrame_SetUp", function(frame)
-			if not frame.bg then
-				frame.bg = CreateFrame("Frame", nil, UIParent)
-				frame.bg:SetPoint("TOPLEFT", frame, 10, -10)
-				frame.bg:SetPoint("BOTTOMRIGHT", frame, -10, 10)
-				frame.bg:SetFrameStrata("DIALOG")
-				frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
-				frame.bg:SetShown(frame:IsShown())
-				F.CreateBD(frame.bg)
-
-				frame:HookScript("OnShow", showHideBg)
-				frame:HookScript("OnHide", showHideBg)
-				frame:HookScript("OnUpdate", onUpdate)
-
-				frame.Background:Hide()
-				frame.IconBorder:Hide()
-
-				frame.Icon:SetTexCoord(.08, .92, .08, .92)
-				F.CreateBG(frame.Icon)
-			end
-		end)
-
-		-- Criteria alert
-
-		hooksecurefunc("CriteriaAlertFrame_ShowAlert", function()
-			for i = 1, MAX_ACHIEVEMENT_ALERTS do
-				local frame = _G["CriteriaAlertFrame"..i]
-				if frame and not frame.bg then
-					local icon = _G["CriteriaAlertFrame"..i.."IconTexture"]
-
-					frame.bg = CreateFrame("Frame", nil, UIParent)
-					frame.bg:SetPoint("TOPLEFT", icon, -6, 5)
-					frame.bg:SetPoint("BOTTOMRIGHT", icon, 236, -5)
-					frame.bg:SetFrameStrata("DIALOG")
-					frame.bg:SetFrameLevel(frame:GetFrameLevel()-1)
-					frame.bg:SetShown(frame:IsShown())
-					F.CreateBD(frame.bg)
-
-					frame:SetScript("OnShow", showHideBg)
-					frame:SetScript("OnHide", showHideBg)
-					frame:HookScript("OnUpdate", onUpdate)
-
-					_G["CriteriaAlertFrame"..i.."Background"]:Hide()
-					_G["CriteriaAlertFrame"..i.."IconOverlay"]:Hide()
-					frame.glow:Hide()
-					frame.glow.Show = F.dummy
-					frame.shine:Hide()
-					frame.shine.Show = F.dummy
-
-					_G["CriteriaAlertFrame"..i.."Unlocked"]:SetTextColor(.9, .9, .9)
-
-					icon:SetTexCoord(.08, .92, .08, .92)
-					F.CreateBG(icon)
-				end
-			end
-		end)
-
 		-- Help frame
 
 		for i = 1, 15 do
@@ -2853,7 +2431,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			Graphics_Quality.SetBackdrop = F.dummy
 
-			local checkboxes = {"Advanced_UseUIScale", "Advanced_MaxFPSCheckBox", "Advanced_MaxFPSBKCheckBox", "Advanced_DesktopGamma", "NetworkOptionsPanelOptimizeSpeed", "NetworkOptionsPanelUseIPv6", "AudioOptionsSoundPanelEnableSound", "AudioOptionsSoundPanelSoundEffects", "AudioOptionsSoundPanelErrorSpeech", "AudioOptionsSoundPanelEmoteSounds", "AudioOptionsSoundPanelPetSounds", "AudioOptionsSoundPanelMusic", "AudioOptionsSoundPanelLoopMusic", "AudioOptionsSoundPanelPetBattleMusic", "AudioOptionsSoundPanelAmbientSounds", "AudioOptionsSoundPanelSoundInBG", "AudioOptionsSoundPanelReverb", "AudioOptionsSoundPanelHRTF", "AudioOptionsSoundPanelEnableDSPs", "AudioOptionsSoundPanelUseHardware", "AudioOptionsVoicePanelEnableVoice", "AudioOptionsVoicePanelEnableMicrophone", "AudioOptionsVoicePanelPushToTalkSound"}
+			local checkboxes = {"Advanced_UseUIScale", "Advanced_MaxFPSCheckBox", "Advanced_MaxFPSBKCheckBox", "Advanced_DesktopGamma", "NetworkOptionsPanelOptimizeSpeed", "NetworkOptionsPanelUseIPv6", "AudioOptionsSoundPanelEnableSound", "AudioOptionsSoundPanelSoundEffects", "AudioOptionsSoundPanelErrorSpeech", "AudioOptionsSoundPanelEmoteSounds", "AudioOptionsSoundPanelPetSounds", "AudioOptionsSoundPanelMusic", "AudioOptionsSoundPanelLoopMusic", "AudioOptionsSoundPanelPetBattleMusic", "AudioOptionsSoundPanelAmbientSounds", "AudioOptionsSoundPanelSoundInBG", "AudioOptionsSoundPanelReverb", "AudioOptionsSoundPanelHRTF", "AudioOptionsSoundPanelEnableDSPs", "AudioOptionsVoicePanelEnableVoice", "AudioOptionsVoicePanelEnableMicrophone", "AudioOptionsVoicePanelPushToTalkSound"}
 			for i = 1, #checkboxes do
 				F.ReskinCheck(_G[checkboxes[i]])
 			end
@@ -3590,32 +3168,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(PetBattleQueueReadyFrame.AcceptButton)
 		F.Reskin(PetBattleQueueReadyFrame.DeclineButton)
 
-		-- PVP Banner Frame
-
-		for i = 1, 3 do
-			for j = 1, 2 do
-				select(i, _G["PVPBannerFrameCustomization"..j]:GetRegions()):Hide()
-			end
-		end
-
-		for i = 18, 28 do
-			select(i, PVPBannerFrame:GetRegions()):SetTexture("")
-		end
-
-		PVPBannerFrameCustomizationBorder:Hide()
-
-		F.ReskinPortraitFrame(PVPBannerFrame, true)
-		F.Reskin(select(6, PVPBannerFrame:GetChildren()))
-		F.Reskin(PVPBannerFrameAcceptButton)
-		F.Reskin(PVPColorPickerButton1)
-		F.Reskin(PVPColorPickerButton2)
-		F.Reskin(PVPColorPickerButton3)
-		F.ReskinInput(PVPBannerFrameEditBox, 20)
-		F.ReskinArrow(PVPBannerFrameCustomization1LeftButton, "left")
-		F.ReskinArrow(PVPBannerFrameCustomization1RightButton, "right")
-		F.ReskinArrow(PVPBannerFrameCustomization2LeftButton, "left")
-		F.ReskinArrow(PVPBannerFrameCustomization2RightButton, "right")
-
 		-- PVP Ready Dialog
 
 		local PVPReadyDialog = PVPReadyDialog
@@ -3666,7 +3218,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		local bglayers = {"SpellBookFrame", "LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "LFRQueueFrame", "LFRBrowseFrame", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
+		local bglayers = {"SpellBookFrame", "LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "LFRQueueFrame", "LFRBrowseFrame", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "EquipmentFlyoutFrameButtons", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
 		for i = 1, #bglayers do
 			_G[bglayers[i]]:DisableDrawLayer("BACKGROUND")
 		end
@@ -3685,6 +3237,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 			select(i, ScrollOfResurrectionFrameNoteFrame:GetRegions()):Hide()
 		end
+		EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
 		OpenStationeryBackgroundLeft:Hide()
 		OpenStationeryBackgroundRight:Hide()
 		for i = 4, 7 do
@@ -3711,6 +3264,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			select(i, AddFriendNoteFrame:GetRegions()):Hide()
 			select(i, ReportPlayerNameDialogCommentFrame:GetRegions()):Hide()
 			select(i, ReportCheatingDialogCommentFrame:GetRegions()):Hide()
+			select(i, QueueStatusFrame:GetRegions()):Hide()
 		end
 		HelpFrameHeader:Hide()
 		ReadyCheckPortrait:SetAlpha(0)
