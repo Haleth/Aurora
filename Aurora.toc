@@ -51,4 +51,5 @@ FrameXML\QueueStatusFrame.lua
 FrameXML\RaidFinder.lua
 FrameXML\RolePoll.lua
 FrameXML\ScenarioFinder.lua
+FrameXML\SpellBookFrame.lua
 FrameXML\StaticPopup.lua

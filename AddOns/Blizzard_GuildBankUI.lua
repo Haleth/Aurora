@@ -99,10 +99,9 @@ C.modules["Blizzard_GuildBankUI"] = function()
 
 		bu:SetCheckedTexture(C.media.checked)
 		F.CreateBG(bu)
-		F.CreateSD(bu, 5, 0, 0, 0, 1, 1)
 
 		local a1, p, a2, x, y = bu:GetPoint()
-		bu:SetPoint(a1, p, a2, x + 11, y)
+		bu:SetPoint(a1, p, a2, x + 1, y)
 
 		ic:SetTexCoord(.08, .92, .08, .92)
 		tb:GetRegions():Hide()

@@ -35,7 +35,6 @@ C.media = {
 	["backdrop"] = "Interface\\ChatFrame\\ChatFrameBackground",
 	["checked"] = "Interface\\AddOns\\Aurora\\media\\CheckButtonHilight",
 	["font"] = "Interface\\AddOns\\Aurora\\media\\font.ttf",
-	["glow"] = "Interface\\AddOns\\Aurora\\media\\glow",
 	["gradient"] = "Interface\\AddOns\\Aurora\\media\\gradient",
 	["roleIcons"] = "Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES",
 }
@@ -104,20 +103,6 @@ F.CreateBG = function(frame)
 	bg:SetVertexColor(0, 0, 0)
 
 	return bg
-end
-
-F.CreateSD = function(parent, size, r, g, b, alpha, offset)
-	local sd = CreateFrame("Frame", nil, parent)
-	sd.size = size or 5
-	sd.offset = offset or 0
-	sd:SetBackdrop({
-		edgeFile = C.media.glow,
-		edgeSize = sd.size,
-	})
-	sd:SetPoint("TOPLEFT", parent, -sd.size - 1 - sd.offset, sd.size + 1 + sd.offset)
-	sd:SetPoint("BOTTOMRIGHT", parent, sd.size + 1 + sd.offset, -sd.size - 1 - sd.offset)
-	sd:SetBackdropBorderColor(r or 0, g or 0, b or 0)
-	sd:SetAlpha(alpha or 1)
 end
 
 -- we assign these after loading variables for caching
@@ -342,7 +327,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 	f:SetSize(17, 17)
 
 	if not a1 then
-		f:SetPoint("TOPRIGHT", -4, -4)
+		f:SetPoint("TOPRIGHT", -6, -6)
 	else
 		f:ClearAllPoints()
 		f:SetPoint(a1, p, a2, x, y)
@@ -548,7 +533,6 @@ F.SetBD = function(f, x, y, x2, y2)
 	end
 	bg:SetFrameLevel(0)
 	F.CreateBD(bg)
-	F.CreateSD(bg)
 end
 
 F.ReskinPortraitFrame = function(f, isButtonFrame)
@@ -578,7 +562,6 @@ F.ReskinPortraitFrame = function(f, isButtonFrame)
 	end
 
 	F.CreateBD(f)
-	F.CreateSD(f)
 	F.ReskinClose(_G[name.."CloseButton"])
 end
 
@@ -807,14 +790,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.SetBD(DressUpFrame, 10, -12, -34, 74)
 		F.SetBD(HelpFrame)
-		F.SetBD(SpellBookFrame)
 		F.SetBD(RaidParentFrame)
 
 		local FrameBDs = {"GameMenuFrame", "InterfaceOptionsFrame", "VideoOptionsFrame", "AudioOptionsFrame", "ChatConfigFrame", "StackSplitFrame", "AddFriendFrame", "FriendsFriendsFrame", "ColorPickerFrame", "ReadyCheckFrame", "GuildInviteFrame", "ChannelFrameDaughterFrame"}
 		for i = 1, #FrameBDs do
 			local FrameBD = _G[FrameBDs[i]]
 			F.CreateBD(FrameBD)
-			F.CreateSD(FrameBD)
 		end
 
 		-- Dropdown lists
@@ -1065,10 +1046,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		OpenMailHorizontalBarLeft:Hide()
 		select(18, MailFrame:GetRegions()):Hide()
 		select(26, OpenMailFrame:GetRegions()):Hide()
+		for i = 4, 7 do
+			select(i, SendMailFrame:GetRegions()):Hide()
+		end
 
 		OpenMailLetterButton:SetNormalTexture("")
 		OpenMailLetterButton:SetPushedTexture("")
 		OpenMailLetterButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+
+		for i = 1, 2 do
+			F.ReskinTab(_G["MailFrameTab"..i])
+		end
 
 		local bgmail = CreateFrame("Frame", nil, OpenMailLetterButton)
 		bgmail:SetPoint("TOPLEFT", -1, 1)
@@ -1287,10 +1275,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			tab:SetCheckedTexture(C.media.checked)
 			if i == 1 then
 				local a1, p, a2, x, y = tab:GetPoint()
-				tab:SetPoint(a1, p, a2, x + 11, y)
+				tab:SetPoint(a1, p, a2, x + 2, y)
 			end
 			F.CreateBG(tab)
-			F.CreateSD(tab, 5, 0, 0, 0, 1, 1)
 			select(2, tab:GetRegions()):SetTexCoord(.08, .92, .08, .92)
 		end
 
@@ -1312,140 +1299,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			button.enableButton:GetCheckedTexture():SetDesaturated(true)
 		end)
-
-		-- Spellbook frame
-
-		for i = 1, SPELLS_PER_PAGE do
-			local bu = _G["SpellButton"..i]
-			local ic = _G["SpellButton"..i.."IconTexture"]
-
-			_G["SpellButton"..i.."SlotFrame"]:SetAlpha(0)
-			_G["SpellButton"..i.."Highlight"]:SetAlpha(0)
-
-			bu.EmptySlot:SetAlpha(0)
-			bu.TextBackground:Hide()
-			bu.TextBackground2:Hide()
-			bu.UnlearnedFrame:SetAlpha(0)
-
-			bu:SetCheckedTexture("")
-			bu:SetPushedTexture("")
-
-			ic:SetTexCoord(.08, .92, .08, .92)
-
-			ic.bg = F.CreateBG(bu)
-		end
-
-		hooksecurefunc("SpellButton_UpdateButton", function(self)
-			if SpellBookFrame.bookType == BOOKTYPE_PROFESSION then return end
-
-			local slot, slotType = SpellBook_GetSpellBookSlot(self);
-			local name = self:GetName();
-			local subSpellString = _G[name.."SubSpellName"]
-
-			local isOffSpec = self.offSpecID ~= 0 and SpellBookFrame.bookType == BOOKTYPE_SPELL
-
-			subSpellString:SetTextColor(1, 1, 1)
-
-			if slotType == "FUTURESPELL" then
-				local level = GetSpellAvailableLevel(slot, SpellBookFrame.bookType)
-				if level and level > UnitLevel("player") then
-					self.SpellName:SetTextColor(.7, .7, .7)
-					subSpellString:SetTextColor(.7, .7, .7)
-				end
-			else
-				if slotType == "SPELL" and isOffSpec then
-					subSpellString:SetTextColor(.7, .7, .7)
-				end
-			end
-
-			self.RequiredLevelString:SetTextColor(.7, .7, .7)
-
-			local ic = _G[name.."IconTexture"]
-			if not ic.bg then return end
-			if ic:IsShown() then
-				ic.bg:Show()
-			else
-				ic.bg:Hide()
-			end
-		end)
-
-		SpellBookSkillLineTab1:SetPoint("TOPLEFT", SpellBookSideTabsFrame, "TOPRIGHT", 11, -36)
-
-		hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
-			for i = 1, GetNumSpellTabs() do
-				local tab = _G["SpellBookSkillLineTab"..i]
-
-				if not tab.styled then
-					tab:GetRegions():Hide()
-					tab:SetCheckedTexture(C.media.checked)
-
-					F.CreateBG(tab)
-					F.CreateSD(tab, 5, 0, 0, 0, 1, 1)
-
-					tab:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
-
-					tab.styled = true
-				end
-			end
-		end)
-
-		local coreTabsSkinned = false
-		hooksecurefunc("SpellBookCoreAbilities_UpdateTabs", function()
-			if coreTabsSkinned then return end
-			coreTabsSkinned = true
-			for i = 1, GetNumSpecializations() do
-				local tab = SpellBookCoreAbilitiesFrame.SpecTabs[i]
-
-				tab:GetRegions():Hide()
-				tab:SetCheckedTexture(C.media.checked)
-
-				F.CreateBG(tab)
-				F.CreateSD(tab, 5, 0, 0, 0, 1, 1)
-
-				tab:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
-
-				if i == 1 then
-					tab:SetPoint("TOPLEFT", SpellBookCoreAbilitiesFrame, "TOPRIGHT", 11, -53)
-				end
-			end
-		end)
-
-		hooksecurefunc("SpellBook_UpdateCoreAbilitiesTab", function()
-			for i = 1, #SpellBookCoreAbilitiesFrame.Abilities do
-				local bu = SpellBook_GetCoreAbilityButton(i)
-				if not bu.reskinned then
-					bu.EmptySlot:SetAlpha(0)
-					bu.ActiveTexture:SetAlpha(0)
-					bu.FutureTexture:SetAlpha(0)
-					bu.RequiredLevel:SetTextColor(1, 1, 1)
-
-					bu.iconTexture:SetTexCoord(.08, .92, .08, .92)
-					bu.iconTexture.bg = F.CreateBG(bu.iconTexture)
-
-					if bu.FutureTexture:IsShown() then
-						bu.Name:SetTextColor(.8, .8, .8)
-						bu.InfoText:SetTextColor(.7, .7, .7)
-					else
-						bu.Name:SetTextColor(1, 1, 1)
-						bu.InfoText:SetTextColor(.9, .9, .9)
-					end
-					bu.reskinned = true
-				end
-			end
-		end)
-
-		hooksecurefunc("SpellBook_UpdateWhatHasChangedTab", function()
-			for i = 1, #SpellBookWhatHasChanged.ChangedItems do
-				local bu = SpellBook_GetWhatChangedItem(i)
-				bu.Ring:Hide()
-				select(2, bu:GetRegions()):Hide()
-				bu:SetTextColor(.9, .9, .9)
-				bu.Title:SetTextColor(1, 1, 1)
-			end
-		end)
-
-		SpellBookFrameTutorialButton.Ring:Hide()
-		SpellBookFrameTutorialButton:SetPoint("TOPLEFT", SpellBookFrame, "TOPLEFT", -12, 12)
 
 		-- Professions
 
@@ -1521,6 +1374,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.ReskinPortraitFrame(MerchantFrame, true)
 		F.ReskinDropDown(MerchantFrameLootFilter)
+
+		MerchantFrameTab1:ClearAllPoints()
+		MerchantFrameTab1:SetPoint("CENTER", MerchantFrame, "BOTTOMLEFT", 50, -14)
+		MerchantFrameTab2:SetPoint("LEFT", MerchantFrameTab1, "RIGHT", -15, 0)
+
+		for i = 1, 2 do
+			F.ReskinTab(_G["MerchantFrameTab"..i])
+		end
 
 		for i = 1, BUYBACK_ITEMS_PER_PAGE do
 			local button = _G["MerchantItem"..i]
@@ -1663,6 +1524,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Friends Frame
 
+		for i = 1, 4 do
+			F.ReskinTab(_G["FriendsFrameTab"..i])
+		end
+
 		FriendsFrameIcon:Hide()
 
 		for i = 1, FRIENDS_TO_DISPLAY do
@@ -1771,7 +1636,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		F.CreateBD(BattleTagInviteFrame)
-		F.CreateSD(BattleTagInviteFrame)
 		F.CreateBD(BattleTagInviteFrame.NoteFrame, .25)
 
 		local _, send, cancel = BattleTagInviteFrame:GetChildren()
@@ -1815,6 +1679,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		-- Character frame
+
+		do
+			local i = 1
+			while _G["CharacterFrameTab"..i] do
+				F.ReskinTab(_G["CharacterFrameTab"..i])
+				i = i + 1
+			end
+		end
 
 		F.ReskinPortraitFrame(CharacterFrame, true)
 
@@ -2598,7 +2470,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- Tutorial Frame
 
 		F.CreateBD(TutorialFrame)
-		F.CreateSD(TutorialFrame)
 
 		TutorialFrameBackground:Hide()
 		TutorialFrameBackground.Show = F.dummy
@@ -2638,7 +2509,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		LootHistoryFrame.ResizeButton:SetSize(32, 12)
 
 		F.CreateBD(LootHistoryFrame)
-		F.CreateSD(LootHistoryFrame)
 
 		F.ReskinClose(LootHistoryFrame.CloseButton)
 		F.ReskinScroll(LootHistoryFrameScrollFrameScrollBar)
@@ -2978,7 +2848,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		F.CreateBD(CinematicFrameCloseDialog)
-		F.CreateSD(CinematicFrameCloseDialog)
 		F.Reskin(CinematicFrameCloseDialogConfirmButton)
 		F.Reskin(CinematicFrameCloseDialogResumeButton)
 
@@ -3167,14 +3036,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		F.CreateBD(MovieFrame.CloseDialog)
-		F.CreateSD(MovieFrame.CloseDialog)
 		F.Reskin(MovieFrame.CloseDialog.ConfirmButton)
 		F.Reskin(MovieFrame.CloseDialog.ResumeButton)
 
 		-- Pet battle queue popup
 
 		F.CreateBD(PetBattleQueueReadyFrame)
-		F.CreateSD(PetBattleQueueReadyFrame)
 		F.CreateBG(PetBattleQueueReadyFrame.Art)
 		F.Reskin(PetBattleQueueReadyFrame.AcceptButton)
 		F.Reskin(PetBattleQueueReadyFrame.DeclineButton)
@@ -3221,7 +3088,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.CreateBD(PVPReadyDialog)
 		PVPReadyDialog.SetBackdrop = F.dummy
-		F.CreateSD(PVPReadyDialog)
 
 		F.Reskin(PVPReadyDialog.enterButton)
 		F.Reskin(PVPReadyDialog.leaveButton)
@@ -3229,15 +3095,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		local bglayers = {"SpellBookFrame", "LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "LFRQueueFrame", "LFRBrowseFrame", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "EquipmentFlyoutFrameButtons", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
+		local bglayers = {"LFDParentFrame", "LFDParentFrameInset", "WhoFrameColumnHeader1", "WhoFrameColumnHeader2", "WhoFrameColumnHeader3", "WhoFrameColumnHeader4", "RaidInfoInstanceLabel", "RaidInfoIDLabel", "CharacterFrameInsetRight", "LFRQueueFrame", "LFRBrowseFrame", "HelpFrameMainInset", "CharacterModelFrame", "HelpFrame", "HelpFrameLeftInset", "EquipmentFlyoutFrameButtons", "VideoOptionsFrameCategoryFrame", "InterfaceOptionsFrameCategories", "InterfaceOptionsFrameAddOns", "RaidParentFrame"}
 		for i = 1, #bglayers do
 			_G[bglayers[i]]:DisableDrawLayer("BACKGROUND")
 		end
-		local borderlayers = {"WhoFrameListInset", "WhoFrameEditBoxInset", "ChannelFrameLeftInset", "ChannelFrameRightInset", "SpellBookFrame", "SpellBookFrameInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrameInsetRight", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "CharacterModelFrame", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "RaidParentFrame", "RaidParentFrameInset", "RaidFinderFrameRoleInset", "LFRQueueFrameRoleInset", "LFRQueueFrameListInset", "LFRQueueFrameCommentInset"}
+		local borderlayers = {"WhoFrameListInset", "WhoFrameEditBoxInset", "ChannelFrameLeftInset", "ChannelFrameRightInset", "LFDParentFrame", "LFDParentFrameInset", "CharacterFrameInsetRight", "HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "CharacterModelFrame", "VideoOptionsFramePanelContainer", "InterfaceOptionsFramePanelContainer", "RaidParentFrame", "RaidParentFrameInset", "RaidFinderFrameRoleInset", "LFRQueueFrameRoleInset", "LFRQueueFrameListInset", "LFRQueueFrameCommentInset"}
 		for i = 1, #borderlayers do
 			_G[borderlayers[i]]:DisableDrawLayer("BORDER")
 		end
-		local overlayers = {"SpellBookFrame", "LFDParentFrame", "CharacterModelFrame"}
+		local overlayers = {"LFDParentFrame", "CharacterModelFrame"}
 		for i = 1, #overlayers do
 			_G[overlayers[i]]:DisableDrawLayer("OVERLAY")
 		end
@@ -3251,9 +3117,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
 		OpenStationeryBackgroundLeft:Hide()
 		OpenStationeryBackgroundRight:Hide()
-		for i = 4, 7 do
-			select(i, SendMailFrame:GetRegions()):Hide()
-		end
 		SendStationeryBackgroundLeft:Hide()
 		SendStationeryBackgroundRight:Hide()
 		DressUpFramePortrait:Hide()
@@ -3523,7 +3386,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 		LFDQueueFrameSpecificListScrollFrameScrollBarScrollDownButton:SetPoint("TOP", LFDQueueFrameSpecificListScrollFrameScrollBar, "BOTTOM", 0, 2)
 		LFDQueueFrameRandomScrollFrameScrollBarScrollDownButton:SetPoint("TOP", LFDQueueFrameRandomScrollFrameScrollBar, "BOTTOM", 0, 2)
-		MerchantFrameTab2:SetPoint("LEFT", MerchantFrameTab1, "RIGHT", -15, 0)
 		SendMailMoneySilver:SetPoint("LEFT", SendMailMoneyGold, "RIGHT", 1, 0)
 		SendMailMoneyCopper:SetPoint("LEFT", SendMailMoneySilver, "RIGHT", 1, 0)
 		WhoFrameWhoButton:SetPoint("RIGHT", WhoFrameAddFriendButton, "LEFT", -1, 0)
@@ -3531,24 +3393,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		FriendsFrameTitleText:SetPoint("TOP", FriendsFrame, "TOP", 0, -8)
 		VideoOptionsFrameOkay:SetPoint("BOTTOMRIGHT", VideoOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
 		InterfaceOptionsFrameOkay:SetPoint("BOTTOMRIGHT", InterfaceOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
-
-		-- [[ Tabs ]]
-
-		for i = 1, 5 do
-			F.ReskinTab(_G["SpellBookFrameTabButton"..i])
-		end
-
-		for i = 1, 4 do
-			F.ReskinTab(_G["FriendsFrameTab"..i])
-			if _G["CharacterFrameTab"..i] then
-				F.ReskinTab(_G["CharacterFrameTab"..i])
-			end
-		end
-
-		for i = 1, 2 do
-			F.ReskinTab(_G["MerchantFrameTab"..i])
-			F.ReskinTab(_G["MailFrameTab"..i])
-		end
 
 		-- [[ Buttons ]]
 
@@ -3564,7 +3408,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		if IsAddOnLoaded("ACP") then F.Reskin(GameMenuButtonAddOns) end
 
-		local closebuttons = {"SpellBookFrameCloseButton", "HelpFrameCloseButton", "RaidInfoCloseButton", "ItemRefCloseButton", "TokenFramePopupCloseButton", "ChannelFrameDaughterFrameDetailCloseButton", "RaidParentFrameCloseButton", "SideDressUpModelCloseButton"}
+		local closebuttons = {"HelpFrameCloseButton", "RaidInfoCloseButton", "ItemRefCloseButton", "TokenFramePopupCloseButton", "ChannelFrameDaughterFrameDetailCloseButton", "RaidParentFrameCloseButton", "SideDressUpModelCloseButton"}
 		for i = 1, #closebuttons do
 			local closebutton = _G[closebuttons[i]]
 			F.ReskinClose(closebutton)
