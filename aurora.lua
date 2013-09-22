@@ -1746,8 +1746,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			colourPopout(popout)
 
-			popout:SetScript("OnEnter", clearPopout)
-			popout:SetScript("OnLeave", colourPopout)
+			popout:HookScript("OnEnter", clearPopout)
+			popout:HookScript("OnLeave", colourPopout)
 		end
 
 		select(10, CharacterMainHandSlot:GetRegions()):Hide()
