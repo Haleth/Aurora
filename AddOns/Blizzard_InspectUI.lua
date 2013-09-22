@@ -9,6 +9,9 @@ C.modules["Blizzard_InspectUI"] = function()
 		for i = 1, 5 do
 			select(i, InspectModelFrame:GetRegions()):Hide()
 		end
+
+		-- Character
+
 		select(9, InspectMainHandSlot:GetRegions()):Hide()
 
 		local slots = {
@@ -25,6 +28,19 @@ C.modules["Blizzard_InspectUI"] = function()
 			slot:SetPushedTexture("")
 			_G["Inspect"..slots[i].."SlotIconTexture"]:SetTexCoord(.08, .92, .08, .92)
 		end
+
+		-- PvP
+
+		InspectPVPFrame.BG:Hide()
+
+		for i = 1, 3 do
+			local div = InspectPVPFrame["Div"..i]
+
+			div:SetTexture(1, 1, 1, .2)
+			div:SetHeight(1)
+		end
+
+		-- Talents
 
 		InspectTalentFrame.InspectSpec.ring:Hide()
 
