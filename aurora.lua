@@ -1700,6 +1700,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.ReskinPortraitFrame(CharacterFrame, true)
 
+		local function colourPopout(self)
+			self.arrow:SetVertexColor(r, g, b)
+		end
+
+		local function clearPopout(self)
+			self.arrow:SetVertexColor(1, 1, 1)
+		end
+
 		local slots = {
 			"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
 			"Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
@@ -1716,6 +1724,28 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			ic:SetTexCoord(.08, .92, .08, .92)
 
 			slot.bg = F.CreateBG(slot)
+
+			local popout = slot.popoutButton
+
+			popout:SetNormalTexture("")
+			popout:SetHighlightTexture("")
+
+			local arrow = popout:CreateTexture(nil, "OVERLAY")
+
+			if slot.verticalFlyout then
+				arrow:SetSize(13, 8)
+				arrow:SetTexture(C.media.arrowDown)
+				arrow:SetPoint("TOP", slot, "BOTTOM", 0, 1)
+			else
+				arrow:SetSize(8, 14)
+				arrow:SetTexture(C.media.arrowRight)
+				arrow:SetPoint("LEFT", slot, "RIGHT", -1, 0)
+			end
+
+			popout.arrow = arrow
+
+			popout:SetScript("OnEnter", colourPopout)
+			popout:SetScript("OnLeave", clearPopout)
 		end
 
 		select(10, CharacterMainHandSlot:GetRegions()):Hide()
@@ -1813,6 +1843,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
+		-- Equipment flyout
+
+		local navFrame = EquipmentFlyoutFrame.NavigationFrame
+
+		EquipmentFlyoutFrameButtons.bg1:SetAlpha(0)
+		EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
+		Test2:Hide() -- wat
+
+		navFrame:SetWidth(204)
+		navFrame:SetPoint("TOPLEFT", EquipmentFlyoutFrameButtons, "BOTTOMLEFT", 1, 0)
+
 		hooksecurefunc("EquipmentFlyout_DisplayButton", function(button)
 			if not button.styled then
 				button:SetNormalTexture("")
@@ -1838,6 +1879,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				button.bg:SetVertexColor(r, g, b)
 			end
 		end)
+
+		F.CreateBD(EquipmentFlyoutFrame.NavigationFrame)
+		F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.PrevButton, "left")
+		F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.NextButton, "right")
 
 		-- Quest Frame
 
