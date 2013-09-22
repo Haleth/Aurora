@@ -147,7 +147,7 @@ C.modules["Blizzard_InspectUI"] = function()
 
 			glyph.glyph:SetDrawLayer("ARTWORK")
 			glyph.glyph:SetTexCoord(.08, .92, .08, .92)
-			F.CreateBDFrame(glyph.glyph)
+			F.CreateBDFrame(glyph.glyph, .25)
 		end
 
 		for i = 1, 4 do
