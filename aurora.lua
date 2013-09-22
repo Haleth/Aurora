@@ -1796,11 +1796,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local updateChar = function(self)
 			if not PaperDollFrame:IsShown() then return end
 
-			for i = 1, #slots do
-				local slot = _G["Character"..slots[i].."Slot"]
-				local slotLink = GetInventoryItemLink("player", i)
-
+			for i, slotName in ipairs(slots) do
 				if i == 18 then i = 19 end
+
+				local slot = _G["Character"..slotName.."Slot"]
+				local slotLink = GetInventoryItemLink("player", i)
 
 				if slotLink then
 					slot.icon:SetAlpha(1)
