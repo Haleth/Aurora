@@ -1744,14 +1744,18 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			popout.arrow = arrow
 
-			popout:SetScript("OnEnter", colourPopout)
-			popout:SetScript("OnLeave", clearPopout)
+			colourPopout(popout)
+
+			popout:SetScript("OnEnter", clearPopout)
+			popout:SetScript("OnLeave", colourPopout)
 		end
 
 		select(10, CharacterMainHandSlot:GetRegions()):Hide()
 		select(10, CharacterSecondaryHandSlot:GetRegions()):Hide()
 
-		hooksecurefunc("PaperDollItemSlotButton_Update", function()
+		local updateChar = function(self)
+			if not PaperDollFrame:IsShown() then return end
+
 			for i = 1, #slots do
 				local slot = _G["Character"..slots[i].."Slot"]
 				local ic = _G["Character"..slots[i].."SlotIconTexture"]
@@ -1766,7 +1770,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					slot.bg:SetAlpha(0)
 				end
 			end
-		end)
+		end
+
+		do
+			local f = CreateFrame("Frame")
+			f:RegisterEvent("UNIT_INVENTORY_CHANGED")
+			f:SetScript("OnEvent", updateChar)
+			PaperDollFrame:HookScript("OnShow", updateChar)
+		end
 
 		for i = 1, #PAPERDOLL_SIDEBARS do
 			local tab = _G["PaperDollSidebarTab"..i]
@@ -1844,6 +1855,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		-- Equipment flyout
+
+		EquipmentFlyoutFrameHighlight:Hide()
+
+		local border = F.CreateBDFrame(EquipmentFlyoutFrame, 0)
+		border:SetBackdropBorderColor(1, 1, 1)
+		border:SetPoint("TOPLEFT", 2, -2)
+		border:SetPoint("BOTTOMRIGHT", -2, 2)
 
 		local navFrame = EquipmentFlyoutFrame.NavigationFrame
 
