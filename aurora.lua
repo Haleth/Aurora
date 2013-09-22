@@ -601,6 +601,41 @@ F.ReskinColourSwatch = function(f)
 	bg:SetPoint("BOTTOMRIGHT", -2, 2)
 end
 
+F.ColourQuality = function(button, id)
+	local quality, texture, _
+	local quest = _G[button:GetName().."IconQuestTexture"]
+
+	if id then
+		quality, _, _, _, _, _, _, texture = select(3, GetItemInfo(id))
+	end
+
+	local glow = button.AuroraGlow
+	if not glow then
+		glow = button:CreateTexture(nil, "BACKGROUND")
+		glow:SetPoint("TOPLEFT", -1, 1)
+		glow:SetPoint("BOTTOMRIGHT", 1, -1)
+		glow:SetTexture(C.media.backdrop)
+
+		button.AuroraGlow = glow
+	end
+
+	if texture then
+		local r, g, b
+
+		if quest and quest:IsShown() then
+			r, g, b = 1, 0, 0
+		else
+			r, g, b = GetItemQualityColor(quality)
+			if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
+		end
+
+		glow:SetVertexColor(r, g, b)
+		glow:Show()
+	else
+		glow:Hide()
+	end
+end
+
 -- [[ Module handling ]]
 
 C.modules = {}
@@ -3583,6 +3618,14 @@ Delay:SetScript("OnEvent", function()
 	if AuroraConfig.bags == true and not(IsAddOnLoaded("Baggins") or IsAddOnLoaded("Stuffing") or IsAddOnLoaded("Combuctor") or IsAddOnLoaded("cargBags") or IsAddOnLoaded("famBags") or IsAddOnLoaded("ArkInventory") or IsAddOnLoaded("Bagnon")) then
 		BackpackTokenFrame:GetRegions():Hide()
 
+		local function onEnter(self)
+			self.bg:SetBackdropBorderColor(r, g, b)
+		end
+
+		local function onLeave(self)
+			self.bg:SetBackdropBorderColor(0, 0, 0)
+		end
+
 		for i = 1, 12 do
 			local con = _G["ContainerFrame"..i]
 
@@ -3593,18 +3636,19 @@ Delay:SetScript("OnEvent", function()
 			for k = 1, MAX_CONTAINER_ITEMS do
 				local item = "ContainerFrame"..i.."Item"..k
 				local button = _G[item]
-				local icon = _G[item.."IconTexture"]
 
 				_G[item.."IconQuestTexture"]:SetAlpha(0)
 
 				button:SetNormalTexture("")
 				button:SetPushedTexture("")
+				button:SetHighlightTexture("")
 
-				icon:SetPoint("TOPLEFT", 1, -1)
-				icon:SetPoint("BOTTOMRIGHT", -1, 1)
-				icon:SetTexCoord(.08, .92, .08, .92)
+				button.icon:SetTexCoord(.08, .92, .08, .92)
 
-				F.CreateBD(button, 0)
+				button.bg = F.CreateBDFrame(button, 0)
+
+				button:HookScript("OnEnter", onEnter)
+				button:HookScript("OnLeave", onLeave)
 			end
 
 			local f = CreateFrame("Frame", nil, con)
@@ -3623,31 +3667,6 @@ Delay:SetScript("OnEvent", function()
 			F.CreateBG(ic)
 		end
 
-		if not IsAddOnLoaded("oGlow") then
-			hooksecurefunc("ContainerFrame_Update", function(frame)
-				local name = frame:GetName()
-				local bu
-				for i = 1, frame.size do
-					bu = _G[name.."Item"..i]
-					if _G[name.."Item"..i.."IconQuestTexture"]:IsShown() then
-						bu:SetBackdropBorderColor(1, 0, 0)
-					else
-						bu:SetBackdropBorderColor(0, 0, 0)
-					end
-				end
-			end)
-
-			hooksecurefunc("BankFrameItemButton_Update", function(bu)
-				if not bu.isBag then
-					if _G[bu:GetName().."IconQuestTexture"]:IsShown() then
-						bu:SetBackdropBorderColor(1, 0, 0)
-					else
-						bu:SetBackdropBorderColor(0, 0, 0)
-					end
-				end
-			end)
-		end
-
 		F.SetBD(BankFrame)
 		BankFrame:DisableDrawLayer("BACKGROUND")
 		BankFrame:DisableDrawLayer("BORDER")
@@ -3656,41 +3675,58 @@ Delay:SetScript("OnEvent", function()
 		BankFrameMoneyFrameInset:Hide()
 		BankFrameMoneyFrameBorder:Hide()
 
-
 		F.Reskin(BankFramePurchaseButton)
 		F.ReskinClose(BankFrameCloseButton)
 
 		for i = 1, 28 do
 			local item = "BankFrameItem"..i
 			local button = _G[item]
-			local icon = _G[item.."IconTexture"]
 
 			_G[item.."IconQuestTexture"]:SetAlpha(0)
 
 			button:SetNormalTexture("")
 			button:SetPushedTexture("")
+			button:SetHighlightTexture("")
 
-			icon:SetPoint("TOPLEFT", 1, -1)
-			icon:SetPoint("BOTTOMRIGHT", -1, 1)
-			icon:SetTexCoord(.08, .92, .08, .92)
+			button.icon:SetTexCoord(.08, .92, .08, .92)
 
-			F.CreateBD(button, 0)
+			button.bg = F.CreateBDFrame(button, 0)
+
+			button:HookScript("OnEnter", onEnter)
+			button:HookScript("OnLeave", onLeave)
 		end
 
 		for i = 1, 7 do
 			local bag = _G["BankFrameBag"..i]
-			local ic = _G["BankFrameBag"..i.."IconTexture"]
+
 			_G["BankFrameBag"..i.."HighlightFrameTexture"]:SetTexture(C.media.checked)
 
 			bag:SetNormalTexture("")
 			bag:SetPushedTexture("")
+			bag:SetHighlightTexture("")
 
-			ic:SetPoint("TOPLEFT", 1, -1)
-			ic:SetPoint("BOTTOMRIGHT", -1, 1)
-			ic:SetTexCoord(.08, .92, .08, .92)
+			bag.icon:SetTexCoord(.08, .92, .08, .92)
 
-			F.CreateBD(bag, 0)
+			bag.bg = F.CreateBDFrame(bag, 0)
+
+			bag:HookScript("OnEnter", onEnter)
+			bag:HookScript("OnLeave", onLeave)
 		end
+
+		hooksecurefunc("ContainerFrame_Update", function(self)
+			local name = self:GetName()
+			local id = self:GetID()
+
+			for i = 1, self.size do
+				local button = _G[name.."Item"..i]
+				local itemID = GetContainerItemID(id, button:GetID())
+				F.ColourQuality(button, itemID)
+			end
+		end)
+
+		hooksecurefunc("BankFrameItemButton_Update", function(self)
+			F.ColourQuality(self, GetInventoryItemID("player", self:GetInventorySlot()))
+		end)
 	end
 
 	if AuroraConfig.loot == true and not(IsAddOnLoaded("Butsu") or IsAddOnLoaded("LovelyLoot") or IsAddOnLoaded("XLoot")) then
