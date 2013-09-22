@@ -33,11 +33,11 @@ C.modules["Blizzard_ItemAlterationUI"] = function()
 	for i = 1, #slots do
 		local slot = _G["TransmogrifyFrame"..slots[i].."Slot"]
 		if slot then
-			local ic = _G["TransmogrifyFrame"..slots[i].."SlotIconTexture"]
+			slot.altTexture:SetTexture("")
 			_G["TransmogrifyFrame"..slots[i].."SlotBorder"]:Hide()
 			_G["TransmogrifyFrame"..slots[i].."SlotGrabber"]:Hide()
 
-			ic:SetTexCoord(.08, .92, .08, .92)
+			slot.icon:SetTexCoord(.08, .92, .08, .92)
 			F.CreateBD(slot, 0)
 
 			local popout = slot.popoutButton
@@ -65,6 +65,32 @@ C.modules["Blizzard_ItemAlterationUI"] = function()
 			popout:HookScript("OnLeave", colourPopout)
 		end
 	end
+
+	hooksecurefunc("TransmogrifyFrame_UpdateSlotButton", function(button)
+		if button.altTexture:IsShown() then
+			button:SetBackdropBorderColor(.87, .5, 1)
+		else
+			button:SetBackdropBorderColor(0, 0, 0)
+		end
+
+		local pendingFrame = button.pendingFrame
+
+		if pendingFrame then
+			local glow = pendingFrame:GetRegions()
+
+			glow:SetTexture("")
+
+			if glow:IsShown() then
+				button:SetBackdropBorderColor(.87, .5, 1)
+			elseif not button.altTexture:IsShown() then
+				button:SetBackdropBorderColor(0, 0, 0)
+			end
+
+			pendingFrame.ants:ClearAllPoints()
+			pendingFrame.ants:SetPoint("TOPLEFT", -7, 7)
+			pendingFrame.ants:SetPoint("BOTTOMRIGHT", 7, -7)
+		end
+	end)
 
 	F.CreateBD(TransmogrifyConfirmationPopup)
 	F.Reskin(TransmogrifyConfirmationPopup.Button1)
