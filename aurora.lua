@@ -1736,7 +1736,16 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinPortraitFrame(CharacterFrame, true)
 
 		local function colourPopout(self)
-			self.arrow:SetVertexColor(r, g, b)
+			local aR, aG, aB
+			local glow = self:GetParent().AuroraGlow
+
+			if glow:IsShown() then
+				aR, aG, aB = glow:GetVertexColor()
+			else
+				aR, aG, aB = r, g, b
+			end
+
+			self.arrow:SetVertexColor(aR, aG, aB)
 		end
 
 		local function clearPopout(self)
@@ -1758,8 +1767,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			slot:SetPushedTexture("")
 			ic:SetTexCoord(.08, .92, .08, .92)
 
-			slot.bg = F.CreateBG(slot)
-
 			local popout = slot.popoutButton
 
 			popout:SetNormalTexture("")
@@ -1779,8 +1786,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			popout.arrow = arrow
 
-			colourPopout(popout)
-
 			popout:HookScript("OnEnter", clearPopout)
 			popout:HookScript("OnLeave", colourPopout)
 		end
@@ -1793,17 +1798,19 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			for i = 1, #slots do
 				local slot = _G["Character"..slots[i].."Slot"]
-				local ic = _G["Character"..slots[i].."SlotIconTexture"]
+				local slotLink = GetInventoryItemLink("player", i)
 
 				if i == 18 then i = 19 end
 
-				if GetInventoryItemLink("player", i) then
-					ic:SetAlpha(1)
-					slot.bg:SetAlpha(1)
+				if slotLink then
+					slot.icon:SetAlpha(1)
 				else
-					ic:SetAlpha(0)
-					slot.bg:SetAlpha(0)
+					slot.icon:SetAlpha(0)
 				end
+
+				F.ColourQuality(slot, slotLink)
+
+				colourPopout(slot.popoutButton)
 			end
 		end
 
