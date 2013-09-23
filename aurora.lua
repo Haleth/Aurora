@@ -2742,16 +2742,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.ReskinCheck(_G["BNConversationInviteDialogListFriend"..i].checkButton)
 		end
 
-		-- Taxi Frame
-
-		TaxiFrame:DisableDrawLayer("BORDER")
-		TaxiFrame:DisableDrawLayer("OVERLAY")
-		TaxiFrame.Bg:Hide()
-		TaxiFrame.TitleBg:Hide()
-
-		F.SetBD(TaxiFrame, 3, -23, -5, 3)
-		F.ReskinClose(TaxiFrame.CloseButton, "TOPRIGHT", TaxiRouteMap, "TOPRIGHT", -4, -4)
-
 		-- Tabard frame
 
 		TabardFrameMoneyInset:DisableDrawLayer("BORDER")
