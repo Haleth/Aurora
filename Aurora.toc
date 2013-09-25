@@ -46,6 +46,7 @@ FrameXML\FlexRaidFrame.lua
 FrameXML\Fonts.lua
 FrameXML\LFDFrame.lua
 FrameXML\LFGFrame.lua
+FrameXML\LootHistory.lua
 FrameXML\PVEFrame.lua
 FrameXML\QueueStatusFrame.lua
 FrameXML\RaidFinder.lua
