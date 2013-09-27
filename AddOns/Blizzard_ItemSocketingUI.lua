@@ -1,7 +1,6 @@
 local F, C = unpack(select(2, ...))
 
 C.modules["Blizzard_ItemSocketingUI"] = function()
-	ItemSocketingFrame:DisableDrawLayer("BORDER")
 	ItemSocketingFrame:DisableDrawLayer("ARTWORK")
 	ItemSocketingScrollFrameTop:SetAlpha(0)
 	ItemSocketingScrollFrameMiddle:SetAlpha(0)
@@ -12,6 +11,14 @@ C.modules["Blizzard_ItemSocketingUI"] = function()
 	ItemSocketingSocket2Right:SetAlpha(0)
 	ItemSocketingSocket3Left:SetAlpha(0)
 	ItemSocketingSocket3Right:SetAlpha(0)
+
+	for i = 36, 51 do
+		select(i, ItemSocketingFrame:GetRegions()):Hide()
+	end
+
+	local title = select(18, ItemSocketingFrame:GetRegions())
+	title:ClearAllPoints()
+	title:SetPoint("TOP", 0, -5)
 
 	for i = 1, MAX_NUM_SOCKETS do
 		local bu = _G["ItemSocketingSocket"..i]
