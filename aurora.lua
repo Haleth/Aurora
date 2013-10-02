@@ -51,7 +51,6 @@ C.defaults = {
 	["useCustomColour"] = false,
 		["customColour"] = {r = 1, g = 1, b = 1},
 	["map"] = true,
-	["qualityColour"] = true,
 	["tooltips"] = true,
 }
 
@@ -1478,40 +1477,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 						_G["MerchantItem"..i.."AltCurrencyFrame"]:SetPoint("BOTTOMLEFT", "MerchantItem"..i.."NameFrame", "BOTTOMLEFT", 0, 35)
 					end
 
-					if AuroraConfig.qualityColour then
-						local bu = _G["MerchantItem"..i.."ItemButton"]
-						local name = _G["MerchantItem"..i.."Name"]
-						if bu.link then
-							local _, _, quality = GetItemInfo(bu.link)
-							local r, g, b = GetItemQualityColor(quality)
-
-							name:SetTextColor(r, g, b)
-						else
-							name:SetTextColor(1, 1, 1)
-						end
-					end
-				end
-			end
-
-			if AuroraConfig.qualityColour then
-				local name = GetBuybackItemLink(GetNumBuybackItems())
-				if name then
-					local _, _, quality = GetItemInfo(name)
-					local r, g, b = GetItemQualityColor(quality)
-
-					MerchantBuyBackItemName:SetTextColor(r, g, b)
-				end
-			end
-		end)
-
-		if AuroraConfig.qualityColour then
-			hooksecurefunc("MerchantFrame_UpdateBuybackInfo", function()
-				for i = 1, BUYBACK_ITEMS_PER_PAGE do
-					local itemLink = GetBuybackItemLink(i)
+					local bu = _G["MerchantItem"..i.."ItemButton"]
 					local name = _G["MerchantItem"..i.."Name"]
-
-					if itemLink then
-						local _, _, quality = GetItemInfo(itemLink)
+					if bu.link then
+						local _, _, quality = GetItemInfo(bu.link)
 						local r, g, b = GetItemQualityColor(quality)
 
 						name:SetTextColor(r, g, b)
@@ -1519,8 +1488,32 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 						name:SetTextColor(1, 1, 1)
 					end
 				end
-			end)
-		end
+			end
+
+			local name = GetBuybackItemLink(GetNumBuybackItems())
+			if name then
+				local _, _, quality = GetItemInfo(name)
+				local r, g, b = GetItemQualityColor(quality)
+
+				MerchantBuyBackItemName:SetTextColor(r, g, b)
+			end
+		end)
+
+		hooksecurefunc("MerchantFrame_UpdateBuybackInfo", function()
+			for i = 1, BUYBACK_ITEMS_PER_PAGE do
+				local itemLink = GetBuybackItemLink(i)
+				local name = _G["MerchantItem"..i.."Name"]
+
+				if itemLink then
+					local _, _, quality = GetItemInfo(itemLink)
+					local r, g, b = GetItemQualityColor(quality)
+
+					name:SetTextColor(r, g, b)
+				else
+					name:SetTextColor(1, 1, 1)
+				end
+			end
+		end)
 
 		MerchantBuyBackItemSlotTexture:Hide()
 		MerchantBuyBackItemNameFrame:Hide()
@@ -1925,19 +1918,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				button.styled = true
 			end
 
-			if AuroraConfig.qualityColour then
-				local location = button.location
-				if not location then return end
-				if location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION then return end
+			local location = button.location
+			if not location then return end
+			if location >= EQUIPMENTFLYOUT_FIRST_SPECIAL_LOCATION then return end
 
-				local id = EquipmentManager_GetItemInfoByLocation(location)
-				local _, _, quality = GetItemInfo(id)
-				local r, g, b = GetItemQualityColor(quality)
+			local id = EquipmentManager_GetItemInfoByLocation(location)
+			local _, _, quality = GetItemInfo(id)
+			local r, g, b = GetItemQualityColor(quality)
 
-				if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
+			if r == 1 and g == 1 then r, g, b = 0, 0, 0 end
 
-				button.bg:SetVertexColor(r, g, b)
-			end
+			button.bg:SetVertexColor(r, g, b)
 		end)
 
 		F.CreateBD(EquipmentFlyoutFrame.NavigationFrame)
