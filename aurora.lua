@@ -1515,7 +1515,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		MerchantBuyBackItemSlotTexture:Hide()
+		MerchantBuyBackItemSlotTexture:SetAlpha(0)
 		MerchantBuyBackItemNameFrame:Hide()
 		MerchantBuyBackItemItemButton:SetNormalTexture("")
 		MerchantBuyBackItemItemButton:SetPushedTexture("")
@@ -1527,6 +1527,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		MerchantBuyBackItemItemButtonIconTexture:ClearAllPoints()
 		MerchantBuyBackItemItemButtonIconTexture:SetPoint("TOPLEFT", 1, -1)
 		MerchantBuyBackItemItemButtonIconTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+
+		MerchantBuyBackItemName:SetHeight(25)
+		MerchantBuyBackItemName:ClearAllPoints()
+		MerchantBuyBackItemName:SetPoint("LEFT", MerchantBuyBackItemSlotTexture, "RIGHT", -5, 8)
 
 		MerchantGuildBankRepairButton:SetPushedTexture("")
 		F.CreateBG(MerchantGuildBankRepairButton)
