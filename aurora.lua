@@ -1,4 +1,4 @@
-local alpha
+local alpha, useButtonGradientColour
 
 -- [[ Core ]]
 
