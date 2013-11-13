@@ -47,6 +47,7 @@ FrameXML\Fonts.lua
 FrameXML\LFDFrame.lua
 FrameXML\LFGFrame.lua
 FrameXML\LootHistory.lua
+FrameXML\ModelPreviewFrame.lua
 FrameXML\ProductChoiceFrame.lua
 FrameXML\PVEFrame.lua
 FrameXML\QueueStatusFrame.lua
