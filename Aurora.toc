@@ -50,6 +50,7 @@ FrameXML\LootHistory.lua
 FrameXML\PVEFrame.lua
 FrameXML\QueueStatusFrame.lua
 FrameXML\RaidFinder.lua
+FrameXML\RecruitAFriendFrame.lua
 FrameXML\RolePoll.lua
 FrameXML\ScenarioFinder.lua
 FrameXML\SpellBookFrame.lua
