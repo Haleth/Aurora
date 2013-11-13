@@ -52,7 +52,6 @@ C.defaults = {
 	["loot"] = true,
 	["useCustomColour"] = false,
 		["customColour"] = {r = 1, g = 1, b = 1},
-	["map"] = true,
 	["tooltips"] = true,
 }
 

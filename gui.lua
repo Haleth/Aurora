@@ -83,17 +83,14 @@ useButtonGradientColourBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -8)
 local bagsBox = createToggleBox(gui, "bags", "Bags")
 bagsBox:SetPoint("TOPLEFT", useButtonGradientColourBox, "BOTTOMLEFT", 0, -16)
 
-local lootBox = createToggleBox(gui, "loot", "Loot")
-lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 90, 0)
-
 local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
-chatBubbleBox:SetPoint("LEFT", lootBox, "RIGHT", 90, 0)
+chatBubbleBox:SetPoint("LEFT", bagsBox, "RIGHT", 90, 0)
 
-local mapBox = createToggleBox(gui, "map", "Map")
-mapBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
+local lootBox = createToggleBox(gui, "loot", "Loot")
+lootBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
 
 local tooltipsBox = createToggleBox(gui, "tooltips", "Tooltips")
-tooltipsBox:SetPoint("LEFT", mapBox, "RIGHT", 90, 0)
+tooltipsBox:SetPoint("LEFT", lootBox, "RIGHT", 90, 0)
 
 local reloadText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 reloadText:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -60)
