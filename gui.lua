@@ -69,7 +69,7 @@ line:SetTexture(1, 1, 1, .2)
 local fontBox = createToggleBox(gui, "enableFont", "Replace default game fonts")
 fontBox:SetPoint("TOPLEFT", 16, -140)
 
-local colourBox = createToggleBox(gui, "useCustomColour", "Use custom colour rather than class as highlight")
+local colourBox = createToggleBox(gui, "useCustomColour", "Custom highlight colour")
 colourBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -8)
 
 local colourButton = CreateFrame("Button", nil, gui, "UIPanelButtonTemplate")
@@ -180,8 +180,7 @@ colourBox:SetScript("OnClick", function(self)
 end)
 
 local function setColour()
-	local r, g, b = ColorPickerFrame:GetColorRGB()
-	AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b = r, g, b
+	AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b = ColorPickerFrame:GetColorRGB()
 end
 
 local function resetColour(restore)
