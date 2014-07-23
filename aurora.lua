@@ -687,18 +687,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 		-- for modules
 		C.r, C.g, C.b = r, g, b
-	end
 
-	-- [[ Custom API support ]]
+		-- [[ Custom style support ]]
 
-	local supportedVersion = GetAddOnMetadata(addon, "X-AuroraVersion")
+		local customStyle = AURORA_CUSTOM_STYLE
 
-	if supportedVersion and supportedVersion == LATEST_API_VERSION then
-		local api = addon.customAPI
-		if api then
+		if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
 			-- replace functions
-			if api.functions then
-				for funcName, func in pairs(api.functions) do
+			if customStyle.functions then
+				for funcName, func in pairs(customStyle.functions) do
 					if F[funcName] then
 						F[funcName] = func
 					end
@@ -706,19 +703,17 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 
 			-- replace class colours
-			if api.classcolours then
-				C.classcolours = api.classcolours
+			if customStyle.classcolors then
+				C.classcolours = customStyle.classcolors
 			end
 
 			-- replace colour scheme
-			local highlightColour = api.highlightColor
+			local highlightColour = customStyle.highlightColor
 			if highlightColour then
 				r, g, b = highlightColour.r, highlightColour.g, highlightColour.b
 				C.r, C.g, C.b = r, g, b
 			end
 		end
-
-		return
 	end
 
 	-- [[ Load modules ]]
@@ -828,11 +823,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinArrow(TabardCharacterModelRotateRightButton, "right")
 
 		hooksecurefunc("CharacterFrame_Expand", function()
-			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture(C.media.arrowLeft)
+			CharacterFrameExpandButton.tex:SetTexture(C.media.arrowLeft)
 		end)
 
 		hooksecurefunc("CharacterFrame_Collapse", function()
-			select(15, CharacterFrameExpandButton:GetRegions()):SetTexture(C.media.arrowRight)
+			CharacterFrameExpandButton.tex:SetTexture(C.media.arrowRight)
 		end)
 
 		-- [[ Radio buttons ]]
@@ -2579,10 +2574,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- because gradient alpha and OnUpdate doesn't work for some reason...
 
-		select(14, TutorialFrameOkayButton:GetRegions()):Hide()
-		select(15, TutorialFramePrevButton:GetRegions()):Hide()
-		select(15, TutorialFrameNextButton:GetRegions()):Hide()
-		select(14, TutorialFrameCloseButton:GetRegions()):Hide()
+		if select(14, TutorialFrameOkayButton:GetRegions()) then
+			select(14, TutorialFrameOkayButton:GetRegions()):Hide()
+			select(15, TutorialFramePrevButton:GetRegions()):Hide()
+			select(15, TutorialFrameNextButton:GetRegions()):Hide()
+			select(14, TutorialFrameCloseButton:GetRegions()):Hide()
+		end
 		TutorialFramePrevButton:SetScript("OnEnter", nil)
 		TutorialFrameNextButton:SetScript("OnEnter", nil)
 		TutorialFrameOkayButton:SetBackdropColor(0, 0, 0, .25)
