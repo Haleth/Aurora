@@ -1,6 +1,7 @@
-local alpha, useButtonGradientColour
-
 -- [[ Core ]]
+
+-- for custom APIs (see docs online)
+local LATEST_API_VERSION = "5.0.7"
 
 local addon, core = ...
 
@@ -12,6 +13,8 @@ Aurora = core
 AuroraConfig = {}
 
 local F, C = unpack(select(2, ...))
+
+-- [[ Constants and settings ]]
 
 C.classcolours = {
 	["HUNTER"] = { r = 0.58, g = 0.86, b = 0.49 },
@@ -66,6 +69,10 @@ C.tooltipAddons = {
 C.shouldStyleTooltips = true -- set to false if one of the above is loaded or AuroraConfig.tooltips is false
 
 C.frames = {}
+
+-- [[ Cached variables ]]
+
+local alpha, useButtonGradientColour
 
 -- [[ Functions ]]
 
@@ -634,7 +641,7 @@ F.ColourQuality = function(button, id)
 	end
 end
 
--- [[ Module handling ]]
+-- [[ Variable and module handling ]]
 
 C.modules = {}
 C.modules["Aurora"] = {}
@@ -682,20 +689,53 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		C.r, C.g, C.b = r, g, b
 	end
 
-	for module, moduleFunc in pairs(C.modules) do
-		if type(moduleFunc) == "function" then
-			if module == addon then
-				moduleFunc()
-			end
-		elseif type(moduleFunc) == "table" then
-			if module == addon then
-				for _, moduleFunc in pairs(C.modules[module]) do
-					moduleFunc()
+	-- [[ Custom API support ]]
+
+	local supportedVersion = GetAddOnMetadata(addon, "X-AuroraVersion")
+
+	if supportedVersion and supportedVersion == LATEST_API_VERSION then
+		local api = addon.customAPI
+		if api then
+			-- replace functions
+			if api.functions then
+				for funcName, func in pairs(api.functions) do
+					if F[funcName] then
+						F[funcName] = func
+					end
 				end
+			end
+
+			-- replace class colours
+			if api.classcolours then
+				C.classcolours = api.classcolours
+			end
+
+			-- replace colour scheme
+			local highlightColour = api.highlightColor
+			if highlightColour then
+				r, g, b = highlightColour.r, highlightColour.g, highlightColour.b
+				C.r, C.g, C.b = r, g, b
+			end
+		end
+
+		return
+	end
+
+	-- [[ Load modules ]]
+
+	-- check if the addon loaded is supported by Aurora, and if it is, execute its module
+	local addonModule = C.modules[addon]
+	if addonModule then
+		if type(addonModule) == "function" then
+			addonModule()
+		else
+			for _, moduleFunc in pairs(addonModule) do
+				moduleFunc()
 			end
 		end
 	end
 
+	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
 		-- [[ Headers ]]
