@@ -705,6 +705,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			-- replace class colours
 			if customStyle.classcolors then
 				C.classcolours = customStyle.classcolors
+
+				if not AuroraConfig.useCustomColour then
+					r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
+					C.r, C.g, C.b = r, g, b
+				end
 			end
 
 			-- replace colour scheme
