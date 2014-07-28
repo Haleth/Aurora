@@ -1,7 +1,7 @@
 -- [[ Core ]]
 
 -- for custom APIs (see docs online)
-local LATEST_API_VERSION = "5.0.7"
+local LATEST_API_VERSION = "5.1"
 
 local addon, core = ...
 
