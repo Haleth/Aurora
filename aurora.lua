@@ -756,7 +756,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Simple backdrops ]]
 
-		local bds = {"AutoCompleteBox", "TicketStatusFrameButton", "GearManagerDialogPopup", "RaidInfoFrame", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog", "QueueStatusFrame"}
+		local bds = {"AutoCompleteBox", "TicketStatusFrameButton", "GearManagerDialogPopup", "RaidInfoFrame", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog"}
 
 		for i = 1, #bds do
 			local bd = _G[bds[i]]
@@ -3112,7 +3112,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			select(i, AddFriendNoteFrame:GetRegions()):Hide()
 			select(i, ReportPlayerNameDialogCommentFrame:GetRegions()):Hide()
 			select(i, ReportCheatingDialogCommentFrame:GetRegions()):Hide()
-			select(i, QueueStatusFrame:GetRegions()):Hide()
 		end
 		HelpFrameHeader:Hide()
 		ReadyCheckPortrait:SetAlpha(0)
