@@ -1,6 +1,6 @@
 local F, C = unpack(select(2, ...))
 
-tinsert(C.modules["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	if AuroraConfig.enableFont then
 		local font = C.media.font
 
@@ -40,6 +40,7 @@ tinsert(C.modules["Aurora"], function()
 		InvoiceFont_Med:SetShadowColor(0, 0, 0)
 		InvoiceFont_Med:SetShadowOffset(1, -1)
 		MailFont_Large:SetFont(font, 15)
+		NumberFont_GameNormal:SetFont(font, 10)
 		NumberFont_OutlineThick_Mono_Small:SetFont(font, 12, "OUTLINE")
 		NumberFont_Outline_Huge:SetFont(font, 30, "OUTLINE")
 		NumberFont_Outline_Large:SetFont(font, 16, "OUTLINE")
@@ -51,9 +52,12 @@ tinsert(C.modules["Aurora"], function()
 		QuestFont_Large:SetShadowColor(0, 0, 0)
 		QuestFont_Large:SetShadowOffset(1, -1)
 		QuestFont_Shadow_Huge:SetFont(font, 17)
+		QuestFont_Huge:SetFont(font, 18)
 		QuestFont_Super_Huge:SetFont(font, 24)
 		QuestFont_Super_Huge:SetShadowColor(0, 0, 0)
 		QuestFont_Super_Huge:SetShadowOffset(1, -1)
+		QuestFont_Enormous:SetFont(font, 30)
+		QuestFont_Enormous:SetShadowOffset(1, -1)
 		ReputationDetailFont:SetFont(font, 10)
 		SpellFont_Small:SetFont(font, 10)
 		SpellFont_Small:SetShadowColor(0, 0, 0)
@@ -111,5 +115,6 @@ tinsert(C.modules["Aurora"], function()
 
 		-- Why?
 		HelpFrameKnowledgebaseNavBarHomeButtonText:SetFont(font, 12)
+		WorldMapFrameNavBarHomeButtonText:SetFont(font, 12)
 	end
 end)

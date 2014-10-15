@@ -1,8 +1,8 @@
-## Interface: 50400
+## Interface: 60000
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
-## Author: Haleth/Freethinker
-## Version: 5.1
+## Author: Haleth/Lightsword
+## Version: 6.0
 ## SavedVariables: AuroraConfig
 
 aurora.lua
@@ -33,7 +33,6 @@ AddOns\Blizzard_MacroUI.lua
 AddOns\Blizzard_PetJournal.lua
 AddOns\Blizzard_PVPUI.lua
 AddOns\Blizzard_QuestChoice.lua
-AddOns\Blizzard_ReforgingUI.lua
 AddOns\Blizzard_TalentUI.lua
 AddOns\Blizzard_TimeManager.lua
 AddOns\Blizzard_TradeSkillUI.lua
@@ -42,21 +41,40 @@ AddOns\Blizzard_VoidStorageUI.lua
 AddOns\Recount.lua
 
 FrameXML\AlertFrames.lua
-FrameXML\FlexRaidFrame.lua
+FrameXML\BankFrame.lua
+FrameXML\CharacterFrame.lua
+FrameXML\Constants.lua
+FrameXML\ContainerFrame.lua
+FrameXML\EquipmentFlyout.lua
 FrameXML\Fonts.lua
+FrameXML\GameTooltip.lua
 FrameXML\LFDFrame.lua
 FrameXML\LFGFrame.lua
+FrameXML\LFGList.lua
 FrameXML\LFRFrame.lua
+FrameXML\LootFrame.lua
 FrameXML\LootHistory.lua
 FrameXML\ModelPreviewFrame.lua
+FrameXML\NavigationBar.lua
+FrameXML\PaperDollFrame.lua
 FrameXML\ProductChoiceFrame.lua
 FrameXML\PVEFrame.lua
+FrameXML\QuestFrame.lua
+FrameXML\QuestInfo.lua
+FrameXML\QuestMapFrame.lua
 FrameXML\QueueStatusFrame.lua
 FrameXML\RaidFinder.lua
 FrameXML\RecruitAFriendFrame.lua
 FrameXML\RolePoll.lua
 FrameXML\ScenarioFinder.lua
 FrameXML\SpellBookFrame.lua
+FrameXML\SplashFrame.lua
 FrameXML\StaticPopup.lua
 FrameXML\TaxiFrame.lua
+FrameXML\VideoOptionsFrame.lua
+FrameXML\WorldMapFrame.lua
 FrameXML\WorldStateFrame.lua
+
+SharedXML\AddonList.lua
+
+Other\ChatBubbles.lua
