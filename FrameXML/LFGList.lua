@@ -35,6 +35,12 @@ tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
+	-- [[ Nothing available ]]
+
+	local NothingAvailable = LFGListFrame.NothingAvailable
+
+	NothingAvailable.Inset:DisableDrawLayer("BORDER")
+
 	-- [[ Search panel ]]
 
 	local SearchPanel = LFGListFrame.SearchPanel
