@@ -146,6 +146,21 @@ C.themes["Blizzard_GarrisonUI"] = function()
 
 	F.ReskinScroll(scrollFrame.scrollBar)
 
+	-- Follower tab
+
+	local FollowerTab = GarrisonLandingPage.FollowerTab
+
+	local xpBar = FollowerTab.XPBar
+
+	select(1, xpBar:GetRegions()):Hide()
+	xpBar.XPLeft:Hide()
+	xpBar.XPRight:Hide()
+	select(4, xpBar:GetRegions()):Hide()
+
+	xpBar:SetStatusBarTexture(C.media.backdrop)
+
+	F.CreateBDFrame(xpBar)
+
 	-- [[ Recruiter frame ]]
 
 	local GarrisonRecruiterFrame = GarrisonRecruiterFrame
@@ -165,7 +180,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 	-- [[ Shared templates ]]
 
 	hooksecurefunc("GarrisonFollowerList_Update", function(self)
-		local followerFrame = self;
+		local followerFrame = self
 		local followers = followerFrame.FollowerList.followers
 		local followersList = followerFrame.FollowerList.followersList
 		local numFollowers = #followersList
@@ -181,6 +196,9 @@ C.themes["Blizzard_GarrisonUI"] = function()
 				button.BG:Hide()
 
 				button.Selection:SetTexture(r, g, b, .2)
+				button.Selection:ClearAllPoints()
+				button.Selection:SetPoint("TOPLEFT", 2, -1)
+				button.Selection:SetPoint("BOTTOMRIGHT", -1, 1)
 
 				F.CreateBD(button, .25)
 
@@ -195,4 +213,23 @@ C.themes["Blizzard_GarrisonUI"] = function()
 			end
 		end
 	end)
+
+	do
+		local abilityIndex = 1
+
+		hooksecurefunc("GarrisonFollowerPage_ShowFollower", function(self, followerID)
+			local abilities = self.AbilitiesFrame.Abilities
+
+			local ability = abilities[abilityIndex]
+			while ability do
+				local icon = ability.IconButton.Icon
+
+				icon:SetTexCoord(.08, .92, .08, .92)
+				F.CreateBG(icon)
+
+				abilityIndex = abilityIndex + 1
+				ability = abilities[abilityIndex]
+			end
+		end)
+	end
 end
