@@ -357,6 +357,19 @@ C.themes["Blizzard_GarrisonUI"] = function()
 
 	FollowerTab:DisableDrawLayer("BORDER")
 
+	do
+		local xpBar = FollowerTab.XPBar
+
+		select(1, xpBar:GetRegions()):Hide()
+		xpBar.XPLeft:Hide()
+		xpBar.XPRight:Hide()
+		select(4, xpBar:GetRegions()):Hide()
+
+		xpBar:SetStatusBarTexture(C.media.backdrop)
+
+		F.CreateBDFrame(xpBar)
+	end
+
 	for _, item in pairs({FollowerTab.ItemWeapon, FollowerTab.ItemArmor}) do
 		local icon = item.Icon
 
@@ -375,6 +388,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 	hooksecurefunc("GarrisonMissionFrame_SetFollowerPortrait", function(portraitFrame, followerInfo)
 		if not portraitFrame.styled then
 			restyleFollowerPortrait(portraitFrame)
+			portraitFrame.styled = true
 		end
 
 		local color = ITEM_QUALITY_COLORS[followerInfo.quality]
