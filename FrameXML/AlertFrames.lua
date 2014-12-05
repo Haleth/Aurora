@@ -284,7 +284,38 @@ tinsert(C.themes["Aurora"], function()
 			F.CreateBG(frame.Icon)
 		end
 	end)
+	-- Garrison Mission Alert
+	local Mission = CreateFrame("Frame", nil, GarrisonMissionAlertFrame)
+	Mission:SetPoint("TOPLEFT", 8, -12)
+	Mission:SetPoint("BOTTOMRIGHT", -8, 13)
+	Mission:SetFrameLevel(GarrisonMissionAlertFrame:GetFrameLevel()-1)
+	F.CreateBD(Mission)
 
+	GarrisonMissionAlertFrameGlow:SetTexture("")
+	GarrisonMissionAlertFrameShine:SetTexture("")
+
+	-- Garrison Follower
+
+	local Follower = CreateFrame("Frame", nil, GarrisonFollowerAlertFrame)
+	Follower:SetPoint("TOPLEFT", 8, -12)
+	Follower:SetPoint("BOTTOMRIGHT", -8, 13)
+	Follower:SetFrameLevel(GarrisonFollowerAlertFrame:GetFrameLevel()-1)
+	F.CreateBD(Follower)
+
+	GarrisonFollowerAlertFrameGlow:SetTexture("")
+	GarrisonFollowerAlertFrameShine:SetTexture("")
+
+	-- Garrison Buldings
+
+	local Building = CreateFrame("Frame", nil, GarrisonBuildingAlertFrame)
+	Building:SetPoint("TOPLEFT", 8, -12)
+	Building:SetPoint("BOTTOMRIGHT", -8, 13)
+	Building:SetFrameLevel(GarrisonBuildingAlertFrame:GetFrameLevel()-1)
+	F.CreateBD(Building)
+
+	GarrisonBuildingAlertFrameGlow:SetTexture("")
+	GarrisonBuildingAlertFrameShine:SetTexture("")
+	
 	-- Criteria alert
 
 	hooksecurefunc("CriteriaAlertFrame_ShowAlert", function()
