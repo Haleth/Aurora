@@ -671,6 +671,11 @@ F.ReskinGarrisonPortrait = function(portrait)
 	end
 end
 
+F.ReskinIcon = function(icon)
+	icon:SetTexCoord(.08, .92, .08, .92)
+	F.CreateBG(icon)
+end
+
 -- [[ Variable and module handling ]]
 
 C.themes = {}
