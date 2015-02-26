@@ -398,4 +398,35 @@ C.themes["Blizzard_Collections"] = function()
 			toyString:SetTextColor(.5, .5, .5)
 		end
 	end)
+
+	-- [[ Heirlooms ]]
+
+	local HeirloomsJournal = HeirloomsJournal
+
+	local icons = HeirloomsJournal.iconsFrame
+	icons.Bg:Hide()
+	icons.BackgroundTile:Hide()
+	icons:DisableDrawLayer("BORDER")
+	icons:DisableDrawLayer("ARTWORK")
+	icons:DisableDrawLayer("OVERLAY")
+
+	F.ReskinInput(HeirloomsJournalSearchBox)
+	F.ReskinDropDown(HeirloomsJournalClassDropDown)
+	F.ReskinFilterButton(HeirloomsJournalFilterButton)
+	F.ReskinArrow(HeirloomsJournal.navigationFrame.prevPageButton, "left")
+	F.ReskinArrow(HeirloomsJournal.navigationFrame.nextPageButton, "right")
+
+	HeirloomsJournal.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
+	HeirloomsJournal.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
+
+	-- Progress bar
+
+	local progressBar = HeirloomsJournal.progressBar
+	progressBar.border:Hide()
+	progressBar:DisableDrawLayer("BACKGROUND")
+
+	progressBar.text:SetPoint("CENTER", 0, 1)
+	progressBar:SetStatusBarTexture(C.media.backdrop)
+
+	F.CreateBDFrame(progressBar, .25)
 end
