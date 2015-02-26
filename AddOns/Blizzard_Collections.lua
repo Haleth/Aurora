@@ -397,6 +397,11 @@ C.themes["Blizzard_Collections"] = function()
 		else
 			toyString:SetTextColor(.5, .5, .5)
 		end
+
+		if not self.updateFixed then
+			hooksecurefunc(self, "updateFunction", ToySpellButton_UpdateButton)
+			self.updateFixed = true
+		end
 	end)
 
 	-- [[ Heirlooms ]]
@@ -472,7 +477,7 @@ C.themes["Blizzard_Collections"] = function()
 			local header = HeirloomsJournal.heirloomHeaderFrames[i]
 			if not header.styled then
 				header.text:SetTextColor(1, 1, 1)
-				header.text:SetFont(C.media.font2, 16)
+				header.text:SetFont(C.media.font, 16)
 
 				header.styled = true
 			end
