@@ -31,6 +31,7 @@ C.classcolours = {
 	["SHAMAN"] = { r = 0, g = 0.6, b = 0.6 };
 	["WARRIOR"] = { r = 0.9, g = 0.65, b = 0.45 },
 	["DEATHKNIGHT"] = { r = 0.77, g = 0.12 , b = 0.23 },
+	["DEMONHUNTER"] = { r = 0.64, g = 0.19, b = 0.79 },
 }
 
 C.media = {
@@ -62,6 +63,9 @@ C.defaults = {
 }
 
 C.frames = {}
+
+C.TOC = select(4, GetBuildInfo())
+C.isBetaClient = C.TOC >= 70000
 
 -- [[ Cached variables ]]
 
@@ -157,7 +161,7 @@ F.Reskin = function(f, noHighlight)
 
 	if not noHighlight then
 		f:HookScript("OnEnter", colourButton)
- 		f:HookScript("OnLeave", clearButton)
+		f:HookScript("OnLeave", clearButton)
 	end
 end
 
@@ -310,14 +314,14 @@ end
 local function colourClose(f)
 	if f:IsEnabled() then
 		for _, pixel in pairs(f.pixels) do
-			pixel:SetVertexColor(r, g, b)
+			pixel:SetColorTexture(r, g, b)
 		end
 	end
 end
 
 local function clearClose(f)
 	for _, pixel in pairs(f.pixels) do
-		pixel:SetVertexColor(1, 1, 1)
+		pixel:SetColorTexture(1, 1, 1)
 	end
 end
 
@@ -348,24 +352,23 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 
 	f.pixels = {}
 
-	for i = 1, 9 do
-		local tex = f:CreateTexture()
-		tex:SetColorTexture(1, 1, 1)
-		tex:SetSize(1, 1)
-		tex:SetPoint("BOTTOMLEFT", 3+i, 3+i)
-		tinsert(f.pixels, tex)
-	end
-
-	for i = 1, 9 do
-		local tex = f:CreateTexture()
-		tex:SetColorTexture(1, 1, 1)
-		tex:SetSize(1, 1)
-		tex:SetPoint("TOPLEFT", 3+i, -3-i)
-		tinsert(f.pixels, tex)
+	local lineOfs = 2.5
+	for i = 1, 2 do
+		local line = f:CreateLine()
+		line:SetColorTexture(1, 1, 1)
+		line:SetThickness(0.5)
+		if i == 1 then
+			line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
+			line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
+		else
+			line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
+			line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
+		end
+		tinsert(f.pixels, line)
 	end
 
 	f:HookScript("OnEnter", colourClose)
- 	f:HookScript("OnLeave", clearClose)
+	f:HookScript("OnLeave", clearClose)
 end
 
 F.ReskinInput = function(f, height, width)
