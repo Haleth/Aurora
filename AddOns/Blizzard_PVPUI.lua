@@ -49,8 +49,6 @@ C.themes["Blizzard_PVPUI"] = function()
 	PVPQueueFrame.CategoryButton3.Icon:SetTexture("Interface\\Icons\\ability_warrior_offensivestance")
 
 	local englishFaction = UnitFactionGroup("player")
-	PVPQueueFrame.CategoryButton1.CurrencyDisplay.Icon:SetTexture("Interface\\Icons\\PVPCurrency-Honor-"..englishFaction)
-	PVPQueueFrame.CategoryButton2.CurrencyDisplay.Icon:SetTexture("Interface\\Icons\\PVPCurrency-Conquest-"..englishFaction)
 
 	hooksecurefunc("PVPQueueFrame_SelectButton", function(index)
 		local self = PVPQueueFrame
@@ -94,15 +92,6 @@ C.themes["Blizzard_PVPUI"] = function()
 			F.ReskinIcon(reward.Icon)
 		end
 	end
-
-	BonusFrame.BattlegroundReward1.Amount:SetPoint("RIGHT", BonusFrame.BattlegroundReward1.Icon, "LEFT", -2, 0)
-	BonusFrame.BattlegroundReward1.Icon:SetTexCoord(.08, .92, .08, .92)
-	BonusFrame.BattlegroundReward1.Icon:SetSize(16, 16)
-	F.CreateBG(BonusFrame.BattlegroundReward1.Icon)
-	BonusFrame.BattlegroundReward2.Amount:SetPoint("RIGHT", BonusFrame.BattlegroundReward2.Icon, "LEFT", -2, 0)
-	BonusFrame.BattlegroundReward2.Icon:SetTexCoord(.08, .92, .08, .92)
-	BonusFrame.BattlegroundReward2.Icon:SetSize(16, 16)
-	F.CreateBG(BonusFrame.BattlegroundReward2.Icon)
 
 	hooksecurefunc("HonorFrameBonusFrame_Update", function()
 		local hasData, canQueue, bgName, battleGroundID, hasWon, winHonorAmount, winConquestAmount = GetHolidayBGInfo()
