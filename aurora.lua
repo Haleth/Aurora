@@ -350,7 +350,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 
 	for i = 1, 9 do
 		local tex = f:CreateTexture()
-		tex:SetTexture(1, 1, 1)
+		tex:SetColorTexture(1, 1, 1)
 		tex:SetSize(1, 1)
 		tex:SetPoint("BOTTOMLEFT", 3+i, 3+i)
 		tinsert(f.pixels, tex)
@@ -358,7 +358,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 
 	for i = 1, 9 do
 		local tex = f:CreateTexture()
-		tex:SetTexture(1, 1, 1)
+		tex:SetColorTexture(1, 1, 1)
 		tex:SetSize(1, 1)
 		tex:SetPoint("TOPLEFT", 3+i, -3-i)
 		tinsert(f.pixels, tex)
@@ -598,7 +598,7 @@ F.ReskinColourSwatch = function(f)
 	nt:SetPoint("TOPLEFT", 3, -3)
 	nt:SetPoint("BOTTOMRIGHT", -3, 3)
 
-	bg:SetTexture(0, 0, 0)
+	bg:SetColorTexture(0, 0, 0)
 	bg:SetPoint("TOPLEFT", 2, -2)
 	bg:SetPoint("BOTTOMRIGHT", -2, 2)
 end
@@ -650,7 +650,7 @@ F.ReskinGarrisonPortrait = function(portrait)
 	portrait.PortraitRing:Hide()
 	portrait.PortraitRingQuality:SetTexture("")
 
-	portrait.LevelBorder:SetTexture(0, 0, 0, .5)
+	portrait.LevelBorder:SetColorTexture(0, 0, 0, .5)
 	portrait.LevelBorder:SetSize(44, 11)
 	portrait.LevelBorder:ClearAllPoints()
 	portrait.LevelBorder:SetPoint("BOTTOM", 0, 12)
@@ -666,7 +666,7 @@ F.ReskinGarrisonPortrait = function(portrait)
 	portrait.squareBG = squareBG
 
 	if cover then
-		cover:SetTexture(0, 0, 0)
+		cover:SetColorTexture(0, 0, 0)
 		cover:SetAllPoints(squareBG)
 	end
 end
@@ -922,35 +922,35 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local createBackdrop = function(parent, texture)
 			local bg = parent:CreateTexture(nil, "BACKGROUND")
-			bg:SetTexture(0, 0, 0, .5)
+			bg:SetColorTexture(0, 0, 0, .5)
 			bg:SetPoint("CENTER", texture)
 			bg:SetSize(12, 12)
 			parent.bg = bg
 
 			local left = parent:CreateTexture(nil, "BACKGROUND")
 			left:SetWidth(1)
-			left:SetTexture(0, 0, 0)
+			left:SetColorTexture(0, 0, 0)
 			left:SetPoint("TOPLEFT", bg)
 			left:SetPoint("BOTTOMLEFT", bg)
 			parent.left = left
 
 			local right = parent:CreateTexture(nil, "BACKGROUND")
 			right:SetWidth(1)
-			right:SetTexture(0, 0, 0)
+			right:SetColorTexture(0, 0, 0)
 			right:SetPoint("TOPRIGHT", bg)
 			right:SetPoint("BOTTOMRIGHT", bg)
 			parent.right = right
 
 			local top = parent:CreateTexture(nil, "BACKGROUND")
 			top:SetHeight(1)
-			top:SetTexture(0, 0, 0)
+			top:SetColorTexture(0, 0, 0)
 			top:SetPoint("TOPLEFT", bg)
 			top:SetPoint("TOPRIGHT", bg)
 			parent.top = top
 
 			local bottom = parent:CreateTexture(nil, "BACKGROUND")
 			bottom:SetHeight(1)
-			bottom:SetTexture(0, 0, 0)
+			bottom:SetColorTexture(0, 0, 0)
 			bottom:SetPoint("BOTTOMLEFT", bg)
 			bottom:SetPoint("BOTTOMRIGHT", bg)
 			parent.bottom = bottom
@@ -1038,7 +1038,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					if not bu.bg then
 						createBackdrop(bu, check)
-						hl:SetTexture(r, g, b, .2)
+						hl:SetColorTexture(r, g, b, .2)
 						_G["DropDownList"..level.."Button"..j.."UnCheck"]:SetTexture("")
 
 						local arrow = _G["DropDownList"..level.."Button"..j.."ExpandArrow"]
@@ -1074,7 +1074,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		hooksecurefunc("UIDropDownMenu_SetIconImage", function(icon, texture)
 			if texture:find("Divider") then
-				icon:SetTexture(1, 1, 1, .2)
+				icon:SetColorTexture(1, 1, 1, .2)
 				icon:SetHeight(1)
 			end
 		end)
@@ -1182,7 +1182,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					bu.highlight:SetPoint("TOPLEFT", 1, 0)
 					bu.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 					bu.highlight.SetPoint = F.dummy
-					bu.highlight:SetTexture(r, g, b, .2)
+					bu.highlight:SetColorTexture(r, g, b, .2)
 					bu.highlight.SetTexture = F.dummy
 
 					bu.expandIcon:SetTexture("")
@@ -1522,13 +1522,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		GossipGreetingText:SetTextColor(1, 1, 1)
 
 		NPCFriendshipStatusBar:GetRegions():Hide()
-		NPCFriendshipStatusBarNotch1:SetTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch1:SetColorTexture(0, 0, 0)
 		NPCFriendshipStatusBarNotch1:SetSize(1, 16)
-		NPCFriendshipStatusBarNotch2:SetTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch2:SetColorTexture(0, 0, 0)
 		NPCFriendshipStatusBarNotch2:SetSize(1, 16)
-		NPCFriendshipStatusBarNotch3:SetTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch3:SetColorTexture(0, 0, 0)
 		NPCFriendshipStatusBarNotch3:SetSize(1, 16)
-		NPCFriendshipStatusBarNotch4:SetTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch4:SetColorTexture(0, 0, 0)
 		NPCFriendshipStatusBarNotch4:SetSize(1, 16)
 		select(7, NPCFriendshipStatusBar:GetRegions()):Hide()
 
@@ -1558,7 +1558,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		local function styleTab(bu)
-			bu.selected:SetTexture(r, g, b, .2)
+			bu.selected:SetColorTexture(r, g, b, .2)
 			bu.selected:SetDrawLayer("BACKGROUND")
 			bu.text:SetFont(C.media.font, 14)
 			F.Reskin(bu, true)
@@ -1973,7 +1973,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local line = ChatConfigFrame:CreateTexture()
 		line:SetSize(1, 460)
 		line:SetPoint("TOPLEFT", ChatConfigCategoryFrame, "TOPRIGHT")
-		line:SetTexture(1, 1, 1, .2)
+		line:SetColorTexture(1, 1, 1, .2)
 
 		ChatConfigCategoryFrame:SetBackdrop(nil)
 		ChatConfigBackgroundFrame:SetBackdrop(nil)
