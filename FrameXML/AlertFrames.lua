@@ -1,5 +1,7 @@
 local F, C = unpack(select(2, ...))
 
+if true then return end
+
 tinsert(C.themes["Aurora"], function()
 	-- Achievement alert
 	local function fixBg(f)

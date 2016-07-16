@@ -851,7 +851,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Scroll bars ]]
 
-		local scrollbars = {"CharacterStatsPaneScrollBar", "LFDQueueFrameSpecificListScrollFrameScrollBar", "HelpFrameKnowledgebaseScrollFrameScrollBar", "HelpFrameReportBugScrollFrameScrollBar", "HelpFrameSubmitSuggestionScrollFrameScrollBar", "PaperDollTitlesPaneScrollBar", "PaperDollEquipmentManagerPaneScrollBar", "RaidInfoScrollFrameScrollBar", "FriendsFriendsScrollFrameScrollBar", "HelpFrameGM_ResponseScrollFrame1ScrollBar", "HelpFrameGM_ResponseScrollFrame2ScrollBar", "HelpFrameKnowledgebaseScrollFrame2ScrollBar", "WhoListScrollFrameScrollBar", "GearManagerDialogPopupScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar", "ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar", "ChannelRosterScrollFrameScrollBar"}
+		local scrollbars = {"LFDQueueFrameSpecificListScrollFrameScrollBar", "HelpFrameKnowledgebaseScrollFrameScrollBar", "HelpFrameReportBugScrollFrameScrollBar", "HelpFrameSubmitSuggestionScrollFrameScrollBar", "PaperDollTitlesPaneScrollBar", "PaperDollEquipmentManagerPaneScrollBar", "RaidInfoScrollFrameScrollBar", "FriendsFriendsScrollFrameScrollBar", "HelpFrameGM_ResponseScrollFrame1ScrollBar", "HelpFrameGM_ResponseScrollFrame2ScrollBar", "HelpFrameKnowledgebaseScrollFrame2ScrollBar", "WhoListScrollFrameScrollBar", "GearManagerDialogPopupScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar", "ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar", "ChannelRosterScrollFrameScrollBar"}
 		for i = 1, #scrollbars do
 			local scrollbar = _G[scrollbars[i]]
 			if scrollbar then
@@ -1760,28 +1760,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		-- Missing loot frame
-
-		MissingLootFrameCorner:Hide()
-
-		hooksecurefunc("MissingLootFrame_Show", function()
-			for i = 1, GetNumMissingLootItems() do
-				local bu = _G["MissingLootFrameItem"..i]
-
-				if not bu.styled then
-					_G["MissingLootFrameItem"..i.."NameFrame"]:Hide()
-
-					bu.icon:SetTexCoord(.08, .92, .08, .92)
-					F.CreateBG(bu.icon)
-
-					bu.styled = true
-				end
-			end
-		end)
-
-		F.CreateBD(MissingLootFrame)
-		F.ReskinClose(MissingLootFramePassButton)
-
 		-- Tabard frame
 
 		TabardFrameMoneyInset:DisableDrawLayer("BORDER")
@@ -1812,8 +1790,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		GuildRegistrarFrameBottom:Hide()
 		GuildRegistrarFrameMiddle:Hide()
 		select(19, GuildRegistrarFrame:GetRegions()):Hide()
-		select(6, GuildRegistrarFrameEditBox:GetRegions()):Hide()
-		select(7, GuildRegistrarFrameEditBox:GetRegions()):Hide()
 
 		GuildRegistrarFrameEditBox:SetHeight(20)
 
@@ -1827,9 +1803,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		select(18, ItemTextFrame:GetRegions()):Hide()
 		InboxFrameBg:Hide()
-		ItemTextScrollFrameMiddle:SetAlpha(0)
-		ItemTextScrollFrameTop:SetAlpha(0)
-		ItemTextScrollFrameBottom:SetAlpha(0)
 		ItemTextPrevPageButton:GetRegions():Hide()
 		ItemTextNextPageButton:GetRegions():Hide()
 		ItemTextMaterialTopLeft:SetAlpha(0)
@@ -2195,16 +2168,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, MAX_DISPLAY_CHANNEL_BUTTONS do
 			_G["ChannelButton"..i]:SetNormalTexture("")
 		end
-		CharacterStatsPaneTop:Hide()
-		CharacterStatsPaneBottom:Hide()
-		hooksecurefunc("PaperDollFrame_CollapseStatCategory", function(categoryFrame)
-			categoryFrame.BgMinimized:Hide()
-		end)
-		hooksecurefunc("PaperDollFrame_ExpandStatCategory", function(categoryFrame)
-			categoryFrame.BgTop:Hide()
-			categoryFrame.BgMiddle:Hide()
-			categoryFrame.BgBottom:Hide()
-		end)
 		local titles = false
 		hooksecurefunc("PaperDollTitlesPane_Update", function()
 			if titles == false then
