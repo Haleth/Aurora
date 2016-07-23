@@ -2156,12 +2156,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["ChannelButton"..i]:SetNormalTexture("")
 		end
 		local titles = false
-		hooksecurefunc("PaperDollTitlesPane_Update", function()
-			if titles == false then
-				for i = 1, 17 do
-					_G["PaperDollTitlesPaneButton"..i]:DisableDrawLayer("BACKGROUND")
-				end
-				titles = true
+		PaperDollTitlesPane:HookScript("OnShow", function(self)
+			for x, object in pairs(PaperDollTitlesPane.buttons) do
+				object:DisableDrawLayer("BACKGROUND")
+				object.text:SetFont(C.media.font, 11)
 			end
 		end)
 		SendScrollBarBackgroundTop:Hide()
