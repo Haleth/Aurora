@@ -42,6 +42,7 @@ tinsert(C.themes["Aurora"], function()
 		slot:SetPushedTexture("")
 		slot.icon:SetTexCoord(.08, .92, .08, .92)
 
+		border:SetTexture(C.media.backdrop)
 		border:SetPoint("TOPLEFT", -1, 1)
 		border:SetPoint("BOTTOMRIGHT", 1, -1)
 		border:SetDrawLayer("BACKGROUND")
@@ -75,7 +76,6 @@ tinsert(C.themes["Aurora"], function()
 	hooksecurefunc("PaperDollItemSlotButton_Update", function(button)
 		-- also fires for bag slots, we don't want that
 		if button.popoutButton then
-			button.IconBorder:SetTexture(C.media.backdrop)
 			button.icon:SetShown(button.hasItem)
 			colourPopout(button.popoutButton)
 		end

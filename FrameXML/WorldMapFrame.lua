@@ -49,26 +49,26 @@ tinsert(C.themes["Aurora"], function()
 		local function colourArrow(f)
 			if f:IsEnabled() then
 				for _, pixel in pairs(f.pixels) do
-					pixel:SetVertexColor(r, g, b)
+					pixel:SetColorTexture(r, g, b)
 				end
 			end
 		end
 
 		local function clearArrow(f)
 			for _, pixel in pairs(f.pixels) do
-				pixel:SetVertexColor(1, 1, 1)
+				pixel:SetColorTexture(1, 1, 1)
 			end
 		end
 
 		button.pixels = {}
 
-		for i = 1, 8 do
-			local tex = button:CreateTexture()
-			tex:SetColorTexture(1, 1, 1)
-			tex:SetSize(1, 1)
-			tex:SetPoint("BOTTOMLEFT", 3+i, 3+i)
-			tinsert(button.pixels, tex)
-		end
+		local lineOfs = 2.5
+		local line = button:CreateLine()
+		line:SetColorTexture(1, 1, 1)
+		line:SetThickness(0.5)
+		line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
+		line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
+		tinsert(button.pixels, line)
 
 		local hline = button:CreateTexture()
 		hline:SetColorTexture(1, 1, 1)
@@ -84,8 +84,8 @@ tinsert(C.themes["Aurora"], function()
 			hline:SetPoint("TOP", 1, -4)
 			vline:SetPoint("RIGHT", -4, 1)
 		else
-			hline:SetPoint("BOTTOM", 1, 4)
-			vline:SetPoint("LEFT", 4, 1)
+			hline:SetPoint("BOTTOM", -1, 4)
+			vline:SetPoint("LEFT", 4, -1)
 		end
 
 		button:SetScript("OnEnter", colourArrow)

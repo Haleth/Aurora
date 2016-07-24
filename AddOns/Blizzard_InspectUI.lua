@@ -132,36 +132,6 @@ C.themes["Blizzard_InspectUI"] = function()
 		bottom:SetPoint("BOTTOMRIGHT", roleIcon, -2, 2)
 	end
 
-	local function updateGlyph(self, clear)
-		local id = self:GetID()
-		local talentGroup = PlayerTalentFrame and PlayerTalentFrame.talentGroup
-		local enabled, glyphType, glyphTooltipIndex, glyphSpell, iconFilename = GetGlyphSocketInfo(id, talentGroup, true, INSPECTED_UNIT);
-
-		if not glyphType then return end
-
-		if enabled and glyphSpell and not clear then
-			if iconFilename then
-				self.glyph:SetTexture(iconFilename)
-			else
-				self.glyph:SetTexture("Interface\\Spellbook\\UI-Glyph-Rune1")
-			end
-		end
-	end
-
-	hooksecurefunc("InspectGlyphFrameGlyph_UpdateSlot", updateGlyph)
-
-	for i = 1, 6 do
-		local glyph = InspectTalentFrame.InspectGlyphs["Glyph"..i]
-
-		glyph:HookScript("OnShow", updateGlyph)
-
-		glyph.ring:Hide()
-
-		glyph.glyph:SetDrawLayer("ARTWORK")
-		glyph.glyph:SetTexCoord(.08, .92, .08, .92)
-		F.CreateBDFrame(glyph.glyph, .25)
-	end
-
 	for i = 1, 4 do
 		local tab = _G["InspectFrameTab"..i]
 		F.ReskinTab(tab)
