@@ -15,17 +15,16 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	EncounterJournalInsetBg:Hide()
 	EncounterJournalEncounterFrameInfoModelFrameShadow:Hide()
 	EncounterJournalEncounterFrameInfoModelFrame.dungeonBG:Hide()
-	
-	EncounterJournalEncounterFrameInfoInstanceButton:Hide()
-	EncounterJournalEncounterFrameInfoInstanceButton.Show = function() end
-	
+	EncounterJournal.encounter.info.difficulty.UpLeft:SetAlpha(0)
+	EncounterJournal.encounter.info.difficulty.UpRight:SetAlpha(0)
+	EncounterJournal.encounter.info.difficulty.DownLeft:SetAlpha(0)
+	EncounterJournal.encounter.info.difficulty.DownRight:SetAlpha(0)
 	select(5, EncounterJournalEncounterFrameInfoDifficulty:GetRegions()):Hide()
 	select(6, EncounterJournalEncounterFrameInfoDifficulty:GetRegions()):Hide()
-	EncounterJournalEncounterFrameInfoDifficulty.UpLeft:SetAlpha(0)
-	EncounterJournalEncounterFrameInfoDifficulty.UpRight:SetAlpha(0)
-	EncounterJournalEncounterFrameInfoDifficulty.DownLeft:SetAlpha(0)
-	EncounterJournalEncounterFrameInfoDifficulty.DownRight:SetAlpha(0)
-	
+	EncounterJournal.encounter.info.lootScroll.filter.UpLeft:SetAlpha(0)
+	EncounterJournal.encounter.info.lootScroll.filter.UpRight:SetAlpha(0)
+	EncounterJournal.encounter.info.lootScroll.filter.DownLeft:SetAlpha(0)
+	EncounterJournal.encounter.info.lootScroll.filter.DownRight:SetAlpha(0)
 	select(5, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
 	select(6, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
 	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpLeft:SetAlpha(0)
@@ -218,7 +217,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 				header.button.expandedIcon:SetTextColor(1, 1, 1)
 				header.button.expandedIcon.SetTextColor = F.dummy
 
-				F.Reskin(header.button)
+				-- Blizzard already uses .tex for this frame, so we can't do highlights
+				F.Reskin(header.button, true)
 
 				header.button.abilityIcon:SetTexCoord(.08, .92, .08, .92)
 				header.button.bg = F.CreateBG(header.button.abilityIcon)
@@ -253,7 +253,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			header.button.expandedIcon:SetTextColor(1, 1, 1)
 			header.button.expandedIcon.SetTextColor = F.dummy
 
-			F.Reskin(header.button)
+			-- Blizzard already uses .tex for this frame, so we can't do highlights
+			F.Reskin(header.button, true)
 
 			header.styled = true
 		end
@@ -306,6 +307,12 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	F.CreateBD(EncounterJournalSearchResults)
 	EncounterJournalSearchResults:SetBackdropColor(.15, .15, .15, .9)
+
+	EncounterJournal.searchBox.searchPreviewContainer.botLeftCorner:Hide()
+	EncounterJournal.searchBox.searchPreviewContainer.botRightCorner:Hide()
+	EncounterJournal.searchBox.searchPreviewContainer.bottomBorder:Hide()
+	EncounterJournal.searchBox.searchPreviewContainer.leftBorder:Hide()
+	EncounterJournal.searchBox.searchPreviewContainer.rightBorder:Hide()
 
 	local function resultOnEnter(self)
 		self.hl:Show()
@@ -444,7 +451,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		end
 	end
 
-	-- Suggestion 1
+	--[[ Suggestion 1 ]]
 
 	local suggestion = suggestFrame.Suggestion1
 
@@ -514,7 +521,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			suggestion.iconRing:Hide()
 
 			if data.iconPath then
-				suggestion.icon:SetMask(nil)
+				suggestion.icon:SetMask("")
+				suggestion.icon:SetTexture(data.iconPath)
 				suggestion.icon:SetTexCoord(.08, .92, .08, .92)
 			end
 		end
@@ -529,7 +537,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 				suggestion.iconRing:Hide()
 
 				if data.iconPath then
-					suggestion.icon:SetMask(nil)
+					suggestion.icon:SetMask("")
+					suggestion.icon:SetTexture(data.iconPath)
 					suggestion.icon:SetTexCoord(.08, .92, .08, .92)
 				end
 			end
@@ -537,12 +546,11 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	end)
 
 	hooksecurefunc("EJSuggestFrame_UpdateRewards", function(suggestion)
-		if suggestion.reward.data then
-			local texture = suggestion.reward.data.itemIcon or suggestion.reward.data.currencyIcon or 454046
-			if ( suggestion.reward.data.isRewardTable ) then
-				texture = 454046
-			end
-			suggestion.reward.icon:SetMask(nil)
+		local rewardData = suggestion.reward.data
+		if rewardData then
+			local texture = rewardData.itemIcon or rewardData.currencyIcon or [[Interface\Icons\achievement_guildperk_mobilebanking]]
+			suggestion.reward.icon:SetMask("")
+			suggestion.reward.icon:SetTexture(texture)
 			suggestion.reward.icon:SetTexCoord(.08, .92, .08, .92)
 			suggestion.reward.icon:SetTexture(texture)
 		end
