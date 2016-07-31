@@ -9,7 +9,6 @@ C.themes["Blizzard_PVPUI"] = function()
 	local ConquestFrame = ConquestFrame
 	local WarGamesFrame = WarGamesFrame
 	local PVPArenaTeamsFrame = PVPArenaTeamsFrame
-	local englishFaction = UnitFactionGroup("player")
 
 	-- Category buttons
 
@@ -48,6 +47,8 @@ C.themes["Blizzard_PVPUI"] = function()
 	PVPQueueFrame.CategoryButton1.Icon:SetTexture("Interface\\Icons\\achievement_bg_winwsg")
 	PVPQueueFrame.CategoryButton2.Icon:SetTexture("Interface\\Icons\\achievement_bg_killxenemies_generalsroom")
 	PVPQueueFrame.CategoryButton3.Icon:SetTexture("Interface\\Icons\\ability_warrior_offensivestance")
+
+	local englishFaction = UnitFactionGroup("player")
 
 	hooksecurefunc("PVPQueueFrame_SelectButton", function(index)
 		local self = PVPQueueFrame
@@ -222,12 +223,18 @@ C.themes["Blizzard_PVPUI"] = function()
 	ConquestFrame.Arena3v3:HookScript("OnEnter", ConquestFrameButton_OnEnter)
 	ConquestFrame.RatedBG:HookScript("OnEnter", ConquestFrameButton_OnEnter)
 
-	for _, bu in pairs({ConquestFrame.Arena2v2, ConquestFrame.Arena3v3, ConquestFrame.Arena5v5, ConquestFrame.RatedBG}) do
+	for _, bu in pairs({ConquestFrame.Arena2v2, ConquestFrame.Arena3v3, ConquestFrame.RatedBG}) do
 		F.Reskin(bu, true)
+		local reward = bu.Reward
 
 		bu.SelectedTexture:SetDrawLayer("BACKGROUND")
 		bu.SelectedTexture:SetColorTexture(r, g, b, .2)
 		bu.SelectedTexture:SetAllPoints()
+
+		if reward then
+			reward.Border:Hide()
+			F.ReskinIcon(reward.Icon)
+		end
 	end
 
 	ConquestFrame.Arena3v3:SetPoint("TOP", ConquestFrame.Arena2v2, "BOTTOM", 0, -1)
@@ -321,7 +328,7 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	-- Main style
 
-	F.Reskin(HonorFrameQueueButton)
+	F.Reskin(HonorFrame.QueueButton)
 	F.Reskin(ConquestFrame.JoinButton)
 	F.Reskin(WarGameStartButton)
 	F.ReskinDropDown(HonorFrameTypeDropDown)
