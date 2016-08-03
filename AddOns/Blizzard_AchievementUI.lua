@@ -60,7 +60,6 @@ C.themes["Blizzard_AchievementUI"] = function()
 	end
 
 	AchievementFrameHeaderPoints:SetPoint("TOP", AchievementFrame, "TOP", 0, -6)
-
 	if C.isBetaClient then
 		AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 1)
 		AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 1)
