@@ -75,13 +75,17 @@ tinsert(C.themes["Aurora"], function()
 	hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", function()
 		for i = 1, GetNumSpellTabs() do
 			local tab = _G["SpellBookSkillLineTab"..i]
-		
+
 			if not tab.styled then
 				tab:GetRegions():Hide()
 				tab:SetCheckedTexture(C.media.checked)
 
 				F.CreateBG(tab)
-				
+
+				local nt = tab:GetNormalTexture()
+				if nt then
+					nt:SetTexCoord(.08, .92, .08, .92)
+				end
 				--tab:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
 
 				tab.styled = true

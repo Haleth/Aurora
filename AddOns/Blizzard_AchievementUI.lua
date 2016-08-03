@@ -58,10 +58,7 @@ C.themes["Blizzard_AchievementUI"] = function()
 			end
 		end)
 	end
-	
-	AchievementFrameHeaderLeftDDLInset:Hide()
-	AchievementFrameHeaderLeftDDLInset.Show = function() end
-	
+
 	AchievementFrameHeaderPoints:SetPoint("TOP", AchievementFrame, "TOP", 0, -6)
 
 	if C.isBetaClient then

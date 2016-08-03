@@ -13,6 +13,12 @@ C.themes["Blizzard_AuctionUI"] = function()
 	ABBD:SetFrameLevel(AuctionProgressBar:GetFrameLevel()-1)
 	F.CreateBD(ABBD, .25)
 
+	AuctionProgressBar.Icon:SetTexCoord(.08, .92, .08, .92)
+	F.CreateBG(AuctionProgressBar.Icon)
+
+	AuctionProgressBar.Text:ClearAllPoints()
+	AuctionProgressBar.Text:SetPoint("CENTER", 0, 1)
+
 	F.ReskinClose(AuctionProgressFrameCancelButton, "LEFT", AuctionProgressBar, "RIGHT", 4, 0)
 	select(14, AuctionProgressFrameCancelButton:GetRegions()):SetPoint("CENTER", 0, 2)
 

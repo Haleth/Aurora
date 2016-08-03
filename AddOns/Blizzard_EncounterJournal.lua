@@ -562,13 +562,13 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	for k, bu in pairs(EncounterJournal.LootJournal.LegendariesFrame.buttons) do
 		bu.Background:Hide()
 		F.Reskin(bu)
-		F.CreateBG(bu.Icon)
+		F.ReskinIcon(bu.Icon)
 		bu.Icon:SetDrawLayer("ARTWORK")
 	end
 	for k, bu in pairs(EncounterJournal.LootJournal.LegendariesFrame.rightSideButtons) do
 		bu.Background:Hide()
 		F.Reskin(bu)
-		F.CreateBG(bu.Icon)
+		F.ReskinIcon(bu.Icon)
 		bu.Icon:SetDrawLayer("ARTWORK")
 	end
 end
