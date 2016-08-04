@@ -193,7 +193,6 @@ end
 
 F.ReskinScroll = function(f, parent)
 	local frame = f:GetName()
-
 	if frame then
 		if _G[frame.."Track"] then _G[frame.."Track"]:Hide() end
 		if _G[frame.."BG"] then _G[frame.."BG"]:Hide() end
@@ -1095,12 +1094,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- Tab text position
 
 		hooksecurefunc("PanelTemplates_DeselectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]
-			text:SetPoint("CENTER", tab, "CENTER")
+			local text = tab.Text or _G[tab:GetName().."Text"]  
+			text:SetPoint("CENTER", tab, "CENTER")  
 		end)
 
 		hooksecurefunc("PanelTemplates_SelectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]
+			local text = tab.Text or _G[tab:GetName().."Text"]  
 			text:SetPoint("CENTER", tab, "CENTER")
 		end)
 
@@ -2135,6 +2134,24 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		PaperDollSidebarTabs:GetRegions():Hide()
 		select(2, PaperDollSidebarTabs:GetRegions()):Hide()
 		select(6, PaperDollEquipmentManagerPaneEquipSet:GetRegions()):Hide()
+
+		F.CreateGradient(CharacterStatsPane.ItemLevelCategory)
+		F.CreateBD(CharacterStatsPane.ItemLevelCategory, 0)
+		F.CreateGradient(CharacterStatsPane.AttributesCategory)
+		F.CreateBD(CharacterStatsPane.AttributesCategory, 0)
+		F.CreateGradient(CharacterStatsPane.EnhancementsCategory)
+		F.CreateBD(CharacterStatsPane.EnhancementsCategory, 0)
+
+		CharacterFrame:HookScript("OnShow", function()
+			for k, v in pairs ({CharacterStatsPane:GetChildren()}) do
+				if v.Background then
+					if v.Background:GetAtlas() then
+						v.Background:SetAtlas(nil)
+					end
+				end
+			end
+		end)
+
 		select(5, HelpFrameGM_Response:GetChildren()):Hide()
 		select(6, HelpFrameGM_Response:GetChildren()):Hide()
 		GearManagerDialogPopupScrollFrame:GetRegions():Hide()
@@ -2152,12 +2169,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["ChannelButton"..i]:SetNormalTexture("")
 		end
 		local titles = false
-		hooksecurefunc("PaperDollTitlesPane_Update", function()
-			if titles == false then
-				for i = 1, 17 do
-					_G["PaperDollTitlesPaneButton"..i]:DisableDrawLayer("BACKGROUND")
-				end
-				titles = true
+		PaperDollTitlesPane:HookScript("OnShow", function(self)
+			for x, object in pairs(PaperDollTitlesPane.buttons) do
+				object:DisableDrawLayer("BACKGROUND")
+				object.text:SetFont(C.media.font, 11)
 			end
 		end)
 		SendScrollBarBackgroundTop:Hide()

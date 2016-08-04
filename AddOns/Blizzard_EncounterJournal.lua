@@ -27,7 +27,11 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	EncounterJournal.encounter.info.lootScroll.filter.DownRight:SetAlpha(0)
 	select(5, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
 	select(6, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
-
+	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpLeft:SetAlpha(0)
+	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpRight:SetAlpha(0)	
+	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.DownLeft:SetAlpha(0)	
+	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.DownRight:SetAlpha(0)	
+	
 	F.SetBD(EncounterJournal)
 
 	-- [[ Dungeon / raid tabs ]]
@@ -45,7 +49,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		self:GetFontString():SetTextColor(1, 1, 1)
 	end
 
-	for _, tabName in pairs({"EncounterJournalInstanceSelectSuggestTab", "EncounterJournalInstanceSelectDungeonTab", "EncounterJournalInstanceSelectRaidTab"}) do
+	for _, tabName in pairs({"EncounterJournalInstanceSelectSuggestTab", "EncounterJournalInstanceSelectDungeonTab", "EncounterJournalInstanceSelectRaidTab", "EncounterJournalInstanceSelectLootJournalTab"}) do
 		local tab = _G[tabName]
 		local text = tab:GetFontString()
 
@@ -68,10 +72,29 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		tab:HookScript("OnEnable", onEnable)
 		tab:HookScript("OnDisable", onDisable)
 		tab:HookScript("OnClick", onClick)
-
+		
 		F.Reskin(tab)
 	end
-
+	
+	for _, EJ_Button in pairs({EncounterJournal.LootJournal.LegendariesFrame.ClassButton, EncounterJournal.LootJournal.LegendariesFrame.SlotButton, EncounterJournal.LootJournal.ItemSetsFrame.ClassButton}) do
+		EJ_Button.UpLeft:Hide()
+		EJ_Button.UpLeft.Show = function() end
+		EJ_Button.UpRight:Hide()
+		EJ_Button.UpRight.Show = function() end
+		EJ_Button.DownLeft:Hide()
+		EJ_Button.DownLeft.Show = function() end
+		EJ_Button.DownRight:Hide()
+		EJ_Button.DownRight.Show = function() end
+		EJ_Button.HighLeft:Hide()
+		EJ_Button.HighRight:Hide()
+		
+		local text = EJ_Button:GetFontString()
+		text:SetPoint("CENTER")
+		text:SetTextColor(1, 1, 1)
+		
+		F.Reskin(EJ_Button)
+	end
+	
 	EncounterJournalInstanceSelectSuggestTab:SetBackdropColor(r, g, b, .2)
 
 	-- [[ Side tabs ]]
@@ -529,6 +552,23 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			suggestion.reward.icon:SetMask("")
 			suggestion.reward.icon:SetTexture(texture)
 			suggestion.reward.icon:SetTexCoord(.08, .92, .08, .92)
+			suggestion.reward.icon:SetTexture(texture)
 		end
 	end)
+	
+	local bg = EncounterJournal.LootJournal:GetRegions()
+	bg:Hide()
+	
+	for k, bu in pairs(EncounterJournal.LootJournal.LegendariesFrame.buttons) do
+		bu.Background:Hide()
+		F.Reskin(bu)
+		F.ReskinIcon(bu.Icon)
+		bu.Icon:SetDrawLayer("ARTWORK")
+	end
+	for k, bu in pairs(EncounterJournal.LootJournal.LegendariesFrame.rightSideButtons) do
+		bu.Background:Hide()
+		F.Reskin(bu)
+		F.ReskinIcon(bu.Icon)
+		bu.Icon:SetDrawLayer("ARTWORK")
+	end
 end

@@ -86,6 +86,7 @@ tinsert(C.themes["Aurora"], function()
 				if nt then
 					nt:SetTexCoord(.08, .92, .08, .92)
 				end
+				--tab:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
 
 				tab.styled = true
 			end

@@ -27,7 +27,6 @@ C.themes["Blizzard_AuctionUI"] = function()
 	for i = 1, 4 do
 		select(i, AuctionProgressFrame:GetRegions()):Hide()
 	end
-	AuctionProgressBar.Border:Hide()
 	BrowseFilterScrollFrame:GetRegions():Hide()
 	select(2, BrowseFilterScrollFrame:GetRegions()):Hide()
 	BrowseScrollFrame:GetRegions():Hide()
@@ -224,7 +223,16 @@ C.themes["Blizzard_AuctionUI"] = function()
 	F.ReskinCheck(ExactMatchCheckButton)
 	F.ReskinCheck(IsUsableCheckButton)
 	F.ReskinCheck(ShowOnPlayerCheckButton)
-
+	
+	BrowseNameText:ClearAllPoints()
+	BrowseNameText:SetPoint("TOPLEFT", AuctionFrameBrowse, "TOPLEFT", 80, -38)
+	BrowseLevelText:ClearAllPoints()
+	BrowseLevelText:SetPoint("TOPLEFT", AuctionFrameBrowse, "TOPLEFT", 230, -40)
+	BrowseDropDownName:ClearAllPoints()
+	BrowseDropDownName:SetPoint("TOPLEFT", AuctionFrameBrowse, "TOPLEFT", 310, -40)
+	BrowseDropDown:ClearAllPoints()
+	BrowseDropDown:SetPoint("TOPLEFT", AuctionFrameBrowse, "TOPLEFT", 290, -48)
+	
 	BrowsePrevPageButton:SetPoint("TOPLEFT", 660, -60)
 	BrowseNextPageButton:SetPoint("TOPRIGHT", 67, -60)
 	BrowsePrevPageButton:GetRegions():SetPoint("LEFT", BrowsePrevPageButton, "RIGHT", 2, 0)

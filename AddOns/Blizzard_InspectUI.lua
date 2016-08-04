@@ -44,14 +44,21 @@ C.themes["Blizzard_InspectUI"] = function()
 	-- PvP
 
 	InspectPVPFrame.BG:Hide()
-
-	for i = 1, 3 do
-		local div = InspectPVPFrame["Div"..i]
-
-		div:SetColorTexture(1, 1, 1, .2)
-		div:SetHeight(1)
+	
+	for tier = 1, MAX_PVP_TALENT_TIERS do
+		for column = 1, MAX_PVP_TALENT_COLUMNS do
+			local bu = InspectPVPFrame.Talents["Tier"..tier]["Talent"..column]
+			
+			bu.Slot:Hide()
+			bu.border:SetTexture("")
+			
+			bu.Icon:SetDrawLayer("ARTWORK")	
+			bu.Icon:SetTexCoord(.08, .92, .08, .92)
+					
+			F.CreateBG(bu.Icon)
+		end
 	end
-
+	
 	-- Talents
 
 	local inspectSpec = InspectTalentFrame.InspectSpec
