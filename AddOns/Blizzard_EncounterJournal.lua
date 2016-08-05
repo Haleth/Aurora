@@ -542,6 +542,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	end
 
 	F.Reskin(EncounterJournal.LootJournal.ItemSetsFrame.ClassButton)
+	EncounterJournal.LootJournal.ItemSetsFrame.ClassButton:GetFontString():SetTextColor(1, 1, 1)
 	select(5, EncounterJournal.LootJournal.ItemSetsFrame.ClassButton:GetRegions()):Hide()
 	select(6, EncounterJournal.LootJournal.ItemSetsFrame.ClassButton:GetRegions()):Hide()
 	EncounterJournal.LootJournal.ItemSetsFrame.ClassButton.UpLeft:SetAlpha(0)
