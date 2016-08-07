@@ -193,22 +193,15 @@ end
 
 F.ReskinScroll = function(f, parent)
 	local frame = f:GetName()
-	if frame then
-		if _G[frame.."Track"] then _G[frame.."Track"]:Hide() end
-		if _G[frame.."BG"] then _G[frame.."BG"]:Hide() end
-		if _G[frame.."Top"] then _G[frame.."Top"]:Hide() end
-		if _G[frame.."Middle"] then _G[frame.."Middle"]:Hide() end
-		if _G[frame.."Bottom"] then _G[frame.."Bottom"]:Hide() end
-	else
-		if f.trackBG then f.trackBG:Hide() end
-		if f.Background then f.Background:Hide() end
-		if f.Top then f.Top:Hide() end
-		if f.Middle then f.Middle:Hide() end
-		if f.Bottom then f.Bottom:Hide() end
-		if f.ScrollBarTop then f.ScrollBarTop:Hide() end
-		if f.ScrollBarMiddle then f.ScrollBarMiddle:Hide() end
-		if f.ScrollBarBottom then f.ScrollBarBottom:Hide() end
-	end
+
+	local track = (f.trackBG or f.Background) or (_G[frame.."Track"] or _G[frame.."BG"])
+	if track then track:Hide() end
+	local top = (f.ScrollBarTop or f.Top) or _G[frame.."Top"]
+	if top then top:Hide() end
+	local middle = (f.ScrollBarMiddle or f.Middle) or _G[frame.."Middle"]
+	if middle then middle:Hide() end
+	local bottom = (f.ScrollBarBottom or f.Bottom) or _G[frame.."Bottom"]
+	if bottom then bottom:Hide() end
 
 	local bu = f.ThumbTexture or f.thumbTexture or _G[frame.."ThumbTexture"]
 	bu:SetAlpha(0)
