@@ -9,6 +9,7 @@ C.themes["Blizzard_InspectUI"] = function()
 	for i = 1, 5 do
 		select(i, InspectModelFrame:GetRegions()):Hide()
 	end
+	F.Reskin(InspectPaperDollFrame.ViewButton)
 
 	-- Character
 
