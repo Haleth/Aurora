@@ -1780,10 +1780,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(GuildRegistrarFramePurchaseButton)
 		F.Reskin(GuildRegistrarFrameCancelButton)
 
-		-- Item text
+		--[[ Item text ]]
 
 		select(18, ItemTextFrame:GetRegions()):Hide()
-		InboxFrameBg:Hide()
+		ItemTextFramePageBg:SetAlpha(0)
 		ItemTextPrevPageButton:GetRegions():Hide()
 		ItemTextNextPageButton:GetRegions():Hide()
 		ItemTextMaterialTopLeft:SetAlpha(0)
