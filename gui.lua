@@ -116,10 +116,9 @@ fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -20)
 local colourBox = createToggleBox(gui, "useCustomColour", "Custom highlight colour")
 colourBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -8)
 
-local colourButton = CreateFrame("Button", nil, gui, "UIPanelButtonTemplate")
-colourButton:SetPoint("LEFT", colourBox.Text, "RIGHT", 20, 0)
-colourButton:SetSize(128, 25)
-colourButton:SetText("Change...")
+local colourButton = CreateFrame("Button", nil, gui)
+colourButton:SetPoint("LEFT", colourBox.Text, "RIGHT", 10, 0)
+colourButton:SetSize(16, 16)
 
 local useButtonGradientColourBox = createToggleBox(gui, "useButtonGradientColour", "Gradient button style")
 useButtonGradientColourBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -8)
@@ -158,8 +157,11 @@ gui.refresh = function()
 		checkboxes[i]:SetChecked(AuroraConfig[checkboxes[i].value] == true)
 	end
 
+	local customColour = AuroraConfig.customColour
+	colourButton:SetBackdropColor(customColour.r, customColour.g, customColour.b)
 	if not colourBox:GetChecked() then
 		colourButton:Disable()
+		colourButton:SetAlpha(.7)
 	end
 end
 
@@ -175,7 +177,7 @@ gui:SetScript("OnEvent", function(self, _, addon)
 	F.ReskinClose(splash.closeButton)
 
 	F.Reskin(reloadButton)
-	F.Reskin(colourButton)
+	F.CreateBD(colourButton)
 	F.ReskinSlider(alphaSlider)
 
 	for i = 1, #checkboxes do
@@ -220,14 +222,18 @@ colourBox:SetScript("OnClick", function(self)
 	if self:GetChecked() then
 		AuroraConfig.useCustomColour = true
 		colourButton:Enable()
+		colourButton:SetAlpha(1)
 	else
 		AuroraConfig.useCustomColour = false
 		colourButton:Disable()
+		colourButton:SetAlpha(.7)
 	end
 end)
 
 local function setColour()
-	AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b = ColorPickerFrame:GetColorRGB()
+	local r, g, b = ColorPickerFrame:GetColorRGB()
+	AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b = r, g, b
+	colourButton:SetBackdropColor(r, g, b)
 end
 
 local function resetColour(restore)
