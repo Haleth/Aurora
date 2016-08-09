@@ -13,6 +13,16 @@ local function onClick(self)
 	self:GetFontString():SetTextColor(1, 1, 1)
 end
 
+local function toggleCollapseButton(button)
+	if button.tradeSkillInfo and button.tradeSkillInfo.collapsed ~= nil then
+		if button.tradeSkillInfo.collapsed then
+			button.plus:Show()
+		else
+			button.plus:Hide()
+		end
+	end
+end
+
 C.themes["Blizzard_TradeSkillUI"] = function()
 	F.ReskinPortraitFrame(TradeSkillFrame)
 
@@ -77,6 +87,15 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 
 				tradeSkillButton._isSkinned = true
 			end
+
+			if tradeSkillButton then toggleCollapseButton(tradeSkillButton) end
+		end
+	end)
+
+	recipeList.scrollBar:HookScript("OnValueChanged", function()
+		for i = 1, #recipeList.buttons do
+			local tradeSkillButton = recipeList.buttons[i]
+			if tradeSkillButton then toggleCollapseButton(tradeSkillButton) end
 		end
 	end)
 
