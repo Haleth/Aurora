@@ -1,5 +1,13 @@
 local F, C = unpack(select(2, ...))
 
+local function updateCollapsedState(button)
+	if button.tradeSkillInfo and button.tradeSkillInfo.collapsed then
+		button.plus:Show()
+	else
+		button.plus:Hide()
+	end
+end
+
 C.themes["Blizzard_TradeSkillUI"] = function()
 	F.ReskinPortraitFrame(TradeSkillFrame)
 
@@ -74,6 +82,13 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 
 				tradeSkillButton._isSkinned = true
 			end
+
+			updateCollapsedState(tradeSkillButton)
+		end
+	end)
+	recipeList.scrollBar:HookScript("OnValueChanged", function()
+		for i = 1, #recipeList.buttons do
+			updateCollapsedState(recipeList.buttons[i])
 		end
 	end)
 
