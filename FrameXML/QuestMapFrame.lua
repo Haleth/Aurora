@@ -1,13 +1,18 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select = _G.select
 
-tinsert(C.themes["Aurora"], function()
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
+
+_G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	local QuestMapFrame = QuestMapFrame
+	local QuestMapFrame = _G.QuestMapFrame
 
 	-- [[ Quest scroll frame ]]
 
-	local QuestScrollFrame = QuestScrollFrame
+	local QuestScrollFrame = _G.QuestScrollFrame
 	local StoryHeader = QuestScrollFrame.Contents.StoryHeader
 
 	QuestMapFrame.VerticalSeparator:Hide()
@@ -92,15 +97,15 @@ tinsert(C.themes["Aurora"], function()
 
 	-- [[ Quest log popup detail frame ]]
 
-	local QuestLogPopupDetailFrame = QuestLogPopupDetailFrame
+	local QuestLogPopupDetailFrame = _G.QuestLogPopupDetailFrame
 
 	select(18, QuestLogPopupDetailFrame:GetRegions()):Hide()
-	QuestLogPopupDetailFrameScrollFrameTop:Hide()
-	QuestLogPopupDetailFrameScrollFrameBottom:Hide()
-	QuestLogPopupDetailFrameScrollFrameMiddle:Hide()
+	_G.QuestLogPopupDetailFrameScrollFrameTop:Hide()
+	_G.QuestLogPopupDetailFrameScrollFrameBottom:Hide()
+	_G.QuestLogPopupDetailFrameScrollFrameMiddle:Hide()
 
 	F.ReskinPortraitFrame(QuestLogPopupDetailFrame, true)
-	F.ReskinScroll(QuestLogPopupDetailFrameScrollFrameScrollBar)
+	F.ReskinScroll(_G.QuestLogPopupDetailFrameScrollFrameScrollBar)
 	F.Reskin(QuestLogPopupDetailFrame.AbandonButton)
 	F.Reskin(QuestLogPopupDetailFrame.TrackButton)
 	F.Reskin(QuestLogPopupDetailFrame.ShareButton)
@@ -123,11 +128,11 @@ tinsert(C.themes["Aurora"], function()
 	F.Reskin(ShowMapButton)
 
 	ShowMapButton:HookScript("OnEnter", function(self)
-		self.Text:SetTextColor(GameFontHighlight:GetTextColor())
+		self.Text:SetTextColor(_G.GameFontHighlight:GetTextColor())
 	end)
 
 	ShowMapButton:HookScript("OnLeave", function(self)
-		self.Text:SetTextColor(GameFontNormal:GetTextColor())
+		self.Text:SetTextColor(_G.GameFontNormal:GetTextColor())
 	end)
 
 	-- Bottom buttons

@@ -1,24 +1,29 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select = _G.select
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_ItemAlterationUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	F.SetBD(TransmogrifyFrame)
-	TransmogrifyArtFrame:DisableDrawLayer("BACKGROUND")
-	TransmogrifyArtFrame:DisableDrawLayer("BORDER")
-	TransmogrifyArtFramePortraitFrame:Hide()
-	TransmogrifyArtFramePortrait:Hide()
-	TransmogrifyArtFrameTopBorder:Hide()
-	TransmogrifyArtFrameTopRightCorner:Hide()
-	TransmogrifyModelFrameMarbleBg:Hide()
-	select(2, TransmogrifyModelFrame:GetRegions()):Hide()
-	TransmogrifyModelFrameLines:Hide()
-	TransmogrifyFrameButtonFrame:GetRegions():Hide()
-	TransmogrifyFrameButtonFrameButtonBorder:Hide()
-	TransmogrifyFrameButtonFrameButtonBottomBorder:Hide()
-	TransmogrifyFrameButtonFrameMoneyLeft:Hide()
-	TransmogrifyFrameButtonFrameMoneyRight:Hide()
-	TransmogrifyFrameButtonFrameMoneyMiddle:Hide()
+	F.SetBD(_G.TransmogrifyFrame)
+	_G.TransmogrifyArtFrame:DisableDrawLayer("BACKGROUND")
+	_G.TransmogrifyArtFrame:DisableDrawLayer("BORDER")
+	_G.TransmogrifyArtFramePortraitFrame:Hide()
+	_G.TransmogrifyArtFramePortrait:Hide()
+	_G.TransmogrifyArtFrameTopBorder:Hide()
+	_G.TransmogrifyArtFrameTopRightCorner:Hide()
+	_G.TransmogrifyModelFrameMarbleBg:Hide()
+	select(2, _G.TransmogrifyModelFrame:GetRegions()):Hide()
+	_G.TransmogrifyModelFrameLines:Hide()
+	_G.TransmogrifyFrameButtonFrame:GetRegions():Hide()
+	_G.TransmogrifyFrameButtonFrameButtonBorder:Hide()
+	_G.TransmogrifyFrameButtonFrameButtonBottomBorder:Hide()
+	_G.TransmogrifyFrameButtonFrameMoneyLeft:Hide()
+	_G.TransmogrifyFrameButtonFrameMoneyRight:Hide()
+	_G.TransmogrifyFrameButtonFrameMoneyMiddle:Hide()
 
 	local function colourPopout(self)
 		self.arrow:SetVertexColor(r, g, b)
@@ -66,7 +71,7 @@ C.themes["Blizzard_ItemAlterationUI"] = function()
 		end
 	end
 
-	hooksecurefunc("TransmogrifyFrame_UpdateSlotButton", function(button)
+	_G.hooksecurefunc("TransmogrifyFrame_UpdateSlotButton", function(button)
 		if button.altTexture:IsShown() then
 			button:SetBackdropBorderColor(.87, .5, 1)
 		else
@@ -92,12 +97,12 @@ C.themes["Blizzard_ItemAlterationUI"] = function()
 		end
 	end)
 
-	F.CreateBD(TransmogrifyConfirmationPopup)
-	F.Reskin(TransmogrifyConfirmationPopup.Button1)
-	F.Reskin(TransmogrifyConfirmationPopup.Button2)
+	F.CreateBD(_G.TransmogrifyConfirmationPopup)
+	F.Reskin(_G.TransmogrifyConfirmationPopup.Button1)
+	F.Reskin(_G.TransmogrifyConfirmationPopup.Button2)
 
 	for i = 1, 2 do
-		local f = TransmogrifyConfirmationPopup["ItemFrame"..i]
+		local f = _G.TransmogrifyConfirmationPopup["ItemFrame"..i]
 
 		f:SetNormalTexture("")
 		f:SetPushedTexture("")
@@ -108,6 +113,6 @@ C.themes["Blizzard_ItemAlterationUI"] = function()
 		select(8, f:GetRegions()):Hide()
 	end
 
-	F.Reskin(TransmogrifyApplyButton)
-	F.ReskinClose(TransmogrifyArtFrameCloseButton)
+	F.Reskin(_G.TransmogrifyApplyButton)
+	F.ReskinClose(_G.TransmogrifyArtFrameCloseButton)
 end

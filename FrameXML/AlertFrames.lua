@@ -1,9 +1,16 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+--local _G = _G
+--local select, pairs = _G.select, _G.pairs
 
-if true then return end
+-- [[ WoW API ]]
+--local hooksecurefunc = _G.hooksecurefunc
 
-tinsert(C.themes["Aurora"], function()
-	if C.isBetaClient then return end
+-- [[ Core ]]
+--local F, C = _G.unpack(select(2, ...))
+
+--[[_G.tinsert(C.themes["Aurora"], function()
+
+	 Pre-Legion  BROKEN
 	-- Achievement alert
 	local function fixBg(f)
 		if f:GetObjectType() == "AnimationGroup" then
@@ -447,4 +454,4 @@ tinsert(C.themes["Aurora"], function()
 		frame.BaseQualityBorder:SetVertexColor(frame.BaseQualityItemName:GetTextColor())
 		frame.UpgradeQualityBorder:SetVertexColor(frame.UpgradeQualityItemName:GetTextColor())
 	end)
-end)
+end)]]

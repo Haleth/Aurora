@@ -1,11 +1,19 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select = _G.select
 
-tinsert(C.themes["Aurora"], function()
-	if not AuroraConfig.loot then return end
+-- [[ WoW API ]]
+local hooksecurefunc = _G.hooksecurefunc
 
-	LootFramePortraitOverlay:Hide()
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
-	select(19, LootFrame:GetRegions()):SetPoint("TOP", LootFrame, "TOP", 0, -7)
+_G.tinsert(C.themes["Aurora"], function()
+	if not _G.AuroraConfig.loot then return end
+
+	_G.LootFramePortraitOverlay:Hide()
+
+	select(19, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
 
 	hooksecurefunc("LootFrame_UpdateButton", function(index)
 		local ic = _G["LootButton"..index.."IconTexture"]
@@ -19,7 +27,7 @@ tinsert(C.themes["Aurora"], function()
 			bu:SetNormalTexture("")
 			bu:SetPushedTexture("")
 
-			local bd = CreateFrame("Frame", nil, bu)
+			local bd = _G.CreateFrame("Frame", nil, bu)
 			bd:SetPoint("TOPLEFT")
 			bd:SetPoint("BOTTOMRIGHT", 114, 0)
 			bd:SetFrameLevel(bu:GetFrameLevel()-1)
@@ -29,21 +37,21 @@ tinsert(C.themes["Aurora"], function()
 			ic.bg = F.CreateBG(ic)
 		end
 
-		if select(6, GetLootSlotInfo(index)) then
+		if select(6, _G.GetLootSlotInfo(index)) then
 			ic.bg:SetVertexColor(1, 1, 0)
 		else
 			ic.bg:SetVertexColor(0, 0, 0)
 		end
 	end)
 
-	LootFrameDownButton:ClearAllPoints()
-	LootFrameDownButton:SetPoint("BOTTOMRIGHT", -8, 6)
-	LootFramePrev:ClearAllPoints()
-	LootFramePrev:SetPoint("LEFT", LootFrameUpButton, "RIGHT", 4, 0)
-	LootFrameNext:ClearAllPoints()
-	LootFrameNext:SetPoint("RIGHT", LootFrameDownButton, "LEFT", -4, 0)
+	_G.LootFrameDownButton:ClearAllPoints()
+	_G.LootFrameDownButton:SetPoint("BOTTOMRIGHT", -8, 6)
+	_G.LootFramePrev:ClearAllPoints()
+	_G.LootFramePrev:SetPoint("LEFT", _G.LootFrameUpButton, "RIGHT", 4, 0)
+	_G.LootFrameNext:ClearAllPoints()
+	_G.LootFrameNext:SetPoint("RIGHT", _G.LootFrameDownButton, "LEFT", -4, 0)
 
-	F.ReskinPortraitFrame(LootFrame, true)
-	F.ReskinArrow(LootFrameUpButton, "up")
-	F.ReskinArrow(LootFrameDownButton, "down")
+	F.ReskinPortraitFrame(_G.LootFrame, true)
+	F.ReskinArrow(_G.LootFrameUpButton, "up")
+	F.ReskinArrow(_G.LootFrameDownButton, "down")
 end)

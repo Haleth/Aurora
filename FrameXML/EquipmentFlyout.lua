@@ -1,39 +1,43 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
 
-tinsert(C.themes["Aurora"], function()
-	EquipmentFlyoutFrameHighlight:Hide()
+-- [[ Core ]]
+local F, C = _G.unpack(_G.select(2, ...))
 
-	local border = F.CreateBDFrame(EquipmentFlyoutFrame, 0)
+_G.tinsert(C.themes["Aurora"], function()
+	_G.EquipmentFlyoutFrameHighlight:Hide()
+
+	local border = F.CreateBDFrame(_G.EquipmentFlyoutFrame, 0)
 	border:SetBackdropBorderColor(1, 1, 1)
 	border:SetPoint("TOPLEFT", 2, -2)
 	border:SetPoint("BOTTOMRIGHT", -2, 2)
 
-	local navFrame = EquipmentFlyoutFrame.NavigationFrame
+	local navFrame = _G.EquipmentFlyoutFrame.NavigationFrame
 
-	EquipmentFlyoutFrameButtons.bg1:SetAlpha(0)
-	EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
-	Test2:Hide() -- wat
+	_G.EquipmentFlyoutFrameButtons.bg1:SetAlpha(0)
+	_G.EquipmentFlyoutFrameButtons:DisableDrawLayer("ARTWORK")
+	_G.Test2:Hide() -- wat
 
 	navFrame:SetWidth(204)
-	navFrame:SetPoint("TOPLEFT", EquipmentFlyoutFrameButtons, "BOTTOMLEFT", 1, 0)
+	navFrame:SetPoint("TOPLEFT", _G.EquipmentFlyoutFrameButtons, "BOTTOMLEFT", 1, 0)
 
-	hooksecurefunc("EquipmentFlyout_CreateButton", function()
-		local bu = EquipmentFlyoutFrame.buttons[#EquipmentFlyoutFrame.buttons]
-		local border = bu.IconBorder
+	_G.hooksecurefunc("EquipmentFlyout_CreateButton", function()
+		local bu = _G.EquipmentFlyoutFrame.buttons[#_G.EquipmentFlyoutFrame.buttons]
+		local iconBorder = bu.IconBorder
 
 		bu:SetNormalTexture("")
 		bu:SetPushedTexture("")
 		F.CreateBG(bu)
 
-		border:SetTexture(C.media.backdrop)
-		border:SetPoint("TOPLEFT", -1, 1)
-		border:SetPoint("BOTTOMRIGHT", 1, -1)
-		border:SetDrawLayer("BACKGROUND", 1)
+		iconBorder:SetTexture(C.media.backdrop)
+		iconBorder:SetPoint("TOPLEFT", -1, 1)
+		iconBorder:SetPoint("BOTTOMRIGHT", 1, -1)
+		iconBorder:SetDrawLayer("BACKGROUND", 1)
 
 		bu.icon:SetTexCoord(.08, .92, .08, .92)
 	end)
 
-	F.CreateBD(EquipmentFlyoutFrame.NavigationFrame)
-	F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.PrevButton, "left")
-	F.ReskinArrow(EquipmentFlyoutFrame.NavigationFrame.NextButton, "right")
+	F.CreateBD(_G.EquipmentFlyoutFrame.NavigationFrame)
+	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.PrevButton, "left")
+	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.NextButton, "right")
 end)

@@ -1,15 +1,19 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
 
-tinsert(C.themes["Aurora"], function()
-	if not AuroraConfig.chatBubbles then return end
+-- [[ Core ]]
+local _, C = _G.unpack(_G.select(2, ...))
 
-	local bubbleHook = CreateFrame("Frame")
+_G.tinsert(C.themes["Aurora"], function()
+	if not _G.AuroraConfig.chatBubbles then return end
+
+	local bubbleHook = _G.CreateFrame("Frame")
 
 	local function styleBubble(frame)
-		local scale = UIParent:GetScale()
+		local scale = _G.UIParent:GetScale()
 
 		for i = 1, frame:GetNumRegions() do
-			local region = select(i, frame:GetRegions())
+			local region = _G.select(i, frame:GetRegions())
 			if region:GetObjectType() == "Texture" then
 				region:SetTexture(nil)
 			elseif region:GetObjectType() == "FontString" then
@@ -23,7 +27,7 @@ tinsert(C.themes["Aurora"], function()
 			edgeFile = C.media.backdrop,
 			edgeSize = scale,
 		})
-		frame:SetBackdropColor(0, 0, 0, AuroraConfig.alpha)
+		frame:SetBackdropColor(0, 0, 0, _G.AuroraConfig.alpha)
 		frame:SetBackdropBorderColor(0, 0, 0)
 	end
 
@@ -42,10 +46,10 @@ tinsert(C.themes["Aurora"], function()
 		last = last + elapsed
 		if last > .1 then
 			last = 0
-			local newNumKids = WorldFrame:GetNumChildren()
+			local newNumKids = _G.WorldFrame:GetNumChildren()
 			if newNumKids ~= numKids then
 				for i=numKids + 1, newNumKids do
-					local frame = select(i, WorldFrame:GetChildren())
+					local frame = _G.select(i, _G.WorldFrame:GetChildren())
 
 					if isChatBubble(frame) then
 						styleBubble(frame)

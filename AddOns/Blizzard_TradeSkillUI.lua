@@ -1,4 +1,12 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select = _G.select
+
+-- [[ WoW API ]]
+local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 local function updateCollapsedState(button)
 	if button.tradeSkillInfo and button.tradeSkillInfo.collapsed then
@@ -9,6 +17,7 @@ local function updateCollapsedState(button)
 end
 
 C.themes["Blizzard_TradeSkillUI"] = function()
+	local TradeSkillFrame = _G.TradeSkillFrame
 	F.ReskinPortraitFrame(TradeSkillFrame)
 
 	local rankFrame = TradeSkillFrame.RankFrame
@@ -57,7 +66,7 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 				tradeSkillButton:SetHighlightTexture("")
 				tradeSkillButton:SetPushedTexture("")
 				tradeSkillButton:SetNormalTexture("")
-				tradeSkillButton.SetNormalTexture = function(self, texture)
+				tradeSkillButton.SetNormalTexture = function(_, texture)
 					if texture == "" then
 						bg:Hide()
 					else

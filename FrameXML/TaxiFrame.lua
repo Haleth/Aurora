@@ -1,6 +1,11 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
 
-tinsert(C.themes["Aurora"], function()
+-- [[ Core ]]
+local F, C = _G.unpack(_G.select(2, ...))
+
+_G.tinsert(C.themes["Aurora"], function()
+    local TaxiFrame = _G.TaxiFrame
 	TaxiFrame:DisableDrawLayer("BORDER")
 	TaxiFrame:DisableDrawLayer("OVERLAY")
 	TaxiFrame.Bg:Hide()
@@ -8,5 +13,5 @@ tinsert(C.themes["Aurora"], function()
 	TaxiFrame.TopTileStreaks:Hide()
 
 	F.SetBD(TaxiFrame, 3, -23, -5, 3)
-	F.ReskinClose(TaxiFrame.CloseButton, "TOPRIGHT", TaxiRouteMap, "TOPRIGHT", -6, -6)
+	F.ReskinClose(TaxiFrame.CloseButton, "TOPRIGHT", _G.TaxiRouteMap, "TOPRIGHT", -6, -6)
 end)

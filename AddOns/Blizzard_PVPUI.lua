@@ -1,14 +1,20 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, pairs = _G.select, _G.pairs
+
+-- [[ WoW API ]]
+local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_PVPUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	local PVPUIFrame = PVPUIFrame
-	local PVPQueueFrame = PVPQueueFrame
-	local HonorFrame = HonorFrame
-	local ConquestFrame = ConquestFrame
-	local WarGamesFrame = WarGamesFrame
-	local PVPArenaTeamsFrame = PVPArenaTeamsFrame
+	local PVPQueueFrame = _G.PVPQueueFrame
+	local HonorFrame = _G.HonorFrame
+	local ConquestFrame = _G.ConquestFrame
+	local WarGamesFrame = _G.WarGamesFrame
 
 	-- Category buttons
 
@@ -48,7 +54,7 @@ C.themes["Blizzard_PVPUI"] = function()
 	PVPQueueFrame.CategoryButton2.Icon:SetTexture("Interface\\Icons\\achievement_bg_killxenemies_generalsroom")
 	PVPQueueFrame.CategoryButton3.Icon:SetTexture("Interface\\Icons\\ability_warrior_offensivestance")
 
-	local englishFaction = UnitFactionGroup("player")
+	local englishFaction = _G.UnitFactionGroup("player")
 
 	hooksecurefunc("PVPQueueFrame_SelectButton", function(index)
 		local self = PVPQueueFrame
@@ -94,7 +100,7 @@ C.themes["Blizzard_PVPUI"] = function()
 	end
 
 	hooksecurefunc("HonorFrameBonusFrame_Update", function()
-		local hasData, canQueue, bgName, battleGroundID, hasWon, winHonorAmount, winConquestAmount = GetHolidayBGInfo()
+		local _, _, _, _, _, winHonorAmount, winConquestAmount = _G.GetHolidayBGInfo()
 		local rewardIndex = 0
 		if winConquestAmount and winConquestAmount > 0 then
 			rewardIndex = rewardIndex + 1
@@ -108,7 +114,7 @@ C.themes["Blizzard_PVPUI"] = function()
 		end
 	end)
 
-	IncludedBattlegroundsDropDown:SetPoint("TOPRIGHT", BonusFrame.DiceButton, 40, 26)
+	_G.IncludedBattlegroundsDropDown:SetPoint("TOPRIGHT", BonusFrame.DiceButton, 40, 26)
 
 	-- Role buttons
 
@@ -201,8 +207,7 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	-- Conquest Frame
 
-	local Inset = ConquestFrame.Inset
-	local ConquestBar = ConquestFrame.ConquestBar
+	Inset = ConquestFrame.Inset
 
 	for i = 1, 9 do
 		select(i, Inset:GetRegions()):Hide()
@@ -213,10 +218,10 @@ C.themes["Blizzard_PVPUI"] = function()
 	ConquestFrame.RatedBGHeader:Hide()
 	ConquestFrame.ShadowOverlay:Hide()
 
-	F.CreateBD(ConquestTooltip)
+	F.CreateBD(_G.ConquestTooltip)
 
 	local ConquestFrameButton_OnEnter = function(self)
-		ConquestTooltip:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, 0)
+		_G.ConquestTooltip:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, 0)
 	end
 
 	ConquestFrame.Arena2v2:HookScript("OnEnter", ConquestFrameButton_OnEnter)
@@ -241,18 +246,18 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	-- War games
 
-	local Inset = WarGamesFrame.RightInset
+	Inset = WarGamesFrame.RightInset
 
 	for i = 1, 9 do
 		select(i, Inset:GetRegions()):Hide()
 	end
 	WarGamesFrame.InfoBG:Hide()
 	WarGamesFrame.HorizontalBar:Hide()
-	WarGamesFrameInfoScrollFrame.scrollBarBackground:Hide()
-	WarGamesFrameInfoScrollFrame.scrollBarArtTop:Hide()
-	WarGamesFrameInfoScrollFrame.scrollBarArtBottom:Hide()
+	_G.WarGamesFrameInfoScrollFrame.scrollBarBackground:Hide()
+	_G.WarGamesFrameInfoScrollFrame.scrollBarArtTop:Hide()
+	_G.WarGamesFrameInfoScrollFrame.scrollBarArtBottom:Hide()
 
-	WarGamesFrameDescription:SetTextColor(.9, .9, .9)
+	_G.WarGamesFrameDescription:SetTextColor(.9, .9, .9)
 
 	local function onSetNormalTexture(self, texture)
 		if texture:find("Plus") then
@@ -324,15 +329,15 @@ C.themes["Blizzard_PVPUI"] = function()
 		hooksecurefunc(header, "SetNormalTexture", onSetNormalTexture)
 	end
 
-	F.ReskinCheck(WarGameTournamentModeCheckButton)
+	F.ReskinCheck(_G.WarGameTournamentModeCheckButton)
 
 	-- Main style
 
 	F.Reskin(HonorFrame.QueueButton)
 	F.Reskin(ConquestFrame.JoinButton)
-	F.Reskin(WarGameStartButton)
-	F.ReskinDropDown(HonorFrameTypeDropDown)
-	F.ReskinScroll(HonorFrameSpecificFrameScrollBar)
-	F.ReskinScroll(WarGamesFrameScrollFrameScrollBar)
-	F.ReskinScroll(WarGamesFrameInfoScrollFrameScrollBar)
+	F.Reskin(_G.WarGameStartButton)
+	F.ReskinDropDown(_G.HonorFrameTypeDropDown)
+	F.ReskinScroll(_G.HonorFrameSpecificFrameScrollBar)
+	F.ReskinScroll(_G.WarGamesFrameScrollFrameScrollBar)
+	F.ReskinScroll(_G.WarGamesFrameInfoScrollFrameScrollBar)
 end

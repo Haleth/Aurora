@@ -1,31 +1,36 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, pairs = _G.select, _G.pairs
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_VoidStorageUI"] = function()
-	F.SetBD(VoidStorageFrame, 20, 0, 0, 20)
-	F.CreateBD(VoidStoragePurchaseFrame)
+	F.SetBD(_G.VoidStorageFrame, 20, 0, 0, 20)
+	F.CreateBD(_G.VoidStoragePurchaseFrame)
 
-	VoidStorageBorderFrame:DisableDrawLayer("BORDER")
-	VoidStorageBorderFrame:DisableDrawLayer("BACKGROUND")
-	VoidStorageBorderFrame:DisableDrawLayer("OVERLAY")
-	VoidStorageDepositFrame:DisableDrawLayer("BACKGROUND")
-	VoidStorageDepositFrame:DisableDrawLayer("BORDER")
-	VoidStorageWithdrawFrame:DisableDrawLayer("BACKGROUND")
-	VoidStorageWithdrawFrame:DisableDrawLayer("BORDER")
-	VoidStorageCostFrame:DisableDrawLayer("BACKGROUND")
-	VoidStorageCostFrame:DisableDrawLayer("BORDER")
-	VoidStorageStorageFrame:DisableDrawLayer("BACKGROUND")
-	VoidStorageStorageFrame:DisableDrawLayer("BORDER")
-	VoidStorageFrameMarbleBg:Hide()
-	select(2, VoidStorageFrame:GetRegions()):Hide()
-	VoidStorageFrameLines:Hide()
-	VoidStorageStorageFrameLine1:Hide()
-	VoidStorageStorageFrameLine2:Hide()
-	VoidStorageStorageFrameLine3:Hide()
-	VoidStorageStorageFrameLine4:Hide()
-	select(12, VoidStorageDepositFrame:GetRegions()):Hide()
-	select(12, VoidStorageWithdrawFrame:GetRegions()):Hide()
+	_G.VoidStorageBorderFrame:DisableDrawLayer("BORDER")
+	_G.VoidStorageBorderFrame:DisableDrawLayer("BACKGROUND")
+	_G.VoidStorageBorderFrame:DisableDrawLayer("OVERLAY")
+	_G.VoidStorageDepositFrame:DisableDrawLayer("BACKGROUND")
+	_G.VoidStorageDepositFrame:DisableDrawLayer("BORDER")
+	_G.VoidStorageWithdrawFrame:DisableDrawLayer("BACKGROUND")
+	_G.VoidStorageWithdrawFrame:DisableDrawLayer("BORDER")
+	_G.VoidStorageCostFrame:DisableDrawLayer("BACKGROUND")
+	_G.VoidStorageCostFrame:DisableDrawLayer("BORDER")
+	_G.VoidStorageStorageFrame:DisableDrawLayer("BACKGROUND")
+	_G.VoidStorageStorageFrame:DisableDrawLayer("BORDER")
+	_G.VoidStorageFrameMarbleBg:Hide()
+	select(2, _G.VoidStorageFrame:GetRegions()):Hide()
+	_G.VoidStorageFrameLines:Hide()
+	_G.VoidStorageStorageFrameLine1:Hide()
+	_G.VoidStorageStorageFrameLine2:Hide()
+	_G.VoidStorageStorageFrameLine3:Hide()
+	_G.VoidStorageStorageFrameLine4:Hide()
+	select(12, _G.VoidStorageDepositFrame:GetRegions()):Hide()
+	select(12, _G.VoidStorageWithdrawFrame:GetRegions()):Hide()
 	for i = 1, 10 do
-		select(i, VoidStoragePurchaseFrame:GetRegions()):Hide()
+		select(i, _G.VoidStoragePurchaseFrame:GetRegions()):Hide()
 	end
 
 	for _, voidButton in pairs({"VoidStorageDepositButton", "VoidStorageWithdrawButton"}) do
@@ -67,7 +72,7 @@ C.themes["Blizzard_VoidStorageUI"] = function()
 	end
 
 	for i = 1, 2 do
-		local tab = VoidStorageFrame["Page"..i]
+		local tab = _G.VoidStorageFrame["Page"..i]
 
 		tab:GetRegions():Hide()
 		tab:SetCheckedTexture(C.media.checked)
@@ -77,12 +82,12 @@ C.themes["Blizzard_VoidStorageUI"] = function()
 		tab:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
 	end
 
-	VoidStorageFrame.Page1:ClearAllPoints()
-	VoidStorageFrame.Page1:SetPoint("LEFT", VoidStorageFrame, "TOPRIGHT", 2, -60)
+	_G.VoidStorageFrame.Page1:ClearAllPoints()
+	_G.VoidStorageFrame.Page1:SetPoint("LEFT", _G.VoidStorageFrame, "TOPRIGHT", 2, -60)
 
-	F.Reskin(VoidStoragePurchaseButton)
-	F.Reskin(VoidStorageHelpBoxButton)
-	F.Reskin(VoidStorageTransferButton)
-	F.ReskinClose(VoidStorageBorderFrame:GetChildren(), nil)
-	F.ReskinInput(VoidItemSearchBox)
+	F.Reskin(_G.VoidStoragePurchaseButton)
+	F.Reskin(_G.VoidStorageHelpBoxButton)
+	F.Reskin(_G.VoidStorageTransferButton)
+	F.ReskinClose(_G.VoidStorageBorderFrame:GetChildren(), nil)
+	F.ReskinInput(_G.VoidItemSearchBox)
 end

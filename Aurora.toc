@@ -22,7 +22,6 @@ AddOns\Blizzard_DeathRecap.lua
 AddOns\Blizzard_DebugTools.lua
 AddOns\Blizzard_EncounterJournal.lua
 AddOns\Blizzard_GarrisonUI.lua
-AddOns\Blizzard_GlyphUI.lua
 AddOns\Blizzard_GMSurveyUI.lua
 AddOns\Blizzard_GuildBankUI.lua
 AddOns\Blizzard_GuildControlUI.lua
@@ -40,7 +39,6 @@ AddOns\Blizzard_TimeManager.lua
 AddOns\Blizzard_TradeSkillUI.lua
 AddOns\Blizzard_TrainerUI.lua
 AddOns\Blizzard_VoidStorageUI.lua
-AddOns\Recount.lua
 
 FrameXML\AlertFrames.lua
 FrameXML\BankFrame.lua

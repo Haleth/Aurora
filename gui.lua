@@ -1,8 +1,16 @@
-local F, C = unpack(Aurora)
+-- [[ Lua Globals ]]
+local _G = _G
+local pairs = _G.pairs
+
+-- [[ WoW API ]]
+local CreateFrame = _G.CreateFrame
+
+-- [[ Core ]]
+local F, C = _G.unpack(_G.select(2, ...))
 
 -- [[ Splash screen ]]
 
-local splash = CreateFrame("Frame", "AuroraSplashScreen", UIParent)
+local splash = CreateFrame("Frame", "AuroraSplashScreen", _G.UIParent)
 splash:SetPoint("CENTER")
 splash:SetSize(400, 300)
 splash:Hide()
@@ -11,7 +19,7 @@ do
 	local title = splash:CreateFontString(nil, "ARTWORK", "GameFont_Gigantic")
 	title:SetTextColor(1, 1, 1)
 	title:SetPoint("TOP", 0, -25)
-	title:SetText("Aurora "..GetAddOnMetadata("Aurora", "Version"))
+	title:SetText("Aurora " .. _G.GetAddOnMetadata("Aurora", "Version"))
 
 	local body = splash:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 	body:SetPoint("TOP", title, "BOTTOM", 0, -20)
@@ -25,7 +33,7 @@ do
 	okayButton:SetText("Got it")
 	okayButton:SetScript("OnClick", function()
 		splash:Hide()
-		AuroraConfig.acknowledgedSplashScreen = true
+		_G.AuroraConfig.acknowledgedSplashScreen = true
 	end)
 
 	splash.okayButton = okayButton
@@ -42,7 +50,7 @@ local checkboxes = {}
 -- function to copy table contents and inner table
 local function copyTable(source, target)
 	for key, value in pairs(source) do
-		if type(value) == "table" then
+		if _G.type(value) == "table" then
 			target[key] = {}
 			for k, v in pairs(value) do
 				target[key][k] = value[k]
@@ -66,7 +74,7 @@ local function addSubCategory(parent, name)
 end
 
 local function toggle(f)
-	AuroraConfig[f.value] = f:GetChecked()
+	_G.AuroraConfig[f.value] = f:GetChecked()
 end
 
 local function createToggleBox(parent, value, text)
@@ -77,20 +85,20 @@ local function createToggleBox(parent, value, text)
 
 	f:SetScript("OnClick", toggle)
 
-	tinsert(checkboxes, f)
+	_G.tinsert(checkboxes, f)
 
 	return f
 end
 
 -- create frames/widgets
 
-local gui = CreateFrame("Frame", "AuroraOptions", UIParent)
+local gui = CreateFrame("Frame", "AuroraOptions", _G.UIParent)
 gui.name = "Aurora"
-InterfaceOptions_AddCategory(gui)
+_G.InterfaceOptions_AddCategory(gui)
 
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 title:SetPoint("TOP", 0, -26)
-title:SetText("Aurora "..GetAddOnMetadata("Aurora", "Version"))
+title:SetText("Aurora " .. _G.GetAddOnMetadata("Aurora", "Version"))
 
 local features = addSubCategory(gui, "Features")
 features:SetPoint("TOPLEFT", 16, -80)
@@ -125,10 +133,10 @@ useButtonGradientColourBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -8)
 
 local alphaSlider = CreateFrame("Slider", "AuroraOptionsAlpha", gui, "OptionsSliderTemplate")
 alphaSlider:SetPoint("TOPLEFT", useButtonGradientColourBox, "BOTTOMLEFT", 0, -40)
-BlizzardOptionsPanel_Slider_Enable(alphaSlider)
+_G.BlizzardOptionsPanel_Slider_Enable(alphaSlider)
 alphaSlider:SetMinMaxValues(0, 1)
 alphaSlider:SetValueStep(0.1)
-AuroraOptionsAlphaText:SetText("Backdrop opacity *")
+_G.AuroraOptionsAlphaText:SetText("Backdrop opacity *")
 
 local line = gui:CreateTexture(nil, "ARTWORK")
 line:SetSize(600, 1)
@@ -151,13 +159,13 @@ credits:SetPoint("BOTTOM", 0, 40)
 -- add event handlers
 
 gui.refresh = function()
-	alphaSlider:SetValue(AuroraConfig.alpha)
+	alphaSlider:SetValue(_G.AuroraConfig.alpha)
 
 	for i = 1, #checkboxes do
-		checkboxes[i]:SetChecked(AuroraConfig[checkboxes[i].value] == true)
+		checkboxes[i]:SetChecked(_G.AuroraConfig[checkboxes[i].value] == true)
 	end
 
-	local customColour = AuroraConfig.customColour
+	local customColour = _G.AuroraConfig.customColour
 	colourButton:SetBackdropColor(customColour.r, customColour.g, customColour.b)
 	if not colourBox:GetChecked() then
 		colourButton:Disable()
@@ -170,7 +178,7 @@ gui:SetScript("OnEvent", function(self, _, addon)
 	if addon ~= "Aurora" then return end
 
 	-- fill 'old' table
-	copyTable(AuroraConfig, old)
+	copyTable(_G.AuroraConfig, old)
 
 	F.CreateBD(splash)
 	F.Reskin(splash.okayButton)
@@ -189,70 +197,70 @@ end)
 
 local function updateFrames()
 	for i = 1, #C.frames do
-		F.CreateBD(C.frames[i], AuroraConfig.alpha)
+		F.CreateBD(C.frames[i], _G.AuroraConfig.alpha)
 	end
 end
 
 gui.okay = function()
-	copyTable(AuroraConfig, old)
+	copyTable(_G.AuroraConfig, old)
 end
 
 gui.cancel = function()
-	copyTable(old, AuroraConfig)
+	copyTable(old, _G.AuroraConfig)
 
 	updateFrames()
 	gui.refresh()
 end
 
 gui.default = function()
-	copyTable(C.defaults, AuroraConfig)
+	copyTable(C.defaults, _G.AuroraConfig)
 
 	updateFrames()
 	gui.refresh()
 end
 
-reloadButton:SetScript("OnClick", ReloadUI)
+reloadButton:SetScript("OnClick", _G.ReloadUI)
 
 alphaSlider:SetScript("OnValueChanged", function(_, value)
-	AuroraConfig.alpha = value
+	_G.AuroraConfig.alpha = value
 	updateFrames()
 end)
 
 colourBox:SetScript("OnClick", function(self)
 	if self:GetChecked() then
-		AuroraConfig.useCustomColour = true
+		_G.AuroraConfig.useCustomColour = true
 		colourButton:Enable()
 		colourButton:SetAlpha(1)
 	else
-		AuroraConfig.useCustomColour = false
+		_G.AuroraConfig.useCustomColour = false
 		colourButton:Disable()
 		colourButton:SetAlpha(.7)
 	end
 end)
 
 local function setColour()
-	local r, g, b = ColorPickerFrame:GetColorRGB()
-	AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b = r, g, b
+	local r, g, b = _G.ColorPickerFrame:GetColorRGB()
+	_G.AuroraConfig.customColour.r, _G.AuroraConfig.customColour.g, _G.AuroraConfig.customColour.b = r, g, b
 	colourButton:SetBackdropColor(r, g, b)
 end
 
 local function resetColour(restore)
-	AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b = restore.r, restore.g, restore.b
+	_G.AuroraConfig.customColour.r, _G.AuroraConfig.customColour.g, _G.AuroraConfig.customColour.b = restore.r, restore.g, restore.b
 end
 
 colourButton:SetScript("OnClick", function()
-	local r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
-	ColorPickerFrame:SetColorRGB(r, g, b)
-	ColorPickerFrame.previousValues = {r = r, g = g, b = b}
-	ColorPickerFrame.func = setColour
-	ColorPickerFrame.cancelFunc = resetColour
-	ColorPickerFrame:Hide()
-	ColorPickerFrame:Show()
+	local r, g, b = _G.AuroraConfig.customColour.r, _G.AuroraConfig.customColour.g, _G.AuroraConfig.customColour.b
+	_G.ColorPickerFrame:SetColorRGB(r, g, b)
+	_G.ColorPickerFrame.previousValues = {r = r, g = g, b = b}
+	_G.ColorPickerFrame.func = setColour
+	_G.ColorPickerFrame.cancelFunc = resetColour
+	_G.ColorPickerFrame:Hide()
+	_G.ColorPickerFrame:Show()
 end)
 
 -- easy slash command
 
-SlashCmdList.AURORA = function()
-	InterfaceOptionsFrame_OpenToCategory(gui)
+_G.SlashCmdList.AURORA = function()
+	_G.InterfaceOptionsFrame_OpenToCategory(gui)
 end
-SLASH_AURORA1 = "/aurora"
+_G.SLASH_AURORA1 = "/aurora"

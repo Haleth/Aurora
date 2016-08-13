@@ -1,36 +1,45 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
+
+-- [[ WoW API ]]
+local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_EncounterJournal"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	EncounterJournalEncounterFrameInfo:DisableDrawLayer("BACKGROUND")
+	local EncounterJournal = _G.EncounterJournal
+	_G.EncounterJournalEncounterFrameInfo:DisableDrawLayer("BACKGROUND")
 	EncounterJournal:DisableDrawLayer("BORDER")
-	EncounterJournalInset:DisableDrawLayer("BORDER")
+	_G.EncounterJournalInset:DisableDrawLayer("BORDER")
 	EncounterJournal:DisableDrawLayer("OVERLAY")
 
-	EncounterJournalPortrait:Hide()
-	EncounterJournalInstanceSelectBG:Hide()
-	EncounterJournalBg:Hide()
-	EncounterJournalTitleBg:Hide()
-	EncounterJournalInsetBg:Hide()
-	EncounterJournalEncounterFrameInfoModelFrameShadow:Hide()
-	EncounterJournalEncounterFrameInfoModelFrame.dungeonBG:Hide()
+	_G.EncounterJournalPortrait:Hide()
+	_G.EncounterJournalInstanceSelectBG:Hide()
+	_G.EncounterJournalBg:Hide()
+	_G.EncounterJournalTitleBg:Hide()
+	_G.EncounterJournalInsetBg:Hide()
+	_G.EncounterJournalEncounterFrameInfoModelFrameShadow:Hide()
+	_G.EncounterJournalEncounterFrameInfoModelFrame.dungeonBG:Hide()
 	EncounterJournal.encounter.info.difficulty.UpLeft:SetAlpha(0)
 	EncounterJournal.encounter.info.difficulty.UpRight:SetAlpha(0)
 	EncounterJournal.encounter.info.difficulty.DownLeft:SetAlpha(0)
 	EncounterJournal.encounter.info.difficulty.DownRight:SetAlpha(0)
-	select(5, EncounterJournalEncounterFrameInfoDifficulty:GetRegions()):Hide()
-	select(6, EncounterJournalEncounterFrameInfoDifficulty:GetRegions()):Hide()
+	select(5, _G.EncounterJournalEncounterFrameInfoDifficulty:GetRegions()):Hide()
+	select(6, _G.EncounterJournalEncounterFrameInfoDifficulty:GetRegions()):Hide()
 	EncounterJournal.encounter.info.lootScroll.filter.UpLeft:SetAlpha(0)
 	EncounterJournal.encounter.info.lootScroll.filter.UpRight:SetAlpha(0)
 	EncounterJournal.encounter.info.lootScroll.filter.DownLeft:SetAlpha(0)
 	EncounterJournal.encounter.info.lootScroll.filter.DownRight:SetAlpha(0)
-	select(5, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
-	select(6, EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
-	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpLeft:SetAlpha(0)
-	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpRight:SetAlpha(0)	
-	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.DownLeft:SetAlpha(0)	
-	EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.DownRight:SetAlpha(0)	
+	select(5, _G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
+	select(6, _G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle:GetRegions()):Hide()
+	_G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpLeft:SetAlpha(0)
+	_G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.UpRight:SetAlpha(0)	
+	_G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.DownLeft:SetAlpha(0)	
+	_G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle.DownRight:SetAlpha(0)	
 	
 	F.SetBD(EncounterJournal)
 
@@ -76,19 +85,20 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		F.Reskin(tab)
 	end
 
-	EncounterJournalInstanceSelectSuggestTab:SetBackdropColor(r, g, b, .2)
+	_G.EncounterJournalInstanceSelectSuggestTab:SetBackdropColor(r, g, b, .2)
 
 	-- [[ Side tabs ]]
 
-	EncounterJournalEncounterFrameInfoOverviewTab:ClearAllPoints()
-	EncounterJournalEncounterFrameInfoOverviewTab:SetPoint("TOPLEFT", EncounterJournalEncounterFrameInfo, "TOPRIGHT", 9, -35)
-	EncounterJournalEncounterFrameInfoLootTab:ClearAllPoints()
-	EncounterJournalEncounterFrameInfoLootTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoOverviewTab, "BOTTOM", 0, 1)
-	EncounterJournalEncounterFrameInfoBossTab:ClearAllPoints()
-	EncounterJournalEncounterFrameInfoBossTab:SetPoint("TOP", EncounterJournalEncounterFrameInfoLootTab, "BOTTOM", 0, 1)
+	_G.EncounterJournalEncounterFrameInfoOverviewTab:ClearAllPoints()
+	_G.EncounterJournalEncounterFrameInfoOverviewTab:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfo, "TOPRIGHT", 9, -35)
+	_G.EncounterJournalEncounterFrameInfoLootTab:ClearAllPoints()
+	_G.EncounterJournalEncounterFrameInfoLootTab:SetPoint("TOP", _G.EncounterJournalEncounterFrameInfoOverviewTab, "BOTTOM", 0, 1)
+	_G.EncounterJournalEncounterFrameInfoBossTab:ClearAllPoints()
+	_G.EncounterJournalEncounterFrameInfoBossTab:SetPoint("TOP", _G.EncounterJournalEncounterFrameInfoLootTab, "BOTTOM", 0, 1)
 
-	local tabs = {EncounterJournalEncounterFrameInfoOverviewTab, EncounterJournalEncounterFrameInfoLootTab, EncounterJournalEncounterFrameInfoBossTab, EncounterJournalEncounterFrameInfoModelTab}
-	for _, tab in pairs(tabs) do
+	local tabs = {"OverviewTab", "LootTab", "BossTab", "ModelTab"}
+	for i = 1, #tabs do
+		local tab = _G["EncounterJournalEncounterFrameInfo"..tabs[i]]
 		tab:SetScale(.75)
 
 		tab:SetBackdrop({
@@ -108,11 +118,11 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	-- [[ Instance select ]]
 
-	F.ReskinDropDown(EncounterJournalInstanceSelectTierDropDown)
+	F.ReskinDropDown(_G.EncounterJournalInstanceSelectTierDropDown)
 
-	local index = 1
 
 	local function listInstances()
+		local index = 1
 		while true do
 			local bu = EncounterJournal.instanceSelect.scroll.child["instance"..index]
 			if not bu then return end
@@ -136,19 +146,19 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	-- [[ Encounter frame ]]
 
-	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildHeader:Hide()
-	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetFontObject("GameFontNormalLarge")
+	_G.EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildHeader:Hide()
+	_G.EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetFontObject("GameFontNormalLarge")
 
-	EncounterJournalEncounterFrameInfoEncounterTitle:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollChildDescription:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildLoreDescription:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetTextColor(1, 1, 1)
-	EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChild.overviewDescription.Text:SetTextColor(1, 1, 1)
+	_G.EncounterJournalEncounterFrameInfoEncounterTitle:SetTextColor(1, 1, 1)
+	_G.EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollChildLore:SetTextColor(1, 1, 1)
+	_G.EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollChildDescription:SetTextColor(1, 1, 1)
+	_G.EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildLoreDescription:SetTextColor(1, 1, 1)
+	_G.EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetTextColor(1, 1, 1)
+	_G.EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChild.overviewDescription.Text:SetTextColor(1, 1, 1)
 
-	F.CreateBDFrame(EncounterJournalEncounterFrameInfoModelFrame, .25)
+	F.CreateBDFrame(_G.EncounterJournalEncounterFrameInfoModelFrame, .25)
 
-	EncounterJournalEncounterFrameInfoCreatureButton1:SetPoint("TOPLEFT", EncounterJournalEncounterFrameInfoModelFrame, 0, -35)
+	_G.EncounterJournalEncounterFrameInfoCreatureButton1:SetPoint("TOPLEFT", _G.EncounterJournalEncounterFrameInfoModelFrame, 0, -35)
 
 	do
 		local numBossButtons = 1
@@ -174,8 +184,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 			end
 
 			-- move last tab
-			local _, point = EncounterJournalEncounterFrameInfoModelTab:GetPoint()
-			EncounterJournalEncounterFrameInfoModelTab:SetPoint("TOP", point, "BOTTOM", 0, 1)
+			local _, point = _G.EncounterJournalEncounterFrameInfoModelTab:GetPoint()
+			_G.EncounterJournalEncounterFrameInfoModelTab:SetPoint("TOP", point, "BOTTOM", 0, 1)
 		end)
 	end
 
@@ -254,10 +264,10 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		end
 	end)
 
-	local items = EncounterJournal.encounter.info.lootScroll.buttons
+	local encLoot = EncounterJournal.encounter.info.lootScroll.buttons
 
-	for i = 1, #items do
-		local item = items[i]
+	for i = 1, #encLoot do
+		local item = encLoot[i]
 
 		item.boss:SetTextColor(1, 1, 1)
 		item.slot:SetTextColor(1, 1, 1)
@@ -281,13 +291,13 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	-- [[ Search results ]]
 
-	EncounterJournalSearchResultsBg:Hide()
+	_G.EncounterJournalSearchResultsBg:Hide()
 	for i = 3, 11 do
-		select(i, EncounterJournalSearchResults:GetRegions()):Hide()
+		select(i, _G.EncounterJournalSearchResults:GetRegions()):Hide()
 	end
 
-	F.CreateBD(EncounterJournalSearchResults)
-	EncounterJournalSearchResults:SetBackdropColor(.15, .15, .15, .9)
+	F.CreateBD(_G.EncounterJournalSearchResults)
+	_G.EncounterJournalSearchResults:SetBackdropColor(.15, .15, .15, .9)
 
 	EncounterJournal.searchBox.searchPreviewContainer.botLeftCorner:Hide()
 	EncounterJournal.searchBox.searchPreviewContainer.botRightCorner:Hide()
@@ -305,11 +315,11 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	local function styleSearchButton(result, index)
 		if index == 1 then
-			result:SetPoint("TOPLEFT", EncounterJournalSearchBox, "BOTTOMLEFT", 0, 1)
-			result:SetPoint("TOPRIGHT", EncounterJournalSearchBox, "BOTTOMRIGHT", -5, 1)
+			result:SetPoint("TOPLEFT", _G.EncounterJournalSearchBox, "BOTTOMLEFT", 0, 1)
+			result:SetPoint("TOPRIGHT", _G.EncounterJournalSearchBox, "BOTTOMRIGHT", -5, 1)
 		else
-			result:SetPoint("TOPLEFT", EncounterJournalSearchBox["sbutton"..index-1], "BOTTOMLEFT", 0, 1)
-			result:SetPoint("TOPRIGHT", EncounterJournalSearchBox["sbutton"..index-1], "BOTTOMRIGHT", 0, 1)
+			result:SetPoint("TOPLEFT", _G.EncounterJournalSearchBox["sbutton"..index-1], "BOTTOMLEFT", 0, 1)
+			result:SetPoint("TOPRIGHT", _G.EncounterJournalSearchBox["sbutton"..index-1], "BOTTOMRIGHT", 0, 1)
 		end
 
 		result:SetNormalTexture("")
@@ -340,18 +350,18 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	end
 
 	for i = 1, 5 do
-		styleSearchButton(EncounterJournalSearchBox["sbutton"..i], i)
+		styleSearchButton(_G.EncounterJournalSearchBox["sbutton"..i], i)
 	end
 
-	styleSearchButton(EncounterJournalSearchBox.showAllResults, 6)
+	styleSearchButton(_G.EncounterJournalSearchBox.showAllResults, 6)
 
 	hooksecurefunc("EncounterJournal_SearchUpdate", function()
 		local scrollFrame = EncounterJournal.searchResults.scrollFrame
-		local offset = HybridScrollFrame_GetOffset(scrollFrame)
+		local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
 		local results = scrollFrame.buttons
 		local result, index
 
-		local numResults = EJ_GetNumSearchResults()
+		local numResults = _G.EJ_GetNumSearchResults()
 
 		for i = 1, #results do
 			result = results[i]
@@ -388,22 +398,22 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		end
 	end)
 
-	F.ReskinClose(EncounterJournalSearchResultsCloseButton)
-	F.ReskinScroll(EncounterJournalSearchResultsScrollFrameScrollBar)
+	F.ReskinClose(_G.EncounterJournalSearchResultsCloseButton)
+	F.ReskinScroll(_G.EncounterJournalSearchResultsScrollFrameScrollBar)
 
 	-- [[ Various controls ]]
 
-	F.Reskin(EncounterJournalEncounterFrameInfoDifficulty)
-	F.Reskin(EncounterJournalEncounterFrameInfoResetButton)
-	F.Reskin(EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle)
-	F.ReskinClose(EncounterJournalCloseButton)
-	F.ReskinInput(EncounterJournalSearchBox)
-	F.ReskinScroll(EncounterJournalInstanceSelectScrollFrameScrollBar)
-	F.ReskinScroll(EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollBar)
-	F.ReskinScroll(EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollBar)
-	F.ReskinScroll(EncounterJournalEncounterFrameInfoBossesScrollFrameScrollBar)
-	F.ReskinScroll(EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollBar)
-	F.ReskinScroll(EncounterJournalEncounterFrameInfoLootScrollFrameScrollBar)
+	F.Reskin(_G.EncounterJournalEncounterFrameInfoDifficulty)
+	F.Reskin(_G.EncounterJournalEncounterFrameInfoResetButton)
+	F.Reskin(_G.EncounterJournalEncounterFrameInfoLootScrollFrameFilterToggle)
+	F.ReskinClose(_G.EncounterJournalCloseButton)
+	F.ReskinInput(_G.EncounterJournalSearchBox)
+	F.ReskinScroll(_G.EncounterJournalInstanceSelectScrollFrameScrollBar)
+	F.ReskinScroll(_G.EncounterJournalEncounterFrameInstanceFrameLoreScrollFrameScrollBar)
+	F.ReskinScroll(_G.EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollBar)
+	F.ReskinScroll(_G.EncounterJournalEncounterFrameInfoBossesScrollFrameScrollBar)
+	F.ReskinScroll(_G.EncounterJournalEncounterFrameInfoDetailsScrollFrameScrollBar)
+	F.ReskinScroll(_G.EncounterJournalEncounterFrameInfoLootScrollFrameScrollBar)
 
 	-- [[ Suggest frame ]]
 
@@ -411,7 +421,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	-- Tooltip
 
-	local EncounterJournalTooltip = EncounterJournalTooltip
+	local EncounterJournalTooltip = _G.EncounterJournalTooltip
 
 	F.CreateBD(EncounterJournalTooltip)
 
@@ -432,62 +442,64 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		end
 	end
 
-	--[[ Suggestion 1 ]]
-
-	local suggestion = suggestFrame.Suggestion1
-
-	suggestion.bg:Hide()
-
-	F.CreateBD(suggestion, .25)
-
-	suggestion.icon:SetPoint("TOPLEFT", 135, -15)
-	F.CreateBG(suggestion.icon)
-
-	local centerDisplay = suggestion.centerDisplay
-
-	centerDisplay.title.text:SetTextColor(1, 1, 1)
-	centerDisplay.description.text:SetTextColor(.9, .9, .9)
-
-	F.Reskin(suggestion.button)
-
-	local reward = suggestion.reward
-
-	reward:HookScript("OnEnter", rewardOnEnter)
-	reward.text:SetTextColor(.9, .9, .9)
-	reward.iconRing:Hide()
-	reward.iconRingHighlight:SetTexture("")
-	F.CreateBG(reward.icon)
-
-	F.ReskinArrow(suggestion.prevButton, "left")
-	F.ReskinArrow(suggestion.nextButton, "right")
-
-	-- Suggestion 2 and 3
-
-	for i = 2, 3 do
-		local suggestion = suggestFrame["Suggestion"..i]
+	--[[ Suggestion Frames ]]
+	do
+		-- Suggestion 1
+		local suggestion = suggestFrame.Suggestion1
 
 		suggestion.bg:Hide()
 
 		F.CreateBD(suggestion, .25)
 
-		suggestion.icon:SetPoint("TOPLEFT", 10, -10)
+		suggestion.icon:SetPoint("TOPLEFT", 135, -15)
 		F.CreateBG(suggestion.icon)
 
 		local centerDisplay = suggestion.centerDisplay
 
-		centerDisplay:ClearAllPoints()
-		centerDisplay:SetPoint("TOPLEFT", 85, -10)
 		centerDisplay.title.text:SetTextColor(1, 1, 1)
 		centerDisplay.description.text:SetTextColor(.9, .9, .9)
 
-		F.Reskin(centerDisplay.button)
+		F.Reskin(suggestion.button)
 
 		local reward = suggestion.reward
 
 		reward:HookScript("OnEnter", rewardOnEnter)
+		reward.text:SetTextColor(.9, .9, .9)
 		reward.iconRing:Hide()
 		reward.iconRingHighlight:SetTexture("")
 		F.CreateBG(reward.icon)
+
+		F.ReskinArrow(suggestion.prevButton, "left")
+		F.ReskinArrow(suggestion.nextButton, "right")
+
+		-- Suggestion 2 and 3
+
+		for i = 2, 3 do
+			suggestion = suggestFrame["Suggestion"..i]
+
+			suggestion.bg:Hide()
+
+			F.CreateBD(suggestion, .25)
+
+			suggestion.icon:SetPoint("TOPLEFT", 10, -10)
+			F.CreateBG(suggestion.icon)
+
+			centerDisplay = suggestion.centerDisplay
+
+			centerDisplay:ClearAllPoints()
+			centerDisplay:SetPoint("TOPLEFT", 85, -10)
+			centerDisplay.title.text:SetTextColor(1, 1, 1)
+			centerDisplay.description.text:SetTextColor(.9, .9, .9)
+
+			F.Reskin(centerDisplay.button)
+
+			reward = suggestion.reward
+
+			reward:HookScript("OnEnter", rewardOnEnter)
+			reward.iconRing:Hide()
+			reward.iconRingHighlight:SetTexture("")
+			F.CreateBG(reward.icon)
+		end
 	end
 
 	-- [[ Loot tab ]]
@@ -515,8 +527,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	EncounterJournal.LootJournal.LegendariesFrame.SlotButton.DownRight:SetAlpha(0)
 
 	EncounterJournal.LootJournal:DisableDrawLayer("BACKGROUND")
-	F.ReskinScroll(EncounterJournalScrollBar)
-	F.ReskinDropDown(LootJournalViewDropDown)
+	F.ReskinScroll(_G.EncounterJournalScrollBar)
+	F.ReskinDropDown(_G.LootJournalViewDropDown)
 
 	local itemsLeftSide = EncounterJournal.LootJournal.LegendariesFrame.buttons
 	local itemsRightSide = EncounterJournal.LootJournal.LegendariesFrame.rightSideButtons

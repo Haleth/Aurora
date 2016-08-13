@@ -1,26 +1,31 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local next = _G.next
 
-tinsert(C.themes["Aurora"], function()
-	VideoOptionsFrameCategoryFrame:DisableDrawLayer("BACKGROUND")
-	VideoOptionsFramePanelContainer:DisableDrawLayer("BORDER")
+-- [[ Core ]]
+local F, C = _G.unpack(_G.select(2, ...))
 
-	VideoOptionsFrameHeader:SetTexture("")
-	VideoOptionsFrameHeader:ClearAllPoints()
-	VideoOptionsFrameHeader:SetPoint("TOP", VideoOptionsFrame, 0, 0)
+_G.tinsert(C.themes["Aurora"], function()
+	_G.VideoOptionsFrameCategoryFrame:DisableDrawLayer("BACKGROUND")
+	_G.VideoOptionsFramePanelContainer:DisableDrawLayer("BORDER")
 
-	F.CreateBD(VideoOptionsFrame)
-	F.Reskin(VideoOptionsFrameOkay)
-	F.Reskin(VideoOptionsFrameCancel)
-	F.Reskin(VideoOptionsFrameDefaults)
-	F.Reskin(VideoOptionsFrameApply)
+	_G.VideoOptionsFrameHeader:SetTexture("")
+	_G.VideoOptionsFrameHeader:ClearAllPoints()
+	_G.VideoOptionsFrameHeader:SetPoint("TOP", _G.VideoOptionsFrame, 0, 0)
 
-	VideoOptionsFrameOkay:SetPoint("BOTTOMRIGHT", VideoOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
+	F.CreateBD(_G.VideoOptionsFrame)
+	F.Reskin(_G.VideoOptionsFrameOkay)
+	F.Reskin(_G.VideoOptionsFrameCancel)
+	F.Reskin(_G.VideoOptionsFrameDefaults)
+	F.Reskin(_G.VideoOptionsFrameApply)
+
+	_G.VideoOptionsFrameOkay:SetPoint("BOTTOMRIGHT", _G.VideoOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
 
 	local styledOptions = false
-	VideoOptionsFrame:HookScript("OnShow", function()
+	_G.VideoOptionsFrame:HookScript("OnShow", function()
 		if styledOptions then return end
 
-		local line = VideoOptionsFrame:CreateTexture(nil, "ARTWORK")
+		local line = _G.VideoOptionsFrame:CreateTexture(nil, "ARTWORK")
 		line:SetSize(1, 512)
 		line:SetPoint("LEFT", 205, 30)
 		line:SetColorTexture(1, 1, 1, .2)
@@ -29,10 +34,10 @@ tinsert(C.themes["Aurora"], function()
 		--[[ Graphics ]]--
 
 		-- Display
-		Display_:SetBackdrop(nil)
-		local hline = Display_:CreateTexture(nil, "ARTWORK")
+		_G.Display_:SetBackdrop(nil)
+		local hline = _G.Display_:CreateTexture(nil, "ARTWORK")
 		hline:SetSize(580, 1)
-		hline:SetPoint("TOPLEFT", GraphicsButton, "BOTTOMLEFT", 14, -4)
+		hline:SetPoint("TOPLEFT", _G.GraphicsButton, "BOTTOMLEFT", 14, -4)
 		hline:SetColorTexture(1, 1, 1, .2)
 
 		dropdowns = {"Display_DisplayModeDropDown", "Display_ResolutionDropDown", "Display_RefreshDropDown", "Display_PrimaryMonitorDropDown", "Display_AntiAliasingDropDown", "Display_VerticalSyncDropDown"}
@@ -40,9 +45,9 @@ tinsert(C.themes["Aurora"], function()
 			F.ReskinDropDown(_G[dropdowns[i]])
 		end
 
-		GraphicsButton:DisableDrawLayer("BACKGROUND")
-		RaidButton:DisableDrawLayer("BACKGROUND")
-		F.ReskinCheck(Display_RaidSettingsEnabledCheckBox)
+		_G.GraphicsButton:DisableDrawLayer("BACKGROUND")
+		_G.RaidButton:DisableDrawLayer("BACKGROUND")
+		F.ReskinCheck(_G.Display_RaidSettingsEnabledCheckBox)
 
 		-- Graphics Settings
 		for _, graphicsGroup in next, {"Graphics_", "RaidGraphics_"} do
@@ -80,8 +85,8 @@ tinsert(C.themes["Aurora"], function()
 		end
 
 		--[[ Languages ]]--
-		F.ReskinDropDown(InterfaceOptionsLanguagesPanelLocaleDropDown)
-		F.ReskinDropDown(InterfaceOptionsLanguagesPanelAudioLocaleDropDown)
+		F.ReskinDropDown(_G.InterfaceOptionsLanguagesPanelLocaleDropDown)
+		F.ReskinDropDown(_G.InterfaceOptionsLanguagesPanelAudioLocaleDropDown)
 
 		--[[ Sound ]]--
 		groups = {"AudioOptionsSoundPanelPlayback", "AudioOptionsSoundPanelHardware", "AudioOptionsSoundPanelVolume"}
@@ -94,10 +99,7 @@ tinsert(C.themes["Aurora"], function()
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
-		dropdowns = {"AudioOptionsSoundPanelHardwareDropDown", "AudioOptionsSoundPanelSoundChannelsDropDown"}
-		if C.isBetaClient then
-			tinsert(dropdowns, "AudioOptionsSoundPanelSoundCacheSizeDropDown")
-		end
+		dropdowns = {"AudioOptionsSoundPanelHardwareDropDown", "AudioOptionsSoundPanelSoundChannelsDropDown", "AudioOptionsSoundPanelSoundCacheSizeDropDown"}
 		for i = 1, #dropdowns do
 			F.ReskinDropDown(_G[dropdowns[i]])
 		end
@@ -125,9 +127,9 @@ tinsert(C.themes["Aurora"], function()
 		for i = 1, #sliders do
 			F.ReskinSlider(_G[sliders[i]])
 		end
-		F.Reskin(RecordLoopbackSoundButton)
-		F.Reskin(PlayLoopbackSoundButton)
-		F.Reskin(AudioOptionsVoicePanelChatMode1KeyBindingButton)
+		F.Reskin(_G.RecordLoopbackSoundButton)
+		F.Reskin(_G.PlayLoopbackSoundButton)
+		F.Reskin(_G.AudioOptionsVoicePanelChatMode1KeyBindingButton)
 
 		styledOptions = true
 	end)

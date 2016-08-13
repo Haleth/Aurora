@@ -1,48 +1,56 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, pairs = _G.select, _G.pairs
+
+-- [[ WoW API ]]
+local hooksecurefunc = _G.hooksecurefunc
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_TalentUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	PlayerTalentFrameTalents:DisableDrawLayer("BORDER")
-	PlayerTalentFrameTalentsBg:Hide()
-	PlayerTalentFrameActiveSpecTabHighlight:SetTexture("")
-	PlayerTalentFrameTitleGlowLeft:SetTexture("")
-	PlayerTalentFrameTitleGlowRight:SetTexture("")
-	PlayerTalentFrameTitleGlowCenter:SetTexture("")
+	_G.PlayerTalentFrameTalents:DisableDrawLayer("BORDER")
+	_G.PlayerTalentFrameTalentsBg:Hide()
+	_G.PlayerTalentFrameActiveSpecTabHighlight:SetTexture("")
+	_G.PlayerTalentFrameTitleGlowLeft:SetTexture("")
+	_G.PlayerTalentFrameTitleGlowRight:SetTexture("")
+	_G.PlayerTalentFrameTitleGlowCenter:SetTexture("")
 
 	for i = 1, 6 do
-		select(i, PlayerTalentFrameSpecialization:GetRegions()):Hide()
+		select(i, _G.PlayerTalentFrameSpecialization:GetRegions()):Hide()
 	end
 
-	select(7, PlayerTalentFrameSpecialization:GetChildren()):DisableDrawLayer("OVERLAY")
+	select(7, _G.PlayerTalentFrameSpecialization:GetChildren()):DisableDrawLayer("OVERLAY")
 
 	for i = 1, 5 do
-		select(i, PlayerTalentFrameSpecializationSpellScrollFrameScrollChild:GetRegions()):Hide()
+		select(i, _G.PlayerTalentFrameSpecializationSpellScrollFrameScrollChild:GetRegions()):Hide()
 	end
 
-	PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.Seperator:SetColorTexture(1, 1, 1)
-	PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.Seperator:SetAlpha(.2)
+	_G.PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.Seperator:SetColorTexture(1, 1, 1)
+	_G.PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.Seperator:SetAlpha(.2)
 
-	if select(2, UnitClass("player")) == "HUNTER" then
+	if select(2, _G.UnitClass("player")) == "HUNTER" then
 		for i = 1, 6 do
-			select(i, PlayerTalentFramePetSpecialization:GetRegions()):Hide()
+			select(i, _G.PlayerTalentFramePetSpecialization:GetRegions()):Hide()
 		end
-		select(7, PlayerTalentFramePetSpecialization:GetChildren()):DisableDrawLayer("OVERLAY")
+		select(7, _G.PlayerTalentFramePetSpecialization:GetChildren()):DisableDrawLayer("OVERLAY")
 		for i = 1, 5 do
-			select(i, PlayerTalentFramePetSpecializationSpellScrollFrameScrollChild:GetRegions()):Hide()
+			select(i, _G.PlayerTalentFramePetSpecializationSpellScrollFrameScrollChild:GetRegions()):Hide()
 		end
 
-		PlayerTalentFramePetSpecializationSpellScrollFrameScrollChild.Seperator:SetColorTexture(1, 1, 1)
-		PlayerTalentFramePetSpecializationSpellScrollFrameScrollChild.Seperator:SetAlpha(.2)
+		_G.PlayerTalentFramePetSpecializationSpellScrollFrameScrollChild.Seperator:SetColorTexture(1, 1, 1)
+		_G.PlayerTalentFramePetSpecializationSpellScrollFrameScrollChild.Seperator:SetAlpha(.2)
 
-		for i = 1, GetNumSpecializations(false, true) do
-			local _, _, _, icon = GetSpecializationInfo(i, false, true)
-			PlayerTalentFramePetSpecialization["specButton"..i].specIcon:SetTexture(icon)
+		for i = 1, _G.GetNumSpecializations(false, true) do
+			local _, _, _, icon = _G.GetSpecializationInfo(i, false, true)
+			_G.PlayerTalentFramePetSpecialization["specButton"..i].specIcon:SetTexture(icon)
 		end
 	end
 
 	hooksecurefunc("PlayerTalentFrame_UpdateTabs", function()
-		for i = 1, NUM_TALENT_FRAME_TABS do
+		for i = 1, _G.NUM_TALENT_FRAME_TABS do
 			local tab = _G["PlayerTalentFrameTab"..i]
 			local a1, p, a2, x = tab:GetPoint()
 
@@ -51,11 +59,11 @@ C.themes["Blizzard_TalentUI"] = function()
 		end
 	end)
 
-	for i = 1, NUM_TALENT_FRAME_TABS do
+	for i = 1, _G.NUM_TALENT_FRAME_TABS do
 		F.ReskinTab(_G["PlayerTalentFrameTab"..i])
 	end
 
-	for _, frame in pairs({PlayerTalentFrameSpecialization, PlayerTalentFramePetSpecialization}) do
+	for _, frame in pairs({_G.PlayerTalentFrameSpecialization, _G.PlayerTalentFramePetSpecialization}) do
 		local scrollChild = frame.spellsScroll.child
 
 		scrollChild.ring:Hide()
@@ -96,10 +104,10 @@ C.themes["Blizzard_TalentUI"] = function()
 	end
 
 	hooksecurefunc("PlayerTalentFrame_UpdateSpecFrame", function(self, spec)
-		local playerTalentSpec = GetSpecialization(nil, self.isPet, PlayerSpecTab2:GetChecked() and 2 or 1)
+		local playerTalentSpec = _G.GetSpecialization(nil, self.isPet, _G.PlayerSpecTab2:GetChecked() and 2 or 1)
 		local shownSpec = spec or playerTalentSpec or 1
 
-		local id, _, _, icon = GetSpecializationInfo(shownSpec, nil, self.isPet)
+		local id, _, _, icon = _G.GetSpecializationInfo(shownSpec, nil, self.isPet)
 		local scrollChild = self.spellsScroll.child
 
 		scrollChild.specIcon:SetTexture(icon)
@@ -107,16 +115,16 @@ C.themes["Blizzard_TalentUI"] = function()
 		local index = 1
 		local bonuses
 		if self.isPet then
-			bonuses = {GetSpecializationSpells(shownSpec, nil, self.isPet, true)}
+			bonuses = {_G.GetSpecializationSpells(shownSpec, nil, self.isPet, true)}
 		else
-			bonuses = SPEC_SPELLS_DISPLAY[id]
+			bonuses = _G.SPEC_SPELLS_DISPLAY[id]
 		end
 
 		for i = 1, #bonuses, 2 do
 			local frame = scrollChild["abilityButton"..index]
-			local _, icon = GetSpellTexture(bonuses[i])
+			local _, spellIcon = _G.GetSpellTexture(bonuses[i])
 
-			frame.icon:SetTexture(icon)
+			frame.icon:SetTexture(spellIcon)
 			frame.subText:SetTextColor(.75, .75, .75)
 
 			if not frame.styled then
@@ -130,7 +138,7 @@ C.themes["Blizzard_TalentUI"] = function()
 			index = index + 1
 		end
 
-		for i = 1, GetNumSpecializations(nil, self.isPet) do
+		for i = 1, _G.GetNumSpecializations(nil, self.isPet) do
 			local bu = self["specButton"..i]
 
 			if bu.disabled then
@@ -141,9 +149,9 @@ C.themes["Blizzard_TalentUI"] = function()
 		end
 	end)
 
-	for i = 1, GetNumSpecializations(false, nil) do
-		local _, _, _, icon = GetSpecializationInfo(i, false, nil)
-		PlayerTalentFrameSpecialization["specButton"..i].specIcon:SetTexture(icon)
+	for i = 1, _G.GetNumSpecializations(false, nil) do
+		local _, _, _, icon = _G.GetSpecializationInfo(i, false, nil)
+		_G.PlayerTalentFrameSpecialization["specButton"..i].specIcon:SetTexture(icon)
 	end
 
 	local buttons = {"PlayerTalentFrameSpecializationSpecButton", "PlayerTalentFramePetSpecializationSpecButton"}
@@ -205,7 +213,7 @@ C.themes["Blizzard_TalentUI"] = function()
 		end
 	end
 
-	for i = 1, MAX_TALENT_TIERS do
+	for i = 1, _G.MAX_TALENT_TIERS do
 		local row = _G["PlayerTalentFrameTalentsTalentRow"..i]
 		_G["PlayerTalentFrameTalentsTalentRow"..i.."Bg"]:Hide()
 		row:DisableDrawLayer("BORDER")
@@ -215,7 +223,7 @@ C.themes["Blizzard_TalentUI"] = function()
 		row.BottomLine:SetDesaturated(true)
 		row.BottomLine:SetVertexColor(r, g, b)
 
-		for j = 1, NUM_TALENT_COLUMNS do
+		for j = 1, _G.NUM_TALENT_COLUMNS do
 			local bu = _G["PlayerTalentFrameTalentsTalentRow"..i.."Talent"..j]
 			local ic = _G["PlayerTalentFrameTalentsTalentRow"..i.."Talent"..j.."IconTexture"]
 
@@ -227,7 +235,7 @@ C.themes["Blizzard_TalentUI"] = function()
 			ic:SetTexCoord(.08, .92, .08, .92)
 			F.CreateBG(ic)
 
-			bu.bg = CreateFrame("Frame", nil, bu)
+			bu.bg = _G.CreateFrame("Frame", nil, bu)
 			bu.bg:SetPoint("TOPLEFT", 10, 0)
 			bu.bg:SetPoint("BOTTOMRIGHT")
 			bu.bg:SetFrameLevel(bu:GetFrameLevel()-1)
@@ -236,8 +244,8 @@ C.themes["Blizzard_TalentUI"] = function()
 	end
 
 	hooksecurefunc("TalentFrame_Update", function()
-		for i = 1, MAX_TALENT_TIERS do
-			for j = 1, NUM_TALENT_COLUMNS do
+		for i = 1, _G.MAX_TALENT_TIERS do
+			for j = 1, _G.NUM_TALENT_COLUMNS do
 				local bu = _G["PlayerTalentFrameTalentsTalentRow"..i.."Talent"..j]
 				if bu.knownSelection:IsShown() then
 					bu.bg:SetBackdropColor(r, g, b, .2)
@@ -254,7 +262,7 @@ C.themes["Blizzard_TalentUI"] = function()
 
 		tab:SetCheckedTexture(C.media.checked)
 
-		local bg = CreateFrame("Frame", nil, tab)
+		local bg = _G.CreateFrame("Frame", nil, tab)
 		bg:SetPoint("TOPLEFT", -1, 1)
 		bg:SetPoint("BOTTOMRIGHT", 1, -1)
 		bg:SetFrameLevel(tab:GetFrameLevel()-1)
@@ -264,17 +272,17 @@ C.themes["Blizzard_TalentUI"] = function()
 	end
 
 	hooksecurefunc("PlayerTalentFrame_UpdateSpecs", function()
-		PlayerSpecTab1:SetPoint("TOPLEFT", PlayerTalentFrame, "TOPRIGHT", 2, -36)
-		PlayerSpecTab2:SetPoint("TOP", PlayerSpecTab1, "BOTTOM")
+		_G.PlayerSpecTab1:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPRIGHT", 2, -36)
+		_G.PlayerSpecTab2:SetPoint("TOP", _G.PlayerSpecTab1, "BOTTOM")
 	end)
 
-	PlayerTalentFrameTalentsTutorialButton.Ring:Hide()
-	PlayerTalentFrameTalentsTutorialButton:SetPoint("TOPLEFT", PlayerTalentFrame, "TOPLEFT", -12, 12)
-	PlayerTalentFrameSpecializationTutorialButton.Ring:Hide()
-	PlayerTalentFrameSpecializationTutorialButton:SetPoint("TOPLEFT", PlayerTalentFrame, "TOPLEFT", -12, 12)
+	_G.PlayerTalentFrameTalentsTutorialButton.Ring:Hide()
+	_G.PlayerTalentFrameTalentsTutorialButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -12, 12)
+	_G.PlayerTalentFrameSpecializationTutorialButton.Ring:Hide()
+	_G.PlayerTalentFrameSpecializationTutorialButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -12, 12)
 
-	F.ReskinPortraitFrame(PlayerTalentFrame, true)
-	F.Reskin(PlayerTalentFrameSpecializationLearnButton)
-	F.Reskin(PlayerTalentFrameActivateButton)
-	F.Reskin(PlayerTalentFramePetSpecializationLearnButton)
+	F.ReskinPortraitFrame(_G.PlayerTalentFrame, true)
+	F.Reskin(_G.PlayerTalentFrameSpecializationLearnButton)
+	F.Reskin(_G.PlayerTalentFrameActivateButton)
+	F.Reskin(_G.PlayerTalentFramePetSpecializationLearnButton)
 end

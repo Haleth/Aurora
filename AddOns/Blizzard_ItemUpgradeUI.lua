@@ -1,14 +1,18 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+
+-- [[ Core ]]
+local F, C = _G.unpack(_G.select(2, ...))
 
 C.themes["Blizzard_ItemUpgradeUI"] = function()
-	local ItemUpgradeFrame = ItemUpgradeFrame
+	local ItemUpgradeFrame = _G.ItemUpgradeFrame
 	local ItemButton = ItemUpgradeFrame.ItemButton
 
 	ItemUpgradeFrame:DisableDrawLayer("BACKGROUND")
 	ItemUpgradeFrame:DisableDrawLayer("BORDER")
-	ItemUpgradeFrameMoneyFrameLeft:Hide()
-	ItemUpgradeFrameMoneyFrameMiddle:Hide()
-	ItemUpgradeFrameMoneyFrameRight:Hide()
+	_G.ItemUpgradeFrameMoneyFrameLeft:Hide()
+	_G.ItemUpgradeFrameMoneyFrameMiddle:Hide()
+	_G.ItemUpgradeFrameMoneyFrameRight:Hide()
 	ItemUpgradeFrame.ButtonFrame:GetRegions():Hide()
 	ItemUpgradeFrame.ButtonFrame.ButtonBorder:Hide()
 	ItemUpgradeFrame.ButtonFrame.ButtonBottomBorder:Hide()
@@ -23,11 +27,11 @@ C.themes["Blizzard_ItemUpgradeUI"] = function()
 	ItemButton.IconTexture:SetPoint("TOPLEFT", 1, -1)
 	ItemButton.IconTexture:SetPoint("BOTTOMRIGHT", -1, 1)
 
-	local bg = CreateFrame("Frame", nil, ItemButton)
-	bg:SetSize(341, 50)
-	bg:SetPoint("LEFT", ItemButton, "RIGHT", -1, 0)
-	bg:SetFrameLevel(ItemButton:GetFrameLevel()-1)
-	F.CreateBD(bg, .25)
+	local btnBG = _G.CreateFrame("Frame", nil, ItemButton)
+	btnBG:SetSize(341, 50)
+	btnBG:SetPoint("LEFT", ItemButton, "RIGHT", -1, 0)
+	btnBG:SetFrameLevel(ItemButton:GetFrameLevel()-1)
+	F.CreateBD(btnBG, .25)
 
 	ItemButton:HookScript("OnEnter", function(self)
 		self:SetBackdropBorderColor(1, .56, .85)
@@ -39,8 +43,8 @@ C.themes["Blizzard_ItemUpgradeUI"] = function()
 	ItemButton.Cost.Icon:SetTexCoord(.08, .92, .08, .92)
 	ItemButton.Cost.Icon.bg = F.CreateBG(ItemButton.Cost.Icon)
 
-	hooksecurefunc("ItemUpgradeFrame_Update", function()
-		if GetItemUpgradeItemInfo() then
+	_G.hooksecurefunc("ItemUpgradeFrame_Update", function()
+		if _G.GetItemUpgradeItemInfo() then
 			ItemButton.IconTexture:SetTexCoord(.08, .92, .08, .92)
 			ItemButton.Cost.Icon.bg:Show()
 		else
@@ -49,16 +53,16 @@ C.themes["Blizzard_ItemUpgradeUI"] = function()
 		end
 	end)
 
-	local currency = ItemUpgradeFrameMoneyFrame.Currency
+	local currency = _G.ItemUpgradeFrameMoneyFrame.Currency
 	currency.icon:SetPoint("LEFT", currency.count, "RIGHT", 1, 0)
 	currency.icon:SetTexCoord(.08, .92, .08, .92)
 	F.CreateBG(currency.icon)
 
-	local bg = CreateFrame("Frame", nil, ItemUpgradeFrame)
-	bg:SetAllPoints(ItemUpgradeFrame)
-	bg:SetFrameLevel(ItemUpgradeFrame:GetFrameLevel()-1)
-	F.CreateBD(bg)
+	local frameBG = _G.CreateFrame("Frame", nil, ItemUpgradeFrame)
+	frameBG:SetAllPoints(ItemUpgradeFrame)
+	frameBG:SetFrameLevel(ItemUpgradeFrame:GetFrameLevel()-1)
+	F.CreateBD(frameBG)
 
 	F.ReskinPortraitFrame(ItemUpgradeFrame)
-	F.Reskin(ItemUpgradeFrameUpgradeButton)
+	F.Reskin(_G.ItemUpgradeFrameUpgradeButton)
 end

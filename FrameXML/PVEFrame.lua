@@ -1,25 +1,33 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select = _G.select
 
-tinsert(C.themes["Aurora"], function()
+-- [[ WoW API ]]
+local hooksecurefunc = _G.hooksecurefunc
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
+
+_G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	PVEFrame:DisableDrawLayer("ARTWORK")
-	PVEFrameLeftInset:DisableDrawLayer("BORDER")
-	PVEFrameBlueBg:Hide()
-	PVEFrameLeftInsetBg:Hide()
-	PVEFrame.shadows:Hide()
-	select(24, PVEFrame:GetRegions()):Hide()
-	select(25, PVEFrame:GetRegions()):Hide()
+	_G.PVEFrame:DisableDrawLayer("ARTWORK")
+	_G.PVEFrameLeftInset:DisableDrawLayer("BORDER")
+	_G.PVEFrameBlueBg:Hide()
+	_G.PVEFrameLeftInsetBg:Hide()
+	_G.PVEFrame.shadows:Hide()
+	select(24, _G.PVEFrame:GetRegions()):Hide()
+	select(25, _G.PVEFrame:GetRegions()):Hide()
 
-	PVEFrameTab2:SetPoint("LEFT", PVEFrameTab1, "RIGHT", -15, 0)
-	PVEFrameTab3:SetPoint("LEFT", PVEFrameTab2, "RIGHT", -15, 0)
+	_G.PVEFrameTab2:SetPoint("LEFT", _G.PVEFrameTab1, "RIGHT", -15, 0)
+	_G.PVEFrameTab3:SetPoint("LEFT", _G.PVEFrameTab2, "RIGHT", -15, 0)
 
-	GroupFinderFrameGroupButton1.icon:SetTexture("Interface\\Icons\\INV_Helmet_08")
-	GroupFinderFrameGroupButton2.icon:SetTexture("Interface\\Icons\\Icon_Scenarios")
-	GroupFinderFrameGroupButton3.icon:SetTexture("Interface\\Icons\\inv_helmet_06")
+	_G.GroupFinderFrameGroupButton1.icon:SetTexture("Interface\\Icons\\INV_Helmet_08")
+	_G.GroupFinderFrameGroupButton2.icon:SetTexture("Interface\\Icons\\Icon_Scenarios")
+	_G.GroupFinderFrameGroupButton3.icon:SetTexture("Interface\\Icons\\inv_helmet_06")
 
 	for i = 1, 4 do
-		local bu = GroupFinderFrame["groupButton"..i]
+		local bu = _G.GroupFinderFrame["groupButton"..i]
 
 		bu.ring:Hide()
 		bu.bg:SetTexture(C.media.backdrop)
@@ -36,7 +44,7 @@ tinsert(C.themes["Aurora"], function()
 	end
 
 	hooksecurefunc("GroupFinderFrame_SelectGroupButton", function(index)
-		local self = GroupFinderFrame
+		local self = _G.GroupFinderFrame
 		for i = 1, 4 do
 			local button = self["groupButton"..i]
 			if i == index then
@@ -47,8 +55,8 @@ tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
-	F.ReskinPortraitFrame(PVEFrame)
-	F.ReskinTab(PVEFrameTab1)
-	F.ReskinTab(PVEFrameTab2)
-	F.ReskinTab(PVEFrameTab3)
+	F.ReskinPortraitFrame(_G.PVEFrame)
+	F.ReskinTab(_G.PVEFrameTab1)
+	F.ReskinTab(_G.PVEFrameTab2)
+	F.ReskinTab(_G.PVEFrameTab3)
 end)

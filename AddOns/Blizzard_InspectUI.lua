@@ -1,19 +1,24 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select = _G.select
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_InspectUI"] = function()
-	InspectModelFrame:DisableDrawLayer("OVERLAY")
+	_G.InspectModelFrame:DisableDrawLayer("OVERLAY")
 
-	InspectTalentFrame:GetRegions():Hide()
-	select(2, InspectTalentFrame:GetRegions()):Hide()
-	InspectGuildFrameBG:Hide()
+	_G.InspectTalentFrame:GetRegions():Hide()
+	select(2, _G.InspectTalentFrame:GetRegions()):Hide()
+	_G.InspectGuildFrameBG:Hide()
 	for i = 1, 5 do
-		select(i, InspectModelFrame:GetRegions()):Hide()
+		select(i, _G.InspectModelFrame:GetRegions()):Hide()
 	end
-	F.Reskin(InspectPaperDollFrame.ViewButton)
+	F.Reskin(_G.InspectPaperDollFrame.ViewButton)
 
 	-- Character
 
-	select(10, InspectMainHandSlot:GetRegions()):Hide()
+	select(10, _G.InspectMainHandSlot:GetRegions()):Hide()
 
 	local slots = {
 		"Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
@@ -37,18 +42,18 @@ C.themes["Blizzard_InspectUI"] = function()
 		slot.icon:SetTexCoord(.08, .92, .08, .92)
 	end
 
-	hooksecurefunc("InspectPaperDollItemSlotButton_Update", function(button)
+	_G.hooksecurefunc("InspectPaperDollItemSlotButton_Update", function(button)
 		button.IconBorder:SetTexture(C.media.backdrop)
 		button.icon:SetShown(button.hasItem)
 	end)
 
 	-- PvP
 
-	InspectPVPFrame.BG:Hide()
+	_G.InspectPVPFrame.BG:Hide()
 	
-	for tier = 1, MAX_PVP_TALENT_TIERS do
-		for column = 1, MAX_PVP_TALENT_COLUMNS do
-			local bu = InspectPVPFrame.Talents["Tier"..tier]["Talent"..column]
+	for tier = 1, _G.MAX_PVP_TALENT_TIERS do
+		for column = 1, _G.MAX_PVP_TALENT_COLUMNS do
+			local bu = _G.InspectPVPFrame.Talents["Tier"..tier]["Talent"..column]
 			
 			bu.Slot:Hide()
 			bu.border:SetTexture("")
@@ -62,12 +67,12 @@ C.themes["Blizzard_InspectUI"] = function()
 	
 	-- Talents
 
-	local inspectSpec = InspectTalentFrame.InspectSpec
+	local inspectSpec = _G.InspectTalentFrame.InspectSpec
 
 	inspectSpec.ring:Hide()
 
 	for i = 1, 7 do
-		local row = InspectTalentFrame.InspectTalents["tier"..i]
+		local row = _G.InspectTalentFrame.InspectTalents["tier"..i]
 		for j = 1, 3 do
 			local bu = row["talent"..j]
 
@@ -86,22 +91,22 @@ C.themes["Blizzard_InspectUI"] = function()
 
 	local function updateIcon(self)
 		local spec = nil
-		if INSPECTED_UNIT ~= nil then
-			spec = GetInspectSpecialization(INSPECTED_UNIT)
+		if _G.INSPECTED_UNIT ~= nil then
+			spec = _G.GetInspectSpecialization(_G.INSPECTED_UNIT)
 		end
 		if spec ~= nil and spec > 0 then
-			local role1 = GetSpecializationRoleByID(spec)
+			local role1 = _G.GetSpecializationRoleByID(spec)
 			if role1 ~= nil then
-				local _, _, _, icon = GetSpecializationInfoByID(spec)
+				local _, _, _, icon = _G.GetSpecializationInfoByID(spec)
 				self.specIcon:SetTexture(icon)
 			end
 		end
 	end
 
 	inspectSpec:HookScript("OnShow", updateIcon)
-	InspectTalentFrame:HookScript("OnEvent", function(self, event, unit)
-		if not InspectFrame:IsShown() then return end
-		if event == "INSPECT_READY" and InspectFrame.unit and UnitGUID(InspectFrame.unit) == unit then
+	_G.InspectTalentFrame:HookScript("OnEvent", function(self, event, unit)
+		if not _G.InspectFrame:IsShown() then return end
+		if event == "INSPECT_READY" and _G.InspectFrame.unit and _G.UnitGUID(_G.InspectFrame.unit) == unit then
 			updateIcon(self.InspectSpec)
 		end
 	end)
@@ -148,5 +153,5 @@ C.themes["Blizzard_InspectUI"] = function()
 		end
 	end
 
-	F.ReskinPortraitFrame(InspectFrame, true)
+	F.ReskinPortraitFrame(_G.InspectFrame, true)
 end

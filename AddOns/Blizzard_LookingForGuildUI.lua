@@ -1,25 +1,30 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, pairs = _G.select, _G.pairs
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_LookingForGuildUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	F.SetBD(LookingForGuildFrame)
-	F.CreateBD(LookingForGuildInterestFrame, .25)
-	LookingForGuildInterestFrameBg:Hide()
-	F.CreateBD(LookingForGuildAvailabilityFrame, .25)
-	LookingForGuildAvailabilityFrameBg:Hide()
-	F.CreateBD(LookingForGuildRolesFrame, .25)
-	LookingForGuildRolesFrameBg:Hide()
-	F.CreateBD(LookingForGuildCommentFrame, .25)
-	LookingForGuildCommentFrameBg:Hide()
-	F.CreateBD(LookingForGuildCommentInputFrame, .12)
-	LookingForGuildFrame:DisableDrawLayer("BACKGROUND")
-	LookingForGuildFrame:DisableDrawLayer("BORDER")
-	LookingForGuildFrameInset:DisableDrawLayer("BACKGROUND")
-	LookingForGuildFrameInset:DisableDrawLayer("BORDER")
-	F.CreateBD(GuildFinderRequestMembershipFrame)
+	F.SetBD(_G.LookingForGuildFrame)
+	F.CreateBD(_G.LookingForGuildInterestFrame, .25)
+	_G.LookingForGuildInterestFrameBg:Hide()
+	F.CreateBD(_G.LookingForGuildAvailabilityFrame, .25)
+	_G.LookingForGuildAvailabilityFrameBg:Hide()
+	F.CreateBD(_G.LookingForGuildRolesFrame, .25)
+	_G.LookingForGuildRolesFrameBg:Hide()
+	F.CreateBD(_G.LookingForGuildCommentFrame, .25)
+	_G.LookingForGuildCommentFrameBg:Hide()
+	F.CreateBD(_G.LookingForGuildCommentInputFrame, .12)
+	_G.LookingForGuildFrame:DisableDrawLayer("BACKGROUND")
+	_G.LookingForGuildFrame:DisableDrawLayer("BORDER")
+	_G.LookingForGuildFrameInset:DisableDrawLayer("BACKGROUND")
+	_G.LookingForGuildFrameInset:DisableDrawLayer("BORDER")
+	F.CreateBD(_G.GuildFinderRequestMembershipFrame)
 	for i = 1, 9 do
-		select(i, LookingForGuildCommentInputFrame:GetRegions()):Hide()
+		select(i, _G.LookingForGuildCommentInputFrame:GetRegions()):Hide()
 	end
 	for i = 1, 3 do
 		for j = 1, 6 do
@@ -28,32 +33,32 @@ C.themes["Blizzard_LookingForGuildUI"] = function()
 		end
 	end
 	for i = 1, 6 do
-		select(i, GuildFinderRequestMembershipFrameInputFrame:GetRegions()):Hide()
+		select(i, _G.GuildFinderRequestMembershipFrameInputFrame:GetRegions()):Hide()
 	end
-	LookingForGuildFrameTabardBackground:Hide()
-	LookingForGuildFrameTabardEmblem:Hide()
-	LookingForGuildFrameTabardBorder:Hide()
-	LookingForGuildFramePortraitFrame:Hide()
-	LookingForGuildFrameTopBorder:Hide()
-	LookingForGuildFrameTopRightCorner:Hide()
+	_G.LookingForGuildFrameTabardBackground:Hide()
+	_G.LookingForGuildFrameTabardEmblem:Hide()
+	_G.LookingForGuildFrameTabardBorder:Hide()
+	_G.LookingForGuildFramePortraitFrame:Hide()
+	_G.LookingForGuildFrameTopBorder:Hide()
+	_G.LookingForGuildFrameTopRightCorner:Hide()
 
-	F.Reskin(LookingForGuildBrowseButton)
-	F.Reskin(GuildFinderRequestMembershipFrameAcceptButton)
-	F.Reskin(GuildFinderRequestMembershipFrameCancelButton)
-	F.ReskinClose(LookingForGuildFrameCloseButton)
-	F.ReskinCheck(LookingForGuildQuestButton)
-	F.ReskinCheck(LookingForGuildDungeonButton)
-	F.ReskinCheck(LookingForGuildRaidButton)
-	F.ReskinCheck(LookingForGuildPvPButton)
-	F.ReskinCheck(LookingForGuildRPButton)
-	F.ReskinCheck(LookingForGuildWeekdaysButton)
-	F.ReskinCheck(LookingForGuildWeekendsButton)
-	F.ReskinInput(GuildFinderRequestMembershipFrameInputFrame)
+	F.Reskin(_G.LookingForGuildBrowseButton)
+	F.Reskin(_G.GuildFinderRequestMembershipFrameAcceptButton)
+	F.Reskin(_G.GuildFinderRequestMembershipFrameCancelButton)
+	F.ReskinClose(_G.LookingForGuildFrameCloseButton)
+	F.ReskinCheck(_G.LookingForGuildQuestButton)
+	F.ReskinCheck(_G.LookingForGuildDungeonButton)
+	F.ReskinCheck(_G.LookingForGuildRaidButton)
+	F.ReskinCheck(_G.LookingForGuildPvPButton)
+	F.ReskinCheck(_G.LookingForGuildRPButton)
+	F.ReskinCheck(_G.LookingForGuildWeekdaysButton)
+	F.ReskinCheck(_G.LookingForGuildWeekendsButton)
+	F.ReskinInput(_G.GuildFinderRequestMembershipFrameInputFrame)
 
 	-- [[ Browse frame ]]
 
-	F.Reskin(LookingForGuildRequestButton)
-	F.ReskinScroll(LookingForGuildBrowseFrameContainerScrollBar)
+	F.Reskin(_G.LookingForGuildRequestButton)
+	F.ReskinScroll(_G.LookingForGuildBrowseFrameContainerScrollBar)
 
 	for i = 1, 5 do
 		local bu = _G["LookingForGuildBrowseFrameContainerButton"..i]
@@ -74,7 +79,7 @@ C.themes["Blizzard_LookingForGuildUI"] = function()
 
 	-- [[ Role buttons ]]
 
-	for _, roleButton in pairs({LookingForGuildTankButton, LookingForGuildHealerButton, LookingForGuildDamagerButton}) do
+	for _, roleButton in pairs({_G.LookingForGuildTankButton, _G.LookingForGuildHealerButton, _G.LookingForGuildDamagerButton}) do
 		roleButton.cover:SetTexture(C.media.roleIcons)
 		roleButton:SetNormalTexture(C.media.roleIcons)
 

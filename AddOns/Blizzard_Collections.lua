@@ -1,4 +1,12 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, pairs = _G.select, _G.pairs
+
+-- [[ WoW API ]]
+local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
+
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
 
 C.themes["Blizzard_Collections"] = function()
 	local r, g, b = C.r, C.g, C.b
@@ -7,27 +15,27 @@ C.themes["Blizzard_Collections"] = function()
 
 	for i = 1, 14 do
 		if i ~= 8 then
-			select(i, CollectionsJournal:GetRegions()):Hide()
+			select(i, _G.CollectionsJournal:GetRegions()):Hide()
 		end
 	end
 
-	F.CreateBD(CollectionsJournal)
-	F.ReskinTab(CollectionsJournalTab1)
-	F.ReskinTab(CollectionsJournalTab2)
-	F.ReskinTab(CollectionsJournalTab3)
-	F.ReskinTab(CollectionsJournalTab4)
-	F.ReskinTab(CollectionsJournalTab5)
-	F.ReskinClose(CollectionsJournalCloseButton)
+	F.CreateBD(_G.CollectionsJournal)
+	F.ReskinTab(_G.CollectionsJournalTab1)
+	F.ReskinTab(_G.CollectionsJournalTab2)
+	F.ReskinTab(_G.CollectionsJournalTab3)
+	F.ReskinTab(_G.CollectionsJournalTab4)
+	F.ReskinTab(_G.CollectionsJournalTab5)
+	F.ReskinClose(_G.CollectionsJournalCloseButton)
 
-	CollectionsJournalTab2:SetPoint("LEFT", CollectionsJournalTab1, "RIGHT", -15, 0)
-	CollectionsJournalTab3:SetPoint("LEFT", CollectionsJournalTab2, "RIGHT", -15, 0)
-	CollectionsJournalTab4:SetPoint("LEFT", CollectionsJournalTab3, "RIGHT", -15, 0)
-	CollectionsJournalTab5:SetPoint("LEFT", CollectionsJournalTab4, "RIGHT", -15, 0)
+	_G.CollectionsJournalTab2:SetPoint("LEFT", _G.CollectionsJournalTab1, "RIGHT", -15, 0)
+	_G.CollectionsJournalTab3:SetPoint("LEFT", _G.CollectionsJournalTab2, "RIGHT", -15, 0)
+	_G.CollectionsJournalTab4:SetPoint("LEFT", _G.CollectionsJournalTab3, "RIGHT", -15, 0)
+	_G.CollectionsJournalTab5:SetPoint("LEFT", _G.CollectionsJournalTab4, "RIGHT", -15, 0)
 
 	-- [[ Mounts and pets ]]
 
-	local PetJournal = PetJournal
-	local MountJournal = MountJournal
+	local PetJournal = _G.PetJournal
+	local MountJournal = _G.MountJournal
 
 	for i = 1, 9 do
 		select(i, MountJournal.MountCount:GetRegions()):Hide()
@@ -43,28 +51,28 @@ C.themes["Blizzard_Collections"] = function()
 	MountJournal.MountDisplay.YesMountsTex:SetAlpha(0)
 	MountJournal.MountDisplay.NoMountsTex:SetAlpha(0)
 	MountJournal.MountDisplay.ShadowOverlay:Hide()
-	PetJournalTutorialButton.Ring:Hide()
+	_G.PetJournalTutorialButton.Ring:Hide()
 
 	F.CreateBD(MountJournal.MountCount, .25)
 	F.CreateBD(PetJournal.PetCount, .25)
 	F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
 
-	F.Reskin(MountJournalMountButton)
-	F.Reskin(PetJournalSummonButton)
-	F.Reskin(PetJournalFindBattle)
-	F.ReskinScroll(MountJournalListScrollFrameScrollBar)
-	F.ReskinScroll(PetJournalListScrollFrameScrollBar)
-	F.ReskinInput(MountJournalSearchBox)
-	F.ReskinInput(PetJournalSearchBox)
+	F.Reskin(_G.MountJournalMountButton)
+	F.Reskin(_G.PetJournalSummonButton)
+	F.Reskin(_G.PetJournalFindBattle)
+	F.ReskinScroll(_G.MountJournalListScrollFrameScrollBar)
+	F.ReskinScroll(_G.PetJournalListScrollFrameScrollBar)
+	F.ReskinInput(_G.MountJournalSearchBox)
+	F.ReskinInput(_G.PetJournalSearchBox)
 	F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
 	F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
-	F.ReskinFilterButton(PetJournalFilterButton)
-	F.ReskinFilterButton(MountJournalFilterButton)
+	F.ReskinFilterButton(_G.PetJournalFilterButton)
+	F.ReskinFilterButton(_G.MountJournalFilterButton)
 
-	MountJournalFilterButton:SetPoint("TOPRIGHT", MountJournal.LeftInset, -5, -8)
-	PetJournalFilterButton:SetPoint("TOPRIGHT", PetJournalLeftInset, -5, -8)
+	_G.MountJournalFilterButton:SetPoint("TOPRIGHT", MountJournal.LeftInset, -5, -8)
+	_G.PetJournalFilterButton:SetPoint("TOPRIGHT", _G.PetJournalLeftInset, -5, -8)
 
-	PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
+	_G.PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
 
 	local scrollFrames = {MountJournal.ListScrollFrame.buttons, PetJournal.listScroll.buttons}
 	for _, scrollFrame in pairs(scrollFrames) do
@@ -94,7 +102,7 @@ C.themes["Blizzard_Collections"] = function()
 			else
 				bu.dragButton.ActiveTexture:SetTexture(C.media.checked)
 				bu.dragButton.levelBG:SetAlpha(0)
-				bu.dragButton.level:SetFontObject(GameFontNormal)
+				bu.dragButton.level:SetFontObject(_G.GameFontNormal)
 				bu.dragButton.level:SetTextColor(1, 1, 1)
 			end
 		end
@@ -123,7 +131,7 @@ C.themes["Blizzard_Collections"] = function()
 	end
 
 	hooksecurefunc("MountJournal_UpdateMountList", updateMountScroll)
-	hooksecurefunc(MountJournalListScrollFrame, "update", updateMountScroll)
+	hooksecurefunc(_G.MountJournalListScrollFrame, "update", updateMountScroll)
 
 	local function updatePetScroll()
 		local petButtons = PetJournal.listScroll.buttons
@@ -133,13 +141,13 @@ C.themes["Blizzard_Collections"] = function()
 
 				local index = bu.index
 				if index then
-					local petID, _, isOwned = C_PetJournal.GetPetInfoByIndex(index)
+					local petID, _, isOwned = _G.C_PetJournal.GetPetInfoByIndex(index)
 
 					if petID and isOwned then
-						local _, _, _, _, rarity = C_PetJournal.GetPetStats(petID)
+						local _, _, _, _, rarity = _G.C_PetJournal.GetPetStats(petID)
 
 						if rarity then
-							local color = ITEM_QUALITY_COLORS[rarity-1]
+							local color = _G.ITEM_QUALITY_COLORS[rarity-1]
 							bu.name:SetTextColor(color.r, color.g, color.b)
 						else
 							bu.name:SetTextColor(1, 1, 1)
@@ -159,10 +167,10 @@ C.themes["Blizzard_Collections"] = function()
 	end
 
 	hooksecurefunc("PetJournal_UpdatePetList", updatePetScroll)
-	hooksecurefunc(PetJournalListScrollFrame, "update", updatePetScroll)
+	hooksecurefunc(_G.PetJournalListScrollFrame, "update", updatePetScroll)
 
-	PetJournalHealPetButtonBorder:Hide()
-	PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+	_G.PetJournalHealPetButtonBorder:Hide()
+	_G.PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
 	PetJournal.HealPetButton:SetPushedTexture("")
 	F.CreateBG(PetJournal.HealPetButton)
 
@@ -172,8 +180,8 @@ C.themes["Blizzard_Collections"] = function()
 		F.CreateBG(ic)
 	end
 
-	if AuroraConfig.tooltips then
-		for _, f in pairs({PetJournalPrimaryAbilityTooltip, PetJournalSecondaryAbilityTooltip}) do
+	if _G.AuroraConfig.tooltips then
+		for _, f in pairs({_G.PetJournalPrimaryAbilityTooltip, _G.PetJournalSecondaryAbilityTooltip}) do
 			f:DisableDrawLayer("BACKGROUND")
 			local bg = CreateFrame("Frame", nil, f)
 			bg:SetAllPoints()
@@ -182,38 +190,28 @@ C.themes["Blizzard_Collections"] = function()
 		end
 	end
 
-	PetJournalLoadoutBorderSlotHeaderText:SetParent(PetJournal)
-	PetJournalLoadoutBorderSlotHeaderText:SetPoint("CENTER", PetJournalLoadoutBorderTop, "TOP", 0, 4)
+	_G.PetJournalLoadoutBorderSlotHeaderText:SetParent(PetJournal)
+	_G.PetJournalLoadoutBorderSlotHeaderText:SetPoint("CENTER", _G.PetJournalLoadoutBorderTop, "TOP", 0, 4)
 
 	-- Favourite mount button
 
-	MountJournalSummonRandomFavoriteButtonBorder:Hide()
-	MountJournalSummonRandomFavoriteButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
-	MountJournalSummonRandomFavoriteButton:SetPushedTexture("")
-	F.CreateBG(MountJournalSummonRandomFavoriteButton)
-
-	do
-		local movedButton = false
-		MountJournal:HookScript("OnShow", function()
-			if not InCombatLockdown() then
-				MountJournalSummonRandomFavoriteButton:SetPoint("TOPRIGHT", -7, -32)
-				movedButton = true
-			end
-		end)
-	end
+	_G.MountJournalSummonRandomFavoriteButtonBorder:Hide()
+	_G.MountJournalSummonRandomFavoriteButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+	_G.MountJournalSummonRandomFavoriteButton:SetPushedTexture("")
+	F.CreateBG(_G.MountJournalSummonRandomFavoriteButton)
 
 	-- Pet card
 
-	local card = PetJournalPetCard
+	local card = _G.PetJournalPetCard
 
-	PetJournalPetCardBG:Hide()
+	_G.PetJournalPetCardBG:Hide()
 	card.PetInfo.levelBG:SetAlpha(0)
 	card.PetInfo.qualityBorder:SetAlpha(0)
 	card.AbilitiesBG1:SetAlpha(0)
 	card.AbilitiesBG2:SetAlpha(0)
 	card.AbilitiesBG3:SetAlpha(0)
 
-	card.PetInfo.level:SetFontObject(GameFontNormal)
+	card.PetInfo.level:SetFontObject(_G.GameFontNormal)
 	card.PetInfo.level:SetTextColor(1, 1, 1)
 
 	card.PetInfo.icon:SetTexCoord(.08, .92, .08, .92)
@@ -228,10 +226,10 @@ C.themes["Blizzard_Collections"] = function()
 	card.xpBar:SetStatusBarTexture(C.media.backdrop)
 	F.CreateBDFrame(card.xpBar, .25)
 
-	PetJournalPetCardHealthFramehealthStatusBarLeft:Hide()
-	PetJournalPetCardHealthFramehealthStatusBarRight:Hide()
-	PetJournalPetCardHealthFramehealthStatusBarMiddle:Hide()
-	PetJournalPetCardHealthFramehealthStatusBarBGMiddle:Hide()
+	_G.PetJournalPetCardHealthFramehealthStatusBarLeft:Hide()
+	_G.PetJournalPetCardHealthFramehealthStatusBarRight:Hide()
+	_G.PetJournalPetCardHealthFramehealthStatusBarMiddle:Hide()
+	_G.PetJournalPetCardHealthFramehealthStatusBarBGMiddle:Hide()
 
 	card.HealthFrame.healthBar:SetStatusBarTexture(C.media.backdrop)
 	F.CreateBDFrame(card.HealthFrame.healthBar, .25)
@@ -244,16 +242,16 @@ C.themes["Blizzard_Collections"] = function()
 	end
 
 	hooksecurefunc("PetJournal_UpdatePetCard", function(self)
-		local border = self.PetInfo.qualityBorder
-		local r, g, b
+		local petInfo = self.PetInfo
+		local red, green, blue
 
-		if border:IsShown() then
-			r, g, b = self.PetInfo.qualityBorder:GetVertexColor()
+		if petInfo.qualityBorder:IsShown() then
+			red, green, blue = petInfo.qualityBorder:GetVertexColor()
 		else
-			r, g, b = 0, 0, 0
+			red, green, blue = 0, 0, 0
 		end
 
-		self.PetInfo.icon.bg:SetVertexColor(r, g, b)
+		petInfo.icon.bg:SetVertexColor(red, green, blue)
 	end)
 
 	-- Pet loadout
@@ -268,7 +266,7 @@ C.themes["Blizzard_Collections"] = function()
 		bu.levelBG:SetAlpha(0)
 		bu.helpFrame:GetRegions():Hide()
 
-		bu.level:SetFontObject(GameFontNormal)
+		bu.level:SetFontObject(_G.GameFontNormal)
 		bu.level:SetTextColor(1, 1, 1)
 
 		bu.icon:SetTexCoord(.08, .92, .08, .92)
@@ -279,8 +277,8 @@ C.themes["Blizzard_Collections"] = function()
 
 		F.CreateBD(bu, .25)
 
-		for i = 2, 12 do
-			select(i, bu.xpBar:GetRegions()):Hide()
+		for j = 2, 12 do
+			select(j, bu.xpBar:GetRegions()):Hide()
 		end
 
 		bu.xpBar:SetStatusBarTexture(C.media.backdrop)
@@ -339,17 +337,17 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- [[ Toy box ]]
 
-	local ToyBox = ToyBox
+	local ToyBox = _G.ToyBox
 
-	local icons = ToyBox.iconsFrame
-	icons.Bg:Hide()
-	icons.BackgroundTile:Hide()
-	icons:DisableDrawLayer("BORDER")
-	icons:DisableDrawLayer("ARTWORK")
-	icons:DisableDrawLayer("OVERLAY")
+	local toyIcons = ToyBox.iconsFrame
+	toyIcons.Bg:Hide()
+	toyIcons.BackgroundTile:Hide()
+	toyIcons:DisableDrawLayer("BORDER")
+	toyIcons:DisableDrawLayer("ARTWORK")
+	toyIcons:DisableDrawLayer("OVERLAY")
 
 	F.ReskinInput(ToyBox.searchBox)
-	F.ReskinFilterButton(ToyBoxFilterButton)
+	F.ReskinFilterButton(_G.ToyBoxFilterButton)
 	F.ReskinArrow(ToyBox.navigationFrame.prevPageButton, "left")
 	F.ReskinArrow(ToyBox.navigationFrame.nextPageButton, "right")
 
@@ -358,14 +356,14 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- Progress bar
 
-	local progressBar = ToyBox.progressBar
-	progressBar.border:Hide()
-	progressBar:DisableDrawLayer("BACKGROUND")
+	local toyProgress = ToyBox.progressBar
+	toyProgress.border:Hide()
+	toyProgress:DisableDrawLayer("BACKGROUND")
 
-	progressBar.text:SetPoint("CENTER", 0, 1)
-	progressBar:SetStatusBarTexture(C.media.backdrop)
+	toyProgress.text:SetPoint("CENTER", 0, 1)
+	toyProgress:SetStatusBarTexture(C.media.backdrop)
 
-	F.CreateBDFrame(progressBar, .25)
+	F.CreateBDFrame(toyProgress, .25)
 
 	-- Toys!
 
@@ -377,10 +375,10 @@ C.themes["Blizzard_Collections"] = function()
 
 			local self = toyString:GetParent()
 
-			if PlayerHasToy(self.itemID) then
-				local _, _, quality = GetItemInfo(self.itemID)
+			if _G.PlayerHasToy(self.itemID) then
+				local _, _, quality = _G.GetItemInfo(self.itemID)
 				if quality then
-					toyString:SetTextColor(GetItemQualityColor(quality))
+					toyString:SetTextColor(_G.GetItemQualityColor(quality))
 				else
 					toyString:SetTextColor(1, 1, 1)
 				end
@@ -413,18 +411,18 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- [[ Heirlooms ]]
 
-	local HeirloomsJournal = HeirloomsJournal
+	local HeirloomsJournal = _G.HeirloomsJournal
 
-	local icons = HeirloomsJournal.iconsFrame
-	icons.Bg:Hide()
-	icons.BackgroundTile:Hide()
-	icons:DisableDrawLayer("BORDER")
-	icons:DisableDrawLayer("ARTWORK")
-	icons:DisableDrawLayer("OVERLAY")
+	local heirloomIcons = HeirloomsJournal.iconsFrame
+	heirloomIcons.Bg:Hide()
+	heirloomIcons.BackgroundTile:Hide()
+	heirloomIcons:DisableDrawLayer("BORDER")
+	heirloomIcons:DisableDrawLayer("ARTWORK")
+	heirloomIcons:DisableDrawLayer("OVERLAY")
 
-	F.ReskinInput(HeirloomsJournalSearchBox)
-	F.ReskinDropDown(HeirloomsJournalClassDropDown)
-	F.ReskinFilterButton(HeirloomsJournalFilterButton)
+	F.ReskinInput(_G.HeirloomsJournalSearchBox)
+	F.ReskinDropDown(_G.HeirloomsJournalClassDropDown)
+	F.ReskinFilterButton(_G.HeirloomsJournalFilterButton)
 	F.ReskinArrow(HeirloomsJournal.navigationFrame.prevPageButton, "left")
 	F.ReskinArrow(HeirloomsJournal.navigationFrame.nextPageButton, "right")
 
@@ -433,14 +431,14 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- Progress bar
 
-	local progressBar = HeirloomsJournal.progressBar
-	progressBar.border:Hide()
-	progressBar:DisableDrawLayer("BACKGROUND")
+	local heirloomProgress = HeirloomsJournal.progressBar
+	heirloomProgress.border:Hide()
+	heirloomProgress:DisableDrawLayer("BACKGROUND")
 
-	progressBar.text:SetPoint("CENTER", 0, 1)
-	progressBar:SetStatusBarTexture(C.media.backdrop)
+	heirloomProgress.text:SetPoint("CENTER", 0, 1)
+	heirloomProgress:SetStatusBarTexture(C.media.backdrop)
 
-	F.CreateBDFrame(progressBar, .25)
+	F.CreateBDFrame(heirloomProgress, .25)
 
 	-- Buttons
 
@@ -507,18 +505,18 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- [[ WardrobeCollection ]]
 
-	local WardrobeCollectionFrame = WardrobeCollectionFrame
+	local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
 	local ModelsFrame = WardrobeCollectionFrame.ModelsFrame
 
-	WardrobeCollectionFrameBg:Hide()
+	_G.WardrobeCollectionFrameBg:Hide()
 	ModelsFrame:DisableDrawLayer("BACKGROUND")
 	ModelsFrame:DisableDrawLayer("BORDER")
 	ModelsFrame:DisableDrawLayer("ARTWORK")
 	ModelsFrame:DisableDrawLayer("OVERLAY")
 
-	F.ReskinInput(WardrobeCollectionFrameSearchBox)
-	F.ReskinFilterButton(WardrobeCollectionFrame.FilterButton)
-	F.ReskinDropDown(WardrobeCollectionFrameWeaponDropDown)
+	F.ReskinInput(_G.WardrobeCollectionFrameSearchBox)
+	F.ReskinFilterButton(_G.WardrobeCollectionFrame.FilterButton)
+	F.ReskinDropDown(_G.WardrobeCollectionFrameWeaponDropDown)
 	F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, "left")
 	F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.NextPageButton, "right")
 
@@ -540,10 +538,10 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- [[ Wardrobe ]]
 
-	local WardrobeFrame = WardrobeFrame
-	local WardrobeTransmogFrame = WardrobeTransmogFrame
+	local WardrobeFrame = _G.WardrobeFrame
+	local WardrobeTransmogFrame = _G.WardrobeTransmogFrame
 
-	WardrobeTransmogFrameBg:Hide()
+	_G.WardrobeTransmogFrameBg:Hide()
 	WardrobeTransmogFrame.Inset.BG:Hide()
 	WardrobeTransmogFrame.Inset:DisableDrawLayer("BORDER")
 	WardrobeTransmogFrame.MoneyLeft:Hide()
@@ -557,12 +555,12 @@ C.themes["Blizzard_Collections"] = function()
 
 	F.ReskinPortraitFrame(WardrobeFrame)
 	F.Reskin(WardrobeTransmogFrame.ApplyButton)
-	F.Reskin(WardrobeOutfitDropDown.SaveButton)
-	F.ReskinArrow(WardrobeTransmogFrame.SpecButton, "down")
-	F.ReskinDropDown(WardrobeOutfitDropDown)
+	F.Reskin(_G.WardrobeOutfitDropDown.SaveButton)
+	F.ReskinArrow(_G.WardrobeTransmogFrame.SpecButton, "down")
+	F.ReskinDropDown(_G.WardrobeOutfitDropDown)
 
-	WardrobeOutfitDropDown:SetHeight(32)
-	WardrobeOutfitDropDown.SaveButton:SetPoint("LEFT", WardrobeOutfitDropDown, "RIGHT", -13, 2)
+	_G.WardrobeOutfitDropDown:SetHeight(32)
+	_G.WardrobeOutfitDropDown.SaveButton:SetPoint("LEFT", _G.WardrobeOutfitDropDown, "RIGHT", -13, 2)
 	WardrobeTransmogFrame.SpecButton:SetPoint("RIGHT", WardrobeTransmogFrame.ApplyButton, "LEFT", -3, 0)
 
 	local slots = {"Head", "Shoulder", "Chest", "Waist", "Legs", "Feet", "Wrist", "Hands", "Back", "Shirt", "Tabard", "MainHand", "SecondaryHand"}

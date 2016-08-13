@@ -1,6 +1,11 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local pairs = _G.pairs
 
-tinsert(C.themes["Aurora"], function()
+-- [[ Core ]]
+local F, C = _G.unpack(_G.select(2, ...))
+
+_G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
 	local function colourMinimize(f)
@@ -55,20 +60,18 @@ tinsert(C.themes["Aurora"], function()
 		F.ReskinInput(copper)
 	end
 
-	hooksecurefunc("StaticPopup_Show", function(which, text_arg1, text_arg2, data)
-		local info = StaticPopupDialogs[which]
+	_G.hooksecurefunc("StaticPopup_Show", function(which, text_arg1, text_arg2, data)
+		local info = _G.StaticPopupDialogs[which]
 
 		if not info then return end
 
-		local dialog = nil
-		dialog = StaticPopup_FindVisible(which, data)
-
+		local dialog = _G.StaticPopup_FindVisible(which, data)
 		if not dialog then
 			local index = 1
 			if info.preferredIndex then
 				index = info.preferredIndex
 			end
-			for i = index, STATICPOPUP_NUMDIALOGS do
+			for i = index, _G.STATICPOPUP_NUMDIALOGS do
 				local frame = _G["StaticPopup"..i]
 				if not frame:IsShown() then
 					dialog = frame

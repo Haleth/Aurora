@@ -1,7 +1,12 @@
-local F, C = unpack(select(2, ...))
+-- [[ Lua Globals ]]
+local _G = _G
+local select, next = _G.select, _G.next
 
-tinsert(C.themes["Aurora"], function()
-	if not AuroraConfig.tooltips then return end
+-- [[ Core ]]
+local F, C = _G.unpack(select(2, ...))
+
+_G.tinsert(C.themes["Aurora"], function()
+	if not _G.AuroraConfig.tooltips then return end
 
 	local tooltips = {
 		"GameTooltip",
@@ -37,10 +42,16 @@ tinsert(C.themes["Aurora"], function()
 	for i = 1, #tooltips do
 		local t = _G[tooltips[i]]
 		t:SetBackdrop(nil)
-		local bg = CreateFrame("Frame", nil, t)
+
+		local bg
+		if t.BackdropFrame then
+			bg = t.BackdropFrame
+		else
+			bg = _G.CreateFrame("Frame", nil, t)
+			bg:SetFrameLevel(t:GetFrameLevel()-1)
+		end
 		bg:SetPoint("TOPLEFT")
 		bg:SetPoint("BOTTOMRIGHT")
-		bg:SetFrameLevel(t:GetFrameLevel()-1)
 		bg:SetBackdrop(backdrop)
 		bg:SetBackdropColor(0, 0, 0, .6)
 		bg:SetBackdropBorderColor(0, 0, 0)
@@ -53,42 +64,42 @@ tinsert(C.themes["Aurora"], function()
 	local sb = _G["GameTooltipStatusBar"]
 	sb:SetHeight(3)
 	sb:ClearAllPoints()
-	sb:SetPoint("BOTTOMLEFT", GameTooltip, "BOTTOMLEFT", 1, 1)
-	sb:SetPoint("BOTTOMRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 1)
+	sb:SetPoint("BOTTOMLEFT", _G.GameTooltip, "BOTTOMLEFT", 1, 1)
+	sb:SetPoint("BOTTOMRIGHT", _G.GameTooltip, "BOTTOMRIGHT", -1, 1)
 	sb:SetStatusBarTexture(C.media.backdrop)
 
-	local sep = GameTooltipStatusBar:CreateTexture(nil, "ARTWORK")
+	local sep = _G.GameTooltipStatusBar:CreateTexture(nil, "ARTWORK")
 	sep:SetHeight(1)
 	sep:SetPoint("BOTTOMLEFT", 0, 3)
 	sep:SetPoint("BOTTOMRIGHT", 0, 3)
 	sep:SetTexture(C.media.backdrop)
 	sep:SetVertexColor(0, 0, 0)
 
-	F.CreateBD(FriendsTooltip)
+	F.CreateBD(_G.FriendsTooltip)
 
 	-- [[ Pet battle tooltips ]]
 
-	local tooltips = {PetBattlePrimaryAbilityTooltip, PetBattlePrimaryUnitTooltip, FloatingBattlePetTooltip, BattlePetTooltip, FloatingPetBattleAbilityTooltip}
-	for _, f in pairs(tooltips) do
-		f:DisableDrawLayer("BACKGROUND")
-		local bg = CreateFrame("Frame", nil, f)
+	local petTooltips = {"PetBattlePrimaryAbilityTooltip", "PetBattlePrimaryUnitTooltip", "FloatingBattlePetTooltip", "BattlePetTooltip", "FloatingPetBattleAbilityTooltip"}
+	for _, tooltipName in next, petTooltips do
+		local tooltip = _G[tooltipName]
+		tooltip:DisableDrawLayer("BACKGROUND")
+		local bg = _G.CreateFrame("Frame", nil, tooltip)
 		bg:SetAllPoints()
 		bg:SetFrameLevel(0)
 		F.CreateBD(bg)
-	end
 
-	PetBattlePrimaryUnitTooltip.Delimiter:SetColorTexture(0, 0, 0)
-	PetBattlePrimaryUnitTooltip.Delimiter:SetHeight(1)
-	PetBattlePrimaryAbilityTooltip.Delimiter1:SetHeight(1)
-	PetBattlePrimaryAbilityTooltip.Delimiter1:SetColorTexture(0, 0, 0)
-	PetBattlePrimaryAbilityTooltip.Delimiter2:SetHeight(1)
-	PetBattlePrimaryAbilityTooltip.Delimiter2:SetColorTexture(0, 0, 0)
-	FloatingPetBattleAbilityTooltip.Delimiter1:SetHeight(1)
-	FloatingPetBattleAbilityTooltip.Delimiter1:SetColorTexture(0, 0, 0)
-	FloatingPetBattleAbilityTooltip.Delimiter2:SetHeight(1)
-	FloatingPetBattleAbilityTooltip.Delimiter2:SetColorTexture(0, 0, 0)
-	FloatingBattlePetTooltip.Delimiter:SetColorTexture(0, 0, 0)
-	FloatingBattlePetTooltip.Delimiter:SetHeight(1)
-	F.ReskinClose(FloatingBattlePetTooltip.CloseButton)
-	F.ReskinClose(FloatingPetBattleAbilityTooltip.CloseButton)
+		if tooltip.Delimiter then
+			tooltip.Delimiter:SetColorTexture(0, 0, 0)
+			tooltip.Delimiter:SetHeight(1)
+		elseif tooltip.Delimiter1 then
+			tooltip.Delimiter1:SetHeight(1)
+			tooltip.Delimiter1:SetColorTexture(0, 0, 0)
+			tooltip.Delimiter2:SetHeight(1)
+			tooltip.Delimiter2:SetColorTexture(0, 0, 0)
+		end
+
+		if tooltip.CloseButton then
+			F.ReskinClose(tooltip.CloseButton)
+		end
+	end
 end)
