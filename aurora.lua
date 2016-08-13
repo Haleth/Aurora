@@ -19,9 +19,7 @@ local ADDON_NAME, core = ...
 core[1] = {} -- F, functions
 core[2] = {} -- C, constants/config
 _G.Aurora = core
-
-local AuroraConfig = {}
-_G.AuroraConfig = AuroraConfig
+local AuroraConfig
 
 local F, C = _G.unpack(select(2, ...))
 
@@ -711,6 +709,7 @@ Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
 	if addon == ADDON_NAME then
 		-- [[ Load Variables ]]
+		AuroraConfig = _G.AuroraConfig or {}
 
 		-- remove deprecated or corrupt variables
 		for key, value in pairs(AuroraConfig) do
