@@ -1,19 +1,11 @@
--- [[ Lua Globals ]]
-local _G = _G
-local tinsert, pairs = _G.tinsert, _G.pairs
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	for i = 1, 9 do
-		_G.select(i, _G.QueueStatusFrame:GetRegions()):Hide()
+		select(i, QueueStatusFrame:GetRegions()):Hide()
 	end
 
-	F.CreateBD(_G.QueueStatusFrame)
+	F.CreateBD(QueueStatusFrame)
 
 	hooksecurefunc("QueueStatusFrame_GetEntry", function(self, entryIndex)
 		local entry = self.StatusEntries[entryIndex]
@@ -52,7 +44,7 @@ _G.tinsert(C.themes["Aurora"], function()
 				bottom:SetPoint("BOTTOMRIGHT", -4, 6)
 			end
 
-			for i = 1, _G.LFD_NUM_ROLES do
+			for i = 1, LFD_NUM_ROLES do
 				local roleIcon = entry["RoleIcon"..i]
 
 				roleIcon:SetTexture(C.media.roleIcons)
@@ -98,7 +90,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	end)
 
 	hooksecurefunc("QueueStatusEntry_SetMinimalDisplay", function(entry)
-		for i = 1, _G.LFD_NUM_ROLES do
+		for i = 1, LFD_NUM_ROLES do
 			for _, border in pairs(entry["RoleIconBorders"..i]) do
 				border:Hide()
 			end
@@ -106,7 +98,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	end)
 
 	hooksecurefunc("QueueStatusEntry_SetFullDisplay", function(entry)
-		for i = 1, _G.LFD_NUM_ROLES do
+		for i = 1, LFD_NUM_ROLES do
 			local shown = entry["RoleIcon"..i]:IsShown()
 
 			for _, border in pairs(entry["RoleIconBorders"..i]) do

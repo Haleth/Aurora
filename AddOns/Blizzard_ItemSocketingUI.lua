@@ -1,31 +1,26 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_ItemSocketingUI"] = function()
-	_G.ItemSocketingFrame:DisableDrawLayer("ARTWORK")
-	_G.ItemSocketingScrollFrameTop:SetAlpha(0)
-	_G.ItemSocketingScrollFrameMiddle:SetAlpha(0)
-	_G.ItemSocketingScrollFrameBottom:SetAlpha(0)
-	_G.ItemSocketingSocket1Left:SetAlpha(0)
-	_G.ItemSocketingSocket1Right:SetAlpha(0)
-	_G.ItemSocketingSocket2Left:SetAlpha(0)
-	_G.ItemSocketingSocket2Right:SetAlpha(0)
-	_G.ItemSocketingSocket3Left:SetAlpha(0)
-	_G.ItemSocketingSocket3Right:SetAlpha(0)
+	ItemSocketingFrame:DisableDrawLayer("ARTWORK")
+	ItemSocketingScrollFrameTop:SetAlpha(0)
+	ItemSocketingScrollFrameMiddle:SetAlpha(0)
+	ItemSocketingScrollFrameBottom:SetAlpha(0)
+	ItemSocketingSocket1Left:SetAlpha(0)
+	ItemSocketingSocket1Right:SetAlpha(0)
+	ItemSocketingSocket2Left:SetAlpha(0)
+	ItemSocketingSocket2Right:SetAlpha(0)
+	ItemSocketingSocket3Left:SetAlpha(0)
+	ItemSocketingSocket3Right:SetAlpha(0)
 
 	for i = 36, 51 do
-		select(i, _G.ItemSocketingFrame:GetRegions()):Hide()
+		select(i, ItemSocketingFrame:GetRegions()):Hide()
 	end
 
-	local title = select(18, _G.ItemSocketingFrame:GetRegions())
+	local title = select(18, ItemSocketingFrame:GetRegions())
 	title:ClearAllPoints()
 	title:SetPoint("TOP", 0, -5)
 
-	for i = 1, _G.MAX_NUM_SOCKETS do
+	for i = 1, MAX_NUM_SOCKETS do
 		local bu = _G["ItemSocketingSocket"..i]
 		local shine = _G["ItemSocketingSocket"..i.."Shine"]
 
@@ -43,24 +38,23 @@ C.themes["Blizzard_ItemSocketingUI"] = function()
 		bu.bg = F.CreateBDFrame(bu, .25)
 	end
 
-	_G.hooksecurefunc("ItemSocketingFrame_Update", function()
-		for i = 1, _G.MAX_NUM_SOCKETS do
-			local color = _G.GEM_TYPE_INFO[_G.GetSocketTypes(i)]
-			_G["ItemSocketingSocket"..i].bg:SetBackdropBorderColor(color.r, color.g, color.b)
+	hooksecurefunc("ItemSocketingFrame_Update", function()
+		for i = 1, MAX_NUM_SOCKETS do
+			_G["ItemSocketingSocket"..i].bg:SetBackdropBorderColor(1, 1, 1)
 		end
 
-		local num = _G.GetNumSockets()
+		local num = GetNumSockets()
 		if num == 3 then
-			_G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -75, 39)
+			ItemSocketingSocket1:SetPoint("BOTTOM", ItemSocketingFrame, "BOTTOM", -75, 39)
 		elseif num == 2 then
-			_G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -35, 39)
+			ItemSocketingSocket1:SetPoint("BOTTOM", ItemSocketingFrame, "BOTTOM", -35, 39)
 		else
-			_G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", 0, 39)
+			ItemSocketingSocket1:SetPoint("BOTTOM", ItemSocketingFrame, "BOTTOM", 0, 39)
 		end
 	end)
 
-	F.ReskinPortraitFrame(_G.ItemSocketingFrame, true)
-	F.CreateBD(_G.ItemSocketingScrollFrame, .25)
-	F.Reskin(_G.ItemSocketingSocketButton)
-	F.ReskinScroll(_G.ItemSocketingScrollFrameScrollBar)
+	F.ReskinPortraitFrame(ItemSocketingFrame, true)
+	F.CreateBD(ItemSocketingScrollFrame, .25)
+	F.Reskin(ItemSocketingSocketButton)
+	F.ReskinScroll(ItemSocketingScrollFrameScrollBar)
 end

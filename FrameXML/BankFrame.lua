@@ -1,32 +1,27 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
+local F, C = unpack(select(2, ...))
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
-	if not _G.AuroraConfig.bags then return end
+tinsert(C.themes["Aurora"], function()
+	if not AuroraConfig.bags then return end
 
 	local r, g, b = C.r, C.g, C.b
 
 	-- [[ Bank ]]
 
-	select(16, _G.BankFrame:GetRegions()):Hide()
-	_G.BankSlotsFrame:DisableDrawLayer("BORDER")
-	_G.BankPortraitTexture:Hide()
-	_G.BankFrameMoneyFrameInset:Hide()
-	_G.BankFrameMoneyFrameBorder:Hide()
+	select(16, BankFrame:GetRegions()):Hide()
+	BankSlotsFrame:DisableDrawLayer("BORDER")
+	BankPortraitTexture:Hide()
+	BankFrameMoneyFrameInset:Hide()
+	BankFrameMoneyFrameBorder:Hide()
 
 	-- "item slots" and "bag slots" text
-	select(9, _G.BankSlotsFrame:GetRegions()):SetDrawLayer("OVERLAY")
-	select(10, _G.BankSlotsFrame:GetRegions()):SetDrawLayer("OVERLAY")
+	select(9, BankSlotsFrame:GetRegions()):SetDrawLayer("OVERLAY")
+	select(10, BankSlotsFrame:GetRegions()):SetDrawLayer("OVERLAY")
 
-	F.ReskinPortraitFrame(_G.BankFrame)
-	F.Reskin(_G.BankFramePurchaseButton)
-	F.ReskinTab(_G.BankFrameTab1)
-	F.ReskinTab(_G.BankFrameTab2)
-	F.ReskinInput(_G.BankItemSearchBox)
+	F.ReskinPortraitFrame(BankFrame)
+	F.Reskin(BankFramePurchaseButton)
+	F.ReskinTab(BankFrameTab1)
+	F.ReskinTab(BankFrameTab2)
+	F.ReskinInput(BankItemSearchBox)
 
 	local function onEnter(self)
 		self.bg:SetBackdropBorderColor(r, g, b)
@@ -69,7 +64,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	end
 
 	for i = 1, 7 do
-		local bag = _G.BankSlotsFrame["Bag"..i]
+		local bag = BankSlotsFrame["Bag"..i]
 		local _, highlightFrame = bag:GetChildren()
 		local border = bag.IconBorder
 		local searchOverlay = bag.searchOverlay
@@ -96,11 +91,11 @@ _G.tinsert(C.themes["Aurora"], function()
 		bag:HookScript("OnLeave", onLeave)
 	end
 
-	_G.BankItemAutoSortButton:GetNormalTexture():SetTexCoord(.17, .83, .17, .83)
-	_G.BankItemAutoSortButton:GetPushedTexture():SetTexCoord(.17, .83, .17, .83)
-	F.CreateBG(_G.BankItemAutoSortButton)
+	BankItemAutoSortButton:GetNormalTexture():SetTexCoord(.17, .83, .17, .83)
+	BankItemAutoSortButton:GetPushedTexture():SetTexCoord(.17, .83, .17, .83)
+	F.CreateBG(BankItemAutoSortButton)
 
-	_G.hooksecurefunc("BankFrameItemButton_Update", function(button)
+	hooksecurefunc("BankFrameItemButton_Update", function(button)
 		if not button.isBag and button.IconQuestTexture:IsShown() then
 			button.IconBorder:SetVertexColor(1, 1, 0)
 		end
@@ -108,18 +103,18 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Reagent bank ]]
 
-	_G.ReagentBankFrame:DisableDrawLayer("BACKGROUND")
-	_G.ReagentBankFrame:DisableDrawLayer("BORDER")
-	_G.ReagentBankFrame:DisableDrawLayer("ARTWORK")
+	ReagentBankFrame:DisableDrawLayer("BACKGROUND")
+	ReagentBankFrame:DisableDrawLayer("BORDER")
+	ReagentBankFrame:DisableDrawLayer("ARTWORK")
 
-	F.Reskin(_G.ReagentBankFrame.DespositButton)
-	F.Reskin(_G.ReagentBankFrameUnlockInfoPurchaseButton)
+	F.Reskin(ReagentBankFrame.DespositButton)
+	F.Reskin(ReagentBankFrameUnlockInfoPurchaseButton)
 
 	-- make button more visible
-	_G.ReagentBankFrameUnlockInfoBlackBG:SetColorTexture(.1, .1, .1)
+	ReagentBankFrameUnlockInfoBlackBG:SetColorTexture(.1, .1, .1)
 
 	local reagentButtonsStyled = false
-	_G.ReagentBankFrame:HookScript("OnShow", function()
+	ReagentBankFrame:HookScript("OnShow", function()
 		if not reagentButtonsStyled then
 			for i = 1, 98 do
 				styleBankButton(_G["ReagentBankFrameItem"..i])

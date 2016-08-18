@@ -1,13 +1,6 @@
--- [[ Lua Globals ]]
-local _G = _G
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
 	local function moveNavButtons(self)

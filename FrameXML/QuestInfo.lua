@@ -1,22 +1,14 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, pairs = _G.select, _G.pairs
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
 	-- [[ Item reward highlight ]]
 
-	_G.QuestInfoItemHighlight:GetRegions():Hide()
+	QuestInfoItemHighlight:GetRegions():Hide()
 
 	local function clearHighlight()
-		for _, button in pairs(_G.QuestInfoRewardsFrame.RewardButtons) do
+		for _, button in pairs(QuestInfoRewardsFrame.RewardButtons) do
 			button.bg:SetBackdropColor(0, 0, 0, .25)
 		end
 	end
@@ -30,9 +22,9 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end
 
-	hooksecurefunc(_G.QuestInfoItemHighlight, "SetPoint", setHighlight)
-	_G.QuestInfoItemHighlight:HookScript("OnShow", setHighlight)
-	_G.QuestInfoItemHighlight:HookScript("OnHide", clearHighlight)
+	hooksecurefunc(QuestInfoItemHighlight, "SetPoint", setHighlight)
+	QuestInfoItemHighlight:HookScript("OnShow", setHighlight)
+	QuestInfoItemHighlight:HookScript("OnHide", clearHighlight)
 
 	-- [[ Shared ]]
 
@@ -48,7 +40,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		icon:SetTexCoord(.08, .92, .08, .92)
 		F.CreateBG(icon)
 
-		local bg = _G.CreateFrame("Frame", nil, bu)
+		local bg = CreateFrame("Frame", nil, bu)
 		bg:SetPoint("TOPLEFT", 2, -1)
 		bg:SetPoint("BOTTOMRIGHT", 0, 14)
 		bg:SetFrameLevel(0)
@@ -57,22 +49,22 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Objectives ]]
 
-	restyleSpellButton(_G.QuestInfoSpellObjectiveFrame)
+	restyleSpellButton(QuestInfoSpellObjectiveFrame)
 
 	local function colourObjectivesText()
-		if not _G.QuestInfoFrame.questLog then return end
+		if not QuestInfoFrame.questLog then return end
 
-		local objectivesTable = _G.QuestInfoObjectivesFrame.Objectives
+		local objectivesTable = QuestInfoObjectivesFrame.Objectives
 		local numVisibleObjectives = 0
 
-		for i = 1, _G.GetNumQuestLeaderBoards() do
-			local _, objectiveType, isCompleted = _G.GetQuestLogLeaderBoard(i)
+		for i = 1, GetNumQuestLeaderBoards() do
+			local text, type, finished = GetQuestLogLeaderBoard(i)
 
-			if (objectiveType ~= "spell" and objectiveType ~= "log" and numVisibleObjectives < _G.MAX_OBJECTIVES) then
+			if (type ~= "spell" and type ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
 				numVisibleObjectives = numVisibleObjectives + 1
 				local objective = objectivesTable[numVisibleObjectives]
 
-				if isCompleted then
+				if finished then
 					objective:SetTextColor(.9, .9, .9)
 				else
 					objective:SetTextColor(1, 1, 1)
@@ -93,7 +85,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		bu.Icon:SetDrawLayer("BACKGROUND", 1)
 		F.CreateBG(bu.Icon, 1)
 
-		local bg = _G.CreateFrame("Frame", nil, bu)
+		local bg = CreateFrame("Frame", nil, bu)
 		bg:SetPoint("TOPLEFT", bu, 1, 1)
 
 		if isMapQuestInfo then
@@ -113,69 +105,69 @@ _G.tinsert(C.themes["Aurora"], function()
 		local bu = rewardsFrame.RewardButtons[index]
 
 		if not bu.restyled then
-			restyleRewardButton(bu, rewardsFrame == _G.MapQuestInfoRewardsFrame)
+			restyleRewardButton(bu, rewardsFrame == MapQuestInfoRewardsFrame)
 
 			bu.restyled = true
 		end
 	end)
 
-	restyleRewardButton(_G.QuestInfoSkillPointFrame)
-	restyleRewardButton(_G.MapQuestInfoRewardsFrame.XPFrame, true)
-	restyleRewardButton(_G.MapQuestInfoRewardsFrame.MoneyFrame, true)
-	restyleRewardButton(_G.MapQuestInfoRewardsFrame.SkillPointFrame, true)
+	restyleRewardButton(QuestInfoSkillPointFrame)
+	restyleRewardButton(MapQuestInfoRewardsFrame.XPFrame, true)
+	restyleRewardButton(MapQuestInfoRewardsFrame.MoneyFrame, true)
+	restyleRewardButton(MapQuestInfoRewardsFrame.SkillPointFrame, true)
 
-	_G.MapQuestInfoRewardsFrame.XPFrame.Name:SetShadowOffset(0, 0)
+	MapQuestInfoRewardsFrame.XPFrame.Name:SetShadowOffset(0, 0)
 
 	-- [[ Change text colours ]]
 
-	hooksecurefunc(_G.QuestInfoRequiredMoneyText, "SetTextColor", function(self, red, green, blue)
-		if red == 0 then
+	hooksecurefunc(QuestInfoRequiredMoneyText, "SetTextColor", function(self, r, g, b)
+		if r == 0 then
 			self:SetTextColor(.8, .8, .8)
-		elseif red == .2 then
+		elseif r == .2 then
 			self:SetTextColor(1, 1, 1)
 		end
 	end)
 
-	_G.QuestInfoTitleHeader:SetTextColor(1, 1, 1)
-	_G.QuestInfoTitleHeader.SetTextColor = F.dummy
-	_G.QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
+	QuestInfoTitleHeader:SetTextColor(1, 1, 1)
+	QuestInfoTitleHeader.SetTextColor = F.dummy
+	QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
 
-	_G.QuestInfoDescriptionHeader:SetTextColor(1, 1, 1)
-	_G.QuestInfoDescriptionHeader.SetTextColor = F.dummy
-	_G.QuestInfoDescriptionHeader:SetShadowColor(0, 0, 0)
+	QuestInfoDescriptionHeader:SetTextColor(1, 1, 1)
+	QuestInfoDescriptionHeader.SetTextColor = F.dummy
+	QuestInfoDescriptionHeader:SetShadowColor(0, 0, 0)
 
-	_G.QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
-	_G.QuestInfoObjectivesHeader.SetTextColor = F.dummy
-	_G.QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
+	QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
+	QuestInfoObjectivesHeader.SetTextColor = F.dummy
+	QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
 
-	_G.QuestInfoRewardsFrame.Header:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardsFrame.Header.SetTextColor = F.dummy
-	_G.QuestInfoRewardsFrame.Header:SetShadowColor(0, 0, 0)
+	QuestInfoRewardsFrame.Header:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.Header.SetTextColor = F.dummy
+	QuestInfoRewardsFrame.Header:SetShadowColor(0, 0, 0)
 
-	_G.QuestInfoDescriptionText:SetTextColor(1, 1, 1)
-	_G.QuestInfoDescriptionText.SetTextColor = F.dummy
+	QuestInfoDescriptionText:SetTextColor(1, 1, 1)
+	QuestInfoDescriptionText.SetTextColor = F.dummy
 
-	_G.QuestInfoObjectivesText:SetTextColor(1, 1, 1)
-	_G.QuestInfoObjectivesText.SetTextColor = F.dummy
+	QuestInfoObjectivesText:SetTextColor(1, 1, 1)
+	QuestInfoObjectivesText.SetTextColor = F.dummy
 
-	_G.QuestInfoGroupSize:SetTextColor(1, 1, 1)
-	_G.QuestInfoGroupSize.SetTextColor = F.dummy
+	QuestInfoGroupSize:SetTextColor(1, 1, 1)
+	QuestInfoGroupSize.SetTextColor = F.dummy
 
-	_G.QuestInfoRewardText:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardText.SetTextColor = F.dummy
+	QuestInfoRewardText:SetTextColor(1, 1, 1)
+	QuestInfoRewardText.SetTextColor = F.dummy
 
-	_G.QuestInfoSpellObjectiveLearnLabel:SetTextColor(1, 1, 1)
-	_G.QuestInfoSpellObjectiveLearnLabel.SetTextColor = F.dummy
+	QuestInfoSpellObjectiveLearnLabel:SetTextColor(1, 1, 1)
+	QuestInfoSpellObjectiveLearnLabel.SetTextColor = F.dummy
 
-	_G.QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardsFrame.ItemChooseText.SetTextColor = F.dummy
+	QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.ItemChooseText.SetTextColor = F.dummy
 
-	_G.QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardsFrame.ItemReceiveText.SetTextColor = F.dummy
+	QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.ItemReceiveText.SetTextColor = F.dummy
 
-	_G.QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardsFrame.PlayerTitleText.SetTextColor = F.dummy
+	QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.PlayerTitleText.SetTextColor = F.dummy
 
-	_G.QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardsFrame.XPFrame.ReceiveText.SetTextColor = F.dummy
+	QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
+	QuestInfoRewardsFrame.XPFrame.ReceiveText.SetTextColor = F.dummy
 end)

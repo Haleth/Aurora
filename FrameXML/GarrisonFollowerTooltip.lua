@@ -1,11 +1,6 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
+local F, C = unpack(select(2, ...))
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local function restyleGarrisonFollowerTooltipTemplate(frame)
 		for i = 1, 9 do
 			select(i, frame:GetRegions()):Hide()
@@ -27,16 +22,16 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.CreateBD(frame)
 	end
 
-	restyleGarrisonFollowerTooltipTemplate(_G.GarrisonFollowerTooltip)
-	restyleGarrisonFollowerAbilityTooltipTemplate(_G.GarrisonFollowerAbilityTooltip)
+	restyleGarrisonFollowerTooltipTemplate(GarrisonFollowerTooltip)
+	restyleGarrisonFollowerAbilityTooltipTemplate(GarrisonFollowerAbilityTooltip)
 
-	restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonFollowerTooltip)
-	F.ReskinClose(_G.FloatingGarrisonFollowerTooltip.CloseButton)
+	restyleGarrisonFollowerTooltipTemplate(FloatingGarrisonFollowerTooltip)
+	F.ReskinClose(FloatingGarrisonFollowerTooltip.CloseButton)
 
-	restyleGarrisonFollowerAbilityTooltipTemplate(_G.FloatingGarrisonFollowerAbilityTooltip)
-	F.ReskinClose(_G.FloatingGarrisonFollowerAbilityTooltip.CloseButton)
+	restyleGarrisonFollowerAbilityTooltipTemplate(FloatingGarrisonFollowerAbilityTooltip)
+	F.ReskinClose(FloatingGarrisonFollowerAbilityTooltip.CloseButton)
 
-	_G.hooksecurefunc("GarrisonFollowerTooltipTemplate_SetGarrisonFollower", function(tooltipFrame)
+	hooksecurefunc("GarrisonFollowerTooltipTemplate_SetGarrisonFollower", function(tooltipFrame)
 		-- Abilities
 
 		if tooltipFrame.numAbilitiesStyled == nil then
@@ -86,6 +81,6 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- Mission tooltip
 
-	restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonMissionTooltip)
-	F.ReskinClose(_G.FloatingGarrisonMissionTooltip.CloseButton)
+	restyleGarrisonFollowerTooltipTemplate(FloatingGarrisonMissionTooltip)
+	F.ReskinClose(FloatingGarrisonMissionTooltip.CloseButton)
 end)

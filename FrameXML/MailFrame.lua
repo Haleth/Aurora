@@ -1,80 +1,72 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
-	_G.SendMailMoneyInset:DisableDrawLayer("BORDER")
-	_G.InboxFrame:GetRegions():Hide()
-	_G.SendMailMoneyBg:Hide()
-	_G.SendMailMoneyInsetBg:Hide()
-	_G.OpenMailFrameIcon:Hide()
-	_G.OpenMailHorizontalBarLeft:Hide()
-	select(18, _G.MailFrame:GetRegions()):Hide()
-	select(25, _G.OpenMailFrame:GetRegions()):Hide()
+tinsert(C.themes["Aurora"], function()
+	SendMailMoneyInset:DisableDrawLayer("BORDER")
+	InboxFrame:GetRegions():Hide()
+	SendMailMoneyBg:Hide()
+	SendMailMoneyInsetBg:Hide()
+	OpenMailFrameIcon:Hide()
+	OpenMailHorizontalBarLeft:Hide()
+	select(18, MailFrame:GetRegions()):Hide()
+	select(25, OpenMailFrame:GetRegions()):Hide()
 	for i = 4, 7 do
-		select(i, _G.SendMailFrame:GetRegions()):Hide()
+		select(i, SendMailFrame:GetRegions()):Hide()
 	end
-	select(4, _G.SendMailScrollFrame:GetRegions()):Hide()
-	select(2, _G.OpenMailScrollFrame:GetRegions()):Hide()
+	select(4, SendMailScrollFrame:GetRegions()):Hide()
+	select(2, OpenMailScrollFrame:GetRegions()):Hide()
 
-	F.ReskinPortraitFrame(_G.MailFrame, true)
-	F.ReskinPortraitFrame(_G.OpenMailFrame, true)
-	F.Reskin(_G.SendMailMailButton)
-	F.Reskin(_G.SendMailCancelButton)
-	F.Reskin(_G.OpenMailReplyButton)
-	F.Reskin(_G.OpenMailDeleteButton)
-	F.Reskin(_G.OpenMailCancelButton)
-	F.Reskin(_G.OpenMailReportSpamButton)
-	F.ReskinInput(_G.SendMailNameEditBox, 20)
-	F.ReskinInput(_G.SendMailSubjectEditBox)
-	F.ReskinInput(_G.SendMailMoneyGold)
-	F.ReskinInput(_G.SendMailMoneySilver)
-	F.ReskinInput(_G.SendMailMoneyCopper)
-	F.ReskinScroll(_G.SendMailScrollFrameScrollBar)
-	F.ReskinScroll(_G.OpenMailScrollFrameScrollBar)
-	F.ReskinRadio(_G.SendMailSendMoneyButton)
-	F.ReskinRadio(_G.SendMailCODButton)
+	F.ReskinPortraitFrame(MailFrame, true)
+	F.ReskinPortraitFrame(OpenMailFrame, true)
+	F.Reskin(SendMailMailButton)
+	F.Reskin(SendMailCancelButton)
+	F.Reskin(OpenMailReplyButton)
+	F.Reskin(OpenMailDeleteButton)
+	F.Reskin(OpenMailCancelButton)
+	F.Reskin(OpenMailReportSpamButton)
+	F.ReskinInput(SendMailNameEditBox, 20)
+	F.ReskinInput(SendMailSubjectEditBox)
+	F.ReskinInput(SendMailMoneyGold)
+	F.ReskinInput(SendMailMoneySilver)
+	F.ReskinInput(SendMailMoneyCopper)
+	F.ReskinScroll(SendMailScrollFrameScrollBar)
+	F.ReskinScroll(OpenMailScrollFrameScrollBar)
+	F.ReskinRadio(SendMailSendMoneyButton)
+	F.ReskinRadio(SendMailCODButton)
 
-	_G.SendMailMailButton:SetPoint("RIGHT", _G.SendMailCancelButton, "LEFT", -1, 0)
-	_G.OpenMailDeleteButton:SetPoint("RIGHT", _G.OpenMailCancelButton, "LEFT", -1, 0)
-	_G.OpenMailReplyButton:SetPoint("RIGHT", _G.OpenMailDeleteButton, "LEFT", -1, 0)
+	SendMailMailButton:SetPoint("RIGHT", SendMailCancelButton, "LEFT", -1, 0)
+	OpenMailDeleteButton:SetPoint("RIGHT", OpenMailCancelButton, "LEFT", -1, 0)
+	OpenMailReplyButton:SetPoint("RIGHT", OpenMailDeleteButton, "LEFT", -1, 0)
 
-	_G.SendMailMoneySilver:SetPoint("LEFT", _G.SendMailMoneyGold, "RIGHT", 1, 0)
-	_G.SendMailMoneyCopper:SetPoint("LEFT", _G.SendMailMoneySilver, "RIGHT", 1, 0)
+	SendMailMoneySilver:SetPoint("LEFT", SendMailMoneyGold, "RIGHT", 1, 0)
+	SendMailMoneyCopper:SetPoint("LEFT", SendMailMoneySilver, "RIGHT", 1, 0)
 
-	_G.OpenMailLetterButton:SetNormalTexture("")
-	_G.OpenMailLetterButton:SetPushedTexture("")
-	_G.OpenMailLetterButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+	OpenMailLetterButton:SetNormalTexture("")
+	OpenMailLetterButton:SetPushedTexture("")
+	OpenMailLetterButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
 
 	for i = 1, 2 do
 		F.ReskinTab(_G["MailFrameTab"..i])
 	end
 
-	local bgmail = CreateFrame("Frame", nil, _G.OpenMailLetterButton)
+	local bgmail = CreateFrame("Frame", nil, OpenMailLetterButton)
 	bgmail:SetPoint("TOPLEFT", -1, 1)
 	bgmail:SetPoint("BOTTOMRIGHT", 1, -1)
-	bgmail:SetFrameLevel(_G.OpenMailLetterButton:GetFrameLevel()-1)
+	bgmail:SetFrameLevel(OpenMailLetterButton:GetFrameLevel()-1)
 	F.CreateBD(bgmail)
 
-	_G.OpenMailMoneyButton:SetNormalTexture("")
-	_G.OpenMailMoneyButton:SetPushedTexture("")
-	_G.OpenMailMoneyButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
+	OpenMailMoneyButton:SetNormalTexture("")
+	OpenMailMoneyButton:SetPushedTexture("")
+	OpenMailMoneyButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
 
-	local bgmoney = CreateFrame("Frame", nil, _G.OpenMailMoneyButton)
+	local bgmoney = CreateFrame("Frame", nil, OpenMailMoneyButton)
 	bgmoney:SetPoint("TOPLEFT", -1, 1)
 	bgmoney:SetPoint("BOTTOMRIGHT", 1, -1)
-	bgmoney:SetFrameLevel(_G.OpenMailMoneyButton:GetFrameLevel()-1)
+	bgmoney:SetFrameLevel(OpenMailMoneyButton:GetFrameLevel()-1)
 	F.CreateBD(bgmoney)
 
-	_G.SendMailSubjectEditBox:SetPoint("TOPLEFT", _G.SendMailNameEditBox, "BOTTOMLEFT", 0, -1)
+	SendMailSubjectEditBox:SetPoint("TOPLEFT", SendMailNameEditBox, "BOTTOMLEFT", 0, -1)
 
-	for i = 1, _G.INBOXITEMS_TO_DISPLAY do
+	for i = 1, INBOXITEMS_TO_DISPLAY do
 		local it = _G["MailItem"..i]
 		local bu = _G["MailItem"..i.."Button"]
 		local st = _G["MailItem"..i.."ButtonSlot"]
@@ -98,7 +90,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.CreateBD(bg, 0)
 	end
 
-	for i = 1, _G.ATTACHMENTS_MAX_SEND do
+	for i = 1, ATTACHMENTS_MAX_SEND do
 		local bu = _G["SendMailAttachment"..i]
 		local border = bu.IconBorder
 
@@ -119,7 +111,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	-- sigh
 	-- we mess with quality colour numbers, so we have to fix this
 	hooksecurefunc("SendMailFrame_Update", function()
-		for i = 1, _G.ATTACHMENTS_MAX_SEND do
+		for i = 1, ATTACHMENTS_MAX_SEND do
 			local bu = _G["SendMailAttachment"..i]
 
 			if bu:GetNormalTexture() == nil and bu.IconBorder:IsShown() then
@@ -128,7 +120,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
-	for i = 1, _G.ATTACHMENTS_MAX_RECEIVE do
+	for i = 1, ATTACHMENTS_MAX_RECEIVE do
 		local bu = _G["OpenMailAttachmentButton"..i]
 		local ic = _G["OpenMailAttachmentButton"..i.."IconTexture"]
 		local border = bu.IconBorder
@@ -150,7 +142,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	end
 
 	hooksecurefunc("SendMailFrame_Update", function()
-		for i = 1, _G.ATTACHMENTS_MAX_SEND do
+		for i = 1, ATTACHMENTS_MAX_SEND do
 			local button = _G["SendMailAttachment"..i]
 			if button:GetNormalTexture() then
 				button:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)

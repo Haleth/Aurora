@@ -1,16 +1,11 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
+local F, C = unpack(select(2, ...))
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
-	if not _G.AuroraConfig.bags then return end
+tinsert(C.themes["Aurora"], function()
+	if not AuroraConfig.bags then return end
 
 	local r, g, b = C.r, C.g, C.b
 
-	_G.BackpackTokenFrame:GetRegions():Hide()
+	BackpackTokenFrame:GetRegions():Hide()
 
 	local function onEnter(self)
 		self.bg:SetBackdropBorderColor(r, g, b)
@@ -34,7 +29,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		name:ClearAllPoints()
 		name:SetPoint("TOP", 0, -10)
 
-		for k = 1, _G.MAX_CONTAINER_ITEMS do
+		for k = 1, MAX_CONTAINER_ITEMS do
 			local item = "ContainerFrame"..i.."Item"..k
 			local button = _G[item]
 			local border = button.IconBorder
@@ -68,7 +63,7 @@ _G.tinsert(C.themes["Aurora"], function()
 			button:HookScript("OnLeave", onLeave)
 		end
 
-		local f = _G.CreateFrame("Frame", nil, con)
+		local f = CreateFrame("Frame", nil, con)
 		f:SetPoint("TOPLEFT", 8, -4)
 		f:SetPoint("BOTTOMRIGHT", -4, 3)
 		f:SetFrameLevel(con:GetFrameLevel()-1)
@@ -84,17 +79,17 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.CreateBG(ic)
 	end
 
-	F.ReskinInput(_G.BagItemSearchBox)
+	F.ReskinInput(BagItemSearchBox)
 
-	_G.hooksecurefunc("ContainerFrame_Update", function(frame)
+	hooksecurefunc("ContainerFrame_Update", function(frame)
 		local id = frame:GetID()
 		local name = frame:GetName()
 
 		if id == 0 then
-			_G.BagItemSearchBox:ClearAllPoints()
-			_G.BagItemSearchBox:SetPoint("TOPLEFT", frame, "TOPLEFT", 50, -35)
-			_G.BagItemAutoSortButton:ClearAllPoints()
-			_G.BagItemAutoSortButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -9, -31)
+			BagItemSearchBox:ClearAllPoints()
+			BagItemSearchBox:SetPoint("TOPLEFT", frame, "TOPLEFT", 50, -35)
+			BagItemAutoSortButton:ClearAllPoints()
+			BagItemAutoSortButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -9, -31)
 		end
 
 		for i = 1, frame.size do
@@ -107,7 +102,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
-	_G.BagItemAutoSortButton:GetNormalTexture():SetTexCoord(.17, .83, .17, .83)
-	_G.BagItemAutoSortButton:GetPushedTexture():SetTexCoord(.17, .83, .17, .83)
-	F.CreateBG(_G.BagItemAutoSortButton)
+	BagItemAutoSortButton:GetNormalTexture():SetTexCoord(.17, .83, .17, .83)
+	BagItemAutoSortButton:GetPushedTexture():SetTexCoord(.17, .83, .17, .83)
+	F.CreateBG(BagItemAutoSortButton)
 end)

@@ -1,17 +1,9 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, pairs = _G.select, _G.pairs
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	local LFGListFrame = _G.LFGListFrame
+	local LFGListFrame = LFGListFrame
 
 	-- [[ Category selection ]]
 
@@ -24,7 +16,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.Reskin(CategorySelection.FindGroupButton)
 	F.Reskin(CategorySelection.StartGroupButton)
 
-	CategorySelection.CategoryButtons[1]:SetNormalFontObject(_G.GameFontNormal)
+	CategorySelection.CategoryButtons[1]:SetNormalFontObject(GameFontNormal)
 
 	hooksecurefunc("LFGListCategorySelection_AddButton", function(self, btnIndex)
 		local bu = self.CategoryButtons[btnIndex]
@@ -161,7 +153,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.Reskin(ApplicationViewer.RefreshButton)
 	F.Reskin(ApplicationViewer.RemoveEntryButton)
 	F.Reskin(ApplicationViewer.EditButton)
-	F.ReskinScroll(_G.LFGListApplicationViewerScrollFrameScrollBar)
+	F.ReskinScroll(LFGListApplicationViewerScrollFrameScrollBar)
 
 	ApplicationViewer.RefreshButton:SetSize(24, 24)
 	ApplicationViewer.RefreshButton.Icon:SetPoint("CENTER")
@@ -274,11 +266,11 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.Reskin(ActivityFinder.Dialog.SelectButton)
 	F.Reskin(ActivityFinder.Dialog.CancelButton)
 	F.ReskinInput(ActivityFinder.Dialog.EntryBox)
-	F.ReskinScroll(_G.LFGListEntryCreationSearchScrollFrameScrollBar)
+	F.ReskinScroll(LFGListEntryCreationSearchScrollFrameScrollBar)
 
 	-- [[ Application dialog ]]
 
-	local LFGListApplicationDialog = _G.LFGListApplicationDialog
+	local LFGListApplicationDialog = LFGListApplicationDialog
 
 	for i = 1, 9 do
 		select(i, LFGListApplicationDialog.Description:GetRegions()):Hide()
@@ -291,7 +283,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Invite dialog ]]
 
-	local LFGListInviteDialog = _G.LFGListInviteDialog
+	local LFGListInviteDialog = LFGListInviteDialog
 
 	F.CreateBD(LFGListInviteDialog)
 	F.Reskin(LFGListInviteDialog.AcceptButton)

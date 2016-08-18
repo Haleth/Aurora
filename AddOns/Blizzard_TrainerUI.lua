@@ -1,48 +1,40 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, next = _G.select, _G.next
-
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_TrainerUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	_G.ClassTrainerFrameBottomInset:DisableDrawLayer("BORDER")
-	_G.ClassTrainerFrame.BG:Hide()
-	_G.ClassTrainerFrameBottomInsetBg:Hide()
-	_G.ClassTrainerFrameMoneyBg:SetAlpha(0)
+	ClassTrainerFrameBottomInset:DisableDrawLayer("BORDER")
+	ClassTrainerFrame.BG:Hide()
+	ClassTrainerFrameBottomInsetBg:Hide()
+	ClassTrainerFrameMoneyBg:SetAlpha(0)
 
-	_G.ClassTrainerStatusBarSkillRank:ClearAllPoints()
-	_G.ClassTrainerStatusBarSkillRank:SetPoint("CENTER", _G.ClassTrainerStatusBar, "CENTER", 0, 0)
+	ClassTrainerStatusBarSkillRank:ClearAllPoints()
+	ClassTrainerStatusBarSkillRank:SetPoint("CENTER", ClassTrainerStatusBar, "CENTER", 0, 0)
 
-	local skillBG = CreateFrame("Frame", nil, _G.ClassTrainerFrameSkillStepButton)
-	skillBG:SetPoint("TOPLEFT", 42, -2)
-	skillBG:SetPoint("BOTTOMRIGHT", 0, 2)
-	skillBG:SetFrameLevel(_G.ClassTrainerFrameSkillStepButton:GetFrameLevel()-1)
-	F.CreateBD(skillBG, .25)
+	local bg = CreateFrame("Frame", nil, ClassTrainerFrameSkillStepButton)
+	bg:SetPoint("TOPLEFT", 42, -2)
+	bg:SetPoint("BOTTOMRIGHT", 0, 2)
+	bg:SetFrameLevel(ClassTrainerFrameSkillStepButton:GetFrameLevel()-1)
+	F.CreateBD(bg, .25)
 
-	_G.ClassTrainerFrameSkillStepButton:SetNormalTexture("")
-	_G.ClassTrainerFrameSkillStepButton:SetHighlightTexture("")
-	_G.ClassTrainerFrameSkillStepButton.disabledBG:SetTexture("")
+	ClassTrainerFrameSkillStepButton:SetNormalTexture("")
+	ClassTrainerFrameSkillStepButton:SetHighlightTexture("")
+	ClassTrainerFrameSkillStepButton.disabledBG:SetTexture("")
 
-	_G.ClassTrainerFrameSkillStepButton.selectedTex:SetPoint("TOPLEFT", 43, -3)
-	_G.ClassTrainerFrameSkillStepButton.selectedTex:SetPoint("BOTTOMRIGHT", -1, 3)
-	_G.ClassTrainerFrameSkillStepButton.selectedTex:SetTexture(C.media.backdrop)
-	_G.ClassTrainerFrameSkillStepButton.selectedTex:SetVertexColor(r, g, b, .2)
+	ClassTrainerFrameSkillStepButton.selectedTex:SetPoint("TOPLEFT", 43, -3)
+	ClassTrainerFrameSkillStepButton.selectedTex:SetPoint("BOTTOMRIGHT", -1, 3)
+	ClassTrainerFrameSkillStepButton.selectedTex:SetTexture(C.media.backdrop)
+	ClassTrainerFrameSkillStepButton.selectedTex:SetVertexColor(r, g, b, .2)
 
-	local icbg = CreateFrame("Frame", nil, _G.ClassTrainerFrameSkillStepButton)
-	icbg:SetPoint("TOPLEFT", _G.ClassTrainerFrameSkillStepButtonIcon, -1, 1)
-	icbg:SetPoint("BOTTOMRIGHT", _G.ClassTrainerFrameSkillStepButtonIcon, 1, -1)
+	local icbg = CreateFrame("Frame", nil, ClassTrainerFrameSkillStepButton)
+	icbg:SetPoint("TOPLEFT", ClassTrainerFrameSkillStepButtonIcon, -1, 1)
+	icbg:SetPoint("BOTTOMRIGHT", ClassTrainerFrameSkillStepButtonIcon, 1, -1)
 	F.CreateBD(icbg, 0)
 
-	_G.ClassTrainerFrameSkillStepButtonIcon:SetTexCoord(.08, .92, .08, .92)
+	ClassTrainerFrameSkillStepButtonIcon:SetTexCoord(.08, .92, .08, .92)
 
 	hooksecurefunc("ClassTrainerFrame_Update", function()
-		for _, bu in next, _G.ClassTrainerFrame.scrollFrame.buttons do
+		for _, bu in next, ClassTrainerFrame.scrollFrame.buttons do
 			if not bu.styled then
 				local bg = CreateFrame("Frame", nil, bu)
 				bg:SetPoint("TOPLEFT", 42, -6)
@@ -73,23 +65,23 @@ C.themes["Blizzard_TrainerUI"] = function()
 		end
 	end)
 
-	_G.ClassTrainerStatusBarLeft:Hide()
-	_G.ClassTrainerStatusBarMiddle:Hide()
-	_G.ClassTrainerStatusBarRight:Hide()
-	_G.ClassTrainerStatusBarBackground:Hide()
-	_G.ClassTrainerStatusBar:SetPoint("TOPLEFT", _G.ClassTrainerFrame, "TOPLEFT", 64, -35)
-	_G.ClassTrainerStatusBar:SetStatusBarTexture(C.media.backdrop)
+	ClassTrainerStatusBarLeft:Hide()
+	ClassTrainerStatusBarMiddle:Hide()
+	ClassTrainerStatusBarRight:Hide()
+	ClassTrainerStatusBarBackground:Hide()
+	ClassTrainerStatusBar:SetPoint("TOPLEFT", ClassTrainerFrame, "TOPLEFT", 64, -35)
+	ClassTrainerStatusBar:SetStatusBarTexture(C.media.backdrop)
 
-	_G.ClassTrainerStatusBar:GetStatusBarTexture():SetGradient("VERTICAL", .1, .3, .9, .2, .4, 1)
+	ClassTrainerStatusBar:GetStatusBarTexture():SetGradient("VERTICAL", .1, .3, .9, .2, .4, 1)
 
-	local bd = CreateFrame("Frame", nil, _G.ClassTrainerStatusBar)
+	local bd = CreateFrame("Frame", nil, ClassTrainerStatusBar)
 	bd:SetPoint("TOPLEFT", -1, 1)
 	bd:SetPoint("BOTTOMRIGHT", 1, -1)
-	bd:SetFrameLevel(_G.ClassTrainerStatusBar:GetFrameLevel()-1)
+	bd:SetFrameLevel(ClassTrainerStatusBar:GetFrameLevel()-1)
 	F.CreateBD(bd, .25)
 
-	F.ReskinPortraitFrame(_G.ClassTrainerFrame, true)
-	F.Reskin(_G.ClassTrainerTrainButton)
-	F.ReskinScroll(_G.ClassTrainerScrollFrameScrollBar)
-	F.ReskinDropDown(_G.ClassTrainerFrameFilterDropDown)
+	F.ReskinPortraitFrame(ClassTrainerFrame, true)
+	F.Reskin(ClassTrainerTrainButton)
+	F.ReskinScroll(ClassTrainerScrollFrameScrollBar)
+	F.ReskinDropDown(ClassTrainerFrameFilterDropDown)
 end

@@ -1,23 +1,16 @@
--- [[ Lua Globals ]]
-local _G = _G
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local C_LootHistory = _G.C_LootHistory
-
--- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	local LootHistoryFrame = _G.LootHistoryFrame
+	local LootHistoryFrame = LootHistoryFrame
 
 	for i = 1, 9 do
-		_G.select(i, LootHistoryFrame:GetRegions()):Hide()
+		select(i, LootHistoryFrame:GetRegions()):Hide()
 	end
 	LootHistoryFrame.LootIcon:Hide()
 	LootHistoryFrame.Divider:SetAlpha(0)
-	_G.LootHistoryFrameScrollFrame:GetRegions():Hide()
+	LootHistoryFrameScrollFrame:GetRegions():Hide()
 
 	LootHistoryFrame.Label:ClearAllPoints()
 	LootHistoryFrame.Label:SetPoint("TOP", LootHistoryFrame, "TOP", 0, -8)
@@ -25,7 +18,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.CreateBD(LootHistoryFrame)
 
 	F.ReskinClose(LootHistoryFrame.CloseButton)
-	F.ReskinScroll(_G.LootHistoryFrameScrollFrameScrollBar)
+	F.ReskinScroll(LootHistoryFrameScrollFrameScrollBar)
 
 	-- [[ Resize button ]]
 
@@ -58,7 +51,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Item frame ]]
 
-	_G.hooksecurefunc("LootHistoryFrame_UpdateItemFrame", function(self, frame)
+	hooksecurefunc("LootHistoryFrame_UpdateItemFrame", function(self, frame)
 		local rollID, _, _, isDone, winnerIdx = C_LootHistory.GetItem(frame.itemIdx)
 		local expanded = self.expandedRolls[rollID]
 
@@ -98,7 +91,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Player frame ]]
 
-	_G.hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, playerFrame)
+	hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, playerFrame)
 		if not playerFrame.styled then
 			playerFrame.RollText:SetTextColor(.9, .9, .9)
 			playerFrame.WinMark:SetDesaturated(true)
@@ -122,21 +115,21 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Dropdown ]]
 
-	_G.LootHistoryDropDown.initialize = function(self)
-		local info = _G.UIDropDownMenu_CreateInfo();
+	LootHistoryDropDown.initialize = function(self)
+		local info = UIDropDownMenu_CreateInfo();
 		info.isTitle = 1;
-		info.text = _G.MASTER_LOOTER;
-		info.fontObject = _G.GameFontNormalLeft;
+		info.text = MASTER_LOOTER;
+		info.fontObject = GameFontNormalLeft;
 		info.notCheckable = 1;
-		_G.UIDropDownMenu_AddButton(info);
+		UIDropDownMenu_AddButton(info);
 
-		info = _G.UIDropDownMenu_CreateInfo();
+		info = UIDropDownMenu_CreateInfo();
 		info.notCheckable = 1;
 		local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx);
 		local classColor = C.classcolours[class];
-		local colorCode = ("|cFF%02x%02x%02x"):format(classColor.r*255,  classColor.g*255,  classColor.b*255);
-		info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorCode..name.."|r");
-		info.func = _G.LootHistoryDropDown_OnClick;
-		_G.UIDropDownMenu_AddButton(info);
+		local colorCode = string.format("|cFF%02x%02x%02x",  classColor.r*255,  classColor.g*255,  classColor.b*255);
+		info.text = string.format(MASTER_LOOTER_GIVE_TO, colorCode..name.."|r");
+		info.func = LootHistoryDropDown_OnClick;
+		UIDropDownMenu_AddButton(info);
 	end
 end)

@@ -1,40 +1,32 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, pairs = _G.select, _G.pairs
+local F, C = unpack(select(2, ...))
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
+tinsert(C.themes["Aurora"], function()
+	F.ReskinPortraitFrame(QuestFrame, true)
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+	QuestFrameDetailPanel:DisableDrawLayer("BACKGROUND")
+	QuestFrameProgressPanel:DisableDrawLayer("BACKGROUND")
+	QuestFrameRewardPanel:DisableDrawLayer("BACKGROUND")
+	QuestFrameGreetingPanel:DisableDrawLayer("BACKGROUND")
+	QuestFrameDetailPanel:DisableDrawLayer("BORDER")
+	QuestFrameRewardPanel:DisableDrawLayer("BORDER")
 
-_G.tinsert(C.themes["Aurora"], function()
-	F.ReskinPortraitFrame(_G.QuestFrame, true)
+	QuestDetailScrollFrameTop:Hide()
+	QuestDetailScrollFrameBottom:Hide()
+	QuestDetailScrollFrameMiddle:Hide()
+	QuestProgressScrollFrameTop:Hide()
+	QuestProgressScrollFrameBottom:Hide()
+	QuestProgressScrollFrameMiddle:Hide()
+	QuestRewardScrollFrameTop:Hide()
+	QuestRewardScrollFrameBottom:Hide()
+	QuestRewardScrollFrameMiddle:Hide()
+	QuestGreetingScrollFrameTop:Hide()
+	QuestGreetingScrollFrameBottom:Hide()
+	QuestGreetingScrollFrameMiddle:Hide()
 
-	_G.QuestFrameDetailPanel:DisableDrawLayer("BACKGROUND")
-	_G.QuestFrameProgressPanel:DisableDrawLayer("BACKGROUND")
-	_G.QuestFrameRewardPanel:DisableDrawLayer("BACKGROUND")
-	_G.QuestFrameGreetingPanel:DisableDrawLayer("BACKGROUND")
-	_G.QuestFrameDetailPanel:DisableDrawLayer("BORDER")
-	_G.QuestFrameRewardPanel:DisableDrawLayer("BORDER")
-
-	_G.QuestDetailScrollFrameTop:Hide()
-	_G.QuestDetailScrollFrameBottom:Hide()
-	_G.QuestDetailScrollFrameMiddle:Hide()
-	_G.QuestProgressScrollFrameTop:Hide()
-	_G.QuestProgressScrollFrameBottom:Hide()
-	_G.QuestProgressScrollFrameMiddle:Hide()
-	_G.QuestRewardScrollFrameTop:Hide()
-	_G.QuestRewardScrollFrameBottom:Hide()
-	_G.QuestRewardScrollFrameMiddle:Hide()
-	_G.QuestGreetingScrollFrameTop:Hide()
-	_G.QuestGreetingScrollFrameBottom:Hide()
-	_G.QuestGreetingScrollFrameMiddle:Hide()
-
-	_G.QuestFrameProgressPanelMaterialTopLeft:SetAlpha(0)
-	_G.QuestFrameProgressPanelMaterialTopRight:SetAlpha(0)
-	_G.QuestFrameProgressPanelMaterialBotLeft:SetAlpha(0)
-	_G.QuestFrameProgressPanelMaterialBotRight:SetAlpha(0)
+	QuestFrameProgressPanelMaterialTopLeft:SetAlpha(0)
+	QuestFrameProgressPanelMaterialTopRight:SetAlpha(0)
+	QuestFrameProgressPanelMaterialBotLeft:SetAlpha(0)
+	QuestFrameProgressPanelMaterialBotRight:SetAlpha(0)
 
 	hooksecurefunc("QuestFrame_SetMaterial", function(frame)
 		_G[frame:GetName().."MaterialTopLeft"]:Hide()
@@ -43,18 +35,18 @@ _G.tinsert(C.themes["Aurora"], function()
 		_G[frame:GetName().."MaterialBotRight"]:Hide()
 	end)
 
-	local hRule = _G.QuestFrameGreetingPanel:CreateTexture()
-	hRule:SetColorTexture(1, 1, 1, .2)
-	hRule:SetSize(256, 1)
-	hRule:SetPoint("CENTER", _G.QuestGreetingFrameHorizontalBreak)
+	local line = QuestFrameGreetingPanel:CreateTexture()
+	line:SetColorTexture(1, 1, 1, .2)
+	line:SetSize(256, 1)
+	line:SetPoint("CENTER", QuestGreetingFrameHorizontalBreak)
 
-	_G.QuestGreetingFrameHorizontalBreak:SetTexture("")
+	QuestGreetingFrameHorizontalBreak:SetTexture("")
 
-	_G.QuestFrameGreetingPanel:HookScript("OnShow", function()
-		hRule:SetShown(_G.QuestGreetingFrameHorizontalBreak:IsShown())
+	QuestFrameGreetingPanel:HookScript("OnShow", function()
+		line:SetShown(QuestGreetingFrameHorizontalBreak:IsShown())
 	end)
 
-	for i = 1, _G.MAX_REQUIRED_ITEMS do
+	for i = 1, MAX_REQUIRED_ITEMS do
 		local bu = _G["QuestProgressItem"..i]
 		local ic = _G["QuestProgressItem"..i.."IconTexture"]
 		local na = _G["QuestProgressItem"..i.."NameFrame"]
@@ -69,15 +61,15 @@ _G.tinsert(C.themes["Aurora"], function()
 		na:Hide()
 		co:SetDrawLayer("OVERLAY")
 
-		local line = _G.CreateFrame("Frame", nil, bu)
+		local line = CreateFrame("Frame", nil, bu)
 		line:SetSize(1, 40)
 		line:SetPoint("RIGHT", ic, 1, 0)
 		F.CreateBD(line)
 	end
 
-	_G.QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
+	QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
 
-	hooksecurefunc(_G.QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
+	hooksecurefunc(QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
 		if r == 0 then
 			self:SetTextColor(.8, .8, .8)
 		elseif r == .2 then
@@ -89,48 +81,51 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.Reskin(_G[questButton])
 	end
 	
-	F.Reskin(_G.QuestFrameDetailPanel.IgnoreButton)
-
-	F.ReskinScroll(_G.QuestProgressScrollFrameScrollBar)
-	F.ReskinScroll(_G.QuestRewardScrollFrameScrollBar)
-	F.ReskinScroll(_G.QuestDetailScrollFrameScrollBar)
-	F.ReskinScroll(_G.QuestGreetingScrollFrameScrollBar)
+	F.Reskin(QuestFrameDetailPanel.IgnoreButton)
+	F.Reskin(QuestFrameDetailPanel.UnignoreButton)
+	F.Reskin(QuestFrameProgressPanel.IgnoreButton)
+	F.Reskin(QuestFrameProgressPanel.UnignoreButton)
+	
+	F.ReskinScroll(QuestProgressScrollFrameScrollBar)
+	F.ReskinScroll(QuestRewardScrollFrameScrollBar)
+	F.ReskinScroll(QuestDetailScrollFrameScrollBar)
+	F.ReskinScroll(QuestGreetingScrollFrameScrollBar)
 
 	-- Text colour stuff
 
-	_G.QuestProgressRequiredItemsText:SetTextColor(1, 1, 1)
-	_G.QuestProgressRequiredItemsText:SetShadowColor(0, 0, 0)
-	_G.QuestProgressTitleText:SetTextColor(1, 1, 1)
-	_G.QuestProgressTitleText:SetShadowColor(0, 0, 0)
-	_G.QuestProgressTitleText.SetTextColor = F.dummy
-	_G.QuestProgressText:SetTextColor(1, 1, 1)
-	_G.QuestProgressText.SetTextColor = F.dummy
-	_G.GreetingText:SetTextColor(1, 1, 1)
-	_G.GreetingText.SetTextColor = F.dummy
-	_G.AvailableQuestsText:SetTextColor(1, 1, 1)
-	_G.AvailableQuestsText.SetTextColor = F.dummy
-	_G.AvailableQuestsText:SetShadowColor(0, 0, 0)
-	_G.CurrentQuestsText:SetTextColor(1, 1, 1)
-	_G.CurrentQuestsText.SetTextColor = F.dummy
-	_G.CurrentQuestsText:SetShadowColor(0, 0, 0)
+	QuestProgressRequiredItemsText:SetTextColor(1, 1, 1)
+	QuestProgressRequiredItemsText:SetShadowColor(0, 0, 0)
+	QuestProgressTitleText:SetTextColor(1, 1, 1)
+	QuestProgressTitleText:SetShadowColor(0, 0, 0)
+	QuestProgressTitleText.SetTextColor = F.dummy
+	QuestProgressText:SetTextColor(1, 1, 1)
+	QuestProgressText.SetTextColor = F.dummy
+	GreetingText:SetTextColor(1, 1, 1)
+	GreetingText.SetTextColor = F.dummy
+	AvailableQuestsText:SetTextColor(1, 1, 1)
+	AvailableQuestsText.SetTextColor = F.dummy
+	AvailableQuestsText:SetShadowColor(0, 0, 0)
+	CurrentQuestsText:SetTextColor(1, 1, 1)
+	CurrentQuestsText.SetTextColor = F.dummy
+	CurrentQuestsText:SetShadowColor(0, 0, 0)
 
 	-- [[ Quest NPC model ]]
 
-	_G.QuestNPCModelShadowOverlay:Hide()
-	_G.QuestNPCModelBg:Hide()
-	_G.QuestNPCModel:DisableDrawLayer("OVERLAY")
-	_G.QuestNPCModelNameText:SetDrawLayer("ARTWORK")
-	_G.QuestNPCModelTextFrameBg:Hide()
-	_G.QuestNPCModelTextFrame:DisableDrawLayer("OVERLAY")
+	QuestNPCModelShadowOverlay:Hide()
+	QuestNPCModelBg:Hide()
+	QuestNPCModel:DisableDrawLayer("OVERLAY")
+	QuestNPCModelNameText:SetDrawLayer("ARTWORK")
+	QuestNPCModelTextFrameBg:Hide()
+	QuestNPCModelTextFrame:DisableDrawLayer("OVERLAY")
 
-	local npcbd = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
+	local npcbd = CreateFrame("Frame", nil, QuestNPCModel)
 	npcbd:SetPoint("TOPLEFT", -1, 1)
 	npcbd:SetPoint("RIGHT", 2, 0)
-	npcbd:SetPoint("BOTTOM", _G.QuestNPCModelTextScrollFrame)
+	npcbd:SetPoint("BOTTOM", QuestNPCModelTextScrollFrame)
 	npcbd:SetFrameLevel(0)
 	F.CreateBD(npcbd)
 
-	local npcLine = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
+	local npcLine = CreateFrame("Frame", nil, QuestNPCModel)
 	npcLine:SetPoint("BOTTOMLEFT", 0, -1)
 	npcLine:SetPoint("BOTTOMRIGHT", 1, -1)
 	npcLine:SetHeight(1)
@@ -138,12 +133,12 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.CreateBD(npcLine, 0)
 
 	hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, _, _, _, x, y)
-		if parentFrame == _G.QuestLogPopupDetailFrame or parentFrame == _G.QuestFrame then
+		if parentFrame == QuestLogPopupDetailFrame or parentFrame == QuestFrame then
 			x = x + 3
 		end
 
-		_G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
+		QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
 	end)
 
-	F.ReskinScroll(_G.QuestNPCModelTextScrollFrameScrollBar)
+	F.ReskinScroll(QuestNPCModelTextScrollFrameScrollBar)
 end)

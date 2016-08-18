@@ -1,35 +1,26 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
-
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-local IsAddOnLoaded = _G.IsAddOnLoaded
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_Calendar"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	_G.CalendarFrame:DisableDrawLayer("BORDER")
+	CalendarFrame:DisableDrawLayer("BORDER")
 
 	for i = 1, 9 do
-		select(i, _G.CalendarViewEventFrame:GetRegions()):Hide()
+		select(i, CalendarViewEventFrame:GetRegions()):Hide()
 	end
-	select(15, _G.CalendarViewEventFrame:GetRegions()):Hide()
+	select(15, CalendarViewEventFrame:GetRegions()):Hide()
 
 	for i = 1, 9 do
-		select(i, _G.CalendarViewHolidayFrame:GetRegions()):Hide()
-		select(i, _G.CalendarViewRaidFrame:GetRegions()):Hide()
+		select(i, CalendarViewHolidayFrame:GetRegions()):Hide()
+		select(i, CalendarViewRaidFrame:GetRegions()):Hide()
 	end
 
 	for i = 1, 3 do
-		select(i, _G.CalendarCreateEventTitleFrame:GetRegions()):Hide()
-		select(i, _G.CalendarViewEventTitleFrame:GetRegions()):Hide()
-		select(i, _G.CalendarViewHolidayTitleFrame:GetRegions()):Hide()
-		select(i, _G.CalendarViewRaidTitleFrame:GetRegions()):Hide()
-		select(i, _G.CalendarMassInviteTitleFrame:GetRegions()):Hide()
+		select(i, CalendarCreateEventTitleFrame:GetRegions()):Hide()
+		select(i, CalendarViewEventTitleFrame:GetRegions()):Hide()
+		select(i, CalendarViewHolidayTitleFrame:GetRegions()):Hide()
+		select(i, CalendarViewRaidTitleFrame:GetRegions()):Hide()
+		select(i, CalendarMassInviteTitleFrame:GetRegions()):Hide()
 	end
 
 	for i = 1, 42 do
@@ -48,93 +39,93 @@ C.themes["Blizzard_Calendar"] = function()
 		_G["CalendarWeekday"..i.."Background"]:SetAlpha(0)
 	end
 
-	_G.CalendarViewEventDivider:Hide()
-	_G.CalendarCreateEventDivider:Hide()
-	_G.CalendarViewEventInviteList:GetRegions():Hide()
-	_G.CalendarViewEventDescriptionContainer:GetRegions():Hide()
-	select(5, _G.CalendarCreateEventCloseButton:GetRegions()):Hide()
-	select(5, _G.CalendarViewEventCloseButton:GetRegions()):Hide()
-	select(5, _G.CalendarViewHolidayCloseButton:GetRegions()):Hide()
-	select(5, _G.CalendarViewRaidCloseButton:GetRegions()):Hide()
-	select(5, _G.CalendarMassInviteCloseButton:GetRegions()):Hide()
-	_G.CalendarCreateEventBackground:Hide()
-	_G.CalendarCreateEventFrameButtonBackground:Hide()
-	_G.CalendarCreateEventMassInviteButtonBorder:Hide()
-	_G.CalendarCreateEventCreateButtonBorder:Hide()
-	_G.CalendarEventPickerTitleFrameBackgroundLeft:Hide()
-	_G.CalendarEventPickerTitleFrameBackgroundMiddle:Hide()
-	_G.CalendarEventPickerTitleFrameBackgroundRight:Hide()
-	_G.CalendarEventPickerFrameButtonBackground:Hide()
-	_G.CalendarEventPickerCloseButtonBorder:Hide()
-	_G.CalendarCreateEventRaidInviteButtonBorder:Hide()
-	_G.CalendarMonthBackground:SetAlpha(0)
-	_G.CalendarYearBackground:SetAlpha(0)
-	_G.CalendarFrameModalOverlay:SetAlpha(.25)
-	_G.CalendarViewHolidayInfoTexture:SetAlpha(0)
-	_G.CalendarTexturePickerTitleFrameBackgroundLeft:Hide()
-	_G.CalendarTexturePickerTitleFrameBackgroundMiddle:Hide()
-	_G.CalendarTexturePickerTitleFrameBackgroundRight:Hide()
-	_G.CalendarTexturePickerFrameButtonBackground:Hide()
-	_G.CalendarTexturePickerAcceptButtonBorder:Hide()
-	_G.CalendarTexturePickerCancelButtonBorder:Hide()
-	_G.CalendarClassTotalsButtonBackgroundTop:Hide()
-	_G.CalendarClassTotalsButtonBackgroundMiddle:Hide()
-	_G.CalendarClassTotalsButtonBackgroundBottom:Hide()
-	_G.CalendarFilterFrameLeft:Hide()
-	_G.CalendarFilterFrameMiddle:Hide()
-	_G.CalendarFilterFrameRight:Hide()
-		_G.CalendarMassInviteFrameDivider:Hide()
+	CalendarViewEventDivider:Hide()
+	CalendarCreateEventDivider:Hide()
+	CalendarViewEventInviteList:GetRegions():Hide()
+	CalendarViewEventDescriptionContainer:GetRegions():Hide()
+	select(5, CalendarCreateEventCloseButton:GetRegions()):Hide()
+	select(5, CalendarViewEventCloseButton:GetRegions()):Hide()
+	select(5, CalendarViewHolidayCloseButton:GetRegions()):Hide()
+	select(5, CalendarViewRaidCloseButton:GetRegions()):Hide()
+	select(5, CalendarMassInviteCloseButton:GetRegions()):Hide()
+	CalendarCreateEventBackground:Hide()
+	CalendarCreateEventFrameButtonBackground:Hide()
+	CalendarCreateEventMassInviteButtonBorder:Hide()
+	CalendarCreateEventCreateButtonBorder:Hide()
+	CalendarEventPickerTitleFrameBackgroundLeft:Hide()
+	CalendarEventPickerTitleFrameBackgroundMiddle:Hide()
+	CalendarEventPickerTitleFrameBackgroundRight:Hide()
+	CalendarEventPickerFrameButtonBackground:Hide()
+	CalendarEventPickerCloseButtonBorder:Hide()
+	CalendarCreateEventRaidInviteButtonBorder:Hide()
+	CalendarMonthBackground:SetAlpha(0)
+	CalendarYearBackground:SetAlpha(0)
+	CalendarFrameModalOverlay:SetAlpha(.25)
+	CalendarViewHolidayInfoTexture:SetAlpha(0)
+	CalendarTexturePickerTitleFrameBackgroundLeft:Hide()
+	CalendarTexturePickerTitleFrameBackgroundMiddle:Hide()
+	CalendarTexturePickerTitleFrameBackgroundRight:Hide()
+	CalendarTexturePickerFrameButtonBackground:Hide()
+	CalendarTexturePickerAcceptButtonBorder:Hide()
+	CalendarTexturePickerCancelButtonBorder:Hide()
+	CalendarClassTotalsButtonBackgroundTop:Hide()
+	CalendarClassTotalsButtonBackgroundMiddle:Hide()
+	CalendarClassTotalsButtonBackgroundBottom:Hide()
+	CalendarFilterFrameLeft:Hide()
+	CalendarFilterFrameMiddle:Hide()
+	CalendarFilterFrameRight:Hide()
+		CalendarMassInviteFrameDivider:Hide()
 
-	F.SetBD(_G.CalendarFrame, 12, 0, -9, 4)
-	F.CreateBD(_G.CalendarViewEventFrame)
-	F.CreateBD(_G.CalendarViewHolidayFrame)
-	F.CreateBD(_G.CalendarViewRaidFrame)
-	F.CreateBD(_G.CalendarCreateEventFrame)
-	F.CreateBD(_G.CalendarClassTotalsButton)
-	F.CreateBD(_G.CalendarTexturePickerFrame)
-	F.CreateBD(_G.CalendarViewEventInviteList, .25)
-	F.CreateBD(_G.CalendarViewEventDescriptionContainer, .25)
-	F.CreateBD(_G.CalendarCreateEventInviteList, .25)
-	F.CreateBD(_G.CalendarCreateEventDescriptionContainer, .25)
-	F.CreateBD(_G.CalendarEventPickerFrame, .25)
-	F.CreateBD(_G.CalendarMassInviteFrame)
+	F.SetBD(CalendarFrame, 12, 0, -9, 4)
+	F.CreateBD(CalendarViewEventFrame)
+	F.CreateBD(CalendarViewHolidayFrame)
+	F.CreateBD(CalendarViewRaidFrame)
+	F.CreateBD(CalendarCreateEventFrame)
+	F.CreateBD(CalendarClassTotalsButton)
+	F.CreateBD(CalendarTexturePickerFrame)
+	F.CreateBD(CalendarViewEventInviteList, .25)
+	F.CreateBD(CalendarViewEventDescriptionContainer, .25)
+	F.CreateBD(CalendarCreateEventInviteList, .25)
+	F.CreateBD(CalendarCreateEventDescriptionContainer, .25)
+	F.CreateBD(CalendarEventPickerFrame, .25)
+	F.CreateBD(CalendarMassInviteFrame)
 
-	_G.CalendarWeekdaySelectedTexture:SetDesaturated(true)
-	_G.CalendarWeekdaySelectedTexture:SetVertexColor(r, g, b)
+	CalendarWeekdaySelectedTexture:SetDesaturated(true)
+	CalendarWeekdaySelectedTexture:SetVertexColor(r, g, b)
 
 	hooksecurefunc("CalendarFrame_SetToday", function()
-		_G.CalendarTodayFrame:SetAllPoints()
+		CalendarTodayFrame:SetAllPoints()
 	end)
 
-	_G.CalendarTodayFrame:SetScript("OnUpdate", nil)
-	_G.CalendarTodayTextureGlow:Hide()
-	_G.CalendarTodayTexture:Hide()
+	CalendarTodayFrame:SetScript("OnUpdate", nil)
+	CalendarTodayTextureGlow:Hide()
+	CalendarTodayTexture:Hide()
 
-	_G.CalendarTodayFrame:SetBackdrop({
+	CalendarTodayFrame:SetBackdrop({
 		edgeFile = C.media.backdrop,
 		edgeSize = 1,
 	})
-	_G.CalendarTodayFrame:SetBackdropBorderColor(r, g, b)
+	CalendarTodayFrame:SetBackdropBorderColor(r, g, b)
 
-	for i, class in ipairs(_G.CLASS_SORT_ORDER) do
+	for i, class in ipairs(CLASS_SORT_ORDER) do
 		local bu = _G["CalendarClassButton"..i]
 		bu:GetRegions():Hide()
 		F.CreateBG(bu)
 
-		local tcoords = _G.CLASS_ICON_TCOORDS[class]
+		local tcoords = CLASS_ICON_TCOORDS[class]
 		local ic = bu:GetNormalTexture()
 		ic:SetTexCoord(tcoords[1] + 0.015, tcoords[2] - 0.02, tcoords[3] + 0.018, tcoords[4] - 0.02)
 	end
 
-	local bd = CreateFrame("Frame", nil, _G.CalendarFilterFrame)
+	local bd = CreateFrame("Frame", nil, CalendarFilterFrame)
 	bd:SetPoint("TOPLEFT", 40, 0)
 	bd:SetPoint("BOTTOMRIGHT", -19, 0)
-	bd:SetFrameLevel(_G.CalendarFilterFrame:GetFrameLevel()-1)
+	bd:SetFrameLevel(CalendarFilterFrame:GetFrameLevel()-1)
 	F.CreateBD(bd, 0)
 
 	F.CreateGradient(bd)
 
-	local downtex = _G.CalendarFilterButton:CreateTexture(nil, "ARTWORK")
+	local downtex = CalendarFilterButton:CreateTexture(nil, "ARTWORK")
 	downtex:SetTexture(C.media.arrowDown)
 	downtex:SetSize(8, 8)
 	downtex:SetPoint("CENTER")
@@ -156,7 +147,7 @@ C.themes["Blizzard_Calendar"] = function()
 	end
 
 	if not(IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop")) then
-		local tooltips = {_G.CalendarContextMenu, _G.CalendarInviteStatusContextMenu}
+		local tooltips = {CalendarContextMenu, CalendarInviteStatusContextMenu}
 
 		for _, tooltip in pairs(tooltips) do
 			tooltip:SetBackdrop(nil)
@@ -168,28 +159,28 @@ C.themes["Blizzard_Calendar"] = function()
 		end
 	end
 
-	_G.CalendarViewEventFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", -8, -24)
-	_G.CalendarViewHolidayFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", -8, -24)
-	_G.CalendarViewRaidFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", -8, -24)
-	_G.CalendarCreateEventFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", -8, -24)
-	_G.CalendarCreateEventInviteButton:SetPoint("TOPLEFT", _G.CalendarCreateEventInviteEdit, "TOPRIGHT", 1, 1)
-	_G.CalendarClassButton1:SetPoint("TOPLEFT", _G.CalendarClassButtonContainer, "TOPLEFT", 5, 0)
+	CalendarViewEventFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", -8, -24)
+	CalendarViewHolidayFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", -8, -24)
+	CalendarViewRaidFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", -8, -24)
+	CalendarCreateEventFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", -8, -24)
+	CalendarCreateEventInviteButton:SetPoint("TOPLEFT", CalendarCreateEventInviteEdit, "TOPRIGHT", 1, 1)
+	CalendarClassButton1:SetPoint("TOPLEFT", CalendarClassButtonContainer, "TOPLEFT", 5, 0)
 
-	_G.CalendarCreateEventHourDropDown:SetWidth(80)
-	_G.CalendarCreateEventMinuteDropDown:SetWidth(80)
-	_G.CalendarCreateEventAMPMDropDown:SetWidth(90)
+	CalendarCreateEventHourDropDown:SetWidth(80)
+	CalendarCreateEventMinuteDropDown:SetWidth(80)
+	CalendarCreateEventAMPMDropDown:SetWidth(90)
 
-	local line = _G.CalendarMassInviteFrame:CreateTexture(nil, "BACKGROUND")
+	local line = CalendarMassInviteFrame:CreateTexture(nil, "BACKGROUND")
 	line:SetSize(240, 1)
-	line:SetPoint("TOP", _G.CalendarMassInviteFrame, "TOP", 0, -150)
+	line:SetPoint("TOP", CalendarMassInviteFrame, "TOP", 0, -150)
 	line:SetTexture(C.media.backdrop)
 	line:SetVertexColor(0, 0, 0)
 
-	_G.CalendarMassInviteFrame:ClearAllPoints()
-	_G.CalendarMassInviteFrame:SetPoint("BOTTOMLEFT", _G.CalendarCreateEventCreateButton, "TOPRIGHT", 10, 0)
+	CalendarMassInviteFrame:ClearAllPoints()
+	CalendarMassInviteFrame:SetPoint("BOTTOMLEFT", CalendarCreateEventCreateButton, "TOPRIGHT", 10, 0)
 
-	_G.CalendarTexturePickerFrame:ClearAllPoints()
-	_G.CalendarTexturePickerFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", 311, -24)
+	CalendarTexturePickerFrame:ClearAllPoints()
+	CalendarTexturePickerFrame:SetPoint("TOPLEFT", CalendarFrame, "TOPRIGHT", 311, -24)
 
 	local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton", "CalendarMassInviteGuildAcceptButton"}
 	for i = 1, #cbuttons do
@@ -197,36 +188,36 @@ C.themes["Blizzard_Calendar"] = function()
 		F.Reskin(cbutton)
 	end
 
-	_G.CalendarViewEventAcceptButton.flashTexture:SetTexture("")
-	_G.CalendarViewEventTentativeButton.flashTexture:SetTexture("")
-	_G.CalendarViewEventDeclineButton.flashTexture:SetTexture("")
+	CalendarViewEventAcceptButton.flashTexture:SetTexture("")
+	CalendarViewEventTentativeButton.flashTexture:SetTexture("")
+	CalendarViewEventDeclineButton.flashTexture:SetTexture("")
 
-	F.ReskinClose(_G.CalendarCloseButton, "TOPRIGHT", _G.CalendarFrame, "TOPRIGHT", -14, -4)
-	F.ReskinClose(_G.CalendarCreateEventCloseButton)
-	F.ReskinClose(_G.CalendarViewEventCloseButton)
-	F.ReskinClose(_G.CalendarViewHolidayCloseButton)
-	F.ReskinClose(_G.CalendarViewRaidCloseButton)
-	F.ReskinClose(_G.CalendarMassInviteCloseButton)
-	F.ReskinScroll(_G.CalendarTexturePickerScrollBar)
-	F.ReskinScroll(_G.CalendarViewEventInviteListScrollFrameScrollBar)
-	F.ReskinScroll(_G.CalendarViewEventDescriptionScrollFrameScrollBar)
-	F.ReskinScroll(_G.CalendarCreateEventInviteListScrollFrameScrollBar)
-	F.ReskinScroll(_G.CalendarCreateEventDescriptionScrollFrameScrollBar)
-	F.ReskinDropDown(_G.CalendarCreateEventTypeDropDown)
-	F.ReskinDropDown(_G.CalendarCreateEventHourDropDown)
-	F.ReskinDropDown(_G.CalendarCreateEventMinuteDropDown)
-	F.ReskinDropDown(_G.CalendarCreateEventAMPMDropDown)
-	F.ReskinDropDown(_G.CalendarCreateEventDifficultyOptionDropDown)
-	F.ReskinDropDown(_G.CalendarMassInviteGuildRankMenu)
-	F.ReskinInput(_G.CalendarCreateEventTitleEdit)
-	F.ReskinInput(_G.CalendarCreateEventInviteEdit)
-	F.ReskinInput(_G.CalendarMassInviteGuildMinLevelEdit)
-	F.ReskinInput(_G.CalendarMassInviteGuildMaxLevelEdit)
-	F.ReskinArrow(_G.CalendarPrevMonthButton, "left")
-	F.ReskinArrow(_G.CalendarNextMonthButton, "right")
-	_G.CalendarPrevMonthButton:SetSize(19, 19)
-	_G.CalendarNextMonthButton:SetSize(19, 19)
-	F.ReskinCheck(_G.CalendarCreateEventLockEventCheck)
+	F.ReskinClose(CalendarCloseButton, "TOPRIGHT", CalendarFrame, "TOPRIGHT", -14, -4)
+	F.ReskinClose(CalendarCreateEventCloseButton)
+	F.ReskinClose(CalendarViewEventCloseButton)
+	F.ReskinClose(CalendarViewHolidayCloseButton)
+	F.ReskinClose(CalendarViewRaidCloseButton)
+	F.ReskinClose(CalendarMassInviteCloseButton)
+	F.ReskinScroll(CalendarTexturePickerScrollBar)
+	F.ReskinScroll(CalendarViewEventInviteListScrollFrameScrollBar)
+	F.ReskinScroll(CalendarViewEventDescriptionScrollFrameScrollBar)
+	F.ReskinScroll(CalendarCreateEventInviteListScrollFrameScrollBar)
+	F.ReskinScroll(CalendarCreateEventDescriptionScrollFrameScrollBar)
+	F.ReskinDropDown(CalendarCreateEventTypeDropDown)
+	F.ReskinDropDown(CalendarCreateEventHourDropDown)
+	F.ReskinDropDown(CalendarCreateEventMinuteDropDown)
+	F.ReskinDropDown(CalendarCreateEventAMPMDropDown)
+	F.ReskinDropDown(CalendarCreateEventDifficultyOptionDropDown)
+	F.ReskinDropDown(CalendarMassInviteGuildRankMenu)
+	F.ReskinInput(CalendarCreateEventTitleEdit)
+	F.ReskinInput(CalendarCreateEventInviteEdit)
+	F.ReskinInput(CalendarMassInviteGuildMinLevelEdit)
+	F.ReskinInput(CalendarMassInviteGuildMaxLevelEdit)
+	F.ReskinArrow(CalendarPrevMonthButton, "left")
+	F.ReskinArrow(CalendarNextMonthButton, "right")
+	CalendarPrevMonthButton:SetSize(19, 19)
+	CalendarNextMonthButton:SetSize(19, 19)
+	F.ReskinCheck(CalendarCreateEventLockEventCheck)
 
-	_G.CalendarCreateEventDifficultyOptionDropDown:SetWidth(150)
+	CalendarCreateEventDifficultyOptionDropDown:SetWidth(150)
 end

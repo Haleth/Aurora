@@ -1,13 +1,9 @@
--- [[ Lua Globals ]]
-local _G = _G
-
--- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_BindingUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	local KeyBindingFrame = _G.KeyBindingFrame
+	local KeyBindingFrame = KeyBindingFrame
 
 	KeyBindingFrame.header:DisableDrawLayer("BACKGROUND")
 	KeyBindingFrame.header:DisableDrawLayer("BORDER")
@@ -24,13 +20,13 @@ C.themes["Blizzard_BindingUI"] = function()
 	F.Reskin(KeyBindingFrame.okayButton)
 	F.Reskin(KeyBindingFrame.cancelButton)
 	F.ReskinCheck(KeyBindingFrame.characterSpecificButton)
-	F.ReskinScroll(_G.KeyBindingFrameScrollFrameScrollBar)
+	F.ReskinScroll(KeyBindingFrameScrollFrameScrollBar)
 
 	local function styleBindingButton(bu)
 		local selected = bu.selectedHighlight
 
 		for i = 1, 9 do
-			_G.select(i, bu:GetRegions()):Hide()
+			select(i, bu:GetRegions()):Hide()
 		end
 
 		selected:SetTexture(C.media.backdrop)
@@ -41,7 +37,7 @@ C.themes["Blizzard_BindingUI"] = function()
 		F.Reskin(bu)
 	end
 
-	for i = 1, _G.KEY_BINDINGS_DISPLAYED do
+	for i = 1, KEY_BINDINGS_DISPLAYED do
 		local button1 = _G["KeyBindingFrameKeyBinding"..i.."Key1Button"]
 		local button2 = _G["KeyBindingFrameKeyBinding"..i.."Key2Button"]
 
