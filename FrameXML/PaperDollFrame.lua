@@ -1,16 +1,11 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
+local F, C = unpack(select(2, ...))
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	_G.CharacterModelFrame:DisableDrawLayer("BACKGROUND")
-	_G.CharacterModelFrame:DisableDrawLayer("BORDER")
-	_G.CharacterModelFrame:DisableDrawLayer("OVERLAY")
+	CharacterModelFrame:DisableDrawLayer("BACKGROUND")
+	CharacterModelFrame:DisableDrawLayer("BORDER")
+	CharacterModelFrame:DisableDrawLayer("OVERLAY")
 
 	-- [[ Item buttons ]]
 
@@ -74,10 +69,10 @@ _G.tinsert(C.themes["Aurora"], function()
 		popout:HookScript("OnLeave", colourPopout)
 	end
 
-	select(11, _G.CharacterMainHandSlot:GetRegions()):Hide()
-	select(11, _G.CharacterSecondaryHandSlot:GetRegions()):Hide()
+	select(11, CharacterMainHandSlot:GetRegions()):Hide()
+	select(11, CharacterSecondaryHandSlot:GetRegions()):Hide()
 
-	_G.hooksecurefunc("PaperDollItemSlotButton_Update", function(button)
+	hooksecurefunc("PaperDollItemSlotButton_Update", function(button)
 		-- also fires for bag slots, we don't want that
 		if button.popoutButton then
 			button.IconBorder:SetTexture(C.media.backdrop)
@@ -88,16 +83,16 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Stats pane ]]
 
-	_G.CharacterStatsPane.ClassBackground:Hide()
+	CharacterStatsPane.ClassBackground:Hide()
 
 	-- [[ Sidebar tabs ]]
 
-	for i = 1, #_G.PAPERDOLL_SIDEBARS do
+	for i = 1, #PAPERDOLL_SIDEBARS do
 		local tab = _G["PaperDollSidebarTab"..i]
 
 		if i == 1 then
-			for j = 1, 4 do
-				local region = select(j, tab:GetRegions())
+			for i = 1, 4 do
+				local region = select(i, tab:GetRegions())
 				region:SetTexCoord(0.16, 0.86, 0.16, 0.86)
 				region.SetTexCoord = F.dummy
 			end
@@ -118,7 +113,7 @@ _G.tinsert(C.themes["Aurora"], function()
 			select(2, tab:GetRegions()):SetPoint("BOTTOMRIGHT", -1, -1)
 		end
 
-		tab.bg = _G.CreateFrame("Frame", nil, tab)
+		tab.bg = CreateFrame("Frame", nil, tab)
 		tab.bg:SetPoint("TOPLEFT", 2, -3)
 		tab.bg:SetPoint("BOTTOMRIGHT", 0, -1)
 		tab.bg:SetFrameLevel(0)
@@ -130,7 +125,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Equipment manager ]]
 
-	for i = 1, _G.NUM_GEARSET_ICONS_SHOWN do
+	for i = 1, NUM_GEARSET_ICONS_SHOWN do
 		local bu = _G["GearManagerDialogPopupButton"..i]
 		local ic = _G["GearManagerDialogPopupButton"..i.."Icon"]
 
@@ -144,7 +139,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	end
 
 	local sets = false
-	_G.PaperDollSidebarTab3:HookScript("OnClick", function()
+	PaperDollSidebarTab3:HookScript("OnClick", function()
 		if sets == false then
 			for i = 1, 9 do
 				local bu = _G["PaperDollEquipmentManagerPaneButton"..i]

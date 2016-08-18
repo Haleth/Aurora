@@ -1,12 +1,7 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_QuestChoice"] = function()
-	local QuestChoiceFrame = _G.QuestChoiceFrame
+	local QuestChoiceFrame = QuestChoiceFrame
 
 	for i = 1, 15 do
 		select(i, QuestChoiceFrame:GetRegions()):Hide()
@@ -16,14 +11,17 @@ C.themes["Blizzard_QuestChoice"] = function()
 		select(i, QuestChoiceFrame:GetRegions()):Hide()
 	end
 
-	for i = 1, #QuestChoiceFrame.Options do
+	local numOptions = C.isBetaClient and #QuestChoiceFrame.Options or 2
+	for i = 1, numOptions do
 		local option = QuestChoiceFrame["Option"..i]
 		local rewards = option.Rewards
 		local item = rewards.Item
 		local currencies = rewards.Currencies
 
-		option.Header.Background:Hide()
-		option.Header.Text:SetTextColor(.9, .9, .9)
+		if C.isBetaClient then
+			option.Header.Background:Hide()
+			option.Header.Text:SetTextColor(.9, .9, .9)
+		end
 
 		option.Artwork:SetTexCoord(0.140625, 0.84375, 0.2265625, 0.78125)
 		option.Artwork:SetSize(180, 71)
@@ -43,13 +41,15 @@ C.themes["Blizzard_QuestChoice"] = function()
 		F.Reskin(option.OptionButton)
 	end
 
-	_G.hooksecurefunc("QuestChoiceFrame_ShowRewards", function(numOptions)
-		for i = 1, numOptions do
-			local rewards = QuestChoiceFrame["Option"..i].Rewards
-			rewards.Item.bg:SetVertexColor(rewards.Item.IconBorder:GetVertexColor())
-			rewards.Item.IconBorder:Hide()
-		end
-	end)
+	if C.isBetaClient then
+		hooksecurefunc("QuestChoiceFrame_ShowRewards", function(numOptions)
+			for i = 1, numOptions do
+				local rewards = QuestChoiceFrame["Option"..i].Rewards
+				rewards.Item.bg:SetVertexColor(rewards.Item.IconBorder:GetVertexColor())
+				rewards.Item.IconBorder:Hide()
+			end
+		end)
+	end
 
 	F.CreateBD(QuestChoiceFrame)
 	F.ReskinClose(QuestChoiceFrame.CloseButton)

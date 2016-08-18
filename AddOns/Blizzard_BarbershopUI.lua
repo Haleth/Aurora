@@ -1,13 +1,9 @@
--- [[ Lua Globals ]]
-local _G = _G
-
--- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_BarbershopUI"] = function()
-	local BarberShopFrame = _G.BarberShopFrame
+	local BarberShopFrame = BarberShopFrame
 	for i = 1, BarberShopFrame:GetNumRegions() do
-		local region = _G.select(i, BarberShopFrame:GetRegions())
+		local region = select(i, BarberShopFrame:GetRegions())
 		region:Hide()
 	end
 	F.SetBD(BarberShopFrame, 44, -75, -40, 44)
@@ -18,20 +14,20 @@ C.themes["Blizzard_BarbershopUI"] = function()
 		F.ReskinArrow(nextBtn, "right")
 	end
 
-	_G.BarberShopFrameMoneyFrame:GetRegions():Hide()
-	F.Reskin(_G.BarberShopFrameOkayButton)
-	F.Reskin(_G.BarberShopFrameCancelButton)
-	F.Reskin(_G.BarberShopFrameResetButton)
+	BarberShopFrameMoneyFrame:GetRegions():Hide()
+	F.Reskin(BarberShopFrameOkayButton)
+	F.Reskin(BarberShopFrameCancelButton)
+	F.Reskin(BarberShopFrameResetButton)
 
-	F.SetBD(_G.BarberShopAltFormFrame, 0, 0, 2, -2)
-	_G.BarberShopAltFormFrame:ClearAllPoints()
-	_G.BarberShopAltFormFrame:SetPoint("BOTTOM", BarberShopFrame, "TOP", 0, -74)
-	_G.BarberShopAltFormFrameBackground:Hide()
-	_G.BarberShopAltFormFrameBorder:Hide()
+	F.SetBD(BarberShopAltFormFrame, 0, 0, 2, -2)
+	BarberShopAltFormFrame:ClearAllPoints()
+	BarberShopAltFormFrame:SetPoint("BOTTOM", BarberShopFrame, "TOP", 0, -74)
+	BarberShopAltFormFrameBackground:Hide()
+	BarberShopAltFormFrameBorder:Hide()
 
 	-- [[ Banner frame ]]
 
-	_G.BarberShopBannerFrameBGTexture:Hide()
+	BarberShopBannerFrameBGTexture:Hide()
 
-	F.SetBD(_G.BarberShopBannerFrame, 25, -80, -20, 75)
+	F.SetBD(BarberShopBannerFrame, 25, -80, -20, 75)
 end

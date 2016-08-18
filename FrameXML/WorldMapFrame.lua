@@ -1,14 +1,9 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, pairs, tinsert = _G.select, _G.pairs, _G.tinsert
+local F, C = unpack(select(2, ...))
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
 
-	local WorldMapFrame = _G.WorldMapFrame
+	local WorldMapFrame = WorldMapFrame
 	local BorderFrame = WorldMapFrame.BorderFrame
 
 	WorldMapFrame.UIElementsFrame.CloseQuestPanelButton:GetRegions():Hide()
@@ -33,12 +28,12 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.ReskinClose(BorderFrame.CloseButton)
 	F.ReskinArrow(WorldMapFrame.UIElementsFrame.CloseQuestPanelButton, "left")
 	F.ReskinArrow(WorldMapFrame.UIElementsFrame.OpenQuestPanelButton, "right")
-	F.ReskinDropDown(_G.WorldMapLevelDropDown)
-	F.ReskinNavBar(_G.WorldMapFrameNavBar)
+	F.ReskinDropDown(WorldMapLevelDropDown)
+	F.ReskinNavBar(WorldMapFrameNavBar)
 
 	BorderFrame.CloseButton:SetPoint("TOPRIGHT", -9, -6)
 
-	_G.WorldMapLevelDropDown:SetPoint("TOPLEFT", -14, 2)
+	WorldMapLevelDropDown:SetPoint("TOPLEFT", -14, 2)
 
 	-- [[ Size up / down buttons ]]
 
@@ -54,26 +49,26 @@ _G.tinsert(C.themes["Aurora"], function()
 		local function colourArrow(f)
 			if f:IsEnabled() then
 				for _, pixel in pairs(f.pixels) do
-					pixel:SetColorTexture(r, g, b)
+					pixel:SetVertexColor(r, g, b)
 				end
 			end
 		end
 
 		local function clearArrow(f)
 			for _, pixel in pairs(f.pixels) do
-				pixel:SetColorTexture(1, 1, 1)
+				pixel:SetVertexColor(1, 1, 1)
 			end
 		end
 
 		button.pixels = {}
 
-		local lineOfs = 2.5
-		local line = button:CreateLine()
-		line:SetColorTexture(1, 1, 1)
-		line:SetThickness(0.5)
-		line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-		line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-		tinsert(button.pixels, line)
+		for i = 1, 8 do
+			local tex = button:CreateTexture()
+			tex:SetColorTexture(1, 1, 1)
+			tex:SetSize(1, 1)
+			tex:SetPoint("BOTTOMLEFT", 3+i, 3+i)
+			tinsert(button.pixels, tex)
+		end
 
 		local hline = button:CreateTexture()
 		hline:SetColorTexture(1, 1, 1)
@@ -89,8 +84,8 @@ _G.tinsert(C.themes["Aurora"], function()
 			hline:SetPoint("TOP", 1, -4)
 			vline:SetPoint("RIGHT", -4, 1)
 		else
-			hline:SetPoint("BOTTOM", -1, 4)
-			vline:SetPoint("LEFT", 4, -1)
+			hline:SetPoint("BOTTOM", 1, 4)
+			vline:SetPoint("LEFT", 4, 1)
 		end
 
 		button:SetScript("OnEnter", colourArrow)
@@ -99,8 +94,8 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- [[ Misc ]]
 
-	_G.WorldMapFrameTutorialButton.Ring:Hide()
-	_G.WorldMapFrameTutorialButton:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -12, 12)
+	WorldMapFrameTutorialButton.Ring:Hide()
+	WorldMapFrameTutorialButton:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -12, 12)
 
 	do
 		local topLine = WorldMapFrame.UIElementsFrame:CreateTexture()

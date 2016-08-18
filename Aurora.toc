@@ -1,8 +1,10 @@
 ## Interface: 70000
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
+## Notes-zhCN:小泡泡修正版，引用请标明出处。
+## Notes-zhTW:小泡泡修正版，引用請標明出處。
 ## Author: Haleth/Lightsword
-## Version: 7.0.3
+## Version: 7.0.2
 ## SavedVariables: AuroraConfig
 
 aurora.lua
@@ -10,6 +12,7 @@ gui.lua
 
 AddOns\Blizzard_AchievementUI.lua
 AddOns\Blizzard_ArchaeologyUI.lua
+AddOns\Blizzard_ArtifactUI.lua
 AddOns\Blizzard_AuctionUI.lua
 AddOns\Blizzard_BarbershopUI.lua
 AddOns\Blizzard_BattlefieldMinimap.lua
@@ -22,6 +25,7 @@ AddOns\Blizzard_DeathRecap.lua
 AddOns\Blizzard_DebugTools.lua
 AddOns\Blizzard_EncounterJournal.lua
 AddOns\Blizzard_GarrisonUI.lua
+AddOns\Blizzard_GlyphUI.lua
 AddOns\Blizzard_GMSurveyUI.lua
 AddOns\Blizzard_GuildBankUI.lua
 AddOns\Blizzard_GuildControlUI.lua
@@ -39,6 +43,7 @@ AddOns\Blizzard_TimeManager.lua
 AddOns\Blizzard_TradeSkillUI.lua
 AddOns\Blizzard_TrainerUI.lua
 AddOns\Blizzard_VoidStorageUI.lua
+AddOns\Recount.lua
 
 FrameXML\AlertFrames.lua
 FrameXML\BankFrame.lua
@@ -57,6 +62,7 @@ FrameXML\LFGList.lua
 FrameXML\LFRFrame.lua
 FrameXML\LootFrame.lua
 FrameXML\LootHistory.lua
+FrameXML\LossOfControlFrame.lua
 FrameXML\MailFrame.lua
 FrameXML\MerchantFrame.lua
 FrameXML\ModelPreviewFrame.lua

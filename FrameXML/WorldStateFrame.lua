@@ -1,40 +1,35 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select = _G.select
+local F, C = unpack(select(2, ...))
 
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
-
-_G.tinsert(C.themes["Aurora"], function()
+tinsert(C.themes["Aurora"], function()
 	-- PvP score frame
 
-	select(2, _G.WorldStateScoreScrollFrame:GetRegions()):Hide()
-	select(3, _G.WorldStateScoreScrollFrame:GetRegions()):Hide()
+	select(2, WorldStateScoreScrollFrame:GetRegions()):Hide()
+	select(3, WorldStateScoreScrollFrame:GetRegions()):Hide()
 
-	_G.WorldStateScoreFrameTab1:ClearAllPoints()
-	_G.WorldStateScoreFrameTab1:SetPoint("TOPLEFT", _G.WorldStateScoreFrame, "BOTTOMLEFT", 5, 2)
-	_G.WorldStateScoreFrameTab2:SetPoint("LEFT", _G.WorldStateScoreFrameTab1, "RIGHT", -15, 0)
-	_G.WorldStateScoreFrameTab3:SetPoint("LEFT", _G.WorldStateScoreFrameTab2, "RIGHT", -15, 0)
+	WorldStateScoreFrameTab1:ClearAllPoints()
+	WorldStateScoreFrameTab1:SetPoint("TOPLEFT", WorldStateScoreFrame, "BOTTOMLEFT", 5, 2)
+	WorldStateScoreFrameTab2:SetPoint("LEFT", WorldStateScoreFrameTab1, "RIGHT", -15, 0)
+	WorldStateScoreFrameTab3:SetPoint("LEFT", WorldStateScoreFrameTab2, "RIGHT", -15, 0)
 
 	for i = 1, 3 do
 		F.ReskinTab(_G["WorldStateScoreFrameTab"..i])
 	end
 
-	F.ReskinPortraitFrame(_G.WorldStateScoreFrame, true)
-	F.Reskin(_G.WorldStateScoreFrameLeaveButton)
-	F.ReskinScroll(_G.WorldStateScoreScrollFrameScrollBar)
+	F.ReskinPortraitFrame(WorldStateScoreFrame, true)
+	F.Reskin(WorldStateScoreFrameLeaveButton)
+	F.ReskinScroll(WorldStateScoreScrollFrameScrollBar)
 
 	-- Capture bar
 
-	_G.hooksecurefunc("UIParent_ManageFramePositions", function()
-		if not _G.NUM_EXTENDED_UI_FRAMES then return end
-		for i = 1, _G.NUM_EXTENDED_UI_FRAMES do
+	hooksecurefunc("UIParent_ManageFramePositions", function()
+		if not NUM_EXTENDED_UI_FRAMES then return end
+		for i = 1, NUM_EXTENDED_UI_FRAMES do
 			local barname = "WorldStateCaptureBar"..i
 			local bar = _G[barname]
 
 			if bar and bar:IsVisible() then
 				bar:ClearAllPoints()
-				bar:SetPoint("TOP", _G.UIParent, "TOP", 0, -120)
+				bar:SetPoint("TOP", UIParent, "TOP", 0, -120)
 				if not bar.skinned then
 					local left = _G[barname.."LeftBar"]
 					local right = _G[barname.."RightBar"]
@@ -63,7 +58,7 @@ _G.tinsert(C.themes["Aurora"], function()
 					bar.bg:SetTexture(C.media.backdrop)
 					bar.bg:SetVertexColor(0, 0, 0)
 
-					bar.bgmiddle = _G.CreateFrame("Frame", nil, bar)
+					bar.bgmiddle = CreateFrame("Frame", nil, bar)
 					bar.bgmiddle:SetPoint("TOPLEFT", middle, -1, 1)
 					bar.bgmiddle:SetPoint("BOTTOMRIGHT", middle, 1, -1)
 					F.CreateBD(bar.bgmiddle, 0)

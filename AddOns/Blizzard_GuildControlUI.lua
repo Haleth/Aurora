@@ -1,38 +1,30 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, pairs = _G.select, _G.pairs
-
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_GuildControlUI"] = function()
 	local r, g, b = C.r, C.g, C.b
 
-	F.CreateBD(_G.GuildControlUI)
+	F.CreateBD(GuildControlUI)
 
 	for i = 1, 9 do
-		select(i, _G.GuildControlUI:GetRegions()):Hide()
+		select(i, GuildControlUI:GetRegions()):Hide()
 	end
 
 	for i = 1, 8 do
-		select(i, _G.GuildControlUIRankBankFrameInset:GetRegions()):Hide()
+		select(i, GuildControlUIRankBankFrameInset:GetRegions()):Hide()
 	end
 
-	_G.GuildControlUIRankSettingsFrameChatBg:SetAlpha(0)
-	_G.GuildControlUIRankSettingsFrameRosterBg:SetAlpha(0)
-	_G.GuildControlUIRankSettingsFrameInfoBg:SetAlpha(0)
-	_G.GuildControlUIRankSettingsFrameBankBg:SetAlpha(0)
-	_G.GuildControlUITopBg:Hide()
-	_G.GuildControlUIHbar:Hide()
-	_G.GuildControlUIRankBankFrameInsetScrollFrameTop:SetAlpha(0)
-	_G.GuildControlUIRankBankFrameInsetScrollFrameBottom:SetAlpha(0)
+	GuildControlUIRankSettingsFrameChatBg:SetAlpha(0)
+	GuildControlUIRankSettingsFrameRosterBg:SetAlpha(0)
+	GuildControlUIRankSettingsFrameInfoBg:SetAlpha(0)
+	GuildControlUIRankSettingsFrameBankBg:SetAlpha(0)
+	GuildControlUITopBg:Hide()
+	GuildControlUIHbar:Hide()
+	GuildControlUIRankBankFrameInsetScrollFrameTop:SetAlpha(0)
+	GuildControlUIRankBankFrameInsetScrollFrameBottom:SetAlpha(0)
 
 	do
 		local function updateGuildRanks()
-			for i = 1, _G.GuildControlGetNumRanks() do
+			for i = 1, GuildControlGetNumRanks() do
 				local rank = _G["GuildControlUIRankOrderFrameRank"..i]
 				if not rank.styled then
 					rank.upButton.icon:Hide()
@@ -50,14 +42,14 @@ C.themes["Blizzard_GuildControlUI"] = function()
 			end
 		end
 
-		local f = _G.CreateFrame("Frame")
+		local f = CreateFrame("Frame")
 		f:RegisterEvent("GUILD_RANKS_UPDATE")
 		f:SetScript("OnEvent", updateGuildRanks)
 		hooksecurefunc("GuildControlUI_RankOrder_Update", updateGuildRanks)
 	end
 
 	hooksecurefunc("GuildControlUI_BankTabPermissions_Update", function()
-		for i = 1, _G.GetNumGuildBankTabs() + 1 do
+		for i = 1, GetNumGuildBankTabs() + 1 do
 			local tab = "GuildControlBankTab"..i
 			local bu = _G[tab]
 			if bu and not bu.styled then
@@ -127,11 +119,11 @@ C.themes["Blizzard_GuildControlUI"] = function()
 		end
 	end
 
-	F.Reskin(_G.GuildControlUIRankOrderFrameNewButton)
-	F.ReskinClose(_G.GuildControlUICloseButton)
-	F.ReskinScroll(_G.GuildControlUIRankBankFrameInsetScrollFrameScrollBar)
-	F.ReskinDropDown(_G.GuildControlUINavigationDropDown)
-	F.ReskinDropDown(_G.GuildControlUIRankSettingsFrameRankDropDown)
-	F.ReskinDropDown(_G.GuildControlUIRankBankFrameRankDropDown)
-	F.ReskinInput(_G.GuildControlUIRankSettingsFrameGoldBox, 20)
+	F.Reskin(GuildControlUIRankOrderFrameNewButton)
+	F.ReskinClose(GuildControlUICloseButton)
+	F.ReskinScroll(GuildControlUIRankBankFrameInsetScrollFrameScrollBar)
+	F.ReskinDropDown(GuildControlUINavigationDropDown)
+	F.ReskinDropDown(GuildControlUIRankSettingsFrameRankDropDown)
+	F.ReskinDropDown(GuildControlUIRankBankFrameRankDropDown)
+	F.ReskinInput(GuildControlUIRankSettingsFrameGoldBox, 20)
 end

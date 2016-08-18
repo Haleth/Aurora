@@ -1,11 +1,7 @@
--- [[ Lua Globals ]]
-local _G = _G
-
--- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
+local F, C = unpack(select(2, ...))
 
 C.themes["Blizzard_DeathRecap"] = function()
-	local DeathRecapFrame = _G.DeathRecapFrame
+	local DeathRecapFrame = DeathRecapFrame
 
 	DeathRecapFrame:DisableDrawLayer("BORDER")
 	DeathRecapFrame.Background:Hide()
@@ -13,10 +9,10 @@ C.themes["Blizzard_DeathRecap"] = function()
 	DeathRecapFrame.Divider:Hide()
 
 	F.CreateBD(DeathRecapFrame)
-	F.Reskin(_G.select(8, DeathRecapFrame:GetChildren())) -- bottom close button has no parentKey
+	F.Reskin(select(8, DeathRecapFrame:GetChildren())) -- bottom close button has no parentKey
 	F.ReskinClose(DeathRecapFrame.CloseXButton)
 
-	for i = 1, _G.NUM_DEATH_RECAP_EVENTS do
+	for i = 1, NUM_DEATH_RECAP_EVENTS do
 		local recap = DeathRecapFrame["Recap"..i].SpellInfo
 		recap.IconBorder:Hide()
 		recap.Icon:SetTexCoord(.08, .92, .08, .92)

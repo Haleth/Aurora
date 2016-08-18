@@ -1,11 +1,3 @@
--- [[ Lua Globals ]]
-local _G = _G
-local select, next, pairs, ipairs = _G.select, _G.next, _G.pairs, _G.ipairs
-
--- [[ WoW API ]]
-local CreateFrame = _G.CreateFrame
-local hooksecurefunc = _G.hooksecurefunc
-
 -- [[ Core ]]
 
 -- for custom APIs (see docs online)
@@ -14,14 +6,16 @@ local LATEST_API_VERSION = "6.0"
 -- see F.AddPlugin
 local AURORA_LOADED = false
 
-local ADDON_NAME, core = ...
+local addon, core = ...
 
 core[1] = {} -- F, functions
 core[2] = {} -- C, constants/config
-_G.Aurora = core
-local AuroraConfig
 
-local F, C = _G.unpack(select(2, ...))
+Aurora = core
+
+AuroraConfig = {}
+
+local F, C = unpack(select(2, ...))
 
 -- [[ Constants and settings ]]
 
@@ -70,7 +64,8 @@ C.defaults = {
 
 C.frames = {}
 
-C.TOC = select(4, _G.GetBuildInfo())
+C.TOC = select(4, GetBuildInfo())
+C.isBetaClient = C.TOC >= 70000
 
 -- [[ Cached variables ]]
 
@@ -78,10 +73,10 @@ local useButtonGradientColour
 
 -- [[ Functions ]]
 
-local classDisplayName, class = _G.UnitClass("player")
+local _, class = UnitClass("player")
 
-if _G.CUSTOM_CLASS_COLORS then
-	C.classcolours = _G.CUSTOM_CLASS_COLORS
+if CUSTOM_CLASS_COLORS then
+	C.classcolours = CUSTOM_CLASS_COLORS
 end
 
 local r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
@@ -96,7 +91,7 @@ F.CreateBD = function(f, a)
 	})
 	f:SetBackdropColor(0, 0, 0, a or AuroraConfig.alpha)
 	f:SetBackdropBorderColor(0, 0, 0)
-	if not a then _G.tinsert(C.frames, f) end
+	if not a then tinsert(C.frames, f) end
 end
 
 F.CreateBG = function(frame)
@@ -113,7 +108,7 @@ F.CreateBG = function(frame)
 end
 
 -- we assign these after loading variables for caching
--- otherwise we call an extra _G.unpack() every time
+-- otherwise we call an extra unpack() every time
 local buttonR, buttonG, buttonB, buttonA
 
 F.CreateGradient = function(f)
@@ -199,14 +194,22 @@ end
 F.ReskinScroll = function(f, parent)
 	local frame = f:GetName()
 
-	local track = (f.trackBG or f.Background) or (_G[frame.."Track"] or _G[frame.."BG"])
-	if track then track:Hide() end
-	local top = (f.ScrollBarTop or f.Top) or _G[frame.."Top"]
-	if top then top:Hide() end
-	local middle = (f.ScrollBarMiddle or f.Middle) or _G[frame.."Middle"]
-	if middle then middle:Hide() end
-	local bottom = (f.ScrollBarBottom or f.Bottom) or _G[frame.."Bottom"]
-	if bottom then bottom:Hide() end
+	if frame then
+		if _G[frame.."Track"] then _G[frame.."Track"]:Hide() end
+		if _G[frame.."BG"] then _G[frame.."BG"]:Hide() end
+		if _G[frame.."Top"] then _G[frame.."Top"]:Hide() end
+		if _G[frame.."Middle"] then _G[frame.."Middle"]:Hide() end
+		if _G[frame.."Bottom"] then _G[frame.."Bottom"]:Hide() end
+	else
+		if f.trackBG then f.trackBG:Hide() end
+		if f.Background then f.Background:Hide() end
+		if f.Top then f.Top:Hide() end
+		if f.Middle then f.Middle:Hide() end
+		if f.Bottom then f.Bottom:Hide() end
+		if f.ScrollBarTop then f.ScrollBarTop:Hide() end
+		if f.ScrollBarMiddle then f.ScrollBarMiddle:Hide() end
+		if f.ScrollBarBottom then f.ScrollBarBottom:Hide() end
+	end
 
 	local bu = f.ThumbTexture or f.thumbTexture or _G[frame.."ThumbTexture"]
 	bu:SetAlpha(0)
@@ -370,7 +373,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 			line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
 			line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
 		end
-		_G.tinsert(f.pixels, line)
+		tinsert(f.pixels, line)
 	end
 
 	f:HookScript("OnEnter", colourClose)
@@ -457,12 +460,18 @@ F.ReskinRadio = function(f)
 	f:SetNormalTexture("")
 	f:SetHighlightTexture("")
 	f:SetCheckedTexture(C.media.backdrop)
-
+	f:SetDisabledCheckedTexture(C.media.backdrop)
+	
 	local ch = f:GetCheckedTexture()
 	ch:SetPoint("TOPLEFT", 4, -4)
 	ch:SetPoint("BOTTOMRIGHT", -4, 4)
 	ch:SetVertexColor(r, g, b, .6)
 
+	local dch = f:GetDisabledCheckedTexture()
+	dch:SetPoint("TOPLEFT", 4, -4)
+	dch:SetPoint("BOTTOMRIGHT", -4, 4)
+	dch:SetVertexColor(.7, .7, .7, .6)
+	
 	local bd = CreateFrame("Frame", nil, f)
 	bd:SetPoint("TOPLEFT", 3, -3)
 	bd:SetPoint("BOTTOMRIGHT", -3, 3)
@@ -698,18 +707,17 @@ F.AddPlugin = function(func)
 	if AURORA_LOADED then
 		func()
 	else
-		_G.tinsert(C.themes["Aurora"], func)
+		tinsert(C.themes["Aurora"], func)
 	end
 end
 
 -- [[ Initialize addon ]]
 
-local Skin = CreateFrame("Frame", nil, _G.UIParent)
+local Skin = CreateFrame("Frame", nil, UIParent)
 Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
-	if addon == ADDON_NAME then
+	if addon == "Aurora" then
 		-- [[ Load Variables ]]
-		AuroraConfig = _G.AuroraConfig or {}
 
 		-- remove deprecated or corrupt variables
 		for key, value in pairs(AuroraConfig) do
@@ -721,7 +729,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- load or init variables
 		for key, value in pairs(C.defaults) do
 			if AuroraConfig[key] == nil then
-				if _G.type(value) == "table" then
+				if type(value) == "table" then
 					AuroraConfig[key] = {}
 					for k, v in pairs(value) do
 						AuroraConfig[key][k] = value[k]
@@ -735,9 +743,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		useButtonGradientColour = AuroraConfig.useButtonGradientColour
 
 		if useButtonGradientColour then
-			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonGradientColour)
+			buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonGradientColour)
 		else
-			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonSolidColour)
+			buttonR, buttonG, buttonB, buttonA = unpack(AuroraConfig.buttonSolidColour)
 		end
 
 		if AuroraConfig.useCustomColour then
@@ -750,7 +758,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local shouldSkipSplashScreen = false
 
-		local customStyle = _G.AURORA_CUSTOM_STYLE
+		local customStyle = AURORA_CUSTOM_STYLE
 
 		if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
 			local protectedFunctions = {
@@ -795,7 +803,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if shouldSkipSplashScreen then
 				AuroraConfig.acknowledgedSplashScreen = true
 			else
-				_G.AuroraSplashScreen:Show()
+				AuroraSplashScreen:Show()
 			end
 		end
 
@@ -810,7 +818,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 	-- check if the addon loaded is supported by Aurora, and if it is, execute its module
 	local addonModule = C.themes[addon]
 	if addonModule then
-		if _G.type(addonModule) == "function" then
+		if type(addonModule) == "function" then
 			addonModule()
 		else
 			for _, moduleFunc in pairs(addonModule) do
@@ -826,12 +834,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local header = {"GameMenuFrame", "AudioOptionsFrame", "ChatConfigFrame", "ColorPickerFrame"}
 		for i = 1, #header do
-			local title = _G[header[i].."Header"]
+		local title = _G[header[i].."Header"]
 			if title then
 				title:SetTexture("")
 				title:ClearAllPoints()
 				if title == _G["GameMenuFrameHeader"] then
-					title:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
+					title:SetPoint("TOP", GameMenuFrame, 0, 7)
 				else
 					title:SetPoint("TOP", header[i], 0, 0)
 				end
@@ -847,7 +855,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if bd then
 				F.CreateBD(bd)
 			else
-				_G.print("Aurora: "..bds[i].." was not found.")
+				print("Aurora: "..bds[i].." was not found.")
 			end
 		end
 
@@ -857,7 +865,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if bd then
 				F.CreateBD(bd, .25)
 			else
-				_G.print("Aurora: "..lightbds[i].." was not found.")
+				print("Aurora: "..lightbds[i].." was not found.")
 			end
 		end
 
@@ -869,7 +877,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if scrollbar then
 				F.ReskinScroll(scrollbar)
 			else
-				_G.print("Aurora: "..scrollbars[i].." was not found.")
+				print("Aurora: "..scrollbars[i].." was not found.")
 			end
 		end
 
@@ -887,12 +895,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Arrows ]]
 
-		F.ReskinArrow(_G.SpellBookPrevPageButton, "left")
-		F.ReskinArrow(_G.SpellBookNextPageButton, "right")
-		F.ReskinArrow(_G.InboxPrevPageButton, "left")
-		F.ReskinArrow(_G.InboxNextPageButton, "right")
-		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "left")
-		F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "right")
+		F.ReskinArrow(SpellBookPrevPageButton, "left")
+		F.ReskinArrow(SpellBookNextPageButton, "right")
+		F.ReskinArrow(InboxPrevPageButton, "left")
+		F.ReskinArrow(InboxNextPageButton, "right")
+		F.ReskinArrow(TabardCharacterModelRotateLeftButton, "left")
+		F.ReskinArrow(TabardCharacterModelRotateRightButton, "right")
 
 		-- [[ Radio buttons ]]
 
@@ -902,14 +910,14 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if radiobutton then
 				F.ReskinRadio(radiobutton)
 			else
-				_G.print("Aurora: "..radiobuttons[i].." was not found.")
+				print("Aurora: "..radiobuttons[i].." was not found.")
 			end
 		end
 
 		-- [[ Backdrop frames ]]
 
-		F.SetBD(_G.HelpFrame)
-		F.SetBD(_G.RaidParentFrame)
+		F.SetBD(HelpFrame)
+		F.SetBD(RaidParentFrame)
 
 		local FrameBDs = {"GameMenuFrame", "AudioOptionsFrame", "ChatConfigFrame", "StackSplitFrame", "AddFriendFrame", "FriendsFriendsFrame", "ColorPickerFrame", "ReadyCheckFrame", "GuildInviteFrame", "ChannelFrameDaughterFrame"}
 		for i = 1, #FrameBDs do
@@ -920,7 +928,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- Dropdown lists
 
 		hooksecurefunc("UIDropDownMenu_CreateFrames", function(level, index)
-			for i = 1, _G.UIDROPDOWNMENU_MAXLEVELS do
+			for i = 1, UIDROPDOWNMENU_MAXLEVELS do
 				local menu = _G["DropDownList"..i.."MenuBackdrop"]
 				local backdrop = _G["DropDownList"..i.."Backdrop"]
 				if not backdrop.reskinned then
@@ -986,7 +994,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		hooksecurefunc("ToggleDropDownMenu", function(level, _, dropDownFrame, anchorName)
 			if not level then level = 1 end
 
-			local uiScale = _G.UIParent:GetScale()
+			local uiScale = UIParent:GetScale()
 
 			local listFrame = _G["DropDownList"..level]
 
@@ -1003,8 +1011,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					-- make sure it doesn't go off the screen
 					local offLeft = listFrame:GetLeft()/uiScale
-					local offRight = (_G.GetScreenWidth() - listFrame:GetRight())/uiScale
-					local offTop = (_G.GetScreenHeight() - listFrame:GetTop())/uiScale
+					local offRight = (GetScreenWidth() - listFrame:GetRight())/uiScale
+					local offTop = (GetScreenHeight() - listFrame:GetTop())/uiScale
 					local offBottom = listFrame:GetBottom()/uiScale
 
 					local xAddOffset, yAddOffset = 0, 0
@@ -1024,7 +1032,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				elseif anchorName ~= "cursor" then
 					-- this part might be a bit unreliable
 					local _, _, relPoint, xOff, yOff = listFrame:GetPoint()
-					if relPoint == "BOTTOMLEFT" and xOff == 0 and _G.floor(yOff) == 5 then
+					if relPoint == "BOTTOMLEFT" and xOff == 0 and floor(yOff) == 5 then
 						listFrame:SetPoint("TOPLEFT", anchorName, "BOTTOMLEFT", 16, 9)
 					end
 				end
@@ -1037,7 +1045,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				end
 			end
 
-			for j = 1, _G.UIDROPDOWNMENU_MAXBUTTONS do
+			for j = 1, UIDROPDOWNMENU_MAXBUTTONS do
 				local bu = _G["DropDownList"..level.."Button"..j]
 				local _, _, _, x = bu:GetPoint()
 				if bu:IsShown() and x then
@@ -1093,12 +1101,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- Tab text position
 
 		hooksecurefunc("PanelTemplates_DeselectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]  
-			text:SetPoint("CENTER", tab, "CENTER")  
+			local text = tab.Text or _G[tab:GetName().."Text"]
+			text:SetPoint("CENTER", tab, "CENTER")
 		end)
 
 		hooksecurefunc("PanelTemplates_SelectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]  
+			local text = tab.Text or _G[tab:GetName().."Text"]
 			text:SetPoint("CENTER", tab, "CENTER")
 		end)
 
@@ -1108,26 +1116,25 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		if class == "HUNTER" or class == "MAGE" or class == "DEATHKNIGHT" or class == "WARLOCK" then
 			if class == "HUNTER" then
-				local PetStableFrame = _G.PetStableFrame
-				PetStableFrame.BottomInset:DisableDrawLayer("BACKGROUND")
-				PetStableFrame.BottomInset:DisableDrawLayer("BORDER")
-				PetStableFrame.LeftInset:DisableDrawLayer("BACKGROUND")
-				PetStableFrame.LeftInset:DisableDrawLayer("BORDER")
-				_G.PetStableModelShadow:Hide()
-				_G.PetStableModelRotateLeftButton:Hide()
-				_G.PetStableModelRotateRightButton:Hide()
-				_G.PetStableFrameModelBg:Hide()
-				_G.PetStablePrevPageButtonIcon:SetTexture("")
-				_G.PetStableNextPageButtonIcon:SetTexture("")
+				PetStableBottomInset:DisableDrawLayer("BACKGROUND")
+				PetStableBottomInset:DisableDrawLayer("BORDER")
+				PetStableLeftInset:DisableDrawLayer("BACKGROUND")
+				PetStableLeftInset:DisableDrawLayer("BORDER")
+				PetStableModelShadow:Hide()
+				PetStableModelRotateLeftButton:Hide()
+				PetStableModelRotateRightButton:Hide()
+				PetStableFrameModelBg:Hide()
+				PetStablePrevPageButtonIcon:SetTexture("")
+				PetStableNextPageButtonIcon:SetTexture("")
 
 				F.ReskinPortraitFrame(PetStableFrame, true)
-				F.ReskinArrow(_G.PetStablePrevPageButton, "left")
-				F.ReskinArrow(_G.PetStableNextPageButton, "right")
+				F.ReskinArrow(PetStablePrevPageButton, "left")
+				F.ReskinArrow(PetStableNextPageButton, "right")
 
-				_G.PetStableSelectedPetIcon:SetTexCoord(.08, .92, .08, .92)
-				F.CreateBG(_G.PetStableSelectedPetIcon)
+				PetStableSelectedPetIcon:SetTexCoord(.08, .92, .08, .92)
+				F.CreateBG(PetStableSelectedPetIcon)
 
-				for i = 1, _G.NUM_PET_ACTIVE_SLOTS do
+				for i = 1, NUM_PET_ACTIVE_SLOTS do
 					local bu = _G["PetStableActivePet"..i]
 
 					bu.Background:Hide()
@@ -1140,7 +1147,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					F.CreateBD(bu, .25)
 				end
 
-				for i = 1, _G.NUM_PET_STABLE_SLOTS do
+				for i = 1, NUM_PET_STABLE_SLOTS do
 					local bu = _G["PetStableStabledPet"..i]
 					local bd = CreateFrame("Frame", nil, bu)
 					bd:SetPoint("TOPLEFT", -1, 1)
@@ -1155,24 +1162,24 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Ghost frame
 
-		_G.GhostFrameContentsFrameIcon:SetTexCoord(.08, .92, .08, .92)
+		GhostFrameContentsFrameIcon:SetTexCoord(.08, .92, .08, .92)
 
-		local GhostBD = CreateFrame("Frame", nil, _G.GhostFrameContentsFrame)
-		GhostBD:SetPoint("TOPLEFT", _G.GhostFrameContentsFrameIcon, -1, 1)
-		GhostBD:SetPoint("BOTTOMRIGHT", _G.GhostFrameContentsFrameIcon, 1, -1)
+		local GhostBD = CreateFrame("Frame", nil, GhostFrameContentsFrame)
+		GhostBD:SetPoint("TOPLEFT", GhostFrameContentsFrameIcon, -1, 1)
+		GhostBD:SetPoint("BOTTOMRIGHT", GhostFrameContentsFrameIcon, 1, -1)
 		F.CreateBD(GhostBD, 0)
 
 		-- Currency frame
 
-		_G.TokenFramePopupCorner:Hide()
-		_G.TokenFramePopup:SetPoint("TOPLEFT", _G.TokenFrame, "TOPRIGHT", 1, -28)
-		F.CreateBD(_G.TokenFramePopup)
-		F.ReskinClose(_G.TokenFramePopupCloseButton)
-		F.ReskinCheck(_G.TokenFramePopupInactiveCheckBox)
-		F.ReskinCheck(_G.TokenFramePopupBackpackCheckBox)
+		TokenFramePopupCorner:Hide()
+		TokenFramePopup:SetPoint("TOPLEFT", TokenFrame, "TOPRIGHT", 1, -28)
+		F.CreateBD(TokenFramePopup)
+		F.ReskinClose(TokenFramePopupCloseButton)
+		F.ReskinCheck(TokenFramePopupInactiveCheckBox)
+		F.ReskinCheck(TokenFramePopupBackpackCheckBox)
 
 		local function updateButtons()
-			local buttons = _G.TokenFrameContainer.buttons
+			local buttons = TokenFrameContainer.buttons
 
 			if not buttons then return end
 
@@ -1226,23 +1233,23 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		_G.TokenFrame:HookScript("OnShow", updateButtons)
+		TokenFrame:HookScript("OnShow", updateButtons)
 		hooksecurefunc("TokenFrame_Update", updateButtons)
-		hooksecurefunc(_G.TokenFrameContainer, "update", updateButtons)
+		hooksecurefunc(TokenFrameContainer, "update", updateButtons)
 
-		F.ReskinScroll(_G.TokenFrameContainerScrollBar)
+		F.ReskinScroll(TokenFrameContainerScrollBar)
 
 		-- Reputation frame
 
-		_G.ReputationDetailCorner:Hide()
-		_G.ReputationDetailDivider:Hide()
-		_G.ReputationListScrollFrame:GetRegions():Hide()
-		select(2, _G.ReputationListScrollFrame:GetRegions()):Hide()
+		ReputationDetailCorner:Hide()
+		ReputationDetailDivider:Hide()
+		ReputationListScrollFrame:GetRegions():Hide()
+		select(2, ReputationListScrollFrame:GetRegions()):Hide()
 
-		_G.ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
+		ReputationDetailFrame:SetPoint("TOPLEFT", ReputationFrame, "TOPRIGHT", 1, -28)
 
 		local function UpdateFactionSkins()
-			for i = 1, _G.GetNumFactions() do
+			for i = 1, GetNumFactions() do
 				local statusbar = _G["ReputationBar"..i.."ReputationBar"]
 
 				if statusbar then
@@ -1264,25 +1271,25 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		_G.ReputationFrame:HookScript("OnShow", UpdateFactionSkins)
-		_G.ReputationFrame:HookScript("OnEvent", UpdateFactionSkins)
+		ReputationFrame:HookScript("OnShow", UpdateFactionSkins)
+		ReputationFrame:HookScript("OnEvent", UpdateFactionSkins)
 
-		for i = 1, _G.NUM_FACTIONS_DISPLAYED do
+		for i = 1, NUM_FACTIONS_DISPLAYED do
 			local bu = _G["ReputationBar"..i.."ExpandOrCollapseButton"]
 			F.ReskinExpandOrCollapse(bu)
 		end
 
 		hooksecurefunc("ReputationFrame_Update", function()
-			local numFactions = _G.GetNumFactions()
-			local factionIndex, factionButton
-			local factionOffset = _G.FauxScrollFrame_GetOffset(_G.ReputationListScrollFrame)
+			local numFactions = GetNumFactions()
+			local factionIndex, factionButton, isCollapsed
+			local factionOffset = FauxScrollFrame_GetOffset(ReputationListScrollFrame)
 
-			for i = 1, _G.NUM_FACTIONS_DISPLAYED do
+			for i = 1, NUM_FACTIONS_DISPLAYED do
 				factionIndex = factionOffset + i
 				factionButton = _G["ReputationBar"..i.."ExpandOrCollapseButton"]
 
 				if factionIndex <= numFactions then
-					local _, _, _, _, _, _, _, _, _, isCollapsed = _G.GetFactionInfo(factionIndex)
+					_, _, _, _, _, _, _, _, _, isCollapsed = GetFactionInfo(factionIndex)
 					if isCollapsed then
 						factionButton.plus:Show()
 					else
@@ -1292,19 +1299,19 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		F.CreateBD(_G.ReputationDetailFrame)
-		F.ReskinClose(_G.ReputationDetailCloseButton)
-		F.ReskinCheck(_G.ReputationDetailAtWarCheckBox)
-		F.ReskinCheck(_G.ReputationDetailInactiveCheckBox)
-		F.ReskinCheck(_G.ReputationDetailMainScreenCheckBox)
-		F.ReskinCheck(_G.ReputationDetailLFGBonusReputationCheckBox)
-		F.ReskinScroll(_G.ReputationListScrollFrameScrollBar)
+		F.CreateBD(ReputationDetailFrame)
+		F.ReskinClose(ReputationDetailCloseButton)
+		F.ReskinCheck(ReputationDetailAtWarCheckBox)
+		F.ReskinCheck(ReputationDetailInactiveCheckBox)
+		F.ReskinCheck(ReputationDetailMainScreenCheckBox)
+		F.ReskinCheck(ReputationDetailLFGBonusReputationCheckBox)
+		F.ReskinScroll(ReputationListScrollFrameScrollBar)
 
-		select(3, _G.ReputationDetailFrame:GetRegions()):Hide()
+		select(3, ReputationDetailFrame:GetRegions()):Hide()
 
 		-- Raid frame (social frame)
 
-		F.ReskinCheck(_G.RaidFrameAllAssistCheckButton)
+		F.ReskinCheck(RaidFrameAllAssistCheckButton)
 
 		-- Professions
 
@@ -1379,7 +1386,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		hooksecurefunc("FormatProfession", function(frame, index)
 			if index then
-				local _, texture = _G.GetProfessionInfo(index)
+				local _, texture = GetProfessionInfo(index)
 
 				if frame.icon and texture then
 					frame.icon:SetTexture(texture)
@@ -1389,23 +1396,23 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Friends Frame
 
-		_G.FriendsFrameFriendsScrollFrameTop:Hide()
-		_G.FriendsFrameFriendsScrollFrameMiddle:Hide()
-		_G.FriendsFrameFriendsScrollFrameBottom:Hide()
-		_G.IgnoreListFrameTop:Hide()
-		_G.IgnoreListFrameMiddle:Hide()
-		_G.IgnoreListFrameBottom:Hide()
-		_G.PendingListFrameTop:Hide()
-		_G.PendingListFrameMiddle:Hide()
-		_G.PendingListFrameBottom:Hide()
+		FriendsFrameFriendsScrollFrameTop:Hide()
+		FriendsFrameFriendsScrollFrameMiddle:Hide()
+		FriendsFrameFriendsScrollFrameBottom:Hide()
+		IgnoreListFrameTop:Hide()
+		IgnoreListFrameMiddle:Hide()
+		IgnoreListFrameBottom:Hide()
+		PendingListFrameTop:Hide()
+		PendingListFrameMiddle:Hide()
+		PendingListFrameBottom:Hide()
 
 		for i = 1, 4 do
 			F.ReskinTab(_G["FriendsFrameTab"..i])
 		end
 
-		_G.FriendsFrameIcon:Hide()
+		FriendsFrameIcon:Hide()
 
-		for i = 1, _G.FRIENDS_TO_DISPLAY do
+		for i = 1, FRIENDS_TO_DISPLAY do
 			local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
 			local ic = bu.gameIcon
 
@@ -1425,7 +1432,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		local function UpdateScroll()
-			for i = 1, _G.FRIENDS_TO_DISPLAY do
+			for i = 1, FRIENDS_TO_DISPLAY do
 				local bu = _G["FriendsFrameFriendsScrollFrameButton"..i]
 
 				if bu.gameIcon:IsShown() then
@@ -1437,108 +1444,108 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		local friendsBtn1 = _G.FriendsFrameFriendsScrollFrameButton1
-		friendsBtn1.bg:SetPoint("BOTTOMRIGHT", friendsBtn1.gameIcon, 0, -1)
+		local bu1 = FriendsFrameFriendsScrollFrameButton1
+		bu1.bg:SetPoint("BOTTOMRIGHT", bu1.gameIcon, 0, -1)
 
 		hooksecurefunc("FriendsFrame_UpdateFriends", UpdateScroll)
-		hooksecurefunc(_G.FriendsFrameFriendsScrollFrame, "update", UpdateScroll)
+		hooksecurefunc(FriendsFrameFriendsScrollFrame, "update", UpdateScroll)
 
-		_G.FriendsFrameStatusDropDown:ClearAllPoints()
-		_G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", _G.FriendsFrame, "TOPLEFT", 10, -28)
+		FriendsFrameStatusDropDown:ClearAllPoints()
+		FriendsFrameStatusDropDown:SetPoint("TOPLEFT", FriendsFrame, "TOPLEFT", 10, -28)
 
-		for _, button in pairs({_G.FriendsTabHeaderSoRButton, _G.FriendsTabHeaderRecruitAFriendButton}) do
+		for _, button in pairs({FriendsTabHeaderSoRButton, FriendsTabHeaderRecruitAFriendButton}) do
 			button:SetPushedTexture("")
 			button:GetRegions():SetTexCoord(.08, .92, .08, .92)
 			F.CreateBDFrame(button)
 		end
 
-		F.CreateBD(_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame)
-		_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:SetPoint("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 1, -18)
+		F.CreateBD(FriendsFrameBattlenetFrame.UnavailableInfoFrame)
+		FriendsFrameBattlenetFrame.UnavailableInfoFrame:SetPoint("TOPLEFT", FriendsFrame, "TOPRIGHT", 1, -18)
 
-		_G.FriendsFrameBattlenetFrame:GetRegions():Hide()
-		F.CreateBD(_G.FriendsFrameBattlenetFrame, .25)
+		FriendsFrameBattlenetFrame:GetRegions():Hide()
+		F.CreateBD(FriendsFrameBattlenetFrame, .25)
 
-		_G.FriendsFrameBattlenetFrame.Tag:SetParent(_G.FriendsListFrame)
-		_G.FriendsFrameBattlenetFrame.Tag:SetPoint("TOP", _G.FriendsFrame, "TOP", 0, -8)
+		FriendsFrameBattlenetFrame.Tag:SetParent(FriendsListFrame)
+		FriendsFrameBattlenetFrame.Tag:SetPoint("TOP", FriendsFrame, "TOP", 0, -8)
 
 		hooksecurefunc("FriendsFrame_CheckBattlenetStatus", function()
-			if _G.BNFeaturesEnabled() then
-				local frame = _G.FriendsFrameBattlenetFrame
+			if BNFeaturesEnabled() then
+				local frame = FriendsFrameBattlenetFrame
 
 				frame.BroadcastButton:Hide()
 
-				if _G.BNConnected() then
+				if BNConnected() then
 					frame:Hide()
-					_G.FriendsFrameBroadcastInput:Show()
-					_G.FriendsFrameBroadcastInput_UpdateDisplay()
+					FriendsFrameBroadcastInput:Show()
+					FriendsFrameBroadcastInput_UpdateDisplay()
 				end
 			end
 		end)
 
 		hooksecurefunc("FriendsFrame_Update", function()
-			if _G.FriendsFrame.selectedTab == 1 and _G.FriendsTabHeader.selectedTab == 1 and _G.FriendsFrameBattlenetFrame.Tag:IsShown() then
-				_G.FriendsFrameTitleText:Hide()
+			if FriendsFrame.selectedTab == 1 and FriendsTabHeader.selectedTab == 1 and FriendsFrameBattlenetFrame.Tag:IsShown() then
+				FriendsFrameTitleText:Hide()
 			else
-				_G.FriendsFrameTitleText:Show()
+				FriendsFrameTitleText:Show()
 			end
 		end)
 
-		local whoBg = CreateFrame("Frame", nil, _G.WhoFrameEditBoxInset)
+		local whoBg = CreateFrame("Frame", nil, WhoFrameEditBoxInset)
 		whoBg:SetPoint("TOPLEFT")
 		whoBg:SetPoint("BOTTOMRIGHT", -1, 1)
-		whoBg:SetFrameLevel(_G.WhoFrameEditBoxInset:GetFrameLevel()-1)
+		whoBg:SetFrameLevel(WhoFrameEditBoxInset:GetFrameLevel()-1)
 		F.CreateBD(whoBg, .25)
 
-		F.ReskinPortraitFrame(_G.FriendsFrame, true)
-		F.Reskin(_G.FriendsFrameAddFriendButton)
-		F.Reskin(_G.FriendsFrameSendMessageButton)
-		F.Reskin(_G.FriendsFrameIgnorePlayerButton)
-		F.Reskin(_G.FriendsFrameUnsquelchButton)
-		F.Reskin(_G.FriendsFrameMutePlayerButton)
-		F.ReskinScroll(_G.FriendsFrameFriendsScrollFrameScrollBar)
-		F.ReskinScroll(_G.FriendsFrameIgnoreScrollFrameScrollBar)
-		F.ReskinDropDown(_G.FriendsFrameStatusDropDown)
+		F.ReskinPortraitFrame(FriendsFrame, true)
+		F.Reskin(FriendsFrameAddFriendButton)
+		F.Reskin(FriendsFrameSendMessageButton)
+		F.Reskin(FriendsFrameIgnorePlayerButton)
+		F.Reskin(FriendsFrameUnsquelchButton)
+		F.Reskin(FriendsFrameMutePlayerButton)
+		F.ReskinScroll(FriendsFrameFriendsScrollFrameScrollBar)
+		F.ReskinScroll(FriendsFrameIgnoreScrollFrameScrollBar)
+		F.ReskinDropDown(FriendsFrameStatusDropDown)
 
 		-- Battlenet toast frame
 
-		F.CreateBD(_G.BNToastFrame)
-		F.CreateBD(_G.BNToastFrame.TooltipFrame)
-		_G.BNToastFrameCloseButton:SetAlpha(0)
+		F.CreateBD(BNToastFrame)
+		F.CreateBD(BNToastFrame.TooltipFrame)
+		BNToastFrameCloseButton:SetAlpha(0)
 
 		-- Battletag invite frame
 
-		F.CreateBD(_G.BattleTagInviteFrame)
+		F.CreateBD(BattleTagInviteFrame)
 
-		local send, cancel = _G.BattleTagInviteFrame:GetChildren()
+		local send, cancel = BattleTagInviteFrame:GetChildren()
 		F.Reskin(send)
 		F.Reskin(cancel)
 
 		-- Gossip Frame
 
-		_G.GossipGreetingScrollFrameTop:Hide()
-		_G.GossipGreetingScrollFrameBottom:Hide()
-		_G.GossipGreetingScrollFrameMiddle:Hide()
-		select(19, _G.GossipFrame:GetRegions()):Hide()
+		GossipGreetingScrollFrameTop:Hide()
+		GossipGreetingScrollFrameBottom:Hide()
+		GossipGreetingScrollFrameMiddle:Hide()
+		select(19, GossipFrame:GetRegions()):Hide()
 
-		_G.GossipGreetingText:SetTextColor(1, 1, 1)
+		GossipGreetingText:SetTextColor(1, 1, 1)
 
-		_G.NPCFriendshipStatusBar:GetRegions():Hide()
-		_G.NPCFriendshipStatusBarNotch1:SetColorTexture(0, 0, 0)
-		_G.NPCFriendshipStatusBarNotch1:SetSize(1, 16)
-		_G.NPCFriendshipStatusBarNotch2:SetColorTexture(0, 0, 0)
-		_G.NPCFriendshipStatusBarNotch2:SetSize(1, 16)
-		_G.NPCFriendshipStatusBarNotch3:SetColorTexture(0, 0, 0)
-		_G.NPCFriendshipStatusBarNotch3:SetSize(1, 16)
-		_G.NPCFriendshipStatusBarNotch4:SetColorTexture(0, 0, 0)
-		_G.NPCFriendshipStatusBarNotch4:SetSize(1, 16)
-		select(7, _G.NPCFriendshipStatusBar:GetRegions()):Hide()
+		NPCFriendshipStatusBar:GetRegions():Hide()
+		NPCFriendshipStatusBarNotch1:SetColorTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch1:SetSize(1, 16)
+		NPCFriendshipStatusBarNotch2:SetColorTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch2:SetSize(1, 16)
+		NPCFriendshipStatusBarNotch3:SetColorTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch3:SetSize(1, 16)
+		NPCFriendshipStatusBarNotch4:SetColorTexture(0, 0, 0)
+		NPCFriendshipStatusBarNotch4:SetSize(1, 16)
+		select(7, NPCFriendshipStatusBar:GetRegions()):Hide()
 
-		_G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -30, 7)
-		F.CreateBDFrame(_G.NPCFriendshipStatusBar, .25)
+		NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -30, 7)
+		F.CreateBDFrame(NPCFriendshipStatusBar, .25)
 
-		F.ReskinPortraitFrame(_G.GossipFrame, true)
-		F.Reskin(_G.GossipFrameGreetingGoodbyeButton)
-		F.ReskinScroll(_G.GossipGreetingScrollFrameScrollBar)
+		F.ReskinPortraitFrame(GossipFrame, true)
+		F.Reskin(GossipFrameGreetingGoodbyeButton)
+		F.ReskinScroll(GossipGreetingScrollFrameScrollBar)
 
 		-- Help frame
 
@@ -1570,74 +1577,76 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 6 do
 			styleTab(_G["HelpFrameButton"..i])
 		end
-		styleTab(_G.HelpFrameButton16)
+		styleTab(HelpFrameButton16)
 
-		_G.HelpFrameAccountSecurityOpenTicket.text:SetFont(C.media.font, 14)
-		_G.HelpFrameOpenTicketHelpOpenTicket.text:SetFont(C.media.font, 14)
+		HelpFrameAccountSecurityOpenTicket.text:SetFont(C.media.font, 14)
+		HelpFrameOpenTicketHelpOpenTicket.text:SetFont(C.media.font, 14)
 
-		_G.HelpFrameCharacterStuckHearthstone:SetSize(56, 56)
-		F.CreateBG(_G.HelpFrameCharacterStuckHearthstone)
-		_G.HelpFrameCharacterStuckHearthstoneIconTexture:SetTexCoord(.08, .92, .08, .92)
+		HelpFrameCharacterStuckHearthstone:SetSize(56, 56)
+		F.CreateBG(HelpFrameCharacterStuckHearthstone)
+		HelpFrameCharacterStuckHearthstoneIconTexture:SetTexCoord(.08, .92, .08, .92)
 
-		F.Reskin(_G.HelpBrowserNavHome)
-		F.Reskin(_G.HelpBrowserNavReload)
-		F.Reskin(_G.HelpBrowserNavStop)
-		F.Reskin(_G.HelpBrowserBrowserSettings)
-		F.ReskinArrow(_G.HelpBrowserNavBack, "left")
-		F.ReskinArrow(_G.HelpBrowserNavForward, "right")
+		F.Reskin(HelpBrowserNavHome)
+		F.Reskin(HelpBrowserNavReload)
+		F.Reskin(HelpBrowserNavStop)
+		F.Reskin(HelpBrowserBrowserSettings)
+		F.ReskinArrow(HelpBrowserNavBack, "left")
+		F.ReskinArrow(HelpBrowserNavForward, "right")
 
-		_G.HelpBrowserNavHome:SetSize(18, 18)
-		_G.HelpBrowserNavReload:SetSize(18, 18)
-		_G.HelpBrowserNavStop:SetSize(18, 18)
-		_G.HelpBrowserBrowserSettings:SetSize(18, 18)
+		HelpBrowserNavHome:SetSize(18, 18)
+		HelpBrowserNavReload:SetSize(18, 18)
+		HelpBrowserNavStop:SetSize(18, 18)
+		HelpBrowserBrowserSettings:SetSize(18, 18)
 
-		_G.HelpBrowserNavHome:SetPoint("BOTTOMLEFT", _G.HelpBrowser, "TOPLEFT", 2, 4)
-		_G.HelpBrowserBrowserSettings:SetPoint("TOPRIGHT", _G.HelpFrameCloseButton, "BOTTOMLEFT", -4, -1)
-		_G.LoadingIcon:ClearAllPoints()
-		_G.LoadingIcon:SetPoint("LEFT", _G.HelpBrowserNavStop, "RIGHT")
+		HelpBrowserNavHome:SetPoint("BOTTOMLEFT", HelpBrowser, "TOPLEFT", 2, 4)
+		HelpBrowserBrowserSettings:SetPoint("TOPRIGHT", HelpFrameCloseButton, "BOTTOMLEFT", -4, -1)
+		LoadingIcon:ClearAllPoints()
+		LoadingIcon:SetPoint("LEFT", HelpBrowserNavStop, "RIGHT")
 
 		for i = 1, 9 do
-			select(i, _G.BrowserSettingsTooltip:GetRegions()):Hide()
+			select(i, BrowserSettingsTooltip:GetRegions()):Hide()
 		end
 
-		F.CreateBD(_G.BrowserSettingsTooltip)
-		F.Reskin(_G.BrowserSettingsTooltip.CacheButton)
-		F.Reskin(_G.BrowserSettingsTooltip.CookiesButton)
+		F.CreateBD(BrowserSettingsTooltip)
+		F.Reskin(BrowserSettingsTooltip.CacheButton)
+		F.Reskin(BrowserSettingsTooltip.CookiesButton)
 
 		-- Trade Frame
 
-		_G.TradePlayerEnchantInset:DisableDrawLayer("BORDER")
-		_G.TradePlayerItemsInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientEnchantInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientItemsInset:DisableDrawLayer("BORDER")
-		_G.TradePlayerInputMoneyInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientMoneyInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientBG:Hide()
-		_G.TradePlayerEnchantInsetBg:Hide()
-		_G.TradePlayerItemsInsetBg:Hide()
-		_G.TradePlayerInputMoneyInsetBg:Hide()
-		_G.TradeRecipientEnchantInsetBg:Hide()
-		_G.TradeRecipientItemsInsetBg:Hide()
-		_G.TradeRecipientMoneyBg:Hide()
-		_G.TradeRecipientPortraitFrame:Hide()
-		_G.TradeRecipientBotLeftCorner:Hide()
-		_G.TradeRecipientLeftBorder:Hide()
-		select(4, _G.TradePlayerItem7:GetRegions()):Hide()
-		select(4, _G.TradeRecipientItem7:GetRegions()):Hide()
-		_G.TradeFramePlayerPortrait:Hide()
-		_G.TradeFrameRecipientPortrait:Hide()
+		TradePlayerEnchantInset:DisableDrawLayer("BORDER")
+		TradePlayerItemsInset:DisableDrawLayer("BORDER")
+		TradeRecipientEnchantInset:DisableDrawLayer("BORDER")
+		TradeRecipientItemsInset:DisableDrawLayer("BORDER")
+		TradePlayerInputMoneyInset:DisableDrawLayer("BORDER")
+		TradeRecipientMoneyInset:DisableDrawLayer("BORDER")
+		TradeRecipientBG:Hide()
+		TradePlayerEnchantInsetBg:Hide()
+		TradePlayerItemsInsetBg:Hide()
+		TradePlayerInputMoneyInsetBg:Hide()
+		TradeRecipientEnchantInsetBg:Hide()
+		TradeRecipientItemsInsetBg:Hide()
+		TradeRecipientMoneyBg:Hide()
+		TradeRecipientPortraitFrame:Hide()
+		TradeRecipientBotLeftCorner:Hide()
+		TradeRecipientLeftBorder:Hide()
+		select(4, TradePlayerItem7:GetRegions()):Hide()
+		select(4, TradeRecipientItem7:GetRegions()):Hide()
+		TradeFramePlayerPortrait:Hide()
+		TradeFrameRecipientPortrait:Hide()
+		TradeFramePortraitFrame:Hide()
+		TradeFrameLeftBorder:Hide()
+		
+		F.ReskinPortraitFrame(TradeFrame, true)
+		F.Reskin(TradeFrameTradeButton)
+		F.Reskin(TradeFrameCancelButton)
+		F.ReskinInput(TradePlayerInputMoneyFrameGold)
+		F.ReskinInput(TradePlayerInputMoneyFrameSilver)
+		F.ReskinInput(TradePlayerInputMoneyFrameCopper)
 
-		F.ReskinPortraitFrame(_G.TradeFrame, true)
-		F.Reskin(_G.TradeFrameTradeButton)
-		F.Reskin(_G.TradeFrameCancelButton)
-		F.ReskinInput(_G.TradePlayerInputMoneyFrameGold)
-		F.ReskinInput(_G.TradePlayerInputMoneyFrameSilver)
-		F.ReskinInput(_G.TradePlayerInputMoneyFrameCopper)
+		TradePlayerInputMoneyFrameSilver:SetPoint("LEFT", TradePlayerInputMoneyFrameGold, "RIGHT", 1, 0)
+		TradePlayerInputMoneyFrameCopper:SetPoint("LEFT", TradePlayerInputMoneyFrameSilver, "RIGHT", 1, 0)
 
-		_G.TradePlayerInputMoneyFrameSilver:SetPoint("LEFT", _G.TradePlayerInputMoneyFrameGold, "RIGHT", 1, 0)
-		_G.TradePlayerInputMoneyFrameCopper:SetPoint("LEFT", _G.TradePlayerInputMoneyFrameSilver, "RIGHT", 1, 0)
-
-		for i = 1, _G.MAX_TRADE_ITEMS do
+		for i = 1, MAX_TRADE_ITEMS do
 			local bu1 = _G["TradePlayerItem"..i.."ItemButton"]
 			local bu2 = _G["TradeRecipientItem"..i.."ItemButton"]
 
@@ -1668,40 +1677,36 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Tutorial Frame
 
-		F.CreateBD(_G.TutorialFrame)
+		F.CreateBD(TutorialFrame)
 
-		_G.TutorialFrameBackground:Hide()
-		_G.TutorialFrameBackground.Show = F.dummy
-		_G.TutorialFrame:DisableDrawLayer("BORDER")
+		TutorialFrameBackground:Hide()
+		TutorialFrameBackground.Show = F.dummy
+		TutorialFrame:DisableDrawLayer("BORDER")
 
-		local tutOkay = _G.TutorialFrameOkayButton
-		local tutPrev = _G.TutorialFramePrevButton
-		local tutNext = _G.TutorialFrameNextButton
-		F.Reskin(tutOkay, true)
-		F.ReskinClose(_G.TutorialFrameCloseButton)
-		F.ReskinArrow(tutPrev, "left")
-		F.ReskinArrow(tutNext, "right")
+		F.Reskin(TutorialFrameOkayButton, true)
+		F.ReskinClose(TutorialFrameCloseButton)
+		F.ReskinArrow(TutorialFramePrevButton, "left")
+		F.ReskinArrow(TutorialFrameNextButton, "right")
 
-		tutOkay:ClearAllPoints()
-		tutOkay:SetPoint("BOTTOMLEFT", tutNext, "BOTTOMRIGHT", 10, 0)
+		TutorialFrameOkayButton:ClearAllPoints()
+		TutorialFrameOkayButton:SetPoint("BOTTOMLEFT", TutorialFrameNextButton, "BOTTOMRIGHT", 10, 0)
 
 		-- because gradient alpha and OnUpdate doesn't work for some reason...
 
-		if select(14, tutOkay:GetRegions()) then
-			select(14, tutOkay:GetRegions()):Hide()
-			select(15, tutPrev:GetRegions()):Hide()
-			select(15, tutNext:GetRegions()):Hide()
-			select(14, _G.TutorialFrameCloseButton:GetRegions()):Hide()
+		if select(14, TutorialFrameOkayButton:GetRegions()) then
+			select(14, TutorialFrameOkayButton:GetRegions()):Hide()
+			select(15, TutorialFramePrevButton:GetRegions()):Hide()
+			select(15, TutorialFrameNextButton:GetRegions()):Hide()
+			select(14, TutorialFrameCloseButton:GetRegions()):Hide()
 		end
-		tutPrev:SetScript("OnEnter", nil)
-		tutNext:SetScript("OnEnter", nil)
-		tutOkay:SetBackdropColor(0, 0, 0, .25)
-		tutPrev:SetBackdropColor(0, 0, 0, .25)
-		tutNext:SetBackdropColor(0, 0, 0, .25)
+		TutorialFramePrevButton:SetScript("OnEnter", nil)
+		TutorialFrameNextButton:SetScript("OnEnter", nil)
+		TutorialFrameOkayButton:SetBackdropColor(0, 0, 0, .25)
+		TutorialFramePrevButton:SetBackdropColor(0, 0, 0, .25)
+		TutorialFrameNextButton:SetBackdropColor(0, 0, 0, .25)
 
 		-- Master looter frame
 
-		local MasterLooterFrame = _G.MasterLooterFrame
 		for i = 1, 9 do
 			select(i, MasterLooterFrame:GetRegions()):Hide()
 		end
@@ -1715,20 +1720,20 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		MasterLooterFrame.Item.Icon:SetDrawLayer("ARTWORK")
 		MasterLooterFrame.Item.bg = F.CreateBG(MasterLooterFrame.Item.Icon)
 
-		MasterLooterFrame:HookScript("OnShow", function(MLFrame)
-			MLFrame.Item.bg:SetVertexColor(MLFrame.Item.IconBorder:GetVertexColor())
-			_G.LootFrame:SetAlpha(.4)
+		MasterLooterFrame:HookScript("OnShow", function(self)
+			self.Item.bg:SetVertexColor(self.Item.IconBorder:GetVertexColor())
+			LootFrame:SetAlpha(.4)
 		end)
 
-		MasterLooterFrame:HookScript("OnHide", function(MLFrame)
-			_G.LootFrame:SetAlpha(1)
+		MasterLooterFrame:HookScript("OnHide", function(self)
+			LootFrame:SetAlpha(1)
 		end)
 
 		F.CreateBD(MasterLooterFrame)
 		F.ReskinClose(select(3, MasterLooterFrame:GetChildren()))
 
 		hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
-			for i = 1, _G.MAX_RAID_MEMBERS do
+			for i = 1, MAX_RAID_MEMBERS do
 				local playerFrame = MasterLooterFrame["player"..i]
 				if playerFrame then
 					if not playerFrame.styled then
@@ -1743,7 +1748,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 						playerFrame.styled = true
 					end
-					local colour = C.classcolours[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
+					local colour = C.classcolours[select(2, UnitClass(playerFrame.Name:GetText()))]
 					playerFrame.Name:SetTextColor(colour.r, colour.g, colour.b)
 					playerFrame.Highlight:SetVertexColor(colour.r, colour.g, colour.b, .2)
 				else
@@ -1754,13 +1759,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Tabard frame
 
-		_G.TabardFrameMoneyInset:DisableDrawLayer("BORDER")
-		_G.TabardFrameCustomizationBorder:Hide()
-		_G.TabardFrameMoneyBg:Hide()
-		_G.TabardFrameMoneyInsetBg:Hide()
+		TabardFrameMoneyInset:DisableDrawLayer("BORDER")
+		TabardFrameCustomizationBorder:Hide()
+		TabardFrameMoneyBg:Hide()
+		TabardFrameMoneyInsetBg:Hide()
 
 		for i = 19, 28 do
-			select(i, _G.TabardFrame:GetRegions()):Hide()
+			select(i, TabardFrame:GetRegions()):Hide()
 		end
 
 		for i = 1, 5 do
@@ -1771,61 +1776,65 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "right")
 		end
 
-		F.ReskinPortraitFrame(_G.TabardFrame, true)
-		F.CreateBD(_G.TabardFrameCostFrame, .25)
-		F.Reskin(_G.TabardFrameAcceptButton)
-		F.Reskin(_G.TabardFrameCancelButton)
+		F.ReskinPortraitFrame(TabardFrame, true)
+		F.CreateBD(TabardFrameCostFrame, .25)
+		F.Reskin(TabardFrameAcceptButton)
+		F.Reskin(TabardFrameCancelButton)
 
 		-- Guild registrar frame
 
-		_G.GuildRegistrarFrameTop:Hide()
-		_G.GuildRegistrarFrameBottom:Hide()
-		_G.GuildRegistrarFrameMiddle:Hide()
-		select(19, _G.GuildRegistrarFrame:GetRegions()):Hide()
+		GuildRegistrarFrameTop:Hide()
+		GuildRegistrarFrameBottom:Hide()
+		GuildRegistrarFrameMiddle:Hide()
+		select(19, GuildRegistrarFrame:GetRegions()):Hide()
 
-		_G.GuildRegistrarFrameEditBox:SetHeight(20)
+		GuildRegistrarFrameEditBox:SetHeight(20)
 
-		F.ReskinPortraitFrame(_G.GuildRegistrarFrame, true)
-		F.CreateBD(_G.GuildRegistrarFrameEditBox, .25)
-		F.Reskin(_G.GuildRegistrarFrameGoodbyeButton)
-		F.Reskin(_G.GuildRegistrarFramePurchaseButton)
-		F.Reskin(_G.GuildRegistrarFrameCancelButton)
+		F.ReskinPortraitFrame(GuildRegistrarFrame, true)
+		F.CreateBD(GuildRegistrarFrameEditBox, .25)
+		F.Reskin(GuildRegistrarFrameGoodbyeButton)
+		F.Reskin(GuildRegistrarFramePurchaseButton)
+		F.Reskin(GuildRegistrarFrameCancelButton)
 
-		--[[ Item text ]]
+		-- Item text
 
-		select(18, _G.ItemTextFrame:GetRegions()):Hide()
-		_G.ItemTextFramePageBg:SetAlpha(0)
-		_G.ItemTextPrevPageButton:GetRegions():Hide()
-		_G.ItemTextNextPageButton:GetRegions():Hide()
-		_G.ItemTextMaterialTopLeft:SetAlpha(0)
-		_G.ItemTextMaterialTopRight:SetAlpha(0)
-		_G.ItemTextMaterialBotLeft:SetAlpha(0)
-		_G.ItemTextMaterialBotRight:SetAlpha(0)
+		select(18, ItemTextFrame:GetRegions()):Hide()
+		InboxFrameBg:Hide()
+		ItemTextPrevPageButton:GetRegions():Hide()
+		ItemTextNextPageButton:GetRegions():Hide()
+		ItemTextMaterialTopLeft:SetAlpha(0)
+		ItemTextMaterialTopRight:SetAlpha(0)
+		ItemTextMaterialBotLeft:SetAlpha(0)
+		ItemTextMaterialBotRight:SetAlpha(0)
 
-		F.ReskinPortraitFrame(_G.ItemTextFrame, true)
-		F.ReskinScroll(_G.ItemTextScrollFrameScrollBar)
-		F.ReskinArrow(_G.ItemTextPrevPageButton, "left")
-		F.ReskinArrow(_G.ItemTextNextPageButton, "right")
+		F.ReskinPortraitFrame(ItemTextFrame, true)
+		F.ReskinScroll(ItemTextScrollFrameScrollBar)
+		ItemTextScrollFrameScrollBar.Top:Hide()
+		ItemTextScrollFrameScrollBar.Middle:Hide()
+		ItemTextScrollFrameScrollBar.Bottom:Hide()
+		ItemTextScrollFrameScrollBar.Background:Hide()
+		F.ReskinArrow(ItemTextPrevPageButton, "left")
+		F.ReskinArrow(ItemTextNextPageButton, "right")
 
 		-- Petition frame
 
-		select(18, _G.PetitionFrame:GetRegions()):Hide()
-		select(19, _G.PetitionFrame:GetRegions()):Hide()
-		select(23, _G.PetitionFrame:GetRegions()):Hide()
-		select(24, _G.PetitionFrame:GetRegions()):Hide()
-		_G.PetitionFrameTop:Hide()
-		_G.PetitionFrameBottom:Hide()
-		_G.PetitionFrameMiddle:Hide()
+		select(18, PetitionFrame:GetRegions()):Hide()
+		select(19, PetitionFrame:GetRegions()):Hide()
+		select(23, PetitionFrame:GetRegions()):Hide()
+		select(24, PetitionFrame:GetRegions()):Hide()
+		PetitionFrameTop:Hide()
+		PetitionFrameBottom:Hide()
+		PetitionFrameMiddle:Hide()
 
-		F.ReskinPortraitFrame(_G.PetitionFrame, true)
-		F.Reskin(_G.PetitionFrameSignButton)
-		F.Reskin(_G.PetitionFrameRequestButton)
-		F.Reskin(_G.PetitionFrameRenameButton)
-		F.Reskin(_G.PetitionFrameCancelButton)
+		F.ReskinPortraitFrame(PetitionFrame, true)
+		F.Reskin(PetitionFrameSignButton)
+		F.Reskin(PetitionFrameRequestButton)
+		F.Reskin(PetitionFrameRenameButton)
+		F.Reskin(PetitionFrameCancelButton)
 
 		-- Micro button alerts
 
-		local microButtons = {_G.TalentMicroButtonAlert, _G.CollectionsMicroButtonAlert}
+		local microButtons = {TalentMicroButtonAlert, CollectionsMicroButtonAlert}
 			for _, button in pairs(microButtons) do
 			button:DisableDrawLayer("BACKGROUND")
 			button:DisableDrawLayer("BORDER")
@@ -1837,17 +1846,16 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Cinematic popup
 
-		_G.CinematicFrameCloseDialog:HookScript("OnShow", function(cinemaFrame)
-			cinemaFrame:SetScale(_G.UIParent:GetScale())
+		CinematicFrameCloseDialog:HookScript("OnShow", function(self)
+			self:SetScale(UIParent:GetScale())
 		end)
 
-		F.CreateBD(_G.CinematicFrameCloseDialog)
-		F.Reskin(_G.CinematicFrameCloseDialogConfirmButton)
-		F.Reskin(_G.CinematicFrameCloseDialogResumeButton)
+		F.CreateBD(CinematicFrameCloseDialog)
+		F.Reskin(CinematicFrameCloseDialogConfirmButton)
+		F.Reskin(CinematicFrameCloseDialogResumeButton)
 
 		-- Bonus roll
 
-		local BonusRollFrame = _G.BonusRollFrame
 		BonusRollFrame.Background:SetAlpha(0)
 		BonusRollFrame.IconBorder:Hide()
 		BonusRollFrame.BlackBackgroundHoist.Background:Hide()
@@ -1860,6 +1868,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(BonusRollFrame)
 		F.CreateBDFrame(BonusRollFrame.PromptFrame.Timer, .25)
 
+		BonusRollFrame.SpecRing:SetTexture(nil)
+		BonusRollFrame.SpecIcon:SetTexCoord(.08, .92, .08, .92)
+		BonusRollFrame.SpecIcon.bg = F.CreateBG(BonusRollFrame.SpecIcon)
+		BonusRollFrame.SpecIcon.bg:SetDrawLayer("OVERLAY", 1)
+				
 		-- Chat config
 
 		hooksecurefunc("ChatConfig_CreateCheckboxes", function(frame, checkBoxTable, checkBoxTemplate)
@@ -1963,58 +1976,58 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["CombatConfigTab"..i.."Right"]:Hide()
 		end
 
-		local line = _G.ChatConfigFrame:CreateTexture()
+		local line = ChatConfigFrame:CreateTexture()
 		line:SetSize(1, 460)
-		line:SetPoint("TOPLEFT", _G.ChatConfigCategoryFrame, "TOPRIGHT")
+		line:SetPoint("TOPLEFT", ChatConfigCategoryFrame, "TOPRIGHT")
 		line:SetColorTexture(1, 1, 1, .2)
 
-		_G.ChatConfigCategoryFrame:SetBackdrop(nil)
-		_G.ChatConfigBackgroundFrame:SetBackdrop(nil)
-		_G.ChatConfigCombatSettingsFilters:SetBackdrop(nil)
-		_G.CombatConfigColorsHighlighting:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeUnitName:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeSpellNames:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeDamageNumber:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeDamageSchool:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeEntireLine:SetBackdrop(nil)
+		ChatConfigCategoryFrame:SetBackdrop(nil)
+		ChatConfigBackgroundFrame:SetBackdrop(nil)
+		ChatConfigCombatSettingsFilters:SetBackdrop(nil)
+		CombatConfigColorsHighlighting:SetBackdrop(nil)
+		CombatConfigColorsColorizeUnitName:SetBackdrop(nil)
+		CombatConfigColorsColorizeSpellNames:SetBackdrop(nil)
+		CombatConfigColorsColorizeDamageNumber:SetBackdrop(nil)
+		CombatConfigColorsColorizeDamageSchool:SetBackdrop(nil)
+		CombatConfigColorsColorizeEntireLine:SetBackdrop(nil)
 
-		local combatBoxes = {"CombatConfigColorsHighlightingLine", "CombatConfigColorsHighlightingAbility", "CombatConfigColorsHighlightingDamage", "CombatConfigColorsHighlightingSchool", "CombatConfigColorsColorizeUnitNameCheck", "CombatConfigColorsColorizeSpellNamesCheck", "CombatConfigColorsColorizeSpellNamesSchoolColoring", "CombatConfigColorsColorizeDamageNumberCheck", "CombatConfigColorsColorizeDamageNumberSchoolColoring", "CombatConfigColorsColorizeDamageSchoolCheck", "CombatConfigColorsColorizeEntireLineCheck", "CombatConfigFormattingShowTimeStamp", "CombatConfigFormattingShowBraces", "CombatConfigFormattingUnitNames", "CombatConfigFormattingSpellNames", "CombatConfigFormattingItemNames", "CombatConfigFormattingFullText", "CombatConfigSettingsShowQuickButton", "CombatConfigSettingsSolo", "CombatConfigSettingsParty", "CombatConfigSettingsRaid"}
+		local combatBoxes = {CombatConfigColorsHighlightingLine, CombatConfigColorsHighlightingAbility, CombatConfigColorsHighlightingDamage, CombatConfigColorsHighlightingSchool, CombatConfigColorsColorizeUnitNameCheck, CombatConfigColorsColorizeSpellNamesCheck, CombatConfigColorsColorizeSpellNamesSchoolColoring, CombatConfigColorsColorizeDamageNumberCheck, CombatConfigColorsColorizeDamageNumberSchoolColoring, CombatConfigColorsColorizeDamageSchoolCheck, CombatConfigColorsColorizeEntireLineCheck, CombatConfigFormattingShowTimeStamp, CombatConfigFormattingShowBraces, CombatConfigFormattingUnitNames, CombatConfigFormattingSpellNames, CombatConfigFormattingItemNames, CombatConfigFormattingFullText, CombatConfigSettingsShowQuickButton, CombatConfigSettingsSolo, CombatConfigSettingsParty, CombatConfigSettingsRaid}
 
 		for _, box in next, combatBoxes do
-			F.ReskinCheck(_G[box])
+			F.ReskinCheck(box)
 		end
 
-		local bg = CreateFrame("Frame", nil, _G.ChatConfigCombatSettingsFilters)
+		local bg = CreateFrame("Frame", nil, ChatConfigCombatSettingsFilters)
 		bg:SetPoint("TOPLEFT", 3, 0)
 		bg:SetPoint("BOTTOMRIGHT", 0, 1)
-		bg:SetFrameLevel(_G.ChatConfigCombatSettingsFilters:GetFrameLevel()-1)
+		bg:SetFrameLevel(ChatConfigCombatSettingsFilters:GetFrameLevel()-1)
 		F.CreateBD(bg, .25)
 
-		F.Reskin(_G.CombatLogDefaultButton)
-		F.Reskin(_G.ChatConfigCombatSettingsFiltersCopyFilterButton)
-		F.Reskin(_G.ChatConfigCombatSettingsFiltersAddFilterButton)
-		F.Reskin(_G.ChatConfigCombatSettingsFiltersDeleteButton)
-		F.Reskin(_G.CombatConfigSettingsSaveButton)
-		F.ReskinArrow(_G.ChatConfigMoveFilterUpButton, "up")
-		F.ReskinArrow(_G.ChatConfigMoveFilterDownButton, "down")
-		F.ReskinInput(_G.CombatConfigSettingsNameEditBox)
-		F.ReskinRadio(_G.CombatConfigColorsColorizeEntireLineBySource)
-		F.ReskinRadio(_G.CombatConfigColorsColorizeEntireLineByTarget)
-		F.ReskinColourSwatch(_G.CombatConfigColorsColorizeSpellNamesColorSwatch)
-		F.ReskinColourSwatch(_G.CombatConfigColorsColorizeDamageNumberColorSwatch)
+		F.Reskin(CombatLogDefaultButton)
+		F.Reskin(ChatConfigCombatSettingsFiltersCopyFilterButton)
+		F.Reskin(ChatConfigCombatSettingsFiltersAddFilterButton)
+		F.Reskin(ChatConfigCombatSettingsFiltersDeleteButton)
+		F.Reskin(CombatConfigSettingsSaveButton)
+		F.ReskinArrow(ChatConfigMoveFilterUpButton, "up")
+		F.ReskinArrow(ChatConfigMoveFilterDownButton, "down")
+		F.ReskinInput(CombatConfigSettingsNameEditBox)
+		F.ReskinRadio(CombatConfigColorsColorizeEntireLineBySource)
+		F.ReskinRadio(CombatConfigColorsColorizeEntireLineByTarget)
+		F.ReskinColourSwatch(CombatConfigColorsColorizeSpellNamesColorSwatch)
+		F.ReskinColourSwatch(CombatConfigColorsColorizeDamageNumberColorSwatch)
 
-		_G.ChatConfigMoveFilterUpButton:SetSize(28, 28)
-		_G.ChatConfigMoveFilterDownButton:SetSize(28, 28)
+		ChatConfigMoveFilterUpButton:SetSize(28, 28)
+		ChatConfigMoveFilterDownButton:SetSize(28, 28)
 
-		_G.ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -1, 0)
-		_G.ChatConfigCombatSettingsFiltersCopyFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersAddFilterButton, "LEFT", -1, 0)
-		_G.ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", _G.ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, 0)
-		_G.ChatConfigMoveFilterDownButton:SetPoint("LEFT", _G.ChatConfigMoveFilterUpButton, "RIGHT", 1, 0)
+		ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -1, 0)
+		ChatConfigCombatSettingsFiltersCopyFilterButton:SetPoint("RIGHT", ChatConfigCombatSettingsFiltersAddFilterButton, "LEFT", -1, 0)
+		ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, 0)
+		ChatConfigMoveFilterDownButton:SetPoint("LEFT", ChatConfigMoveFilterUpButton, "RIGHT", 1, 0)
 
 		-- Level up display
 
-		_G.LevelUpDisplaySide:HookScript("OnShow", function(lvlUp)
-			for i = 1, #lvlUp.unlockList do
+		LevelUpDisplaySide:HookScript("OnShow", function(self)
+			for i = 1, #self.unlockList do
 				local f = _G["LevelUpDisplaySideUnlockFrame"..i]
 
 				if not f.restyled then
@@ -2026,9 +2039,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Movie Frame
 
-		local MovieFrame = _G.MovieFrame
-		MovieFrame.CloseDialog:HookScript("OnShow", function(mov)
-			mov:SetScale(_G.UIParent:GetScale())
+		MovieFrame.CloseDialog:HookScript("OnShow", function(self)
+			self:SetScale(UIParent:GetScale())
 		end)
 
 		F.CreateBD(MovieFrame.CloseDialog)
@@ -2037,7 +2049,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- Pet battle queue popup
 
-		local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
 		F.CreateBD(PetBattleQueueReadyFrame)
 		F.CreateBG(PetBattleQueueReadyFrame.Art)
 		F.Reskin(PetBattleQueueReadyFrame.AcceptButton)
@@ -2045,36 +2056,37 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- PVP Ready Dialog
 
-		local PVPReadyDialog = _G.PVPReadyDialog
-		PVPReadyDialog.background:Hide()
-		PVPReadyDialog.bottomArt:Hide()
-		PVPReadyDialog.filigree:Hide()
+		local PVPReadyDialog = PVPReadyDialog
 
-		PVPReadyDialog.roleIcon.texture:SetTexture(C.media.roleIcons)
+		PVPReadyDialogBackground:Hide()
+		PVPReadyDialogBottomArt:Hide()
+		PVPReadyDialogFiligree:Hide()
+
+		PVPReadyDialogRoleIconTexture:SetTexture(C.media.roleIcons)
 
 		do
-			local left = PVPReadyDialog.roleIcon:CreateTexture(nil, "OVERLAY")
+			local left = PVPReadyDialogRoleIcon:CreateTexture(nil, "OVERLAY")
 			left:SetWidth(1)
 			left:SetTexture(C.media.backdrop)
 			left:SetVertexColor(0, 0, 0)
 			left:SetPoint("TOPLEFT", 9, -7)
 			left:SetPoint("BOTTOMLEFT", 9, 10)
 
-			local right = PVPReadyDialog.roleIcon:CreateTexture(nil, "OVERLAY")
+			local right = PVPReadyDialogRoleIcon:CreateTexture(nil, "OVERLAY")
 			right:SetWidth(1)
 			right:SetTexture(C.media.backdrop)
 			right:SetVertexColor(0, 0, 0)
 			right:SetPoint("TOPRIGHT", -8, -7)
 			right:SetPoint("BOTTOMRIGHT", -8, 10)
 
-			local top = PVPReadyDialog.roleIcon:CreateTexture(nil, "OVERLAY")
+			local top = PVPReadyDialogRoleIcon:CreateTexture(nil, "OVERLAY")
 			top:SetHeight(1)
 			top:SetTexture(C.media.backdrop)
 			top:SetVertexColor(0, 0, 0)
 			top:SetPoint("TOPLEFT", 9, -7)
 			top:SetPoint("TOPRIGHT", -8, -7)
 
-			local bottom = PVPReadyDialog.roleIcon:CreateTexture(nil, "OVERLAY")
+			local bottom = PVPReadyDialogRoleIcon:CreateTexture(nil, "OVERLAY")
 			bottom:SetHeight(1)
 			bottom:SetTexture(C.media.backdrop)
 			bottom:SetVertexColor(0, 0, 0)
@@ -2087,7 +2099,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.Reskin(PVPReadyDialog.enterButton)
 		F.Reskin(PVPReadyDialog.leaveButton)
-		F.ReskinClose(_G.PVPReadyDialogCloseButton)
+		F.ReskinClose(PVPReadyDialogCloseButton)
 
 		-- [[ Hide regions ]]
 
@@ -2104,180 +2116,182 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				select(i, _G["FriendsTabHeaderTab"..j]:GetRegions()):Hide()
 				select(i, _G["FriendsTabHeaderTab"..j]:GetRegions()).Show = F.dummy
 			end
-			select(i, _G.ScrollOfResurrectionFrameNoteFrame:GetRegions()):Hide()
+			select(i, ScrollOfResurrectionFrameNoteFrame:GetRegions()):Hide()
 		end
-		_G.OpenStationeryBackgroundLeft:Hide()
-		_G.OpenStationeryBackgroundRight:Hide()
-		_G.SendStationeryBackgroundLeft:Hide()
-		_G.SendStationeryBackgroundRight:Hide()
+		OpenStationeryBackgroundLeft:Hide()
+		OpenStationeryBackgroundRight:Hide()
+		SendStationeryBackgroundLeft:Hide()
+		SendStationeryBackgroundRight:Hide()
 		for i = 1, 4 do
-			select(i, _G.GearManagerDialogPopup:GetRegions()):Hide()
+			select(i, GearManagerDialogPopup:GetRegions()):Hide()
 		end
-		_G.StackSplitFrame:GetRegions():Hide()
-		_G.RaidInfoDetailFooter:Hide()
-		_G.RaidInfoDetailHeader:Hide()
-		_G.RaidInfoDetailCorner:Hide()
-		_G.RaidInfoFrameHeader:Hide()
+		StackSplitFrame:GetRegions():Hide()
+		RaidInfoDetailFooter:Hide()
+		RaidInfoDetailHeader:Hide()
+		RaidInfoDetailCorner:Hide()
+		RaidInfoFrameHeader:Hide()
 		for i = 1, 9 do
-			select(i, _G.AddFriendNoteFrame:GetRegions()):Hide()
-			select(i, _G.ReportPlayerNameDialogCommentFrame:GetRegions()):Hide()
-			select(i, _G.ReportCheatingDialogCommentFrame:GetRegions()):Hide()
+			select(i, AddFriendNoteFrame:GetRegions()):Hide()
+			select(i, ReportPlayerNameDialogCommentFrame:GetRegions()):Hide()
+			select(i, ReportCheatingDialogCommentFrame:GetRegions()):Hide()
 		end
-		_G.HelpFrameHeader:Hide()
-		_G.ReadyCheckPortrait:SetAlpha(0)
-		select(2, _G.ReadyCheckListenerFrame:GetRegions()):Hide()
-		_G.HelpFrameLeftInsetBg:Hide()
-		_G.LFDQueueFrameBackground:Hide()
-		select(3, _G.HelpFrameReportBug:GetChildren()):Hide()
-		select(3, _G.HelpFrameSubmitSuggestion:GetChildren()):Hide()
-		_G.HelpFrameKnowledgebaseStoneTex:Hide()
-		_G.GhostFrameLeft:Hide()
-		_G.GhostFrameRight:Hide()
-		_G.GhostFrameMiddle:Hide()
+		HelpFrameHeader:Hide()
+		ReadyCheckPortrait:SetAlpha(0)
+		select(2, ReadyCheckListenerFrame:GetRegions()):Hide()
+		HelpFrameLeftInsetBg:Hide()
+		LFDQueueFrameBackground:Hide()
+		select(3, HelpFrameReportBug:GetChildren()):Hide()
+		select(3, HelpFrameSubmitSuggestion:GetChildren()):Hide()
+		HelpFrameKnowledgebaseStoneTex:Hide()
+		GhostFrameLeft:Hide()
+		GhostFrameRight:Hide()
+		GhostFrameMiddle:Hide()
 		for i = 3, 6 do
-			select(i, _G.GhostFrame:GetRegions()):Hide()
+			select(i, GhostFrame:GetRegions()):Hide()
 		end
-		_G.PaperDollSidebarTabs:GetRegions():Hide()
-		select(2, _G.PaperDollSidebarTabs:GetRegions()):Hide()
-		select(6, _G.PaperDollEquipmentManagerPaneEquipSet:GetRegions()):Hide()
-
-		F.CreateGradient(_G.CharacterStatsPane.ItemLevelCategory)
-		F.CreateBD(_G.CharacterStatsPane.ItemLevelCategory, 0)
-		F.CreateGradient(_G.CharacterStatsPane.AttributesCategory)
-		F.CreateBD(_G.CharacterStatsPane.AttributesCategory, 0)
-		F.CreateGradient(_G.CharacterStatsPane.EnhancementsCategory)
-		F.CreateBD(_G.CharacterStatsPane.EnhancementsCategory, 0)
-
-		_G.CharacterFrame:HookScript("OnShow", function()
-			for k, v in pairs ({_G.CharacterStatsPane:GetChildren()}) do
+		PaperDollSidebarTabs:GetRegions():Hide()
+		select(2, PaperDollSidebarTabs:GetRegions()):Hide()
+		select(6, PaperDollEquipmentManagerPaneEquipSet:GetRegions()):Hide()
+		
+		F.CreateGradient(CharacterStatsPane.ItemLevelCategory)
+		F.CreateBD(CharacterStatsPane.ItemLevelCategory, 0)
+		F.CreateGradient(CharacterStatsPane.AttributesCategory)
+		F.CreateBD(CharacterStatsPane.AttributesCategory, 0)
+		F.CreateGradient(CharacterStatsPane.EnhancementsCategory)
+		F.CreateBD(CharacterStatsPane.EnhancementsCategory, 0)
+		
+		CharacterFrame:HookScript("OnShow", function()
+			for k, v in pairs ({CharacterStatsPane:GetChildren()}) do
 				if v.Background then
 					if v.Background:GetAtlas() then
 						v.Background:SetAtlas(nil)
 					end
 				end
+				
 			end
 		end)
-
-		select(5, _G.HelpFrameGM_Response:GetChildren()):Hide()
-		select(6, _G.HelpFrameGM_Response:GetChildren()):Hide()
-		_G.GearManagerDialogPopupScrollFrame:GetRegions():Hide()
-		select(2, _G.GearManagerDialogPopupScrollFrame:GetRegions()):Hide()
+		
+		select(5, HelpFrameGM_Response:GetChildren()):Hide()
+		select(6, HelpFrameGM_Response:GetChildren()):Hide()
+		GearManagerDialogPopupScrollFrame:GetRegions():Hide()
+		select(2, GearManagerDialogPopupScrollFrame:GetRegions()):Hide()
 		for i = 1, 10 do
-			select(i, _G.GuildInviteFrame:GetRegions()):Hide()
+			select(i, GuildInviteFrame:GetRegions()):Hide()
 		end
-		_G.InboxPrevPageButton:GetRegions():Hide()
-		_G.InboxNextPageButton:GetRegions():Hide()
-		_G.LFDQueueFrameRandomScrollFrameScrollBackground:Hide()
-		_G.ChannelFrameDaughterFrameCorner:Hide()
-		_G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
-		_G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
-		for i = 1, _G.MAX_DISPLAY_CHANNEL_BUTTONS do
+		InboxPrevPageButton:GetRegions():Hide()
+		InboxNextPageButton:GetRegions():Hide()
+		LFDQueueFrameRandomScrollFrameScrollBackground:Hide()
+		ChannelFrameDaughterFrameCorner:Hide()
+		LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
+		LFDQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
+		for i = 1, MAX_DISPLAY_CHANNEL_BUTTONS do
 			_G["ChannelButton"..i]:SetNormalTexture("")
 		end
-		_G.PaperDollTitlesPane:HookScript("OnShow", function(titles)
-			for x, object in pairs(titles.buttons) do
-				object:DisableDrawLayer("BACKGROUND")
-				object.text:SetFont(C.media.font, 11)
+		local titles = false
+		hooksecurefunc("PaperDollTitlesPane_Update", function()
+			if titles == false then
+				for i = 1, 17 do
+					_G["PaperDollTitlesPaneButton"..i]:DisableDrawLayer("BACKGROUND")
+				end
+				titles = true
 			end
 		end)
-		_G.SendScrollBarBackgroundTop:Hide()
-		_G.HelpFrameKnowledgebaseTopTileStreaks:Hide()
-		_G.ChannelFrameDaughterFrameTitlebar:Hide()
-		_G.OpenScrollBarBackgroundTop:Hide()
-		_G.WhoListScrollFrame:GetRegions():Hide()
-		select(2, _G.WhoListScrollFrame:GetRegions()):Hide()
-		select(2, _G.GuildChallengeAlertFrame:GetRegions()):Hide()
-		_G.ChannelRosterScrollFrameTop:SetAlpha(0)
-		_G.ChannelRosterScrollFrameBottom:SetAlpha(0)
-		_G.WhoFrameListInsetBg:Hide()
-		_G.WhoFrameEditBoxInsetBg:Hide()
-		_G.ChannelFrameLeftInsetBg:Hide()
-		_G.ChannelFrameRightInsetBg:Hide()
-		_G.RaidFinderQueueFrameBackground:Hide()
-		_G.RaidParentFrameInsetBg:Hide()
-		_G.RaidFinderFrameRoleInsetBg:Hide()
-		_G.RaidFinderFrameRoleBackground:Hide()
-		_G.RaidParentFramePortraitFrame:Hide()
-		_G.RaidParentFramePortrait:Hide()
-		_G.RaidParentFrameTopBorder:Hide()
-		_G.RaidParentFrameTopRightCorner:Hide()
-		_G.ScrollOfResurrectionSelectionFrameBackground:Hide()
+		SendScrollBarBackgroundTop:Hide()
+		HelpFrameKnowledgebaseTopTileStreaks:Hide()
+		ChannelFrameDaughterFrameTitlebar:Hide()
+		OpenScrollBarBackgroundTop:Hide()
+		WhoListScrollFrame:GetRegions():Hide()
+		select(2, WhoListScrollFrame:GetRegions()):Hide()
+		select(2, GuildChallengeAlertFrame:GetRegions()):Hide()
+		ChannelRosterScrollFrameTop:SetAlpha(0)
+		ChannelRosterScrollFrameBottom:SetAlpha(0)
+		WhoFrameListInsetBg:Hide()
+		WhoFrameEditBoxInsetBg:Hide()
+		ChannelFrameLeftInsetBg:Hide()
+		ChannelFrameRightInsetBg:Hide()
+		RaidFinderQueueFrameBackground:Hide()
+		RaidParentFrameInsetBg:Hide()
+		RaidFinderFrameRoleInsetBg:Hide()
+		RaidFinderFrameRoleBackground:Hide()
+		RaidParentFramePortraitFrame:Hide()
+		RaidParentFramePortrait:Hide()
+		RaidParentFrameTopBorder:Hide()
+		RaidParentFrameTopRightCorner:Hide()
+		ScrollOfResurrectionSelectionFrameBackground:Hide()
 
-		_G.ReadyCheckFrame:HookScript("OnShow", function(readyCheck)
-			if _G.UnitIsUnit("player", readyCheck.initiator) then
-				readyCheck:Hide()
-			end
-		end)
+		ReadyCheckFrame:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end)
 
 		-- [[ Text colour functions ]]
 
-		_G.NORMAL_QUEST_DISPLAY = "|cffffffff%s|r"
-		_G.TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
+		NORMAL_QUEST_DISPLAY = "|cffffffff%s|r"
+		TRIVIAL_QUEST_DISPLAY = gsub(TRIVIAL_QUEST_DISPLAY, "000000", "ffffff")
+		IGNORED_QUEST_DISPLAY = gsub(IGNORED_QUEST_DISPLAY, "000000", "ffffff")
+		
+		GameFontBlackMedium:SetTextColor(1, 1, 1)
+		QuestFont:SetTextColor(1, 1, 1)
+		MailFont_Large:SetTextColor(1, 1, 1)
+		MailFont_Large:SetShadowColor(0, 0, 0)
+		MailFont_Large:SetShadowOffset(1, -1)
+		MailTextFontNormal:SetTextColor(1, 1, 1)
+		MailTextFontNormal:SetShadowOffset(1, -1)
+		MailTextFontNormal:SetShadowColor(0, 0, 0)
+		InvoiceTextFontNormal:SetTextColor(1, 1, 1)
+		InvoiceTextFontSmall:SetTextColor(1, 1, 1)
+		SpellBookPageText:SetTextColor(.8, .8, .8)
+		AvailableServicesText:SetTextColor(1, 1, 1)
+		AvailableServicesText:SetShadowColor(0, 0, 0)
+		PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
+		PetitionFrameCharterTitle:SetShadowColor(0, 0, 0)
+		PetitionFrameMasterTitle:SetTextColor(1, 1, 1)
+		PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
+		PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
+		PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
+		ItemTextPageText:SetTextColor(1, 1, 1)
+		ItemTextPageText.SetTextColor = F.dummy
+		CoreAbilityFont:SetTextColor(1, 1, 1)
 
-		_G.GameFontBlackMedium:SetTextColor(1, 1, 1)
-		_G.QuestFont:SetTextColor(1, 1, 1)
-		_G.MailFont_Large:SetTextColor(1, 1, 1)
-		_G.MailFont_Large:SetShadowColor(0, 0, 0)
-		_G.MailFont_Large:SetShadowOffset(1, -1)
-		_G.MailTextFontNormal:SetTextColor(1, 1, 1)
-		_G.MailTextFontNormal:SetShadowOffset(1, -1)
-		_G.MailTextFontNormal:SetShadowColor(0, 0, 0)
-		_G.InvoiceTextFontNormal:SetTextColor(1, 1, 1)
-		_G.InvoiceTextFontSmall:SetTextColor(1, 1, 1)
-		_G.SpellBookPageText:SetTextColor(.8, .8, .8)
-		_G.AvailableServicesText:SetTextColor(1, 1, 1)
-		_G.AvailableServicesText:SetShadowColor(0, 0, 0)
-		_G.PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
-		_G.PetitionFrameCharterTitle:SetShadowColor(0, 0, 0)
-		_G.PetitionFrameMasterTitle:SetTextColor(1, 1, 1)
-		_G.PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
-		_G.PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
-		_G.PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
-		_G.ItemTextPageText:SetTextColor(1, 1, 1)
-		_G.ItemTextPageText.SetTextColor = F.dummy
-		_G.CoreAbilityFont:SetTextColor(1, 1, 1)
-
-		hooksecurefunc("UpdateProfessionButton", function(profBtn)
-			profBtn.spellString:SetTextColor(1, 1, 1);
-			profBtn.subSpellString:SetTextColor(1, 1, 1)
+		hooksecurefunc("UpdateProfessionButton", function(self)
+			self.spellString:SetTextColor(1, 1, 1);
+			self.subSpellString:SetTextColor(1, 1, 1)
 		end)
 
 		hooksecurefunc("PaperDollFrame_SetLevel", function()
-			local primaryTalentTree = _G.GetSpecialization()
-			local classColor = C.classcolours[class]
-			local classColorString = ("ff%.2x%.2x%.2x"):format(classColor.r * 255, classColor.g * 255, classColor.b * 255)
+			local primaryTalentTree = GetSpecialization()
+			local classDisplayName, class = UnitClass("player")
+			local classColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or C.classcolours[class]
+			local classColorString = format("ff%.2x%.2x%.2x", classColor.r * 255, classColor.g * 255, classColor.b * 255)
 			local specName, _
 
 			if primaryTalentTree then
-				_, specName = _G.GetSpecializationInfo(primaryTalentTree, nil, nil, nil, _G.UnitSex("player"))
+				_, specName = GetSpecializationInfo(primaryTalentTree, nil, nil, nil, UnitSex("player"))
 			end
 
 			if specName and specName ~= "" then
-				_G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColorString, specName, classDisplayName)
+				CharacterLevelText:SetFormattedText(PLAYER_LEVEL, UnitLevel("player"), classColorString, specName, classDisplayName)
 			else
-				_G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL_NO_SPEC, _G.UnitLevel("player"), classColorString, classDisplayName)
+				CharacterLevelText:SetFormattedText(PLAYER_LEVEL_NO_SPEC, UnitLevel("player"), classColorString, classDisplayName)
 			end
 		end)
 
 		-- [[ Change positions ]]
 
-		_G.ChatConfigFrameDefaultButton:SetWidth(125)
-		_G.ChatConfigFrameDefaultButton:SetPoint("TOPLEFT", _G.ChatConfigCategoryFrame, "BOTTOMLEFT", 0, -4)
-		_G.ChatConfigFrameOkayButton:SetPoint("TOPRIGHT", _G.ChatConfigBackgroundFrame, "BOTTOMRIGHT", 0, -4)
-		_G.PaperDollEquipmentManagerPaneEquipSet:SetWidth(_G.PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
-		_G.PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", _G.PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
-		_G.GearManagerDialogPopup:SetPoint("LEFT", _G.PaperDollFrame, "RIGHT", 1, 0)
-		_G.HelpFrameReportBugScrollFrameScrollBar:SetPoint("TOPLEFT", _G.HelpFrameReportBugScrollFrame, "TOPRIGHT", 1, -16)
-		_G.HelpFrameSubmitSuggestionScrollFrameScrollBar:SetPoint("TOPLEFT", _G.HelpFrameSubmitSuggestionScrollFrame, "TOPRIGHT", 1, -16)
-		_G.HelpFrameGM_ResponseScrollFrame1ScrollBar:SetPoint("TOPLEFT", _G.HelpFrameGM_ResponseScrollFrame1, "TOPRIGHT", 1, -16)
-		_G.HelpFrameGM_ResponseScrollFrame2ScrollBar:SetPoint("TOPLEFT", _G.HelpFrameGM_ResponseScrollFrame2, "TOPRIGHT", 1, -16)
-		_G.RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
-		_G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
-		_G.LFDQueueFrameSpecificListScrollFrameScrollBarScrollDownButton:SetPoint("TOP", _G.LFDQueueFrameSpecificListScrollFrameScrollBar, "BOTTOM", 0, 2)
-		_G.LFDQueueFrameRandomScrollFrameScrollBarScrollDownButton:SetPoint("TOP", _G.LFDQueueFrameRandomScrollFrameScrollBar, "BOTTOM", 0, 2)
-		_G.WhoFrameWhoButton:SetPoint("RIGHT", _G.WhoFrameAddFriendButton, "LEFT", -1, 0)
-		_G.WhoFrameAddFriendButton:SetPoint("RIGHT", _G.WhoFrameGroupInviteButton, "LEFT", -1, 0)
-		_G.FriendsFrameTitleText:SetPoint("TOP", _G.FriendsFrame, "TOP", 0, -8)
+		ChatConfigFrameDefaultButton:SetWidth(125)
+		ChatConfigFrameDefaultButton:SetPoint("TOPLEFT", ChatConfigCategoryFrame, "BOTTOMLEFT", 0, -4)
+		ChatConfigFrameOkayButton:SetPoint("TOPRIGHT", ChatConfigBackgroundFrame, "BOTTOMRIGHT", 0, -4)
+		PaperDollEquipmentManagerPaneEquipSet:SetWidth(PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
+		PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
+		GearManagerDialogPopup:SetPoint("LEFT", PaperDollFrame, "RIGHT", 1, 0)
+		HelpFrameReportBugScrollFrameScrollBar:SetPoint("TOPLEFT", HelpFrameReportBugScrollFrame, "TOPRIGHT", 1, -16)
+		HelpFrameSubmitSuggestionScrollFrameScrollBar:SetPoint("TOPLEFT", HelpFrameSubmitSuggestionScrollFrame, "TOPRIGHT", 1, -16)
+		HelpFrameGM_ResponseScrollFrame1ScrollBar:SetPoint("TOPLEFT", HelpFrameGM_ResponseScrollFrame1, "TOPRIGHT", 1, -16)
+		HelpFrameGM_ResponseScrollFrame2ScrollBar:SetPoint("TOPLEFT", HelpFrameGM_ResponseScrollFrame2, "TOPRIGHT", 1, -16)
+		RaidInfoFrame:SetPoint("TOPLEFT", RaidFrame, "TOPRIGHT", 1, -28)
+		TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
+		LFDQueueFrameSpecificListScrollFrameScrollBarScrollDownButton:SetPoint("TOP", LFDQueueFrameSpecificListScrollFrameScrollBar, "BOTTOM", 0, 2)
+		LFDQueueFrameRandomScrollFrameScrollBarScrollDownButton:SetPoint("TOP", LFDQueueFrameRandomScrollFrameScrollBar, "BOTTOM", 0, 2)
+		WhoFrameWhoButton:SetPoint("RIGHT", WhoFrameAddFriendButton, "LEFT", -1, 0)
+		WhoFrameAddFriendButton:SetPoint("RIGHT", WhoFrameGroupInviteButton, "LEFT", -1, 0)
+		FriendsFrameTitleText:SetPoint("TOP", FriendsFrame, "TOP", 0, -8)
 
 		-- [[ Buttons ]]
 
@@ -2287,7 +2301,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			if reskinbutton then
 				F.Reskin(reskinbutton)
 			else
-				_G.print("Aurora: "..buttons[i].." was not found.")
+				print("Aurora: "..buttons[i].." was not found.")
 			end
 		end
 
