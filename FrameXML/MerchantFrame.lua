@@ -8,6 +8,18 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(select(2, ...))
 
+local function GetItemQualityColor(link)
+	if link then
+		local _, _, quality = _G.GetItemInfo(link)
+		if quality then
+			return _G.GetItemQualityColor(quality)
+		else
+			return 1, 1, 1
+		end
+	else
+		return 1, 1, 1
+	end
+end
 _G.tinsert(C.themes["Aurora"], function()
 	_G.MerchantMoneyInset:DisableDrawLayer("BORDER")
 	_G.MerchantExtraCurrencyInset:DisableDrawLayer("BORDER")
@@ -90,42 +102,17 @@ _G.tinsert(C.themes["Aurora"], function()
 
 				local bu = _G["MerchantItem"..i.."ItemButton"]
 				local name = _G["MerchantItem"..i.."Name"]
-				if bu.link then
-					local _, _, quality = _G.GetItemInfo(bu.link)
-					if quality then
-						local r, g, b = _G.GetItemQualityColor(quality)
-						name:SetTextColor(r, g, b)
-					else
-						name:SetTextColor(1, 1, 1)
-					end
-				else
-					name:SetTextColor(1, 1, 1)
-				end
+				name:SetTextColor(GetItemQualityColor(bu.link))
 			end
 		end
 
-		local name = _G.GetBuybackItemLink(_G.GetNumBuybackItems())
-		if name then
-			local _, _, quality = _G.GetItemInfo(name)
-			local r, g, b = _G.GetItemQualityColor(quality)
-
-			_G.MerchantBuyBackItemName:SetTextColor(r, g, b)
-		end
+		_G.MerchantBuyBackItemName:SetTextColor(GetItemQualityColor(_G.GetBuybackItemLink(_G.GetNumBuybackItems())))
 	end)
 
 	hooksecurefunc("MerchantFrame_UpdateBuybackInfo", function()
 		for i = 1, _G.BUYBACK_ITEMS_PER_PAGE do
-			local itemLink = _G.GetBuybackItemLink(i)
 			local name = _G["MerchantItem"..i.."Name"]
-
-			if itemLink then
-				local _, _, quality = _G.GetItemInfo(itemLink)
-				local r, g, b = _G.GetItemQualityColor(quality)
-
-				name:SetTextColor(r, g, b)
-			else
-				name:SetTextColor(1, 1, 1)
-			end
+			name:SetTextColor(GetItemQualityColor(_G.GetBuybackItemLink(i)))
 		end
 	end)
 
