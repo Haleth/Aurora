@@ -2212,7 +2212,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- [[ Text colour functions ]]
 
 		_G.NORMAL_QUEST_DISPLAY = "|cffffffff%s|r"
-		_G.TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
+		_G.TRIVIAL_QUEST_DISPLAY = gsub(TRIVIAL_QUEST_DISPLAY, "000000", "ffffff")
+		_G.IGNORED_QUEST_DISPLAY = gsub(IGNORED_QUEST_DISPLAY, "000000", "ffffff")
 
 		_G.GameFontBlackMedium:SetTextColor(1, 1, 1)
 		_G.QuestFont:SetTextColor(1, 1, 1)
