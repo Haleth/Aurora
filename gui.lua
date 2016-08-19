@@ -262,7 +262,21 @@ end)
 
 -- easy slash command
 
-_G.SlashCmdList.AURORA = function()
-	_G.InterfaceOptionsFrame_OpenToCategory(gui)
+_G.SlashCmdList.AURORA = function(msg, editBox)
+	private.debug("/aurora", msg)
+	if msg == "debug" then
+		local debugger = private.debugger
+		if debugger then
+			if debugger:Lines() == 0 then
+				debugger:AddLine("Nothing to report.")
+				debugger:Display()
+				debugger:Clear()
+				return
+			end
+			debugger:Display()
+		end
+	else
+		_G.InterfaceOptionsFrame_OpenToCategory(gui)
+	end
 end
 _G.SLASH_AURORA1 = "/aurora"

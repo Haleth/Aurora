@@ -2,7 +2,7 @@ local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
 local _G = _G
-local select, next, pairs, ipairs = _G.select, _G.next, _G.pairs, _G.ipairs
+local select, tostring, next, pairs, ipairs = _G.select, _G.tostring, _G.next, _G.pairs, _G.ipairs
 
 -- [[ WoW API ]]
 local CreateFrame = _G.CreateFrame
@@ -21,6 +21,29 @@ _G.Aurora = {
 	{}, -- C, constants/config
 }
 private.Aurora = _G.Aurora
+
+local debug do
+	local debugger
+	local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0")
+	function debug(...)
+		if not debugger then
+			if LTD then
+				debugger = LTD:New(ADDON_NAME .." Debug Output", 640, 480)
+				private.debugger = debugger
+			else
+				return
+			end
+		end
+		local time = _G.date("%H:%M:%S")
+		local text = ("[%s]"):format(time)
+		for i = 1, select("#", ...) do
+			local arg = select(i, ...)
+			text = text .. "     " .. tostring(arg)
+		end
+		debugger:AddLine(text)
+	end
+	private.debug = debug
+end
 
 local F, C = _G.unpack(private.Aurora)
 
