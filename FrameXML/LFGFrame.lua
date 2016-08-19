@@ -1,12 +1,14 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
-local select, pairs = _G.select, _G.pairs
+local pairs = _G.pairs
 
 -- [[ WoW API ]]
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	local function styleRewardButton(button)

@@ -1,8 +1,10 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 
 -- [[ Core ]]
-local _, C = _G.unpack(_G.select(2, ...))
+local _, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	if _G.AuroraConfig.enableFont then

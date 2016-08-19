@@ -1,3 +1,5 @@
+local ADDON_NAME, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 local select, next, pairs, ipairs = _G.select, _G.next, _G.pairs, _G.ipairs
@@ -13,15 +15,14 @@ local LATEST_API_VERSION = "6.0"
 
 -- see F.AddPlugin
 local AURORA_LOADED = false
-
-local ADDON_NAME, core = ...
-
-core[1] = {} -- F, functions
-core[2] = {} -- C, constants/config
-_G.Aurora = core
 local AuroraConfig
+_G.Aurora = {
+	{}, -- F, functions
+	{}, -- C, constants/config
+}
+private.Aurora = _G.Aurora
 
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 -- [[ Constants and settings ]]
 

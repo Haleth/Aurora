@@ -1,3 +1,5 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 
@@ -5,7 +7,7 @@ local _G = _G
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b

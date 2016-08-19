@@ -1,3 +1,5 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 local select = _G.select
@@ -6,7 +8,7 @@ local select = _G.select
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 local function GetItemQualityColor(link)
 	if link then

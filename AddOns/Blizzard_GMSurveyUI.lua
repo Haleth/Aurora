@@ -1,8 +1,10 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 
 -- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 C.themes["Blizzard_GMSurveyUI"] = function()
 	F.SetBD(_G.GMSurveyFrame, 0, 0, -32, 4)

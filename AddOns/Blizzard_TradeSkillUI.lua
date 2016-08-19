@@ -1,12 +1,13 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
-local select = _G.select
 
 -- [[ WoW API ]]
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 local function updateCollapsedState(button)
 	if button.tradeSkillInfo and button.tradeSkillInfo.collapsed then

@@ -1,9 +1,11 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 C.themes["Blizzard_QuestChoice"] = function()
 	local QuestChoiceFrame = _G.QuestChoiceFrame

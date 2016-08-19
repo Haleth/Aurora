@@ -1,12 +1,14 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
-local select, next = _G.select, _G.next
+local next = _G.next
 
 -- [[ WoW API ]]
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 C.themes["Blizzard_TrainerUI"] = function()
 	local r, g, b = C.r, C.g, C.b

@@ -1,3 +1,5 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
@@ -6,7 +8,7 @@ local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 C.themes["Blizzard_EncounterJournal"] = function()
 	local r, g, b = C.r, C.g, C.b

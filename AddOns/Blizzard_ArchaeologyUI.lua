@@ -1,3 +1,5 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 local select = _G.select
@@ -6,7 +8,7 @@ local select = _G.select
 local CreateFrame = _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 C.themes["Blizzard_ArchaeologyUI"] = function()
 	F.SetBD(_G.ArchaeologyFrame)

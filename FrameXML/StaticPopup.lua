@@ -1,9 +1,11 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
 local _G = _G
 local pairs = _G.pairs
 
 -- [[ Core ]]
-local F, C = _G.unpack(_G.select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
