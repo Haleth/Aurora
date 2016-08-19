@@ -89,10 +89,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.Reskin(_G[questButton])
 	end
 	
-	F.Reskin(QuestFrameDetailPanel.IgnoreButton)
-	F.Reskin(QuestFrameDetailPanel.UnignoreButton)
-	F.Reskin(QuestFrameProgressPanel.IgnoreButton)
-	F.Reskin(QuestFrameProgressPanel.UnignoreButton)
+	F.Reskin(_G.QuestFrameDetailPanel.IgnoreButton)
 
 	F.ReskinScroll(_G.QuestProgressScrollFrameScrollBar)
 	F.ReskinScroll(_G.QuestRewardScrollFrameScrollBar)
