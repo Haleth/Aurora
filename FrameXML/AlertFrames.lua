@@ -1,16 +1,105 @@
+local _, private = ...
+
 -- [[ Lua Globals ]]
---local _G = _G
+local _G = _G
 --local select, pairs = _G.select, _G.pairs
 
 -- [[ WoW API ]]
---local hooksecurefunc = _G.hooksecurefunc
+local CreateFrame = _G.CreateFrame
 
 -- [[ Core ]]
---local F, C = _G.unpack(select(2, ...))
+local F, C = _G.unpack(private.Aurora)
 
---[[_G.tinsert(C.themes["Aurora"], function()
+_G.tinsert(C.themes["Aurora"], function()
+	local OnShow = {}
 
-	 Pre-Legion  BROKEN
+	--[[ Achievement alert ]]
+	OnShow.Achievement = function(self)
+		if not self.styled then
+			self.Background:Hide()
+
+			self.styled = true
+		end
+	end
+
+	--[[ Dungeon completion rewards ]]
+	local DungeonCompletionAlertFrame = _G.DungeonCompletionAlertFrame
+	local bg = CreateFrame("Frame", nil, DungeonCompletionAlertFrame)
+	bg:SetPoint("TOPLEFT", 6, -14)
+	bg:SetPoint("BOTTOMRIGHT", -6, 6)
+	bg:SetFrameLevel(DungeonCompletionAlertFrame:GetFrameLevel()-1)
+	F.CreateBD(bg)
+
+	DungeonCompletionAlertFrame.dungeonTexture:SetDrawLayer("ARTWORK")
+	DungeonCompletionAlertFrame.dungeonTexture:SetTexCoord(.02, .98, .02, .98)
+	DungeonCompletionAlertFrame.dungeonTexture:SetPoint("BOTTOMLEFT", DungeonCompletionAlertFrame, "BOTTOMLEFT", 13, 13)
+	DungeonCompletionAlertFrame.dungeonTexture.SetPoint = F.dummy
+	F.CreateBG(DungeonCompletionAlertFrame.dungeonTexture)
+
+	DungeonCompletionAlertFrame.raidArt:SetAlpha(0)
+	DungeonCompletionAlertFrame.dungeonArt1:SetAlpha(0)
+	DungeonCompletionAlertFrame.dungeonArt2:SetAlpha(0)
+	DungeonCompletionAlertFrame.dungeonArt3:SetAlpha(0)
+	DungeonCompletionAlertFrame.dungeonArt4:SetAlpha(0)
+
+	DungeonCompletionAlertFrame.shine:Hide()
+	DungeonCompletionAlertFrame.shine.Show = F.dummy
+	DungeonCompletionAlertFrame.glowFrame:Hide()
+	DungeonCompletionAlertFrame.glowFrame.Show = F.dummy
+
+	OnShow.DungeonCompletion = function(self)
+		local bu = _G.DungeonCompletionAlertFrameReward1
+		local index = 1
+
+		while bu do
+			if not bu.styled then
+				_G["DungeonCompletionAlertFrameReward"..index.."Border"]:Hide()
+
+				bu.texture:SetTexCoord(.08, .92, .08, .92)
+				F.CreateBG(bu.texture)
+
+				bu.styled = true
+			end
+
+			index = index + 1
+			bu = _G["DungeonCompletionAlertFrameReward"..index]
+		end
+	end
+
+	--[[ Guild challenges ]]
+	local challenge = CreateFrame("Frame", nil, _G.GuildChallengeAlertFrame)
+	challenge:SetPoint("TOPLEFT", 8, -12)
+	challenge:SetPoint("BOTTOMRIGHT", -8, 13)
+	challenge:SetFrameLevel(_G.GuildChallengeAlertFrame:GetFrameLevel()-1)
+	F.CreateBD(challenge)
+	F.CreateBG(_G.GuildChallengeAlertFrameEmblemBackground)
+	_G.select(2, _G.GuildChallengeAlertFrame:GetRegions()):Hide()
+
+	_G.GuildChallengeAlertFrameGlow:SetTexture("")
+	_G.GuildChallengeAlertFrameShine:SetTexture("")
+	_G.GuildChallengeAlertFrameEmblemBorder:SetTexture("")
+
+    _G.hooksecurefunc(_G.AlertFrame, "AddAlertFrame", function(self, frame)
+    	local frameName = frame:GetName()
+    	if frameName then
+    		local alertName = frameName:match("(%w+)AlertFrame")
+    		private.debug("alertName", alertName)
+    		if OnShow[alertName] then OnShow[alertName](frame) end
+    	else
+    		-- QueueAlertFrames are created dynamicly and do not have names
+    		if frame.Unlocked then
+    			-- Achievement alert
+    			if frame.Unlocked:GetText() == _G.ACHIEVEMENT_PROGRESSED then
+    				private.debug("AchievementCriteria")
+    			else
+    				private.debug("AchievementUnlocked")
+    				OnShow.Achievement(frame)
+    			end
+    		end
+    	end
+    end)
+
+	--[[ Pre-Legion  BROKEN
 	-- Achievement alert
 	local function fixBg(f)
 		if f:GetObjectType() == "AnimationGroup" then
@@ -73,64 +162,6 @@
 					_G["AchievementAlertFrame"..i.."Shield"]:SetPoint("TOPRIGHT", -10, -22)
 				end
 			end
-		end
-	end)
-
-	-- Guild challenges
-
-	local challenge = CreateFrame("Frame", nil, GuildChallengeAlertFrame)
-	challenge:SetPoint("TOPLEFT", 8, -12)
-	challenge:SetPoint("BOTTOMRIGHT", -8, 13)
-	challenge:SetFrameLevel(GuildChallengeAlertFrame:GetFrameLevel()-1)
-	F.CreateBD(challenge)
-	F.CreateBG(GuildChallengeAlertFrameEmblemBackground)
-
-	GuildChallengeAlertFrameGlow:SetTexture("")
-	GuildChallengeAlertFrameShine:SetTexture("")
-	GuildChallengeAlertFrameEmblemBorder:SetTexture("")
-
-	-- Dungeon completion rewards
-
-	local bg = CreateFrame("Frame", nil, DungeonCompletionAlertFrame1)
-	bg:SetPoint("TOPLEFT", 6, -14)
-	bg:SetPoint("BOTTOMRIGHT", -6, 6)
-	bg:SetFrameLevel(DungeonCompletionAlertFrame1:GetFrameLevel()-1)
-	F.CreateBD(bg)
-
-	DungeonCompletionAlertFrame1DungeonTexture:SetDrawLayer("ARTWORK")
-	DungeonCompletionAlertFrame1DungeonTexture:SetTexCoord(.02, .98, .02, .98)
-	F.CreateBG(DungeonCompletionAlertFrame1DungeonTexture)
-
-	DungeonCompletionAlertFrame1.dungeonArt1:SetAlpha(0)
-	DungeonCompletionAlertFrame1.dungeonArt2:SetAlpha(0)
-	DungeonCompletionAlertFrame1.dungeonArt3:SetAlpha(0)
-	DungeonCompletionAlertFrame1.dungeonArt4:SetAlpha(0)
-	DungeonCompletionAlertFrame1.raidArt:SetAlpha(0)
-
-	DungeonCompletionAlertFrame1.dungeonTexture:SetPoint("BOTTOMLEFT", DungeonCompletionAlertFrame1, "BOTTOMLEFT", 13, 13)
-	DungeonCompletionAlertFrame1.dungeonTexture.SetPoint = F.dummy
-
-	DungeonCompletionAlertFrame1.shine:Hide()
-	DungeonCompletionAlertFrame1.shine.Show = F.dummy
-	DungeonCompletionAlertFrame1.glow:Hide()
-	DungeonCompletionAlertFrame1.glow.Show = F.dummy
-
-	hooksecurefunc("DungeonCompletionAlertFrame_ShowAlert", function()
-		local bu = DungeonCompletionAlertFrame1Reward1
-		local index = 1
-
-		while bu do
-			if not bu.styled then
-				_G["DungeonCompletionAlertFrame1Reward"..index.."Border"]:Hide()
-
-				bu.texture:SetTexCoord(.08, .92, .08, .92)
-				F.CreateBG(bu.texture)
-
-				bu.styled = true
-			end
-
-			index = index + 1
-			bu = _G["DungeonCompletionAlertFrame1Reward"..index]
 		end
 	end)
 
@@ -453,5 +484,5 @@
 		frame.UpgradeQualityBorder:SetSize(52, 52)
 		frame.BaseQualityBorder:SetVertexColor(frame.BaseQualityItemName:GetTextColor())
 		frame.UpgradeQualityBorder:SetVertexColor(frame.UpgradeQualityItemName:GetTextColor())
-	end)
-end)]]
+	end)]]
+end)
