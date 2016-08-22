@@ -2,7 +2,7 @@ local _, private = ...
 
 -- [[ Lua Globals ]]
 local _G = _G
-local select = _G.select
+local select, next = _G.select, _G.next
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
@@ -59,7 +59,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	DetailsFrame:GetRegions():Hide()
 	select(2, DetailsFrame:GetRegions()):Hide()
-	select(3, DetailsFrame:GetRegions()):Hide()
+	select(4, DetailsFrame:GetRegions()):Hide()
 	select(6, DetailsFrame.ShareButton:GetRegions()):Hide()
 	select(7, DetailsFrame.ShareButton:GetRegions()):Hide()
 
@@ -88,6 +88,21 @@ _G.tinsert(C.themes["Aurora"], function()
 	-- Scroll frame
 
 	F.ReskinScroll(DetailsFrame.ScrollFrame.ScrollBar)
+	_G.hooksecurefunc("QuestLogQuests_Update", function()
+		for i, questLogHeader in next, QuestMapFrame.QuestsFrame.Contents.Headers do
+			if not questLogHeader.isSkinned then
+				F.ReskinExpandOrCollapse(questLogHeader)
+				questLogHeader.isSkinned = true
+			end
+			questLogHeader:SetHighlightTexture("")
+			local _, _, _, _, isCollapsed = _G.GetQuestLogTitle(questLogHeader.questLogIndex)
+			if isCollapsed then
+				questLogHeader.plus:Show()
+			else
+				questLogHeader.plus:Hide()
+			end
+		end
+	end)
 
 	-- Complete quest frame
 	CompleteQuestFrame:GetRegions():Hide()
