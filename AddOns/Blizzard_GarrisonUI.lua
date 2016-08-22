@@ -148,7 +148,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 		local portrait = infoBox.FollowerPortrait
 
 		if portrait:IsShown() then
-			portrait.squareBG:SetBackdropBorderColor(portrait.PortraitRing:GetVertexColor())
+			portrait:SetBackdropBorderColor(portrait.PortraitRingQuality:GetVertexColor())
 		end
 	end)
 
@@ -533,6 +533,8 @@ C.themes["Blizzard_GarrisonUI"] = function()
 
 	for i = 1, 3 do
 		local follower = MissionPage.Followers[i]
+		F.ReskinGarrisonPortrait(follower.PortraitFrame)
+		follower.PortraitFrame.Empty:SetAlpha(0)
 
 		follower:GetRegions():Hide()
 
@@ -542,17 +544,14 @@ C.themes["Blizzard_GarrisonUI"] = function()
 	local function onAssignFollowerToMission(self, frame)
 		local portrait = frame.PortraitFrame
 
-		portrait.LevelBorder:SetColorTexture(0, 0, 0, .5)
-		portrait.LevelBorder:SetSize(44, 11)
+		portrait.Portrait:Show()
 	end
 
 	local function onRemoveFollowerFromMission(self, frame)
 		local portrait = frame.PortraitFrame
 
-		portrait.LevelBorder:SetColorTexture(0, 0, 0, .5)
-		portrait.LevelBorder:SetSize(44, 11)
-
-		if portrait.squareBG then portrait.squareBG:SetBackdropBorderColor(0, 0, 0) end
+		portrait.Portrait:Hide()
+		portrait:SetBackdropBorderColor(0, 0, 0)
 	end
 
 	hooksecurefunc(GarrisonMissionFrame, "AssignFollowerToMission", onAssignFollowerToMission)
@@ -621,7 +620,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 
 		local color = _G.ITEM_QUALITY_COLORS[followerInfo.quality]
 
-		portraitFrame.squareBG:SetBackdropBorderColor(color.r, color.g, color.b)
+		portraitFrame:SetBackdropBorderColor(color.r, color.g, color.b)
 	end)
 
 	-- Mechanic tooltip
@@ -700,7 +699,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 			local recruit = FollowerSelection["Recruit"..i]
 			local portrait = recruit.PortraitFrame
 
-			portrait.squareBG:SetBackdropBorderColor(portrait.LevelBorder:GetVertexColor())
+			portrait:SetBackdropBorderColor(portrait.PortraitRingQuality:GetVertexColor())
 		end
 	end)
 
@@ -755,7 +754,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 				if portrait then
 					F.ReskinGarrisonPortrait(portrait)
 					portrait:ClearAllPoints()
-					portrait:SetPoint("TOPLEFT", 4, -1)
+					portrait:SetPoint("TOPLEFT")
 				end
 
 				button.restyled = true
@@ -769,9 +768,9 @@ C.themes["Blizzard_GarrisonUI"] = function()
 
 			if portrait then
 				if portrait.PortraitRingQuality:IsShown() then
-					portrait.squareBG:SetBackdropBorderColor(portrait.PortraitRingQuality:GetVertexColor())
+					portrait:SetBackdropBorderColor(portrait.PortraitRingQuality:GetVertexColor())
 				else
-					portrait.squareBG:SetBackdropBorderColor(0, 0, 0)
+					portrait:SetBackdropBorderColor(0, 0, 0)
 				end
 			end
 		end
