@@ -2227,10 +2227,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end)
 
 		-- [[ Text colour functions ]]
-
-		_G.NORMAL_QUEST_DISPLAY = "|cffffffff%s|r"
-		_G.TRIVIAL_QUEST_DISPLAY = "|cffffffff%s (low level)|r"
-
 		_G.GameFontBlackMedium:SetTextColor(1, 1, 1)
 		_G.QuestFont:SetTextColor(1, 1, 1)
 		_G.MailFont_Large:SetTextColor(1, 1, 1)
