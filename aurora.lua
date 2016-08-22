@@ -108,7 +108,7 @@ if _G.CUSTOM_CLASS_COLORS then
 	C.classcolours = _G.CUSTOM_CLASS_COLORS
 end
 
-local r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
+local red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
 
 F.dummy = function() end
 
@@ -154,12 +154,12 @@ local function colourButton(f)
 	if not f:IsEnabled() then return end
 
 	if useButtonGradientColour then
-		f:SetBackdropColor(r, g, b, .3)
+		f:SetBackdropColor(red, green, blue, .3)
 	else
-		f.tex:SetVertexColor(r / 4, g / 4, b / 4)
+		f.tex:SetVertexColor(red / 4, green / 4, blue / 4)
 	end
 
-	f:SetBackdropBorderColor(r, g, b)
+	f:SetBackdropBorderColor(red, green, blue)
 end
 
 local function clearButton(f)
@@ -207,12 +207,12 @@ F.ReskinTab = function(f)
 	local hl = f:GetHighlightTexture()
 	hl:SetPoint("TOPLEFT", 9, -4)
 	hl:SetPoint("BOTTOMRIGHT", -9, 1)
-	hl:SetVertexColor(r, g, b, .25)
+	hl:SetVertexColor(red, green, blue, .25)
 end
 
 local function colourScroll(f)
 	if f:IsEnabled() then
-		f.tex:SetVertexColor(r, g, b)
+		f.tex:SetVertexColor(red, green, blue)
 	end
 end
 
@@ -286,7 +286,7 @@ end
 
 local function colourArrow(f)
 	if f:IsEnabled() then
-		f.tex:SetVertexColor(r, g, b)
+		f.tex:SetVertexColor(red, green, blue)
 	end
 end
 
@@ -344,7 +344,7 @@ end
 local function colourClose(f)
 	if f:IsEnabled() then
 		for _, pixel in pairs(f.pixels) do
-			pixel:SetColorTexture(r, g, b)
+			pixel:SetColorTexture(red, green, blue)
 		end
 	end
 end
@@ -452,7 +452,7 @@ F.ReskinCheck = function(f)
 	local hl = f:GetHighlightTexture()
 	hl:SetPoint("TOPLEFT", 5, -5)
 	hl:SetPoint("BOTTOMRIGHT", -5, 5)
-	hl:SetVertexColor(r, g, b, .2)
+	hl:SetVertexColor(red, green, blue, .2)
 
 	local bd = CreateFrame("Frame", nil, f)
 	bd:SetPoint("TOPLEFT", 4, -4)
@@ -466,11 +466,11 @@ F.ReskinCheck = function(f)
 
 	local ch = f:GetCheckedTexture()
 	ch:SetDesaturated(true)
-	ch:SetVertexColor(r, g, b)
+	ch:SetVertexColor(red, green, blue)
 end
 
 local function colourRadio(f)
-	f.bd:SetBackdropBorderColor(r, g, b)
+	f.bd:SetBackdropBorderColor(red, green, blue)
 end
 
 local function clearRadio(f)
@@ -485,7 +485,7 @@ F.ReskinRadio = function(f)
 	local ch = f:GetCheckedTexture()
 	ch:SetPoint("TOPLEFT", 4, -4)
 	ch:SetPoint("BOTTOMRIGHT", -4, 4)
-	ch:SetVertexColor(r, g, b, .6)
+	ch:SetVertexColor(red, green, blue, .6)
 
 	local bd = CreateFrame("Frame", nil, f)
 	bd:SetPoint("TOPLEFT", 3, -3)
@@ -522,8 +522,8 @@ end
 
 local function colourExpandOrCollapse(f)
 	if f:IsEnabled() then
-		f.plus:SetVertexColor(r, g, b)
-		f.minus:SetVertexColor(r, g, b)
+		f.plus:SetVertexColor(red, green, blue)
+		f.minus:SetVertexColor(red, green, blue)
 	end
 end
 
@@ -765,10 +765,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		if AuroraConfig.useCustomColour then
-			r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+			red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
 		end
 		-- for modules
-		C.r, C.g, C.b = r, g, b
+		C.r, C.g, C.b = red, green, blue
 
 		-- [[ Custom style support ]]
 
@@ -795,16 +795,16 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				C.classcolours = customStyle.classcolors
 
 				if not AuroraConfig.useCustomColour then
-					r, g, b = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
-					C.r, C.g, C.b = r, g, b
+					red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
+					C.r, C.g, C.b = red, green, blue
 				end
 			end
 
 			-- replace colour scheme
 			local highlightColour = customStyle.highlightColor
 			if highlightColour then
-				r, g, b = highlightColour.r, highlightColour.g, highlightColour.b
-				C.r, C.g, C.b = r, g, b
+				red, green, blue = highlightColour.r, highlightColour.g, highlightColour.b
+				C.r, C.g, C.b = red, green, blue
 			end
 
 			-- skip splash screen if requested
@@ -1073,7 +1073,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 					if not bu.bg then
 						createBackdrop(bu, check)
-						hl:SetColorTexture(r, g, b, .2)
+						hl:SetColorTexture(red, green, blue, .2)
 						_G["DropDownList"..level.."Button"..j.."UnCheck"]:SetTexture("")
 
 						local arrow = _G["DropDownList"..level.."Button"..j.."ExpandArrow"]
@@ -1089,12 +1089,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 						if co == 0 then
 							check:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
-							check:SetVertexColor(r, g, b, 1)
+							check:SetVertexColor(red, green, blue, 1)
 							check:SetSize(20, 20)
 							check:SetDesaturated(true)
 						else
 							check:SetTexture(C.media.backdrop)
-							check:SetVertexColor(r, g, b, .6)
+							check:SetVertexColor(red, green, blue, .6)
 							check:SetSize(10, 10)
 							check:SetDesaturated(false)
 						end
@@ -1207,7 +1207,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 					bu.highlight:SetPoint("TOPLEFT", 1, 0)
 					bu.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 					bu.highlight.SetPoint = F.dummy
-					bu.highlight:SetColorTexture(r, g, b, .2)
+					bu.highlight:SetColorTexture(red, green, blue, .2)
 					bu.highlight.SetTexture = F.dummy
 
 					bu.expandIcon:SetTexture("")
@@ -1583,7 +1583,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 
 		local function styleTab(bu)
-			bu.selected:SetColorTexture(r, g, b, .2)
+			bu.selected:SetColorTexture(red, green, blue, .2)
 			bu.selected:SetDrawLayer("BACKGROUND")
 			bu.text:SetFont(C.media.font, 14)
 			F.Reskin(bu, true)
