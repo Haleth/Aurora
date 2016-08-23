@@ -95,11 +95,13 @@ _G.tinsert(C.themes["Aurora"], function()
 				questLogHeader.isSkinned = true
 			end
 			questLogHeader:SetHighlightTexture("")
-			local _, _, _, _, isCollapsed = _G.GetQuestLogTitle(questLogHeader.questLogIndex)
-			if isCollapsed then
-				questLogHeader.plus:Show()
-			else
-				questLogHeader.plus:Hide()
+			if questLogHeader.questLogIndex then
+				local _, _, _, _, isCollapsed = _G.GetQuestLogTitle(questLogHeader.questLogIndex)
+				if isCollapsed then
+					questLogHeader.plus:Show()
+				else
+					questLogHeader.plus:Hide()
+				end
 			end
 		end
 	end)
