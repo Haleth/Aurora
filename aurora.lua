@@ -24,7 +24,7 @@ private.Aurora = _G.Aurora
 
 local debug do
 	local debugger
-	local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0")
+	local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0", true)
 	function debug(...)
 		if not debugger then
 			if LTD then
