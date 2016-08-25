@@ -2,7 +2,7 @@ local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
 local _G = _G
-local select, tostring, next, pairs, ipairs = _G.select, _G.tostring, _G.next, _G.pairs, _G.ipairs
+local select, tostring, pairs = _G.select, _G.tostring, _G.pairs
 
 -- [[ WoW API ]]
 local CreateFrame = _G.CreateFrame
@@ -846,7 +846,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Headers ]]
 
-		local header = {"GameMenuFrame", "AudioOptionsFrame", "ChatConfigFrame", "ColorPickerFrame"}
+		local header = {"GameMenuFrame", "AudioOptionsFrame", "ColorPickerFrame"}
 		for i = 1, #header do
 			local title = _G[header[i].."Header"]
 			if title then
@@ -873,7 +873,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		local lightbds = {"SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4", "ChatConfigChatSettingsClassColorLegend", "ChatConfigChannelSettingsClassColorLegend", "FriendsFriendsList", "HelpFrameGM_ResponseScrollFrame1", "HelpFrameGM_ResponseScrollFrame2", "AddFriendNoteFrame", "ScrollOfResurrectionSelectionFrameList", "HelpFrameReportBugScrollFrame", "HelpFrameSubmitSuggestionScrollFrame", "ReportPlayerNameDialogCommentFrame", "ReportCheatingDialogCommentFrame"}
+		local lightbds = {"SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4", "FriendsFriendsList", "HelpFrameGM_ResponseScrollFrame1", "HelpFrameGM_ResponseScrollFrame2", "AddFriendNoteFrame", "ScrollOfResurrectionSelectionFrameList", "HelpFrameReportBugScrollFrame", "HelpFrameSubmitSuggestionScrollFrame", "ReportPlayerNameDialogCommentFrame", "ReportCheatingDialogCommentFrame"}
 		for i = 1, #lightbds do
 			local bd = _G[lightbds[i]]
 			if bd then
@@ -933,7 +933,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.SetBD(_G.HelpFrame)
 		F.SetBD(_G.RaidParentFrame)
 
-		local FrameBDs = {"GameMenuFrame", "AudioOptionsFrame", "ChatConfigFrame", "StackSplitFrame", "AddFriendFrame", "FriendsFriendsFrame", "ColorPickerFrame", "ReadyCheckFrame", "GuildInviteFrame", "ChannelFrameDaughterFrame"}
+		local FrameBDs = {"GameMenuFrame", "AudioOptionsFrame", "StackSplitFrame", "AddFriendFrame", "FriendsFriendsFrame", "ColorPickerFrame", "ReadyCheckFrame", "GuildInviteFrame", "ChannelFrameDaughterFrame"}
 		for i = 1, #FrameBDs do
 			local FrameBD = _G[FrameBDs[i]]
 			F.CreateBD(FrameBD)
@@ -1882,157 +1882,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.CreateBD(BonusRollFrame)
 		F.CreateBDFrame(BonusRollFrame.PromptFrame.Timer, .25)
 
-		-- Chat config
-
-		hooksecurefunc("ChatConfig_CreateCheckboxes", function(frame, checkBoxTable, checkBoxTemplate)
-			if frame.styled then return end
-
-			frame:SetBackdrop(nil)
-
-			local checkBoxNameString = frame:GetName().."CheckBox"
-
-			if checkBoxTemplate == "ChatConfigCheckBoxTemplate" then
-				for index, value in ipairs(checkBoxTable) do
-					local checkBoxName = checkBoxNameString..index
-					local checkbox = _G[checkBoxName]
-
-					checkbox:SetBackdrop(nil)
-
-					local bg = CreateFrame("Frame", nil, checkbox)
-					bg:SetPoint("TOPLEFT")
-					bg:SetPoint("BOTTOMRIGHT", 0, 1)
-					bg:SetFrameLevel(checkbox:GetFrameLevel()-1)
-					F.CreateBD(bg, .25)
-
-					F.ReskinCheck(_G[checkBoxName.."Check"])
-				end
-			elseif checkBoxTemplate == "ChatConfigCheckBoxWithSwatchTemplate" or checkBoxTemplate == "ChatConfigCheckBoxWithSwatchAndClassColorTemplate" then
-				for index, value in ipairs(checkBoxTable) do
-					local checkBoxName = checkBoxNameString..index
-					local checkbox = _G[checkBoxName]
-
-					checkbox:SetBackdrop(nil)
-
-					local bg = CreateFrame("Frame", nil, checkbox)
-					bg:SetPoint("TOPLEFT")
-					bg:SetPoint("BOTTOMRIGHT", 0, 1)
-					bg:SetFrameLevel(checkbox:GetFrameLevel()-1)
-					F.CreateBD(bg, .25)
-
-					F.ReskinColourSwatch(_G[checkBoxName.."ColorSwatch"])
-
-					F.ReskinCheck(_G[checkBoxName.."Check"])
-
-					if checkBoxTemplate == "ChatConfigCheckBoxWithSwatchAndClassColorTemplate" then
-						F.ReskinCheck(_G[checkBoxName.."ColorClasses"])
-					end
-				end
-			end
-
-			frame.styled = true
-		end)
-
-		hooksecurefunc("ChatConfig_CreateTieredCheckboxes", function(frame, checkBoxTable, checkBoxTemplate, subCheckBoxTemplate)
-			if frame.styled then return end
-
-			local checkBoxNameString = frame:GetName().."CheckBox"
-
-			for index, value in ipairs(checkBoxTable) do
-				local checkBoxName = checkBoxNameString..index
-
-				F.ReskinCheck(_G[checkBoxName])
-
-				if value.subTypes then
-					local subCheckBoxNameString = checkBoxName.."_"
-
-					for k, v in ipairs(value.subTypes) do
-						F.ReskinCheck(_G[subCheckBoxNameString..k])
-					end
-				end
-			end
-
-			frame.styled = true
-		end)
-
-		hooksecurefunc("ChatConfig_CreateColorSwatches", function(frame, swatchTable, swatchTemplate)
-			if frame.styled then return end
-
-			frame:SetBackdrop(nil)
-
-			local nameString = frame:GetName().."Swatch"
-
-			for index, value in ipairs(swatchTable) do
-				local swatchName = nameString..index
-				local swatch = _G[swatchName]
-
-				swatch:SetBackdrop(nil)
-
-				local bg = CreateFrame("Frame", nil, swatch)
-				bg:SetPoint("TOPLEFT")
-				bg:SetPoint("BOTTOMRIGHT", 0, 1)
-				bg:SetFrameLevel(swatch:GetFrameLevel()-1)
-				F.CreateBD(bg, .25)
-
-				F.ReskinColourSwatch(_G[swatchName.."ColorSwatch"])
-			end
-
-			frame.styled = true
-		end)
-
-		for i = 1, 5 do
-			_G["CombatConfigTab"..i.."Left"]:Hide()
-			_G["CombatConfigTab"..i.."Middle"]:Hide()
-			_G["CombatConfigTab"..i.."Right"]:Hide()
-		end
-
-		local line = _G.ChatConfigFrame:CreateTexture()
-		line:SetSize(1, 460)
-		line:SetPoint("TOPLEFT", _G.ChatConfigCategoryFrame, "TOPRIGHT")
-		line:SetColorTexture(1, 1, 1, .2)
-
-		_G.ChatConfigCategoryFrame:SetBackdrop(nil)
-		_G.ChatConfigBackgroundFrame:SetBackdrop(nil)
-		_G.ChatConfigCombatSettingsFilters:SetBackdrop(nil)
-		_G.CombatConfigColorsHighlighting:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeUnitName:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeSpellNames:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeDamageNumber:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeDamageSchool:SetBackdrop(nil)
-		_G.CombatConfigColorsColorizeEntireLine:SetBackdrop(nil)
-
-		local combatBoxes = {"CombatConfigColorsHighlightingLine", "CombatConfigColorsHighlightingAbility", "CombatConfigColorsHighlightingDamage", "CombatConfigColorsHighlightingSchool", "CombatConfigColorsColorizeUnitNameCheck", "CombatConfigColorsColorizeSpellNamesCheck", "CombatConfigColorsColorizeSpellNamesSchoolColoring", "CombatConfigColorsColorizeDamageNumberCheck", "CombatConfigColorsColorizeDamageNumberSchoolColoring", "CombatConfigColorsColorizeDamageSchoolCheck", "CombatConfigColorsColorizeEntireLineCheck", "CombatConfigFormattingShowTimeStamp", "CombatConfigFormattingShowBraces", "CombatConfigFormattingUnitNames", "CombatConfigFormattingSpellNames", "CombatConfigFormattingItemNames", "CombatConfigFormattingFullText", "CombatConfigSettingsShowQuickButton", "CombatConfigSettingsSolo", "CombatConfigSettingsParty", "CombatConfigSettingsRaid"}
-
-		for _, box in next, combatBoxes do
-			F.ReskinCheck(_G[box])
-		end
-
-		local bg = CreateFrame("Frame", nil, _G.ChatConfigCombatSettingsFilters)
-		bg:SetPoint("TOPLEFT", 3, 0)
-		bg:SetPoint("BOTTOMRIGHT", 0, 1)
-		bg:SetFrameLevel(_G.ChatConfigCombatSettingsFilters:GetFrameLevel()-1)
-		F.CreateBD(bg, .25)
-
-		F.Reskin(_G.CombatLogDefaultButton)
-		F.Reskin(_G.ChatConfigCombatSettingsFiltersCopyFilterButton)
-		F.Reskin(_G.ChatConfigCombatSettingsFiltersAddFilterButton)
-		F.Reskin(_G.ChatConfigCombatSettingsFiltersDeleteButton)
-		F.Reskin(_G.CombatConfigSettingsSaveButton)
-		F.ReskinArrow(_G.ChatConfigMoveFilterUpButton, "up")
-		F.ReskinArrow(_G.ChatConfigMoveFilterDownButton, "down")
-		F.ReskinInput(_G.CombatConfigSettingsNameEditBox)
-		F.ReskinRadio(_G.CombatConfigColorsColorizeEntireLineBySource)
-		F.ReskinRadio(_G.CombatConfigColorsColorizeEntireLineByTarget)
-		F.ReskinColourSwatch(_G.CombatConfigColorsColorizeSpellNamesColorSwatch)
-		F.ReskinColourSwatch(_G.CombatConfigColorsColorizeDamageNumberColorSwatch)
-
-		_G.ChatConfigMoveFilterUpButton:SetSize(28, 28)
-		_G.ChatConfigMoveFilterDownButton:SetSize(28, 28)
-
-		_G.ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -1, 0)
-		_G.ChatConfigCombatSettingsFiltersCopyFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersAddFilterButton, "LEFT", -1, 0)
-		_G.ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", _G.ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, 0)
-		_G.ChatConfigMoveFilterDownButton:SetPoint("LEFT", _G.ChatConfigMoveFilterUpButton, "RIGHT", 1, 0)
-
 		-- Level up display
 
 		_G.LevelUpDisplaySide:HookScript("OnShow", function(lvlUp)
@@ -2278,9 +2127,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Change positions ]]
 
-		_G.ChatConfigFrameDefaultButton:SetWidth(125)
-		_G.ChatConfigFrameDefaultButton:SetPoint("TOPLEFT", _G.ChatConfigCategoryFrame, "BOTTOMLEFT", 0, -4)
-		_G.ChatConfigFrameOkayButton:SetPoint("TOPRIGHT", _G.ChatConfigBackgroundFrame, "BOTTOMRIGHT", 0, -4)
 		_G.PaperDollEquipmentManagerPaneEquipSet:SetWidth(_G.PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
 		_G.PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", _G.PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
 		_G.GearManagerDialogPopup:SetPoint("LEFT", _G.PaperDollFrame, "RIGHT", 1, 0)
@@ -2298,7 +2144,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"AudioOptionsFrameOkay", "AudioOptionsFrameCancel", "AudioOptionsFrameDefaults", "ChatConfigFrameOkayButton", "ChatConfigFrameDefaultButton", "WhoFrameWhoButton", "WhoFrameAddFriendButton", "WhoFrameGroupInviteButton", "ChannelFrameNewButton", "RaidFrameRaidInfoButton", "RaidFrameConvertToRaidButton", "GearManagerDialogPopupOkay", "GearManagerDialogPopupCancel", "StackSplitOkayButton", "StackSplitCancelButton", "GameMenuButtonHelp", "GameMenuButtonWhatsNew", "GameMenuButtonStore", "GameMenuButtonOptions", "GameMenuButtonUIOptions", "GameMenuButtonKeybindings", "GameMenuButtonMacros", "GameMenuButtonAddons", "GameMenuButtonLogout", "GameMenuButtonQuit", "GameMenuButtonContinue", "LFDQueueFrameFindGroupButton", "AddFriendEntryFrameAcceptButton", "AddFriendEntryFrameCancelButton", "FriendsFriendsSendRequestButton", "FriendsFriendsCloseButton", "ColorPickerOkayButton", "ColorPickerCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "FriendsFramePendingButton1AcceptButton", "FriendsFramePendingButton1DeclineButton", "RaidInfoExtendButton", "RaidInfoCancelButton", "PaperDollEquipmentManagerPaneEquipSet", "PaperDollEquipmentManagerPaneSaveSet", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "AddFriendInfoFrameContinueButton", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "ChannelFrameDaughterFrameOkayButton", "ChannelFrameDaughterFrameCancelButton", "PendingListInfoFrameContinueButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "ScrollOfResurrectionSelectionFrameAcceptButton", "ScrollOfResurrectionSelectionFrameCancelButton", "ScrollOfResurrectionFrameAcceptButton", "ScrollOfResurrectionFrameCancelButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton"}
+		local buttons = {"AudioOptionsFrameOkay", "AudioOptionsFrameCancel", "AudioOptionsFrameDefaults", "WhoFrameWhoButton", "WhoFrameAddFriendButton", "WhoFrameGroupInviteButton", "ChannelFrameNewButton", "RaidFrameRaidInfoButton", "RaidFrameConvertToRaidButton", "GearManagerDialogPopupOkay", "GearManagerDialogPopupCancel", "StackSplitOkayButton", "StackSplitCancelButton", "GameMenuButtonHelp", "GameMenuButtonWhatsNew", "GameMenuButtonStore", "GameMenuButtonOptions", "GameMenuButtonUIOptions", "GameMenuButtonKeybindings", "GameMenuButtonMacros", "GameMenuButtonAddons", "GameMenuButtonLogout", "GameMenuButtonQuit", "GameMenuButtonContinue", "LFDQueueFrameFindGroupButton", "AddFriendEntryFrameAcceptButton", "AddFriendEntryFrameCancelButton", "FriendsFriendsSendRequestButton", "FriendsFriendsCloseButton", "ColorPickerOkayButton", "ColorPickerCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "FriendsFramePendingButton1AcceptButton", "FriendsFramePendingButton1DeclineButton", "RaidInfoExtendButton", "RaidInfoCancelButton", "PaperDollEquipmentManagerPaneEquipSet", "PaperDollEquipmentManagerPaneSaveSet", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "AddFriendInfoFrameContinueButton", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "ChannelFrameDaughterFrameOkayButton", "ChannelFrameDaughterFrameCancelButton", "PendingListInfoFrameContinueButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "ScrollOfResurrectionSelectionFrameAcceptButton", "ScrollOfResurrectionSelectionFrameCancelButton", "ScrollOfResurrectionFrameAcceptButton", "ScrollOfResurrectionFrameCancelButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then

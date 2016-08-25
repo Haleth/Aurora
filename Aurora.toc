@@ -43,6 +43,7 @@ AddOns\Blizzard_VoidStorageUI.lua
 FrameXML\AlertFrames.lua
 FrameXML\BankFrame.lua
 FrameXML\CharacterFrame.lua
+FrameXML\ChatConfigFrame.lua
 FrameXML\Constants.lua
 FrameXML\ContainerFrame.lua
 FrameXML\DressUpFrames.lua
