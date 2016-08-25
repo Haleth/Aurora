@@ -40,7 +40,9 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	BorderFrame.CloseButton:SetPoint("TOPRIGHT", -9, -6)
 
-	_G.WorldMapLevelDropDown:SetPoint("TOPLEFT", -14, 2)
+	_G.WorldMapLevelDropDown:SetPoint("TOPLEFT", -7, 2)
+	_G.WorldMapLevelDropDown.Text:SetPoint("LEFT", 14, 2)
+	_G.WorldMapLevelDropDown.Text:SetPoint("RIGHT", -38, 2)
 
 	-- [[ Size up / down buttons ]]
 
