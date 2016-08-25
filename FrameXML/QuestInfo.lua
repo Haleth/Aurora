@@ -77,13 +77,18 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	restyleSpellButton(_G.QuestInfoSpellObjectiveFrame)
 	hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
-	hooksecurefunc("QuestInfo_Display", function()
+	hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material, mapView)
 		private.debug("QuestInfo_Display")
 		local rewardsFrame = _G.QuestInfoFrame.rewardsFrame
 		local isQuestLog = _G.QuestInfoFrame.questLog ~= nil
 		local isMapQuest = rewardsFrame == _G.MapQuestInfoRewardsFrame
 
 		colourObjectivesText()
+
+		if ( template.canHaveSealMaterial ) then
+			local questFrame = parentFrame:GetParent():GetParent()
+			questFrame.SealMaterialBG:Hide()
+		end
 
 		local numSpellRewards = isQuestLog and _G.GetNumQuestLogRewardSpells() or _G.GetNumRewardSpells()
 		if numSpellRewards > 0 then
@@ -236,4 +241,8 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	_G.QuestInfoDescriptionText:SetTextColor(1, 1, 1)
 	_G.QuestInfoDescriptionText.SetTextColor = F.dummy
+
+	--[[ QuestInfoSealFrame ]]
+	_G.QuestInfoSealFrame.Text:SetShadowColor(0.2, 0.2, 0.2)
+	_G.QuestInfoSealFrame.Text:SetShadowOffset(0.6, -0.6)
 end)
