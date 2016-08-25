@@ -23,24 +23,28 @@ _G.Aurora = {
 private.Aurora = _G.Aurora
 
 local debug do
-	local debugger
-	local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0", true)
-	function debug(...)
-		if not debugger then
-			if LTD then
-				debugger = LTD:New(ADDON_NAME .." Debug Output", 640, 480)
-				private.debugger = debugger
-			else
-				return
+	if _G.LibStub then
+		local debugger
+		local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0", true)
+		function debug(...)
+			if not debugger then
+				if LTD then
+					debugger = LTD:New(ADDON_NAME .." Debug Output", 640, 480)
+					private.debugger = debugger
+				else
+					return
+				end
 			end
+			local time = _G.date("%H:%M:%S")
+			local text = ("[%s]"):format(time)
+			for i = 1, select("#", ...) do
+				local arg = select(i, ...)
+				text = text .. "     " .. tostring(arg)
+			end
+			debugger:AddLine(text)
 		end
-		local time = _G.date("%H:%M:%S")
-		local text = ("[%s]"):format(time)
-		for i = 1, select("#", ...) do
-			local arg = select(i, ...)
-			text = text .. "     " .. tostring(arg)
-		end
-		debugger:AddLine(text)
+	else
+		debug = function() end
 	end
 	private.debug = debug
 end
