@@ -98,7 +98,6 @@ _G.tinsert(C.themes["Aurora"], function()
     F.Reskin(_G.CombatConfigSettingsSaveButton)
 
     F.Reskin(_G.ChatConfigFrame.DefaultButton)
-    --_G.ChatConfigFrame.DefaultButton:SetWidth(125)
     F.Reskin(_G.ChatConfigFrame.RedockButton)
     F.Reskin(_G.CombatLogDefaultButton)
     _G.ChatConfigFrame.DefaultButton:SetPoint("BOTTOMLEFT", 10, 10)
