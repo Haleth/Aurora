@@ -750,7 +750,8 @@ Skin:RegisterEvent("ADDON_LOADED")
 Skin:SetScript("OnEvent", function(self, event, addon)
 	if addon == ADDON_NAME then
 		-- [[ Load Variables ]]
-		AuroraConfig = _G.AuroraConfig or {}
+		_G.AuroraConfig = _G.AuroraConfig or {}
+		AuroraConfig = _G.AuroraConfig
 
 		-- remove deprecated or corrupt variables
 		for key, value in pairs(AuroraConfig) do
