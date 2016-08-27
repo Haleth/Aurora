@@ -18,8 +18,15 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	_G.AddonCharacterDropDown:SetWidth(170)
 
-	for i = 1, _G.MAX_ADDONS_DISPLAYED do
-		F.ReskinCheck(_G["AddonListEntry"..i.."Enabled"])
-		F.Reskin(_G["AddonListEntry"..i.."Load"])
-	end
+	_G.hooksecurefunc("AddonList_Update", function()
+		for i = 1, _G.MAX_ADDONS_DISPLAYED do
+			local checkbox = _G["AddonListEntry"..i.."Enabled"]
+			if not checkbox.isSkinned then
+				F.ReskinCheck(checkbox, true)
+				F.Reskin(_G["AddonListEntry"..i.."Load"])
+				checkbox.isSkinned = true
+			end
+			checkbox:SetTriState(checkbox.state)
+		end
+	end)
 end)
