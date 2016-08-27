@@ -192,6 +192,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 
 	do
 		local icon = CapacitiveDisplay.ShipmentIconFrame.Icon
+		F.ReskinGarrisonPortrait(CapacitiveDisplay.ShipmentIconFrame.Follower, true)
 
 		icon:SetTexCoord(.08, .92, .08, .92)
 		F.CreateBG(icon)
