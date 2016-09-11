@@ -181,6 +181,17 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end
 
+	local QuestInfoPlayerTitleFrame = _G.QuestInfoPlayerTitleFrame
+	F.ReskinIcon(QuestInfoPlayerTitleFrame.Icon)
+	QuestInfoPlayerTitleFrame.FrameLeft:Hide()
+	QuestInfoPlayerTitleFrame.FrameCenter:Hide()
+	QuestInfoPlayerTitleFrame.FrameRight:Hide()
+
+	local titleBG = _G.CreateFrame("Frame", nil, QuestInfoPlayerTitleFrame)
+	titleBG:SetPoint("TOPLEFT", QuestInfoPlayerTitleFrame.FrameLeft, -2, 0)
+	titleBG:SetPoint("BOTTOMRIGHT", QuestInfoPlayerTitleFrame.FrameRight, 0, -1)
+	F.CreateBD(titleBG, .25)
+
 	local ItemHighlight = QuestInfoRewardsFrame.ItemHighlight
 	ItemHighlight:GetRegions():Hide()
 
@@ -190,7 +201,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
 
 	--[[ MapQuestInfoRewardsFrame ]]
-	for i, name in next, {"HonorFrame", "MoneyFrame", "SkillPointFrame", "XPFrame", "ArtifactXPFrame"} do
+	for i, name in next, {"HonorFrame", "MoneyFrame", "SkillPointFrame", "XPFrame", "ArtifactXPFrame", "TitleFrame"} do
 		private.debug("Map restyleRewardButton", name)
 		restyleRewardButton(_G.MapQuestInfoRewardsFrame[name], true)
 	end
