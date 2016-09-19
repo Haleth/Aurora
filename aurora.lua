@@ -99,6 +99,7 @@ C.defaults = {
 C.frames = {}
 
 C.TOC = select(4, _G.GetBuildInfo())
+C.is71 = _G.GetBuildInfo() == "7.1.0"
 
 -- [[ Cached variables ]]
 
@@ -1439,9 +1440,11 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.IgnoreListFrameTop:Hide()
 		_G.IgnoreListFrameMiddle:Hide()
 		_G.IgnoreListFrameBottom:Hide()
-		_G.PendingListFrameTop:Hide()
-		_G.PendingListFrameMiddle:Hide()
-		_G.PendingListFrameBottom:Hide()
+		if not C.is71 then
+			_G.PendingListFrameTop:Hide()
+			_G.PendingListFrameMiddle:Hide()
+			_G.PendingListFrameBottom:Hide()
+		end
 
 		for i = 1, 4 do
 			F.ReskinTab(_G["FriendsFrameTab"..i])
