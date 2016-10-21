@@ -7,6 +7,8 @@
 
 aurora.lua
 gui.lua
+skin_funcs.lua
+apply_skin.lua
 
 AddOns\Blizzard_AchievementUI.lua
 AddOns\Blizzard_ArchaeologyUI.lua
