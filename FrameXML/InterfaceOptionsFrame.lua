@@ -157,6 +157,10 @@ _G.tinsert(C.themes["Aurora"], function()
 			"InterfaceOptionsNamesPanelUnitNameplatesEnemyMinus",
 			"InterfaceOptionsNamesPanelUnitNameplatesFriendlyMinions"
 		}
+		if C.is71 then
+			_G.tinsert(checkboxes, "InterfaceOptionsNamesPanelUnitNameplatesEnemies")
+			_G.tinsert(checkboxes, "InterfaceOptionsNamesPanelUnitNameplatesFriends")
+		end
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
@@ -166,7 +170,9 @@ _G.tinsert(C.themes["Aurora"], function()
 		-- Camera
 		F.ReskinCheck(_G.InterfaceOptionsCameraPanelWaterCollision)
 		F.ReskinDropDown(_G.InterfaceOptionsCameraPanelStyleDropDown)
-		F.ReskinSlider(_G.InterfaceOptionsCameraPanelMaxDistanceSlider)
+		if not C.is71 then
+			F.ReskinSlider(_G.InterfaceOptionsCameraPanelMaxDistanceSlider)
+		end
 		F.ReskinSlider(_G.InterfaceOptionsCameraPanelFollowSpeedSlider)
 
 		-- Mouse
@@ -226,6 +232,9 @@ _G.tinsert(C.themes["Aurora"], function()
 				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvP",
 				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvE"
 			}
+			if C.is71 then
+				_G.tinsert(boxes, "CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec3")
+			end
 
 			for i = 1, #boxes do
 				F.ReskinCheck(_G[boxes[i]])
