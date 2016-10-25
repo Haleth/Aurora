@@ -2,7 +2,6 @@ local _, private = ...
 
 -- [[ Lua Globals ]]
 local _G = _G
-local next = _G.next
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
@@ -45,14 +44,27 @@ _G.tinsert(C.themes["Aurora"], function()
 
 		local checkboxes, dropdowns
 		-- Controls
-		checkboxes = {"InterfaceOptionsControlsPanelStickyTargeting", "InterfaceOptionsControlsPanelAutoDismount", "InterfaceOptionsControlsPanelAutoClearAFK", "InterfaceOptionsControlsPanelAutoLootCorpse", "InterfaceOptionsControlsPanelInteractOnLeftClick", "InterfaceOptionsControlsPanelLootAtMouse"}
+		checkboxes = {
+			"InterfaceOptionsControlsPanelStickyTargeting",
+			"InterfaceOptionsControlsPanelAutoDismount",
+			"InterfaceOptionsControlsPanelAutoClearAFK",
+			"InterfaceOptionsControlsPanelAutoLootCorpse",
+			"InterfaceOptionsControlsPanelInteractOnLeftClick",
+			"InterfaceOptionsControlsPanelLootAtMouse"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
 		F.ReskinDropDown(_G.InterfaceOptionsControlsPanelAutoLootKeyDropDown)
 
 		-- Combat
-		checkboxes = {"InterfaceOptionsCombatPanelTargetOfTarget", "InterfaceOptionsCombatPanelFlashLowHealthWarning", "InterfaceOptionsCombatPanelLossOfControl", "InterfaceOptionsCombatPanelAutoSelfCast", "InterfaceOptionsCombatPanelEnableFloatingCombatText"}
+		checkboxes = {
+			"InterfaceOptionsCombatPanelTargetOfTarget",
+			"InterfaceOptionsCombatPanelFlashLowHealthWarning",
+			"InterfaceOptionsCombatPanelLossOfControl",
+			"InterfaceOptionsCombatPanelAutoSelfCast",
+			"InterfaceOptionsCombatPanelEnableFloatingCombatText"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
@@ -61,23 +73,50 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.ReskinSlider(_G.InterfaceOptionsCombatPanelSpellAlertOpacitySlider)
 
 		-- Display
-		checkboxes = {"InterfaceOptionsDisplayPanelRotateMinimap", "InterfaceOptionsDisplayPanelAJAlerts", "InterfaceOptionsDisplayPanelShowTutorials"}
+		checkboxes = {
+			"InterfaceOptionsDisplayPanelRotateMinimap",
+			"InterfaceOptionsDisplayPanelAJAlerts",
+			"InterfaceOptionsDisplayPanelShowTutorials"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
-		dropdowns = {"InterfaceOptionsDisplayPanelOutlineDropDown", "InterfaceOptionsDisplayPanelSelfHighlightDropDown", "InterfaceOptionsDisplayPanelDisplayDropDown", "InterfaceOptionsDisplayPanelChatBubblesDropDown"}
+		dropdowns = {
+			"InterfaceOptionsDisplayPanelOutlineDropDown",
+			"InterfaceOptionsDisplayPanelSelfHighlightDropDown",
+			"InterfaceOptionsDisplayPanelDisplayDropDown",
+			"InterfaceOptionsDisplayPanelChatBubblesDropDown"
+		}
 		for i = 1, #dropdowns do
 			F.ReskinDropDown(_G[dropdowns[i]])
 		end
 		F.Reskin(_G.InterfaceOptionsDisplayPanelResetTutorials)
 
 		-- Social
-		checkboxes = {"InterfaceOptionsSocialPanelProfanityFilter", "InterfaceOptionsSocialPanelSpamFilter", "InterfaceOptionsSocialPanelGuildMemberAlert", "InterfaceOptionsSocialPanelBlockTrades", "InterfaceOptionsSocialPanelBlockGuildInvites", "InterfaceOptionsSocialPanelBlockChatChannelInvites", "InterfaceOptionsSocialPanelShowAccountAchievments",
-					"InterfaceOptionsSocialPanelOnlineFriends", "InterfaceOptionsSocialPanelOfflineFriends", "InterfaceOptionsSocialPanelBroadcasts", "InterfaceOptionsSocialPanelFriendRequests", "InterfaceOptionsSocialPanelShowToastWindow", "InterfaceOptionsSocialPanelEnableTwitter"}
+		checkboxes = {
+			"InterfaceOptionsSocialPanelProfanityFilter",
+			"InterfaceOptionsSocialPanelSpamFilter",
+			"InterfaceOptionsSocialPanelGuildMemberAlert",
+			"InterfaceOptionsSocialPanelBlockTrades",
+			"InterfaceOptionsSocialPanelBlockGuildInvites",
+			"InterfaceOptionsSocialPanelBlockChatChannelInvites",
+			"InterfaceOptionsSocialPanelShowAccountAchievments",
+
+			"InterfaceOptionsSocialPanelOnlineFriends",
+			"InterfaceOptionsSocialPanelOfflineFriends",
+			"InterfaceOptionsSocialPanelBroadcasts",
+			"InterfaceOptionsSocialPanelFriendRequests",
+			"InterfaceOptionsSocialPanelShowToastWindow",
+			"InterfaceOptionsSocialPanelEnableTwitter"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
-		dropdowns = {"InterfaceOptionsSocialPanelChatStyle", "InterfaceOptionsSocialPanelTimestamps", "InterfaceOptionsSocialPanelWhisperMode"}
+		dropdowns = {
+			"InterfaceOptionsSocialPanelChatStyle",
+			"InterfaceOptionsSocialPanelTimestamps",
+			"InterfaceOptionsSocialPanelWhisperMode"
+		}
 		for i = 1, #dropdowns do
 			F.ReskinDropDown(_G[dropdowns[i]])
 		end
@@ -85,16 +124,43 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.Reskin(_G.InterfaceOptionsSocialPanelRedockChat)
 
 		-- ActionBars
-		checkboxes = {"InterfaceOptionsActionBarsPanelBottomLeft", "InterfaceOptionsActionBarsPanelBottomRight", "InterfaceOptionsActionBarsPanelRight", "InterfaceOptionsActionBarsPanelRightTwo", "InterfaceOptionsActionBarsPanelLockActionBars", "InterfaceOptionsActionBarsPanelAlwaysShowActionBars", "InterfaceOptionsActionBarsPanelCountdownCooldowns"}
+		checkboxes = {
+			"InterfaceOptionsActionBarsPanelBottomLeft",
+			"InterfaceOptionsActionBarsPanelBottomRight",
+			"InterfaceOptionsActionBarsPanelRight",
+			"InterfaceOptionsActionBarsPanelRightTwo",
+			"InterfaceOptionsActionBarsPanelLockActionBars",
+			"InterfaceOptionsActionBarsPanelAlwaysShowActionBars",
+			"InterfaceOptionsActionBarsPanelCountdownCooldowns"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
 		F.ReskinDropDown(_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown)
 
 		-- Names
-		checkboxes = {"InterfaceOptionsNamesPanelMyName", "InterfaceOptionsNamesPanelNonCombatCreature", "InterfaceOptionsNamesPanelFriendlyPlayerNames", "InterfaceOptionsNamesPanelFriendlyMinions", "InterfaceOptionsNamesPanelEnemyPlayerNames", "InterfaceOptionsNamesPanelEnemyMinions",
-					"InterfaceOptionsNamesPanelUnitNameplatesPersonalResource", "InterfaceOptionsNamesPanelUnitNameplatesPersonalResourceOnEnemy", "InterfaceOptionsNamesPanelUnitNameplatesMakeLarger", "InterfaceOptionsNamesPanelUnitNameplatesShowAll", "InterfaceOptionsNamesPanelUnitNameplatesAggroFlash",
-					"InterfaceOptionsNamesPanelUnitNameplatesFriendlyMinions", "InterfaceOptionsNamesPanelUnitNameplatesEnemyMinions", "InterfaceOptionsNamesPanelUnitNameplatesEnemyMinus"}
+		checkboxes = {
+			"InterfaceOptionsNamesPanelMyName",
+			"InterfaceOptionsNamesPanelNonCombatCreature",
+			"InterfaceOptionsNamesPanelFriendlyPlayerNames",
+			"InterfaceOptionsNamesPanelFriendlyMinions",
+			"InterfaceOptionsNamesPanelEnemyPlayerNames",
+			"InterfaceOptionsNamesPanelEnemyMinions",
+
+			"InterfaceOptionsNamesPanelUnitNameplatesPersonalResource",
+			"InterfaceOptionsNamesPanelUnitNameplatesPersonalResourceOnEnemy",
+			"InterfaceOptionsNamesPanelUnitNameplatesMakeLarger",
+			"InterfaceOptionsNamesPanelUnitNameplatesAggroFlash",
+
+			"InterfaceOptionsNamesPanelUnitNameplatesShowAll",
+			"InterfaceOptionsNamesPanelUnitNameplatesEnemyMinions",
+			"InterfaceOptionsNamesPanelUnitNameplatesEnemyMinus",
+			"InterfaceOptionsNamesPanelUnitNameplatesFriendlyMinions"
+		}
+		if C.is71 then
+			_G.tinsert(checkboxes, "InterfaceOptionsNamesPanelUnitNameplatesEnemies")
+			_G.tinsert(checkboxes, "InterfaceOptionsNamesPanelUnitNameplatesFriends")
+		end
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
@@ -104,11 +170,17 @@ _G.tinsert(C.themes["Aurora"], function()
 		-- Camera
 		F.ReskinCheck(_G.InterfaceOptionsCameraPanelWaterCollision)
 		F.ReskinDropDown(_G.InterfaceOptionsCameraPanelStyleDropDown)
-		F.ReskinSlider(_G.InterfaceOptionsCameraPanelMaxDistanceSlider)
+		if not C.is71 then
+			F.ReskinSlider(_G.InterfaceOptionsCameraPanelMaxDistanceSlider)
+		end
 		F.ReskinSlider(_G.InterfaceOptionsCameraPanelFollowSpeedSlider)
 
 		-- Mouse
-		checkboxes = {"InterfaceOptionsMousePanelInvertMouse", "InterfaceOptionsMousePanelEnableMouseSpeed", "InterfaceOptionsMousePanelClickToMove"}
+		checkboxes = {
+			"InterfaceOptionsMousePanelInvertMouse",
+			"InterfaceOptionsMousePanelEnableMouseSpeed",
+			"InterfaceOptionsMousePanelClickToMove"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
@@ -117,7 +189,11 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.ReskinSlider(_G.InterfaceOptionsMousePanelMouseSensitivitySlider)
 
 		-- Accessibility
-		checkboxes = {"InterfaceOptionsAccessibilityPanelMovePad", "InterfaceOptionsAccessibilityPanelCinematicSubtitles", "InterfaceOptionsAccessibilityPanelColorblindMode"}
+		checkboxes = {
+			"InterfaceOptionsAccessibilityPanelMovePad",
+			"InterfaceOptionsAccessibilityPanelCinematicSubtitles",
+			"InterfaceOptionsAccessibilityPanelColorblindMode"
+		}
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
@@ -128,33 +204,40 @@ _G.tinsert(C.themes["Aurora"], function()
 			_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateBG:Hide()
 
 			local boxes = {
-				_G.CompactUnitFrameProfilesRaidStylePartyFrames,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameKeepGroupsTogether,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameHorizontalGroups,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayIncomingHeals,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayPowerBar,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayAggroHighlight,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameUseClassColors,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayPets,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayMainTankAndAssist,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayBorder,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameShowDebuffs,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayOnlyDispellableDebuffs,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate2Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate3Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate5Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate10Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate15Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate25Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate40Players,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec1,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec2,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvP,
-				_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvE
-			}
+				"CompactUnitFrameProfilesRaidStylePartyFrames",
 
-			for _, box in next, boxes do
-				F.ReskinCheck(box)
+				"CompactUnitFrameProfilesGeneralOptionsFrameKeepGroupsTogether",
+				"CompactUnitFrameProfilesGeneralOptionsFrameHorizontalGroups",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayIncomingHeals",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayPowerBar",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayAggroHighlight",
+				"CompactUnitFrameProfilesGeneralOptionsFrameUseClassColors",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayPets",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayMainTankAndAssist",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayBorder",
+				"CompactUnitFrameProfilesGeneralOptionsFrameShowDebuffs",
+				"CompactUnitFrameProfilesGeneralOptionsFrameDisplayOnlyDispellableDebuffs",
+
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate2Players",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate3Players",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate5Players",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate10Players",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate15Players",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate25Players",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate40Players",
+
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec1",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec2",
+
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvP",
+				"CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvE"
+			}
+			if C.is71 then
+				_G.tinsert(boxes, "CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec3")
+			end
+
+			for i = 1, #boxes do
+				F.ReskinCheck(_G[boxes[i]])
 			end
 
 			F.Reskin(_G.CompactUnitFrameProfilesSaveButton)

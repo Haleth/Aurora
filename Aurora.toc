@@ -2,7 +2,7 @@
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword
-## Version: 7.0.7
+## Version: 7.1.0
 ## SavedVariables: AuroraConfig
 
 aurora.lua
@@ -36,6 +36,7 @@ AddOns\Blizzard_LookingForGuildUI.lua
 AddOns\Blizzard_MacroUI.lua
 AddOns\Blizzard_PVPUI.lua
 AddOns\Blizzard_QuestChoice.lua
+AddOns\Blizzard_RaidUI.lua
 AddOns\Blizzard_TalentUI.lua
 AddOns\Blizzard_TimeManager.lua
 AddOns\Blizzard_TradeSkillUI.lua
@@ -44,6 +45,7 @@ AddOns\Blizzard_VoidStorageUI.lua
 
 FrameXML\AlertFrames.lua
 FrameXML\BankFrame.lua
+FrameXML\ChannelFrame.lua
 FrameXML\CharacterFrame.lua
 FrameXML\ChatConfigFrame.lua
 FrameXML\Constants.lua
@@ -51,6 +53,7 @@ FrameXML\ContainerFrame.lua
 FrameXML\DressUpFrames.lua
 FrameXML\EquipmentFlyout.lua
 FrameXML\Fonts.lua
+FrameXML\FriendsFrame.lua
 FrameXML\GameTooltip.lua
 FrameXML\GarrisonFollowerTooltip.lua
 FrameXML\InterfaceOptionsFrame.lua
@@ -71,7 +74,9 @@ FrameXML\QuestFrame.lua
 FrameXML\QuestInfo.lua
 FrameXML\QuestMapFrame.lua
 FrameXML\QueueStatusFrame.lua
+FrameXML\QuickJoin.lua
 FrameXML\RaidFinder.lua
+FrameXML\RaidFrame.lua
 FrameXML\RecruitAFriendFrame.lua
 FrameXML\RolePoll.lua
 FrameXML\ScenarioFinder.lua

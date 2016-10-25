@@ -56,8 +56,6 @@ C.themes["Blizzard_PVPUI"] = function()
 	PVPQueueFrame.CategoryButton2.Icon:SetTexture("Interface\\Icons\\achievement_bg_killxenemies_generalsroom")
 	PVPQueueFrame.CategoryButton3.Icon:SetTexture("Interface\\Icons\\ability_warrior_offensivestance")
 
-	local englishFaction = _G.UnitFactionGroup("player")
-
 	hooksecurefunc("PVPQueueFrame_SelectButton", function(index)
 		local self = PVPQueueFrame
 		for i = 1, 4 do
@@ -100,21 +98,6 @@ C.themes["Blizzard_PVPUI"] = function()
 			F.ReskinIcon(reward.Icon)
 		end
 	end
-
-	hooksecurefunc("HonorFrameBonusFrame_Update", function()
-		local _, _, _, _, _, winHonorAmount, winConquestAmount = _G.GetHolidayBGInfo()
-		local rewardIndex = 0
-		if winConquestAmount and winConquestAmount > 0 then
-			rewardIndex = rewardIndex + 1
-			local frame = HonorFrame.BonusFrame["BattlegroundReward"..rewardIndex]
-			frame.Icon:SetTexture("Interface\\Icons\\PVPCurrency-Conquest-"..englishFaction)
-		end
-		if winHonorAmount and winHonorAmount > 0 then
-			rewardIndex = rewardIndex + 1
-			local frame = HonorFrame.BonusFrame["BattlegroundReward"..rewardIndex]
-			frame.Icon:SetTexture("Interface\\Icons\\PVPCurrency-Honor-"..englishFaction)
-		end
-	end)
 
 	_G.IncludedBattlegroundsDropDown:SetPoint("TOPRIGHT", BonusFrame.DiceButton, 40, 26)
 
