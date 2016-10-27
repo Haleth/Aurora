@@ -22,18 +22,9 @@ C.themes["Blizzard_GuildBankUI"] = function()
 	_G.GuildBankTabLimitBackgroundLeft:SetTexture("")
 	_G.GuildBankTabLimitBackgroundRight:SetTexture("")
 	_G.GuildBankEmblemFrame:Hide()
-	_G.GuildBankPopupFrameTopLeft:Hide()
-	_G.GuildBankPopupFrameBottomLeft:Hide()
 	_G.GuildBankMoneyFrameBackgroundLeft:Hide()
 	_G.GuildBankMoneyFrameBackgroundMiddle:Hide()
 	_G.GuildBankMoneyFrameBackgroundRight:Hide()
-	select(2, _G.GuildBankPopupFrame:GetRegions()):Hide()
-	select(4, _G.GuildBankPopupFrame:GetRegions()):Hide()
-	_G.GuildBankPopupNameLeft:Hide()
-	_G.GuildBankPopupNameMiddle:Hide()
-	_G.GuildBankPopupNameRight:Hide()
-	_G.GuildBankPopupScrollFrame:GetRegions():Hide()
-	select(2, _G.GuildBankPopupScrollFrame:GetRegions()):Hide()
 	for i = 1, 2 do
 		select(i, _G.GuildBankTransactionsScrollFrame:GetRegions()):Hide()
 		select(i, _G.GuildBankInfoScrollFrame:GetRegions()):Hide()
@@ -43,13 +34,10 @@ C.themes["Blizzard_GuildBankUI"] = function()
 	F.Reskin(_G.GuildBankFrameWithdrawButton)
 	F.Reskin(_G.GuildBankFrameDepositButton)
 	F.Reskin(_G.GuildBankFramePurchaseButton)
-	F.Reskin(_G.GuildBankPopupOkayButton)
-	F.Reskin(_G.GuildBankPopupCancelButton)
 	F.Reskin(_G.GuildBankInfoSaveButton)
 	F.ReskinClose(GuildBankFrame.CloseButton)
 	F.ReskinScroll(_G.GuildBankTransactionsScrollFrameScrollBar)
 	F.ReskinScroll(_G.GuildBankInfoScrollFrameScrollBar)
-	F.ReskinScroll(_G.GuildBankPopupScrollFrameScrollBar)
 	F.ReskinInput(_G.GuildItemSearchBox)
 
 	for i = 1, 4 do
@@ -61,14 +49,6 @@ C.themes["Blizzard_GuildBankUI"] = function()
 		end
 	end
 
-	local bd = _G.CreateFrame("Frame", nil, _G.GuildBankPopupFrame)
-	bd:SetPoint("TOPLEFT")
-	bd:SetPoint("BOTTOMRIGHT", -28, 26)
-	bd:SetFrameLevel(_G.GuildBankPopupFrame:GetFrameLevel()-1)
-	F.CreateBD(bd)
-	F.CreateBD(_G.GuildBankPopupEditBox, .25)
-
-	_G.GuildBankPopupFrame:SetPoint("TOPLEFT", GuildBankFrame, "TOPRIGHT", 2, -30)
 
 	_G.GuildBankFrameWithdrawButton:SetPoint("RIGHT", _G.GuildBankFrameDepositButton, "LEFT", -1, 0)
 
@@ -113,14 +93,25 @@ C.themes["Blizzard_GuildBankUI"] = function()
 		ic:SetTexCoord(.08, .92, .08, .92)
 	end
 
-	for i = 1, _G.NUM_GUILDBANK_ICONS_PER_ROW * _G.NUM_GUILDBANK_ICON_ROWS do
-		local bu = _G["GuildBankPopupButton"..i]
-
-		bu:SetCheckedTexture(C.media.checked)
-		select(2, bu:GetRegions()):Hide()
-
-		_G["GuildBankPopupButton"..i.."Icon"]:SetTexCoord(.08, .92, .08, .92)
-
-		F.CreateBG(_G["GuildBankPopupButton"..i.."Icon"])
+	local GuildBankPopupFrame = _G.GuildBankPopupFrame
+	GuildBankPopupFrame:SetPoint("TOPLEFT", GuildBankFrame, "TOPRIGHT", 3, -30)
+	GuildBankPopupFrame:SetHeight(520)
+	F.CreateBD(GuildBankPopupFrame)
+	GuildBankPopupFrame.BG:Hide()
+	for i = 1, 8 do
+		select(i, GuildBankPopupFrame.BorderBox:GetRegions()):Hide()
 	end
+
+	_G.GuildBankPopupNameLeft:Hide()
+	_G.GuildBankPopupNameMiddle:Hide()
+	_G.GuildBankPopupNameRight:Hide()
+	F.CreateBD(_G.GuildBankPopupEditBox, .25)
+	F.Reskin(_G.GuildBankPopupCancelButton)
+	F.Reskin(_G.GuildBankPopupOkayButton)
+
+	_G.GuildBankPopupScrollFrameTop:Hide()
+	_G.GuildBankPopupScrollFrameMiddle:Hide()
+	_G.GuildBankPopupScrollFrameBottom:Hide()
+	F.ReskinScroll(_G.GuildBankPopupScrollFrameScrollBar)
+	_G.GuildBankPopupScrollFrame:SetHeight(400)
 end

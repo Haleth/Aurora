@@ -2,13 +2,14 @@ local _, private = ...
 
 -- [[ Lua Globals ]]
 local _G = _G
-local select = _G.select
+local select, next = _G.select, _G.next
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
+	local classDisplayName = _G.UnitClass("player")
 
 	_G.CharacterModelFrame:DisableDrawLayer("BACKGROUND")
 	_G.CharacterModelFrame:DisableDrawLayer("BORDER")
@@ -87,13 +88,18 @@ _G.tinsert(C.themes["Aurora"], function()
 			colourPopout(button.popoutButton)
 		end
 	end)
+	_G.hooksecurefunc("PaperDollFrame_SetLevel", function()
+		local classColorString = ("ff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
 
-	-- [[ Stats pane ]]
-
-	_G.CharacterStatsPane.ClassBackground:Hide()
+		local _, specName = _G.GetSpecializationInfo(_G.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
+		_G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColorString, specName, classDisplayName)
+	end)
 
 	-- [[ Sidebar tabs ]]
+	F.Reskin(_G.PaperDollEquipmentManagerPaneSaveSet)
 
+	_G.PaperDollSidebarTabs:GetRegions():Hide()
+	select(2, _G.PaperDollSidebarTabs:GetRegions()):Hide()
 	for i = 1, #_G.PAPERDOLL_SIDEBARS do
 		local tab = _G["PaperDollSidebarTab"..i]
 
@@ -130,20 +136,46 @@ _G.tinsert(C.themes["Aurora"], function()
 		tab.Hider:SetPoint("BOTTOMRIGHT", tab.bg, -1, 1)
 	end
 
+	-- [[ Titles pane ]]
+
+	F.ReskinScroll(_G.PaperDollTitlesPaneScrollBar)
+	_G.PaperDollTitlesPane:HookScript("OnShow", function(titles)
+		for x, object in next, titles.buttons do
+			object:DisableDrawLayer("BACKGROUND")
+			object.text:SetFont(C.media.font, 11)
+		end
+	end)
+
 	-- [[ Equipment manager ]]
 
-	for i = 1, _G.NUM_GEARSET_ICONS_SHOWN do
-		local bu = _G["GearManagerDialogPopupButton"..i]
-		local ic = _G["GearManagerDialogPopupButton"..i.."Icon"]
+	_G.PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", _G.PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
+	_G.PaperDollEquipmentManagerPaneEquipSet:SetWidth(_G.PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
+	F.Reskin(_G.PaperDollEquipmentManagerPaneSaveSet)
+	F.Reskin(_G.PaperDollEquipmentManagerPaneEquipSet)
+	F.ReskinScroll(_G.PaperDollEquipmentManagerPaneScrollBar)
+	--select(6, _G.PaperDollEquipmentManagerPaneEquipSet:GetRegions()):Hide()
 
-		bu:SetCheckedTexture(C.media.checked)
-		select(2, bu:GetRegions()):Hide()
-		ic:SetPoint("TOPLEFT", 1, -1)
-		ic:SetPoint("BOTTOMRIGHT", -1, 1)
-		ic:SetTexCoord(.08, .92, .08, .92)
-
-		F.CreateBD(bu, .25)
+	local GearManagerDialogPopup = _G.GearManagerDialogPopup
+	GearManagerDialogPopup:SetHeight(520)
+	F.CreateBD(GearManagerDialogPopup)
+	GearManagerDialogPopup.BG:Hide()
+	for i = 1, 8 do
+		select(i, GearManagerDialogPopup.BorderBox:GetRegions()):Hide()
 	end
+
+	_G.GearManagerDialogPopupEditBoxLeft:Hide()
+	_G.GearManagerDialogPopupEditBoxMiddle:Hide()
+	_G.GearManagerDialogPopupEditBoxRight:Hide()
+	F.CreateBD(_G.GearManagerDialogPopupEditBox, .25)
+	F.Reskin(_G.GearManagerDialogPopupCancel)
+	F.Reskin(_G.GearManagerDialogPopupOkay)
+
+	_G.GearManagerDialogPopupScrollFrameTop:Hide()
+	_G.GearManagerDialogPopupScrollFrameMiddle:Hide()
+	_G.GearManagerDialogPopupScrollFrameBottom:Hide()
+	F.ReskinScroll(_G.GearManagerDialogPopupScrollFrameScrollBar)
+	_G.GearManagerDialogPopupScrollFrame:SetHeight(400)
+	private.SkinIconArray("GearManagerDialogPopupButton", _G.NUM_GEARSET_ICONS_PER_ROW, _G.NUM_GEARSET_ICON_ROWS)
 
 	local sets = false
 	_G.PaperDollSidebarTab3:HookScript("OnClick", function()
