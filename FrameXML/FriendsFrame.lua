@@ -52,7 +52,9 @@ _G.tinsert(C.themes["Aurora"], function()
     F.CreateBD(_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame)
     _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:SetPoint("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 1, -18)
 
+    _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
     F.ReskinDropDown(_G.FriendsFrameStatusDropDown)
+    _G.FriendsFrameBroadcastInput:SetWidth(250)
     F.ReskinInput(_G.FriendsFrameBroadcastInput)
     for i = 1, 6 do
         for j = 1, 3 do
@@ -189,11 +191,4 @@ _G.tinsert(C.themes["Aurora"], function()
     local send, cancel = _G.BattleTagInviteFrame:GetChildren()
     F.Reskin(send)
     F.Reskin(cancel)
-
-    if not C.is71 then
-        -- Pending List
-        _G.PendingListFrameTop:Hide()
-        _G.PendingListFrameMiddle:Hide()
-        _G.PendingListFrameBottom:Hide()
-    end
 end)
