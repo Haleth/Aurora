@@ -236,7 +236,7 @@ F.ReskinScroll = function(f, parent)
 	local bottom = (f.ScrollBarBottom or f.Bottom) or _G[frame.."Bottom"]
 	if bottom then bottom:Hide() end
 
-	local bu = f.ThumbTexture or f.thumbTexture or _G[frame.."ThumbTexture"]
+	local bu = (f.ThumbTexture or f.thumbTexture) or _G[frame.."ThumbTexture"]
 	bu:SetAlpha(0)
 	bu:SetWidth(17)
 
@@ -249,8 +249,8 @@ F.ReskinScroll = function(f, parent)
 	tex:SetPoint("TOPLEFT", bu.bg, 1, -1)
 	tex:SetPoint("BOTTOMRIGHT", bu.bg, -1, 1)
 
-	local up = f.ScrollUpButton or f.UpButton or _G[(frame or parent).."ScrollUpButton"]
-	local down = f.ScrollDownButton or f.DownButton or _G[(frame or parent).."ScrollDownButton"]
+	local up = (f.ScrollUpButton or f.UpButton) or _G[(frame or parent).."ScrollUpButton"]
+	local down = (f.ScrollDownButton or f.DownButton) or _G[(frame or parent).."ScrollDownButton"]
 
 	up:SetWidth(17)
 	down:SetWidth(17)
