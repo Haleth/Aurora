@@ -92,7 +92,9 @@ _G.tinsert(C.themes["Aurora"], function()
 		local classColorString = ("ff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
 
 		local _, specName = _G.GetSpecializationInfo(_G.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
-		_G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColorString, specName, classDisplayName)
+		if specName and specName ~= "" then
+			_G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColorString, specName, classDisplayName)
+		end
 	end)
 
 	-- [[ Sidebar tabs ]]
