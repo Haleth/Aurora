@@ -77,6 +77,11 @@ _G.tinsert(C.themes["Aurora"], function()
     _G.FriendsFrameFriendsScrollFrameBottom:Hide()
     F.Reskin(_G.FriendsFrameAddFriendButton)
     F.Reskin(_G.FriendsFrameSendMessageButton)
+    local inviteHeader = _G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton
+    F.ReskinStretchButton(inviteHeader)
+    inviteHeader.RightArrow:SetTexture(C.media.arrowRight)
+    inviteHeader.DownArrow:SetTexture(C.media.arrowDown)
+    inviteHeader.DownArrow:SetSize(10, 8)
     F.ReskinScroll(_G.FriendsFrameFriendsScrollFrameScrollBar)
 
     for i = 1, _G.FRIENDS_TO_DISPLAY do
@@ -109,20 +114,63 @@ _G.tinsert(C.themes["Aurora"], function()
         btn.inv:SetSize(22, 22)
     end
 
-    local function UpdateScroll()
-        for i = 1, _G.FRIENDS_TO_DISPLAY do
-            local btn = _G["FriendsFrameFriendsScrollFrameButton"..i]
-            local isEnabled = btn.travelPassButton:IsEnabled()
-            --print("UpdateScroll", i, isEnabled)
+    _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", function(button)
+        if button.buttonType == _G.FRIENDS_BUTTON_TYPE_BNET then
+            local isEnabled = button.travelPassButton:IsEnabled()
 
-            if btn.inv then
-                btn.inv:SetAlpha(isEnabled and 0.7 or 0.25)
-                btn.bg:SetShown(btn.gameIcon:IsShown())
+            if button.inv then
+                button.inv:SetAlpha(isEnabled and 0.7 or 0.25)
+                button.bg:SetShown(button.gameIcon:IsShown())
+            end
+        elseif button.buttonType == _G.FRIENDS_BUTTON_TYPE_INVITE then
+            for invite in _G.FriendsFrameFriendsScrollFrame.invitePool:EnumerateActive() do
+                if not invite._skinned then
+                    local lineOfs = 4
+                    for i = 1, 2 do
+                        local line = invite.DeclineButton:CreateLine()
+                        line:SetColorTexture(1, 0, 0)
+                        line:SetThickness(0.5)
+                        if i == 1 then
+                            line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
+                            line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
+                        else
+                            line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
+                            line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
+                        end
+                    end
+                    invite.DeclineButton:SetSize(22, 22)
+                    invite.DeclineButton.Icon:Hide()
+                    F.ReskinStretchButton(invite.DeclineButton)
+                    F.ReskinStretchButton(invite.AcceptButton)
+                    invite._skinned = true
+                end
             end
         end
-    end
-    _G.hooksecurefunc("FriendsFrame_UpdateFriends", UpdateScroll)
-    _G.hooksecurefunc(_G.FriendsFrameFriendsScrollFrame, "update", UpdateScroll)
+    end)
+    _G.hooksecurefunc(_G.FriendsFrameFriendsScrollFrame.invitePool, "Acquire", function(self, button)
+        for invite in self:EnumerateActive() do
+            if not invite._skinned then
+                local lineOfs = 4
+                for i = 1, 2 do
+                    local line = invite.DeclineButton:CreateLine()
+                    line:SetColorTexture(1, 0, 0)
+                    line:SetThickness(0.5)
+                    if i == 1 then
+                        line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
+                        line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
+                    else
+                        line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
+                        line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
+                    end
+                end
+                invite.DeclineButton:SetSize(22, 22)
+                invite.DeclineButton.Icon:Hide()
+                F.ReskinStretchButton(invite.DeclineButton)
+                F.ReskinStretchButton(invite.AcceptButton)
+                invite._skinned = true
+            end
+        end
+    end)
 
     -- Ignore
     _G.IgnoreListFrameTop:Hide()

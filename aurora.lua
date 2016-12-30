@@ -661,7 +661,7 @@ F.ReskinColourSwatch = function(f)
 	bg:SetPoint("BOTTOMRIGHT", -2, 2)
 end
 
-F.ReskinFilterButton = function(f)
+F.ReskinStretchButton = function(f)
 	f.TopLeft:Hide()
 	f.TopRight:Hide()
 	f.BottomLeft:Hide()
@@ -673,6 +673,11 @@ F.ReskinFilterButton = function(f)
 	f.MiddleMiddle:Hide()
 
 	F.Reskin(f)
+end
+
+F.ReskinFilterButton = function(f)
+	F.ReskinStretchButton(f)
+
 	f.Icon:SetTexture(C.media.arrowRight)
 
 	f.Text:SetPoint("CENTER")
@@ -1137,12 +1142,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- Tab text position
 
 		hooksecurefunc("PanelTemplates_DeselectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]  
-			text:SetPoint("CENTER", tab, "CENTER")  
+			local text = tab.Text or _G[tab:GetName().."Text"]
+			text:SetPoint("CENTER", tab, "CENTER")
 		end)
 
 		hooksecurefunc("PanelTemplates_SelectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]  
+			local text = tab.Text or _G[tab:GetName().."Text"]
 			text:SetPoint("CENTER", tab, "CENTER")
 		end)
 
