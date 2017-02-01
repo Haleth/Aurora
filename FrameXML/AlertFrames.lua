@@ -60,7 +60,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end
 
-	--[=[ Broken in 7.1 
+	--[=[ Broken in 7.1
 	--[[ Dungeon completion rewards ]]
 	local DungeonCompletionAlertFrame = _G.DungeonCompletionAlertFrame
 	local bg = CreateFrame("Frame", nil, DungeonCompletionAlertFrame)
@@ -120,23 +120,23 @@ _G.tinsert(C.themes["Aurora"], function()
 	]=]
 
     _G.hooksecurefunc(_G.AlertFrame, "AddAlertFrame", function(self, frame)
-    	local frameName = frame:GetName()
-    	if frameName then
-    		local alertName = frameName:match("(%w+)AlertFrame")
-    		private.debug("alertName", alertName)
-    		if OnShow[alertName] then OnShow[alertName](frame) end
-    	else
-    		-- QueueAlertFrames are created dynamicly and do not have names
-    		if frame.Unlocked then
-    			-- Achievement alert
-    			if frame.Unlocked:GetText() == _G.ACHIEVEMENT_PROGRESSED then
-    				private.debug("AchievementCriteria")
-    			else
-    				private.debug("AchievementUnlocked")
-    				OnShow.Achievement(frame)
-    			end
-    		end
-    	end
+		local frameName = frame:GetName()
+		if frameName then
+			local alertName = frameName:match("(%w+)AlertFrame")
+			private.debug("alertName", alertName)
+			if OnShow[alertName] then OnShow[alertName](frame) end
+		else
+			-- QueueAlertFrames are created dynamicly and do not have names
+			if frame.Unlocked then
+				-- Achievement alert
+				if frame.Unlocked:GetText() == _G.ACHIEVEMENT_PROGRESSED then
+					private.debug("AchievementCriteria")
+				else
+					private.debug("AchievementUnlocked")
+					OnShow.Achievement(frame)
+				end
+			end
+		end
     end)
 
 	--[[ Pre-Legion  BROKEN

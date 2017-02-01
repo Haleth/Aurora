@@ -34,7 +34,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.QuestRewardScrollFrameBottom:Hide()
 	_G.QuestRewardScrollFrameMiddle:Hide()
 	F.ReskinScroll(_G.QuestRewardScrollFrame.ScrollBar)
-	
+
 
 	--[[ Progress Panel ]]
 	_G.QuestFrameProgressPanel:DisableDrawLayer("BACKGROUND")
@@ -78,7 +78,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		bu.NameFrame:Hide()
 		bu.Count:SetDrawLayer("OVERLAY")
 	end
-	
+
 
 	--[[ Detail Panel ]]
 	_G.QuestFrameDetailPanel:DisableDrawLayer("BACKGROUND")
@@ -96,7 +96,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.QuestDetailScrollFrameBottom:Hide()
 	_G.QuestDetailScrollFrameMiddle:Hide()
 	F.ReskinScroll(_G.QuestDetailScrollFrame.ScrollBar)
-	
+
 
 	--[[ Greeting Panel ]]
 	_G.QuestFrameGreetingPanel:DisableDrawLayer("BACKGROUND")

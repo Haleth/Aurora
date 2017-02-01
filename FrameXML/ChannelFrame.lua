@@ -12,7 +12,7 @@ _G.tinsert(C.themes["Aurora"], function()
     _G.ChannelFrameRightInset:DisableDrawLayer("BORDER")
     _G.ChannelFrameRightInsetBg:Hide()
     F.Reskin(_G.ChannelFrameNewButton)
-    
+
     _G.ChannelRosterScrollFrameTop:SetAlpha(0)
     _G.ChannelRosterScrollFrameBottom:SetAlpha(0)
     F.ReskinScroll(_G.ChannelRosterScrollFrameScrollBar)
