@@ -1,7 +1,6 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local _G = _G
 local select, next = _G.select, _G.next
 
 -- [[ Core ]]

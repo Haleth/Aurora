@@ -1,7 +1,6 @@
 local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
-local _G = _G
 local select, tostring, pairs = _G.select, _G.tostring, _G.pairs
 
 -- [[ WoW API ]]

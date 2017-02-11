@@ -1,8 +1,5 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local _G = _G
-
 -- [[ WoW API ]]
 local C_LootHistory = _G.C_LootHistory
 

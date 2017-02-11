@@ -1,7 +1,6 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local _G = _G
 local tinsert, pairs = _G.tinsert, _G.pairs
 
 -- [[ WoW API ]]

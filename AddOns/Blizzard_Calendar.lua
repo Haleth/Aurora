@@ -1,7 +1,6 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local _G = _G
 local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
 
 -- [[ WoW API ]]

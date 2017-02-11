@@ -1,8 +1,5 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local _G = _G
-
 -- [[ Core ]]
 local _, C = _G.unpack(private.Aurora)
 

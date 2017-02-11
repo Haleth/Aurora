@@ -1,7 +1,6 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local _G = _G
 local select, pairs, tinsert = _G.select, _G.pairs, _G.tinsert
 
 -- [[ Core ]]
