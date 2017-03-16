@@ -688,12 +688,12 @@ F.ReskinStretchButton = function(f)
 	F.Reskin(f)
 end
 
-F.ReskinFilterButton = function(f)
+F.ReskinFilterButton = function(f, direction)
 	F.ReskinStretchButton(f)
 
-	f.Icon:SetTexture(C.media.arrowRight)
+	direction = direction or "Right"
+	f.Icon:SetTexture(C.media["arrow"..direction])
 
-	f.Text:SetPoint("CENTER")
 	f.Icon:SetPoint("RIGHT", f, "RIGHT", -5, 0)
 	f.Icon:SetSize(8, 8)
 end

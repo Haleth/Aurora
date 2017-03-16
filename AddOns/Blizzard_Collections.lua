@@ -540,7 +540,19 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinInput(WardrobeCollectionFrame.searchBox)
 	F.ReskinFilterButton(WardrobeCollectionFrame.FilterButton)
 
+	-- Progress bar
+	local progressBar = WardrobeCollectionFrame.progressBar
+	progressBar.borderLeft:Hide()
+	progressBar.borderMid:Hide()
+	progressBar.borderRight:Hide()
+	progressBar:DisableDrawLayer("BACKGROUND")
 
+	progressBar.text:SetPoint("CENTER", 0, 1)
+	progressBar:SetStatusBarTexture(C.media.backdrop)
+
+	F.CreateBDFrame(progressBar, .25)
+
+	-- Items
 	if C.is72 then
 		local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
 		ItemsCollectionFrame:DisableDrawLayer("BACKGROUND")
@@ -566,18 +578,82 @@ C.themes["Blizzard_Collections"] = function()
 		WardrobeCollectionFrame.NavigationFrame.NextPageButton:SetPoint("BOTTOM", 58, 51)
 	end
 
-	-- Progress bar
+	-- Sets
+	if C.is72 then
+		local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
+		SetsCollectionFrame.LeftInset:DisableDrawLayer("BACKGROUND")
+		SetsCollectionFrame.LeftInset:DisableDrawLayer("BORDER")
+		SetsCollectionFrame.RightInset:DisableDrawLayer("BACKGROUND")
+		SetsCollectionFrame.RightInset:DisableDrawLayer("BORDER")
+		SetsCollectionFrame.RightInset:DisableDrawLayer("ARTWORK")
+		SetsCollectionFrame.RightInset:DisableDrawLayer("OVERLAY")
 
-	local progressBar = WardrobeCollectionFrame.progressBar
-	progressBar.borderLeft:Hide()
-	progressBar.borderMid:Hide()
-	progressBar.borderRight:Hide()
-	progressBar:DisableDrawLayer("BACKGROUND")
+		local ScrollFrame = SetsCollectionFrame.ScrollFrame
+		F.ReskinScroll(ScrollFrame.scrollBar)
+		for i = 1, #ScrollFrame.buttons do
+			local button = ScrollFrame.buttons[i]
 
-	progressBar.text:SetPoint("CENTER", 0, 1)
-	progressBar:SetStatusBarTexture(C.media.backdrop)
+			button.Background:Hide()
+			local bg = CreateFrame("Frame", nil, button)
+			bg:SetPoint("TOPLEFT", 0, -1)
+			bg:SetPoint("BOTTOMRIGHT", 0, 1)
+			bg:SetFrameLevel(button:GetFrameLevel()-1)
+			F.CreateBD(bg, .25)
+			button.bg = bg
 
-	F.CreateBDFrame(progressBar, .25)
+			button.Icon.bg = F.ReskinIcon(button.Icon)
+
+			button.SelectedTexture:SetTexture("")
+			button.HighlightTexture:SetTexture(C.media.backdrop)
+			button.HighlightTexture:SetVertexColor(r, g, b, .25)
+		end
+
+		hooksecurefunc(ScrollFrame, "Update", function(self)
+			local buttons = self.buttons
+
+			for i = 1, #buttons do
+				local button = buttons[i]
+				if button.SelectedTexture:IsShown() then
+					button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
+				else
+					button.bg:SetBackdropBorderColor(0, 0, 0)
+				end
+
+				if button.IconCover:IsShown() then
+					button.Icon.bg:SetVertexColor(0, 0, 0, 0.7)
+				else
+					button.Icon.bg:SetVertexColor(1, 1, 1)
+				end
+			end
+		end)
+
+		local DetailsFrame = SetsCollectionFrame.DetailsFrame
+		DetailsFrame.ModelFadeTexture:Hide()
+		DetailsFrame.IconRowBackground:Hide()
+		F.ReskinFilterButton(DetailsFrame.VariantSetsButton, "Down")
+
+		hooksecurefunc(SetsCollectionFrame, "DisplaySet", function(self)
+			for itemFrame in DetailsFrame.itemFramesPool:EnumerateActive() do
+				if not itemFrame.skinned then
+					itemFrame.Icon.bg = F.ReskinIcon(itemFrame.Icon)
+					itemFrame.IconBorder:Hide()
+
+					itemFrame.skinned = true
+				end
+
+				if itemFrame.collected then
+					local quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
+					local color = _G.BAG_ITEM_QUALITY_COLORS[quality]
+					if not color then
+						print("No color", quality)
+					end
+					itemFrame.Icon.bg:SetVertexColor(color.r, color.g, color.b)
+				else
+					itemFrame.Icon.bg:SetVertexColor(0, 0, 0)
+				end
+			end
+		end)
+	end
 
 	-- [[ Wardrobe ]]
 
