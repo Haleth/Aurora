@@ -106,6 +106,9 @@ _G.tinsert(C.themes["Aurora"], function()
 			"InterfaceOptionsSocialPanelShowToastWindow",
 			"InterfaceOptionsSocialPanelEnableTwitter"
 		}
+		if C.is72 then
+			_G.tinsert(checkboxes, "InterfaceOptionsSocialPanelAutoAcceptQuickJoinRequests")
+		end
 		for i = 1, #checkboxes do
 			F.ReskinCheck(_G[checkboxes[i]])
 		end
