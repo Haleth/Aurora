@@ -27,12 +27,7 @@ C.themes["Blizzard_LookingForGuildUI"] = function()
 	for i = 1, 9 do
 		select(i, _G.LookingForGuildCommentInputFrame:GetRegions()):Hide()
 	end
-	for i = 1, 3 do
-		for j = 1, 6 do
-			select(j, _G["LookingForGuildFrameTab"..i]:GetRegions()):Hide()
-			select(j, _G["LookingForGuildFrameTab"..i]:GetRegions()).Show = F.dummy
-		end
-	end
+	F.ReskinTab("LookingForGuildFrameTab", 3)
 	for i = 1, 6 do
 		select(i, _G.GuildFinderRequestMembershipFrameInputFrame:GetRegions()):Hide()
 	end

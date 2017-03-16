@@ -1,7 +1,8 @@
 local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
-local select, tostring, pairs = _G.select, _G.tostring, _G.pairs
+local select, tostring = _G.select, _G.tostring
+local pairs = _G.pairs
 
 -- [[ WoW API ]]
 local CreateFrame = _G.CreateFrame
@@ -198,20 +199,29 @@ F.Reskin = function(f, noHighlight)
 	end
 end
 
-F.ReskinTab = function(f)
-	f:DisableDrawLayer("BACKGROUND")
+F.ReskinTab = function(f, numTabs)
+	if numTabs then
+		for i = 1, numTabs do
+			for j = 1, 6 do
+				select(j, _G[f..i]:GetRegions()):Hide()
+				select(j, _G[f..i]:GetRegions()).Show = F.dummy
+			end
+		end
+	else
+		f:DisableDrawLayer("BACKGROUND")
 
-	local bg = CreateFrame("Frame", nil, f)
-	bg:SetPoint("TOPLEFT", 8, -3)
-	bg:SetPoint("BOTTOMRIGHT", -8, 0)
-	bg:SetFrameLevel(f:GetFrameLevel()-1)
-	F.CreateBD(bg)
+		local bg = CreateFrame("Frame", nil, f)
+		bg:SetPoint("TOPLEFT", 8, -3)
+		bg:SetPoint("BOTTOMRIGHT", -8, 0)
+		bg:SetFrameLevel(f:GetFrameLevel()-1)
+		F.CreateBD(bg)
 
-	f:SetHighlightTexture(C.media.backdrop)
-	local hl = f:GetHighlightTexture()
-	hl:SetPoint("TOPLEFT", 9, -4)
-	hl:SetPoint("BOTTOMRIGHT", -9, 1)
-	hl:SetVertexColor(red, green, blue, .25)
+		f:SetHighlightTexture(C.media.backdrop)
+		local hl = f:GetHighlightTexture()
+		hl:SetPoint("TOPLEFT", 9, -4)
+		hl:SetPoint("BOTTOMRIGHT", -9, 1)
+		hl:SetVertexColor(red, green, blue, .25)
+	end
 end
 
 local function colourScroll(f)

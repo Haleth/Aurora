@@ -527,6 +527,9 @@ C.themes["Blizzard_Collections"] = function()
 	-- [[ WardrobeCollection ]]
 
 	local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
+	if C.is72 then
+		F.ReskinTab("WardrobeCollectionFrameTab", 2)
+	end
 
 	_G.WardrobeCollectionFrameBg:Hide()
 	F.ReskinInput(WardrobeCollectionFrame.searchBox)
