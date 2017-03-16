@@ -59,7 +59,7 @@ C.themes["Blizzard_Collections"] = function()
 	if C.is72 then
 		F.CreateBD(MountJournal.MountDisplay.ModelScene, .25)
 	else
-	F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
+		F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
 	end
 
 
@@ -74,8 +74,8 @@ C.themes["Blizzard_Collections"] = function()
 		F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "left")
 		F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "right")
 	else
-	F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
-	F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
+		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
+		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
 	end
 	F.ReskinFilterButton(_G.PetJournalFilterButton)
 	F.ReskinFilterButton(_G.MountJournalFilterButton)
@@ -363,11 +363,11 @@ C.themes["Blizzard_Collections"] = function()
 		F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "left")
 		F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "right")
 	else
-	F.ReskinArrow(ToyBox.navigationFrame.prevPageButton, "left")
-	F.ReskinArrow(ToyBox.navigationFrame.nextPageButton, "right")
+		F.ReskinArrow(ToyBox.navigationFrame.prevPageButton, "left")
+		F.ReskinArrow(ToyBox.navigationFrame.nextPageButton, "right")
 
-	ToyBox.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
-	ToyBox.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
+		ToyBox.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
+		ToyBox.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
 	end
 
 	-- Progress bar
@@ -384,8 +384,7 @@ C.themes["Blizzard_Collections"] = function()
 	-- Toys!
 
 	local shouldChangeTextColor = true
-
-	local changeTextColor = function(toyString)
+	local function changeTextColor(toyString)
 		if shouldChangeTextColor then
 			shouldChangeTextColor = false
 
@@ -408,21 +407,26 @@ C.themes["Blizzard_Collections"] = function()
 
 	local buttons = ToyBox.iconsFrame
 	for i = 1, 18 do
-		local bu = buttons["spellButton"..i]
-		local ic = bu.iconTexture
+		local button = buttons["spellButton"..i]
+		button:SetPushedTexture("")
+		button:SetHighlightTexture("")
 
-		bu:SetPushedTexture("")
-		bu:SetHighlightTexture("")
+		button.bg = F.CreateBG(button)
+		button.bg:SetPoint("TOPLEFT", button, 3, -2)
+		button.bg:SetPoint("BOTTOMRIGHT", button, -3, 4)
 
-		bu.cooldown:SetAllPoints(ic)
+		button.iconTexture:SetTexCoord(.08, .92, .08, .92)
 
-		bu.slotFrameCollected:SetTexture("")
-		bu.slotFrameUncollected:SetTexture("")
+		button.iconTextureUncollected:SetTexCoord(.08, .92, .08, .92)
+		button.iconTextureUncollected:SetPoint("CENTER", 0, 1)
+		button.iconTextureUncollected:SetHeight(42)
 
-		ic:SetTexCoord(.08, .92, .08, .92)
-		F.CreateBG(ic)
+		button.slotFrameCollected:SetTexture("")
+		button.slotFrameUncollected:SetTexture("")
 
-		hooksecurefunc(bu.name, "SetTextColor", changeTextColor)
+		--button.cooldown:SetAllPoints(icon)
+
+		hooksecurefunc(button.name, "SetTextColor", changeTextColor)
 	end
 
 	-- [[ Heirlooms ]]
@@ -443,11 +447,11 @@ C.themes["Blizzard_Collections"] = function()
 		F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "left")
 		F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "right")
 	else
-	F.ReskinArrow(HeirloomsJournal.navigationFrame.prevPageButton, "left")
-	F.ReskinArrow(HeirloomsJournal.navigationFrame.nextPageButton, "right")
+		F.ReskinArrow(HeirloomsJournal.navigationFrame.prevPageButton, "left")
+		F.ReskinArrow(HeirloomsJournal.navigationFrame.nextPageButton, "right")
 
-	HeirloomsJournal.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
-	HeirloomsJournal.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
+		HeirloomsJournal.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
+		HeirloomsJournal.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
 	end
 
 	-- Progress bar
@@ -463,38 +467,53 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- Buttons
 
-	hooksecurefunc("HeirloomsJournal_UpdateButton", function(button)
+	local heirloomColor = _G.BAG_ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_HEIRLOOM]
+	hooksecurefunc(HeirloomsJournal, "UpdateButton", function(self, button)
 		if not button.styled then
-			local ic = button.iconTexture
+			button:SetPushedTexture("")
+			button:SetHighlightTexture("")
+
+			button.bg = F.CreateBG(button)
+			button.bg:SetPoint("TOPLEFT", button, 3, -2)
+			button.bg:SetPoint("BOTTOMRIGHT", button, -3, 4)
+
+			button.iconTexture:SetTexCoord(.08, .92, .08, .92)
+
+			button.iconTextureUncollected:SetTexCoord(.08, .92, .08, .92)
+			button.iconTextureUncollected:SetPoint("CENTER", 0, 1)
+			button.iconTextureUncollected:SetHeight(42)
 
 			button.slotFrameCollected:SetTexture("")
 			button.slotFrameUncollected:SetTexture("")
-			button.levelBackground:SetAlpha(0)
 
-			button.iconTextureUncollected:SetTexCoord(.08, .92, .08, .92)
-			button.bg = F.ReskinIcon(ic)
+			button.levelBackground:SetAlpha(0)
 
 			button.level:ClearAllPoints()
 			button.level:SetPoint("BOTTOM", 0, 1)
 
-			local newLevelBg = button:CreateTexture(nil, "OVERLAY")
-			newLevelBg:SetColorTexture(0, 0, 0, .5)
-			newLevelBg:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT", 4, 5)
-			newLevelBg:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -4, 5)
-			newLevelBg:SetHeight(11)
-			button.newLevelBg = newLevelBg
+			local auroraLevelBG = button:CreateTexture(nil, "OVERLAY")
+			auroraLevelBG:SetColorTexture(0, 0, 0, .5)
+			auroraLevelBG:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT", 4, 5)
+			auroraLevelBG:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -4, 5)
+			auroraLevelBG:SetHeight(11)
+			button.auroraLevelBG = auroraLevelBG
 
 			button.styled = true
 		end
 
 		if button.iconTexture:IsShown() then
 			button.name:SetTextColor(1, 1, 1)
-			button.bg:SetVertexColor(.9, .8, .5)
-			button.newLevelBg:Show()
+			button.bg:SetVertexColor(heirloomColor.r, heirloomColor.g, heirloomColor.b)
+			button.auroraLevelBG:Show()
+			if button.levelBackground:GetAtlas() == "collections-levelplate-gold" then
+				button.auroraLevelBG:SetColorTexture(1, 1, 1, .5)
+			else
+				button.auroraLevelBG:SetColorTexture(0, 0, 0, .5)
+			end
 		else
 			button.name:SetTextColor(.5, .5, .5)
 			button.bg:SetVertexColor(0, 0, 0)
-			button.newLevelBg:Hide()
+			button.auroraLevelBG:Hide()
 		end
 	end)
 
@@ -506,20 +525,6 @@ C.themes["Blizzard_Collections"] = function()
 				header.text:SetFont(C.media.font, 16)
 
 				header.styled = true
-			end
-		end
-
-		for i = 1, #HeirloomsJournal.heirloomEntryFrames do
-			local button = HeirloomsJournal.heirloomEntryFrames[i]
-
-			if button.iconTexture:IsShown() then
-				button.name:SetTextColor(1, 1, 1)
-				button.bg:SetVertexColor(.9, .8, .5)
-				button.newLevelBg:Show()
-			else
-				button.name:SetTextColor(.5, .5, .5)
-				button.bg:SetVertexColor(0, 0, 0)
-				button.newLevelBg:Hide()
 			end
 		end
 	end)
@@ -548,17 +553,17 @@ C.themes["Blizzard_Collections"] = function()
 		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "right")
 	else
 		local ModelsFrame = WardrobeCollectionFrame.ModelsFrame
-	ModelsFrame:DisableDrawLayer("BACKGROUND")
-	ModelsFrame:DisableDrawLayer("BORDER")
-	ModelsFrame:DisableDrawLayer("ARTWORK")
-	ModelsFrame:DisableDrawLayer("OVERLAY")
+		ModelsFrame:DisableDrawLayer("BACKGROUND")
+		ModelsFrame:DisableDrawLayer("BORDER")
+		ModelsFrame:DisableDrawLayer("ARTWORK")
+		ModelsFrame:DisableDrawLayer("OVERLAY")
 
 		F.ReskinDropDown(ModelsFrame.WeaponDropDown)
-	F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, "left")
-	F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.NextPageButton, "right")
+		F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, "left")
+		F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.NextPageButton, "right")
 
-	WardrobeCollectionFrame.NavigationFrame.PrevPageButton:SetPoint("BOTTOM", 23, 51)
-	WardrobeCollectionFrame.NavigationFrame.NextPageButton:SetPoint("BOTTOM", 58, 51)
+		WardrobeCollectionFrame.NavigationFrame.PrevPageButton:SetPoint("BOTTOM", 23, 51)
+		WardrobeCollectionFrame.NavigationFrame.NextPageButton:SetPoint("BOTTOM", 58, 51)
 	end
 
 	-- Progress bar
