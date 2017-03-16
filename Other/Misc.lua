@@ -45,4 +45,15 @@ _G.tinsert(C.themes["Aurora"], function()
 
     --[[ FrameXML/HelpFrame.lua ]]--
     F.CreateBD(_G.TicketStatusFrameButton)
+
+    --[[ FrameXML/ItemButtonTemplate.lua ]]--
+    _G.hooksecurefunc("SetItemButtonQuality", function(button, quality, itemIDOrLink)
+        if button.bg then
+            local color = _G.BAG_ITEM_QUALITY_COLORS[quality]
+            if quality >= _G.LE_ITEM_QUALITY_COMMON and color then
+                button.bg:SetVertexColor(color.r, color.g, color.b)
+                button.IconBorder:Hide()
+            end
+        end
+    end)
 end)

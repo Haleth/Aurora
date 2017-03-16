@@ -116,19 +116,25 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 	F.ReskinArrow(detailsFrame.CreateMultipleInputBox.DecrementButton, "left")
 
 	local contents = detailsFrame.Contents
-	contents.ResultIcon.Background:Hide()
+	if C.is72 then
+		contents.ResultIcon.bg = F.CreateBG(contents.ResultIcon)
+		contents.ResultIcon.ResultBorder:Hide()
+	else
+		contents.ResultIcon.Background:Hide()
+	end
 	hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
 		if not self._isSkinned then
-			F.ReskinIcon(self:GetNormalTexture())
+			self.bg = F.ReskinIcon(self:GetNormalTexture())
 			self._isSkinned = true
 		end
 	end)
 	for i = 1, #contents.Reagents do
 		local reagent = contents.Reagents[i]
-		F.ReskinIcon(reagent.Icon)
+		reagent.Icon:SetTexCoord(.08, .92, .08, .92)
+		F.CreateBDFrame(reagent.Icon)
 		reagent.NameFrame:Hide()
 		local bg = F.CreateBDFrame(reagent.NameFrame, .2)
-		bg:SetPoint("TOPLEFT", reagent.Icon, "TOPRIGHT", 2, 0)
-		bg:SetPoint("BOTTOMRIGHT", -4, 0)
+		bg:SetPoint("TOPLEFT", reagent.Icon, "TOPRIGHT", 2, 1)
+		bg:SetPoint("BOTTOMRIGHT", -4, 1)
 	end
 end

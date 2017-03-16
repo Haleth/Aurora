@@ -718,10 +718,9 @@ C.themes["Blizzard_Collections"] = function()
 				if itemFrame.collected then
 					local quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
 					local color = _G.BAG_ITEM_QUALITY_COLORS[quality]
-					if not color then
-						print("No color", quality)
+					if color then
+						itemFrame.Icon.bg:SetVertexColor(color.r, color.g, color.b)
 					end
-					itemFrame.Icon.bg:SetVertexColor(color.r, color.g, color.b)
 				else
 					itemFrame.Icon.bg:SetVertexColor(0, 0, 0)
 				end
