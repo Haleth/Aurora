@@ -88,33 +88,30 @@ C.themes["Blizzard_Collections"] = function()
 	local scrollFrames = {MountJournal.ListScrollFrame.buttons, PetJournal.listScroll.buttons}
 	for _, scrollFrame in pairs(scrollFrames) do
 		for i = 1, #scrollFrame do
-			local bu = scrollFrame[i]
-			local ic = bu.icon
+			local button = scrollFrame[i]
 
-			bu:GetRegions():Hide()
-			bu:SetHighlightTexture("")
-			bu.iconBorder:SetTexture("")
-			bu.selectedTexture:SetTexture("")
-
-			local bg = CreateFrame("Frame", nil, bu)
+			button:GetRegions():Hide()
+			local bg = CreateFrame("Frame", nil, button)
 			bg:SetPoint("TOPLEFT", 0, -1)
 			bg:SetPoint("BOTTOMRIGHT", 0, 1)
-			bg:SetFrameLevel(bu:GetFrameLevel()-1)
+			bg:SetFrameLevel(button:GetFrameLevel()-1)
 			F.CreateBD(bg, .25)
-			bu.bg = bg
+			button.bg = bg
 
-			ic:SetTexCoord(.08, .92, .08, .92)
-			ic.bg = F.CreateBG(ic)
+			button.icon.bg = F.ReskinIcon(button.icon)
 
-			bu.name:SetParent(bg)
+			button.iconBorder:SetTexture("")
+			button.selectedTexture:SetTexture("")
+			button:SetHighlightTexture(C.media.backdrop)
+			button:GetHighlightTexture():SetVertexColor(r, g, b, .25)
 
-			if bu.DragButton then
-				bu.DragButton.ActiveTexture:SetTexture(C.media.checked)
+			if button.DragButton then
+				button.DragButton.ActiveTexture:SetTexture(C.media.checked)
 			else
-				bu.dragButton.ActiveTexture:SetTexture(C.media.checked)
-				bu.dragButton.levelBG:SetAlpha(0)
-				bu.dragButton.level:SetFontObject(_G.GameFontNormal)
-				bu.dragButton.level:SetTextColor(1, 1, 1)
+				button.dragButton.ActiveTexture:SetTexture(C.media.checked)
+				button.dragButton.levelBG:SetAlpha(0)
+				button.dragButton.level:SetFontObject(_G.GameFontNormal)
+				button.dragButton.level:SetTextColor(1, 1, 1)
 			end
 		end
 	end
@@ -122,21 +119,21 @@ C.themes["Blizzard_Collections"] = function()
 	local function updateMountScroll()
 		local buttons = MountJournal.ListScrollFrame.buttons
 		for i = 1, #buttons do
-			local bu = buttons[i]
-			if bu.index ~= nil then
-				bu.bg:Show()
-				bu.icon:Show()
-				bu.icon.bg:Show()
+			local button = buttons[i]
+			if button.index ~= nil then
+				button.bg:Show()
+				button.icon:Show()
+				button.icon.bg:Show()
 
-				if bu.selectedTexture:IsShown() then
-					bu.bg:SetBackdropColor(r, g, b, .25)
+				if button.selectedTexture:IsShown() then
+					button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
 				else
-					bu.bg:SetBackdropColor(0, 0, 0, .25)
+					button.bg:SetBackdropBorderColor(0, 0, 0)
 				end
 			else
-				bu.bg:Hide()
-				bu.icon:Hide()
-				bu.icon.bg:Hide()
+				button.bg:Hide()
+				button.icon:Hide()
+				button.icon.bg:Hide()
 			end
 		end
 	end
@@ -148,9 +145,9 @@ C.themes["Blizzard_Collections"] = function()
 		local petButtons = PetJournal.listScroll.buttons
 		if petButtons then
 			for i = 1, #petButtons do
-				local bu = petButtons[i]
+				local button = petButtons[i]
 
-				local index = bu.index
+				local index = button.index
 				if index then
 					local petID, _, isOwned = _G.C_PetJournal.GetPetInfoByIndex(index)
 
@@ -159,18 +156,18 @@ C.themes["Blizzard_Collections"] = function()
 
 						if rarity then
 							local color = _G.ITEM_QUALITY_COLORS[rarity-1]
-							bu.name:SetTextColor(color.r, color.g, color.b)
+							button.name:SetTextColor(color.r, color.g, color.b)
 						else
-							bu.name:SetTextColor(1, 1, 1)
+							button.name:SetTextColor(1, 1, 1)
 						end
 					else
-						bu.name:SetTextColor(.5, .5, .5)
+						button.name:SetTextColor(.5, .5, .5)
 					end
 
-					if bu.selectedTexture:IsShown() then
-						bu.bg:SetBackdropColor(r, g, b, .25)
+					if button.selectedTexture:IsShown() then
+						button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
 					else
-						bu.bg:SetBackdropColor(0, 0, 0, .25)
+						button.bg:SetBackdropBorderColor(0, 0, 0)
 					end
 				end
 			end
@@ -405,9 +402,9 @@ C.themes["Blizzard_Collections"] = function()
 		end
 	end
 
-	local buttons = ToyBox.iconsFrame
+	local iconsFrame = ToyBox.iconsFrame
 	for i = 1, 18 do
-		local button = buttons["spellButton"..i]
+		local button = iconsFrame["spellButton"..i]
 		button:SetPushedTexture("")
 		button:SetHighlightTexture("")
 
@@ -517,9 +514,9 @@ C.themes["Blizzard_Collections"] = function()
 		end
 	end)
 
-	hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function()
-		for i = 1, #HeirloomsJournal.heirloomHeaderFrames do
-			local header = HeirloomsJournal.heirloomHeaderFrames[i]
+	hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function(self)
+		for i = 1, #self.heirloomHeaderFrames do
+			local header = self.heirloomHeaderFrames[i]
 			if not header.styled then
 				header.text:SetTextColor(1, 1, 1)
 				header.text:SetFont(C.media.font, 16)
