@@ -550,29 +550,106 @@ C.themes["Blizzard_Collections"] = function()
 	F.CreateBDFrame(progressBar, .25)
 
 	-- Items
-	if C.is72 then
-		local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
-		ItemsCollectionFrame:DisableDrawLayer("BACKGROUND")
-		ItemsCollectionFrame:DisableDrawLayer("BORDER")
-		ItemsCollectionFrame:DisableDrawLayer("ARTWORK")
-		ItemsCollectionFrame:DisableDrawLayer("OVERLAY")
+	local ItemsCollectionFrame = WardrobeCollectionFrame[C.is72 and "ItemsCollectionFrame" or "ModelsFrame"]
+	ItemsCollectionFrame:DisableDrawLayer("BACKGROUND")
+	ItemsCollectionFrame:DisableDrawLayer("BORDER")
+	ItemsCollectionFrame:DisableDrawLayer("ARTWORK")
+	ItemsCollectionFrame:DisableDrawLayer("OVERLAY")
 
-		F.ReskinDropDown(ItemsCollectionFrame.WeaponDropDown)
+	F.ReskinDropDown(ItemsCollectionFrame.WeaponDropDown)
+	if C.is72 then
 		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "left")
 		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "right")
 	else
-		local ModelsFrame = WardrobeCollectionFrame.ModelsFrame
-		ModelsFrame:DisableDrawLayer("BACKGROUND")
-		ModelsFrame:DisableDrawLayer("BORDER")
-		ModelsFrame:DisableDrawLayer("ARTWORK")
-		ModelsFrame:DisableDrawLayer("OVERLAY")
-
-		F.ReskinDropDown(ModelsFrame.WeaponDropDown)
 		F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, "left")
 		F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.NextPageButton, "right")
 
 		WardrobeCollectionFrame.NavigationFrame.PrevPageButton:SetPoint("BOTTOM", 23, 51)
 		WardrobeCollectionFrame.NavigationFrame.NextPageButton:SetPoint("BOTTOM", 58, 51)
+	end
+
+	local Models = ItemsCollectionFrame.Models
+	for i = 1, #Models do
+		local model = Models[i]
+		local bg, _, _, _, _, highlight = model:GetRegions()
+		bg:Hide()
+		model.Border:Hide()
+		model.bg = F.CreateBDFrame(model)
+		model.bg:SetPoint("BOTTOMRIGHT", 2, -2)
+		highlight:SetTexCoord(.03, .97, .03, .97)
+		highlight:SetPoint("TOPLEFT", 0, 0)
+		highlight:SetPoint("BOTTOMRIGHT", 1, -1)
+	end
+
+	local lightValues = {
+		enabled=true, omni=false,
+		dirX=-1, dirY=1, dirZ=-1,
+		ambIntensity=1.05, ambR=1, ambG=1, ambB=1,
+		dirIntensity=0, dirR=1, dirG=1, dirB=1
+	}
+	local notCollected = {
+		ambIntensity=1, ambR=0.4, ambG=0.4, ambB=0.4,
+		dirIntensity=0.5, dirR=0.5, dirG=0.5, dirB=0.5
+	}
+	local notUsable = {
+		ambIntensity=1, ambR=0.8, ambG=0.4, ambB=0.4,
+		dirIntensity=0.5, dirR=1, dirG=0, dirB=0
+	}
+	local function UpdateItems(self)
+		for i = 1, self.PAGE_SIZE do
+			local model = self.Models[i]
+			local visualInfo = model.visualInfo
+			if visualInfo then
+				local borderColor
+				if model.TransmogStateTexture:IsShown() then
+					local xmogState = model.TransmogStateTexture:GetAtlas()
+					if xmogState:find("transmogged") then
+						borderColor = {1, 0.5, 1}
+					elseif xmogState:find("current") then
+						borderColor = {1, 1, 0}
+					elseif xmogState:find("selected") then
+						borderColor = {1, 0.5, 1}
+					end
+					model.TransmogStateTexture:Hide()
+
+					self.PendingTransmogFrame:SetPoint("TOPLEFT", model, 2, -3)
+					self.PendingTransmogFrame:SetPoint("BOTTOMRIGHT", model, -1, 2)
+					self.PendingTransmogFrame.TransmogSelectedAnim2:Stop()
+				end
+
+				if borderColor then
+					model.bg:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3])
+				else
+					model.bg:SetBackdropBorderColor(0, 0, 0)
+				end
+
+				if ( not visualInfo.isCollected ) then
+					model:SetLight(lightValues.enabled, lightValues.omni,
+					    lightValues.dirX, lightValues.dirY, lightValues.dirZ,
+					    notCollected.ambIntensity, notCollected.ambR, notCollected.ambG, notCollected.ambB,
+					    notCollected.dirIntensity, notCollected.dirR, notCollected.dirG, notCollected.dirB)
+				elseif ( not visualInfo.isUsable ) then
+					model:SetLight(lightValues.enabled, lightValues.omni,
+					    lightValues.dirX, lightValues.dirY, lightValues.dirZ,
+					    notUsable.ambIntensity, notUsable.ambR, notUsable.ambG, notUsable.ambB,
+					    notUsable.dirIntensity, notUsable.dirR, notUsable.dirG, notUsable.dirB)
+				else
+					model:SetLight(lightValues.enabled, lightValues.omni,
+					    lightValues.dirX, lightValues.dirY, lightValues.dirZ,
+					    lightValues.ambIntensity, lightValues.ambR, lightValues.ambG, lightValues.ambB,
+					    lightValues.dirIntensity, lightValues.dirR, lightValues.dirG, lightValues.dirB)
+				end
+			end
+		end
+	end
+	if C.is72 then
+		hooksecurefunc(ItemsCollectionFrame, "UpdateItems", UpdateItems)
+	else
+		hooksecurefunc("WardrobeCollectionFrame_Update", function()
+			ItemsCollectionFrame.PAGE_SIZE = 18
+			ItemsCollectionFrame.PendingTransmogFrame = _G.WardrobeModelPendingTransmogFrame
+			UpdateItems(ItemsCollectionFrame)
+		end)
 	end
 
 	-- Sets
