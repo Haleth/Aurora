@@ -8,6 +8,9 @@
 aurora.lua
 gui.lua
 
+Other\Misc.lua
+Other\ChatBubbles.lua
+
 AddOns\Blizzard_AchievementUI.lua
 AddOns\Blizzard_ArchaeologyUI.lua
 AddOns\Blizzard_AuctionUI.lua
@@ -46,12 +49,14 @@ FrameXML\BankFrame.lua
 FrameXML\ChannelFrame.lua
 FrameXML\CharacterFrame.lua
 FrameXML\ChatConfigFrame.lua
+FrameXML\ColorPickerFrame.lua
 FrameXML\Constants.lua
 FrameXML\ContainerFrame.lua
 FrameXML\DressUpFrames.lua
 FrameXML\EquipmentFlyout.lua
 FrameXML\Fonts.lua
 FrameXML\FriendsFrame.lua
+FrameXML\GameMenuFrame.lua
 FrameXML\GameTooltip.lua
 FrameXML\GarrisonFollowerTooltip.lua
 FrameXML\InterfaceOptionsFrame.lua
@@ -87,5 +92,3 @@ FrameXML\WorldMapFrame.lua
 FrameXML\WorldStateFrame.lua
 
 SharedXML\AddonList.lua
-
-Other\ChatBubbles.lua

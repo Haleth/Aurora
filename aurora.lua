@@ -525,7 +525,7 @@ F.ReskinRadio = function(f)
 	f:HookScript("OnLeave", clearRadio)
 end
 
-F.ReskinSlider = function(f)
+F.ReskinSlider = function(f, isVert)
 	f:SetBackdrop(nil)
 	f.SetBackdrop = F.dummy
 
@@ -540,6 +540,9 @@ F.ReskinSlider = function(f)
 
 	local slider = select(4, f:GetRegions())
 	slider:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
+	if isVert then
+		slider:SetTexCoord(1,0, 0,0, 1,1, 0,1)
+	end
 	slider:SetBlendMode("ADD")
 end
 
@@ -871,25 +874,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- [[ Headers ]]
-
-		local header = {"GameMenuFrame", "AudioOptionsFrame", "ColorPickerFrame"}
-		for i = 1, #header do
-			local title = _G[header[i].."Header"]
-			if title then
-				title:SetTexture("")
-				title:ClearAllPoints()
-				if title == _G["GameMenuFrameHeader"] then
-					title:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
-				else
-					title:SetPoint("TOP", header[i], 0, 0)
-				end
-			end
-		end
-
 		-- [[ Simple backdrops ]]
 
-		local bds = {"AutoCompleteBox", "TicketStatusFrameButton", "ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog"}
+		local bds = {"ScrollOfResurrectionSelectionFrame", "ScrollOfResurrectionFrame", "VoiceChatTalkers", "ReportPlayerNameDialog", "ReportCheatingDialog"}
 
 		for i = 1, #bds do
 			local bd = _G[bds[i]]
@@ -960,7 +947,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.SetBD(_G.HelpFrame)
 		F.SetBD(_G.RaidParentFrame)
 
-		local FrameBDs = {"GameMenuFrame", "AudioOptionsFrame", "StackSplitFrame", "ColorPickerFrame", "ReadyCheckFrame", "GuildInviteFrame"}
+		local FrameBDs = {"StackSplitFrame", "ReadyCheckFrame", "GuildInviteFrame"}
 		for i = 1, #FrameBDs do
 			local FrameBD = _G[FrameBDs[i]]
 			F.CreateBD(FrameBD)
@@ -1962,7 +1949,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"AudioOptionsFrameOkay", "AudioOptionsFrameCancel", "AudioOptionsFrameDefaults", "StackSplitOkayButton", "StackSplitCancelButton", "GameMenuButtonHelp", "GameMenuButtonWhatsNew", "GameMenuButtonStore", "GameMenuButtonOptions", "GameMenuButtonUIOptions", "GameMenuButtonKeybindings", "GameMenuButtonMacros", "GameMenuButtonAddons", "GameMenuButtonLogout", "GameMenuButtonQuit", "GameMenuButtonContinue", "LFDQueueFrameFindGroupButton", "ColorPickerOkayButton", "ColorPickerCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "ScrollOfResurrectionSelectionFrameAcceptButton", "ScrollOfResurrectionSelectionFrameCancelButton", "ScrollOfResurrectionFrameAcceptButton", "ScrollOfResurrectionFrameCancelButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton"}
+		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "LFDQueueFrameFindGroupButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "ScrollOfResurrectionSelectionFrameAcceptButton", "ScrollOfResurrectionSelectionFrameCancelButton", "ScrollOfResurrectionFrameAcceptButton", "ScrollOfResurrectionFrameCancelButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then
@@ -1977,22 +1964,4 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.ReskinClose(_G[closebuttons[i]])
 		end
 	end
-end)
-
-
--- [[ Misc ]]
-
--- UIParent.lua
-function private.SkinIconArray(baseName, rowSize, numRows)
-	for i = 1, rowSize * numRows do
-		local bu = _G[baseName..i]
-		bu:SetCheckedTexture(C.media.checked)
-		select(2, bu:GetRegions()):Hide()
-
-		F.ReskinIcon(_G[baseName..i.."Icon"])
-	end
-end
-_G.hooksecurefunc("BuildIconArray", function(parent, baseName, template, rowSize, numRows, onButtonCreated)
-	-- This is used to create icons for the GuildBankPopupFrame, MacroPopupFrame, and GearManagerDialogPopup
-	private.SkinIconArray(baseName, rowSize, numRows)
 end)
