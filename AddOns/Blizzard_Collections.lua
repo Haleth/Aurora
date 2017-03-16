@@ -56,7 +56,12 @@ C.themes["Blizzard_Collections"] = function()
 
 	F.CreateBD(MountJournal.MountCount, .25)
 	F.CreateBD(PetJournal.PetCount, .25)
+	if C.is72 then
+		F.CreateBD(MountJournal.MountDisplay.ModelScene, .25)
+	else
 	F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
+	end
+
 
 	F.Reskin(_G.MountJournalMountButton)
 	F.Reskin(_G.PetJournalSummonButton)
@@ -65,8 +70,13 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinScroll(_G.PetJournalListScrollFrameScrollBar)
 	F.ReskinInput(_G.MountJournalSearchBox)
 	F.ReskinInput(_G.PetJournalSearchBox)
+	if C.is72 then
+		F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "left")
+		F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "right")
+	else
 	F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
 	F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
+	end
 	F.ReskinFilterButton(_G.PetJournalFilterButton)
 	F.ReskinFilterButton(_G.MountJournalFilterButton)
 
@@ -349,11 +359,16 @@ C.themes["Blizzard_Collections"] = function()
 
 	F.ReskinInput(ToyBox.searchBox)
 	F.ReskinFilterButton(_G.ToyBoxFilterButton)
+	if C.is72 then
+		F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "left")
+		F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "right")
+	else
 	F.ReskinArrow(ToyBox.navigationFrame.prevPageButton, "left")
 	F.ReskinArrow(ToyBox.navigationFrame.nextPageButton, "right")
 
 	ToyBox.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
 	ToyBox.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
+	end
 
 	-- Progress bar
 
@@ -424,11 +439,16 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinInput(_G.HeirloomsJournalSearchBox)
 	F.ReskinDropDown(_G.HeirloomsJournalClassDropDown)
 	F.ReskinFilterButton(_G.HeirloomsJournalFilterButton)
+	if C.is72 then
+		F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "left")
+		F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "right")
+	else
 	F.ReskinArrow(HeirloomsJournal.navigationFrame.prevPageButton, "left")
 	F.ReskinArrow(HeirloomsJournal.navigationFrame.nextPageButton, "right")
 
 	HeirloomsJournal.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
 	HeirloomsJournal.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
+	end
 
 	-- Progress bar
 
@@ -507,22 +527,36 @@ C.themes["Blizzard_Collections"] = function()
 	-- [[ WardrobeCollection ]]
 
 	local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
-	local ModelsFrame = WardrobeCollectionFrame.ModelsFrame
 
 	_G.WardrobeCollectionFrameBg:Hide()
+	F.ReskinInput(WardrobeCollectionFrame.searchBox)
+	F.ReskinFilterButton(WardrobeCollectionFrame.FilterButton)
+
+
+	if C.is72 then
+		local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
+		ItemsCollectionFrame:DisableDrawLayer("BACKGROUND")
+		ItemsCollectionFrame:DisableDrawLayer("BORDER")
+		ItemsCollectionFrame:DisableDrawLayer("ARTWORK")
+		ItemsCollectionFrame:DisableDrawLayer("OVERLAY")
+
+		F.ReskinDropDown(ItemsCollectionFrame.WeaponDropDown)
+		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "left")
+		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "right")
+	else
+		local ModelsFrame = WardrobeCollectionFrame.ModelsFrame
 	ModelsFrame:DisableDrawLayer("BACKGROUND")
 	ModelsFrame:DisableDrawLayer("BORDER")
 	ModelsFrame:DisableDrawLayer("ARTWORK")
 	ModelsFrame:DisableDrawLayer("OVERLAY")
 
-	F.ReskinInput(_G.WardrobeCollectionFrameSearchBox)
-	F.ReskinFilterButton(_G.WardrobeCollectionFrame.FilterButton)
-	F.ReskinDropDown(_G.WardrobeCollectionFrameWeaponDropDown)
+		F.ReskinDropDown(ModelsFrame.WeaponDropDown)
 	F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, "left")
 	F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.NextPageButton, "right")
 
 	WardrobeCollectionFrame.NavigationFrame.PrevPageButton:SetPoint("BOTTOM", 23, 51)
 	WardrobeCollectionFrame.NavigationFrame.NextPageButton:SetPoint("BOTTOM", 58, 51)
+	end
 
 	-- Progress bar
 
@@ -564,7 +598,21 @@ C.themes["Blizzard_Collections"] = function()
 	_G.WardrobeOutfitDropDown.SaveButton:SetPoint("LEFT", _G.WardrobeOutfitDropDown, "RIGHT", -13, 2)
 	WardrobeTransmogFrame.SpecButton:SetPoint("RIGHT", WardrobeTransmogFrame.ApplyButton, "LEFT", -3, 0)
 
-	local slots = {"Head", "Shoulder", "Chest", "Waist", "Legs", "Feet", "Wrist", "Hands", "Back", "Shirt", "Tabard", "MainHand", "SecondaryHand"}
+	local slots = {
+		"Head",
+		"Shoulder",
+		"Chest",
+		"Waist",
+		"Legs",
+		"Feet",
+		"Wrist",
+		"Hands",
+		"Back",
+		"Shirt",
+		"Tabard",
+		"MainHand",
+		"SecondaryHand"
+	}
 
 	for i = 1, #slots do
 		local slot = WardrobeTransmogFrame.Model[slots[i].."Button"]
