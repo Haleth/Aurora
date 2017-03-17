@@ -55,7 +55,7 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 	hooksecurefunc(recipeList, "RefreshDisplay", function(self)
 		for i = 1, #self.buttons do
 			local tradeSkillButton = self.buttons[i]
-			if not tradeSkillButton._isSkinned then
+			if not tradeSkillButton._auroraSkinned then
 				local bg = CreateFrame("Frame", nil, tradeSkillButton)
 				F.CreateBD(bg, .0)
 				F.CreateGradient(bg)
@@ -87,7 +87,7 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 				tradeSkillButton:HookScript("OnEnter", F.colourExpandOrCollapse)
 				tradeSkillButton:HookScript("OnLeave", F.clearExpandOrCollapse)
 
-				tradeSkillButton._isSkinned = true
+				tradeSkillButton._auroraSkinned = true
 			end
 
 			updateCollapsedState(tradeSkillButton)
@@ -123,9 +123,9 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 		contents.ResultIcon.Background:Hide()
 	end
 	hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
-		if not self._isSkinned then
-			self.bg = F.ReskinIcon(self:GetNormalTexture())
-			self._isSkinned = true
+		if not self._auroraSkinned then
+			self._auroraBG = F.ReskinIcon(self:GetNormalTexture())
+			self._auroraSkinned = true
 		end
 	end)
 	for i = 1, #contents.Reagents do

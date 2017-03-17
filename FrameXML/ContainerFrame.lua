@@ -1,81 +1,82 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
-
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	if not _G.AuroraConfig.bags then return end
 
-	local r, g, b = C.r, C.g, C.b
-
 	_G.BackpackTokenFrame:GetRegions():Hide()
 
-	local function onEnter(self)
-		self.bg:SetBackdropBorderColor(r, g, b)
-	end
+	local BAG_FILTER_ICONS = {
+		["bags-icon-equipment"] = [[Interface\Icons\INV_Chest_Chain]],
+		["bags-icon-consumables"] = [[Interface\Icons\INV_Potion_93]],
+		["bags-icon-tradegoods"] = [[Interface\Icons\INV_Fabric_Silk_02]],
+	}
 
-	local function onLeave(self)
-		self.bg:SetBackdropBorderColor(0, 0, 0)
-	end
+	local containerTextures = {
+		"BackgroundTop",
+		"BackgroundMiddle1",
+		"BackgroundMiddle2",
+		"BackgroundBottom",
+		"Background1Slot",
+	}
 
 	for i = 1, 12 do
-		local con = _G["ContainerFrame"..i]
-		local name = _G["ContainerFrame"..i.."Name"]
+		local frameName = "ContainerFrame"..i
+		local container = _G[frameName]
+		local name = _G[frameName.."Name"]
 
-		for j = 1, 5 do
-			select(j, con:GetRegions()):SetAlpha(0)
+		container.Portrait:Hide()
+		for j = 1, #containerTextures do
+			_G[frameName..containerTextures[j]]:SetAlpha(0)
 		end
-		select(7, con:GetRegions()):SetAlpha(0)
-
-		con.PortraitButton.Highlight:SetTexture("")
 
 		name:ClearAllPoints()
 		name:SetPoint("TOP", 0, -10)
 
+		container.PortraitButton:Hide()
+		container.FilterIcon:ClearAllPoints()
+		container.FilterIcon:SetPoint("TOPLEFT", 11, -7)
+		container.FilterIcon:SetSize(17, 17)
+		container.FilterIcon.Icon:SetAllPoints()
+		F.ReskinIcon(container.FilterIcon.Icon)
+		_G.hooksecurefunc(container.FilterIcon.Icon, "SetAtlas", function(self, atlas)
+			self:SetTexture(BAG_FILTER_ICONS[atlas])
+		end)
+
 		for k = 1, _G.MAX_CONTAINER_ITEMS do
 			local item = "ContainerFrame"..i.."Item"..k
 			local button = _G[item]
-			local border = button.IconBorder
 			local searchOverlay = button.searchOverlay
 			local questTexture = _G[item.."IconQuestTexture"]
 			local newItemTexture = button.NewItemTexture
 
-			questTexture:SetDrawLayer("BACKGROUND")
-			questTexture:SetSize(1, 1)
+			questTexture:SetTexCoord(.08, .92, .08, .92)
 
 			button:SetNormalTexture("")
 			button:SetPushedTexture("")
 			button:SetHighlightTexture("")
 
+			F.ReskinIcon(button.icon)
 			button.icon:SetTexCoord(.08, .92, .08, .92)
-
-			button.bg = F.CreateBDFrame(button, 0)
+			button._auroraBG = F.CreateBDFrame(button, 0)
 
 			-- easiest way to 'hide' it without breaking stuff
 			newItemTexture:SetDrawLayer("BACKGROUND")
 			newItemTexture:SetSize(1, 1)
 
-			border:SetPoint("TOPLEFT", -1, 1)
-			border:SetPoint("BOTTOMRIGHT", 1, -1)
-			border:SetDrawLayer("BACKGROUND", 1)
-
 			searchOverlay:SetPoint("TOPLEFT", -1, 1)
 			searchOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
-
-			button:HookScript("OnEnter", onEnter)
-			button:HookScript("OnLeave", onLeave)
 		end
 
-		local f = _G.CreateFrame("Frame", nil, con)
+		local f = _G.CreateFrame("Frame", nil, container)
 		f:SetPoint("TOPLEFT", 8, -4)
 		f:SetPoint("BOTTOMRIGHT", -4, 3)
-		f:SetFrameLevel(con:GetFrameLevel()-1)
+		f:SetFrameLevel(container:GetFrameLevel()-1)
 		F.CreateBD(f)
 
-		F.ReskinClose(_G["ContainerFrame"..i.."CloseButton"], "TOPRIGHT", con, "TOPRIGHT", -6, -6)
+		F.ReskinClose(_G[frameName.."CloseButton"])
 	end
 
 	for i = 1, 3 do
@@ -85,30 +86,35 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.CreateBG(ic)
 	end
 
-	F.ReskinInput(_G.BagItemSearchBox)
-
 	_G.hooksecurefunc("ContainerFrame_Update", function(frame)
 		local id = frame:GetID()
 		local name = frame:GetName()
 
 		if id == 0 then
 			_G.BagItemSearchBox:ClearAllPoints()
-			_G.BagItemSearchBox:SetPoint("TOPLEFT", frame, "TOPLEFT", 50, -35)
+			_G.BagItemSearchBox:SetPoint("TOPLEFT", frame, 18, -35)
 			_G.BagItemAutoSortButton:ClearAllPoints()
-			_G.BagItemAutoSortButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -9, -31)
+			_G.BagItemAutoSortButton:SetPoint("TOPRIGHT", frame, -16, -31)
 		end
 
 		for i = 1, frame.size do
 			local itemButton = _G[name.."Item"..i]
 
-			itemButton.IconBorder:SetTexture(C.media.backdrop)
-			if _G[name.."Item"..i.."IconQuestTexture"]:IsShown() then
-				itemButton.IconBorder:SetVertexColor(1, 1, 0)
+			local questTexture = _G[name.."Item"..i.."IconQuestTexture"]
+			if questTexture:IsShown() then
+				itemButton._auroraBG:SetBackdropBorderColor(1, 1, 0)
 			end
 		end
 	end)
 
-	_G.BagItemAutoSortButton:GetNormalTexture():SetTexCoord(.17, .83, .17, .83)
-	_G.BagItemAutoSortButton:GetPushedTexture():SetTexCoord(.17, .83, .17, .83)
+	F.ReskinInput(_G.BagItemSearchBox)
+	_G.BagItemSearchBox:SetWidth(120)
+
+	_G.BagItemAutoSortButton:SetSize(26, 26)
+	_G.BagItemAutoSortButton:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
+	_G.BagItemAutoSortButton:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
+
+	_G.BagItemAutoSortButton:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
+	_G.BagItemAutoSortButton:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
 	F.CreateBG(_G.BagItemAutoSortButton)
 end)
