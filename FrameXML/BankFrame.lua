@@ -9,8 +9,6 @@ local F, C = _G.unpack(private.Aurora)
 _G.tinsert(C.themes["Aurora"], function()
 	if not _G.AuroraConfig.bags then return end
 
-	local r, g, b = C.r, C.g, C.b
-
 	-- [[ Bank ]]
 
 	select(16, _G.BankFrame:GetRegions()):Hide()
@@ -29,98 +27,80 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.ReskinTab(_G.BankFrameTab2)
 	F.ReskinInput(_G.BankItemSearchBox)
 
-	local function onEnter(self)
-		self.bg:SetBackdropBorderColor(r, g, b)
-	end
+	local function styleBankButton(button)
+		button:SetNormalTexture("")
+		button:SetPushedTexture("")
+		button:SetHighlightTexture("")
 
-	local function onLeave(self)
-		self.bg:SetBackdropBorderColor(0, 0, 0)
-	end
+		F.ReskinIcon(button.icon)
+		button.icon:SetTexCoord(.08, .92, .08, .92)
+		button._auroraBG = F.CreateBDFrame(button, 0)
 
-	local function styleBankButton(bu)
-		local border = bu.IconBorder
-		local questTexture = bu.IconQuestTexture
-		local searchOverlay = bu.searchOverlay
-
-		questTexture:SetDrawLayer("BACKGROUND")
-		questTexture:SetSize(1, 1)
-
-		border:SetTexture(C.media.backdrop)
-		border:SetPoint("TOPLEFT", -1, 1)
-		border:SetPoint("BOTTOMRIGHT", 1, -1)
-		border:SetDrawLayer("BACKGROUND", 1)
-
+		local searchOverlay = button.searchOverlay
 		searchOverlay:SetPoint("TOPLEFT", -1, 1)
 		searchOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
-
-		bu:SetNormalTexture("")
-		bu:SetPushedTexture("")
-		bu:SetHighlightTexture("")
-
-		bu.icon:SetTexCoord(.08, .92, .08, .92)
-
-		bu.bg = F.CreateBDFrame(bu, 0)
-
-		bu:HookScript("OnEnter", onEnter)
-		bu:HookScript("OnLeave", onLeave)
 	end
 
 	for i = 1, 28 do
+		local item = _G["BankFrameItem"..i]
 		styleBankButton(_G["BankFrameItem"..i])
+
+		local questTexture = item.IconQuestTexture
+		questTexture:SetTexCoord(.08, .92, .08, .92)
 	end
 
 	for i = 1, 7 do
 		local bag = _G.BankSlotsFrame["Bag"..i]
+		styleBankButton(bag)
+
 		local _, highlightFrame = bag:GetChildren()
-		local border = bag.IconBorder
-		local searchOverlay = bag.searchOverlay
-
-		bag:SetNormalTexture("")
-		bag:SetPushedTexture("")
-		bag:SetHighlightTexture("")
-
 		highlightFrame:GetRegions():SetTexture(C.media.checked)
-
-		border:SetTexture(C.media.backdrop)
-		border:SetPoint("TOPLEFT", -1, 1)
-		border:SetPoint("BOTTOMRIGHT", 1, -1)
-		border:SetDrawLayer("BACKGROUND", 1)
-
-		searchOverlay:SetPoint("TOPLEFT", -1, 1)
-		searchOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
-
-		bag.icon:SetTexCoord(.08, .92, .08, .92)
-
-		bag.bg = F.CreateBDFrame(bag, 0)
-
-		bag:HookScript("OnEnter", onEnter)
-		bag:HookScript("OnLeave", onLeave)
 	end
 
-	_G.BankItemAutoSortButton:GetNormalTexture():SetTexCoord(.17, .83, .17, .83)
-	_G.BankItemAutoSortButton:GetPushedTexture():SetTexCoord(.17, .83, .17, .83)
+	_G.BankItemAutoSortButton:SetSize(26, 26)
+	_G.BankItemAutoSortButton:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
+	_G.BankItemAutoSortButton:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
+
+	_G.BankItemAutoSortButton:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
+	_G.BankItemAutoSortButton:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
 	F.CreateBG(_G.BankItemAutoSortButton)
 
 	_G.hooksecurefunc("BankFrameItemButton_Update", function(button)
 		if not button.isBag and button.IconQuestTexture:IsShown() then
-			button.IconBorder:SetVertexColor(1, 1, 0)
+			button._auroraBG:SetBackdropBorderColor(1, 1, 0)
 		end
 	end)
 
 	-- [[ Reagent bank ]]
+	local ReagentBankFrame = _G.ReagentBankFrame
 
-	_G.ReagentBankFrame:DisableDrawLayer("BACKGROUND")
-	_G.ReagentBankFrame:DisableDrawLayer("BORDER")
-	_G.ReagentBankFrame:DisableDrawLayer("ARTWORK")
+	ReagentBankFrame:DisableDrawLayer("BACKGROUND")
+	ReagentBankFrame:DisableDrawLayer("BORDER")
+	ReagentBankFrame:DisableDrawLayer("ARTWORK")
 
-	F.Reskin(_G.ReagentBankFrame.DespositButton)
+	F.Reskin(ReagentBankFrame.DespositButton)
+
+	ReagentBankFrame.UnlockInfo:SetPoint("TOPLEFT", 13, -60)
+	ReagentBankFrame.UnlockInfo:SetPoint("BOTTOMRIGHT", -14, 48)
+	F.CreateBDFrame(ReagentBankFrame.UnlockInfo, 0.2)
+	local borderTextures = {
+		"BottomLeftInner",
+		"BottomRightInner",
+		"TopRightInner",
+		"TopLeftInner",
+		"LeftInner",
+		"RightInner",
+		"TopInner",
+		"BottomInner",
+		"BlackBG"
+	}
+	for i = 1, #borderTextures do
+		_G["ReagentBankFrameUnlockInfo"..borderTextures[i]]:Hide()
+	end
 	F.Reskin(_G.ReagentBankFrameUnlockInfoPurchaseButton)
 
-	-- make button more visible
-	_G.ReagentBankFrameUnlockInfoBlackBG:SetColorTexture(.1, .1, .1)
-
 	local reagentButtonsStyled = false
-	_G.ReagentBankFrame:HookScript("OnShow", function()
+	ReagentBankFrame:HookScript("OnShow", function()
 		if not reagentButtonsStyled then
 			for i = 1, 98 do
 				styleBankButton(_G["ReagentBankFrameItem"..i])

@@ -709,20 +709,10 @@ C.themes["Blizzard_Collections"] = function()
 		hooksecurefunc(SetsCollectionFrame, "DisplaySet", function(self)
 			for itemFrame in DetailsFrame.itemFramesPool:EnumerateActive() do
 				if not itemFrame.skinned then
-					itemFrame.Icon.bg = F.ReskinIcon(itemFrame.Icon)
+					itemFrame._auroraBG = F.ReskinIcon(itemFrame.Icon)
 					itemFrame.IconBorder:Hide()
 
 					itemFrame.skinned = true
-				end
-
-				if itemFrame.collected then
-					local quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
-					local color = _G.BAG_ITEM_QUALITY_COLORS[quality]
-					if color then
-						itemFrame.Icon.bg:SetVertexColor(color.r, color.g, color.b)
-					end
-				else
-					itemFrame.Icon.bg:SetVertexColor(0, 0, 0)
 				end
 			end
 		end)

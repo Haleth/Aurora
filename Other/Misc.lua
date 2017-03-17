@@ -94,7 +94,13 @@ _G.tinsert(C.themes["Aurora"], function()
                     SetRelic(button, isRelic, color)
                     button._auroraBG:SetBackdropBorderColor(color.r, color.g, color.b)
                     button.IconBorder:Hide()
+                else
+                    SetRelic(button, false)
+                    button._auroraBG:SetBackdropBorderColor(0, 0, 0)
                 end
+            else
+                SetRelic(button, false)
+                button._auroraBG:SetBackdropBorderColor(0, 0, 0)
             end
         end
     end)
