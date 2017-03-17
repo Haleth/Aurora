@@ -1,7 +1,7 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local select, next = _G.select, _G.next
+local select = _G.select
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
@@ -10,18 +10,14 @@ _G.tinsert(C.themes["Aurora"], function()
     _G.ColorPickerFrameHeader:Hide()
     local header = select(3, _G.ColorPickerFrame:GetRegions())
     header:SetPoint("TOP", _G.ColorPickerFrame, 0, -4)
-
     F.CreateBD(_G.ColorPickerFrame)
-    for name, side in next, {ColorPickerOkayButton = "LEFT", ColorPickerCancelButton = "RIGHT"} do
-        local btn = _G[name]
-        local point = "BOTTOM"..side
-        local offSet = side == "LEFT" and 5 or -5
 
-        F.Reskin(btn)
-        btn:ClearAllPoints()
-        btn:SetPoint(point, offSet, 5)
-        btn:SetWidth(100)
-    end
+    F.Reskin(_G.ColorPickerCancelButton)
+    _G.ColorPickerCancelButton:SetWidth(100)
+
+    F.Reskin(_G.ColorPickerOkayButton)
+    _G.ColorPickerOkayButton:SetWidth(100)
+    _G.ColorPickerOkayButton:SetPoint("RIGHT", _G.ColorPickerCancelButton, "LEFT", -5, 0)
 
     _G.OpacitySliderFrame:ClearAllPoints()
     _G.OpacitySliderFrame:SetPoint("TOPRIGHT", -30, -30)
@@ -36,9 +32,9 @@ _G.tinsert(C.themes["Aurora"], function()
 
     _G.ColorPickerFrame:HookScript("OnShow", function(self)
         if self.hasOpacity then
-            self:SetSize(300, 200)
+            self:SetWidth(300)
         else
-            self:SetSize(255, 200)
+            self:SetWidth(255)
         end
     end)
 end)
