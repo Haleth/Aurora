@@ -161,7 +161,7 @@ local function colourButton(f)
 	if useButtonGradientColour then
 		f:SetBackdropColor(red, green, blue, .3)
 	else
-		f.tex:SetVertexColor(red / 4, green / 4, blue / 4)
+		f._auroraTex:SetVertexColor(red / 4, green / 4, blue / 4)
 	end
 
 	f:SetBackdropBorderColor(red, green, blue)
@@ -171,7 +171,7 @@ local function clearButton(f)
 	if useButtonGradientColour then
 		f:SetBackdropColor(0, 0, 0, 0)
 	else
-		f.tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
+		f._auroraTex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
 	end
 
 	f:SetBackdropBorderColor(0, 0, 0)
@@ -191,7 +191,7 @@ F.Reskin = function(f, noHighlight)
 
 	F.CreateBD(f, .0)
 
-	f.tex = F.CreateGradient(f)
+	f._auroraTex = F.CreateGradient(f)
 
 	if not noHighlight then
 		f:HookScript("OnEnter", colourButton)

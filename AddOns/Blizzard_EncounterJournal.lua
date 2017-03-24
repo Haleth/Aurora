@@ -353,8 +353,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 					header.button.expandedIcon:SetTextColor(1, 1, 1)
 					header.button.expandedIcon.SetTextColor = F.dummy
 
-					-- Blizzard already uses .tex for this frame, so we can't do highlights
-					F.Reskin(header.button, true)
+					F.Reskin(header.button)
 
 					header.button.abilityIcon:SetTexCoord(.08, .92, .08, .92)
 					header.button.bg = F.CreateBG(header.button.abilityIcon)
@@ -389,8 +388,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 				header.button.expandedIcon:SetTextColor(1, 1, 1)
 				header.button.expandedIcon.SetTextColor = F.dummy
 
-				-- Blizzard already uses .tex for this frame, so we can't do highlights
-				F.Reskin(header.button, true)
+				F.Reskin(header.button)
 
 				header.styled = true
 			end
