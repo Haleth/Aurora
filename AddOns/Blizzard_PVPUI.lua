@@ -69,7 +69,7 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	PVPQueueFrame.CategoryButton1.Background:Show()
 
-	-- Honor frame
+	-- Casual - HonorFrame
 
 	local Inset = HonorFrame.Inset
 	local BonusFrame = HonorFrame.BonusFrame
@@ -82,11 +82,11 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	F.Reskin(BonusFrame.DiceButton)
 
-	for _, bonusButton in pairs({"RandomBGButton", "Arena1Button", "AshranButton"}) do
+	for _, bonusButton in pairs({"RandomBGButton", "Arena1Button", "AshranButton", "BrawlButton"}) do
 		local bu = BonusFrame[bonusButton]
 		local reward = bu.Reward
 
-		F.Reskin(bu, true)
+		F.Reskin(bu)
 
 		bu.SelectedTexture:SetDrawLayer("BACKGROUND")
 		bu.SelectedTexture:SetColorTexture(r, g, b, .2)
@@ -189,7 +189,7 @@ C.themes["Blizzard_PVPUI"] = function()
 		bu.Icon:SetPoint("TOPLEFT", 5, -3)
 	end
 
-	-- Conquest Frame
+	-- Rated - ConquestFrame
 
 	Inset = ConquestFrame.Inset
 
@@ -213,7 +213,7 @@ C.themes["Blizzard_PVPUI"] = function()
 	ConquestFrame.RatedBG:HookScript("OnEnter", ConquestFrameButton_OnEnter)
 
 	for _, bu in pairs({ConquestFrame.Arena2v2, ConquestFrame.Arena3v3, ConquestFrame.RatedBG}) do
-		F.Reskin(bu, true)
+		F.Reskin(bu)
 		local reward = bu.Reward
 
 		bu.SelectedTexture:SetDrawLayer("BACKGROUND")
@@ -228,7 +228,7 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	ConquestFrame.Arena3v3:SetPoint("TOP", ConquestFrame.Arena2v2, "BOTTOM", 0, -1)
 
-	-- War games
+	-- War Games
 
 	Inset = WarGamesFrame.RightInset
 
