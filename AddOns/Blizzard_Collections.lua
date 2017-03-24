@@ -694,9 +694,9 @@ C.themes["Blizzard_Collections"] = function()
 				end
 
 				if button.IconCover:IsShown() then
-					button.Icon.bg:SetVertexColor(0, 0, 0, 0.7)
+					button.Icon.bg:SetBackdropBorderColor(0, 0, 0, 0.7)
 				else
-					button.Icon.bg:SetVertexColor(1, 1, 1)
+					button.Icon.bg:SetBackdropBorderColor(1, 1, 1)
 				end
 			end
 		end)
@@ -706,15 +706,17 @@ C.themes["Blizzard_Collections"] = function()
 		DetailsFrame.IconRowBackground:Hide()
 		F.ReskinFilterButton(DetailsFrame.VariantSetsButton, "Down")
 
-		hooksecurefunc(SetsCollectionFrame, "DisplaySet", function(self)
-			for itemFrame in DetailsFrame.itemFramesPool:EnumerateActive() do
-				if not itemFrame.skinned then
-					itemFrame._auroraBG = F.ReskinIcon(itemFrame.Icon)
-					itemFrame.IconBorder:Hide()
-
-					itemFrame.skinned = true
-				end
+		hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", function(self, itemFrame)
+			if not itemFrame.skinned then
+				itemFrame._auroraBG = F.ReskinIcon(itemFrame.Icon)
+				itemFrame.skinned = true
 			end
+
+			local quality
+			if itemFrame.collected then
+				quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
+			end
+			_G.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
 		end)
 	end
 
