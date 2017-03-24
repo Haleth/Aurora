@@ -17,6 +17,43 @@ C.themes["Blizzard_PVPUI"] = function()
 	local ConquestFrame = _G.ConquestFrame
 	local WarGamesFrame = _G.WarGamesFrame
 
+	local function SkinRoleInset(roleInset)
+		roleInset:DisableDrawLayer("BACKGROUND")
+		roleInset:DisableDrawLayer("BORDER")
+
+		for _, roleButton in pairs({roleInset.HealerIcon, roleInset.TankIcon, roleInset.DPSIcon}) do
+			roleButton.cover:SetTexture(C.media.roleIcons)
+			roleButton:SetNormalTexture(C.media.roleIcons)
+
+			for i = 1, 4 do
+				-- These textures cover up a texture scaling artifact along the border
+				local tex = roleButton:CreateTexture(nil, "OVERLAY")
+				tex:SetColorTexture(0, 0, 0)
+				tex:SetSize(1, 1)
+				if i == 1 then
+					-- Left
+					tex:SetPoint("TOPLEFT", roleButton, 6, -4)
+					tex:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
+				elseif i == 2 then
+					-- Right
+					tex:SetPoint("TOPRIGHT", roleButton, -5, -4)
+					tex:SetPoint("BOTTOMRIGHT", roleButton, -5, 7)
+				elseif i == 3 then
+					-- Top
+					tex:SetPoint("TOPLEFT", roleButton, 6, -4)
+					tex:SetPoint("TOPRIGHT", roleButton, -6, -4)
+				elseif i == 4 then
+					-- Bottom
+					tex:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
+					tex:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
+				end
+			end
+
+			roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
+			F.ReskinCheck(roleButton.checkButton)
+		end
+	end
+
 	-- Category buttons
 
 	for i = 1, 4 do
@@ -99,65 +136,7 @@ C.themes["Blizzard_PVPUI"] = function()
 	end
 
 	_G.IncludedBattlegroundsDropDown:SetPoint("TOPRIGHT", BonusFrame.DiceButton, 40, 26)
-
-	-- Role buttons
-
-	local RoleInset = HonorFrame.RoleInset
-
-	RoleInset:DisableDrawLayer("BACKGROUND")
-	RoleInset:DisableDrawLayer("BORDER")
-
-	for _, roleButton in pairs({RoleInset.HealerIcon, RoleInset.TankIcon, RoleInset.DPSIcon}) do
-		roleButton.cover:SetTexture(C.media.roleIcons)
-		roleButton:SetNormalTexture(C.media.roleIcons)
-
-		roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
-
-		for i = 1, 2 do
-			local left = roleButton:CreateTexture()
-			left:SetDrawLayer("OVERLAY", i)
-			left:SetWidth(1)
-			left:SetTexture(C.media.backdrop)
-			left:SetVertexColor(0, 0, 0)
-			left:SetPoint("TOPLEFT", roleButton, 6, -4)
-			left:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
-			roleButton["leftLine"..i] = left
-
-			local right = roleButton:CreateTexture()
-			right:SetDrawLayer("OVERLAY", i)
-			right:SetWidth(1)
-			right:SetTexture(C.media.backdrop)
-			right:SetVertexColor(0, 0, 0)
-			right:SetPoint("TOPRIGHT", roleButton, -6, -4)
-			right:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
-			roleButton["rightLine"..i] = right
-
-			local top = roleButton:CreateTexture()
-			top:SetDrawLayer("OVERLAY", i)
-			top:SetHeight(1)
-			top:SetTexture(C.media.backdrop)
-			top:SetVertexColor(0, 0, 0)
-			top:SetPoint("TOPLEFT", roleButton, 6, -4)
-			top:SetPoint("TOPRIGHT", roleButton, -6, -4)
-			roleButton["topLine"..i] = top
-
-			local bottom = roleButton:CreateTexture()
-			bottom:SetDrawLayer("OVERLAY", i)
-			bottom:SetHeight(1)
-			bottom:SetTexture(C.media.backdrop)
-			bottom:SetVertexColor(0, 0, 0)
-			bottom:SetPoint("BOTTOMLEFT", roleButton, 6, 7)
-			bottom:SetPoint("BOTTOMRIGHT", roleButton, -6, 7)
-			roleButton["bottomLine"..i] = bottom
-		end
-
-		roleButton.leftLine2:Hide()
-		roleButton.rightLine2:Hide()
-		roleButton.topLine2:Hide()
-		roleButton.bottomLine2:Hide()
-
-		F.ReskinCheck(roleButton.checkButton)
-	end
+	SkinRoleInset(HonorFrame.RoleInset)
 
 	-- Honor frame specific
 
@@ -203,6 +182,7 @@ C.themes["Blizzard_PVPUI"] = function()
 	ConquestFrame.ShadowOverlay:Hide()
 
 	F.CreateBD(_G.ConquestTooltip)
+	SkinRoleInset(ConquestFrame.RoleInset)
 
 	local ConquestFrameButton_OnEnter = function(self)
 		_G.ConquestTooltip:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, 0)
