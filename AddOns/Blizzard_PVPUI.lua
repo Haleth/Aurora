@@ -27,7 +27,7 @@ C.themes["Blizzard_PVPUI"] = function()
 
 			for i = 1, 4 do
 				-- These textures cover up a texture scaling artifact along the border
-				local tex = roleButton:CreateTexture(nil, "OVERLAY")
+				local tex = roleButton:CreateTexture(nil, "OVERLAY", nil, 7)
 				tex:SetColorTexture(0, 0, 0)
 				tex:SetSize(1, 1)
 				if i == 1 then
@@ -120,6 +120,7 @@ C.themes["Blizzard_PVPUI"] = function()
 	F.Reskin(BonusFrame.DiceButton)
 
 	for _, bonusButton in pairs({"RandomBGButton", "Arena1Button", "AshranButton", "BrawlButton"}) do
+		if not C.is72 and bonusButton == "BrawlButton" then break end
 		local bu = BonusFrame[bonusButton]
 		local reward = bu.Reward
 
