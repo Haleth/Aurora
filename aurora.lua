@@ -794,30 +794,19 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		useButtonGradientColour = AuroraConfig.useButtonGradientColour
-
-		if useButtonGradientColour then
-			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonGradientColour)
-		else
-			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonSolidColour)
-		end
-
-		if AuroraConfig.useCustomColour then
-			red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
-		end
-		-- for modules
-		C.r, C.g, C.b = red, green, blue
-
 		-- [[ Custom style support ]]
-
-		local shouldSkipSplashScreen = false
-
 		local customStyle = _G.AURORA_CUSTOM_STYLE
-
 		if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
 			local protectedFunctions = {
 				["AddPlugin"] = true,
 			}
+
+			-- override settings
+			if customStyle.defaults then
+				for setting, value in next, customStyle.defaults do
+					AuroraConfig[setting] = value
+				end
+			end
 
 			-- replace functions
 			if customStyle.functions then
@@ -831,35 +820,30 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			-- replace class colours
 			if customStyle.classcolors then
 				C.classcolours = customStyle.classcolors
-
-				if not AuroraConfig.useCustomColour then
-					red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
-					C.r, C.g, C.b = red, green, blue
 				end
 			end
 
-			-- replace colour scheme
-			local highlightColour = customStyle.highlightColor
-			if highlightColour then
-				red, green, blue = highlightColour.r, highlightColour.g, highlightColour.b
-				C.r, C.g, C.b = red, green, blue
+		useButtonGradientColour = AuroraConfig.useButtonGradientColour
+
+		if useButtonGradientColour then
+			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonGradientColour)
+		else
+			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonSolidColour)
 			end
 
-			-- skip splash screen if requested
-			if customStyle.skipSplashScreen then
-				shouldSkipSplashScreen = true
-			end
+		if AuroraConfig.useCustomColour then
+			red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+		else
+			red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
 		end
+		-- for modules
+		C.r, C.g, C.b = red, green, blue
 
 		-- [[ Splash screen for first time users ]]
 
 		if not AuroraConfig.acknowledgedSplashScreen then
-			if shouldSkipSplashScreen then
-				AuroraConfig.acknowledgedSplashScreen = true
-			else
 				_G.AuroraSplashScreen:Show()
 			end
-		end
 
 		-- [[ Plugin helper ]]
 
