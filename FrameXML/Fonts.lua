@@ -1,125 +1,178 @@
 local _, private = ...
 
+-- [[ Lua Globals ]]
+local type = _G.type
+
 -- [[ Core ]]
 local _, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
-	if _G.AuroraConfig.enableFont then
-		local locale = _G.GetLocale()
-		local font = C.media.font
+    if _G.AuroraConfig.enableFont then
+        if _G.LOCALE_koKR then
+            C.media.font = [[Fonts/2002.ttf]]
+        elseif _G.LOCALE_zhCN then
+            C.media.font = [[Fonts/ARKai_T.ttf]]
+        elseif _G.LOCALE_zhTW then
+            C.media.font = [[Fonts/blei00d.ttf]]
+        end
 
-		_G.RaidWarningFrame.slot1:SetFont(font, 20, "OUTLINE")
-		_G.RaidWarningFrame.slot2:SetFont(font, 20, "OUTLINE")
-		_G.RaidBossEmoteFrame.slot1:SetFont(font, 20, "OUTLINE")
-		_G.RaidBossEmoteFrame.slot2:SetFont(font, 20, "OUTLINE")
+        local function SetFont(fontObj, fontPath, fontSize, fontStyle, fontColor, shadowColor, shadowX, shadowY)
+            if type(fontObj) == "string" then fontObj = _G[fontObj] end
+            if not fontObj then return end
 
-		_G.STANDARD_TEXT_FONT = font
-		_G.UNIT_NAME_FONT     = font
-		_G.DAMAGE_TEXT_FONT   = font
+            fontObj:SetFont(fontPath, fontSize, fontStyle)
+            if type(fontColor) == "table" then
+                fontObj:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
+            elseif fontColor then
+                fontObj:SetAlpha(fontColor)
+            end
 
-		_G.AchievementFont_Small:SetFont(font, 10)
-		_G.AchievementFont_Small:SetShadowColor(0, 0, 0)
-		_G.AchievementFont_Small:SetShadowOffset(1, -1)
-		_G.CoreAbilityFont:SetFont(font, 32)
-		_G.CoreAbilityFont:SetShadowColor(0, 0, 0)
-		_G.CoreAbilityFont:SetShadowOffset(1, -1)
-		_G.DestinyFontHuge:SetFont(font, 32)
-		_G.DestinyFontHuge:SetShadowColor(0, 0, 0)
-		_G.DestinyFontHuge:SetShadowOffset(1, -1)
-		_G.DestinyFontLarge:SetFont(font, 18)
-		_G.DestinyFontLarge:SetShadowColor(0, 0, 0)
-		_G.DestinyFontLarge:SetShadowOffset(1, -1)
-		_G.FriendsFont_Normal:SetFont(font, 12)
-		_G.FriendsFont_Small:SetFont(font, 10)
-		_G.FriendsFont_Large:SetFont(font, 14)
-		_G.FriendsFont_UserText:SetFont(font, 11)
-		_G.GameFont_Gigantic:SetFont(font, 32)
-		_G.GameTooltipHeader:SetFont(font, 14)
-		_G.GameTooltipHeader:SetShadowColor(0, 0, 0)
-		_G.GameTooltipHeader:SetShadowOffset(1, -1)
-		_G.InvoiceFont_Small:SetFont(font, 10)
-		_G.InvoiceFont_Small:SetShadowColor(0, 0, 0)
-		_G.InvoiceFont_Small:SetShadowOffset(1, -1)
-		_G.InvoiceFont_Med:SetFont(font, 12)
-		_G.InvoiceFont_Med:SetShadowColor(0, 0, 0)
-		_G.InvoiceFont_Med:SetShadowOffset(1, -1)
-		_G.MailFont_Large:SetFont(font, 15)
-		_G.NumberFont_GameNormal:SetFont(font, 10)
-		_G.NumberFont_OutlineThick_Mono_Small:SetFont(font, 12, "OUTLINE")
-		_G.NumberFont_Outline_Huge:SetFont(font, 30, "OUTLINE")
-		_G.NumberFont_Outline_Large:SetFont(font, 16, "OUTLINE")
-		_G.NumberFont_Outline_Med:SetFont(font, 14, "OUTLINE")
-		_G.NumberFont_Shadow_Med:SetFont(font, 14)
-		_G.NumberFont_Shadow_Small:SetFont(font, 12)
-		_G.QuestFont_Shadow_Small:SetFont(font, 14)
-		_G.QuestFont_Large:SetFont(font, 15)
-		_G.QuestFont_Large:SetShadowColor(0, 0, 0)
-		_G.QuestFont_Large:SetShadowOffset(1, -1)
-		_G.QuestFont_Shadow_Huge:SetFont(font, 17)
-		_G.QuestFont_Huge:SetFont(font, 18)
-		_G.QuestFont_Super_Huge:SetFont(font, 24)
-		_G.QuestFont_Super_Huge:SetShadowColor(0, 0, 0)
-		_G.QuestFont_Super_Huge:SetShadowOffset(1, -1)
-		if locale ~= "zhCN" and locale ~= "zhTW" then -- I don't even know
-			_G.QuestFont_Enormous:SetFont(font, 30)
-			_G.QuestFont_Enormous:SetShadowOffset(1, -1)
-		end
-		_G.ReputationDetailFont:SetFont(font, 10)
-		_G.SpellFont_Small:SetFont(font, 10)
-		_G.SpellFont_Small:SetShadowColor(0, 0, 0)
-		_G.SpellFont_Small:SetShadowOffset(1, -1)
-		_G.SystemFont_InverseShadow_Small:SetFont(font, 10)
-		_G.SystemFont_Large:SetFont(font, 16)
-		_G.SystemFont_Large:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Large:SetShadowOffset(1, -1)
-		_G.SystemFont_Huge1:SetFont(font, 20)
-		_G.SystemFont_Huge1:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Huge1:SetShadowOffset(1, -1)
-		_G.SystemFont_Med1:SetFont(font, 12)
-		_G.SystemFont_Med1:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Med1:SetShadowOffset(1, -1)
-		_G.SystemFont_Med2:SetFont(font, 13)
-		_G.SystemFont_Med2:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Med2:SetShadowOffset(1, -1)
-		_G.SystemFont_Med3:SetFont(font, 14)
-		_G.SystemFont_Med3:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Med3:SetShadowOffset(1, -1)
-		_G.SystemFont_OutlineThick_WTF:SetFont(font, 32, "THICKOUTLINE")
-		_G.SystemFont_OutlineThick_Huge2:SetFont(font, 22, "THICKOUTLINE")
-		_G.SystemFont_OutlineThick_Huge4:SetFont(font, 26, "THICKOUTLINE")
-		_G.SystemFont_Outline_Small:SetFont(font, 10, "OUTLINE")
-		_G.SystemFont_Outline:SetFont(font, 13, "OUTLINE")
-		_G.SystemFont_Shadow_Large:SetFont(font, 16)
-		_G.SystemFont_Shadow_Large_Outline:SetFont(font, 16)
-		_G.SystemFont_Shadow_Large2:SetFont(font, 18)
-		_G.SystemFont_Shadow_Med1:SetFont(font, 12)
-		_G.SystemFont_Shadow_Med1_Outline:SetFont(font, 12, "OUTLINE")
-		_G.SystemFont_Shadow_Med2:SetFont(font, 13)
-		_G.SystemFont_Shadow_Med3:SetFont(font, 14)
-		_G.SystemFont_Shadow_Outline_Huge2:SetFont(font, 22, "OUTLINE")
-		_G.SystemFont_Shadow_Huge1:SetFont(font, 20)
-		_G.SystemFont_Shadow_Huge2:SetFont(font, 24)
-		_G.SystemFont_Shadow_Huge3:SetFont(font, 25)
-		_G.SystemFont_Shadow_Small:SetFont(font, 10)
-		_G.SystemFont_Shadow_Small2:SetFont(font, 11)
-		_G.SystemFont_Small:SetFont(font, 10)
-		_G.SystemFont_Small:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Small:SetShadowOffset(1, -1)
-		_G.SystemFont_Small2:SetFont(font, 11)
-		_G.SystemFont_Small2:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Small2:SetShadowOffset(1, -1)
-		_G.SystemFont_Tiny:SetFont(font, 9)
-		_G.SystemFont_Tiny:SetShadowColor(0, 0, 0)
-		_G.SystemFont_Tiny:SetShadowOffset(1, -1)
-		_G.Tooltip_Med:SetFont(font, 12)
-		_G.Tooltip_Med:SetShadowColor(0, 0, 0)
-		_G.Tooltip_Med:SetShadowOffset(1, -1)
-		_G.Tooltip_Small:SetFont(font, 10)
-		_G.Tooltip_Small:SetShadowColor(0, 0, 0)
-		_G.Tooltip_Small:SetShadowOffset(1, -1)
+            if shadowColor then
+                fontObj:SetShadowColor(shadowColor[1], shadowColor[2], shadowColor[3], shadowColor[4])
+            end
+            if shadowX and shadowY then
+                fontObj:SetShadowOffset(shadowX, shadowY)
+            end
+        end
 
-		-- Why?
-		_G.HelpFrameKnowledgebaseNavBarHomeButtonText:SetFont(font, 12)
-		_G.WorldMapFrameNavBarHomeButtonText:SetFont(font, 12)
-	end
+        -- Regular text: replaces FRIZQT__.TTF
+        local NORMAL = C.media.normalFont or C.media.font
+
+        -- Chat Font: replaces ARIALN.TTF
+        local CHAT   = C.media.chatFont or C.media.font
+
+        -- Crit Font: replaces skurri.ttf
+        local CRIT   = C.media.critFont or C.media.font
+
+        -- Header Font: replaces MORPHEUS.ttf
+        local HEADER = C.media.headerFont or C.media.font
+
+
+        _G.STANDARD_TEXT_FONT = NORMAL
+        _G.UNIT_NAME_FONT = NORMAL
+        _G.NAMEPLATE_FONT = NORMAL
+        _G.DAMAGE_TEXT_FONT = NORMAL
+
+
+        -- FrameXML\Fonts.xml
+        SetFont("SystemFont_Outline_Small",       NORMAL, 10, "OUTLINE")
+        SetFont("SystemFont_Outline",             NORMAL, 13, "OUTLINE")
+        SetFont("SystemFont_InverseShadow_Small", NORMAL, 10, nil, nil, {0.4, 0.4, 0.4, 0.75}, 1, -1)
+        SetFont("SystemFont_Med2",                NORMAL, 13)
+        SetFont("SystemFont_Med3",                NORMAL, 14)
+        SetFont("SystemFont_Shadow_Med3",         NORMAL, 14, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Huge1",               NORMAL, 20)
+        SetFont("SystemFont_Huge1_Outline",       NORMAL, 20, "OUTLINE")
+        SetFont("SystemFont_OutlineThick_Huge2",  NORMAL, 22, "THICKOUTLINE")
+        SetFont("SystemFont_OutlineThick_Huge4",  NORMAL, 26, "THICKOUTLINE")
+        SetFont("SystemFont_OutlineThick_WTF",    NORMAL, 32, "THICKOUTLINE")
+
+        SetFont("NumberFont_GameNormal",            NORMAL, 10, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("NumberFont_Shadow_Small",            CHAT, 12, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("NumberFont_OutlineThick_Mono_Small", CHAT, 12, "THICKOUTLINE, MONOCHROME")
+        SetFont("NumberFont_Shadow_Med",              CHAT, 14, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("NumberFont_Normal_Med",              CHAT, 14)
+        SetFont("NumberFont_Outline_Med",             CHAT, 14, "OUTLINE")
+        SetFont("NumberFont_Outline_Large",           CHAT, 16, "OUTLINE")
+        SetFont("NumberFont_Outline_Huge",            CRIT, 30, "OUTLINE")
+
+        SetFont("Fancy22Font",                  HEADER, 22)
+        SetFont("QuestFont_Huge",               HEADER, 18)
+        SetFont("QuestFont_Outline_Huge",       HEADER, 18, "OUTLINE")
+        SetFont("QuestFont_Super_Huge",         HEADER, 24, nil, {1, 0.82, 0})
+        SetFont("QuestFont_Super_Huge_Outline", HEADER, 24, "OUTLINE", {1, 0.82, 0})
+        SetFont("SplashHeaderFont",             HEADER, 24, nil, {1, 0.82, 0}, {0, 0, 0}, 1, -2)
+
+        SetFont("Game11Font", NORMAL, 11)
+        SetFont("Game12Font", NORMAL, 12)
+        SetFont("Game13Font", NORMAL, 13)
+        SetFont("Game13FontShadow", NORMAL, 13, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("Game15Font", NORMAL, 15)
+        SetFont("Game18Font", NORMAL, 18)
+        SetFont("Game20Font", NORMAL, 20)
+        SetFont("Game24Font", NORMAL, 24)
+        SetFont("Game27Font", NORMAL, 27)
+        SetFont("Game30Font", NORMAL, 30)
+        SetFont("Game32Font", NORMAL, 32)
+        SetFont("Game36Font", NORMAL, 36)
+        SetFont("Game48Font", NORMAL, 48)
+        SetFont("Game48FontShadow", NORMAL, 48, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("Game60Font", NORMAL, 60)
+        SetFont("Game72Font", NORMAL, 72)
+
+        SetFont("Game11Font_ol", NORMAL, 11, "OUTLINE")
+        SetFont("Game12Font_ol", NORMAL, 12, "OUTLINE")
+        SetFont("Game13Font_ol", NORMAL, 13, "OUTLINE")
+        SetFont("Game15Font_ol", NORMAL, 15, "OUTLINE")
+
+        SetFont("QuestFont_Enormous",     HEADER, 30, nil, {1, 0.82, 0})
+        SetFont("DestinyFontLarge",       HEADER, 18, nil, {0.1, 0.1, 0.1})
+        SetFont("CoreAbilityFont",        HEADER, 32, nil, {0.1, 0.1, 0.1})
+        SetFont("DestinyFontHuge",        HEADER, 32, nil, {0.1, 0.1, 0.1})
+        SetFont("QuestFont_Shadow_Small", HEADER, 14, nil, nil, {0.49, 0.35, 0.05}, 1, -1)
+
+        SetFont("MailFont_Large",    HEADER, 15)
+        SetFont("SpellFont_Small",   NORMAL, 10)
+        SetFont("InvoiceFont_Med",   NORMAL, 12)
+        SetFont("InvoiceFont_Small", NORMAL, 10)
+        SetFont("Tooltip_Med",       NORMAL, 12)
+        SetFont("Tooltip_Small",     NORMAL, 10)
+
+        SetFont("AchievementFont_Small", NORMAL, 12)
+        SetFont("ReputationDetailFont",  NORMAL, 10, nil, {1, 1, 1}, {0, 0, 0}, 1, -1)
+        SetFont("FriendsFont_Normal",    NORMAL, 12, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("FriendsFont_Small",     NORMAL, 10, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("FriendsFont_Large",     NORMAL, 14, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("FriendsFont_UserText",  NORMAL, 11, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("GameFont_Gigantic",     NORMAL, 32, nil, {1, 0.82, 0}, {0, 0, 0}, 1, -1)
+
+        SetFont("ChatBubbleFont", NORMAL, 13)
+        SetFont("Fancy16Font",    HEADER, 16)
+        SetFont("Fancy18Font",    HEADER, 18)
+        SetFont("Fancy20Font",    HEADER, 20)
+        SetFont("Fancy24Font",    HEADER, 24)
+        SetFont("Fancy27Font",    HEADER, 27)
+        SetFont("Fancy30Font",    HEADER, 30)
+        SetFont("Fancy32Font",    HEADER, 32)
+        SetFont("Fancy48Font",    HEADER, 48)
+
+        SetFont("SystemFont_NamePlateFixed",      NORMAL, 14)
+        SetFont("SystemFont_LargeNamePlateFixed", NORMAL, 20)
+        SetFont("SystemFont_NamePlate",           NORMAL, 9)
+        SetFont("SystemFont_LargeNamePlate",      NORMAL, 12)
+        SetFont("SystemFont_NamePlateCastBar",    NORMAL, 10)
+
+        -- SharedXML\SharedFonts.xml
+        SetFont("SystemFont_Tiny2",                NORMAL, 8)
+        SetFont("SystemFont_Tiny",                 NORMAL, 9)
+        SetFont("SystemFont_Shadow_Small",         NORMAL, 10, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Small",                NORMAL, 10)
+        SetFont("SystemFont_Small2",               NORMAL, 11)
+        SetFont("SystemFont_Shadow_Small2",        NORMAL, 11, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Med1_Outline",  NORMAL, 12, "OUTLINE", nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Med1",          NORMAL, 12, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("QuestFont_Large",                 HEADER, 15)
+        SetFont("SystemFont_Large",                NORMAL, 16)
+        SetFont("SystemFont_Shadow_Large_Outline", NORMAL, 16, "OUTLINE", nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Med2",          NORMAL, 14, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Large",         NORMAL, 16, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Large2",        NORMAL, 18, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Huge1",         NORMAL, 20, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Huge2",                NORMAL, 24)
+        SetFont("SystemFont_Shadow_Huge2",         NORMAL, 24, "OUTLINE", nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Huge3",         NORMAL, 25, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Outline_Huge3", NORMAL, 25, "OUTLINE", nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_World",                NORMAL, 64, nil, nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_World_ThickOutline",   NORMAL, 64, "THICKOUTLINE", nil, {0, 0, 0}, 1, -1)
+        SetFont("SystemFont_Shadow_Outline_Huge2", NORMAL, 22, "OUTLINE", nil, {0, 0, 0}, 2, -2)
+        SetFont("SystemFont_Med1",                 NORMAL, 12)
+        SetFont("SystemFont_WTF2",                 NORMAL, 36)
+        SetFont("SystemFont_Outline_WTF2",         NORMAL, 36, "OUTLINE")
+        SetFont("GameTooltipHeader",               NORMAL, 14)
+        SetFont("System_IME",                      NORMAL, 16)
+
+        -- This uses GameFontNormal, which inherits from SystemFont_Shadow_Med1,
+        -- but for some reason the above changes do not propagate to it.
+        SetFont(_G.WorldMapFrame.NavBar.home.text, NORMAL, 12, nil, {1, 0.82, 0}, {0, 0, 0}, 1, -1)
+    end
 end)
