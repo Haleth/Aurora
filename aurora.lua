@@ -2,7 +2,7 @@ local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
 local select, tostring = _G.select, _G.tostring
-local pairs = _G.pairs
+local next = _G.next
 
 -- [[ WoW API ]]
 local CreateFrame = _G.CreateFrame
@@ -357,14 +357,14 @@ end
 
 local function colourClose(f)
 	if f:IsEnabled() then
-		for _, pixel in pairs(f.pixels) do
+		for _, pixel in next, f.pixels do
 			pixel:SetColorTexture(red, green, blue)
 		end
 	end
 end
 
 local function clearClose(f)
-	for _, pixel in pairs(f.pixels) do
+	for _, pixel in next, f.pixels do
 		pixel:SetColorTexture(1, 1, 1)
 	end
 end
@@ -774,18 +774,18 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		AuroraConfig = _G.AuroraConfig
 
 		-- remove deprecated or corrupt variables
-		for key, value in pairs(AuroraConfig) do
+		for key, value in next, AuroraConfig do
 			if C.defaults[key] == nil then
 				AuroraConfig[key] = nil
 			end
 		end
 
 		-- load or init variables
-		for key, value in pairs(C.defaults) do
+		for key, value in next, C.defaults do
 			if AuroraConfig[key] == nil then
 				if _G.type(value) == "table" then
 					AuroraConfig[key] = {}
-					for k, v in pairs(value) do
+					for k, v in next, value do
 						AuroraConfig[key][k] = value[k]
 					end
 				else
@@ -810,7 +810,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 			-- replace functions
 			if customStyle.functions then
-				for funcName, func in pairs(customStyle.functions) do
+				for funcName, func in next, customStyle.functions do
 					if F[funcName] and not protectedFunctions[funcName] then
 						F[funcName] = func
 					end
@@ -820,8 +820,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			-- replace class colours
 			if customStyle.classcolors then
 				C.classcolours = customStyle.classcolors
-				end
 			end
+		end
 
 		useButtonGradientColour = AuroraConfig.useButtonGradientColour
 
@@ -829,7 +829,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonGradientColour)
 		else
 			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonSolidColour)
-			end
+		end
 
 		if AuroraConfig.useCustomColour then
 			red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
@@ -842,8 +842,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- [[ Splash screen for first time users ]]
 
 		if not AuroraConfig.acknowledgedSplashScreen then
-				_G.AuroraSplashScreen:Show()
-			end
+			_G.AuroraSplashScreen:Show()
+		end
 
 		-- [[ Plugin helper ]]
 
@@ -859,7 +859,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		if _G.type(addonModule) == "function" then
 			addonModule()
 		else
-			for _, moduleFunc in pairs(addonModule) do
+			for _, moduleFunc in next, addonModule do
 				moduleFunc()
 			end
 		end
@@ -905,13 +905,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Dropdowns ]]
 
-		for _, dropdown in pairs({"LFDQueueFrameTypeDropDown", "RaidFinderQueueFrameSelectionDropDown", "Advanced_GraphicsAPIDropDown"}) do
+		for _, dropdown in next, {"LFDQueueFrameTypeDropDown", "RaidFinderQueueFrameSelectionDropDown", "Advanced_GraphicsAPIDropDown"} do
 			F.ReskinDropDown(_G[dropdown])
 		end
 
 		-- [[ Input frames ]]
 
-		for _, input in pairs({"HelpFrameKnowledgebaseSearchBox", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame"}) do
+		for _, input in next, {"HelpFrameKnowledgebaseSearchBox", "ScrollOfResurrectionSelectionFrameTargetEditBox", "ScrollOfResurrectionFrameNoteFrame"} do
 			F.ReskinInput(_G[input])
 		end
 
@@ -1336,7 +1336,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local professions = {"PrimaryProfession1", "PrimaryProfession2", "SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4"}
 
-		for _, button in pairs(professions) do
+		for _, button in next, professions do
 			local bu = _G[button]
 			bu.professionName:SetTextColor(1, 1, 1)
 			bu.missingHeader:SetTextColor(1, 1, 1)
@@ -1365,7 +1365,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		local professionbuttons = {"PrimaryProfession1SpellButtonTop", "PrimaryProfession1SpellButtonBottom", "PrimaryProfession2SpellButtonTop", "PrimaryProfession2SpellButtonBottom", "SecondaryProfession1SpellButtonLeft", "SecondaryProfession1SpellButtonRight", "SecondaryProfession2SpellButtonLeft", "SecondaryProfession2SpellButtonRight", "SecondaryProfession3SpellButtonLeft", "SecondaryProfession3SpellButtonRight", "SecondaryProfession4SpellButtonLeft", "SecondaryProfession4SpellButtonRight"}
 
-		for _, button in pairs(professionbuttons) do
+		for _, button in next, professionbuttons do
 			local icon = _G[button.."IconTexture"]
 			local bu = _G[button]
 			_G[button.."NameFrame"]:SetAlpha(0)
@@ -1732,7 +1732,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- Micro button alerts
 
 		local microButtons = {_G.TalentMicroButtonAlert, _G.CollectionsMicroButtonAlert}
-			for _, button in pairs(microButtons) do
+			for _, button in next, microButtons do
 			button:DisableDrawLayer("BACKGROUND")
 			button:DisableDrawLayer("BORDER")
 			button.Arrow:Hide()
