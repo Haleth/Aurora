@@ -412,20 +412,6 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	local suggestFrame = EncounterJournal.suggestFrame
 	local EncounterJournalTooltip = _G.EncounterJournalTooltip
 	do
-		local function rewardOnEnter()
-			for i = 1, 2 do
-				local item = EncounterJournalTooltip["Item"..i]
-				if item:IsShown() then
-					if item.IconBorder:IsShown() then
-						item.newBg:SetVertexColor(item.IconBorder:GetVertexColor())
-						item.IconBorder:Hide()
-					else
-						item.newBg:SetVertexColor(0, 0, 0)
-					end
-				end
-			end
-		end
-
 		-- Suggestion 1
 		local suggestion = suggestFrame.Suggestion1
 
@@ -445,7 +431,6 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 		local reward = suggestion.reward
 
-		reward:HookScript("OnEnter", rewardOnEnter)
 		reward.text:SetTextColor(.9, .9, .9)
 		reward.iconRing:Hide()
 		reward.iconRingHighlight:SetTexture("")
@@ -477,7 +462,6 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 			reward = suggestion.reward
 
-			reward:HookScript("OnEnter", rewardOnEnter)
 			reward.iconRing:Hide()
 			reward.iconRingHighlight:SetTexture("")
 			F.CreateBG(reward.icon)
@@ -520,9 +504,7 @@ C.themes["Blizzard_EncounterJournal"] = function()
 	hooksecurefunc("EJSuggestFrame_UpdateRewards", function(suggestion)
 		local rewardData = suggestion.reward.data
 		if rewardData then
-			local texture = rewardData.itemIcon or rewardData.currencyIcon or [[Interface\Icons\achievement_guildperk_mobilebanking]]
 			suggestion.reward.icon:SetMask("")
-			suggestion.reward.icon:SetTexture(texture)
 			suggestion.reward.icon:SetTexCoord(.08, .92, .08, .92)
 		end
 	end)
@@ -530,8 +512,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 
 	--[[ EncounterJournalTooltip ]]
 	F.CreateBD(EncounterJournalTooltip)
-	EncounterJournalTooltip.Item1.newBg = F.ReskinIcon(EncounterJournalTooltip.Item1.icon)
-	EncounterJournalTooltip.Item2.newBg = F.ReskinIcon(EncounterJournalTooltip.Item2.icon)
+	EncounterJournalTooltip.Item1._auroraBG = F.ReskinIcon(EncounterJournalTooltip.Item1.icon)
+	EncounterJournalTooltip.Item2._auroraBG = F.ReskinIcon(EncounterJournalTooltip.Item2.icon)
 
 
 	-- [[ LootJournal ]]
