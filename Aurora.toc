@@ -1,8 +1,8 @@
-## Interface: 70100
+## Interface: 70200
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 7.2.0
+## Version: 7.2.1
 ## SavedVariables: AuroraConfig
 
 aurora.lua
