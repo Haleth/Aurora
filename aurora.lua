@@ -11,7 +11,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 
 -- for custom APIs (see docs online)
-local LATEST_API_VERSION = "6.0"
+local LATEST_API_VERSION = "7.0"
 
 -- see F.AddPlugin
 local AURORA_LOADED = false
