@@ -17,6 +17,20 @@ splash:SetSize(400, 300)
 splash:Hide()
 
 do
+local text = [[
+Thank you for using Aurora!
+
+
+Type |cff00a0ff/aurora|r at any time to access Aurora's options.
+
+There, you can customize the addon's appearance.
+
+You can also turn off optional features such as bags and tooltips if they are incompatible with your other addons.
+
+
+
+Enjoy!
+]]
 	local title = splash:CreateFontString(nil, "ARTWORK", "GameFont_Gigantic")
 	title:SetTextColor(1, 1, 1)
 	title:SetPoint("TOP", 0, -25)
@@ -26,7 +40,7 @@ do
 	body:SetPoint("TOP", title, "BOTTOM", 0, -20)
 	body:SetWidth(360)
 	body:SetJustifyH("CENTER")
-	body:SetText("Thank you for using Aurora!\n\n\nType |cff00a0ff/aurora|r at any time to access Aurora's options.\n\nThere, you can customize the addon's appearance.\n\nYou can also turn off optional features such as bags and tooltips if they are incompatible with your other addons.\n\n\n\nEnjoy!")
+	body:SetText(text)
 
 	local okayButton = CreateFrame("Button", nil, splash, "UIPanelButtonTemplate")
 	okayButton:SetSize(128, 25)
@@ -107,17 +121,21 @@ features:SetPoint("TOPLEFT", 16, -80)
 local bagsBox = createToggleBox(gui, "bags", "Bags")
 bagsBox:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -20)
 
-local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
-chatBubbleBox:SetPoint("LEFT", bagsBox, "RIGHT", 90, 0)
-
 local lootBox = createToggleBox(gui, "loot", "Loot")
-lootBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
+lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 90, 0)
+
+local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
+chatBubbleBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
+
+local chatBubbleNamesBox = createToggleBox(gui, "chatBubbleNames", "Show names")
+chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -5, 0)
+chatBubbleNamesBox:SetSize(22, 22)
 
 local tooltipsBox = createToggleBox(gui, "tooltips", "Tooltips")
-tooltipsBox:SetPoint("LEFT", lootBox, "RIGHT", 90, 0)
+tooltipsBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 90, 0)
 
 local appearance = addSubCategory(gui, "Appearance")
-appearance:SetPoint("TOPLEFT", lootBox, "BOTTOMLEFT", 0, -30)
+appearance:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMLEFT", 0, -35)
 
 local fontBox = createToggleBox(gui, "enableFont", "Replace default game fonts")
 fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -20)
@@ -220,11 +238,14 @@ gui.default = function()
 	gui.refresh()
 end
 
-reloadButton:SetScript("OnClick", _G.ReloadUI)
-
-alphaSlider:SetScript("OnValueChanged", function(_, value)
-	_G.AuroraConfig.alpha = value
-	updateFrames()
+chatBubbleBox:SetScript("OnClick", function(self)
+	if self:GetChecked() then
+		_G.AuroraConfig.chatBubbles = true
+		chatBubbleNamesBox:Enable()
+	else
+		_G.AuroraConfig.chatBubbles = false
+		chatBubbleNamesBox:Disable()
+	end
 end)
 
 colourBox:SetScript("OnClick", function(self)
@@ -258,6 +279,13 @@ colourButton:SetScript("OnClick", function()
 	_G.ColorPickerFrame:Hide()
 	_G.ColorPickerFrame:Show()
 end)
+
+alphaSlider:SetScript("OnValueChanged", function(_, value)
+	_G.AuroraConfig.alpha = value
+	updateFrames()
+end)
+
+reloadButton:SetScript("OnClick", _G.ReloadUI)
 
 -- easy slash command
 
