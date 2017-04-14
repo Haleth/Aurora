@@ -511,9 +511,13 @@ C.themes["Blizzard_Collections"] = function()
 
 	-- Progress bar
 	local progressBar = WardrobeCollectionFrame.progressBar
-	progressBar.borderLeft:Hide()
-	progressBar.borderMid:Hide()
-	progressBar.borderRight:Hide()
+	if C.is725 then
+		progressBar.border:Hide()
+	else
+		progressBar.borderLeft:Hide()
+		progressBar.borderMid:Hide()
+		progressBar.borderRight:Hide()
+	end
 	progressBar:DisableDrawLayer("BACKGROUND")
 
 	progressBar.text:SetPoint("CENTER", 0, 1)
