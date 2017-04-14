@@ -89,6 +89,7 @@ C.defaults = {
 	["buttonSolidColour"] = {.2, .2, .2, 1},
 	["useButtonGradientColour"] = true,
 	["chatBubbles"] = true,
+		["chatBubbleNames"] = true,
 	["enableFont"] = true,
 	["loot"] = true,
 	["useCustomColour"] = false,
