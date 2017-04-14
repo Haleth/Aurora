@@ -66,9 +66,7 @@ _G.tinsert(C.themes["Aurora"], function()
 
                     local vertexInfo = vertexOffsets[i]
                     tex:SetPoint(vertexInfo[1])
-                    if C.is72 then
-                        tex:SetVertexOffset(vertexInfo[2], vertexInfo[3], 0)
-                    end
+                    tex:SetVertexOffset(vertexInfo[2], vertexInfo[3], 0)
                     relic[i] = tex
                 end
 

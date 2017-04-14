@@ -6,20 +6,20 @@ local F, C = _G.unpack(private.Aurora)
 _G.tinsert(C.themes["Aurora"], function()
 	local ModelPreviewFrame = _G.ModelPreviewFrame
 	local Display = ModelPreviewFrame.Display
-	local Model = Display.Model or Display.ModelScene -- is72
+	local ModelScene = Display.ModelScene
 
 	Display.YesMountsTex:Hide()
 	Display.ShadowOverlay:Hide()
 
 	F.ReskinPortraitFrame(ModelPreviewFrame, true)
 	F.Reskin(ModelPreviewFrame.CloseButton)
-	F.ReskinArrow(Model.RotateLeftButton, "left")
-	F.ReskinArrow(Model.RotateRightButton, "right")
+	F.ReskinArrow(ModelScene.RotateLeftButton, "left")
+	F.ReskinArrow(ModelScene.RotateRightButton, "right")
 
-	local bg = F.CreateBDFrame(Model, .25)
+	local bg = F.CreateBDFrame(ModelScene, .25)
 	bg:SetPoint("TOPLEFT", -1, 0)
 	bg:SetPoint("BOTTOMRIGHT", 2, -2)
 
-	Model.RotateLeftButton:SetPoint("TOPRIGHT", Model, "BOTTOM", -5, -10)
-	Model.RotateRightButton:SetPoint("TOPLEFT", Model, "BOTTOM", 5, -10)
+	ModelScene.RotateLeftButton:SetPoint("TOPRIGHT", ModelScene, "BOTTOM", -5, -10)
+	ModelScene.RotateRightButton:SetPoint("TOPLEFT", ModelScene, "BOTTOM", 5, -10)
 end)

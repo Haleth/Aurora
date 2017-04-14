@@ -56,12 +56,7 @@ C.themes["Blizzard_Collections"] = function()
 
 	F.CreateBD(MountJournal.MountCount, .25)
 	F.CreateBD(PetJournal.PetCount, .25)
-	if C.is72 then
-		F.CreateBD(MountJournal.MountDisplay.ModelScene, .25)
-	else
-		F.CreateBD(MountJournal.MountDisplay.ModelFrame, .25)
-	end
-
+	F.CreateBD(MountJournal.MountDisplay.ModelScene, .25)
 
 	F.Reskin(_G.MountJournalMountButton)
 	F.Reskin(_G.PetJournalSummonButton)
@@ -70,13 +65,8 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinScroll(_G.PetJournalListScrollFrameScrollBar)
 	F.ReskinInput(_G.MountJournalSearchBox)
 	F.ReskinInput(_G.PetJournalSearchBox)
-	if C.is72 then
-		F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "left")
-		F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "right")
-	else
-		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateLeftButton, "left")
-		F.ReskinArrow(MountJournal.MountDisplay.ModelFrame.RotateRightButton, "right")
-	end
+	F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "left")
+	F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "right")
 	F.ReskinFilterButton(_G.PetJournalFilterButton)
 	F.ReskinFilterButton(_G.MountJournalFilterButton)
 
@@ -356,16 +346,8 @@ C.themes["Blizzard_Collections"] = function()
 
 	F.ReskinInput(ToyBox.searchBox)
 	F.ReskinFilterButton(_G.ToyBoxFilterButton)
-	if C.is72 then
-		F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "left")
-		F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "right")
-	else
-		F.ReskinArrow(ToyBox.navigationFrame.prevPageButton, "left")
-		F.ReskinArrow(ToyBox.navigationFrame.nextPageButton, "right")
-
-		ToyBox.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
-		ToyBox.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
-	end
+	F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "left")
+	F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "right")
 
 	-- Progress bar
 
@@ -440,16 +422,8 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinInput(_G.HeirloomsJournalSearchBox)
 	F.ReskinDropDown(_G.HeirloomsJournalClassDropDown)
 	F.ReskinFilterButton(_G.HeirloomsJournalFilterButton)
-	if C.is72 then
-		F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "left")
-		F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "right")
-	else
-		F.ReskinArrow(HeirloomsJournal.navigationFrame.prevPageButton, "left")
-		F.ReskinArrow(HeirloomsJournal.navigationFrame.nextPageButton, "right")
-
-		HeirloomsJournal.navigationFrame.prevPageButton:SetPoint("BOTTOMRIGHT", -320, 51)
-		HeirloomsJournal.navigationFrame.nextPageButton:SetPoint("BOTTOMRIGHT", -285, 51)
-	end
+	F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "left")
+	F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "right")
 
 	-- Progress bar
 
@@ -529,9 +503,7 @@ C.themes["Blizzard_Collections"] = function()
 	-- [[ WardrobeCollection ]]
 
 	local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
-	if C.is72 then
-		F.ReskinTab("WardrobeCollectionFrameTab", 2)
-	end
+	F.ReskinTab("WardrobeCollectionFrameTab", 2)
 
 	_G.WardrobeCollectionFrameBg:Hide()
 	F.ReskinInput(WardrobeCollectionFrame.searchBox)
@@ -550,23 +522,15 @@ C.themes["Blizzard_Collections"] = function()
 	F.CreateBDFrame(progressBar, .25)
 
 	-- Items
-	local ItemsCollectionFrame = WardrobeCollectionFrame[C.is72 and "ItemsCollectionFrame" or "ModelsFrame"]
+	local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
 	ItemsCollectionFrame:DisableDrawLayer("BACKGROUND")
 	ItemsCollectionFrame:DisableDrawLayer("BORDER")
 	ItemsCollectionFrame:DisableDrawLayer("ARTWORK")
 	ItemsCollectionFrame:DisableDrawLayer("OVERLAY")
 
 	F.ReskinDropDown(ItemsCollectionFrame.WeaponDropDown)
-	if C.is72 then
-		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "left")
-		F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "right")
-	else
-		F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.PrevPageButton, "left")
-		F.ReskinArrow(WardrobeCollectionFrame.NavigationFrame.NextPageButton, "right")
-
-		WardrobeCollectionFrame.NavigationFrame.PrevPageButton:SetPoint("BOTTOM", 23, 51)
-		WardrobeCollectionFrame.NavigationFrame.NextPageButton:SetPoint("BOTTOM", 58, 51)
-	end
+	F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "left")
+	F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "right")
 
 	local Models = ItemsCollectionFrame.Models
 	for i = 1, #Models do
@@ -642,83 +606,73 @@ C.themes["Blizzard_Collections"] = function()
 			end
 		end
 	end
-	if C.is72 then
-		hooksecurefunc(ItemsCollectionFrame, "UpdateItems", UpdateItems)
-	else
-		hooksecurefunc("WardrobeCollectionFrame_Update", function()
-			ItemsCollectionFrame.PAGE_SIZE = 18
-			ItemsCollectionFrame.PendingTransmogFrame = _G.WardrobeModelPendingTransmogFrame
-			UpdateItems(ItemsCollectionFrame)
-		end)
-	end
+	hooksecurefunc(ItemsCollectionFrame, "UpdateItems", UpdateItems)
 
 	-- Sets
-	if C.is72 then
-		local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
-		SetsCollectionFrame.LeftInset:DisableDrawLayer("BACKGROUND")
-		SetsCollectionFrame.LeftInset:DisableDrawLayer("BORDER")
-		SetsCollectionFrame.RightInset:DisableDrawLayer("BACKGROUND")
-		SetsCollectionFrame.RightInset:DisableDrawLayer("BORDER")
-		SetsCollectionFrame.RightInset:DisableDrawLayer("ARTWORK")
-		SetsCollectionFrame.RightInset:DisableDrawLayer("OVERLAY")
+	local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
+	SetsCollectionFrame.LeftInset:DisableDrawLayer("BACKGROUND")
+	SetsCollectionFrame.LeftInset:DisableDrawLayer("BORDER")
+	SetsCollectionFrame.RightInset:DisableDrawLayer("BACKGROUND")
+	SetsCollectionFrame.RightInset:DisableDrawLayer("BORDER")
+	SetsCollectionFrame.RightInset:DisableDrawLayer("ARTWORK")
+	SetsCollectionFrame.RightInset:DisableDrawLayer("OVERLAY")
 
-		local ScrollFrame = SetsCollectionFrame.ScrollFrame
-		F.ReskinScroll(ScrollFrame.scrollBar)
-		for i = 1, #ScrollFrame.buttons do
-			local button = ScrollFrame.buttons[i]
+	local ScrollFrame = SetsCollectionFrame.ScrollFrame
+	F.ReskinScroll(ScrollFrame.scrollBar)
+	for i = 1, #ScrollFrame.buttons do
+		local button = ScrollFrame.buttons[i]
 
-			button.Background:Hide()
-			local bg = CreateFrame("Frame", nil, button)
-			bg:SetPoint("TOPLEFT", 0, -1)
-			bg:SetPoint("BOTTOMRIGHT", 0, 1)
-			bg:SetFrameLevel(button:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-			button.bg = bg
+		button.Background:Hide()
+		local bg = CreateFrame("Frame", nil, button)
+		bg:SetPoint("TOPLEFT", 0, -1)
+		bg:SetPoint("BOTTOMRIGHT", 0, 1)
+		bg:SetFrameLevel(button:GetFrameLevel()-1)
+		F.CreateBD(bg, .25)
+		button.bg = bg
 
-			button.Icon.bg = F.ReskinIcon(button.Icon)
+		button.Icon.bg = F.ReskinIcon(button.Icon)
 
-			button.SelectedTexture:SetTexture("")
-			button.HighlightTexture:SetTexture(C.media.backdrop)
-			button.HighlightTexture:SetVertexColor(r, g, b, .25)
+		button.SelectedTexture:SetTexture("")
+		button.HighlightTexture:SetTexture(C.media.backdrop)
+		button.HighlightTexture:SetVertexColor(r, g, b, .25)
+	end
+
+	hooksecurefunc(ScrollFrame, "Update", function(self)
+		local buttons = self.buttons
+
+		for i = 1, #buttons do
+			local button = buttons[i]
+			if button.SelectedTexture:IsShown() then
+				button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
+			else
+				button.bg:SetBackdropBorderColor(0, 0, 0)
+			end
+
+			if button.IconCover:IsShown() then
+				button.Icon.bg:SetBackdropBorderColor(0, 0, 0, 0.7)
+			else
+				button.Icon.bg:SetBackdropBorderColor(1, 1, 1)
+			end
+		end
+	end)
+
+	local DetailsFrame = SetsCollectionFrame.DetailsFrame
+	DetailsFrame.ModelFadeTexture:Hide()
+	DetailsFrame.IconRowBackground:Hide()
+	F.ReskinFilterButton(DetailsFrame.VariantSetsButton, "Down")
+
+	hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", function(self, itemFrame)
+		if not itemFrame.skinned then
+			itemFrame._auroraBG = F.ReskinIcon(itemFrame.Icon)
+			itemFrame.skinned = true
 		end
 
-		hooksecurefunc(ScrollFrame, "Update", function(self)
-			local buttons = self.buttons
-
-			for i = 1, #buttons do
-				local button = buttons[i]
-				if button.SelectedTexture:IsShown() then
-					button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
-				else
-					button.bg:SetBackdropBorderColor(0, 0, 0)
-				end
-
-				if button.IconCover:IsShown() then
-					button.Icon.bg:SetBackdropBorderColor(0, 0, 0, 0.7)
-				else
-					button.Icon.bg:SetBackdropBorderColor(1, 1, 1)
-				end
-			end
-		end)
-
-		local DetailsFrame = SetsCollectionFrame.DetailsFrame
-		DetailsFrame.ModelFadeTexture:Hide()
-		DetailsFrame.IconRowBackground:Hide()
-		F.ReskinFilterButton(DetailsFrame.VariantSetsButton, "Down")
-
-		hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", function(self, itemFrame)
-			if not itemFrame.skinned then
-				itemFrame._auroraBG = F.ReskinIcon(itemFrame.Icon)
-				itemFrame.skinned = true
-			end
-
-			local quality
-			if itemFrame.collected then
-				quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
-			end
-			_G.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
-		end)
-	end
+		local quality
+		if itemFrame.collected then
+			quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
+		end
+		_G.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
+	end)
 
 	-- [[ Wardrobe ]]
 

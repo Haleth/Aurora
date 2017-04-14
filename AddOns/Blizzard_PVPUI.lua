@@ -120,7 +120,6 @@ C.themes["Blizzard_PVPUI"] = function()
 	F.Reskin(BonusFrame.DiceButton)
 
 	for _, bonusButton in pairs({"RandomBGButton", "Arena1Button", "AshranButton", "BrawlButton"}) do
-		if not C.is72 and bonusButton == "BrawlButton" then break end
 		local bu = BonusFrame[bonusButton]
 		local reward = bu.Reward
 

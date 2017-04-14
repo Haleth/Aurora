@@ -116,12 +116,8 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 	F.ReskinArrow(detailsFrame.CreateMultipleInputBox.DecrementButton, "left")
 
 	local contents = detailsFrame.Contents
-	if C.is72 then
-		contents.ResultIcon.bg = F.CreateBG(contents.ResultIcon)
-		contents.ResultIcon.ResultBorder:Hide()
-	else
-		contents.ResultIcon.Background:Hide()
-	end
+	contents.ResultIcon.bg = F.CreateBG(contents.ResultIcon)
+	contents.ResultIcon.ResultBorder:Hide()
 	hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
 		if not self._auroraSkinned then
 			self._auroraBG = F.ReskinIcon(self:GetNormalTexture())

@@ -37,10 +37,6 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.QuestFrameProgressPanel:DisableDrawLayer("BORDER")
 
 	F.Reskin(_G.QuestFrameGoodbyeButton)
-	if not C.is72 then
-		F.Reskin(_G.QuestFrameProgressPanel.IgnoreButton)
-		F.Reskin(_G.QuestFrameProgressPanel.UnignoreButton)
-	end
 	F.Reskin(_G.QuestFrameCompleteButton)
 
 	_G.QuestProgressScrollFrameTop:Hide()
@@ -81,10 +77,6 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.QuestFrameDetailPanel:DisableDrawLayer("BORDER")
 
 	F.Reskin(_G.QuestFrameDeclineButton)
-	if not C.is72 then
-		F.Reskin(_G.QuestFrameDetailPanel.IgnoreButton)
-		F.Reskin(_G.QuestFrameDetailPanel.UnignoreButton)
-	end
 	F.Reskin(_G.QuestFrameAcceptButton)
 
 	_G.QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
