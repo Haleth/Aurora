@@ -225,16 +225,6 @@ F.ReskinTab = function(f, numTabs)
 	end
 end
 
-local function colourScroll(f)
-	if f:IsEnabled() then
-		f.tex:SetVertexColor(red, green, blue)
-	end
-end
-
-local function clearScroll(f)
-	f.tex:SetVertexColor(1, 1, 1)
-end
-
 F.ReskinScroll = function(f, parent)
 	local frame = f:GetName()
 
@@ -263,50 +253,20 @@ F.ReskinScroll = function(f, parent)
 	local up = (f.ScrollUpButton or f.UpButton) or _G[(frame or parent).."ScrollUpButton"]
 	local down = (f.ScrollDownButton or f.DownButton) or _G[(frame or parent).."ScrollDownButton"]
 
-	up:SetWidth(17)
-	down:SetWidth(17)
-
-	F.Reskin(up, true)
-	F.Reskin(down, true)
-
-	up:SetDisabledTexture(C.media.backdrop)
-	local dis1 = up:GetDisabledTexture()
-	dis1:SetVertexColor(0, 0, 0, .4)
-	dis1:SetDrawLayer("OVERLAY")
-
-	down:SetDisabledTexture(C.media.backdrop)
-	local dis2 = down:GetDisabledTexture()
-	dis2:SetVertexColor(0, 0, 0, .4)
-	dis2:SetDrawLayer("OVERLAY")
-
-	local uptex = up:CreateTexture(nil, "ARTWORK")
-	uptex:SetTexture(C.media.arrowUp)
-	uptex:SetSize(8, 8)
-	uptex:SetPoint("CENTER")
-	uptex:SetVertexColor(1, 1, 1)
-	up.tex = uptex
-
-	local downtex = down:CreateTexture(nil, "ARTWORK")
-	downtex:SetTexture(C.media.arrowDown)
-	downtex:SetSize(8, 8)
-	downtex:SetPoint("CENTER")
-	downtex:SetVertexColor(1, 1, 1)
-	down.tex = downtex
-
-	up:HookScript("OnEnter", colourScroll)
-	up:HookScript("OnLeave", clearScroll)
-	down:HookScript("OnEnter", colourScroll)
-	down:HookScript("OnLeave", clearScroll)
+	F.ReskinArrow(up, "Up")
+	F.ReskinArrow(down, "Down")
+	up:SetSize(17, 17)
+	down:SetSize(17, 17)
 end
 
 local function colourArrow(f)
 	if f:IsEnabled() then
-		f.tex:SetVertexColor(red, green, blue)
+		f._auroraArrow:SetVertexColor(red, green, blue)
 	end
 end
 
 local function clearArrow(f)
-	f.tex:SetVertexColor(1, 1, 1)
+	f._auroraArrow:SetVertexColor(1, 1, 1)
 end
 
 F.colourArrow = colourArrow
@@ -323,9 +283,13 @@ F.ReskinDropDown = function(f)
 	if middle then middle:SetAlpha(0) end
 	if right then right:SetAlpha(0) end
 
+	local button = f.Button or _G[frame.."Button"]
+	button:SetPoint("TOPRIGHT", right, -19, -21)
+	F.ReskinArrow(button, "Down")
+
 	local bg = CreateFrame("Frame", nil, f)
 	bg:SetPoint("TOPLEFT", 20, -4)
-	bg:SetPoint("BOTTOMRIGHT", -14, 8)
+	bg:SetPoint("BOTTOMRIGHT", button, "BOTTOMLEFT", 1, 0)
 	bg:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bg, 0)
 
@@ -333,27 +297,6 @@ F.ReskinDropDown = function(f)
 	gradient:SetPoint("TOPLEFT", bg, 1, -1)
 	gradient:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
-	local down = _G[frame.."Button"]
-	down:SetSize(20, 20)
-	down:ClearAllPoints()
-	down:SetPoint("TOPRIGHT", bg)
-	F.Reskin(down, true)
-
-	down:SetDisabledTexture(C.media.backdrop)
-	local dis = down:GetDisabledTexture()
-	dis:SetVertexColor(0, 0, 0, .4)
-	dis:SetDrawLayer("OVERLAY")
-	dis:SetAllPoints()
-
-	local tex = down:CreateTexture(nil, "ARTWORK")
-	tex:SetTexture(C.media.arrowDown)
-	tex:SetSize(8, 8)
-	tex:SetPoint("CENTER")
-	tex:SetVertexColor(1, 1, 1)
-	down.tex = tex
-
-	down:HookScript("OnEnter", colourArrow)
-	down:HookScript("OnLeave", clearArrow)
 end
 
 local function colourClose(f)
@@ -451,10 +394,10 @@ F.ReskinArrow = function(f, direction)
 	dis:SetDrawLayer("OVERLAY")
 
 	local tex = f:CreateTexture(nil, "ARTWORK")
-	tex:SetTexture("Interface\\AddOns\\Aurora\\media\\arrow-"..direction.."-active")
+	tex:SetTexture(C.media["arrow"..direction])
 	tex:SetSize(8, 8)
 	tex:SetPoint("CENTER")
-	f.tex = tex
+	f._auroraArrow = tex
 
 	f:HookScript("OnEnter", colourArrow)
 	f:HookScript("OnLeave", clearArrow)
