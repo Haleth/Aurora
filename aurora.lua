@@ -691,11 +691,9 @@ end
 local getBackdrop = function()
 	return C.backdrop
 end
-
 local getBackdropColor = function()
 	return 0, 0, 0, .6
 end
-
 local getBackdropBorderColor = function()
 	return 0, 0, 0
 end

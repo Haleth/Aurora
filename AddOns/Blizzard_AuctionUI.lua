@@ -10,302 +10,204 @@ local CreateFrame = _G.CreateFrame
 local F, C = _G.unpack(private.Aurora)
 
 C.themes["Blizzard_AuctionUI"] = function()
-	local r, g, b = C.r, C.g, C.b
-
-	F.SetBD(_G.AuctionFrame, 2, -10, 0, 10)
-	F.CreateBD(_G.AuctionProgressFrame)
-
-	_G.AuctionProgressBar:SetStatusBarTexture(C.media.backdrop)
-	local ABBD = CreateFrame("Frame", nil, _G.AuctionProgressBar)
-	ABBD:SetPoint("TOPLEFT", -1, 1)
-	ABBD:SetPoint("BOTTOMRIGHT", 1, -1)
-	ABBD:SetFrameLevel(_G.AuctionProgressBar:GetFrameLevel()-1)
-	F.CreateBD(ABBD, .25)
-
-	_G.AuctionProgressBar.Icon:SetTexCoord(.08, .92, .08, .92)
-	F.CreateBG(_G.AuctionProgressBar.Icon)
-
-	_G.AuctionProgressBar.Text:ClearAllPoints()
-	_G.AuctionProgressBar.Text:SetPoint("CENTER", 0, 1)
-
-	F.ReskinClose(_G.AuctionProgressFrameCancelButton, "LEFT", _G.AuctionProgressBar, "RIGHT", 4, 0)
-	select(14, _G.AuctionProgressFrameCancelButton:GetRegions()):SetPoint("CENTER", 0, 2)
-
-	_G.AuctionFrame:DisableDrawLayer("ARTWORK")
+	F.SetBD(_G.AuctionFrame, 11, -12, -1, 10)
 	_G.AuctionPortraitTexture:Hide()
+	_G.AuctionFrame:DisableDrawLayer("ARTWORK")
+
+	for i = 1, 3 do
+		F.ReskinTab(_G["AuctionFrameTab"..i])
+	end
+
+	F.ReskinClose(_G.AuctionFrameCloseButton, "TOPRIGHT", _G.AuctionFrame, "TOPRIGHT", -4, -15)
+
+	local function SkinSort(sortButtons)
+		for i = 1, #sortButtons do
+			_G[sortButtons[i]]:DisableDrawLayer("BACKGROUND")
+		end
+	end
+	local function SkinScroll(scroll)
+		scroll:GetRegions():Hide()
+		select(2, scroll:GetRegions()):Hide()
+		F.ReskinScroll(scroll.ScrollBar)
+	end
+	local function SkinList(prefix, middleIdx, numToDisplay)
+		for i = 1, numToDisplay do
+			local name = prefix..i
+			local button = _G[name]
+			local item = _G[name.."Item"]
+			local icon = _G[name.."ItemIconTexture"]
+
+			if button and item then
+				item._auroraBG = F.ReskinIcon(icon)
+				item:SetNormalTexture("")
+				item:SetPushedTexture("")
+
+				_G[name.."Left"]:Hide()
+				_G[name.."Right"]:Hide()
+				select(middleIdx, button:GetRegions()):Hide() -- middle
+
+				local bd = CreateFrame("Frame", nil, button)
+				bd:SetPoint("TOPLEFT", item, "TOPRIGHT", 2, 1)
+				bd:SetPoint("BOTTOMRIGHT", 0, 4)
+				bd:SetFrameLevel(button:GetFrameLevel()-1)
+				F.CreateBD(bd, .25)
+				button._auroraBD = bd
+
+				local highlight = button:GetHighlightTexture()
+				highlight:SetTexture([[Interface\ClassTrainerFrame\TrainerTextures]])
+				highlight:SetTexCoord(0.005859375, 0.5703125, 0.85546875, 0.939453125)
+				highlight:SetPoint("TOPLEFT", bd, 1, -1)
+				highlight:SetPoint("BOTTOMRIGHT", bd, -1, 1)
+			end
+		end
+	end
+	local function SkinButtons(buttons, hasBorder)
+		for i = 1, #buttons do
+			local button = buttons[i]
+			F.Reskin(button)
+			if hasBorder then
+				select(6, button:GetRegions()):Hide()
+			end
+			if i == 1 then
+				button:SetPoint("BOTTOMRIGHT", 66, 15)
+			else
+				button:SetPoint("RIGHT", buttons[i - 1], "LEFT", -1, 0)
+			end
+		end
+	end
+	local SkinPrice do
+		local money = {"gold", "silver", "copper"}
+		function SkinPrice(price)
+			for i = 1, #money do
+				local bid = price[money[i]]
+				F.ReskinInput(bid)
+				if i > 1 then
+					bid:SetPoint("LEFT", price[money[i - 1]], "RIGHT", 6, 0)
+					bid:SetWidth(35)
+					bid.texture:SetPoint("RIGHT", -4, 0)
+				end
+			end
+		end
+	end
+
+	--[[ Browse ]]--
+	local filterButtonColor = {r = 0.2, g = 0.2, b = 0.2}
+	local wowTokenColor = _G.BAG_ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_WOW_TOKEN]
+	_G.hooksecurefunc("FilterButton_SetUp", function(button, info)
+		if not button._auroraSkinned then
+			F.CreateBD(button, 0)
+			button._auroraSkinned = true
+		end
+		local color
+		if info.isToken then
+			color = wowTokenColor
+		else
+			color = filterButtonColor
+		end
+		button:SetBackdropColor(color.r, color.g, color.b, 0.6)
+		button:SetBackdropBorderColor(color.r, color.g, color.b)
+		button:SetNormalTexture("")
+	end)
+	SkinScroll(_G.BrowseFilterScrollFrame)
+	SkinScroll(_G.BrowseScrollFrame)
+
+	-- WoW token
+	local BrowseWowTokenResults = _G.BrowseWowTokenResults
+	F.Reskin(BrowseWowTokenResults.Buyout)
+
+	local token = BrowseWowTokenResults.Token
+	token.ItemBorder:Hide()
+	local itemBG = F.CreateBDFrame(token.ItemBorder, .2)
+	itemBG:SetPoint("TOPLEFT", token.Icon, "TOPRIGHT", 3, 1)
+	itemBG:SetPoint("BOTTOMRIGHT", -2, 2)
+	local iconBG = F.ReskinIcon(token.Icon)
+	iconBG:SetBackdropBorderColor(wowTokenColor.r, wowTokenColor.g, wowTokenColor.b)
+	token.IconBorder:Hide()
+
+	local WowTokenGameTimeTutorial = _G.WowTokenGameTimeTutorial
+	F.ReskinPortraitFrame(WowTokenGameTimeTutorial, true)
+	WowTokenGameTimeTutorial.Tutorial:SetDrawLayer("BACKGROUND", 7)
+
+	F.Reskin(_G.StoreButton)
+    _G.StoreButton:SetSize(149, 26)
+    _G.StoreButton:SetPoint("TOPLEFT", _G.WowTokenGameTimeTutorial.RightDisplay.Tutorial2, "BOTTOMLEFT", 56, -12)
+
+    SkinSort({"BrowseQualitySort", "BrowseLevelSort", "BrowseDurationSort", "BrowseHighBidderSort", "BrowseCurrentBidSort"})
+	SkinList("BrowseButton", 5, _G.NUM_BROWSE_TO_DISPLAY)
+
+	F.ReskinInput(_G.BrowseName)
+	F.ReskinInput(_G.BrowseMinLevel)
+	F.ReskinInput(_G.BrowseMaxLevel)
+	F.ReskinDropDown(_G.BrowseDropDown)
+	F.ReskinCheck(_G.IsUsableCheckButton)
+	F.ReskinCheck(_G.ShowOnPlayerCheckButton)
+	F.Reskin(_G.BrowseResetButton)
+	F.Reskin(_G.BrowseSearchButton)
+
+	F.ReskinArrow(_G.BrowsePrevPageButton, "Left")
+	_G.BrowsePrevPageButton:SetPoint("TOPLEFT", 660, -60)
+	F.ReskinArrow(_G.BrowseNextPageButton, "Right")
+	_G.BrowseNextPageButton:SetPoint("TOPRIGHT", 67, -60)
+
+	SkinButtons({_G.BrowseCloseButton, _G.BrowseBuyoutButton, _G.BrowseBidButton}, true)
+	SkinPrice(_G.BrowseBidPrice)
+	F.ReskinCheck(_G.ExactMatchCheckButton)
+
+	--[[ Bid ]]--
+    SkinSort({"BidQualitySort", "BidLevelSort", "BidDurationSort", "BidBuyoutSort", "BidStatusSort", "BidBidSort"})
+	SkinScroll(_G.BidScrollFrame)
+	SkinList("BidButton", 6, _G.NUM_BIDS_TO_DISPLAY)
+	SkinPrice(_G.BidBidPrice)
+	SkinButtons({_G.BidCloseButton, _G.BidBuyoutButton, _G.BidBidButton}, true)
+
+	--[[ Auctions ]]--
+    SkinSort({"AuctionsQualitySort", "AuctionsDurationSort", "AuctionsHighBidderSort", "AuctionsBidSort"})
+	SkinScroll(_G.AuctionsScrollFrame)
+	SkinList("AuctionsButton", 4, _G.NUM_AUCTIONS_TO_DISPLAY)
+
+	_G.AuctionsItemButton._auroraBG = F.CreateBDFrame(_G.AuctionsItemButton, .2)
+	local nameFrame = select(2, _G.AuctionsItemButton:GetRegions())
+	nameFrame:Hide()
+	local nameBG = F.CreateBDFrame(_G.AuctionsItemButton, .2)
+	nameBG:SetPoint("TOPLEFT", _G.AuctionsItemButton, "TOPRIGHT", 3, 1)
+	nameBG:SetPoint("BOTTOMRIGHT", nameFrame)
+	_G.AuctionsItemButton:HookScript("OnEvent", function(self, event, ...)
+		print("AuctionsItemButton", self, event, ...)
+		local icon = _G.AuctionsItemButton:GetNormalTexture()
+		if icon then
+			print("Normal", icon)
+			icon:SetTexCoord(.08, .92, .08, .92)
+		end
+	end)
+
+	F.ReskinInput(_G.AuctionsStackSizeEntry)
+	F.Reskin(_G.AuctionsStackSizeMaxButton)
+	F.ReskinInput(_G.AuctionsNumStacksEntry)
+	F.Reskin(_G.AuctionsNumStacksMaxButton)
+	F.ReskinDropDown(_G.PriceDropDown)
+	SkinPrice(_G.StartPrice)
+	SkinPrice(_G.BuyoutPrice)
+	F.ReskinDropDown(_G.DurationDropDown)
+	SkinButtons({_G.AuctionsCloseButton, _G.AuctionsCancelAuctionButton})
+	F.Reskin(_G.AuctionsCreateAuctionButton)
+
+	-- AuctionProgressFrame
 	for i = 1, 4 do
 		select(i, _G.AuctionProgressFrame:GetRegions()):Hide()
 	end
-	_G.BrowseFilterScrollFrame:GetRegions():Hide()
-	select(2, _G.BrowseFilterScrollFrame:GetRegions()):Hide()
-	_G.BrowseScrollFrame:GetRegions():Hide()
-	select(2, _G.BrowseScrollFrame:GetRegions()):Hide()
-	_G.BidScrollFrame:GetRegions():Hide()
-	select(2, _G.BidScrollFrame:GetRegions()):Hide()
-	_G.AuctionsScrollFrame:GetRegions():Hide()
-	select(2, _G.AuctionsScrollFrame:GetRegions()):Hide()
-	_G.BrowseQualitySort:DisableDrawLayer("BACKGROUND")
-	_G.BrowseLevelSort:DisableDrawLayer("BACKGROUND")
-	_G.BrowseDurationSort:DisableDrawLayer("BACKGROUND")
-	_G.BrowseHighBidderSort:DisableDrawLayer("BACKGROUND")
-	_G.BrowseCurrentBidSort:DisableDrawLayer("BACKGROUND")
-	_G.BidQualitySort:DisableDrawLayer("BACKGROUND")
-	_G.BidLevelSort:DisableDrawLayer("BACKGROUND")
-	_G.BidDurationSort:DisableDrawLayer("BACKGROUND")
-	_G.BidBuyoutSort:DisableDrawLayer("BACKGROUND")
-	_G.BidStatusSort:DisableDrawLayer("BACKGROUND")
-	_G.BidBidSort:DisableDrawLayer("BACKGROUND")
-	_G.AuctionsQualitySort:DisableDrawLayer("BACKGROUND")
-	_G.AuctionsDurationSort:DisableDrawLayer("BACKGROUND")
-	_G.AuctionsHighBidderSort:DisableDrawLayer("BACKGROUND")
-	_G.AuctionsBidSort:DisableDrawLayer("BACKGROUND")
-	select(6, _G.BrowseCloseButton:GetRegions()):Hide()
-	select(6, _G.BrowseBuyoutButton:GetRegions()):Hide()
-	select(6, _G.BrowseBidButton:GetRegions()):Hide()
-	select(6, _G.BidCloseButton:GetRegions()):Hide()
-	select(6, _G.BidBuyoutButton:GetRegions()):Hide()
-	select(6, _G.BidBidButton:GetRegions()):Hide()
+	F.CreateBD(_G.AuctionProgressFrame)
+	_G.AuctionProgressFrame:SetSize(280, 53)
+	_G.AuctionProgressFrame:SetPoint("BOTTOM", 0, 179)
 
-	_G.hooksecurefunc("FilterButton_SetUp", function(button)
-		button:SetNormalTexture("")
-	end)
-
-	local lastSkinnedTab = 1
-	_G.AuctionFrame:HookScript("OnShow", function()
-		local tab = _G["AuctionFrameTab"..lastSkinnedTab]
-
-		while tab do
-			F.ReskinTab(tab)
-			lastSkinnedTab = lastSkinnedTab + 1
-			tab = _G["AuctionFrameTab"..lastSkinnedTab]
-		end
-	end)
-
-	local abuttons = {"BrowseBidButton", "BrowseBuyoutButton", "BrowseCloseButton", "BrowseSearchButton", "BrowseResetButton", "BidBidButton", "BidBuyoutButton", "BidCloseButton", "AuctionsCloseButton", "AuctionsCancelAuctionButton", "AuctionsCreateAuctionButton", "AuctionsNumStacksMaxButton", "AuctionsStackSizeMaxButton"}
-	for i = 1, #abuttons do
-		F.Reskin(_G[abuttons[i]])
-	end
-
-	_G.BrowseCloseButton:ClearAllPoints()
-	_G.BrowseCloseButton:SetPoint("BOTTOMRIGHT", _G.AuctionFrameBrowse, "BOTTOMRIGHT", 66, 13)
-	_G.BrowseBuyoutButton:ClearAllPoints()
-	_G.BrowseBuyoutButton:SetPoint("RIGHT", _G.BrowseCloseButton, "LEFT", -1, 0)
-	_G.BrowseBidButton:ClearAllPoints()
-	_G.BrowseBidButton:SetPoint("RIGHT", _G.BrowseBuyoutButton, "LEFT", -1, 0)
-	_G.BidBuyoutButton:ClearAllPoints()
-	_G.BidBuyoutButton:SetPoint("RIGHT", _G.BidCloseButton, "LEFT", -1, 0)
-	_G.BidBidButton:ClearAllPoints()
-	_G.BidBidButton:SetPoint("RIGHT", _G.BidBuyoutButton, "LEFT", -1, 0)
-	_G.AuctionsCancelAuctionButton:ClearAllPoints()
-	_G.AuctionsCancelAuctionButton:SetPoint("RIGHT", _G.AuctionsCloseButton, "LEFT", -1, 0)
-
-	-- Blizz needs to be more consistent
-
-	_G.BrowseBidPriceSilver:SetPoint("LEFT", _G.BrowseBidPriceGold, "RIGHT", 1, 0)
-	_G.BrowseBidPriceCopper:SetPoint("LEFT", _G.BrowseBidPriceSilver, "RIGHT", 1, 0)
-	_G.BidBidPriceSilver:SetPoint("LEFT", _G.BidBidPriceGold, "RIGHT", 1, 0)
-	_G.BidBidPriceCopper:SetPoint("LEFT", _G.BidBidPriceSilver, "RIGHT", 1, 0)
-	_G.StartPriceSilver:SetPoint("LEFT", _G.StartPriceGold, "RIGHT", 1, 0)
-	_G.StartPriceCopper:SetPoint("LEFT", _G.StartPriceSilver, "RIGHT", 1, 0)
-	_G.BuyoutPriceSilver:SetPoint("LEFT", _G.BuyoutPriceGold, "RIGHT", 1, 0)
-	_G.BuyoutPriceCopper:SetPoint("LEFT", _G.BuyoutPriceSilver, "RIGHT", 1, 0)
-
-	for i = 1, _G.NUM_BROWSE_TO_DISPLAY do
-		local bu = _G["BrowseButton"..i]
-		local it = _G["BrowseButton"..i.."Item"]
-		local ic = _G["BrowseButton"..i.."ItemIconTexture"]
-
-		if bu and it then
-			it:SetNormalTexture("")
-			it:SetPushedTexture("")
-
-			ic:SetTexCoord(.08, .92, .08, .92)
-
-			F.CreateBG(it)
-
-			it.IconBorder:SetTexture("")
-			_G["BrowseButton"..i.."Left"]:Hide()
-			select(5, _G["BrowseButton"..i]:GetRegions()):Hide()
-			_G["BrowseButton"..i.."Right"]:Hide()
-
-			local bd = CreateFrame("Frame", nil, bu)
-			bd:SetPoint("TOPLEFT")
-			bd:SetPoint("BOTTOMRIGHT", 0, 5)
-			bd:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bd, .25)
-
-			bu:SetHighlightTexture(C.media.backdrop)
-			local hl = bu:GetHighlightTexture()
-			hl:SetVertexColor(r, g, b, .2)
-			hl:ClearAllPoints()
-			hl:SetPoint("TOPLEFT", 0, -1)
-			hl:SetPoint("BOTTOMRIGHT", -1, 6)
-		end
-	end
-
-	for i = 1, _G.NUM_BIDS_TO_DISPLAY do
-		local bu = _G["BidButton"..i]
-		local it = _G["BidButton"..i.."Item"]
-		local ic = _G["BidButton"..i.."ItemIconTexture"]
-
-		it:SetNormalTexture("")
-		it:SetPushedTexture("")
-
-		ic:SetTexCoord(.08, .92, .08, .92)
-
-		F.CreateBG(it)
-
-		it.IconBorder:SetTexture("")
-		_G["BidButton"..i.."Left"]:Hide()
-		select(6, _G["BidButton"..i]:GetRegions()):Hide()
-		_G["BidButton"..i.."Right"]:Hide()
-
-		local bd = CreateFrame("Frame", nil, bu)
-		bd:SetPoint("TOPLEFT")
-		bd:SetPoint("BOTTOMRIGHT", 0, 5)
-		bd:SetFrameLevel(bu:GetFrameLevel()-1)
-		F.CreateBD(bd, .25)
-
-		bu:SetHighlightTexture(C.media.backdrop)
-		local hl = bu:GetHighlightTexture()
-		hl:SetVertexColor(r, g, b, .2)
-		hl:ClearAllPoints()
-		hl:SetPoint("TOPLEFT", 0, -1)
-		hl:SetPoint("BOTTOMRIGHT", -1, 6)
-	end
-
-	for i = 1, _G.NUM_AUCTIONS_TO_DISPLAY do
-		local bu = _G["AuctionsButton"..i]
-		local it = _G["AuctionsButton"..i.."Item"]
-		local ic = _G["AuctionsButton"..i.."ItemIconTexture"]
-
-		it:SetNormalTexture("")
-		it:SetPushedTexture("")
-
-		ic:SetTexCoord(.08, .92, .08, .92)
-
-		F.CreateBG(it)
-
-		it.IconBorder:SetTexture("")
-		_G["AuctionsButton"..i.."Left"]:Hide()
-		select(4, _G["AuctionsButton"..i]:GetRegions()):Hide()
-		_G["AuctionsButton"..i.."Right"]:Hide()
-
-		local bd = CreateFrame("Frame", nil, bu)
-		bd:SetPoint("TOPLEFT")
-		bd:SetPoint("BOTTOMRIGHT", 0, 5)
-		bd:SetFrameLevel(bu:GetFrameLevel()-1)
-		F.CreateBD(bd, .25)
-
-		bu:SetHighlightTexture(C.media.backdrop)
-		local hl = bu:GetHighlightTexture()
-		hl:SetVertexColor(r, g, b, .2)
-		hl:ClearAllPoints()
-		hl:SetPoint("TOPLEFT", 0, -1)
-		hl:SetPoint("BOTTOMRIGHT", -1, 6)
-	end
-
-	local auctionhandler = CreateFrame("Frame")
-	auctionhandler:RegisterEvent("NEW_AUCTION_UPDATE")
-	auctionhandler:SetScript("OnEvent", function()
-		local AuctionsItemButtonIconTexture = _G.AuctionsItemButton:GetNormalTexture()
-		if AuctionsItemButtonIconTexture then
-			AuctionsItemButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
-			AuctionsItemButtonIconTexture:SetPoint("TOPLEFT", 1, -1)
-			AuctionsItemButtonIconTexture:SetPoint("BOTTOMRIGHT", -1, 1)
-		end
-	end)
-
-	F.CreateBD(_G.AuctionsItemButton, .25)
-	local _, AuctionsItemButtonNameFrame = _G.AuctionsItemButton:GetRegions()
-	AuctionsItemButtonNameFrame:Hide()
-
-	F.ReskinClose(_G.AuctionFrameCloseButton, "TOPRIGHT", _G.AuctionFrame, "TOPRIGHT", -4, -14)
-	F.ReskinScroll(_G.BrowseScrollFrameScrollBar)
-	F.ReskinScroll(_G.AuctionsScrollFrameScrollBar)
-	F.ReskinScroll(_G.BrowseFilterScrollFrameScrollBar)
-	F.ReskinDropDown(_G.PriceDropDown)
-	F.ReskinDropDown(_G.DurationDropDown)
-	F.ReskinInput(_G.BrowseName)
-	F.ReskinArrow(_G.BrowsePrevPageButton, "left")
-	F.ReskinArrow(_G.BrowseNextPageButton, "right")
-	F.ReskinCheck(_G.ExactMatchCheckButton)
-	F.ReskinCheck(_G.IsUsableCheckButton)
-	F.ReskinCheck(_G.ShowOnPlayerCheckButton)
-
-	_G.BrowseNameText:ClearAllPoints()
-	_G.BrowseNameText:SetPoint("TOPLEFT", _G.AuctionFrameBrowse, "TOPLEFT", 80, -38)
-	_G.BrowseLevelText:ClearAllPoints()
-	_G.BrowseLevelText:SetPoint("TOPLEFT", _G.AuctionFrameBrowse, "TOPLEFT", 230, -40)
-	_G.BrowseDropDownName:ClearAllPoints()
-	_G.BrowseDropDownName:SetPoint("TOPLEFT", _G.AuctionFrameBrowse, "TOPLEFT", 310, -40)
-	_G.BrowseDropDown:ClearAllPoints()
-	_G.BrowseDropDown:SetPoint("TOPLEFT", _G.AuctionFrameBrowse, "TOPLEFT", 290, -48)
-
-	_G.BrowsePrevPageButton:SetPoint("TOPLEFT", 660, -60)
-	_G.BrowseNextPageButton:SetPoint("TOPRIGHT", 67, -60)
-	_G.BrowsePrevPageButton:GetRegions():SetPoint("LEFT", _G.BrowsePrevPageButton, "RIGHT", 2, 0)
-
-	_G.BrowseDropDownLeft:SetAlpha(0)
-	_G.BrowseDropDownMiddle:SetAlpha(0)
-	_G.BrowseDropDownRight:SetAlpha(0)
-
-	local a1, p, a2, x, y = _G.BrowseDropDownButton:GetPoint()
-	_G.BrowseDropDownButton:SetPoint(a1, p, a2, x, y-4)
-	_G.BrowseDropDownButton:SetSize(16, 16)
-	F.Reskin(_G.BrowseDropDownButton, true)
-
-	local tex = _G.BrowseDropDownButton:CreateTexture(nil, "OVERLAY")
-	tex:SetTexture(C.media.arrowDown)
-	tex:SetSize(8, 8)
-	tex:SetPoint("CENTER")
-	tex:SetVertexColor(1, 1, 1)
-	_G.BrowseDropDownButton.tex = tex
-
-	local bg = CreateFrame("Frame", nil, _G.BrowseDropDown)
-	bg:SetPoint("TOPLEFT", 16, -5)
-	bg:SetPoint("BOTTOMRIGHT", 109, 11)
-	bg:SetFrameLevel(_G.BrowseDropDown:GetFrameLevel()-1)
-	F.CreateBD(bg, 0)
-
-	F.CreateGradient(bg)
-
-	local colourArrow = F.colourArrow
-	local clearArrow = F.clearArrow
-
-	_G.BrowseDropDownButton:HookScript("OnEnter", colourArrow)
-	_G.BrowseDropDownButton:HookScript("OnLeave", clearArrow)
-
-	local inputs = {"BrowseMinLevel", "BrowseMaxLevel", "BrowseBidPriceGold", "BrowseBidPriceSilver", "BrowseBidPriceCopper", "BidBidPriceGold", "BidBidPriceSilver", "BidBidPriceCopper", "StartPriceGold", "StartPriceSilver", "StartPriceCopper", "BuyoutPriceGold", "BuyoutPriceSilver", "BuyoutPriceCopper", "AuctionsStackSizeEntry", "AuctionsNumStacksEntry"}
-	for i = 1, #inputs do
-		F.ReskinInput(_G[inputs[i]])
-	end
-
-	-- [[ WoW token ]]
-
-	local BrowseWowTokenResults = _G.BrowseWowTokenResults
-
-	F.Reskin(BrowseWowTokenResults.Buyout)
-
-	-- Tutorial
-
-	local WowTokenGameTimeTutorial = _G.WowTokenGameTimeTutorial
-
-	F.ReskinPortraitFrame(WowTokenGameTimeTutorial, true)
-	F.Reskin(_G.StoreButton)
-
-	-- Token
-
-	do
-		local Token = BrowseWowTokenResults.Token
-		local icon = Token.Icon
-		local iconBorder = Token.IconBorder
-
-		Token.ItemBorder:Hide()
-		iconBorder:SetTexture(C.media.backdrop)
-		iconBorder:SetDrawLayer("BACKGROUND")
-		iconBorder:SetPoint("TOPLEFT", icon, -1, 1)
-		iconBorder:SetPoint("BOTTOMRIGHT", icon, 1, -1)
-		icon:SetTexCoord(.08, .92, .08, .92)
-	end
+	local AuctionProgressBar = _G.AuctionProgressBar
+	F.CreateBD(AuctionProgressBar, 0)
+	AuctionProgressBar:SetPoint("CENTER", 3, -1)
+	AuctionProgressBar:SetStatusBarTexture(C.media.backdrop)
+	AuctionProgressBar.Border:Hide()
+	AuctionProgressBar.Text:ClearAllPoints()
+	AuctionProgressBar.Text:SetPoint("CENTER", 0, 1)
+	F.ReskinIcon(AuctionProgressBar.Icon)
+	AuctionProgressBar.Icon:ClearAllPoints()
+	AuctionProgressBar.Icon:SetPoint("TOPRIGHT", AuctionProgressBar, "TOPLEFT", -10, 5)
+	F.ReskinClose(_G.AuctionProgressFrameCancelButton, "TOPLEFT", AuctionProgressBar, "TOPRIGHT", 11, 2)
 end
