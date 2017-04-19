@@ -1581,59 +1581,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		tutPrev:SetBackdropColor(0, 0, 0, .25)
 		tutNext:SetBackdropColor(0, 0, 0, .25)
 
-		-- Master looter frame
-
-		local MasterLooterFrame = _G.MasterLooterFrame
-		for i = 1, 9 do
-			select(i, MasterLooterFrame:GetRegions()):Hide()
-		end
-
-		MasterLooterFrame.Item.NameBorderLeft:Hide()
-		MasterLooterFrame.Item.NameBorderRight:Hide()
-		MasterLooterFrame.Item.NameBorderMid:Hide()
-		MasterLooterFrame.Item.IconBorder:Hide()
-
-		MasterLooterFrame.Item.Icon:SetTexCoord(.08, .92, .08, .92)
-		MasterLooterFrame.Item.Icon:SetDrawLayer("ARTWORK")
-		MasterLooterFrame.Item.bg = F.CreateBG(MasterLooterFrame.Item.Icon)
-
-		MasterLooterFrame:HookScript("OnShow", function(MLFrame)
-			MLFrame.Item.bg:SetVertexColor(MLFrame.Item.IconBorder:GetVertexColor())
-			_G.LootFrame:SetAlpha(.4)
-		end)
-
-		MasterLooterFrame:HookScript("OnHide", function(MLFrame)
-			_G.LootFrame:SetAlpha(1)
-		end)
-
-		F.CreateBD(MasterLooterFrame)
-		F.ReskinClose(select(3, MasterLooterFrame:GetChildren()))
-
-		hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
-			for i = 1, _G.MAX_RAID_MEMBERS do
-				local playerFrame = MasterLooterFrame["player"..i]
-				if playerFrame then
-					if not playerFrame.styled then
-						playerFrame.Bg:SetPoint("TOPLEFT", 1, -1)
-						playerFrame.Bg:SetPoint("BOTTOMRIGHT", -1, 1)
-						playerFrame.Highlight:SetPoint("TOPLEFT", 1, -1)
-						playerFrame.Highlight:SetPoint("BOTTOMRIGHT", -1, 1)
-
-						playerFrame.Highlight:SetTexture(C.media.backdrop)
-
-						F.CreateBD(playerFrame, 0)
-
-						playerFrame.styled = true
-					end
-					local colour = C.classcolours[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
-					playerFrame.Name:SetTextColor(colour.r, colour.g, colour.b)
-					playerFrame.Highlight:SetVertexColor(colour.r, colour.g, colour.b, .2)
-				else
-					break
-				end
-			end
-		end)
-
 		-- Tabard frame
 
 		_G.TabardFrameMoneyInset:DisableDrawLayer("BORDER")
