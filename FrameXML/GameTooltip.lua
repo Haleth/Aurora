@@ -53,9 +53,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 		bg:SetPoint("TOPLEFT")
 		bg:SetPoint("BOTTOMRIGHT")
-		bg:SetBackdrop(backdrop)
-		bg:SetBackdropColor(0, 0, 0, .6)
-		bg:SetBackdropBorderColor(0, 0, 0)
+		F.CreateBD(bg, .6)
 
 		t.GetBackdrop = getBackdrop
 		t.GetBackdropColor = getBackdropColor
