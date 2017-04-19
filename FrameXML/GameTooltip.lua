@@ -21,43 +21,8 @@ _G.tinsert(C.themes["Aurora"], function()
 		"VoiceMacroMenu",
 	}
 
-	local backdrop = {
-		bgFile = C.media.backdrop,
-		edgeFile = C.media.backdrop,
-		edgeSize = 1,
-	}
-
-	-- so other stuff which tries to look like GameTooltip doesn't mess up
-	local getBackdrop = function()
-		return backdrop
-	end
-
-	local getBackdropColor = function()
-		return 0, 0, 0, .6
-	end
-
-	local getBackdropBorderColor = function()
-		return 0, 0, 0
-	end
-
 	for i = 1, #tooltips do
-		local t = _G[tooltips[i]]
-		t:SetBackdrop(nil)
-
-		local bg
-		if t.BackdropFrame then
-			bg = t.BackdropFrame
-		else
-			bg = _G.CreateFrame("Frame", nil, t)
-			bg:SetFrameLevel(t:GetFrameLevel()-1)
-		end
-		bg:SetPoint("TOPLEFT")
-		bg:SetPoint("BOTTOMRIGHT")
-		F.CreateBD(bg, .6)
-
-		t.GetBackdrop = getBackdrop
-		t.GetBackdropColor = getBackdropColor
-		t.GetBackdropBorderColor = getBackdropBorderColor
+		F.ReskinTooltip(_G[tooltips[i]])
 	end
 
 	local sb = _G["GameTooltipStatusBar"]

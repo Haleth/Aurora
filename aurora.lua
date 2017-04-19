@@ -97,6 +97,12 @@ C.defaults = {
 	["tooltips"] = true,
 }
 
+C.backdrop = {
+	bgFile = C.media.backdrop,
+	edgeFile = C.media.backdrop,
+	edgeSize = 1,
+}
+
 C.frames = {}
 
 C.TOC = select(4, _G.GetBuildInfo())
@@ -119,11 +125,7 @@ local red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.cla
 F.dummy = function() end
 
 F.CreateBD = function(f, a)
-	f:SetBackdrop({
-		bgFile = C.media.backdrop,
-		edgeFile = C.media.backdrop,
-		edgeSize = 1,
-	})
+	f:SetBackdrop(C.backdrop)
 	f:SetBackdropColor(0, 0, 0, a or AuroraConfig.alpha)
 	f:SetBackdropBorderColor(0, 0, 0)
 	if not a then _G.tinsert(C.frames, f) end
@@ -690,6 +692,36 @@ end
 F.ReskinIcon = function(icon)
 	icon:SetTexCoord(.08, .92, .08, .92)
 	return F.CreateBDFrame(icon)
+end
+
+local getBackdrop = function()
+	return C.backdrop
+end
+
+local getBackdropColor = function()
+	return 0, 0, 0, .6
+end
+
+local getBackdropBorderColor = function()
+	return 0, 0, 0
+end
+F.ReskinTooltip = function(f)
+	f:SetBackdrop(nil)
+
+	local bg
+	if f.BackdropFrame then
+		bg = f.BackdropFrame
+	else
+		bg = _G.CreateFrame("Frame", nil, f)
+		bg:SetFrameLevel(f:GetFrameLevel()-1)
+	end
+	bg:SetPoint("TOPLEFT")
+	bg:SetPoint("BOTTOMRIGHT")
+	F.CreateBD(bg, .6)
+
+	f.GetBackdrop = getBackdrop
+	f.GetBackdropColor = getBackdropColor
+	f.GetBackdropBorderColor = getBackdropBorderColor
 end
 
 -- [[ Variable and module handling ]]

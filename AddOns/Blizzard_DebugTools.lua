@@ -44,13 +44,8 @@ C.themes["Blizzard_DebugTools"] = function()
     F.CreateBD(etraceBG, 0)
     F.CreateGradient(etraceBG)
 
-    --[[ FrameStack ]]--
-	_G.FrameStackTooltip:SetScale(_G.UIParent:GetScale())
-	_G.FrameStackTooltip:SetBackdrop(nil)
+    F.ReskinTooltip(_G.EventTraceTooltip)
 
-	local fstackBG = _G.CreateFrame("Frame", nil, _G.FrameStackTooltip)
-	fstackBG:SetFrameLevel(_G.FrameStackTooltip:GetFrameLevel()-1)
-	fstackBG:SetPoint("TOPLEFT")
-	fstackBG:SetPoint("BOTTOMRIGHT")
-	F.CreateBD(fstackBG, .6)
+    --[[ FrameStack ]]--
+    F.ReskinTooltip(_G.FrameStackTooltip)
 end
