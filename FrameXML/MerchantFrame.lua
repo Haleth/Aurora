@@ -38,8 +38,8 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	F.ReskinPortraitFrame(_G.MerchantFrame, true)
 	F.ReskinDropDown(_G.MerchantFrameLootFilter)
-	F.ReskinArrow(_G.MerchantPrevPageButton, "left")
-	F.ReskinArrow(_G.MerchantNextPageButton, "right")
+	F.ReskinArrow(_G.MerchantPrevPageButton, "Left")
+	F.ReskinArrow(_G.MerchantNextPageButton, "Right")
 
 	_G.MerchantFrameTab1:ClearAllPoints()
 	_G.MerchantFrameTab1:SetPoint("CENTER", _G.MerchantFrame, "BOTTOMLEFT", 50, -14)

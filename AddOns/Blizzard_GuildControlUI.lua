@@ -40,8 +40,8 @@ C.themes["Blizzard_GuildControlUI"] = function()
 					rank.downButton.icon:Hide()
 					rank.deleteButton.icon:Hide()
 
-					F.ReskinArrow(rank.upButton, "up")
-					F.ReskinArrow(rank.downButton, "down")
+					F.ReskinArrow(rank.upButton, "Up")
+					F.ReskinArrow(rank.downButton, "Down")
 					F.ReskinClose(rank.deleteButton)
 
 					F.ReskinInput(rank.nameBox, 20)

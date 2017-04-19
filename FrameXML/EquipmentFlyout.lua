@@ -37,6 +37,6 @@ _G.tinsert(C.themes["Aurora"], function()
 	end)
 
 	F.CreateBD(_G.EquipmentFlyoutFrame.NavigationFrame)
-	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.PrevButton, "left")
-	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.NextButton, "right")
+	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.PrevButton, "Left")
+	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.NextButton, "Right")
 end)

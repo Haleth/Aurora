@@ -887,12 +887,12 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Arrows ]]
 
-		F.ReskinArrow(_G.SpellBookPrevPageButton, "left")
-		F.ReskinArrow(_G.SpellBookNextPageButton, "right")
-		F.ReskinArrow(_G.InboxPrevPageButton, "left")
-		F.ReskinArrow(_G.InboxNextPageButton, "right")
-		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "left")
-		F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "right")
+		F.ReskinArrow(_G.SpellBookPrevPageButton, "Left")
+		F.ReskinArrow(_G.SpellBookNextPageButton, "Right")
+		F.ReskinArrow(_G.InboxPrevPageButton, "Left")
+		F.ReskinArrow(_G.InboxNextPageButton, "Right")
+		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
+		F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
 
 		-- [[ Radio buttons ]]
 
@@ -1121,8 +1121,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 				_G.PetStableNextPageButtonIcon:SetTexture("")
 
 				F.ReskinPortraitFrame(PetStableFrame, true)
-				F.ReskinArrow(_G.PetStablePrevPageButton, "left")
-				F.ReskinArrow(_G.PetStableNextPageButton, "right")
+				F.ReskinArrow(_G.PetStablePrevPageButton, "Left")
+				F.ReskinArrow(_G.PetStableNextPageButton, "Right")
 
 				_G.PetStableSelectedPetIcon:SetTexCoord(.08, .92, .08, .92)
 				F.CreateBG(_G.PetStableSelectedPetIcon)
@@ -1487,8 +1487,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(_G.HelpBrowserNavReload)
 		F.Reskin(_G.HelpBrowserNavStop)
 		F.Reskin(_G.HelpBrowserBrowserSettings)
-		F.ReskinArrow(_G.HelpBrowserNavBack, "left")
-		F.ReskinArrow(_G.HelpBrowserNavForward, "right")
+		F.ReskinArrow(_G.HelpBrowserNavBack, "Left")
+		F.ReskinArrow(_G.HelpBrowserNavForward, "Right")
 
 		_G.HelpBrowserNavHome:SetSize(18, 18)
 		_G.HelpBrowserNavReload:SetSize(18, 18)
@@ -1583,8 +1583,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		local tutNext = _G.TutorialFrameNextButton
 		F.Reskin(tutOkay, true)
 		F.ReskinClose(_G.TutorialFrameCloseButton)
-		F.ReskinArrow(tutPrev, "left")
-		F.ReskinArrow(tutNext, "right")
+		F.ReskinArrow(tutPrev, "Left")
+		F.ReskinArrow(tutNext, "Right")
 
 		tutOkay:ClearAllPoints()
 		tutOkay:SetPoint("BOTTOMLEFT", tutNext, "BOTTOMRIGHT", 10, 0)
@@ -1618,8 +1618,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			_G["TabardFrameCustomization"..i.."Left"]:Hide()
 			_G["TabardFrameCustomization"..i.."Middle"]:Hide()
 			_G["TabardFrameCustomization"..i.."Right"]:Hide()
-			F.ReskinArrow(_G["TabardFrameCustomization"..i.."LeftButton"], "left")
-			F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "right")
+			F.ReskinArrow(_G["TabardFrameCustomization"..i.."LeftButton"], "Left")
+			F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "Right")
 		end
 
 		F.ReskinPortraitFrame(_G.TabardFrame, true)
@@ -1655,8 +1655,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		F.ReskinPortraitFrame(_G.ItemTextFrame, true)
 		F.ReskinScroll(_G.ItemTextScrollFrameScrollBar)
-		F.ReskinArrow(_G.ItemTextPrevPageButton, "left")
-		F.ReskinArrow(_G.ItemTextNextPageButton, "right")
+		F.ReskinArrow(_G.ItemTextPrevPageButton, "Left")
+		F.ReskinArrow(_G.ItemTextNextPageButton, "Right")
 
 		-- Petition frame
 

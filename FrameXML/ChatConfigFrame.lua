@@ -50,8 +50,8 @@ _G.tinsert(C.themes["Aurora"], function()
     _G.ChatConfigMoveFilterDownButton:SetSize(28, 28)
     _G.ChatConfigMoveFilterUpButton:SetPoint("TOPLEFT", _G.ChatConfigCombatSettingsFilters, "BOTTOMLEFT", 3, 0)
     _G.ChatConfigMoveFilterDownButton:SetPoint("LEFT", _G.ChatConfigMoveFilterUpButton, "RIGHT", 1, 0)
-    F.ReskinArrow(_G.ChatConfigMoveFilterUpButton, "up")
-    F.ReskinArrow(_G.ChatConfigMoveFilterDownButton, "down")
+    F.ReskinArrow(_G.ChatConfigMoveFilterUpButton, "Up")
+    F.ReskinArrow(_G.ChatConfigMoveFilterDownButton, "Down")
 
     for i = 1, 5 do
         _G["CombatConfigTab"..i.."Left"]:Hide()

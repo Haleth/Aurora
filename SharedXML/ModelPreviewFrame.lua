@@ -13,8 +13,8 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	F.ReskinPortraitFrame(ModelPreviewFrame, true)
 	F.Reskin(ModelPreviewFrame.CloseButton)
-	F.ReskinArrow(ModelScene.RotateLeftButton, "left")
-	F.ReskinArrow(ModelScene.RotateRightButton, "right")
+	F.ReskinArrow(ModelScene.RotateLeftButton, "Left")
+	F.ReskinArrow(ModelScene.RotateRightButton, "Right")
 
 	local bg = F.CreateBDFrame(ModelScene, .25)
 	bg:SetPoint("TOPLEFT", -1, 0)

@@ -436,8 +436,8 @@ C.themes["Blizzard_EncounterJournal"] = function()
 		reward.iconRingHighlight:SetTexture("")
 		F.CreateBG(reward.icon)
 
-		F.ReskinArrow(suggestion.prevButton, "left")
-		F.ReskinArrow(suggestion.nextButton, "right")
+		F.ReskinArrow(suggestion.prevButton, "Left")
+		F.ReskinArrow(suggestion.nextButton, "Right")
 
 		-- Suggestion 2 and 3
 

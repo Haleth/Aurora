@@ -180,8 +180,8 @@ C.themes["Blizzard_GarrisonUI"] = function()
 	F.ReskinPortraitFrame(GarrisonCapacitiveDisplayFrame, true)
 	F.Reskin(GarrisonCapacitiveDisplayFrame.StartWorkOrderButton, true)
 	F.Reskin(GarrisonCapacitiveDisplayFrame.CreateAllWorkOrdersButton, true)
-	F.ReskinArrow(GarrisonCapacitiveDisplayFrame.DecrementButton, "left")
-	F.ReskinArrow(GarrisonCapacitiveDisplayFrame.IncrementButton, "right")
+	F.ReskinArrow(GarrisonCapacitiveDisplayFrame.DecrementButton, "Left")
+	F.ReskinArrow(GarrisonCapacitiveDisplayFrame.IncrementButton, "Right")
 
 	-- Capacitive display
 
@@ -707,8 +707,8 @@ C.themes["Blizzard_GarrisonUI"] = function()
 		left.Texture:Hide()
 		right.Texture:Hide()
 
-		F.ReskinArrow(left, "left")
-		F.ReskinArrow(right, "right")
+		F.ReskinArrow(left, "Left")
+		F.ReskinArrow(right, "Right")
 		left:SetSize(35, 35)
 		left.tex:SetSize(16, 16)
 		right:SetSize(35, 35)

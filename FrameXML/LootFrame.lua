@@ -48,8 +48,8 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.LootFrameNext:SetPoint("RIGHT", _G.LootFrameDownButton, "LEFT", -4, 0)
 
 	F.ReskinPortraitFrame(_G.LootFrame, true)
-	F.ReskinArrow(_G.LootFrameUpButton, "up")
-	F.ReskinArrow(_G.LootFrameDownButton, "down")
+	F.ReskinArrow(_G.LootFrameUpButton, "Up")
+	F.ReskinArrow(_G.LootFrameDownButton, "Down")
 
 
 	--[[ MasterLooterFrame ]]--

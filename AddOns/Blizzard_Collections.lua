@@ -65,8 +65,8 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinScroll(_G.PetJournalListScrollFrameScrollBar)
 	F.ReskinInput(_G.MountJournalSearchBox)
 	F.ReskinInput(_G.PetJournalSearchBox)
-	F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "left")
-	F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "right")
+	F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "Left")
+	F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "Right")
 	F.ReskinFilterButton(_G.PetJournalFilterButton)
 	F.ReskinFilterButton(_G.MountJournalFilterButton)
 
@@ -346,8 +346,8 @@ C.themes["Blizzard_Collections"] = function()
 
 	F.ReskinInput(ToyBox.searchBox)
 	F.ReskinFilterButton(_G.ToyBoxFilterButton)
-	F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "left")
-	F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "right")
+	F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "Left")
+	F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "Right")
 
 	-- Progress bar
 
@@ -422,8 +422,8 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinInput(_G.HeirloomsJournalSearchBox)
 	F.ReskinDropDown(_G.HeirloomsJournalClassDropDown)
 	F.ReskinFilterButton(_G.HeirloomsJournalFilterButton)
-	F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "left")
-	F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "right")
+	F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "Left")
+	F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "Right")
 
 	-- Progress bar
 
@@ -533,8 +533,8 @@ C.themes["Blizzard_Collections"] = function()
 	ItemsCollectionFrame:DisableDrawLayer("OVERLAY")
 
 	F.ReskinDropDown(ItemsCollectionFrame.WeaponDropDown)
-	F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "left")
-	F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "right")
+	F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "Left")
+	F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "Right")
 
 	local Models = ItemsCollectionFrame.Models
 	for i = 1, #Models do
@@ -698,7 +698,7 @@ C.themes["Blizzard_Collections"] = function()
 	F.ReskinPortraitFrame(WardrobeFrame)
 	F.Reskin(WardrobeTransmogFrame.ApplyButton)
 	F.Reskin(_G.WardrobeOutfitDropDown.SaveButton)
-	F.ReskinArrow(_G.WardrobeTransmogFrame.SpecButton, "down")
+	F.ReskinArrow(_G.WardrobeTransmogFrame.SpecButton, "Down")
 	F.ReskinDropDown(_G.WardrobeOutfitDropDown)
 
 	_G.WardrobeOutfitDropDown:SetHeight(32)

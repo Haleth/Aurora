@@ -32,8 +32,8 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	F.SetBD(BorderFrame, 1, 0, -3, 2)
 	F.ReskinClose(BorderFrame.CloseButton)
-	F.ReskinArrow(WorldMapFrame.UIElementsFrame.CloseQuestPanelButton, "left")
-	F.ReskinArrow(WorldMapFrame.UIElementsFrame.OpenQuestPanelButton, "right")
+	F.ReskinArrow(WorldMapFrame.UIElementsFrame.CloseQuestPanelButton, "Left")
+	F.ReskinArrow(WorldMapFrame.UIElementsFrame.OpenQuestPanelButton, "Right")
 	F.ReskinDropDown(_G.WorldMapLevelDropDown)
 	F.ReskinNavBar(_G.WorldMapFrameNavBar)
 

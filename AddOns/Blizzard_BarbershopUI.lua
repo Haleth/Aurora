@@ -13,8 +13,8 @@ C.themes["Blizzard_BarbershopUI"] = function()
 
 	for i = 1, #BarberShopFrame.Selector do
 		local prevBtn, nextBtn = BarberShopFrame.Selector[i]:GetChildren()
-		F.ReskinArrow(prevBtn, "left")
-		F.ReskinArrow(nextBtn, "right")
+		F.ReskinArrow(prevBtn, "Left")
+		F.ReskinArrow(nextBtn, "Right")
 	end
 
 	_G.BarberShopFrameMoneyFrame:GetRegions():Hide()
