@@ -70,9 +70,9 @@ _G.tinsert(C.themes["Aurora"], function()
 			-- arrow button
 
 			local arrowButton = navButton.MenuArrowButton
-
 			arrowButton.Art:Hide()
-
+			arrowButton.NormalTexture:Hide()
+			arrowButton.PushedTexture:Hide()
 			arrowButton:SetHighlightTexture("")
 			F.CreateArrow(arrowButton, "Down")
 
