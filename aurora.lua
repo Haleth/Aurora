@@ -1421,6 +1421,34 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinPortraitFrame(_G.GossipFrame, true)
 		F.Reskin(_G.GossipFrameGreetingGoodbyeButton)
 		F.ReskinScroll(_G.GossipGreetingScrollFrameScrollBar)
+		hooksecurefunc("GossipFrameAvailableQuestsUpdate", function(...)
+			local numAvailQuestsData = select("#", ...)
+			local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numAvailQuestsData / 7)
+			for i = 1, numAvailQuestsData, 7 do
+				local titleText, _, isTrivial = select(i, ...)
+				local titleButton = _G["GossipTitleButton" .. buttonIndex]
+				if isTrivial then
+					titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText);
+				else
+					titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText);
+				end
+				buttonIndex = buttonIndex + 1
+			end
+		end)
+		hooksecurefunc("GossipFrameActiveQuestsUpdate", function(...)
+			local numActiveQuestsData = select("#", ...)
+			local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numActiveQuestsData / 6)
+			for i = 1, numActiveQuestsData, 6 do
+				local titleText, _, isTrivial = select(i, ...)
+				local titleButton = _G["GossipTitleButton" .. buttonIndex]
+				if isTrivial then
+					titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText);
+				else
+					titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText);
+				end
+				buttonIndex = buttonIndex + 1
+			end
+		end)
 
 		-- Help frame
 
