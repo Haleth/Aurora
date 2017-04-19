@@ -261,19 +261,6 @@ F.ReskinScroll = function(f, parent)
 	down:SetSize(17, 17)
 end
 
-local function colourArrow(f)
-	if f:IsEnabled() then
-		f._auroraArrow:SetVertexColor(red, green, blue)
-	end
-end
-
-local function clearArrow(f)
-	f._auroraArrow:SetVertexColor(1, 1, 1)
-end
-
-F.colourArrow = colourArrow
-F.clearArrow = clearArrow
-
 F.ReskinDropDown = function(f)
 	local frame = f:GetName()
 
@@ -298,7 +285,6 @@ F.ReskinDropDown = function(f)
 	local gradient = F.CreateGradient(f)
 	gradient:SetPoint("TOPLEFT", bg, 1, -1)
 	gradient:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-
 end
 
 local function colourClose(f)
@@ -386,6 +372,29 @@ F.ReskinInput = function(f, height, width)
 	if width then f:SetWidth(width) end
 end
 
+local function colourArrow(f)
+	if f:IsEnabled() then
+		f._auroraArrow:SetVertexColor(red, green, blue)
+	end
+end
+
+local function clearArrow(f)
+	f._auroraArrow:SetVertexColor(1, 1, 1)
+end
+
+F.colourArrow = colourArrow
+F.clearArrow = clearArrow
+
+F.CreateArrow = function(f, direction)
+	local tex = f:CreateTexture(nil, "ARTWORK", nil, 7)
+	tex:SetTexture(C.media["arrow"..direction])
+	tex:SetSize(8, 8)
+	tex:SetPoint("CENTER")
+	f._auroraArrow = tex
+
+	f:HookScript("OnEnter", colourArrow)
+	f:HookScript("OnLeave", clearArrow)
+end
 F.ReskinArrow = function(f, direction)
 	f:SetSize(18, 18)
 	F.Reskin(f, true)
@@ -395,14 +404,7 @@ F.ReskinArrow = function(f, direction)
 	dis:SetVertexColor(0, 0, 0, .3)
 	dis:SetDrawLayer("OVERLAY")
 
-	local tex = f:CreateTexture(nil, "ARTWORK")
-	tex:SetTexture(C.media["arrow"..direction])
-	tex:SetSize(8, 8)
-	tex:SetPoint("CENTER")
-	f._auroraArrow = tex
-
-	f:HookScript("OnEnter", colourArrow)
-	f:HookScript("OnLeave", clearArrow)
+	F.CreateArrow(f, direction)
 end
 
 F.ReskinCheck = function(f, isTriState)
@@ -654,15 +656,7 @@ F.ReskinNavBar = function(f)
 
 	F.Reskin(f.homeButton)
 	F.Reskin(overflowButton, true)
-
-	local tex = overflowButton:CreateTexture(nil, "ARTWORK")
-	tex:SetTexture(C.media.arrowLeft)
-	tex:SetSize(8, 8)
-	tex:SetPoint("CENTER")
-	overflowButton.tex = tex
-
-	overflowButton:HookScript("OnEnter", colourArrow)
-	overflowButton:HookScript("OnLeave", clearArrow)
+	F.CreateArrow(overflowButton, "Left")
 end
 
 F.ReskinGarrisonPortrait = function(portrait, isTroop)
