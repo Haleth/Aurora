@@ -710,9 +710,9 @@ C.themes["Blizzard_GarrisonUI"] = function()
 		F.ReskinArrow(left, "Left")
 		F.ReskinArrow(right, "Right")
 		left:SetSize(35, 35)
-		left.tex:SetSize(16, 16)
+		left._auroraArrow:SetSize(16, 16)
 		right:SetSize(35, 35)
-		right.tex:SetSize(16, 16)
+		right._auroraArrow:SetSize(16, 16)
 	end
 
 	-- [[ Shared templates ]]
