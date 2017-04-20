@@ -105,9 +105,8 @@ _G.tinsert(C.themes["Aurora"], function()
         self.elapsed = self.elapsed + elapsed
         local frame = FindChatBubble(self.msg)
         if frame or self.elapsed > 0.3 then
-            if not scaled then
-                local scale = _G.UIParent:GetScale()
-                _G.WorldFrame:SetScale(scale)
+            if not scaled and not _G.InCombatLockdown() then
+                _G.WorldFrame:SetScale(_G.UIParent:GetScale())
                 scaled = true
             end
             self:Hide()
