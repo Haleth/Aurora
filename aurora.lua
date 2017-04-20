@@ -261,23 +261,14 @@ F.ReskinScroll = function(f, parent)
 	down:SetSize(17, 17)
 end
 
-F.ReskinDropDown = function(f)
+F.ReskinDropDown = function(f, borderless)
 	local frame = f:GetName()
 
-	local left = _G[frame.."Left"]
-	local middle = _G[frame.."Middle"]
-	local right = _G[frame.."Right"]
-
-	if left then left:SetAlpha(0) end
-	if middle then middle:SetAlpha(0) end
-	if right then right:SetAlpha(0) end
-
 	local button = f.Button or _G[frame.."Button"]
-	button:SetPoint("TOPRIGHT", right, -19, -21)
 	F.ReskinArrow(button, "Down")
+	button:ClearAllPoints()
 
 	local bg = CreateFrame("Frame", nil, f)
-	bg:SetPoint("TOPLEFT", 20, -4)
 	bg:SetPoint("BOTTOMRIGHT", button, "BOTTOMLEFT", 1, 0)
 	bg:SetFrameLevel(f:GetFrameLevel()-1)
 	F.CreateBD(bg, 0)
@@ -285,6 +276,22 @@ F.ReskinDropDown = function(f)
 	local gradient = F.CreateGradient(f)
 	gradient:SetPoint("TOPLEFT", bg, 1, -1)
 	gradient:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
+	if borderless then
+		button:SetPoint("TOPRIGHT", 0, -6)
+		bg:SetPoint("TOPLEFT", 0, -6)
+	else
+		local left = _G[frame.."Left"]
+		local middle = _G[frame.."Middle"]
+		local right = _G[frame.."Right"]
+
+		left:SetAlpha(0)
+		middle:SetAlpha(0)
+		right:SetAlpha(0)
+
+		button:SetPoint("TOPRIGHT", right, -19, -21)
+		bg:SetPoint("TOPLEFT", 20, -4)
+	end
 end
 
 local function colourClose(f)
