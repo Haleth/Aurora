@@ -23,6 +23,7 @@ _G.tinsert(C.themes["Aurora"], function()
         end
 
         F.CreateBD(frame)
+        frame:SetScale(_G.UIParent:GetScale())
 
         local tail = frame:CreateTexture(nil, "BORDER")
         tail:SetPoint("TOP", frame, "BOTTOM", -(tailSize / 2), 0) -- places tail about where the old one was
@@ -80,7 +81,6 @@ _G.tinsert(C.themes["Aurora"], function()
         end
     end
 
-    local scaled = false
     local events = {
         CHAT_MSG_SAY = "chatBubbles",
         CHAT_MSG_YELL = "chatBubbles",
@@ -105,10 +105,6 @@ _G.tinsert(C.themes["Aurora"], function()
         self.elapsed = self.elapsed + elapsed
         local frame = FindChatBubble(self.msg)
         if frame or self.elapsed > 0.3 then
-            if not scaled and not _G.InCombatLockdown() then
-                _G.WorldFrame:SetScale(_G.UIParent:GetScale())
-                scaled = true
-            end
             self:Hide()
             if frame then UpdateChatBubble(frame, self.guid, self.sender) end
         end
