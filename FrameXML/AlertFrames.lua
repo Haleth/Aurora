@@ -8,29 +8,35 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	do --[[ Achievement alert ]]
 		local r, g, b, a
-		local function fixBg(f)
+		local function fixBG(f)
 			if f:GetObjectType() == "AnimationGroup" then
 				f = f:GetParent()
 			end
-			f:SetBackdropColor(r, g, b, a)
+			f._auroraBG:SetBackdropColor(r, g, b, a)
 		end
 
 		OnShow.Achievement = function(self)
 			if not self.isSkinned then
 				self.Background:Hide()
-				F.CreateBD(self)
+				local bg = F.CreateBDFrame(self)
+				bg:SetPoint("BOTTOMRIGHT", -7, 15)
+				self._auroraBG = bg
 
-				r, g, b, a = self:GetBackdropColor()
-				self:HookScript("OnEnter", fixBg)
-				self:HookScript("OnShow", fixBg)
-				self.animIn:HookScript("OnFinished", fixBg)
+		        local guildBG = self:CreateTexture(nil, "BACKGROUND")
+		        guildBG:SetTexture([[Interface\LFGFrame\UI-LFG-SEPARATOR]])
+		        guildBG:SetTexCoord(0, 0.6640625, 0, 0.25)
+		        guildBG:SetVertexColor(0, 0, 0)
+		        guildBG:SetPoint("BOTTOM", self, "TOP", 0, -30)
+		        guildBG:SetSize(340, 64)
+		        self._auroraGuildBG = guildBG
+
+				r, g, b, a = bg:GetBackdropColor()
+				self:HookScript("OnEnter", fixBG)
+				self:HookScript("OnShow", fixBG)
+				self.animIn:HookScript("OnFinished", fixBG)
 
 				self.Unlocked:SetTextColor(1, 1, 1)
-				self.GuildName:SetPoint("TOPLEFT", 50, -2)
-				self.GuildName:SetPoint("TOPRIGHT", -50, -2)
-
-				self.GuildBanner:SetPoint("TOPRIGHT", -10, 0)
-				self.GuildBorder:SetPoint("TOPRIGHT", -10, 0)
+				self.shine:SetHeight(58)
 
 				F.ReskinIcon(self.Icon.Texture)
 				self.Icon.Overlay:Hide()
@@ -38,20 +44,22 @@ _G.tinsert(C.themes["Aurora"], function()
 				self.isSkinned = true
 			end
 
-			self:SetHeight(72)
-			self.Icon:SetPoint("TOPLEFT", -26, 23)
 			if self.guildDisplay then
-				self.Unlocked:SetPoint("TOP", 0, -17)
-				self.Name:SetPoint("BOTTOMLEFT", 65, 23)
-				self.Name:SetPoint("BOTTOMRIGHT", -65, 23)
+				self._auroraBG:SetPoint("TOPLEFT", 6, -29)
+				self._auroraGuildBG:Show()
 
-				self.Shield:SetPoint("TOPRIGHT", -12, 0)
+				self.Icon:SetPoint("TOPLEFT", -26, 0)
+				self.shine:SetTexCoord(0.75195313, 0.91601563, 0.25, 0.3359375)
 			else
-				self.Unlocked:SetPoint("TOP", 0, -5)
-				self.Name:SetPoint("BOTTOMLEFT", 65, 30)
-				self.Name:SetPoint("BOTTOMRIGHT", -65, 30)
+				self._auroraBG:SetPoint("TOPLEFT", 6, -13)
+				self._auroraGuildBG:Hide()
 
-				self.Shield:SetPoint("TOPRIGHT", -10, -5)
+				self.shine:SetTexCoord(0.78125, 0.912109375, 0.06640625, 0.23046875)
+				self.shine:SetPoint("BOTTOMLEFT", 0, 16)
+
+				if self.oldCheevo then
+					self.OldAchievement:Hide()
+				end
 			end
 		end
 	end
