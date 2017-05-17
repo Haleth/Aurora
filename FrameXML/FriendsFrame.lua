@@ -57,9 +57,6 @@ _G.tinsert(C.themes["Aurora"], function()
     _G.FriendsFrameBroadcastInput:SetWidth(250)
     F.ReskinInput(_G.FriendsFrameBroadcastInput)
     F.ReskinTab("FriendsTabHeaderTab", 3)
-    for i = 1, 6 do
-        select(i, _G.ScrollOfResurrectionFrameNoteFrame:GetRegions()):Hide()
-    end
 
     for _, key in next, {"RaFButton", "soRButton"} do
         local button = _G.FriendsTabHeader[key]
