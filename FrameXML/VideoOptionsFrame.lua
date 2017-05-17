@@ -109,29 +109,6 @@ _G.tinsert(C.themes["Aurora"], function()
 			F.ReskinSlider(_G[sliders[i]])
 		end
 
-		--[[ Voice ]]--
-		groups = {"AudioOptionsVoicePanelTalking", "AudioOptionsVoicePanelBinding", "AudioOptionsVoicePanelListening"}
-		for i = 1, #groups do
-			local group = _G[groups[i]]
-			F.CreateBD(group, .25)
-			_G[groups[i].."Title"]:SetPoint("BOTTOMLEFT", group, "TOPLEFT", 5, 2)
-		end
-		checkboxes = {"AudioOptionsVoicePanelEnableVoice", "AudioOptionsVoicePanelEnableMicrophone", "AudioOptionsVoicePanelPushToTalkSound"}
-		for i = 1, #checkboxes do
-			F.ReskinCheck(_G[checkboxes[i]])
-		end
-		dropdowns = {"AudioOptionsVoicePanelInputDeviceDropDown", "AudioOptionsVoicePanelChatModeDropDown", "AudioOptionsVoicePanelOutputDeviceDropDown"}
-		for i = 1, #dropdowns do
-			F.ReskinDropDown(_G[dropdowns[i]])
-		end
-		sliders = {"AudioOptionsVoicePanelMicrophoneVolume", "AudioOptionsVoicePanelSpeakerVolume", "AudioOptionsVoicePanelSoundFade", "AudioOptionsVoicePanelMusicFade", "AudioOptionsVoicePanelAmbienceFade"}
-		for i = 1, #sliders do
-			F.ReskinSlider(_G[sliders[i]])
-		end
-		F.Reskin(_G.RecordLoopbackSoundButton)
-		F.Reskin(_G.PlayLoopbackSoundButton)
-		F.Reskin(_G.AudioOptionsVoicePanelChatMode1KeyBindingButton)
-
 		styledOptions = true
 	end)
 end)
