@@ -37,4 +37,7 @@ _G.tinsert(C.themes["Aurora"], function()
             self:SetWidth(255)
         end
     end)
+
+    F.CreateBD(_G.OpacityFrame)
+    F.ReskinSlider(_G.OpacityFrameSlider, true)
 end)
