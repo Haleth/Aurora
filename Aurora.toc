@@ -35,12 +35,14 @@ FrameXML\ContainerFrame.lua
 FrameXML\LootFrame.lua
 FrameXML\TaxiFrame.lua
 FrameXML\BankFrame.lua
+FrameXML\ScrollOfResurrection.lua
 FrameXML\FriendsFrame.lua
 FrameXML\QuickJoin.lua
 FrameXML\RaidFrame.lua
 FrameXML\ChannelFrame.lua
 FrameXML\WorldMapFrame.lua
 FrameXML\QuestMapFrame.lua
+FrameXML\HelpFrame.lua
 FrameXML\ColorPickerFrame.lua
 FrameXML\MailFrame.lua
 FrameXML\WorldStateFrame.lua
