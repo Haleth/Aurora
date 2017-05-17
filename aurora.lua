@@ -845,18 +845,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Simple backdrops ]]
 
-		local bds = {"ReportPlayerNameDialog", "ReportCheatingDialog"}
-
-		for i = 1, #bds do
-			local bd = _G[bds[i]]
-			if bd then
-				F.CreateBD(bd)
-			else
-				_G.print("Aurora: "..bds[i].." was not found.")
-			end
-		end
-
-		local lightbds = {"SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4", "HelpFrameGM_ResponseScrollFrame1", "HelpFrameGM_ResponseScrollFrame2", "HelpFrameReportBugScrollFrame", "HelpFrameSubmitSuggestionScrollFrame", "ReportPlayerNameDialogCommentFrame", "ReportCheatingDialogCommentFrame"}
+		local lightbds = {"SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4"}
 		for i = 1, #lightbds do
 			local bd = _G[lightbds[i]]
 			if bd then
@@ -868,7 +857,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Scroll bars ]]
 
-		local scrollbars = {"LFDQueueFrameSpecificListScrollFrameScrollBar", "HelpFrameKnowledgebaseScrollFrameScrollBar", "HelpFrameReportBugScrollFrameScrollBar", "HelpFrameSubmitSuggestionScrollFrameScrollBar", "HelpFrameGM_ResponseScrollFrame1ScrollBar", "HelpFrameGM_ResponseScrollFrame2ScrollBar", "HelpFrameKnowledgebaseScrollFrame2ScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar"}
+		local scrollbars = {"LFDQueueFrameSpecificListScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar"}
 		for i = 1, #scrollbars do
 			local scrollbar = _G[scrollbars[i]]
 			if scrollbar then
@@ -884,12 +873,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			F.ReskinDropDown(_G[dropdown])
 		end
 
-		-- [[ Input frames ]]
-
-		for _, input in next, {"HelpFrameKnowledgebaseSearchBox"} do
-			F.ReskinInput(_G[input])
-		end
-
 		-- [[ Arrows ]]
 
 		F.ReskinArrow(_G.SpellBookPrevPageButton, "Left")
@@ -899,21 +882,8 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
 		F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
 
-		-- [[ Radio buttons ]]
-
-		local radiobuttons = {"ReportPlayerNameDialogPlayerNameCheckButton", "ReportPlayerNameDialogGuildNameCheckButton"}
-		for i = 1, #radiobuttons do
-			local radiobutton = _G[radiobuttons[i]]
-			if radiobutton then
-				F.ReskinRadio(radiobutton)
-			else
-				_G.print("Aurora: "..radiobuttons[i].." was not found.")
-			end
-		end
-
 		-- [[ Backdrop frames ]]
 
-		F.SetBD(_G.HelpFrame)
 		F.SetBD(_G.RaidParentFrame)
 
 		local FrameBDs = {"StackSplitFrame", "ReadyCheckFrame", "GuildInviteFrame"}
@@ -1449,70 +1419,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end)
 
-		-- Help frame
-
-		for i = 1, 15 do
-			local bu = _G["HelpFrameKnowledgebaseScrollFrameButton"..i]
-			bu:DisableDrawLayer("ARTWORK")
-			F.CreateBD(bu, 0)
-
-			F.CreateGradient(bu)
-		end
-
-		local function colourTab(f)
-			f.text:SetTextColor(1, 1, 1)
-		end
-
-		local function clearTab(f)
-			f.text:SetTextColor(1, .82, 0)
-		end
-
-		local function styleTab(bu)
-			bu.selected:SetColorTexture(red, green, blue, .2)
-			bu.selected:SetDrawLayer("BACKGROUND")
-			bu.text:SetFont(C.media.font, 14)
-			F.Reskin(bu, true)
-			bu:SetScript("OnEnter", colourTab)
-			bu:SetScript("OnLeave", clearTab)
-		end
-
-		for i = 1, 6 do
-			styleTab(_G["HelpFrameButton"..i])
-		end
-		styleTab(_G.HelpFrameButton16)
-
-		_G.HelpFrameAccountSecurityOpenTicket.text:SetFont(C.media.font, 14)
-		_G.HelpFrameOpenTicketHelpOpenTicket.text:SetFont(C.media.font, 14)
-
-		_G.HelpFrameCharacterStuckHearthstone:SetSize(56, 56)
-		F.CreateBG(_G.HelpFrameCharacterStuckHearthstone)
-		_G.HelpFrameCharacterStuckHearthstoneIconTexture:SetTexCoord(.08, .92, .08, .92)
-
-		F.Reskin(_G.HelpBrowserNavHome)
-		F.Reskin(_G.HelpBrowserNavReload)
-		F.Reskin(_G.HelpBrowserNavStop)
-		F.Reskin(_G.HelpBrowserBrowserSettings)
-		F.ReskinArrow(_G.HelpBrowserNavBack, "Left")
-		F.ReskinArrow(_G.HelpBrowserNavForward, "Right")
-
-		_G.HelpBrowserNavHome:SetSize(18, 18)
-		_G.HelpBrowserNavReload:SetSize(18, 18)
-		_G.HelpBrowserNavStop:SetSize(18, 18)
-		_G.HelpBrowserBrowserSettings:SetSize(18, 18)
-
-		_G.HelpBrowserNavHome:SetPoint("BOTTOMLEFT", _G.HelpBrowser, "TOPLEFT", 2, 4)
-		_G.HelpBrowserBrowserSettings:SetPoint("TOPRIGHT", _G.HelpFrameCloseButton, "BOTTOMLEFT", -4, -1)
-		_G.LoadingIcon:ClearAllPoints()
-		_G.LoadingIcon:SetPoint("LEFT", _G.HelpBrowserNavStop, "RIGHT")
-
-		for i = 1, 9 do
-			select(i, _G.BrowserSettingsTooltip:GetRegions()):Hide()
-		end
-
-		F.CreateBD(_G.BrowserSettingsTooltip)
-		F.Reskin(_G.BrowserSettingsTooltip.CacheButton)
-		F.Reskin(_G.BrowserSettingsTooltip.CookiesButton)
-
 		-- Trade Frame
 
 		_G.TradePlayerEnchantInset:DisableDrawLayer("BORDER")
@@ -1796,31 +1702,15 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		local bglayers = {"HelpFrameMainInset", "HelpFrame", "HelpFrameLeftInset"}
-		for i = 1, #bglayers do
-			_G[bglayers[i]]:DisableDrawLayer("BACKGROUND")
-		end
-		local borderlayers = {"HelpFrame", "HelpFrameLeftInset", "HelpFrameMainInset", "RaidFinderFrameRoleInset"}
-		for i = 1, #borderlayers do
-			_G[borderlayers[i]]:DisableDrawLayer("BORDER")
-		end
+		_G.RaidFinderFrameRoleInset:DisableDrawLayer("BORDER")
 		_G.OpenStationeryBackgroundLeft:Hide()
 		_G.OpenStationeryBackgroundRight:Hide()
 		_G.SendStationeryBackgroundLeft:Hide()
 		_G.SendStationeryBackgroundRight:Hide()
 		_G.StackSplitFrame:GetRegions():Hide()
-		for i = 1, 9 do
-			select(i, _G.ReportPlayerNameDialogCommentFrame:GetRegions()):Hide()
-			select(i, _G.ReportCheatingDialogCommentFrame:GetRegions()):Hide()
-		end
-		_G.HelpFrameHeader:Hide()
 		_G.ReadyCheckPortrait:SetAlpha(0)
 		select(2, _G.ReadyCheckListenerFrame:GetRegions()):Hide()
-		_G.HelpFrameLeftInsetBg:Hide()
 		_G.LFDQueueFrameBackground:Hide()
-		select(3, _G.HelpFrameReportBug:GetChildren()):Hide()
-		select(3, _G.HelpFrameSubmitSuggestion:GetChildren()):Hide()
-		_G.HelpFrameKnowledgebaseStoneTex:Hide()
 		_G.GhostFrameLeft:Hide()
 		_G.GhostFrameRight:Hide()
 		_G.GhostFrameMiddle:Hide()
@@ -1828,8 +1718,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			select(i, _G.GhostFrame:GetRegions()):Hide()
 		end
 
-		select(5, _G.HelpFrameGM_Response:GetChildren()):Hide()
-		select(6, _G.HelpFrameGM_Response:GetChildren()):Hide()
 		for i = 1, 10 do
 			select(i, _G.GuildInviteFrame:GetRegions()):Hide()
 		end
@@ -1839,7 +1727,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
 		_G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
 		_G.SendScrollBarBackgroundTop:Hide()
-		_G.HelpFrameKnowledgebaseTopTileStreaks:Hide()
 		_G.OpenScrollBarBackgroundTop:Hide()
 		_G.RaidFinderQueueFrameBackground:Hide()
 		_G.RaidFinderFrameRoleInsetBg:Hide()
@@ -1882,17 +1769,13 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Change positions ]]
 
-		_G.HelpFrameReportBugScrollFrameScrollBar:SetPoint("TOPLEFT", _G.HelpFrameReportBugScrollFrame, "TOPRIGHT", 1, -16)
-		_G.HelpFrameSubmitSuggestionScrollFrameScrollBar:SetPoint("TOPLEFT", _G.HelpFrameSubmitSuggestionScrollFrame, "TOPRIGHT", 1, -16)
-		_G.HelpFrameGM_ResponseScrollFrame1ScrollBar:SetPoint("TOPLEFT", _G.HelpFrameGM_ResponseScrollFrame1, "TOPRIGHT", 1, -16)
-		_G.HelpFrameGM_ResponseScrollFrame2ScrollBar:SetPoint("TOPLEFT", _G.HelpFrameGM_ResponseScrollFrame2, "TOPRIGHT", 1, -16)
 		_G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 		_G.LFDQueueFrameSpecificListScrollFrameScrollBarScrollDownButton:SetPoint("TOP", _G.LFDQueueFrameSpecificListScrollFrameScrollBar, "BOTTOM", 0, 2)
 		_G.LFDQueueFrameRandomScrollFrameScrollBarScrollDownButton:SetPoint("TOP", _G.LFDQueueFrameRandomScrollFrameScrollBar, "BOTTOM", 0, 2)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "LFDQueueFrameFindGroupButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "HelpFrameAccountSecurityOpenTicket", "HelpFrameCharacterStuckStuck", "HelpFrameOpenTicketHelpOpenTicket", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "HelpFrameKnowledgebaseSearchButton", "GhostFrame", "HelpFrameGM_ResponseNeedMoreHelp", "HelpFrameGM_ResponseCancel", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton", "HelpFrameReportBugSubmit", "HelpFrameSubmitSuggestionSubmit", "ReportPlayerNameDialogReportButton", "ReportPlayerNameDialogCancelButton", "ReportCheatingDialogReportButton", "ReportCheatingDialogCancelButton"}
+		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "LFDQueueFrameFindGroupButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then
@@ -1902,9 +1785,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
-		local closebuttons = {"HelpFrameCloseButton", "ItemRefCloseButton"}
-		for i = 1, #closebuttons do
-			F.ReskinClose(_G[closebuttons[i]])
-		end
+		F.ReskinClose(_G.ItemRefCloseButton)
 	end
 end)

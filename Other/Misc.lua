@@ -63,7 +63,4 @@ _G.tinsert(C.themes["Aurora"], function()
             _G.AutoCompleteBox._skinned = true
         end
     end)
-
-    --[[ FrameXML/HelpFrame.lua ]]--
-    F.CreateBD(_G.TicketStatusFrameButton)
 end)
