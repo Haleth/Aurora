@@ -723,6 +723,21 @@ F.ReskinTooltip = function(f)
 	f.GetBackdropBorderColor = getBackdropBorderColor
 end
 
+F.ReskinItemFrame = function(frame)
+	local name = frame:GetName()
+	local icon = frame.Icon or _G[name.."IconTexture"]
+	frame._auroraIconBG = F.ReskinIcon(icon)
+
+	local nameFrame = frame.NameFrame or _G[name.."NameFrame"]
+	nameFrame:SetAlpha(0)
+
+	local bg = F.CreateBDFrame(nameFrame, .2)
+	bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
+	bg:SetPoint("RIGHT", nameFrame, -4, 0)
+	bg:SetPoint("BOTTOM", 0, -1)
+	frame._auroraNameBG = bg
+end
+
 -- [[ Variable and module handling ]]
 
 C.themes = {}
@@ -843,18 +858,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- [[ Simple backdrops ]]
-
-		local lightbds = {"SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4"}
-		for i = 1, #lightbds do
-			local bd = _G[lightbds[i]]
-			if bd then
-				F.CreateBD(bd, .25)
-			else
-				_G.print("Aurora: "..lightbds[i].." was not found.")
-			end
-		end
-
 		-- [[ Scroll bars ]]
 
 		local scrollbars = {"LFDQueueFrameSpecificListScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar"}
@@ -875,8 +878,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Arrows ]]
 
-		F.ReskinArrow(_G.SpellBookPrevPageButton, "Left")
-		F.ReskinArrow(_G.SpellBookNextPageButton, "Right")
 		F.ReskinArrow(_G.InboxPrevPageButton, "Left")
 		F.ReskinArrow(_G.InboxNextPageButton, "Right")
 		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
@@ -1277,87 +1278,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		select(3, _G.ReputationDetailFrame:GetRegions()):Hide()
 
-		-- Professions
-
-		local professions = {"PrimaryProfession1", "PrimaryProfession2", "SecondaryProfession1", "SecondaryProfession2", "SecondaryProfession3", "SecondaryProfession4"}
-
-		for _, button in next, professions do
-			local bu = _G[button]
-			bu.professionName:SetTextColor(1, 1, 1)
-			bu.missingHeader:SetTextColor(1, 1, 1)
-			bu.missingText:SetTextColor(1, 1, 1)
-
-			bu.statusBar:SetHeight(13)
-			bu.statusBar:SetStatusBarTexture(C.media.backdrop)
-			bu.statusBar:GetStatusBarTexture():SetGradient("VERTICAL", 0, .6, 0, 0, .8, 0)
-			bu.statusBar.rankText:SetPoint("CENTER")
-
-			local _, p = bu.statusBar:GetPoint()
-			bu.statusBar:SetPoint("TOPLEFT", p, "BOTTOMLEFT", 1, -3)
-
-			_G[button.."StatusBarLeft"]:Hide()
-			bu.statusBar.capRight:SetAlpha(0)
-			_G[button.."StatusBarBGLeft"]:Hide()
-			_G[button.."StatusBarBGMiddle"]:Hide()
-			_G[button.."StatusBarBGRight"]:Hide()
-
-			local bg = CreateFrame("Frame", nil, bu.statusBar)
-			bg:SetPoint("TOPLEFT", -1, 1)
-			bg:SetPoint("BOTTOMRIGHT", 1, -1)
-			bg:SetFrameLevel(bu:GetFrameLevel()-1)
-			F.CreateBD(bg, .25)
-		end
-
-		local professionbuttons = {"PrimaryProfession1SpellButtonTop", "PrimaryProfession1SpellButtonBottom", "PrimaryProfession2SpellButtonTop", "PrimaryProfession2SpellButtonBottom", "SecondaryProfession1SpellButtonLeft", "SecondaryProfession1SpellButtonRight", "SecondaryProfession2SpellButtonLeft", "SecondaryProfession2SpellButtonRight", "SecondaryProfession3SpellButtonLeft", "SecondaryProfession3SpellButtonRight", "SecondaryProfession4SpellButtonLeft", "SecondaryProfession4SpellButtonRight"}
-
-		for _, button in next, professionbuttons do
-			local icon = _G[button.."IconTexture"]
-			local bu = _G[button]
-			_G[button.."NameFrame"]:SetAlpha(0)
-
-			bu:SetPushedTexture("")
-			bu:SetCheckedTexture(C.media.checked)
-			bu:GetHighlightTexture():Hide()
-
-			if icon then
-				icon:SetTexCoord(.08, .92, .08, .92)
-				icon:ClearAllPoints()
-				icon:SetPoint("TOPLEFT", 2, -2)
-				icon:SetPoint("BOTTOMRIGHT", -2, 2)
-				F.CreateBG(icon)
-			end
-		end
-
-		for i = 1, 2 do
-			local bu = _G["PrimaryProfession"..i]
-
-			_G["PrimaryProfession"..i.."IconBorder"]:Hide()
-
-			bu.professionName:ClearAllPoints()
-			bu.professionName:SetPoint("TOPLEFT", 100, -4)
-
-			bu.icon:SetAlpha(1)
-			bu.icon:SetTexCoord(.08, .92, .08, .92)
-			bu.icon:SetDesaturated(false)
-			F.CreateBG(bu.icon)
-
-			local bg = CreateFrame("Frame", nil, bu)
-			bg:SetPoint("TOPLEFT")
-			bg:SetPoint("BOTTOMRIGHT", 0, -4)
-			bg:SetFrameLevel(0)
-			F.CreateBD(bg, .25)
-		end
-
-		hooksecurefunc("FormatProfession", function(frame, index)
-			if index then
-				local _, texture = _G.GetProfessionInfo(index)
-
-				if frame.icon and texture then
-					frame.icon:SetTexture(texture)
-				end
-			end
-		end)
-
 		-- Battlenet toast frame
 
 		F.CreateBD(_G.BNToastFrame)
@@ -1749,7 +1669,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.MailTextFontNormal:SetShadowColor(0, 0, 0)
 		_G.InvoiceTextFontNormal:SetTextColor(1, 1, 1)
 		_G.InvoiceTextFontSmall:SetTextColor(1, 1, 1)
-		_G.SpellBookPageText:SetTextColor(.8, .8, .8)
 		_G.AvailableServicesText:SetTextColor(1, 1, 1)
 		_G.AvailableServicesText:SetShadowColor(0, 0, 0)
 		_G.PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
@@ -1761,11 +1680,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.ItemTextPageText:SetTextColor(1, 1, 1)
 		_G.ItemTextPageText.SetTextColor = F.dummy
 		_G.CoreAbilityFont:SetTextColor(1, 1, 1)
-
-		hooksecurefunc("UpdateProfessionButton", function(profBtn)
-			profBtn.spellString:SetTextColor(1, 1, 1);
-			profBtn.subSpellString:SetTextColor(1, 1, 1)
-		end)
 
 		-- [[ Change positions ]]
 
