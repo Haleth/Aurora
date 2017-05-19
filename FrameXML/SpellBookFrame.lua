@@ -60,7 +60,8 @@ _G.tinsert(C.themes["Aurora"], function()
 		spellHighlight:SetPoint("BOTTOMRIGHT")
 		spellHighlight:SetTexCoord(0.125, 0.882, 0.135, 0.885)
 
-		_G[name.."Highlight"]:Hide()
+		button:SetPushedTexture("")
+		button:SetCheckedTexture(C.media.checked)
 	end
 	hooksecurefunc("SpellButton_UpdateButton", function(self)
 		if _G.SpellBookFrame.bookType == _G.BOOKTYPE_PROFESSION then return end
@@ -149,10 +150,13 @@ _G.tinsert(C.themes["Aurora"], function()
 		prof.missingHeader:SetTextColor(1, 1, 1)
 		prof.missingText:SetTextColor(1, 1, 1)
 
-		prof.button2:SetSize(41, 41)
-		prof.button1:SetSize(41, 41)
-		F.ReskinItemFrame(prof.button2)
-		F.ReskinItemFrame(prof.button1)
+		for i = 1, 2 do
+			local button = prof["button"..i]
+			button:SetSize(41, 41)
+			F.ReskinItemFrame(button)
+			button:SetPushedTexture("")
+			button:SetCheckedTexture(C.media.checked)
+		end
 
 		prof.statusBar:SetSize(115, 12)
 		prof.statusBar:ClearAllPoints()
