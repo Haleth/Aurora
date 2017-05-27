@@ -143,20 +143,46 @@ C.themes["Blizzard_GuildUI"] = function()
 	_G.GuildLogFrame:SetPoint("TOPLEFT", _G.GuildFrame, "TOPRIGHT", 1, 0)
 	_G.GuildTextEditFrame:SetPoint("TOPLEFT", _G.GuildFrame, "TOPRIGHT", 1, 0)
 
-	for i = 1, 5 do
-		local bu = _G["GuildInfoFrameApplicantsContainerButton"..i]
+	local GuildInfoFrameApplicantsContainer = _G.GuildInfoFrameApplicantsContainer
+	local GuildApplicantButtons = GuildInfoFrameApplicantsContainer.buttons
+	for _, button in pairs(GuildApplicantButtons) do
+		F.CreateBD(button, .25)
+		button.selectedTex:SetTexture(C.media.backdrop)
+		button.selectedTex:SetVertexColor(r, g, b, .2)
 
-		bu:SetBackdrop(nil)
-		bu:SetHighlightTexture("")
+		local classBG = F.CreateBG(button.class)
+		classBG:SetDrawLayer("ARTWORK", -1)
+		button.class:SetTexture([[Interface\GLUES\CHARACTERCREATE\UI-CharacterCreate-Classes]])
+		button.ring:Hide()
 
-		local bg = F.CreateBDFrame(bu, .25)
-		bg:ClearAllPoints()
-		bg:SetPoint("TOPLEFT", 0, 0)
-		bg:SetPoint("BOTTOMRIGHT", 0, 1)
+		button.PointsSpentBgGold:Hide()
+		local lvlBG = button:CreateTexture(nil, "ARTWORK", 3)
+		lvlBG:SetColorTexture(0, 0, 0, 0.5)
+		lvlBG:SetHeight(12)
+		lvlBG:SetPoint("BOTTOMLEFT", button.class)
+		lvlBG:SetPoint("BOTTOMRIGHT", button.class)
+		button._auroraLvlBG = lvlBG
 
-		bu:GetRegions():SetTexture(C.media.backdrop)
-		bu:GetRegions():SetVertexColor(r, g, b, .2)
+		button.level:ClearAllPoints()
+		button.level:SetPoint("CENTER", lvlBG)
+
+		button:SetHighlightTexture("")
 	end
+	local function GuildInfoFrameApplicants_UpdateHook()
+		local scrollFrame = GuildInfoFrameApplicantsContainer
+		local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
+		local button, index
+		for i = 1, #GuildApplicantButtons do
+			button = GuildApplicantButtons[i];
+			index = offset + i;
+			local name, _, class = _G.GetGuildApplicantInfo(index);
+			if name then
+				button.class:SetTexCoord(_G.unpack(C.classicons[class]))
+			end
+		end
+	end
+	_G.hooksecurefunc("GuildInfoFrameApplicants_Update", GuildInfoFrameApplicants_UpdateHook)
+	_G.hooksecurefunc(GuildInfoFrameApplicantsContainer, "update", GuildInfoFrameApplicants_UpdateHook)
 
 	_G.GuildFactionBarProgress:SetTexture(C.media.backdrop)
 	_G.GuildFactionBarLeft:Hide()
@@ -223,10 +249,9 @@ C.themes["Blizzard_GuildUI"] = function()
 			end
 
 			index = offset + i
-			local name, _, _, _, _, _, _, _, _, _, classFileName  = _G.GetGuildRosterInfo(index)
+			local name, _, _, _, _, _, _, _, _, _, class  = _G.GetGuildRosterInfo(index)
 			if name and index <= visibleMembers and bu.icon:IsShown() then
-				local tcoords = _G.CLASS_ICON_TCOORDS[classFileName]
-				bu.icon:SetTexCoord(tcoords[1] + 0.022, tcoords[2] - 0.025, tcoords[3] + 0.022, tcoords[4] - 0.025)
+				bu.icon:SetTexCoord(_G.unpack(C.classicons[class]))
 				bu.bg:Show()
 			else
 				bu.bg:Hide()
