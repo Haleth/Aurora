@@ -64,3 +64,7 @@ _G.tinsert(C.themes["Aurora"], function()
         end
     end)
 end)
+
+--[[ FrameXML/NewFile.lua
+_G.tinsert(C.themes["Aurora"], function()
+end) ]]--

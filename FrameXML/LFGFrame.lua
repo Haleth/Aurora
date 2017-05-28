@@ -126,7 +126,6 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	local roleQueueButtons = {
 		_G.LFDQueueFrameRoleButtonTank, _G.LFDQueueFrameRoleButtonHealer, _G.LFDQueueFrameRoleButtonDPS, _G.LFDQueueFrameRoleButtonLeader,
-		_G.LFRQueueFrameRoleButtonTank, _G.LFRQueueFrameRoleButtonHealer, _G.LFRQueueFrameRoleButtonDPS,
 		_G.RaidFinderQueueFrameRoleButtonTank, _G.RaidFinderQueueFrameRoleButtonHealer, _G.RaidFinderQueueFrameRoleButtonDPS, _G.RaidFinderQueueFrameRoleButtonLeader
 	}
 	for _, roleButton in pairs(roleQueueButtons) do
@@ -350,7 +349,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
-	-- LFR/LFD group invite stuff
+	-- LFD/Scenario group invite stuff
 	hooksecurefunc("LFGDungeonListButton_SetDungeon", function(button, dungeonID)
 		if not button.expandOrCollapseButton.plus then
 			F.ReskinCheck(button.enableButton)

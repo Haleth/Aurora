@@ -49,7 +49,6 @@ FrameXML\WorldStateFrame.lua
 FrameXML\PVEFrame.lua
 FrameXML\LFGFrame.lua
 FrameXML\LFDFrame.lua
-FrameXML\LFRFrame.lua
 FrameXML\RaidFinder.lua
 FrameXML\ScenarioFinder.lua
 FrameXML\LFGList.lua
