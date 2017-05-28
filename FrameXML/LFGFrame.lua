@@ -11,60 +11,13 @@ local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
 	local function styleRewardButton(button)
-		local buttonName = button:GetName()
+		F.ReskinItemFrame(button)
+		button._auroraNameBG:SetPoint("RIGHT", -4, 0)
 
-		local icon = _G[buttonName.."IconTexture"]
-		local cta = _G[buttonName.."ShortageBorder"]
-		local count = _G[buttonName.."Count"]
-		local na = _G[buttonName.."NameFrame"]
-
-		F.CreateBG(icon)
-		icon:SetTexCoord(.08, .92, .08, .92)
-		icon:SetDrawLayer("OVERLAY")
-		count:SetDrawLayer("OVERLAY")
-		na:SetColorTexture(0, 0, 0, .25)
-		na:SetSize(118, 39)
-
-		if cta then
-			cta:SetAlpha(0)
+		if button.shortageBorder then
+			button.shortageBorder:SetAlpha(0)
 		end
-
-		button.bg2 = _G.CreateFrame("Frame", nil, button)
-		button.bg2:SetPoint("TOPLEFT", na, "TOPLEFT", 10, 0)
-		button.bg2:SetPoint("BOTTOMRIGHT", na, "BOTTOMRIGHT")
-		F.CreateBD(button.bg2, 0)
 	end
-
-	hooksecurefunc("LFDQueueFrameRandom_UpdateFrame", function()
-		for i = 1, _G.LFD_MAX_REWARDS do
-			local button = _G["LFDQueueFrameRandomScrollFrameChildFrameItem"..i]
-
-			if button and not button.styled then
-				styleRewardButton(button)
-				button.styled = true
-			end
-		end
-	end)
-	hooksecurefunc("ScenarioQueueFrameRandom_UpdateFrame", function()
-		for i = 1, 2 do
-			local button = _G["ScenarioQueueFrameRandomScrollFrameChildFrameItem"..i]
-
-			if button and not button.styled then
-				styleRewardButton(button)
-				button.styled = true
-			end
-		end
-	end)
-	hooksecurefunc("RaidFinderQueueFrameRewards_UpdateFrame", function()
-		for i = 1, _G.LFD_MAX_REWARDS do
-			local button = _G["RaidFinderQueueFrameScrollFrameChildFrameItem"..i]
-
-			if button and not button.styled then
-				styleRewardButton(button)
-				button.styled = true
-			end
-		end
-	end)
 
 	styleRewardButton(_G.LFDQueueFrameRandomScrollFrameChildFrame.MoneyReward)
 	styleRewardButton(_G.ScenarioQueueFrameRandomScrollFrameChildFrame.MoneyReward)
@@ -171,11 +124,12 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.ReskinClose(_G.LFGDungeonReadyDialogCloseButton)
 	F.ReskinClose(_G.LFGDungeonReadyStatusCloseButton)
 
-	for _, roleButton in pairs({
-			_G.LFDQueueFrameRoleButtonTank, _G.LFDQueueFrameRoleButtonHealer, _G.LFDQueueFrameRoleButtonDPS, _G.LFDQueueFrameRoleButtonLeader,
-			_G.LFRQueueFrameRoleButtonTank, _G.LFRQueueFrameRoleButtonHealer, _G.LFRQueueFrameRoleButtonDPS,
-			_G.RaidFinderQueueFrameRoleButtonTank, _G.RaidFinderQueueFrameRoleButtonHealer, _G.RaidFinderQueueFrameRoleButtonDPS, _G.RaidFinderQueueFrameRoleButtonLeader
-			}) do
+	local roleQueueButtons = {
+		_G.LFDQueueFrameRoleButtonTank, _G.LFDQueueFrameRoleButtonHealer, _G.LFDQueueFrameRoleButtonDPS, _G.LFDQueueFrameRoleButtonLeader,
+		_G.LFRQueueFrameRoleButtonTank, _G.LFRQueueFrameRoleButtonHealer, _G.LFRQueueFrameRoleButtonDPS,
+		_G.RaidFinderQueueFrameRoleButtonTank, _G.RaidFinderQueueFrameRoleButtonHealer, _G.RaidFinderQueueFrameRoleButtonDPS, _G.RaidFinderQueueFrameRoleButtonLeader
+	}
+	for _, roleButton in pairs(roleQueueButtons) do
 		if roleButton.background then
 			roleButton.background:SetTexture("")
 		end
@@ -248,16 +202,17 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.ReskinCheck(roleButton.checkButton)
 	end
 
-	for _, roleButton in pairs({
-			_G.LFDRoleCheckPopupRoleButtonTank, _G.LFDRoleCheckPopupRoleButtonHealer, _G.LFDRoleCheckPopupRoleButtonDPS,
-			_G.LFGInvitePopupRoleButtonTank, _G.LFGInvitePopupRoleButtonHealer, _G.LFGInvitePopupRoleButtonDPS,
-			_G.LFGListApplicationDialog.TankButton, _G.LFGListApplicationDialog.HealerButton, _G.LFGListApplicationDialog.DamagerButton
-		}) do
-		local checkButton = roleButton.checkButton or roleButton.CheckButton
+	local rolePoleButtons = {
+		_G.LFDRoleCheckPopupRoleButtonTank, _G.LFDRoleCheckPopupRoleButtonHealer, _G.LFDRoleCheckPopupRoleButtonDPS,
+		_G.LFGInvitePopupRoleButtonTank, _G.LFGInvitePopupRoleButtonHealer, _G.LFGInvitePopupRoleButtonDPS,
+		_G.LFGListApplicationDialog.TankButton, _G.LFGListApplicationDialog.HealerButton, _G.LFGListApplicationDialog.DamagerButton
+	}
+	for _, roleButton in pairs(rolePoleButtons) do
 
 		roleButton.cover:SetTexture(C.media.roleIcons)
 		roleButton:SetNormalTexture(C.media.roleIcons)
 
+		local checkButton = roleButton.checkButton or roleButton.CheckButton
 		checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
 
 		local left = roleButton:CreateTexture(nil, "OVERLAY")
@@ -291,45 +246,41 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.ReskinCheck(checkButton)
 	end
 
-	do
-		local roleButtons = {_G.LFGDungeonReadyStatusGroupedTank, _G.LFGDungeonReadyStatusGroupedHealer, _G.LFGDungeonReadyStatusGroupedDamager, _G.LFGDungeonReadyStatusRolelessReady}
+	local roleStatusButtons = {_G.LFGDungeonReadyStatusGroupedTank, _G.LFGDungeonReadyStatusGroupedHealer, _G.LFGDungeonReadyStatusGroupedDamager, _G.LFGDungeonReadyStatusRolelessReady}
+	for i = 1, 5 do
+		_G.tinsert(roleStatusButtons, _G["LFGDungeonReadyStatusIndividualPlayer"..i])
+	end
+	for _, roleButton in pairs(roleStatusButtons) do
+		roleButton.texture:SetTexture(C.media.roleIcons)
+		roleButton.statusIcon:SetDrawLayer("OVERLAY", 2)
 
-		for i = 1, 5 do
-			_G.tinsert(roleButtons, _G["LFGDungeonReadyStatusIndividualPlayer"..i])
-		end
+		local left = roleButton:CreateTexture(nil, "OVERLAY")
+		left:SetWidth(1)
+		left:SetTexture(C.media.backdrop)
+		left:SetVertexColor(0, 0, 0)
+		left:SetPoint("TOPLEFT", 7, -6)
+		left:SetPoint("BOTTOMLEFT", 7, 8)
 
-		for _, roleButton in pairs(roleButtons) do
-			roleButton.texture:SetTexture(C.media.roleIcons)
-			roleButton.statusIcon:SetDrawLayer("OVERLAY", 2)
+		local right = roleButton:CreateTexture(nil, "OVERLAY")
+		right:SetWidth(1)
+		right:SetTexture(C.media.backdrop)
+		right:SetVertexColor(0, 0, 0)
+		right:SetPoint("TOPRIGHT", -7, -6)
+		right:SetPoint("BOTTOMRIGHT", -7, 8)
 
-			local left = roleButton:CreateTexture(nil, "OVERLAY")
-			left:SetWidth(1)
-			left:SetTexture(C.media.backdrop)
-			left:SetVertexColor(0, 0, 0)
-			left:SetPoint("TOPLEFT", 7, -6)
-			left:SetPoint("BOTTOMLEFT", 7, 8)
+		local top = roleButton:CreateTexture(nil, "OVERLAY")
+		top:SetHeight(1)
+		top:SetTexture(C.media.backdrop)
+		top:SetVertexColor(0, 0, 0)
+		top:SetPoint("TOPLEFT", 7, -6)
+		top:SetPoint("TOPRIGHT", -7, -6)
 
-			local right = roleButton:CreateTexture(nil, "OVERLAY")
-			right:SetWidth(1)
-			right:SetTexture(C.media.backdrop)
-			right:SetVertexColor(0, 0, 0)
-			right:SetPoint("TOPRIGHT", -7, -6)
-			right:SetPoint("BOTTOMRIGHT", -7, 8)
-
-			local top = roleButton:CreateTexture(nil, "OVERLAY")
-			top:SetHeight(1)
-			top:SetTexture(C.media.backdrop)
-			top:SetVertexColor(0, 0, 0)
-			top:SetPoint("TOPLEFT", 7, -6)
-			top:SetPoint("TOPRIGHT", -7, -6)
-
-			local bottom = roleButton:CreateTexture(nil, "OVERLAY")
-			bottom:SetHeight(1)
-			bottom:SetTexture(C.media.backdrop)
-			bottom:SetVertexColor(0, 0, 0)
-			bottom:SetPoint("BOTTOMLEFT", 7, 8)
-			bottom:SetPoint("BOTTOMRIGHT", -7, 8)
-		end
+		local bottom = roleButton:CreateTexture(nil, "OVERLAY")
+		bottom:SetHeight(1)
+		bottom:SetTexture(C.media.backdrop)
+		bottom:SetVertexColor(0, 0, 0)
+		bottom:SetPoint("BOTTOMLEFT", 7, 8)
+		bottom:SetPoint("BOTTOMRIGHT", -7, 8)
 	end
 
 	_G.LFGDungeonReadyStatusRolelessReady.texture:SetTexCoord(0.5234375, 0.78750, 0, 0.25875)
@@ -382,5 +333,35 @@ _G.tinsert(C.themes["Aurora"], function()
 			button.topLine2:SetVertexColor(1, .9, .06)
 			button.bottomLine2:SetVertexColor(1, .9, .06)
 		end
+	end)
+
+	--Reward frame functions
+	hooksecurefunc("LFGRewardsFrame_SetItemButton", function(parentFrame, dungeonID, index, id, name, texture, numItems, rewardType, rewardID, shortageIndex, showTankIcon, showHealerIcon, showDamageIcon)
+		local parentName = parentFrame:GetName();
+		local button = _G[parentName.."Item"..index];
+		if button and not button._auroraNameBG then
+			styleRewardButton(button)
+		end
+		button.IconBorder:Hide()
+		if shortageIndex then
+			button._auroraBG:SetBackdropBorderColor(1, .9, .06)
+		elseif rewardType ~= "item" then
+			button._auroraBG:SetBackdropBorderColor(0, 0, 0)
+		end
+	end)
+
+	-- LFR/LFD group invite stuff
+	hooksecurefunc("LFGDungeonListButton_SetDungeon", function(button, dungeonID)
+		if not button.expandOrCollapseButton.plus then
+			F.ReskinCheck(button.enableButton)
+			F.ReskinExpandOrCollapse(button.expandOrCollapseButton)
+		end
+		if _G.LFGCollapseList[dungeonID] then
+			button.expandOrCollapseButton.plus:Show()
+		else
+			button.expandOrCollapseButton.plus:Hide()
+		end
+
+		button.enableButton:GetCheckedTexture():SetDesaturated(true)
 	end)
 end)

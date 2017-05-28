@@ -741,15 +741,17 @@ end
 F.ReskinItemFrame = function(frame)
 	local name = frame:GetName()
 	local icon = frame.Icon or _G[name.."IconTexture"]
-	frame._auroraIconBG = F.ReskinIcon(icon)
+	frame._auroraBG = F.ReskinIcon(icon)
 
 	local nameFrame = frame.NameFrame or _G[name.."NameFrame"]
 	nameFrame:SetAlpha(0)
 
-	local bg = F.CreateBDFrame(nameFrame, .2)
-	bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
+	local bg = CreateFrame("Frame", nil, frame)
+	bg:SetPoint("TOP", icon, 0, 1)
+	bg:SetPoint("BOTTOM", icon, 0, -1)
+	bg:SetPoint("LEFT", icon, "RIGHT", 2, 0)
 	bg:SetPoint("RIGHT", nameFrame, -4, 0)
-	bg:SetPoint("BOTTOM", 0, -1)
+	F.CreateBD(bg, .2)
 	frame._auroraNameBG = bg
 end
 
@@ -873,21 +875,9 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- [[ Scroll bars ]]
-
-		local scrollbars = {"LFDQueueFrameSpecificListScrollFrameScrollBar", "LFDQueueFrameRandomScrollFrameScrollBar"}
-		for i = 1, #scrollbars do
-			local scrollbar = _G[scrollbars[i]]
-			if scrollbar then
-				F.ReskinScroll(scrollbar)
-			else
-				_G.print("Aurora: "..scrollbars[i].." was not found.")
-			end
-		end
-
 		-- [[ Dropdowns ]]
 
-		for _, dropdown in next, {"LFDQueueFrameTypeDropDown", "RaidFinderQueueFrameSelectionDropDown", "Advanced_GraphicsAPIDropDown"} do
+		for _, dropdown in next, {"RaidFinderQueueFrameSelectionDropDown"} do
 			F.ReskinDropDown(_G[dropdown])
 		end
 
@@ -1645,7 +1635,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.StackSplitFrame:GetRegions():Hide()
 		_G.ReadyCheckPortrait:SetAlpha(0)
 		select(2, _G.ReadyCheckListenerFrame:GetRegions()):Hide()
-		_G.LFDQueueFrameBackground:Hide()
 		_G.GhostFrameLeft:Hide()
 		_G.GhostFrameRight:Hide()
 		_G.GhostFrameMiddle:Hide()
@@ -1658,9 +1647,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		end
 		_G.InboxPrevPageButton:GetRegions():Hide()
 		_G.InboxNextPageButton:GetRegions():Hide()
-		_G.LFDQueueFrameRandomScrollFrameScrollBackground:Hide()
-		_G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
-		_G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
 		_G.SendScrollBarBackgroundTop:Hide()
 		_G.OpenScrollBarBackgroundTop:Hide()
 		_G.RaidFinderQueueFrameBackground:Hide()
@@ -1699,12 +1685,10 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		-- [[ Change positions ]]
 
 		_G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
-		_G.LFDQueueFrameSpecificListScrollFrameScrollBarScrollDownButton:SetPoint("TOP", _G.LFDQueueFrameSpecificListScrollFrameScrollBar, "BOTTOM", 0, 2)
-		_G.LFDQueueFrameRandomScrollFrameScrollBarScrollDownButton:SetPoint("TOP", _G.LFDQueueFrameRandomScrollFrameScrollBar, "BOTTOM", 0, 2)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "LFDQueueFrameFindGroupButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame", "LFDQueueFramePartyBackfillBackfillButton", "LFDQueueFramePartyBackfillNoBackfillButton", "LFDQueueFrameNoLFDWhileLFRLeaveQueueButton", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton"}
+		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then
