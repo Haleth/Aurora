@@ -875,12 +875,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- [[ Dropdowns ]]
-
-		for _, dropdown in next, {"RaidFinderQueueFrameSelectionDropDown"} do
-			F.ReskinDropDown(_G[dropdown])
-		end
-
 		-- [[ Arrows ]]
 
 		F.ReskinArrow(_G.InboxPrevPageButton, "Left")
@@ -1627,7 +1621,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		_G.RaidFinderFrameRoleInset:DisableDrawLayer("BORDER")
 		_G.OpenStationeryBackgroundLeft:Hide()
 		_G.OpenStationeryBackgroundRight:Hide()
 		_G.SendStationeryBackgroundLeft:Hide()
@@ -1649,9 +1642,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.InboxNextPageButton:GetRegions():Hide()
 		_G.SendScrollBarBackgroundTop:Hide()
 		_G.OpenScrollBarBackgroundTop:Hide()
-		_G.RaidFinderQueueFrameBackground:Hide()
-		_G.RaidFinderFrameRoleInsetBg:Hide()
-		_G.RaidFinderFrameRoleBackground:Hide()
 
 		_G.ReadyCheckFrame:HookScript("OnShow", function(readyCheck)
 			if _G.UnitIsUnit("player", readyCheck.initiator) then
@@ -1688,7 +1678,7 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame", "RaidFinderFrameFindRaidButton", "RaidFinderQueueFrameIneligibleFrameLeaveQueueButton", "RaidFinderQueueFramePartyBackfillBackfillButton", "RaidFinderQueueFramePartyBackfillNoBackfillButton"}
+		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then

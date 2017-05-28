@@ -4,16 +4,36 @@ local _, private = ...
 local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
-	_G.RaidFinderFrameBottomInset:DisableDrawLayer("BORDER")
-	_G.RaidFinderFrameBottomInsetBg:Hide()
+	_G.RaidFinderFrameRoleBackground:Hide()
 	_G.RaidFinderFrameBtnCornerRight:Hide()
 	_G.RaidFinderFrameButtonBottomBorder:Hide()
+
+	_G.RaidFinderFrameRoleInset:DisableDrawLayer("BORDER")
+	_G.RaidFinderFrameRoleInsetBg:Hide()
+
+
+	_G.RaidFinderFrameBottomInset:DisableDrawLayer("BORDER")
+	_G.RaidFinderFrameBottomInsetBg:Hide()
+
+	_G.RaidFinderQueueFrameBackground:Hide()
+
+	--[[ skinned in LFGFrame.lua
+		RaidFinderQueueFrameRoleButtonTank
+		RaidFinderQueueFrameRoleButtonHealer
+		RaidFinderQueueFrameRoleButtonDPS
+		RaidFinderQueueFrameRoleButtonLeader
+	]]
+
+	F.ReskinDropDown(_G.RaidFinderQueueFrameSelectionDropDown)
+	F.ReskinScroll(_G.RaidFinderQueueFrameScrollFrameScrollBar)
 	_G.RaidFinderQueueFrameScrollFrameScrollBackground:Hide()
 	_G.RaidFinderQueueFrameScrollFrameScrollBackgroundTopLeft:Hide()
 	_G.RaidFinderQueueFrameScrollFrameScrollBackgroundBottomRight:Hide()
 
-	-- this fixes right border of second reward being cut off
-	_G.RaidFinderQueueFrameScrollFrame:SetWidth(_G.RaidFinderQueueFrameScrollFrame:GetWidth()+1)
 
-	F.ReskinScroll(_G.RaidFinderQueueFrameScrollFrameScrollBar)
+	F.Reskin(_G.RaidFinderQueueFramePartyBackfillBackfillButton)
+	F.Reskin(_G.RaidFinderQueueFramePartyBackfillNoBackfillButton)
+	F.Reskin(_G.RaidFinderQueueFrameIneligibleFrameLeaveQueueButton)
+
+	F.Reskin(_G.RaidFinderFrameFindRaidButton)
 end)
