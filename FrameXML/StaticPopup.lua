@@ -24,10 +24,6 @@ _G.tinsert(C.themes["Aurora"], function()
 		local bu = _G["StaticPopup"..i.."ItemFrame"]
 		local close = _G["StaticPopup"..i.."CloseButton"]
 
-		local gold = _G["StaticPopup"..i.."MoneyInputFrameGold"]
-		local silver = _G["StaticPopup"..i.."MoneyInputFrameSilver"]
-		local copper = _G["StaticPopup"..i.."MoneyInputFrameCopper"]
-
 		_G["StaticPopup"..i.."ItemFrameNameFrame"]:Hide()
 		_G["StaticPopup"..i.."ItemFrameIconTexture"]:SetTexCoord(.08, .92, .08, .92)
 
@@ -35,9 +31,6 @@ _G.tinsert(C.themes["Aurora"], function()
 		bu:SetHighlightTexture("")
 		bu:SetPushedTexture("")
 		F.CreateBG(bu)
-
-		silver:SetPoint("LEFT", gold, "RIGHT", 1, 0)
-		copper:SetPoint("LEFT", silver, "RIGHT", 1, 0)
 
 		F.CreateBD(frame)
 
@@ -56,9 +49,7 @@ _G.tinsert(C.themes["Aurora"], function()
 		close:HookScript("OnLeave", clearMinimize)
 
 		F.ReskinInput(_G["StaticPopup"..i.."EditBox"], 20)
-		F.ReskinInput(gold)
-		F.ReskinInput(silver)
-		F.ReskinInput(copper)
+		F.ReskinMoneyInput(_G["StaticPopup"..i.."MoneyInputFrame"])
 	end
 
 	_G.hooksecurefunc("StaticPopup_Show", function(which, text_arg1, text_arg2, data)
