@@ -18,6 +18,8 @@ C.themes["Blizzard_AuctionUI"] = function()
 		F.ReskinTab(_G["AuctionFrameTab"..i])
 	end
 
+	local moneyBG = private.Skin.SmallMoneyFrameTemplate(_G.AuctionFrameMoneyFrame, true)
+	moneyBG:SetPoint("BOTTOMLEFT", _G.AuctionFrame, 18, 17)
 	F.ReskinClose(_G.AuctionFrameCloseButton, "TOPRIGHT", _G.AuctionFrame, "TOPRIGHT", -4, -15)
 
 	local function SkinSort(sortButtons)
