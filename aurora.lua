@@ -16,11 +16,18 @@ local LATEST_API_VERSION = "7.0"
 -- see F.AddPlugin
 local AURORA_LOADED = false
 local AuroraConfig
+
+-- API setup
+local Hook, Skin = {}, {}
 _G.Aurora = {
 	{}, -- F, functions
 	{}, -- C, constants/config
+	Hook = Hook,
+	Skin = Skin
 }
 private.Aurora = _G.Aurora
+private.Hook = Hook
+private.Skin = Skin
 
 local debug do
 	if _G.LibStub then
@@ -121,7 +128,9 @@ C.backdrop = {
 C.frames = {}
 
 C.TOC = select(4, _G.GetBuildInfo())
-C.is725 = _G.GetBuildInfo() == "7.2.5"
+
+local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
+C.is725 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) > 2 or _G.tonumber(minor) >= 5)
 
 -- [[ Cached variables ]]
 
