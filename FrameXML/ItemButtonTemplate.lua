@@ -39,13 +39,13 @@ _G.tinsert(C.themes["Aurora"], function()
             button._auroraRelicTex:Hide()
         end
     end
-    _G.hooksecurefunc("SetItemButtonQuality", function(button, quality, itemIDOrLink)
+    function private.Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
         if button._auroraBG then
             local isRelic = (itemIDOrLink and _G.IsArtifactRelicItem(itemIDOrLink))
 
             if quality then
-                local color = _G.BAG_ITEM_QUALITY_COLORS[quality]
-                if quality >= _G.LE_ITEM_QUALITY_COMMON and color then
+                local color = _G.type(quality) == "table" and quality or _G.BAG_ITEM_QUALITY_COLORS[quality]
+                if color and color == quality or quality >= _G.LE_ITEM_QUALITY_COMMON then
                     SetRelic(button, isRelic, color)
                     button._auroraBG:SetBackdropBorderColor(color.r, color.g, color.b)
                     button.IconBorder:Hide()
@@ -58,5 +58,6 @@ _G.tinsert(C.themes["Aurora"], function()
                 button._auroraBG:SetBackdropBorderColor(0, 0, 0)
             end
         end
-    end)
+    end
+    _G.hooksecurefunc("SetItemButtonQuality", private.Hook.SetItemButtonQuality)
 end)

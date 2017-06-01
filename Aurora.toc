@@ -14,6 +14,7 @@ Other\ChatBubbles.lua
 FrameXML\Constants.lua
 FrameXML\Fonts.lua
 
+FrameXML\MoneyFrame.lua
 FrameXML\GameTooltip.lua
 FrameXML\DressUpFrames.lua
 FrameXML\ItemButtonTemplate.lua

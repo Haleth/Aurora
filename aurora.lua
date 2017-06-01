@@ -601,19 +601,19 @@ end
 F.ReskinPortraitFrame = function(f, isButtonFrame)
 	local name = f:GetName()
 
-	f.Bg:Hide()
-	_G[name.."TitleBg"]:Hide()
-	f.portrait:Hide()
-	f.portraitFrame:Hide()
-	_G[name.."TopRightCorner"]:Hide()
-	f.topLeftCorner:Hide()
-	f.topBorderBar:Hide()
+	f.Bg:SetAlpha(0)
+	_G[name.."TitleBg"]:SetAlpha(0)
+	f.portrait:SetAlpha(0)
+	f.portraitFrame:SetAlpha(0)
+	_G[name.."TopRightCorner"]:SetAlpha(0)
+	f.topLeftCorner:SetAlpha(0)
+	f.topBorderBar:SetAlpha(0)
 	f.TopTileStreaks:SetTexture("")
-	_G[name.."BotLeftCorner"]:Hide()
-	_G[name.."BotRightCorner"]:Hide()
-	_G[name.."BottomBorder"]:Hide()
-	f.leftBorderBar:Hide()
-	_G[name.."RightBorder"]:Hide()
+	_G[name.."BotLeftCorner"]:SetAlpha(0)
+	_G[name.."BotRightCorner"]:SetAlpha(0)
+	_G[name.."BottomBorder"]:SetAlpha(0)
+	f.leftBorderBar:SetAlpha(0)
+	_G[name.."RightBorder"]:SetAlpha(0)
 
 	F.ReskinClose(f.CloseButton)
 	f.portrait.Show = F.dummy
@@ -623,14 +623,14 @@ F.ReskinPortraitFrame = function(f, isButtonFrame)
 		_G[name.."BtnCornerRight"]:SetTexture("")
 		_G[name.."ButtonBottomBorder"]:SetTexture("")
 
-		f.Inset.Bg:Hide()
+		f.Inset.Bg:SetAlpha(0)
 		f.Inset:DisableDrawLayer("BORDER")
 	end
 
 	F.CreateBD(f)
 end
 
-F.CreateBDFrame = function(f, a)
+F.CreateBDFrame = function(f, a, left, right, top, bottom)
 	local frame
 	if f:GetObjectType() == "Texture" then
 		frame = f:GetParent()
@@ -641,8 +641,8 @@ F.CreateBDFrame = function(f, a)
 	local lvl = frame:GetFrameLevel()
 
 	local bg = CreateFrame("Frame", nil, frame)
-	bg:SetPoint("TOPLEFT", f, -1, 1)
-	bg:SetPoint("BOTTOMRIGHT", f, 1, -1)
+	bg:SetPoint("TOPLEFT", f, left or -1, top or 1)
+	bg:SetPoint("BOTTOMRIGHT", f, right or 1, bottom or -1)
 	bg:SetFrameLevel(lvl == 0 and 1 or lvl - 1)
 
 	F.CreateBD(bg, a or .5)
@@ -794,9 +794,9 @@ end
 
 -- [[ Initialize addon ]]
 
-local Skin = CreateFrame("Frame", nil, _G.UIParent)
-Skin:RegisterEvent("ADDON_LOADED")
-Skin:SetScript("OnEvent", function(self, event, addon)
+local SetSkin = CreateFrame("Frame", nil, _G.UIParent)
+SetSkin:RegisterEvent("ADDON_LOADED")
+SetSkin:SetScript("OnEvent", function(self, event, addon)
 	if addon == ADDON_NAME then
 		-- [[ Load Variables ]]
 		_G.AuroraConfig = _G.AuroraConfig or {}
@@ -899,8 +899,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Arrows ]]
 
-		F.ReskinArrow(_G.InboxPrevPageButton, "Left")
-		F.ReskinArrow(_G.InboxNextPageButton, "Right")
 		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
 		F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
 
@@ -1643,10 +1641,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		_G.OpenStationeryBackgroundLeft:Hide()
-		_G.OpenStationeryBackgroundRight:Hide()
-		_G.SendStationeryBackgroundLeft:Hide()
-		_G.SendStationeryBackgroundRight:Hide()
 		_G.StackSplitFrame:GetRegions():Hide()
 		_G.ReadyCheckPortrait:SetAlpha(0)
 		select(2, _G.ReadyCheckListenerFrame:GetRegions()):Hide()
@@ -1660,10 +1654,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 10 do
 			select(i, _G.GuildInviteFrame:GetRegions()):Hide()
 		end
-		_G.InboxPrevPageButton:GetRegions():Hide()
-		_G.InboxNextPageButton:GetRegions():Hide()
-		_G.SendScrollBarBackgroundTop:Hide()
-		_G.OpenScrollBarBackgroundTop:Hide()
 
 		_G.ReadyCheckFrame:HookScript("OnShow", function(readyCheck)
 			if _G.UnitIsUnit("player", readyCheck.initiator) then
@@ -1677,11 +1667,6 @@ Skin:SetScript("OnEvent", function(self, event, addon)
 		_G.MailFont_Large:SetTextColor(1, 1, 1)
 		_G.MailFont_Large:SetShadowColor(0, 0, 0)
 		_G.MailFont_Large:SetShadowOffset(1, -1)
-		_G.MailTextFontNormal:SetTextColor(1, 1, 1)
-		_G.MailTextFontNormal:SetShadowOffset(1, -1)
-		_G.MailTextFontNormal:SetShadowColor(0, 0, 0)
-		_G.InvoiceTextFontNormal:SetTextColor(1, 1, 1)
-		_G.InvoiceTextFontSmall:SetTextColor(1, 1, 1)
 		_G.AvailableServicesText:SetTextColor(1, 1, 1)
 		_G.AvailableServicesText:SetShadowColor(0, 0, 0)
 		_G.PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
