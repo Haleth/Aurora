@@ -234,7 +234,7 @@ _G.tinsert(C.themes["Aurora"], function()
 				if invoiceType == "buyer" then
 					_G.OpenMailArithmeticLine:SetPoint("TOP", "OpenMailInvoicePurchaser", "BOTTOMLEFT", 125, -5)
 				elseif invoiceType == "seller" then
-					_G.OpenMailArithmeticLine:SetPoint("TOP", "OpenMailInvoiceHouseCut", "BOTTOMRIGHT", -114, -14)
+					_G.OpenMailArithmeticLine:SetPoint("TOP", "OpenMailInvoiceHouseCut", "BOTTOMRIGHT", -114, -22)
 				elseif invoiceType == "seller_temp_invoice" then
 					_G.OpenMailArithmeticLine:SetPoint("TOP", "OpenMailInvoicePurchaser", "BOTTOMLEFT", 125, -5)
 				end
