@@ -121,22 +121,24 @@ C.themes["Blizzard_TalentUI"] = function()
 			bonuses = _G.SPEC_SPELLS_DISPLAY[id]
 		end
 
-		for i = 1, #bonuses, 2 do
-			local frame = scrollChild["abilityButton"..index]
-			local _, spellIcon = _G.GetSpellTexture(bonuses[i])
+		if bonuses then
+			for i = 1, #bonuses, 2 do
+				local frame = scrollChild["abilityButton"..index]
+				local _, spellIcon = _G.GetSpellTexture(bonuses[i])
 
-			frame.icon:SetTexture(spellIcon)
-			frame.subText:SetTextColor(.75, .75, .75)
+				frame.icon:SetTexture(spellIcon)
+				frame.subText:SetTextColor(.75, .75, .75)
 
-			if not frame.styled then
-				frame.ring:Hide()
-				frame.icon:SetTexCoord(.08, .92, .08, .92)
-				F.CreateBG(frame.icon)
+				if not frame.styled then
+					frame.ring:Hide()
+					frame.icon:SetTexCoord(.08, .92, .08, .92)
+					F.CreateBG(frame.icon)
 
-				frame.styled = true
+					frame.styled = true
+				end
+
+				index = index + 1
 			end
-
-			index = index + 1
 		end
 
 		for i = 1, _G.GetNumSpecializations(nil, self.isPet) do
