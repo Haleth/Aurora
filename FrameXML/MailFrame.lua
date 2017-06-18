@@ -166,6 +166,8 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.SendMailCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
 	F.Reskin(_G.SendMailMailButton)
 	_G.SendMailMailButton:SetPoint("RIGHT", _G.SendMailCancelButton, "LEFT", -1, 0)
+	_G.SendMailFrameLockSendMail:SetPoint("TOPLEFT", "SendMailAttachment1", -12, 12)
+	_G.SendMailFrameLockSendMail:SetPoint("BOTTOMRIGHT", "SendMailCancelButton", 5, -5)
 
 	F.ReskinTab(_G.MailFrameTab1)
 	F.ReskinTab(_G.MailFrameTab2)
