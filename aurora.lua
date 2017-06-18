@@ -565,9 +565,15 @@ F.clearExpandOrCollapse = clearExpandOrCollapse
 
 F.ReskinExpandOrCollapse = function(f)
 	f:SetSize(13, 13)
-
 	F.Reskin(f, true)
-	f.SetNormalTexture = F.dummy
+
+	local settingTexture = false
+	_G.hooksecurefunc(f, "SetNormalTexture", function(self, texture)
+		if settingTexture then return end
+		settingTexture = true
+		f:SetNormalTexture("")
+		settingTexture = false
+	end)
 
 	f.minus = f:CreateTexture(nil, "OVERLAY")
 	f.minus:SetSize(7, 1)
@@ -912,7 +918,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 			F.CreateBD(FrameBD)
 		end
 
-		-- Dropdown lists
+		--[[ Dropdown lists ]]
 
 		hooksecurefunc("UIDropDownMenu_CreateFrames", function(level, index)
 			for i = 1, _G.UIDROPDOWNMENU_MAXLEVELS do
