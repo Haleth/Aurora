@@ -550,42 +550,60 @@ end
 
 local function colourExpandOrCollapse(f)
 	if f:IsEnabled() then
-		f.plus:SetVertexColor(red, green, blue)
-		f.minus:SetVertexColor(red, green, blue)
+		f._auroraBG.plus:SetVertexColor(red, green, blue)
+		f._auroraBG.minus:SetVertexColor(red, green, blue)
 	end
 end
 
 local function clearExpandOrCollapse(f)
-	f.plus:SetVertexColor(1, 1, 1)
-	f.minus:SetVertexColor(1, 1, 1)
+	f._auroraBG.plus:SetVertexColor(1, 1, 1)
+	f._auroraBG.minus:SetVertexColor(1, 1, 1)
 end
 
 F.colourExpandOrCollapse = colourExpandOrCollapse
 F.clearExpandOrCollapse = clearExpandOrCollapse
 
 F.ReskinExpandOrCollapse = function(f)
-	f:SetSize(13, 13)
-	F.Reskin(f, true)
+	f:SetHighlightTexture("")
+	f:SetPushedTexture("")
+
+	local bg = CreateFrame("Frame", nil, f)
+	F.CreateBD(bg, .0)
+	F.CreateGradient(bg)
+	bg:SetSize(13, 13)
+	bg:SetPoint("TOPLEFT", f:GetNormalTexture(), 0, -2)
+	f._auroraBG = bg
 
 	local settingTexture = false
 	_G.hooksecurefunc(f, "SetNormalTexture", function(self, texture)
 		if settingTexture then return end
 		settingTexture = true
 		f:SetNormalTexture("")
+
+		if texture and texture ~= "" then
+			if texture:find("Plus") then
+				bg.plus:Show()
+			elseif texture:find("Minus") then
+				bg.plus:Hide()
+			end
+			bg:Show()
+		else
+			bg:Hide()
+		end
 		settingTexture = false
 	end)
 
-	f.minus = f:CreateTexture(nil, "OVERLAY")
-	f.minus:SetSize(7, 1)
-	f.minus:SetPoint("CENTER")
-	f.minus:SetTexture(C.media.backdrop)
-	f.minus:SetVertexColor(1, 1, 1)
+	bg.minus = bg:CreateTexture(nil, "OVERLAY")
+	bg.minus:SetSize(7, 1)
+	bg.minus:SetPoint("CENTER")
+	bg.minus:SetTexture(C.media.backdrop)
+	bg.minus:SetVertexColor(1, 1, 1)
 
-	f.plus = f:CreateTexture(nil, "OVERLAY")
-	f.plus:SetSize(1, 7)
-	f.plus:SetPoint("CENTER")
-	f.plus:SetTexture(C.media.backdrop)
-	f.plus:SetVertexColor(1, 1, 1)
+	bg.plus = bg:CreateTexture(nil, "OVERLAY")
+	bg.plus:SetSize(1, 7)
+	bg.plus:SetPoint("CENTER")
+	bg.plus:SetTexture(C.media.backdrop)
+	bg.plus:SetVertexColor(1, 1, 1)
 
 	f:HookScript("OnEnter", colourExpandOrCollapse)
 	f:HookScript("OnLeave", clearExpandOrCollapse)
@@ -1272,26 +1290,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 			local bu = _G["ReputationBar"..i.."ExpandOrCollapseButton"]
 			F.ReskinExpandOrCollapse(bu)
 		end
-
-		hooksecurefunc("ReputationFrame_Update", function()
-			local numFactions = _G.GetNumFactions()
-			local factionIndex, factionButton
-			local factionOffset = _G.FauxScrollFrame_GetOffset(_G.ReputationListScrollFrame)
-
-			for i = 1, _G.NUM_FACTIONS_DISPLAYED do
-				factionIndex = factionOffset + i
-				factionButton = _G["ReputationBar"..i.."ExpandOrCollapseButton"]
-
-				if factionIndex <= numFactions then
-					local _, _, _, _, _, _, _, _, _, isCollapsed = _G.GetFactionInfo(factionIndex)
-					if isCollapsed then
-						factionButton.plus:Show()
-					else
-						factionButton.plus:Hide()
-					end
-				end
-			end
-		end)
 
 		F.CreateBD(_G.ReputationDetailFrame)
 		F.ReskinClose(_G.ReputationDetailCloseButton)

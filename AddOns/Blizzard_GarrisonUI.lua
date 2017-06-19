@@ -857,7 +857,7 @@ C.themes["Blizzard_GarrisonUI"] = function()
 				minimize:SetSize(17, 17)
 				minimize:ClearAllPoints()
 				minimize:SetPoint("RIGHT", MissionPage.CloseButton, "LEFT", -1, 0)
-				minimize.plus:Hide()
+				minimize._auroraBG.plus:Hide()
 
 				self:UnregisterEvent("ADDON_LOADED")
 			end

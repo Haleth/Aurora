@@ -247,20 +247,11 @@ _G.tinsert(C.themes["Aurora"], function()
 		local num = #_G.INTERFACEOPTIONS_ADDONCATEGORIES
 		for i = 1, num do
 			local bu = _G["InterfaceOptionsFrameAddOnsButton"..i.."Toggle"]
-			if bu and not bu.reskinned then
+			if bu and not bu._auroraSkinned then
 				F.ReskinExpandOrCollapse(bu)
-				bu:SetPushedTexture("")
-				bu.SetPushedTexture = F.dummy
-				bu.reskinned = true
+				bu._auroraSkinned = true
 			end
-		end
-	end)
-
-	_G.hooksecurefunc("OptionsListButtonToggle_OnClick", function(self)
-		if self:GetParent().element.collapsed then
-			self.plus:Show()
-		else
-			self.plus:Hide()
+			--bu:SetPushedTexture("")
 		end
 	end)
 end)

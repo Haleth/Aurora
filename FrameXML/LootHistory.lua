@@ -76,10 +76,6 @@ _G.tinsert(C.themes["Aurora"], function()
 			frame.bg:SetVertexColor(frame.IconBorder:GetVertexColor())
 
 			F.ReskinExpandOrCollapse(frame.ToggleButton)
-			frame.ToggleButton:GetNormalTexture():SetAlpha(0)
-			frame.ToggleButton:GetPushedTexture():SetAlpha(0)
-			frame.ToggleButton:GetDisabledTexture():SetAlpha(0)
-
 			frame.styled = true
 		end
 
@@ -92,7 +88,6 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 
 		frame.bg:SetVertexColor(frame.IconBorder:GetVertexColor())
-		frame.ToggleButton.plus:SetShown(not expanded)
 	end)
 
 	-- [[ Player frame ]]

@@ -223,14 +223,6 @@ C.themes["Blizzard_PVPUI"] = function()
 
 	_G.WarGamesFrameDescription:SetTextColor(.9, .9, .9)
 
-	local function onSetNormalTexture(self, texture)
-		if texture:find("Plus") then
-			self.plus:Show()
-		else
-			self.plus:Hide()
-		end
-	end
-
 	for _, button in pairs(WarGamesFrame.scrollFrame.buttons) do
 		local bu = button.Entry
 		local SelectedTexture = bu.SelectedTexture
@@ -262,35 +254,7 @@ C.themes["Blizzard_PVPUI"] = function()
 		bu.Icon.bg:SetDrawLayer("BACKGROUND", 1)
 		bu.Icon:SetPoint("TOPLEFT", 5, -3)
 
-		local header = button.Header
-
-		header:GetNormalTexture():SetAlpha(0)
-		header:SetHighlightTexture("")
-		header:SetPushedTexture("")
-
-		local headerBg = CreateFrame("Frame", nil, header)
-		headerBg:SetSize(13, 13)
-		headerBg:SetPoint("LEFT", 4, 0)
-		headerBg:SetFrameLevel(header:GetFrameLevel()-1)
-		F.CreateBD(headerBg, 0)
-
-		local headerTex = F.CreateGradient(header)
-		headerTex:SetAllPoints(headerBg)
-
-		local minus = header:CreateTexture(nil, "OVERLAY")
-		minus:SetSize(7, 1)
-		minus:SetPoint("CENTER", headerBg)
-		minus:SetTexture(C.media.backdrop)
-		minus:SetVertexColor(1, 1, 1)
-
-		local plus = header:CreateTexture(nil, "OVERLAY")
-		plus:SetSize(1, 7)
-		plus:SetPoint("CENTER", headerBg)
-		plus:SetTexture(C.media.backdrop)
-		plus:SetVertexColor(1, 1, 1)
-		header.plus = plus
-
-		hooksecurefunc(header, "SetNormalTexture", onSetNormalTexture)
+		F.ReskinExpandOrCollapse(button.Header)
 	end
 
 	F.ReskinCheck(_G.WarGameTournamentModeCheckButton)

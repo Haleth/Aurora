@@ -85,23 +85,14 @@ _G.tinsert(C.themes["Aurora"], function()
 	select(2, RewardsFrame:GetRegions()):Hide()
 
 	-- Scroll frame
-
 	F.ReskinScroll(DetailsFrame.ScrollFrame.ScrollBar)
 	_G.hooksecurefunc("QuestLogQuests_Update", function()
 		for i, questLogHeader in next, QuestMapFrame.QuestsFrame.Contents.Headers do
-			if not questLogHeader.isSkinned then
+			if not questLogHeader._auroraSkinned then
 				F.ReskinExpandOrCollapse(questLogHeader)
-				questLogHeader.isSkinned = true
+				questLogHeader._auroraSkinned = true
 			end
 			questLogHeader:SetHighlightTexture("")
-			if questLogHeader.questLogIndex then
-				local _, _, _, _, isCollapsed = _G.GetQuestLogTitle(questLogHeader.questLogIndex)
-				if isCollapsed then
-					questLogHeader.plus:Show()
-				else
-					questLogHeader.plus:Hide()
-				end
-			end
 		end
 	end)
 

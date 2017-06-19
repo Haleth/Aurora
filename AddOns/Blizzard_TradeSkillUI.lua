@@ -1,18 +1,10 @@
 local _, private = ...
 
 -- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
+local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
-
-local function updateCollapsedState(button)
-	if button.tradeSkillInfo and button.tradeSkillInfo.collapsed then
-		button.plus:Show()
-	else
-		button.plus:Hide()
-	end
-end
 
 C.themes["Blizzard_TradeSkillUI"] = function()
 	local TradeSkillFrame = _G.TradeSkillFrame
@@ -56,46 +48,10 @@ C.themes["Blizzard_TradeSkillUI"] = function()
 		for i = 1, #self.buttons do
 			local tradeSkillButton = self.buttons[i]
 			if not tradeSkillButton._auroraSkinned then
-				local bg = CreateFrame("Frame", nil, tradeSkillButton)
-				F.CreateBD(bg, .0)
-				F.CreateGradient(bg)
-				bg:SetSize(15, 15)
-				bg:SetPoint("TOPLEFT", tradeSkillButton:GetNormalTexture())
-				tradeSkillButton:SetHighlightTexture("")
-				tradeSkillButton:SetPushedTexture("")
-				tradeSkillButton:SetNormalTexture("")
-				tradeSkillButton.SetNormalTexture = function(_, texture)
-					if texture == "" then
-						bg:Hide()
-					else
-						bg:Show()
-					end
-				end
-
-				tradeSkillButton.minus = bg:CreateTexture(nil, "ARTWORK")
-				tradeSkillButton.minus:SetSize(7, 1)
-				tradeSkillButton.minus:SetPoint("CENTER")
-				tradeSkillButton.minus:SetTexture(C.media.backdrop)
-				tradeSkillButton.minus:SetVertexColor(1, 1, 1)
-
-				tradeSkillButton.plus = bg:CreateTexture(nil, "ARTWORK")
-				tradeSkillButton.plus:SetSize(1, 7)
-				tradeSkillButton.plus:SetPoint("CENTER")
-				tradeSkillButton.plus:SetTexture(C.media.backdrop)
-				tradeSkillButton.plus:SetVertexColor(1, 1, 1)
-
-				tradeSkillButton:HookScript("OnEnter", F.colourExpandOrCollapse)
-				tradeSkillButton:HookScript("OnLeave", F.clearExpandOrCollapse)
-
+				F.ReskinExpandOrCollapse(tradeSkillButton)
 				tradeSkillButton._auroraSkinned = true
 			end
-
-			updateCollapsedState(tradeSkillButton)
-		end
-	end)
-	recipeList.scrollBar:HookScript("OnValueChanged", function()
-		for i = 1, #recipeList.buttons do
-			updateCollapsedState(recipeList.buttons[i])
+			tradeSkillButton:SetHighlightTexture("")
 		end
 	end)
 

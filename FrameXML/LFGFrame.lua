@@ -351,16 +351,11 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	-- LFD/Scenario group invite stuff
 	hooksecurefunc("LFGDungeonListButton_SetDungeon", function(button, dungeonID)
-		if not button.expandOrCollapseButton.plus then
+		if not button.expandOrCollapseButton._auroraSkinned then
 			F.ReskinCheck(button.enableButton)
 			F.ReskinExpandOrCollapse(button.expandOrCollapseButton)
+			button.expandOrCollapseButton._auroraSkinned = true
 		end
-		if _G.LFGCollapseList[dungeonID] then
-			button.expandOrCollapseButton.plus:Show()
-		else
-			button.expandOrCollapseButton.plus:Hide()
-		end
-
 		button.enableButton:GetCheckedTexture():SetDesaturated(true)
 	end)
 end)
