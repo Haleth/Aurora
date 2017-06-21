@@ -74,6 +74,16 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end
 
+	local function SkinQuestText(font)
+		local settingFont = false
+		_G.hooksecurefunc(font, "SetTextColor", function(self, texture)
+			if settingFont then return end
+			settingFont = true
+			font:SetTextColor(1, 1, 1)
+			settingFont = false
+		end)
+	end
+
 	restyleSpellButton(_G.QuestInfoSpellObjectiveFrame)
 	hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
 	hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material, mapView)
@@ -140,31 +150,21 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
-	--_G.QuestInfoSpellObjectiveLearnLabel:SetTextColor(1, 1, 1)
-	--_G.QuestInfoSpellObjectiveLearnLabel.SetTextColor = F.dummy
+	SkinQuestText(_G.QuestInfoSpellObjectiveLearnLabel)
 
 
 	--[[ QuestInfoRewardsFrame ]]
 	local QuestInfoRewardsFrame = _G.QuestInfoRewardsFrame
-	QuestInfoRewardsFrame.Header:SetTextColor(1, 1, 1)
-	QuestInfoRewardsFrame.Header.SetTextColor = F.dummy
-	QuestInfoRewardsFrame.Header:SetShadowColor(0, 0, 0)
-
-	QuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
-	QuestInfoRewardsFrame.ItemChooseText.SetTextColor = F.dummy
-
-	QuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
-	QuestInfoRewardsFrame.ItemReceiveText.SetTextColor = F.dummy
-
-	QuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
-	QuestInfoRewardsFrame.PlayerTitleText.SetTextColor = F.dummy
+	SkinQuestText(QuestInfoRewardsFrame.Header)
+	SkinQuestText(QuestInfoRewardsFrame.ItemChooseText)
+	SkinQuestText(QuestInfoRewardsFrame.ItemReceiveText)
+	SkinQuestText(QuestInfoRewardsFrame.PlayerTitleText)
 
 	for i, name in next, {"HonorFrame", "SkillPointFrame", "ArtifactXPFrame"} do
 		private.debug("Quest restyleRewardButton", name)
 		restyleRewardButton(QuestInfoRewardsFrame[name])
 	end
-	QuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
-	QuestInfoRewardsFrame.XPFrame.ReceiveText.SetTextColor = F.dummy
+	SkinQuestText(QuestInfoRewardsFrame.XPFrame.ReceiveText)
 
 	local function clearHighlight()
 		for _, button in next, QuestInfoRewardsFrame.RewardButtons do
@@ -220,15 +220,9 @@ _G.tinsert(C.themes["Aurora"], function()
 
 
 	--[[ QuestInfoFrame ]]
-	_G.QuestInfoTitleHeader:SetTextColor(1, 1, 1)
-	_G.QuestInfoTitleHeader.SetTextColor = F.dummy
-	_G.QuestInfoTitleHeader:SetShadowColor(0, 0, 0)
-
-	_G.QuestInfoObjectivesText:SetTextColor(1, 1, 1)
-	_G.QuestInfoObjectivesText.SetTextColor = F.dummy
-
-	_G.QuestInfoRewardText:SetTextColor(1, 1, 1)
-	_G.QuestInfoRewardText.SetTextColor = F.dummy
+	SkinQuestText(_G.QuestInfoTitleHeader)
+	SkinQuestText(_G.QuestInfoObjectivesText)
+	SkinQuestText(_G.QuestInfoRewardText)
 
 	hooksecurefunc(_G.QuestInfoRequiredMoneyText, "SetTextColor", function(self, red, green, blue)
 		if red == 0 then
@@ -238,19 +232,10 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end)
 
-	_G.QuestInfoGroupSize:SetTextColor(1, 1, 1)
-	_G.QuestInfoGroupSize.SetTextColor = F.dummy
-
-	_G.QuestInfoDescriptionHeader:SetTextColor(1, 1, 1)
-	_G.QuestInfoDescriptionHeader.SetTextColor = F.dummy
-	_G.QuestInfoDescriptionHeader:SetShadowColor(0, 0, 0)
-
-	_G.QuestInfoObjectivesHeader:SetTextColor(1, 1, 1)
-	_G.QuestInfoObjectivesHeader.SetTextColor = F.dummy
-	_G.QuestInfoObjectivesHeader:SetShadowColor(0, 0, 0)
-
-	_G.QuestInfoDescriptionText:SetTextColor(1, 1, 1)
-	_G.QuestInfoDescriptionText.SetTextColor = F.dummy
+	SkinQuestText(_G.QuestInfoGroupSize)
+	SkinQuestText(_G.QuestInfoDescriptionHeader)
+	SkinQuestText(_G.QuestInfoObjectivesHeader)
+	SkinQuestText(_G.QuestInfoDescriptionText)
 
 	--[[ QuestInfoSealFrame ]]
 	_G.QuestInfoSealFrame.Text:SetShadowColor(0.2, 0.2, 0.2)
