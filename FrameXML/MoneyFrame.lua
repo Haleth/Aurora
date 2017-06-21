@@ -6,14 +6,13 @@ local F, C = _G.unpack(private.Aurora)
 _G.tinsert(C.themes["Aurora"], function()
     function private.Skin.SmallMoneyFrameTemplate(moneyFrame, addBackdrop)
         local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
-        moneyBG:SetFrameLevel(moneyFrame:GetFrameLevel() - 1)
         moneyBG:SetSize(moneyFrame.maxDisplayWidth, 18)
         if addBackdrop then
-            F.CreateBD(moneyBG, .25)
+            F.CreateBD(moneyBG, .3)
             moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
         end
 
-        moneyFrame.auroraMoneyBG = moneyBG
+        moneyFrame._auroraMoneyBG = moneyBG
         moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG)
         moneyFrame:SetPoint("TOPRIGHT", moneyBG)
         return moneyBG
@@ -28,15 +27,15 @@ _G.tinsert(C.themes["Aurora"], function()
             moneyFrame = _G[frameName];
         end
 
-        if moneyFrame.auroraMoneyBG then
+        if moneyFrame._auroraMoneyBG then
             local copperButton = _G[frameName.."CopperButton"]
             copperButton:ClearAllPoints();
             copperButton:SetPoint("BOTTOMRIGHT", frameName, -2, 2)
         end
     end)
     _G.hooksecurefunc("MoneyFrame_SetMaxDisplayWidth", function(moneyFrame, width)
-        if moneyFrame.auroraMoneyBG then
-            moneyFrame.auroraMoneyBG:SetWidth(width)
+        if moneyFrame._auroraMoneyBG then
+            moneyFrame._auroraMoneyBG:SetWidth(width)
         end
     end)
 end)

@@ -32,6 +32,7 @@ FrameXML\PaperDollFrame.lua
 FrameXML\QuestFrame.lua
 FrameXML\QuestInfo.lua
 FrameXML\MerchantFrame.lua
+FrameXML\TradeFrame.lua
 FrameXML\ContainerFrame.lua
 FrameXML\LootFrame.lua
 FrameXML\TaxiFrame.lua

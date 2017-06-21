@@ -153,6 +153,8 @@ _G.tinsert(C.themes["Aurora"], function()
 		for i = 1, 2 do
 			local button = prof["button"..i]
 			button:SetSize(41, 41)
+			button.Icon = button.iconTexture
+			button.NameFrame = _G[button:GetName().."NameFrame"]
 			F.ReskinItemFrame(button)
 			button:SetPushedTexture("")
 			button:SetCheckedTexture(C.media.checked)

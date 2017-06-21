@@ -1,9 +1,19 @@
 local _, private = ...
 
 -- [[ Core ]]
-local _, C = _G.unpack(private.Aurora)
+local F, C = _G.unpack(private.Aurora)
 
 _G.tinsert(C.themes["Aurora"], function()
+    function private.Skin.ItemButtonTemplate(itemButton)
+        itemButton:SetNormalTexture("")
+        itemButton:SetHighlightTexture("")
+        itemButton:SetPushedTexture("")
+
+        local icon = itemButton.icon
+        itemButton._auroraBG = F.ReskinIcon(icon)
+    end
+
+
     local size = 6
     local vertexOffsets = {
         {"TOPLEFT", 4, -size},

@@ -628,7 +628,7 @@ F.ReskinPortraitFrame = function(f, isButtonFrame)
 	f.Bg:SetAlpha(0)
 	_G[name.."TitleBg"]:SetAlpha(0)
 	f.portrait:SetAlpha(0)
-	f.portraitFrame:SetAlpha(0)
+	_G[name.."PortraitFrame"]:SetAlpha(0)
 	_G[name.."TopRightCorner"]:SetAlpha(0)
 	f.topLeftCorner:SetAlpha(0)
 	f.topBorderBar:SetAlpha(0)
@@ -636,7 +636,7 @@ F.ReskinPortraitFrame = function(f, isButtonFrame)
 	_G[name.."BotLeftCorner"]:SetAlpha(0)
 	_G[name.."BotRightCorner"]:SetAlpha(0)
 	_G[name.."BottomBorder"]:SetAlpha(0)
-	f.leftBorderBar:SetAlpha(0)
+	_G[name.."LeftBorder"]:SetAlpha(0)
 	_G[name.."RightBorder"]:SetAlpha(0)
 
 	F.ReskinClose(f.CloseButton)
@@ -785,11 +785,10 @@ F.ReskinTooltip = function(f)
 end
 
 F.ReskinItemFrame = function(frame)
-	local name = frame:GetName()
-	local icon = frame.Icon or _G[name.."IconTexture"]
+	local icon = frame.Icon
 	frame._auroraBG = F.ReskinIcon(icon)
 
-	local nameFrame = frame.NameFrame or _G[name.."NameFrame"]
+	local nameFrame = frame.NameFrame
 	nameFrame:SetAlpha(0)
 
 	local bg = CreateFrame("Frame", nil, frame)
@@ -1361,68 +1360,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 				buttonIndex = buttonIndex + 1
 			end
 		end)
-
-		-- Trade Frame
-
-		_G.TradePlayerEnchantInset:DisableDrawLayer("BORDER")
-		_G.TradePlayerItemsInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientEnchantInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientItemsInset:DisableDrawLayer("BORDER")
-		_G.TradePlayerInputMoneyInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientMoneyInset:DisableDrawLayer("BORDER")
-		_G.TradeRecipientBG:Hide()
-		_G.TradePlayerEnchantInsetBg:Hide()
-		_G.TradePlayerItemsInsetBg:Hide()
-		_G.TradePlayerInputMoneyInsetBg:Hide()
-		_G.TradeRecipientEnchantInsetBg:Hide()
-		_G.TradeRecipientItemsInsetBg:Hide()
-		_G.TradeRecipientMoneyBg:Hide()
-		_G.TradeRecipientPortraitFrame:Hide()
-		_G.TradeRecipientBotLeftCorner:Hide()
-		_G.TradeRecipientLeftBorder:Hide()
-		select(4, _G.TradePlayerItem7:GetRegions()):Hide()
-		select(4, _G.TradeRecipientItem7:GetRegions()):Hide()
-		_G.TradeFramePlayerPortrait:Hide()
-		_G.TradeFrameRecipientPortrait:Hide()
-
-		F.ReskinPortraitFrame(_G.TradeFrame, true)
-		F.Reskin(_G.TradeFrameTradeButton)
-		F.Reskin(_G.TradeFrameCancelButton)
-		F.ReskinInput(_G.TradePlayerInputMoneyFrameGold)
-		F.ReskinInput(_G.TradePlayerInputMoneyFrameSilver)
-		F.ReskinInput(_G.TradePlayerInputMoneyFrameCopper)
-
-		_G.TradePlayerInputMoneyFrameSilver:SetPoint("LEFT", _G.TradePlayerInputMoneyFrameGold, "RIGHT", 1, 0)
-		_G.TradePlayerInputMoneyFrameCopper:SetPoint("LEFT", _G.TradePlayerInputMoneyFrameSilver, "RIGHT", 1, 0)
-
-		for i = 1, _G.MAX_TRADE_ITEMS do
-			local bu1 = _G["TradePlayerItem"..i.."ItemButton"]
-			local bu2 = _G["TradeRecipientItem"..i.."ItemButton"]
-
-			_G["TradePlayerItem"..i.."SlotTexture"]:Hide()
-			_G["TradePlayerItem"..i.."NameFrame"]:Hide()
-			_G["TradeRecipientItem"..i.."SlotTexture"]:Hide()
-			_G["TradeRecipientItem"..i.."NameFrame"]:Hide()
-
-			bu1:SetNormalTexture("")
-			bu1:SetPushedTexture("")
-			bu1.icon:SetTexCoord(.08, .92, .08, .92)
-			bu2:SetNormalTexture("")
-			bu2:SetPushedTexture("")
-			bu2.icon:SetTexCoord(.08, .92, .08, .92)
-
-			local bg1 = CreateFrame("Frame", nil, bu1)
-			bg1:SetPoint("TOPLEFT", -1, 1)
-			bg1:SetPoint("BOTTOMRIGHT", 1, -1)
-			bg1:SetFrameLevel(bu1:GetFrameLevel()-1)
-			F.CreateBD(bg1, .25)
-
-			local bg2 = CreateFrame("Frame", nil, bu2)
-			bg2:SetPoint("TOPLEFT", -1, 1)
-			bg2:SetPoint("BOTTOMRIGHT", 1, -1)
-			bg2:SetFrameLevel(bu2:GetFrameLevel()-1)
-			F.CreateBD(bg2, .25)
-		end
 
 		-- Tutorial Frame
 
