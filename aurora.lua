@@ -563,6 +563,24 @@ end
 F.colourExpandOrCollapse = colourExpandOrCollapse
 F.clearExpandOrCollapse = clearExpandOrCollapse
 
+local function Hook_SetNormalTexture(self, texture)
+	if self.settingTexture then return end
+	self.settingTexture = true
+	self:SetNormalTexture("")
+
+	if texture and texture ~= "" then
+		if texture:find("Plus") then
+			self._auroraBG.plus:Show()
+		elseif texture:find("Minus") then
+			self._auroraBG.plus:Hide()
+		end
+		self._auroraBG:Show()
+	else
+		self._auroraBG:Hide()
+	end
+	self.settingTexture = nil
+end
+
 F.ReskinExpandOrCollapse = function(f)
 	f:SetHighlightTexture("")
 	f:SetPushedTexture("")
@@ -574,24 +592,7 @@ F.ReskinExpandOrCollapse = function(f)
 	bg:SetPoint("TOPLEFT", f:GetNormalTexture(), 0, -2)
 	f._auroraBG = bg
 
-	local settingTexture = false
-	_G.hooksecurefunc(f, "SetNormalTexture", function(self, texture)
-		if settingTexture then return end
-		settingTexture = true
-		f:SetNormalTexture("")
-
-		if texture and texture ~= "" then
-			if texture:find("Plus") then
-				bg.plus:Show()
-			elseif texture:find("Minus") then
-				bg.plus:Hide()
-			end
-			bg:Show()
-		else
-			bg:Hide()
-		end
-		settingTexture = false
-	end)
+	_G.hooksecurefunc(f, "SetNormalTexture", Hook_SetNormalTexture)
 
 	bg.minus = bg:CreateTexture(nil, "OVERLAY")
 	bg.minus:SetSize(7, 1)
