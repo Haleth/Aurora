@@ -8,30 +8,10 @@ local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
+local Skin = private.Skin
 
 _G.tinsert(C.themes["Aurora"], function()
 	local r, g, b = C.r, C.g, C.b
-	local function restyleRewardButton(bu, isMapQuestInfo)
-		bu.NameFrame:Hide()
-
-		bu.Icon:SetDrawLayer("BACKGROUND", 1)
-		F.ReskinIcon(bu.Icon)
-
-		local bg = _G.CreateFrame("Frame", nil, bu)
-		bg:SetPoint("TOPLEFT", bu, 1, 1)
-
-		if isMapQuestInfo then
-			bg:SetPoint("BOTTOMRIGHT", bu, -3, 0)
-			bu.Icon:SetSize(29, 29)
-		else
-			bg:SetPoint("BOTTOMRIGHT", bu, -3, 1)
-		end
-
-		bg:SetFrameLevel(0)
-		F.CreateBD(bg, .25)
-
-		bu.bg = bg
-	end
 
 	local function restyleSpellButton(bu)
 		local name = bu:GetName()
@@ -74,17 +54,23 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 	end
 
-	local function SkinQuestText(font)
-		local settingFont = false
-		_G.hooksecurefunc(font, "SetTextColor", function(self, texture)
-			if settingFont then return end
-			settingFont = true
+	local SkinQuestText do
+		local function Hook_SetTextColor(self, red, green, blue)
+			if self.settingFont then return end
+			self.settingFont = true
+			self:SetTextColor(1, 1, 1)
+			self.settingFont = nil
+		end
+
+		function SkinQuestText(font, hasShadow)
+			if hasShadow then
+				font:SetShadowColor(0.3, 0.3, 0.3)
+			end
 			font:SetTextColor(1, 1, 1)
-			settingFont = false
-		end)
+			_G.hooksecurefunc(font, "SetTextColor", Hook_SetTextColor)
+		end
 	end
 
-	restyleSpellButton(_G.QuestInfoSpellObjectiveFrame)
 	hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
 	hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material, mapView)
 		private.debug("QuestInfo_Display")
@@ -136,7 +122,11 @@ _G.tinsert(C.themes["Aurora"], function()
 			for spellReward in rewardsFrame.spellRewardPool:EnumerateActive() do
 				private.debug("spellRewardPool", spellReward.Name:GetText())
 				if not spellReward.isSkinned then
-					restyleRewardButton(spellReward, isMapQuest)
+					if isMapQuest then
+						Skin.SmallItemButtonTemplate(spellReward)
+					else
+						Skin.LargeItemButtonTemplate(spellReward)
+					end
 					local border = _G.select(4, spellReward:GetRegions())
 					border:Hide()
 					if not isMapQuest then
@@ -149,36 +139,34 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
+	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
+		local button = rewardsFrame.RewardButtons[index]
 
+		if not button.restyled then
+			if rewardsFrame == _G.MapQuestInfoRewardsFrame then
+				Skin.SmallItemButtonTemplate(button)
+			else
+				Skin.LargeItemButtonTemplate(button)
+			end
+			button.restyled = true
+		end
+	end)
+
+
+	restyleSpellButton(_G.QuestInfoSpellObjectiveFrame)
 	SkinQuestText(_G.QuestInfoSpellObjectiveLearnLabel)
-
 
 	--[[ QuestInfoRewardsFrame ]]
 	local QuestInfoRewardsFrame = _G.QuestInfoRewardsFrame
-	SkinQuestText(QuestInfoRewardsFrame.Header)
+	SkinQuestText(QuestInfoRewardsFrame.Header, true)
 	SkinQuestText(QuestInfoRewardsFrame.ItemChooseText)
 	SkinQuestText(QuestInfoRewardsFrame.ItemReceiveText)
 	SkinQuestText(QuestInfoRewardsFrame.PlayerTitleText)
 
 	for i, name in next, {"HonorFrame", "SkillPointFrame", "ArtifactXPFrame"} do
-		private.debug("Quest restyleRewardButton", name)
-		restyleRewardButton(QuestInfoRewardsFrame[name])
+		Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame[name])
 	end
 	SkinQuestText(QuestInfoRewardsFrame.XPFrame.ReceiveText)
-
-	local function clearHighlight()
-		for _, button in next, QuestInfoRewardsFrame.RewardButtons do
-			button.bg:SetBackdropColor(0, 0, 0, .25)
-		end
-	end
-	local function setHighlight(self)
-		clearHighlight()
-
-		local _, point = self:GetPoint()
-		if point then
-			point.bg:SetBackdropColor(r, g, b, .2)
-		end
-	end
 
 	local QuestInfoPlayerTitleFrame = _G.QuestInfoPlayerTitleFrame
 	F.ReskinIcon(QuestInfoPlayerTitleFrame.Icon)
@@ -194,6 +182,20 @@ _G.tinsert(C.themes["Aurora"], function()
 	local ItemHighlight = QuestInfoRewardsFrame.ItemHighlight
 	ItemHighlight:GetRegions():Hide()
 
+	local function clearHighlight()
+		for _, button in next, QuestInfoRewardsFrame.RewardButtons do
+			button.bg:SetBackdropColor(0, 0, 0, .25)
+		end
+	end
+	local function setHighlight(self)
+		clearHighlight()
+
+		local _, point = self:GetPoint()
+		if point then
+			point.bg:SetBackdropColor(r, g, b, .2)
+		end
+	end
+
 	hooksecurefunc(ItemHighlight, "SetPoint", setHighlight)
 	ItemHighlight:HookScript("OnShow", setHighlight)
 	ItemHighlight:HookScript("OnHide", clearHighlight)
@@ -201,26 +203,13 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	--[[ MapQuestInfoRewardsFrame ]]
 	for i, name in next, {"HonorFrame", "MoneyFrame", "SkillPointFrame", "XPFrame", "ArtifactXPFrame", "TitleFrame"} do
-		private.debug("Map restyleRewardButton", name)
-		restyleRewardButton(_G.MapQuestInfoRewardsFrame[name], true)
+		Skin.SmallItemButtonTemplate(_G.MapQuestInfoRewardsFrame[name])
 	end
 	_G.MapQuestInfoRewardsFrame.XPFrame.Name:SetShadowOffset(0, 0)
 
 
-	hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
-		local bu = rewardsFrame.RewardButtons[index]
-
-		if not bu.restyled then
-			restyleRewardButton(bu, rewardsFrame == _G.MapQuestInfoRewardsFrame)
-
-			bu.restyled = true
-		end
-	end)
-
-
-
 	--[[ QuestInfoFrame ]]
-	SkinQuestText(_G.QuestInfoTitleHeader)
+	SkinQuestText(_G.QuestInfoTitleHeader, true)
 	SkinQuestText(_G.QuestInfoObjectivesText)
 	SkinQuestText(_G.QuestInfoRewardText)
 
@@ -233,8 +222,8 @@ _G.tinsert(C.themes["Aurora"], function()
 	end)
 
 	SkinQuestText(_G.QuestInfoGroupSize)
-	SkinQuestText(_G.QuestInfoDescriptionHeader)
-	SkinQuestText(_G.QuestInfoObjectivesHeader)
+	SkinQuestText(_G.QuestInfoDescriptionHeader, true)
+	SkinQuestText(_G.QuestInfoObjectivesHeader, true)
 	SkinQuestText(_G.QuestInfoDescriptionText)
 
 	--[[ QuestInfoSealFrame ]]
