@@ -921,11 +921,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- [[ Arrows ]]
-
-		F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
-		F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
-
 		-- [[ Backdrop frames ]]
 
 		F.SetBD(_G.RaidParentFrame)
@@ -1394,30 +1389,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 		tutOkay:SetBackdropColor(0, 0, 0, .25)
 		tutPrev:SetBackdropColor(0, 0, 0, .25)
 		tutNext:SetBackdropColor(0, 0, 0, .25)
-
-		-- Tabard frame
-
-		_G.TabardFrameMoneyInset:DisableDrawLayer("BORDER")
-		_G.TabardFrameCustomizationBorder:Hide()
-		_G.TabardFrameMoneyBg:Hide()
-		_G.TabardFrameMoneyInsetBg:Hide()
-
-		for i = 19, 28 do
-			select(i, _G.TabardFrame:GetRegions()):Hide()
-		end
-
-		for i = 1, 5 do
-			_G["TabardFrameCustomization"..i.."Left"]:Hide()
-			_G["TabardFrameCustomization"..i.."Middle"]:Hide()
-			_G["TabardFrameCustomization"..i.."Right"]:Hide()
-			F.ReskinArrow(_G["TabardFrameCustomization"..i.."LeftButton"], "Left")
-			F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "Right")
-		end
-
-		F.ReskinPortraitFrame(_G.TabardFrame, true)
-		F.CreateBD(_G.TabardFrameCostFrame, .25)
-		F.Reskin(_G.TabardFrameAcceptButton)
-		F.Reskin(_G.TabardFrameCancelButton)
 
 		-- Guild registrar frame
 
