@@ -83,24 +83,7 @@ _G.tinsert(C.themes["Aurora"], function()
 	ReagentBankFrame.UnlockInfo:SetPoint("TOPLEFT", 13, -60)
 	ReagentBankFrame.UnlockInfo:SetPoint("BOTTOMRIGHT", -14, 48)
 	F.CreateBDFrame(ReagentBankFrame.UnlockInfo, 0.2)
-	if C.is725 then
-		ReagentBankFrame.UnlockInfo:DisableDrawLayer("BORDER")
-	else
-		local borderTextures = {
-			"BottomLeftInner",
-			"BottomRightInner",
-			"TopRightInner",
-			"TopLeftInner",
-			"LeftInner",
-			"RightInner",
-			"TopInner",
-			"BottomInner",
-			"BlackBG"
-		}
-		for i = 1, #borderTextures do
-			_G["ReagentBankFrameUnlockInfo"..borderTextures[i]]:Hide()
-		end
-	end
+	ReagentBankFrame.UnlockInfo:DisableDrawLayer("BORDER")
 	F.Reskin(_G.ReagentBankFrameUnlockInfoPurchaseButton)
 
 	local reagentButtonsStyled = false
