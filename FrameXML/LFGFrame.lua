@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.LFGFrame()
 	local function styleRewardButton(button)
 		F.ReskinItemFrame(button)
 		button._auroraNameBG:SetPoint("RIGHT", -4, 0)
@@ -358,4 +358,4 @@ _G.tinsert(C.themes["Aurora"], function()
 		end
 		button.enableButton:GetCheckedTexture():SetDesaturated(true)
 	end)
-end)
+end

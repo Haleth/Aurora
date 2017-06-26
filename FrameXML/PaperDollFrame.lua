@@ -6,7 +6,7 @@ local select, next = _G.select, _G.next
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.PaperDollFrame()
 	local r, g, b = C.r, C.g, C.b
 	local classDisplayName = _G.UnitClass("player")
 
@@ -203,4 +203,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			sets = true
 		end
 	end)
-end)
+end

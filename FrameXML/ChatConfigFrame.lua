@@ -7,9 +7,9 @@ local next, ipairs = _G.next, _G.ipairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ChatConfigFrame()
     F.CreateBD(_G.ChatConfigFrame)
 
     _G.ChatConfigFrameHeader:SetTexture("")
@@ -200,4 +200,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
         frame.styled = true
     end)
-end)
+end

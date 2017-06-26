@@ -4,9 +4,9 @@ local _, private = ...
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.GarrisonFollowerTooltip()
 	local function restyleGarrisonFollowerTooltipTemplate(frame)
 		for i = 1, 9 do
 			select(i, frame:GetRegions()):Hide()
@@ -89,4 +89,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonMissionTooltip)
 	F.ReskinClose(_G.FloatingGarrisonMissionTooltip.CloseButton)
-end)
+end

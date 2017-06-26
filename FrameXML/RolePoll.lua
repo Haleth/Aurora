@@ -6,7 +6,7 @@ local pairs = _G.pairs
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.RolePoll()
 	F.CreateBD(_G.RolePollPopup)
 	F.Reskin(_G.RolePollPopupAcceptButton)
 	F.ReskinClose(_G.RolePollPopupCloseButton)
@@ -47,4 +47,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 		F.ReskinRadio(roleButton.checkButton)
 	end
-end)
+end

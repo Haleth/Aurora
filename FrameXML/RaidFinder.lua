@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.RaidFinder()
 	_G.RaidFinderFrameRoleBackground:Hide()
 	_G.RaidFinderFrameBtnCornerRight:Hide()
 	_G.RaidFinderFrameButtonBottomBorder:Hide()
@@ -36,4 +36,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.Reskin(_G.RaidFinderQueueFrameIneligibleFrameLeaveQueueButton)
 
 	F.Reskin(_G.RaidFinderFrameFindRaidButton)
-end)
+end

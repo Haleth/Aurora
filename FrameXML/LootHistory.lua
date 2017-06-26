@@ -6,7 +6,7 @@ local C_LootHistory = _G.C_LootHistory
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.LootHistory()
 	local r, g, b = C.r, C.g, C.b
 
 	local LootHistoryFrame = _G.LootHistoryFrame
@@ -133,4 +133,4 @@ _G.tinsert(C.themes["Aurora"], function()
 		info.func = _G.LootHistoryDropDown_OnClick;
 		_G.UIDropDownMenu_AddButton(info);
 	end
-end)
+end

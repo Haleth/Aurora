@@ -6,7 +6,7 @@ local next, select = _G.next, _G.select
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.HelpFrame()
     local r, g, b = C.r, C.g, C.b
 
     local HelpFrame = _G.HelpFrame
@@ -116,4 +116,4 @@ _G.tinsert(C.themes["Aurora"], function()
     end
     F.Reskin(ReportCheatingDialog.reportButton)
     F.Reskin(_G.ReportCheatingDialogCancelButton)
-end)
+end

@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ScenarioFinder()
 	_G.ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
 	_G.ScenarioFinderFrame.TopTileStreaks:Hide()
 	_G.ScenarioFinderFrameBtnCornerRight:Hide()
@@ -23,4 +23,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.ReskinDropDown(_G.ScenarioQueueFrameTypeDropDown)
 	F.ReskinScroll(_G.ScenarioQueueFrameRandomScrollFrameScrollBar)
 	F.ReskinScroll(_G.ScenarioQueueFrameSpecificScrollFrameScrollBar)
-end)
+end

@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.TabardFrame()
     F.ReskinPortraitFrame(_G.TabardFrame, true)
 
     for i = 19, 28 do -- OuterFrame textures
@@ -43,4 +43,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
     F.Reskin(_G.TabardFrameAcceptButton)
     F.Reskin(_G.TabardFrameCancelButton)
-end)
+end

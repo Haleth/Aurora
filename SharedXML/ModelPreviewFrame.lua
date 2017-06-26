@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.SharedXML.ModelPreviewFrame()
 	local ModelPreviewFrame = _G.ModelPreviewFrame
 	local Display = ModelPreviewFrame.Display
 	local ModelScene = Display.ModelScene
@@ -22,4 +22,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	ModelScene.RotateLeftButton:SetPoint("TOPRIGHT", ModelScene, "BOTTOM", -5, -10)
 	ModelScene.RotateRightButton:SetPoint("TOPLEFT", ModelScene, "BOTTOM", 5, -10)
-end)
+end

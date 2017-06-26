@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.LFGList()
 	local r, g, b = C.r, C.g, C.b
 
 	local LFGListFrame = _G.LFGListFrame
@@ -332,4 +332,4 @@ _G.tinsert(C.themes["Aurora"], function()
 		bottom:SetPoint("BOTTOMLEFT", RoleIcon, 8, 10)
 		bottom:SetPoint("BOTTOMRIGHT", RoleIcon, -8, 10)
 	end
-end)
+end

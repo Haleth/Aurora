@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.AlertFrames()
     local r, g, b, a
     local function fixBG(f)
         if f:GetObjectType() == "AnimationGroup" then
@@ -546,4 +546,4 @@ _G.tinsert(C.themes["Aurora"], function()
         frame.BaseQualityBorder:SetVertexColor(frame.BaseQualityItemName:GetTextColor())
         frame.UpgradeQualityBorder:SetVertexColor(frame.UpgradeQualityItemName:GetTextColor())
     end)]]
-end)
+end

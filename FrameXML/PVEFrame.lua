@@ -6,7 +6,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.PVEFrame()
 	local r, g, b = C.r, C.g, C.b
 
 	_G.PVEFrame:DisableDrawLayer("ARTWORK")
@@ -61,4 +61,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.ReskinTab(_G.PVEFrameTab1)
 	F.ReskinTab(_G.PVEFrameTab2)
 	F.ReskinTab(_G.PVEFrameTab3)
-end)
+end

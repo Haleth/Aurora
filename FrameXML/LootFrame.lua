@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.LootFrame()
 	if not _G.AuroraConfig.loot then return end
 
 	--[[ LootFrame ]]--
@@ -98,4 +98,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end

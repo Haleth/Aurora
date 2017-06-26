@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.QueueStatusFrame()
 	local function SkinEntry(entry)
 		for _, roleButton in next, {entry.HealersFound, entry.TanksFound, entry.DamagersFound} do
 			roleButton.Texture:SetTexture(C.media.roleIcons)
@@ -118,4 +118,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end

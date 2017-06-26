@@ -10,7 +10,7 @@ local hooksecurefunc = _G.hooksecurefunc
 local F, C = _G.unpack(private.Aurora)
 local Skin = private.Skin
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.QuestInfo()
 	local r, g, b = C.r, C.g, C.b
 
 	local function restyleSpellButton(bu)
@@ -229,4 +229,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	--[[ QuestInfoSealFrame ]]
 	_G.QuestInfoSealFrame.Text:SetShadowColor(0.2, 0.2, 0.2)
 	_G.QuestInfoSealFrame.Text:SetShadowOffset(0.6, -0.6)
-end)
+end

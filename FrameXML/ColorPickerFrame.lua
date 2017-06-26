@@ -4,9 +4,9 @@ local _, private = ...
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ColorPickerFrame()
     _G.ColorPickerFrameHeader:Hide()
     local header = select(3, _G.ColorPickerFrame:GetRegions())
     header:SetPoint("TOP", _G.ColorPickerFrame, 0, -4)
@@ -40,4 +40,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
     F.CreateBD(_G.OpacityFrame)
     F.ReskinSlider(_G.OpacityFrameSlider, true)
-end)
+end

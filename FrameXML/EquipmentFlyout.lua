@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.EquipmentFlyout()
 	_G.EquipmentFlyoutFrameHighlight:Hide()
 
 	local border = F.CreateBDFrame(_G.EquipmentFlyoutFrame, 0)
@@ -39,4 +39,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.CreateBD(_G.EquipmentFlyoutFrame.NavigationFrame)
 	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.PrevButton, "Left")
 	F.ReskinArrow(_G.EquipmentFlyoutFrame.NavigationFrame.NextButton, "Right")
-end)
+end

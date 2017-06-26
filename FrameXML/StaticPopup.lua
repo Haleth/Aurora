@@ -6,7 +6,7 @@ local pairs = _G.pairs
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.StaticPopup()
 	local r, g, b = C.r, C.g, C.b
 
 	local function colourMinimize(f)
@@ -103,4 +103,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end

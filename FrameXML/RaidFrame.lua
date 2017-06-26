@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.RaidFrame()
     F.ReskinCheck(_G.RaidFrameAllAssistCheckButton)
     F.Reskin(_G.RaidFrameConvertToRaidButton)
     F.Reskin(_G.RaidFrameRaidInfoButton)
@@ -21,4 +21,4 @@ _G.tinsert(C.themes["Aurora"], function()
     F.ReskinScroll(_G.RaidInfoScrollFrameScrollBar)
     F.Reskin(_G.RaidInfoExtendButton)
     F.Reskin(_G.RaidInfoCancelButton)
-end)
+end

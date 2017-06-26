@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.SpellBookFrame()
 	local r, g, b = C.r, C.g, C.b
 
 	local SpellBookFrame = _G.SpellBookFrame
@@ -205,4 +205,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end

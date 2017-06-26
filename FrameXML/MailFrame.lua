@@ -11,7 +11,7 @@ local F, C = _G.unpack(private.Aurora)
 local Skin = private.Skin
 local Hook = private.Hook
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.MailFrame()
 	F.ReskinPortraitFrame(_G.MailFrame, true)
 	select(18, _G.MailFrame:GetRegions()):Hide()
 
@@ -243,4 +243,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end

@@ -4,9 +4,9 @@ local _, private = ...
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.QuestFrame()
 	F.ReskinPortraitFrame(_G.QuestFrame, true)
 	--[[ QuestFrame ]]
 
@@ -172,4 +172,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 		_G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
 	end)
-end)
+end

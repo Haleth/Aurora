@@ -6,7 +6,7 @@ local select, pairs, tinsert = _G.select, _G.pairs, _G.tinsert
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.WorldMapFrame()
 	local r, g, b = C.r, C.g, C.b
 
 	local WorldMapFrame = _G.WorldMapFrame
@@ -127,4 +127,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	TrackingOptions.Background:Hide()
 	TrackingOptions.IconOverlay:SetTexture("")
 	TrackingOptions.Button.Border:Hide()
-end)
+end

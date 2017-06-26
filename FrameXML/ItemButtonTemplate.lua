@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ItemButtonTemplate()
     function private.Skin.ItemButtonTemplate(itemButton)
         itemButton:SetNormalTexture("")
         itemButton:SetHighlightTexture("")
@@ -95,4 +95,4 @@ _G.tinsert(C.themes["Aurora"], function()
         end
     end
     _G.hooksecurefunc("SetItemButtonQuality", private.Hook.SetItemButtonQuality)
-end)
+end

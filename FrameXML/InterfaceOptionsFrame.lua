@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.InterfaceOptionsFrame()
 	local restyled = false
 
 	_G.InterfaceOptionsFrame:HookScript("OnShow", function()
@@ -254,4 +254,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			--bu:SetPushedTexture("")
 		end
 	end)
-end)
+end

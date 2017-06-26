@@ -898,7 +898,19 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 			_G.AuroraSplashScreen:Show()
 		end
 
-		-- [[ Plugin helper ]]
+		-- [[ Load FrameXML ]]
+		for i = 1, #private.FrameXML do
+			local file, isShared = _G.strsplit(".", private.FrameXML[i])
+			local fileList = private.FrameXML
+			if isShared then
+				file = isShared
+				fileList = private.SharedXML
+			end
+			if fileList[file] then
+				print("File", i, file, not not isShared)
+				fileList[file]()
+			end
+		end
 
 		-- from this point, plugins added with F.AddPlugin are executed directly instead of cached
 		AURORA_LOADED = true

@@ -6,7 +6,7 @@ local select, next = _G.select, _G.next
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.QuestMapFrame()
 	local r, g, b = C.r, C.g, C.b
 
 	local QuestMapFrame = _G.QuestMapFrame
@@ -149,4 +149,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	QuestLogPopupDetailFrame.ShareButton:ClearAllPoints()
 	QuestLogPopupDetailFrame.ShareButton:SetPoint("LEFT", QuestLogPopupDetailFrame.AbandonButton, "RIGHT", 1, 0)
 	QuestLogPopupDetailFrame.ShareButton:SetPoint("RIGHT", QuestLogPopupDetailFrame.TrackButton, "LEFT", -1, 0)
-end)
+end

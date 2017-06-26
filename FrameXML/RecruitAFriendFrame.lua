@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.RecruitAFriendFrame()
 	local RecruitAFriendFrame = _G.RecruitAFriendFrame
 	local RecruitAFriendSentFrame = _G.RecruitAFriendSentFrame
 
@@ -19,4 +19,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	F.CreateBD(RecruitAFriendSentFrame)
 	F.Reskin(RecruitAFriendSentFrame.OKButton)
 	F.ReskinClose(_G.RecruitAFriendSentFrameCloseButton)
-end)
+end

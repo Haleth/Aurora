@@ -6,7 +6,7 @@ local next = _G.next
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.GameTooltip()
 	if not _G.AuroraConfig.tooltips then return end
 
 	local tooltips = {
@@ -66,4 +66,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			F.ReskinClose(tooltip.CloseButton)
 		end
 	end
-end)
+end

@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.MoneyFrame()
     function private.Skin.SmallMoneyFrameTemplate(moneyFrame, addBackdrop)
         local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
         moneyBG:SetSize(moneyFrame.maxDisplayWidth, 18)
@@ -38,4 +38,4 @@ _G.tinsert(C.themes["Aurora"], function()
             moneyFrame._auroraMoneyBG:SetWidth(width)
         end
     end)
-end)
+end

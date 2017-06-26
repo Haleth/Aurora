@@ -6,7 +6,7 @@ local type = _G.type
 -- [[ Core ]]
 local _, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.Fonts()
     if _G.AuroraConfig.enableFont then
         if _G.LOCALE_koKR then
             C.media.font = [[Fonts/2002.ttf]]
@@ -175,4 +175,4 @@ _G.tinsert(C.themes["Aurora"], function()
         -- but for some reason the above changes do not propagate to it.
         SetFont(_G.WorldMapFrame.NavBar.home.text, NORMAL, 12, nil, {1, 0.82, 0}, {0, 0, 0}, 1, -1)
     end
-end)
+end

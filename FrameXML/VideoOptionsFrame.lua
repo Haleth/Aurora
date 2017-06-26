@@ -4,9 +4,9 @@ local _, private = ...
 local next = _G.next
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.VideoOptionsFrame()
 	_G.VideoOptionsFrameCategoryFrame:DisableDrawLayer("BACKGROUND")
 	_G.VideoOptionsFramePanelContainer:DisableDrawLayer("BORDER")
 
@@ -111,4 +111,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 		styledOptions = true
 	end)
-end)
+end

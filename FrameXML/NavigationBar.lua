@@ -6,7 +6,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.NavigationBar()
 	local r, g, b = C.r, C.g, C.b
 
 	local function moveNavButtons(self)
@@ -81,4 +81,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 		moveNavButtons(self)
 	end)
-end)
+end

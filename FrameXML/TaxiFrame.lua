@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.TaxiFrame()
     local TaxiFrame = _G.TaxiFrame
 	TaxiFrame:DisableDrawLayer("BORDER")
 	TaxiFrame:DisableDrawLayer("OVERLAY")
@@ -13,4 +13,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	F.SetBD(TaxiFrame, 3, -23, -5, 3)
 	F.ReskinClose(TaxiFrame.CloseButton, "TOPRIGHT", _G.TaxiRouteMap, "TOPRIGHT", -6, -6)
-end)
+end

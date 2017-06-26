@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.SharedXML.AddonList()
 	F.ReskinPortraitFrame(_G.AddonList, true)
 	F.Reskin(_G.AddonListEnableAllButton)
 	F.Reskin(_G.AddonListDisableAllButton)
@@ -26,4 +26,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			checkbox:SetTriState(checkbox.state)
 		end
 	end)
-end)
+end

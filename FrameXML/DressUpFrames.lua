@@ -4,9 +4,9 @@ local _, private = ...
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.DressUpFrames()
 	-- Dressup Frame
 
 	_G.DressUpFramePortrait:Hide()
@@ -49,4 +49,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.SideDressUpModel.bg:SetPoint("BOTTOMRIGHT", 1, -1)
 	_G.SideDressUpModel.bg:SetFrameLevel(_G.SideDressUpModel:GetFrameLevel()-1)
 	F.CreateBD(_G.SideDressUpModel.bg)
-end)
+end

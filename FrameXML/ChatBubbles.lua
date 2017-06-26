@@ -6,7 +6,7 @@ local next = _G.next
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ChatBubbles()
     if not _G.AuroraConfig.chatBubbles then return end
 
     local tailSize = 16

@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ChannelFrame()
     _G.ChannelFrameLeftInset:DisableDrawLayer("BORDER")
     _G.ChannelFrameLeftInsetBg:Hide()
     _G.ChannelFrameRightInset:DisableDrawLayer("BORDER")
@@ -26,4 +26,4 @@ _G.tinsert(C.themes["Aurora"], function()
     F.ReskinClose(_G.ChannelFrameDaughterFrameDetailCloseButton)
     F.Reskin(_G.ChannelFrameDaughterFrameOkayButton)
     F.Reskin(_G.ChannelFrameDaughterFrameCancelButton)
-end)
+end

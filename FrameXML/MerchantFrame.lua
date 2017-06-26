@@ -7,21 +7,22 @@ local select = _G.select
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-local function GetItemQualityColor(link)
-	if link then
-		local _, _, quality = _G.GetItemInfo(link)
-		if quality then
-			return _G.GetItemQualityColor(quality)
+function private.FrameXML.MerchantFrame()
+	local function GetItemQualityColor(link)
+		if link then
+			local _, _, quality = _G.GetItemInfo(link)
+			if quality then
+				return _G.GetItemQualityColor(quality)
+			else
+				return 1, 1, 1
+			end
 		else
 			return 1, 1, 1
 		end
-	else
-		return 1, 1, 1
 	end
-end
-_G.tinsert(C.themes["Aurora"], function()
+
 	_G.MerchantMoneyInset:DisableDrawLayer("BORDER")
 	_G.MerchantExtraCurrencyInset:DisableDrawLayer("BORDER")
 	_G.BuybackBG:SetAlpha(0)
@@ -165,4 +166,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end

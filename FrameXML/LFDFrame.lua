@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.LFDFrame()
 	--[[ LFDRoleCheckPopup ]]--
 	F.CreateBD(_G.LFDRoleCheckPopup)
 
@@ -54,4 +54,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	F.Reskin(_G.LFDQueueFrameFindGroupButton)
 	F.Reskin(_G.LFDQueueFrameRandomScrollFrameChildFrame.bonusRepFrame.ChooseButton)
-end)
+end

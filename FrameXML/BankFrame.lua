@@ -6,7 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.BankFrame()
 	if not _G.AuroraConfig.bags then return end
 
 	-- [[ Bank ]]
@@ -95,4 +95,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			reagentButtonsStyled = true
 		end
 	end)
-end)
+end

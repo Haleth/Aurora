@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ContainerFrame()
 	if not _G.AuroraConfig.bags then return end
 
 	_G.BackpackTokenFrame:GetRegions():Hide()
@@ -117,4 +117,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	_G.BagItemAutoSortButton:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
 	_G.BagItemAutoSortButton:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
 	F.CreateBG(_G.BagItemAutoSortButton)
-end)
+end

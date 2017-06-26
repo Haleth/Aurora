@@ -4,9 +4,9 @@ local _, private = ...
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ScrollOfResurrection()
     local ScrollOfResurrectionSelectionFrame = _G.ScrollOfResurrectionSelectionFrame
     _G.ScrollOfResurrectionSelectionFrameBackground:Hide()
     F.CreateBD(ScrollOfResurrectionSelectionFrame)
@@ -26,4 +26,4 @@ _G.tinsert(C.themes["Aurora"], function()
     end
     F.Reskin(_G.ScrollOfResurrectionFrameAcceptButton)
     F.Reskin(_G.ScrollOfResurrectionFrameCancelButton)
-end)
+end

@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.ProductChoice()
 	local ProductChoiceFrame = _G.ProductChoiceFrame
 
 	ProductChoiceFrame.Inset.Bg:Hide()
@@ -11,4 +11,4 @@ _G.tinsert(C.themes["Aurora"], function()
 
 	F.ReskinPortraitFrame(ProductChoiceFrame)
 	F.Reskin(ProductChoiceFrame.Inset.ClaimButton)
-end)
+end

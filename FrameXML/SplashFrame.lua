@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.SplashFrame()
     local SplashFrame = _G.SplashFrame
 	F.Reskin(SplashFrame.BottomCloseButton)
 	F.ReskinClose(SplashFrame.TopCloseButton)
@@ -11,4 +11,4 @@ _G.tinsert(C.themes["Aurora"], function()
 	SplashFrame.TopCloseButton:ClearAllPoints()
 
 	SplashFrame.TopCloseButton:SetPoint("TOPRIGHT", SplashFrame, "TOPRIGHT", -18, -18)
-end)
+end

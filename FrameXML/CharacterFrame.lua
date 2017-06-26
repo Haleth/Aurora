@@ -4,9 +4,9 @@ local _, private = ...
 local next = _G.next
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.CharacterFrame()
 	_G.CharacterFrameInsetRight:DisableDrawLayer("BACKGROUND")
 	_G.CharacterFrameInsetRight:DisableDrawLayer("BORDER")
 
@@ -40,4 +40,4 @@ _G.tinsert(C.themes["Aurora"], function()
 		F.ReskinTab(_G["CharacterFrameTab"..i])
 		i = i + 1
 	end
-end)
+end

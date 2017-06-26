@@ -6,7 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-_G.tinsert(C.themes["Aurora"], function()
+function private.FrameXML.WorldStateFrame()
 	-- PvP score frame
 
 	select(2, _G.WorldStateScoreScrollFrame:GetRegions()):Hide()
@@ -74,4 +74,4 @@ _G.tinsert(C.themes["Aurora"], function()
 			end
 		end
 	end)
-end)
+end
