@@ -113,4 +113,4 @@ function private.FrameXML.ChatBubbles()
     for event in next, events do
         bubbleHook:RegisterEvent(event)
     end
-end)
+end
