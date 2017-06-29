@@ -7,30 +7,7 @@ local select = _G.select
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.DressUpFrames()
-	-- Dressup Frame
-
-	_G.DressUpFramePortrait:Hide()
-	_G.DressUpBackgroundTopLeft:Hide()
-	_G.DressUpBackgroundTopRight:Hide()
-	_G.DressUpBackgroundBotLeft:Hide()
-	_G.DressUpBackgroundBotRight:Hide()
-	for i = 2, 5 do
-		select(i, _G.DressUpFrame:GetRegions()):Hide()
-	end
-
-	F.SetBD(_G.DressUpFrame, 10, -12, -34, 74)
-	F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
-	F.Reskin(_G.DressUpFrameCancelButton)
-	F.Reskin(_G.DressUpFrameResetButton)
-	F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
-	F.ReskinClose(_G.DressUpFrameCloseButton, "TOPRIGHT", _G.DressUpFrame, "TOPRIGHT", -38, -16)
-
-	_G.DressUpFrameOutfitDropDown:SetHeight(32)
-	_G.DressUpFrameOutfitDropDown.SaveButton:SetPoint("LEFT", _G.DressUpFrameOutfitDropDown, "RIGHT", -13, 2)
-	_G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
-
 	-- SideDressUp
-
 	for i = 1, 4 do
 		select(i, _G.SideDressUpFrame:GetRegions()):Hide()
 	end
@@ -49,4 +26,43 @@ function private.FrameXML.DressUpFrames()
 	_G.SideDressUpModel.bg:SetPoint("BOTTOMRIGHT", 1, -1)
 	_G.SideDressUpModel.bg:SetFrameLevel(_G.SideDressUpModel:GetFrameLevel()-1)
 	F.CreateBD(_G.SideDressUpModel.bg)
+
+
+	-- Dressup Frame
+	if private.is730 then
+		local DressUpFrame = _G.DressUpFrame
+		F.ReskinPortraitFrame(DressUpFrame, true)
+
+		F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
+		F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
+
+		private.Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
+
+		F.Reskin(_G.DressUpFrameCancelButton)
+		F.Reskin(_G.DressUpFrameResetButton)
+		_G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
+
+		DressUpFrame.ModelBackground:SetDrawLayer("BACKGROUND", 3)
+	else
+		_G.DressUpFramePortrait:Hide()
+		_G.DressUpBackgroundTopLeft:Hide()
+		_G.DressUpBackgroundTopRight:Hide()
+		_G.DressUpBackgroundBotLeft:Hide()
+		_G.DressUpBackgroundBotRight:Hide()
+		for i = 2, 5 do
+			select(i, _G.DressUpFrame:GetRegions()):Hide()
+		end
+
+		F.SetBD(_G.DressUpFrame, 10, -12, -34, 74)
+		F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
+		F.Reskin(_G.DressUpFrameCancelButton)
+		F.Reskin(_G.DressUpFrameResetButton)
+		F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
+		F.ReskinClose(_G.DressUpFrameCloseButton, "TOPRIGHT", _G.DressUpFrame, "TOPRIGHT", -38, -16)
+
+		_G.DressUpFrameOutfitDropDown:SetHeight(32)
+		_G.DressUpFrameOutfitDropDown.SaveButton:SetPoint("LEFT", _G.DressUpFrameOutfitDropDown, "RIGHT", -13, 2)
+		_G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
+	end
+
 end

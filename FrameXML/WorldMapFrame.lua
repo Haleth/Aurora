@@ -45,59 +45,63 @@ function private.FrameXML.WorldMapFrame()
 
 	-- [[ Size up / down buttons ]]
 
-	for _, buttonName in pairs{"WorldMapFrameSizeUpButton", "WorldMapFrameSizeDownButton"} do
-		local button = _G[buttonName]
+	if private.is730 then
+		private.Skin.MaximizeMinimizeButtonFrameTemplate(BorderFrame.MaxMinButtonFrame)
+	else
+		for _, buttonName in pairs{"WorldMapFrameSizeUpButton", "WorldMapFrameSizeDownButton"} do
+			local button = _G[buttonName]
 
-		button:SetSize(17, 17)
-		button:ClearAllPoints()
-		button:SetPoint("RIGHT", BorderFrame.CloseButton, "LEFT", -1, 0)
+			button:SetSize(17, 17)
+			button:ClearAllPoints()
+			button:SetPoint("RIGHT", BorderFrame.CloseButton, "LEFT", -1, 0)
 
-		F.Reskin(button)
+			F.Reskin(button)
 
-		local function colourArrow(f)
-			if f:IsEnabled() then
-				for _, pixel in pairs(f.pixels) do
-					pixel:SetColorTexture(r, g, b)
+			local function colourArrow(f)
+				if f:IsEnabled() then
+					for _, pixel in pairs(f.pixels) do
+						pixel:SetColorTexture(r, g, b)
+					end
 				end
 			end
-		end
 
-		local function clearArrow(f)
-			for _, pixel in pairs(f.pixels) do
-				pixel:SetColorTexture(1, 1, 1)
+			local function clearArrow(f)
+				for _, pixel in pairs(f.pixels) do
+					pixel:SetColorTexture(1, 1, 1)
+				end
 			end
+
+			button.pixels = {}
+
+			local lineOfs = 2.5
+			local line = button:CreateLine()
+			line:SetColorTexture(1, 1, 1)
+			line:SetThickness(0.5)
+			line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
+			line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
+			tinsert(button.pixels, line)
+
+			local hline = button:CreateTexture()
+			hline:SetColorTexture(1, 1, 1)
+			hline:SetSize(7, 1)
+			tinsert(button.pixels, hline)
+
+			local vline = button:CreateTexture()
+			vline:SetColorTexture(1, 1, 1)
+			vline:SetSize(1, 7)
+			tinsert(button.pixels, vline)
+
+			if buttonName == "WorldMapFrameSizeUpButton" then
+				hline:SetPoint("TOP", 1, -4)
+				vline:SetPoint("RIGHT", -4, 1)
+			else
+				hline:SetPoint("BOTTOM", -1, 4)
+				vline:SetPoint("LEFT", 4, -1)
+			end
+
+			button:SetScript("OnEnter", colourArrow)
+			button:SetScript("OnLeave", clearArrow)
 		end
-
-		button.pixels = {}
-
-		local lineOfs = 2.5
-		local line = button:CreateLine()
-		line:SetColorTexture(1, 1, 1)
-		line:SetThickness(0.5)
-		line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-		line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-		tinsert(button.pixels, line)
-
-		local hline = button:CreateTexture()
-		hline:SetColorTexture(1, 1, 1)
-		hline:SetSize(7, 1)
-		tinsert(button.pixels, hline)
-
-		local vline = button:CreateTexture()
-		vline:SetColorTexture(1, 1, 1)
-		vline:SetSize(1, 7)
-		tinsert(button.pixels, vline)
-
-		if buttonName == "WorldMapFrameSizeUpButton" then
-			hline:SetPoint("TOP", 1, -4)
-			vline:SetPoint("RIGHT", -4, 1)
-		else
-			hline:SetPoint("BOTTOM", -1, 4)
-			vline:SetPoint("LEFT", 4, -1)
-		end
-
-		button:SetScript("OnEnter", colourArrow)
-		button:SetScript("OnLeave", clearArrow)
 	end
 
 	-- [[ Misc ]]

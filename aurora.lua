@@ -127,10 +127,8 @@ C.backdrop = {
 
 C.frames = {}
 
-C.TOC = select(4, _G.GetBuildInfo())
-
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-C.is725 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) > 2 or _G.tonumber(minor) >= 5)
+private.is730 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) >= 3 or _G.tonumber(minor) >= 0)
 
 -- [[ Cached variables ]]
 
@@ -907,7 +905,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 				fileList = private.SharedXML
 			end
 			if fileList[file] then
-				print("File", i, file, not not isShared)
 				fileList[file]()
 			end
 		end
