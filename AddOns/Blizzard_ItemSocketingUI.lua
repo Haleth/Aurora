@@ -4,9 +4,9 @@ local _, private = ...
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_ItemSocketingUI"] = function()
+function private.AddOns.Blizzard_ItemSocketingUI()
 	_G.ItemSocketingFrame:DisableDrawLayer("ARTWORK")
 	_G.ItemSocketingScrollFrameTop:SetAlpha(0)
 	_G.ItemSocketingScrollFrameMiddle:SetAlpha(0)

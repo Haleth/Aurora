@@ -9,7 +9,7 @@ local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_EncounterJournal"] = function()
+function private.AddOns.Blizzard_EncounterJournal()
 	local r, g, b = C.r, C.g, C.b
 
 	local EncounterJournal = _G.EncounterJournal

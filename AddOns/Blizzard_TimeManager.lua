@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_TimeManager"] = function()
+function private.AddOns.Blizzard_TimeManager()
 	_G.TimeManagerGlobe:Hide()
 	_G.StopwatchFrameBackgroundLeft:Hide()
 	_G.select(2, _G.StopwatchFrame:GetRegions()):Hide()

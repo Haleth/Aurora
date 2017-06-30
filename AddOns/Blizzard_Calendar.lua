@@ -10,7 +10,7 @@ local IsAddOnLoaded = _G.IsAddOnLoaded
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_Calendar"] = function()
+function private.AddOns.Blizzard_Calendar()
 	local r, g, b = C.r, C.g, C.b
 
 	_G.CalendarFrame:DisableDrawLayer("BORDER")

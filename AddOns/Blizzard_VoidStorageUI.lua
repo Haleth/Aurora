@@ -6,7 +6,7 @@ local select, pairs = _G.select, _G.pairs
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_VoidStorageUI"] = function()
+function private.AddOns.Blizzard_VoidStorageUI()
 	F.SetBD(_G.VoidStorageFrame, 20, 0, 0, 20)
 	F.CreateBD(_G.VoidStoragePurchaseFrame)
 

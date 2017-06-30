@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_DeathRecap"] = function()
+function private.AddOns.Blizzard_DeathRecap()
 	local DeathRecapFrame = _G.DeathRecapFrame
 
 	DeathRecapFrame:DisableDrawLayer("BORDER")

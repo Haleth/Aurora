@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_BattlefieldMinimap"] = function()
+function private.AddOns.Blizzard_BattlefieldMinimap()
     _G.BattlefieldMinimapTab:DisableDrawLayer("BACKGROUND")
 
 	local bg = F.CreateBDFrame(_G.BattlefieldMinimap, 1.0 - _G.BattlefieldMinimapOptions.opacity)

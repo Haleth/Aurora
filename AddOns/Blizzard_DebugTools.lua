@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_DebugTools"] = function()
+function private.AddOns.Blizzard_DebugTools()
     --[[ EventTrace ]]--
     for i = 1, _G.EventTraceFrame:GetNumRegions() do
         local region = _G.select(i, _G.EventTraceFrame:GetRegions())

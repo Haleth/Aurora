@@ -9,7 +9,7 @@ local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_GuildUI"] = function()
+function private.AddOns.Blizzard_GuildUI()
 	local r, g, b = C.r, C.g, C.b
 
 	F.ReskinPortraitFrame(_G.GuildFrame, true)

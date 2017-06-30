@@ -223,14 +223,15 @@ local FrameXML = {
 private.FrameXML = FrameXML
 private.SharedXML = {}
 
--- Some boilerplate stuff for new files
+--[==[ Some boilerplate stuff for new files
 -- [[ Lua Globals ]]
---local next, tinsert = _G.next, _G.tinsert
+local next, tinsert = _G.next, _G.tinsert
 
 -- [[ Core ]]
---local F, C = _G.unpack(private.Aurora)
+local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.Foo()
 end
 function private.SharedXML.Bar()
 end
+]==]

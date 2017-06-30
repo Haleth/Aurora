@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_BindingUI"] = function()
+function private.AddOns.Blizzard_BindingUI()
 	local r, g, b = C.r, C.g, C.b
 
 	local KeyBindingFrame = _G.KeyBindingFrame

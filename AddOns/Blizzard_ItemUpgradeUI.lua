@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_ItemUpgradeUI"] = function()
+function private.AddOns.Blizzard_ItemUpgradeUI()
 	local ItemUpgradeFrame = _G.ItemUpgradeFrame
 	local ItemButton = ItemUpgradeFrame.ItemButton
 

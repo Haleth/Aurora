@@ -9,7 +9,7 @@ local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_PVPUI"] = function()
+function private.AddOns.Blizzard_PVPUI()
 	local r, g, b = C.r, C.g, C.b
 
 	local PVPQueueFrame = _G.PVPQueueFrame

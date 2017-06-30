@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_GMSurveyUI"] = function()
+function private.AddOns.Blizzard_GMSurveyUI()
 	F.SetBD(_G.GMSurveyFrame, 0, 0, -32, 4)
 	F.CreateBD(_G.GMSurveyCommentFrame, .25)
 	for i = 1, 11 do

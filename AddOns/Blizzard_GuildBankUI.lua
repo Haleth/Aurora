@@ -6,7 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_GuildBankUI"] = function()
+function private.AddOns.Blizzard_GuildBankUI()
 	local GuildBankFrame = _G.GuildBankFrame
 	GuildBankFrame:DisableDrawLayer("BACKGROUND")
 	GuildBankFrame:DisableDrawLayer("BORDER")

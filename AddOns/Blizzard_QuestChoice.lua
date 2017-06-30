@@ -4,9 +4,9 @@ local _, private = ...
 local select = _G.select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_QuestChoice"] = function()
+function private.AddOns.Blizzard_QuestChoice()
 	local QuestChoiceFrame = _G.QuestChoiceFrame
 
 	for i = 1, 15 do

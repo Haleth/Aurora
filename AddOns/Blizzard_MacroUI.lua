@@ -6,7 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_MacroUI"] = function()
+function private.AddOns.Blizzard_MacroUI()
 	select(18, _G.MacroFrame:GetRegions()):Hide()
 	_G.MacroHorizontalBarLeft:Hide()
 	select(21, _G.MacroFrame:GetRegions()):Hide()

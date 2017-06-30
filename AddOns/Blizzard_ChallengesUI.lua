@@ -4,10 +4,10 @@ local _, private = ...
 local ipairs = _G.ipairs
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 local skinned = {}
 
-C.themes["Blizzard_ChallengesUI"] = function()
+function private.AddOns.Blizzard_ChallengesUI()
     --[[ ChallengesKeystoneFrame ]]--
     local KeystoneFrame = _G.ChallengesKeystoneFrame
     F.CreateBD(KeystoneFrame)

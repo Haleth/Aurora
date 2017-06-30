@@ -9,7 +9,7 @@ local CreateFrame = _G.CreateFrame
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_ArchaeologyUI"] = function()
+function private.AddOns.Blizzard_ArchaeologyUI()
 	F.SetBD(_G.ArchaeologyFrame)
 	F.Reskin(_G.ArchaeologyFrameArtifactPageSolveFrameSolveButton)
 	F.Reskin(_G.ArchaeologyFrameArtifactPageBackButton)

@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_RaidUI"] = function()
+function private.AddOns.Blizzard_RaidUI()
     local function onEnter(self)
         if self.class then
             self:SetBackdropBorderColor(C.classcolours[self.class].r, C.classcolours[self.class].g, C.classcolours[self.class].b)

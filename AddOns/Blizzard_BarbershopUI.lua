@@ -1,9 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_BarbershopUI"] = function()
+function private.AddOns.Blizzard_BarbershopUI()
 	local BarberShopFrame = _G.BarberShopFrame
 	for i = 1, BarberShopFrame:GetNumRegions() do
 		local region = _G.select(i, BarberShopFrame:GetRegions())

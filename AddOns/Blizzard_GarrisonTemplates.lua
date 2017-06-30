@@ -4,9 +4,9 @@ local _, private = ...
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_GarrisonTemplates"] = function()
+function private.AddOns.Blizzard_GarrisonTemplates()
     --[[
         This addon is a dependancy for the GarrisonUI, which is in turn a dependancy for the OrderHallUI.
         The hooks made here will persist into both of those, greatly reducing posible duplicate code.

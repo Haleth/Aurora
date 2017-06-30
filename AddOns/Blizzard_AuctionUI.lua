@@ -9,7 +9,7 @@ local CreateFrame = _G.CreateFrame
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_AuctionUI"] = function()
+function private.AddOns.Blizzard_AuctionUI()
 	F.SetBD(_G.AuctionFrame, 11, -12, -1, 10)
 	_G.AuctionPortraitTexture:Hide()
 	_G.AuctionFrame:DisableDrawLayer("ARTWORK")

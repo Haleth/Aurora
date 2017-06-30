@@ -6,7 +6,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_TradeSkillUI"] = function()
+function private.AddOns.Blizzard_TradeSkillUI()
 	local TradeSkillFrame = _G.TradeSkillFrame
 	F.ReskinPortraitFrame(TradeSkillFrame)
 

@@ -6,7 +6,7 @@ local select, pairs = _G.select, _G.pairs
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_LookingForGuildUI"] = function()
+function private.AddOns.Blizzard_LookingForGuildUI()
 	local r, g, b = C.r, C.g, C.b
 
 	F.SetBD(_G.LookingForGuildFrame)

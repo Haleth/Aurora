@@ -916,7 +916,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 	-- [[ Load modules ]]
 
 	-- check if the addon loaded is supported by Aurora, and if it is, execute its module
-	local addonModule = C.themes[addon]
+	local addonModule = private.AddOns[addon] or C.themes[addon]
 	if addonModule then
 		if _G.type(addonModule) == "function" then
 			addonModule()

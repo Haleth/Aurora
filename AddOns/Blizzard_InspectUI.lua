@@ -6,7 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
-C.themes["Blizzard_InspectUI"] = function()
+function private.AddOns.Blizzard_InspectUI()
 	_G.InspectModelFrame:DisableDrawLayer("OVERLAY")
 
 	_G.InspectTalentFrame:GetRegions():Hide()
