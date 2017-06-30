@@ -27,6 +27,7 @@ local FrameXML = {
     "FrameLocks",
 
 
+    "SharedXML.SoundKitConstants",
     "Constants",
     "Localization",
     "Fonts",
