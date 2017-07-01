@@ -8,8 +8,7 @@ local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
-local Skin = private.Skin
-local Hook = private.Hook
+local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
 
 function private.FrameXML.MailFrame()
 	F.ReskinPortraitFrame(_G.MailFrame, true)

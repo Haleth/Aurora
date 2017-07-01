@@ -2,6 +2,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local F = _G.unpack(private.Aurora)
+local Skin = private.Aurora.Skin
 
 function private.FrameXML.TabardFrame()
     F.ReskinPortraitFrame(_G.TabardFrame, true)
@@ -38,7 +39,7 @@ function private.FrameXML.TabardFrame()
     _G.TabardFrameMoneyInset:DisableDrawLayer("BORDER")
     _G.TabardFrameMoneyInsetBg:Hide()
     _G.TabardFrameMoneyBg:Hide()
-    local moneyBG = private.Skin.SmallMoneyFrameTemplate(_G.TabardFrameMoneyFrame, true)
+    local moneyBG = Skin.SmallMoneyFrameTemplate(_G.TabardFrameMoneyFrame, true)
     moneyBG:SetPoint("BOTTOMLEFT", _G.TabardFrame, 6, 6)
 
     F.Reskin(_G.TabardFrameAcceptButton)

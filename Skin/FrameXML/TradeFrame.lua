@@ -2,6 +2,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local F = _G.unpack(private.Aurora)
+local Skin = private.Aurora.Skin
 
 function private.FrameXML.TradeFrame()
     local function SkinHighlightFrames(user)
@@ -48,7 +49,7 @@ function private.FrameXML.TradeFrame()
             _G[name.."SlotTexture"]:Hide()
 
             local itemButton = _G[name.."ItemButton"]
-            private.Skin.ItemButtonTemplate(itemButton)
+            Skin.ItemButtonTemplate(itemButton)
 
             local nameFrame = _G[name.."NameFrame"]
             nameFrame:SetAlpha(0)
@@ -108,7 +109,7 @@ function private.FrameXML.TradeFrame()
 
     _G.TradeRecipientMoneyInset:DisableDrawLayer("BORDER")
     _G.TradeRecipientMoneyBg:Hide()
-    local moneyBG = private.Skin.SmallMoneyFrameTemplate(_G.TradeRecipientMoneyFrame, true)
+    local moneyBG = Skin.SmallMoneyFrameTemplate(_G.TradeRecipientMoneyFrame, true)
     moneyBG:SetPoint("TOPRIGHT", _G.TradeFrame, -6, -36)
 
     SkinHighlightFrames("Recipient")

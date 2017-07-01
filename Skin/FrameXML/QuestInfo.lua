@@ -8,7 +8,7 @@ local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
-local Skin = private.Skin
+local Skin = private.Aurora.Skin
 
 function private.FrameXML.QuestInfo()
 	local r, g, b = C.r, C.g, C.b

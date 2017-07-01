@@ -8,5 +8,4 @@
 aurora.lua
 gui.lua
 
-FrameXML\FrameXML.xml
-AddOns\AddOns.xml
+Skin\skin.xml

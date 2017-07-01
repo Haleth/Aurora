@@ -5,6 +5,7 @@ local select, pairs, tinsert = _G.select, _G.pairs, _G.tinsert
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
+local Skin = private.Aurora.Skin
 
 function private.FrameXML.WorldMapFrame()
 	local r, g, b = C.r, C.g, C.b
@@ -46,7 +47,7 @@ function private.FrameXML.WorldMapFrame()
 	-- [[ Size up / down buttons ]]
 
 	if private.is730 then
-		private.Skin.MaximizeMinimizeButtonFrameTemplate(BorderFrame.MaxMinButtonFrame)
+		Skin.MaximizeMinimizeButtonFrameTemplate(BorderFrame.MaxMinButtonFrame)
 	else
 		for _, buttonName in pairs{"WorldMapFrameSizeUpButton", "WorldMapFrameSizeDownButton"} do
 			local button = _G[buttonName]

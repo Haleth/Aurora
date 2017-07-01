@@ -2,15 +2,16 @@ local _, private = ...
 
 -- [[ Core ]]
 local F = _G.unpack(private.Aurora)
+local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
 
 function private.FrameXML.ItemButtonTemplate()
-    function private.Skin.ItemButtonTemplate(itemButton)
+    function Skin.ItemButtonTemplate(itemButton)
         itemButton:SetNormalTexture("")
         itemButton:SetHighlightTexture("")
         itemButton:SetPushedTexture("")
         itemButton._auroraBG = F.ReskinIcon(itemButton.icon)
     end
-    function private.Skin.LargeItemButtonTemplate(itemButton)
+    function Skin.LargeItemButtonTemplate(itemButton)
         local icon = itemButton.Icon
         itemButton._auroraBG = F.ReskinIcon(icon)
 
@@ -23,7 +24,7 @@ function private.FrameXML.ItemButtonTemplate()
         F.CreateBD(bg, .2)
         itemButton._auroraNameBG = bg
     end
-    function private.Skin.SmallItemButtonTemplate(itemButton)
+    function Skin.SmallItemButtonTemplate(itemButton)
         local icon = itemButton.Icon
         icon:SetSize(29, 29)
         itemButton._auroraBG = F.ReskinIcon(icon)
@@ -74,7 +75,7 @@ function private.FrameXML.ItemButtonTemplate()
             button._auroraRelicTex:Hide()
         end
     end
-    function private.Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
+    function Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
         if button._auroraBG then
             local isRelic = (itemIDOrLink and _G.IsArtifactRelicItem(itemIDOrLink))
 
@@ -94,5 +95,5 @@ function private.FrameXML.ItemButtonTemplate()
             end
         end
     end
-    _G.hooksecurefunc("SetItemButtonQuality", private.Hook.SetItemButtonQuality)
+    _G.hooksecurefunc("SetItemButtonQuality", Hook.SetItemButtonQuality)
 end

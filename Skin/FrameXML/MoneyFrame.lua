@@ -2,9 +2,10 @@ local _, private = ...
 
 -- [[ Core ]]
 local F = _G.unpack(private.Aurora)
+local Skin = private.Aurora.Skin
 
 function private.FrameXML.MoneyFrame()
-    function private.Skin.SmallMoneyFrameTemplate(moneyFrame, addBackdrop)
+    function Skin.SmallMoneyFrameTemplate(moneyFrame, addBackdrop)
         local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
         moneyBG:SetSize(moneyFrame.maxDisplayWidth, 18)
         if addBackdrop then

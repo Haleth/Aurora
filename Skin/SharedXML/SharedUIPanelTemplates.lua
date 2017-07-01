@@ -5,6 +5,7 @@ local next, tinsert = _G.next, _G.tinsert
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
+local Skin = private.Aurora.Skin
 
 function private.SharedXML.SharedUIPanelTemplates()
     local r, g, b = C.r, C.g, C.b
@@ -23,7 +24,7 @@ function private.SharedXML.SharedUIPanelTemplates()
         end
     end
 
-    function private.Skin.MaximizeMinimizeButtonFrameTemplate(frame)
+    function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
             local button = frame[name]
             button:SetSize(17, 17)

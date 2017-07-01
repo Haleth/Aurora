@@ -5,6 +5,7 @@ local select = _G.select
 
 -- [[ Core ]]
 local F = _G.unpack(private.Aurora)
+local Skin = private.Aurora.Skin
 
 function private.FrameXML.DressUpFrames()
 	-- SideDressUp
@@ -36,7 +37,7 @@ function private.FrameXML.DressUpFrames()
 		F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
 		F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
 
-		private.Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
+		Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
 
 		F.Reskin(_G.DressUpFrameCancelButton)
 		F.Reskin(_G.DressUpFrameResetButton)
