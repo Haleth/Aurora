@@ -1,7 +1,7 @@
 local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
-local select, tostring = _G.select, _G.tostring
+local select = _G.select
 local next = _G.next
 
 -- [[ WoW API ]]
@@ -16,45 +16,6 @@ local LATEST_API_VERSION = "7.0"
 -- see F.AddPlugin
 local AURORA_LOADED = false
 local AuroraConfig
-
--- API setup
-local Hook, Skin = {}, {}
-_G.Aurora = {
-	{}, -- F, functions
-	{}, -- C, constants/config
-	Hook = Hook,
-	Skin = Skin
-}
-private.Aurora = _G.Aurora
-private.Hook = Hook
-private.Skin = Skin
-
-local debug do
-	if _G.LibStub then
-		local debugger
-		local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0", true)
-		function debug(...)
-			if not debugger then
-				if LTD then
-					debugger = LTD:New(ADDON_NAME .." Debug Output", 640, 480)
-					private.debugger = debugger
-				else
-					return
-				end
-			end
-			local time = _G.date("%H:%M:%S")
-			local text = ("[%s]"):format(time)
-			for i = 1, select("#", ...) do
-				local arg = select(i, ...)
-				text = text .. "     " .. tostring(arg)
-			end
-			debugger:AddLine(text)
-		end
-	else
-		debug = function() end
-	end
-	private.debug = debug
-end
 
 local F, C = _G.unpack(private.Aurora)
 
@@ -126,9 +87,6 @@ C.backdrop = {
 }
 
 C.frames = {}
-
-local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.is730 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) >= 3 or _G.tonumber(minor) >= 0)
 
 -- [[ Cached variables ]]
 

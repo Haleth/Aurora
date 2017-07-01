@@ -5,7 +5,7 @@
 ## Version: 7.2.5.1
 ## SavedVariables: AuroraConfig
 
+Skin\skin.xml
+
 aurora.lua
 gui.lua
-
-Skin\skin.xml
