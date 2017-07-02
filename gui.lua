@@ -1,7 +1,7 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local pairs = _G.pairs
+local next, ipairs = _G.next, _G.ipairs
 
 -- [[ WoW API ]]
 local CreateFrame = _G.CreateFrame
@@ -64,10 +64,10 @@ local checkboxes = {}
 
 -- function to copy table contents and inner table
 local function copyTable(source, target)
-	for key, value in pairs(source) do
+	for key, value in next, source do
 		if _G.type(value) == "table" then
 			target[key] = {}
-			for k, v in pairs(value) do
+			for k, v in next, value do
 				target[key][k] = value[k]
 			end
 		else
@@ -88,22 +88,77 @@ local function addSubCategory(parent, name)
 	return header
 end
 
-local function toggle(f)
-	_G.AuroraConfig[f.value] = f:GetChecked()
+local createToggleBox do
+	local function toggle(f)
+		_G.AuroraConfig[f.value] = f:GetChecked()
+	end
+
+	function createToggleBox(parent, value, text)
+		local f = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
+		f.value = value
+
+		f.Text:SetText(text)
+
+		f:SetScript("OnClick", toggle)
+
+		_G.tinsert(checkboxes, f)
+
+		return f
+	end
 end
 
-local function createToggleBox(parent, value, text)
-	local f = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
-	f.value = value
 
-	f.Text:SetText(text)
+local createColorSwatch do
+	local info, swatch = {}
+	function info.swatchFunc()
+		local r, g, b = _G.ColorPickerFrame:GetColorRGB()
+		local value = _G.AuroraConfig[swatch.value]
+		if swatch.class then
+			value = value[swatch.class]
+			value.colorStr = ("ff%02x%02x%02x"):format(r * 255, g * 255, b * 255)
+			_G.CUSTOM_CLASS_COLORS:NotifyChanges()
+		end
+		value.r, value.g, value.b = r, g, b
+		swatch:SetBackdropColor(r, g, b)
+	end
 
-	f:SetScript("OnClick", toggle)
+	function info.cancelFunc(restore)
+		local value = _G.AuroraConfig[swatch.value]
+		if swatch.class then
+			value = value[swatch.class]
+			value.colorStr = ("ff%02x%02x%02x"):format(restore.r * 255, restore.g * 255, restore.b * 255)
+		end
+		value.r, value.g, value.b = restore.r, restore.g, restore.b
+	end
 
-	_G.tinsert(checkboxes, f)
+	local function OnClick(self)
+		local value = _G.AuroraConfig[self.value]
+		if self.class then
+			value = value[self.class]
+		end
+		swatch = self
+		info.r, info.g, info.b = value.r, value.g, value.b
+		_G.OpenColorPicker(info)
+	end
 
-	return f
+	function createColorSwatch(parent, value, text)
+		local button = CreateFrame("Button", nil, parent)
+		button:SetScript("OnClick", OnClick)
+		button:SetBackdrop(C.backdrop)
+		button:SetBackdropBorderColor(0, 0, 0)
+		button:SetSize(16, 16)
+		button.value = value
+
+		if text then
+			button:SetNormalFontObject("GameFontHighlight")
+			button:SetText(text)
+			button:GetFontString():SetPoint("LEFT", button, "RIGHT", 10, 0)
+		end
+
+		return button
+	end
 end
+
 
 -- create frames/widgets
 
@@ -143,9 +198,8 @@ fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -20)
 local colourBox = createToggleBox(gui, "useCustomColour", "Custom highlight colour")
 colourBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -8)
 
-local colourButton = CreateFrame("Button", nil, gui)
+local colourButton = createColorSwatch(gui, "customColour")
 colourButton:SetPoint("LEFT", colourBox.Text, "RIGHT", 10, 0)
-colourButton:SetSize(16, 16)
 
 local useButtonGradientColourBox = createToggleBox(gui, "useButtonGradientColour", "Gradient button style")
 useButtonGradientColourBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -8)
@@ -175,6 +229,26 @@ local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 credits:SetText("Aurora by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com")
 credits:SetPoint("BOTTOM", 0, 40)
 
+
+local classColors = {}
+for i, class in ipairs(_G.CLASS_SORT_ORDER) do
+	local classColor = createColorSwatch(gui, "customClassColors", class)
+	classColor.class = class
+	classColors[i] = classColor
+
+	if i == 1 then
+		classColor:SetPoint("TOPLEFT", gui, "TOPRIGHT", -130, -105)
+	else
+		classColor:SetPoint("TOPLEFT", classColors[i - 1], "BOTTOMLEFT", 0, -10)
+	end
+end
+
+local resetButton = CreateFrame("Button", nil, gui, "UIPanelButtonTemplate")
+resetButton:SetPoint("RIGHT", classColors[1], "LEFT", -10, 0)
+resetButton:SetSize(50, 20)
+resetButton:SetText(_G.RESET)
+
+
 -- add event handlers
 
 gui.refresh = function()
@@ -190,6 +264,13 @@ gui.refresh = function()
 		colourButton:Disable()
 		colourButton:SetAlpha(.7)
 	end
+
+	for i, classColor in ipairs(classColors) do
+		local color = _G.AuroraConfig.customClassColors[classColor.class]
+		local class = _G.LOCALIZED_CLASS_NAMES_MALE[classColor.class]
+		classColor:SetFormattedText("|c%s%s|r", color.colorStr, class)
+		classColor:SetBackdropColor(color.r, color.g, color.b)
+	end
 end
 
 gui:RegisterEvent("ADDON_LOADED")
@@ -203,8 +284,8 @@ gui:SetScript("OnEvent", function(self, _, addon)
 	F.Reskin(splash.okayButton)
 	F.ReskinClose(splash.closeButton)
 
+	F.Reskin(resetButton)
 	F.Reskin(reloadButton)
-	F.CreateBD(colourButton)
 	F.ReskinSlider(alphaSlider)
 
 	for i = 1, #checkboxes do
@@ -260,32 +341,18 @@ colourBox:SetScript("OnClick", function(self)
 	end
 end)
 
-local function setColour()
-	local r, g, b = _G.ColorPickerFrame:GetColorRGB()
-	_G.AuroraConfig.customColour.r, _G.AuroraConfig.customColour.g, _G.AuroraConfig.customColour.b = r, g, b
-	colourButton:SetBackdropColor(r, g, b)
-end
-
-local function resetColour(restore)
-	_G.AuroraConfig.customColour.r, _G.AuroraConfig.customColour.g, _G.AuroraConfig.customColour.b = restore.r, restore.g, restore.b
-end
-
-colourButton:SetScript("OnClick", function()
-	local r, g, b = _G.AuroraConfig.customColour.r, _G.AuroraConfig.customColour.g, _G.AuroraConfig.customColour.b
-	_G.ColorPickerFrame:SetColorRGB(r, g, b)
-	_G.ColorPickerFrame.previousValues = {r = r, g = g, b = b}
-	_G.ColorPickerFrame.func = setColour
-	_G.ColorPickerFrame.cancelFunc = resetColour
-	_G.ColorPickerFrame:Hide()
-	_G.ColorPickerFrame:Show()
-end)
-
 alphaSlider:SetScript("OnValueChanged", function(_, value)
 	_G.AuroraConfig.alpha = value
 	updateFrames()
 end)
 
 reloadButton:SetScript("OnClick", _G.ReloadUI)
+
+resetButton:SetScript("OnClick", function(self)
+	private.classColorsReset(_G.AuroraConfig.customClassColors)
+	gui.refresh()
+end)
+
 
 -- easy slash command
 

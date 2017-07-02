@@ -62,6 +62,7 @@ C.defaults = {
 	["loot"] = true,
 	["useCustomColour"] = false,
 		["customColour"] = {r = 1, g = 1, b = 1},
+    ["customClassColors"] = false,
 	["tooltips"] = true,
 }
 
@@ -804,29 +805,51 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 					end
 				end
 			end
-
-			-- replace class colours
-            function private.classColorsInit( ... )
-                if customStyle.classcolors then
-                    for classToken, color in next, customStyle.classcolors do
-                        _G.CUSTOM_CLASS_COLORS[classToken] = {
-                            r = color.r,
-                            g = color.g,
-                            b = color.b,
-                            colorStr = ("ff%02x%02x%02x"):format(color.r * 255, color.g * 255, color.b * 255)
-                        }
-                    end
-                end
-
-                if AuroraConfig.useCustomColour then
-                    red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
-                else
-                    red, green, blue = _G.CUSTOM_CLASS_COLORS[class].r, _G.CUSTOM_CLASS_COLORS[class].g, _G.CUSTOM_CLASS_COLORS[class].b
-                end
-                -- for modules
-                C.r, C.g, C.b = red, green, blue
-            end
 		end
+
+        -- setup class colours
+        if not AuroraConfig.customClassColors then
+            local customClassColors = {}
+            private.classColorsReset(customClassColors)
+            AuroraConfig.customClassColors = customClassColors
+        end
+
+        function private.classColorsInit()
+            local classColors = customStyle.classcolors or AuroraConfig.customClassColors
+            for classToken, color in next, classColors do
+                _G.CUSTOM_CLASS_COLORS[classToken] = {
+                    r = color.r,
+                    g = color.g,
+                    b = color.b,
+                    colorStr = ("ff%02x%02x%02x"):format(color.r * 255, color.g * 255, color.b * 255)
+                }
+            end
+
+            if AuroraConfig.useCustomColour then
+                red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+            else
+                red, green, blue = _G.CUSTOM_CLASS_COLORS[class].r, _G.CUSTOM_CLASS_COLORS[class].g, _G.CUSTOM_CLASS_COLORS[class].b
+            end
+            -- for modules
+            C.r, C.g, C.b = red, green, blue
+        end
+        function private.classColorsHaveChanged()
+            for i = 1, #_G.CLASS_SORT_ORDER do
+                local classToken = _G.CLASS_SORT_ORDER[i]
+                local color = _G.CUSTOM_CLASS_COLORS[classToken]
+                local cache = AuroraConfig.customClassColors[classToken]
+
+                if cache.r ~= color.r or cache.g ~= color.g or cache.b ~= color.b then
+                    --print("Change found in", classToken)
+                    color.r = cache.r
+                    color.g = cache.g
+                    color.b = cache.b
+                    color.colorStr = cache.colorStr
+
+                    return true
+                end
+            end
+        end
 
 		useButtonGradientColour = AuroraConfig.useButtonGradientColour
 
