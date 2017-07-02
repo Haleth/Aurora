@@ -90,7 +90,7 @@ function private.FrameXML.LootFrame()
 
 					playerFrame.styled = true
 				end
-				local colour = C.classcolours[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
+				local colour = _G.CUSTOM_CLASS_COLORS[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
 				playerFrame.Name:SetTextColor(colour.r, colour.g, colour.b)
 				playerFrame.Highlight:SetVertexColor(colour.r, colour.g, colour.b, .2)
 			else

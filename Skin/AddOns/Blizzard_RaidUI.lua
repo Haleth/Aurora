@@ -1,12 +1,12 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_RaidUI()
     local function onEnter(self)
         if self.class then
-            self:SetBackdropBorderColor(C.classcolours[self.class].r, C.classcolours[self.class].g, C.classcolours[self.class].b)
+            self:SetBackdropBorderColor(_G.CUSTOM_CLASS_COLORS[self.class].r, _G.CUSTOM_CLASS_COLORS[self.class].g, _G.CUSTOM_CLASS_COLORS[self.class].b)
         else
             self:SetBackdropBorderColor(0.5, 0.5, 0.5)
         end

@@ -4,7 +4,7 @@ local _, private = ...
 local next = _G.next
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.ChatBubbles()
     if not _G.AuroraConfig.chatBubbles then return end
@@ -50,7 +50,7 @@ function private.FrameXML.ChatBubbles()
             local color
             if guid ~= nil and guid ~= "" then
                 local _, class = _G.GetPlayerInfoByGUID(guid)
-                color = C.classcolours[class]
+                color = _G.CUSTOM_CLASS_COLORS[class]
             else
                 color = defaultColor
             end

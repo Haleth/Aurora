@@ -21,21 +21,6 @@ local F, C = _G.unpack(private.Aurora)
 
 -- [[ Constants and settings ]]
 
-C.classcolours = {
-	["HUNTER"] = { r = 0.58, g = 0.86, b = 0.49 },
-	["WARLOCK"] = { r = 0.6, g = 0.47, b = 0.85 },
-	["PALADIN"] = { r = 1, g = 0.22, b = 0.52 },
-	["PRIEST"] = { r = 0.8, g = 0.87, b = .9 },
-	["MAGE"] = { r = 0, g = 0.76, b = 1 },
-	["MONK"] = {r = 0.0, g = 1.00 , b = 0.59},
-	["ROGUE"] = { r = 1, g = 0.91, b = 0.2 },
-	["DRUID"] = { r = 1, g = 0.49, b = 0.04 },
-	["SHAMAN"] = { r = 0, g = 0.6, b = 0.6 };
-	["WARRIOR"] = { r = 0.9, g = 0.65, b = 0.45 },
-	["DEATHKNIGHT"] = { r = 0.77, g = 0.12 , b = 0.23 },
-	["DEMONHUNTER"] = { r = 0.64, g = 0.19, b = 0.79 },
-}
-
 C.classicons = { -- adjusted for borderless icons
 	["WARRIOR"]     = {0.01953125, 0.234375, 0.01953125, 0.234375},
 	["MAGE"]        = {0.26953125, 0.48046875, 0.01953125, 0.234375},
@@ -91,16 +76,10 @@ C.frames = {}
 -- [[ Cached variables ]]
 
 local useButtonGradientColour
+local _, class = _G.UnitClass("player")
+local red, green, blue
 
 -- [[ Functions ]]
-
-local _, class = _G.UnitClass("player")
-
-if _G.CUSTOM_CLASS_COLORS then
-	C.classcolours = _G.CUSTOM_CLASS_COLORS
-end
-
-local red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
 
 F.dummy = function() end
 
@@ -827,9 +806,26 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 			end
 
 			-- replace class colours
-			if customStyle.classcolors then
-				C.classcolours = customStyle.classcolors
-			end
+            function private.classColorsInit( ... )
+                if customStyle.classcolors then
+                    for classToken, color in next, customStyle.classcolors do
+                        _G.CUSTOM_CLASS_COLORS[classToken] = {
+                            r = color.r,
+                            g = color.g,
+                            b = color.b,
+                            colorStr = ("ff%02x%02x%02x"):format(color.r * 255, color.g * 255, color.b * 255)
+                        }
+                    end
+                end
+
+                if AuroraConfig.useCustomColour then
+                    red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+                else
+                    red, green, blue = _G.CUSTOM_CLASS_COLORS[class].r, _G.CUSTOM_CLASS_COLORS[class].g, _G.CUSTOM_CLASS_COLORS[class].b
+                end
+                -- for modules
+                C.r, C.g, C.b = red, green, blue
+            end
 		end
 
 		useButtonGradientColour = AuroraConfig.useButtonGradientColour
@@ -839,14 +835,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 		else
 			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonSolidColour)
 		end
-
-		if AuroraConfig.useCustomColour then
-			red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
-		else
-			red, green, blue = C.classcolours[class].r, C.classcolours[class].g, C.classcolours[class].b
-		end
-		-- for modules
-		C.r, C.g, C.b = red, green, blue
 
 		-- [[ Splash screen for first time users ]]
 

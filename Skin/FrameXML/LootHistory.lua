@@ -82,7 +82,7 @@ function private.FrameXML.LootHistory()
 		if isDone and not expanded and winnerIdx then
 			local name, class = C_LootHistory.GetPlayerInfo(frame.itemIdx, winnerIdx)
 			if name then
-				local colour = C.classcolours[class]
+				local colour = _G.CUSTOM_CLASS_COLORS[class]
 				frame.WinnerName:SetVertexColor(colour.r, colour.g, colour.b)
 			end
 		end
@@ -104,7 +104,7 @@ function private.FrameXML.LootHistory()
 			local name, class, _, _, isWinner = C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
 
 			if name then
-				local colour = C.classcolours[class]
+				local colour = _G.CUSTOM_CLASS_COLORS[class]
 				playerFrame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
 
 				if isWinner then
@@ -127,7 +127,7 @@ function private.FrameXML.LootHistory()
 		info = _G.UIDropDownMenu_CreateInfo();
 		info.notCheckable = 1;
 		local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx);
-		local classColor = C.classcolours[class];
+		local classColor = _G.CUSTOM_CLASS_COLORS[class];
 		local colorCode = ("|cFF%02x%02x%02x"):format(classColor.r*255,  classColor.g*255,  classColor.b*255);
 		info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorCode..name.."|r");
 		info.func = _G.LootHistoryDropDown_OnClick;

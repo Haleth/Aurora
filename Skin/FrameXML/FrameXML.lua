@@ -225,10 +225,7 @@ private.SharedXML = {}
 
 --[==[ Some boilerplate stuff for new files
 -- [[ Lua Globals ]]
-local next, tinsert = _G.next, _G.tinsert
-
--- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local next = _G.next
 
 function private.FrameXML.Foo()
 end
