@@ -9,6 +9,7 @@ local CreateFrame = _G.CreateFrame
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
+local Aurora = private.Aurora
 
 -- for custom APIs (see docs online)
 local LATEST_API_VERSION = "7.0"
@@ -17,7 +18,7 @@ local LATEST_API_VERSION = "7.0"
 local AURORA_LOADED = false
 local AuroraConfig
 
-local F, C = _G.unpack(private.Aurora)
+local F, C = _G.unpack(Aurora)
 
 -- [[ Constants and settings ]]
 
@@ -901,9 +902,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Backdrop frames ]]
 
-		F.SetBD(_G.RaidParentFrame)
-
-		local FrameBDs = {"StackSplitFrame", "ReadyCheckFrame", "GuildInviteFrame"}
+		local FrameBDs = {"ReadyCheckFrame", "GuildInviteFrame"}
 		for i = 1, #FrameBDs do
 			local FrameBD = _G[FrameBDs[i]]
 			F.CreateBD(FrameBD)
@@ -1532,7 +1531,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		_G.StackSplitFrame:GetRegions():Hide()
 		_G.ReadyCheckPortrait:SetAlpha(0)
 		select(2, _G.ReadyCheckListenerFrame:GetRegions()):Hide()
 		_G.GhostFrameLeft:Hide()
@@ -1576,7 +1574,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"StackSplitOkayButton", "StackSplitCancelButton", "GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame"}
+		local buttons = {"GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then

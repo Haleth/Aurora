@@ -48,6 +48,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="ScrollOfResurrection.lua"/>
     <Script file="SpellBookFrame.lua"/>
     <Script file="SplashFrame.lua"/>
+    <Script file="StackSplitFrame.lua"/>
     <Script file="StaticPopup.lua"/>
     <Script file="TabardFrame.lua"/>
     <Script file="TaxiFrame.lua"/>

@@ -4,7 +4,7 @@ local ADDON_NAME, private = ...
 local select, tostring = _G.select, _G.tostring
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.is730 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) >= 3 or _G.tonumber(minor) >= 0)
+private.is730 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) >= 3 and _G.tonumber(minor) >= 0)
 
 local debug do
     if _G.LibStub then
