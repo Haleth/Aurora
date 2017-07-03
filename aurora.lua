@@ -902,7 +902,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Backdrop frames ]]
 
-		local FrameBDs = {"ReadyCheckFrame", "GuildInviteFrame"}
+		local FrameBDs = {"GuildInviteFrame"}
 		for i = 1, #FrameBDs do
 			local FrameBD = _G[FrameBDs[i]]
 			F.CreateBD(FrameBD)
@@ -1531,8 +1531,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Hide regions ]]
 
-		_G.ReadyCheckPortrait:SetAlpha(0)
-		select(2, _G.ReadyCheckListenerFrame:GetRegions()):Hide()
 		_G.GhostFrameLeft:Hide()
 		_G.GhostFrameRight:Hide()
 		_G.GhostFrameMiddle:Hide()
@@ -1543,12 +1541,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 		for i = 1, 10 do
 			select(i, _G.GuildInviteFrame:GetRegions()):Hide()
 		end
-
-		_G.ReadyCheckFrame:HookScript("OnShow", function(readyCheck)
-			if _G.UnitIsUnit("player", readyCheck.initiator) then
-				readyCheck:Hide()
-			end
-		end)
 
 		-- [[ Text colour functions ]]
 		_G.GameFontBlackMedium:SetTextColor(1, 1, 1)
@@ -1574,7 +1566,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "ReadyCheckFrameYesButton", "ReadyCheckFrameNoButton", "GhostFrame"}
+		local buttons = {"GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "GhostFrame"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then
