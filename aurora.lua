@@ -784,6 +784,13 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 
+        -- init class colors
+        if not AuroraConfig.customClassColors then
+            local customClassColors = {}
+            private.classColorsReset(customClassColors)
+            AuroraConfig.customClassColors = customClassColors
+        end
+
 		-- [[ Custom style support ]]
 		local customStyle = _G.AURORA_CUSTOM_STYLE
 		if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
@@ -806,18 +813,23 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 					end
 				end
 			end
-		end
 
-        -- setup class colours
-        if not AuroraConfig.customClassColors then
-            local customClassColors = {}
-            private.classColorsReset(customClassColors)
-            AuroraConfig.customClassColors = customClassColors
+            -- replace classcolors
+            if customStyle.classcolors then
+                for classToken, color in next, customStyle.classcolors do
+                    AuroraConfig.customClassColors[classToken] = {
+                        r = color.r,
+                        g = color.g,
+                        b = color.b,
+                        colorStr = ("ff%02x%02x%02x"):format(color.r * 255, color.g * 255, color.b * 255)
+                    }
+                end
+            end
         end
 
+        -- setup class colours
         function private.classColorsInit()
-            local classColors = customStyle.classcolors or AuroraConfig.customClassColors
-            for classToken, color in next, classColors do
+            for classToken, color in next, AuroraConfig.customClassColors do
                 _G.CUSTOM_CLASS_COLORS[classToken] = {
                     r = color.r,
                     g = color.g,
