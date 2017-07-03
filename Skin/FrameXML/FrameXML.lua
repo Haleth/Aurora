@@ -224,11 +224,13 @@ private.FrameXML = FrameXML
 private.SharedXML = {}
 
 --[==[ Some boilerplate stuff for new files
--- Lua Globals --
+--[[ Lua Globals ]]
 local next = _G.next
 
+-- [[ Core ]]
 local Aurora = private.Aurora
-local F = Aurora[1]
+local F, C = _G.unpack(Aurora)
+local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
 
 function private.FrameXML.Foo()
     --[[

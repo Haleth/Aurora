@@ -900,14 +900,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- [[ Backdrop frames ]]
-
-		local FrameBDs = {"GuildInviteFrame"}
-		for i = 1, #FrameBDs do
-			local FrameBD = _G[FrameBDs[i]]
-			F.CreateBD(FrameBD)
-		end
-
 		--[[ Dropdown lists ]]
 
 		hooksecurefunc("UIDropDownMenu_CreateFrames", function(level, index)
@@ -1538,10 +1530,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 			select(i, _G.GhostFrame:GetRegions()):Hide()
 		end
 
-		for i = 1, 10 do
-			select(i, _G.GuildInviteFrame:GetRegions()):Hide()
-		end
-
 		-- [[ Text colour functions ]]
 		_G.GameFontBlackMedium:SetTextColor(1, 1, 1)
 		_G.QuestFont:SetTextColor(1, 1, 1)
@@ -1566,7 +1554,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
 		-- [[ Buttons ]]
 
-		local buttons = {"GuildInviteFrameJoinButton", "GuildInviteFrameDeclineButton", "GhostFrame"}
+		local buttons = {"GhostFrame"}
 		for i = 1, #buttons do
 		local reskinbutton = _G[buttons[i]]
 			if reskinbutton then

@@ -1,7 +1,7 @@
 local _, private = ...
 
-local Aurora = private.Aurora
-local F = Aurora[1]
+-- [[ Core ]]
+local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.StackSplitFrame()
     F.CreateBD(_G.StackSplitFrame)
