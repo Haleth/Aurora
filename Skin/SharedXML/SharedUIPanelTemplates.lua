@@ -5,7 +5,7 @@ local next, tinsert = _G.next, _G.tinsert
 
 -- [[ Core ]]
 local F, C = _G.unpack(private.Aurora)
-local Skin = private.Aurora.Skin
+local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
 
 function private.SharedXML.SharedUIPanelTemplates()
     local r, g, b = C.r, C.g, C.b
@@ -64,4 +64,17 @@ function private.SharedXML.SharedUIPanelTemplates()
             button:SetScript("OnLeave", clearArrow)
         end
     end
+
+
+    function Hook.PanelTemplates_DeselectTab(tab)
+        local text = tab.Text or _G[tab:GetName().."Text"]
+        text:SetPoint("CENTER", tab, "CENTER")
+    end
+    _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
+
+    function Hook.PanelTemplates_SelectTab(tab)
+        local text = tab.Text or _G[tab:GetName().."Text"]
+        text:SetPoint("CENTER", tab, "CENTER")
+    end
+    _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)
 end

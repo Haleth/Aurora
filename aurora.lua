@@ -912,18 +912,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- Tab text position
-
-		hooksecurefunc("PanelTemplates_DeselectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]
-			text:SetPoint("CENTER", tab, "CENTER")
-		end)
-
-		hooksecurefunc("PanelTemplates_SelectTab", function(tab)
-			local text = tab.Text or _G[tab:GetName().."Text"]
-			text:SetPoint("CENTER", tab, "CENTER")
-		end)
-
 		-- [[ Custom skins ]]
 
 		-- Pet stuff
