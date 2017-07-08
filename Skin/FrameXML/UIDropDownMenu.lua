@@ -22,7 +22,7 @@ function private.FrameXML.UIDropDownMenu()
         F.CreateBD(checkBox)
         menuButton._auroraCheckBox = checkBox
 
-        local check = checkBox:CreateTexture("ARTWORK")
+        local check = checkBox:CreateTexture(nil, "ARTWORK")
         check:SetDesaturated(true)
         check:SetVertexColor(C.r, C.g, C.b)
         check:SetPoint("CENTER")

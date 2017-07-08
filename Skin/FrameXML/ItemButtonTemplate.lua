@@ -54,7 +54,7 @@ function private.FrameXML.ItemButtonTemplate()
                 relic:SetAllPoints()
 
                 for i = 1, 4 do
-                    local tex = relic:CreateTexture("OVERLAY")
+                    local tex = relic:CreateTexture(nil, "OVERLAY")
                     tex:SetSize(size, size)
 
                     local vertexInfo = vertexOffsets[i]
