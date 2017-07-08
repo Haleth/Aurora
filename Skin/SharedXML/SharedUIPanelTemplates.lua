@@ -8,7 +8,18 @@ local Aurora = private.Aurora
 local F = _G.unpack(Aurora)
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
-function private.SharedXML.SharedUIPanelTemplates()
+do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
+    function Hook.PanelTemplates_DeselectTab(tab)
+        local text = tab.Text or _G[tab:GetName().."Text"]
+        text:SetPoint("CENTER", tab, "CENTER")
+    end
+    function Hook.PanelTemplates_SelectTab(tab)
+        local text = tab.Text or _G[tab:GetName().."Text"]
+        text:SetPoint("CENTER", tab, "CENTER")
+    end
+end
+
+do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.UIPanelCloseButton(button)
         local size = private.is730 and 16.5 or 17
         button:SetSize(size, size)
@@ -43,7 +54,6 @@ function private.SharedXML.SharedUIPanelTemplates()
 
         Aurora.SetHighlight(button)
     end
-
     function Skin.PortraitFrameTemplate(frame, noCloseButton)
         local name = frame:GetName()
 
@@ -73,7 +83,6 @@ function private.SharedXML.SharedUIPanelTemplates()
             frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
         end
     end
-
     function Skin.InsetFrameTemplate(frame)
         frame.Bg:Hide()
 
@@ -88,7 +97,6 @@ function private.SharedXML.SharedUIPanelTemplates()
         frame.InsetBorderLeft:Hide()
         frame.InsetBorderRight:Hide()
     end
-
     function Skin.ButtonFrameTemplate(frame)
         Skin.PortraitFrameTemplate(frame)
         local name = frame:GetName()
@@ -98,7 +106,6 @@ function private.SharedXML.SharedUIPanelTemplates()
         _G[name.."ButtonBottomBorder"]:SetTexture("")
         Skin.InsetFrameTemplate(frame.Inset)
     end
-
     function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
             local button = frame[name]
@@ -138,17 +145,9 @@ function private.SharedXML.SharedUIPanelTemplates()
             Aurora.SetHighlight(button)
         end
     end
+end
 
-
-    function Hook.PanelTemplates_DeselectTab(tab)
-        local text = tab.Text or _G[tab:GetName().."Text"]
-        text:SetPoint("CENTER", tab, "CENTER")
-    end
+function private.SharedXML.SharedUIPanelTemplates()
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
-
-    function Hook.PanelTemplates_SelectTab(tab)
-        local text = tab.Text or _G[tab:GetName().."Text"]
-        text:SetPoint("CENTER", tab, "CENTER")
-    end
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)
 end

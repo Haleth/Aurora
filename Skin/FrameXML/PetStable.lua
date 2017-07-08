@@ -4,29 +4,33 @@ local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
-function Hook.PetStable_SetSelectedPetInfo(icon, name, level, family, talent)
-    if family then
-        _G.PetStableTypeText:SetText(family)
-    else
-        _G.PetStableTypeText:SetText("")
+do --[[ FrameXML\PetStable.lua ]]
+    function Hook.PetStable_SetSelectedPetInfo(icon, name, level, family, talent)
+        if family then
+            _G.PetStableTypeText:SetText(family)
+        else
+            _G.PetStableTypeText:SetText("")
+        end
     end
 end
 
-function Skin.PetStableSlotTemplate(slot)
-    local slotName = slot:GetName()
+do --[[ FrameXML\PetStable.xml ]]
+    function Skin.PetStableSlotTemplate(slot)
+        local slotName = slot:GetName()
 
-    _G[slotName.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
-    slot.Background:SetColorTexture(0, 0, 0, 1)
-    slot.Background:SetPoint("TOPLEFT", slot, -1, 1)
-    slot.Background:SetPoint("BOTTOMRIGHT", slot, 1, -1)
-    slot.Checked:SetTexture(C.media.checked)
-end
-function Skin.PetStableActiveSlotTemplate(slot)
-    Skin.PetStableSlotTemplate(slot)
+        _G[slotName.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
+        slot.Background:SetColorTexture(0, 0, 0, 1)
+        slot.Background:SetPoint("TOPLEFT", slot, -1, 1)
+        slot.Background:SetPoint("BOTTOMRIGHT", slot, 1, -1)
+        slot.Checked:SetTexture(C.media.checked)
+    end
+    function Skin.PetStableActiveSlotTemplate(slot)
+        Skin.PetStableSlotTemplate(slot)
 
-    slot.Border:Hide()
-    slot.PetName:SetPoint("BOTTOMLEFT", slot, "TOPLEFT", -16, 5)
-    slot.PetName:SetPoint("BOTTOMRIGHT", slot, "TOPRIGHT", 16, 5)
+        slot.Border:Hide()
+        slot.PetName:SetPoint("BOTTOMLEFT", slot, "TOPLEFT", -16, 5)
+        slot.PetName:SetPoint("BOTTOMRIGHT", slot, "TOPRIGHT", 16, 5)
+    end
 end
 
 function private.FrameXML.PetStable()

@@ -5,7 +5,7 @@ local Aurora = private.Aurora
 local F = _G.unpack(Aurora)
 local Skin = Aurora.Skin
 
-function private.FrameXML.UIPanelTemplates()
+do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.UIPanelSquareButton(button)
         button:SetSize(19.5, 19.5)
         button:SetNormalTexture("")
@@ -28,4 +28,7 @@ function private.FrameXML.UIPanelTemplates()
         frame.RightBorder:Hide()
         F.CreateBD(frame)
     end
+end
+
+function private.FrameXML.UIPanelTemplates()
 end

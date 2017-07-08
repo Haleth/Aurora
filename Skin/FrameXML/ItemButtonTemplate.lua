@@ -4,42 +4,7 @@ local _, private = ...
 local F = _G.unpack(private.Aurora)
 local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
 
-function private.FrameXML.ItemButtonTemplate()
-    function Skin.ItemButtonTemplate(itemButton)
-        itemButton:SetNormalTexture("")
-        itemButton:SetHighlightTexture("")
-        itemButton:SetPushedTexture("")
-        itemButton._auroraBG = F.ReskinIcon(itemButton.icon)
-    end
-    function Skin.LargeItemButtonTemplate(itemButton)
-        local icon = itemButton.Icon
-        itemButton._auroraBG = F.ReskinIcon(icon)
-
-        local nameFrame = itemButton.NameFrame
-        nameFrame:SetAlpha(0)
-
-        local bg = _G.CreateFrame("Frame", nil, itemButton)
-        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
-        bg:SetPoint("BOTTOMRIGHT", -3, 1)
-        F.CreateBD(bg, .2)
-        itemButton._auroraNameBG = bg
-    end
-    function Skin.SmallItemButtonTemplate(itemButton)
-        local icon = itemButton.Icon
-        icon:SetSize(29, 29)
-        itemButton._auroraBG = F.ReskinIcon(icon)
-
-        local nameFrame = itemButton.NameFrame
-        nameFrame:SetAlpha(0)
-
-        local bg = _G.CreateFrame("Frame", nil, itemButton)
-        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
-        bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
-        F.CreateBD(bg, .2)
-        itemButton._auroraNameBG = bg
-    end
-
-
+do --[[ FrameXML\ItemButtonTemplate.lua ]]
     local size = 6
     local vertexOffsets = {
         {"TOPLEFT", 4, -size},
@@ -95,5 +60,44 @@ function private.FrameXML.ItemButtonTemplate()
             end
         end
     end
+end
+
+do --[[ FrameXML\ItemButtonTemplate.xml ]]
+    function Skin.ItemButtonTemplate(itemButton)
+        itemButton:SetNormalTexture("")
+        itemButton:SetHighlightTexture("")
+        itemButton:SetPushedTexture("")
+        itemButton._auroraBG = F.ReskinIcon(itemButton.icon)
+    end
+    function Skin.LargeItemButtonTemplate(itemButton)
+        local icon = itemButton.Icon
+        itemButton._auroraBG = F.ReskinIcon(icon)
+
+        local nameFrame = itemButton.NameFrame
+        nameFrame:SetAlpha(0)
+
+        local bg = _G.CreateFrame("Frame", nil, itemButton)
+        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
+        bg:SetPoint("BOTTOMRIGHT", -3, 1)
+        F.CreateBD(bg, .2)
+        itemButton._auroraNameBG = bg
+    end
+    function Skin.SmallItemButtonTemplate(itemButton)
+        local icon = itemButton.Icon
+        icon:SetSize(29, 29)
+        itemButton._auroraBG = F.ReskinIcon(icon)
+
+        local nameFrame = itemButton.NameFrame
+        nameFrame:SetAlpha(0)
+
+        local bg = _G.CreateFrame("Frame", nil, itemButton)
+        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
+        bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
+        F.CreateBD(bg, .2)
+        itemButton._auroraNameBG = bg
+    end
+end
+
+function private.FrameXML.ItemButtonTemplate()
     _G.hooksecurefunc("SetItemButtonQuality", Hook.SetItemButtonQuality)
 end
