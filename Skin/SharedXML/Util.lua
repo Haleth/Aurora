@@ -92,4 +92,10 @@ function private.SharedXML.Util()
     else
         private.classColorsReset()
     end
+
+    if not private.highlightColor.r then
+        local _, class = _G.UnitClass("player")
+        local color = _G.CUSTOM_CLASS_COLORS[class]
+        private.highlightColor:SetRGB(color.r, color.g, color.b)
+    end
 end

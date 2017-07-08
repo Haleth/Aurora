@@ -6,10 +6,26 @@ local F = _G.unpack(Aurora)
 local Skin = Aurora.Skin
 
 function private.FrameXML.UIPanelTemplates()
+    function Skin.UIPanelSquareButton(button)
+        button:SetSize(19.5, 19.5)
+        button:SetNormalTexture("")
+        button:SetHighlightTexture("")
+        button:SetPushedTexture("")
+        F.CreateBD(button, 0)
+        F.CreateGradient(button)
+    end
     function Skin.TranslucentFrameTemplate(frame)
-        for i = 1, 9 do
-            _G.select(i, frame:GetRegions()):Hide()
-        end
+        frame.Bg:Hide()
+
+        frame.TopLeftCorner:Hide()
+        frame.TopRightCorner:Hide()
+        frame.BottomLeftCorner:Hide()
+        frame.BottomRightCorner:Hide()
+
+        frame.TopBorder:Hide()
+        frame.BottomBorder:Hide()
+        frame.LeftBorder:Hide()
+        frame.RightBorder:Hide()
         F.CreateBD(frame)
     end
 end
