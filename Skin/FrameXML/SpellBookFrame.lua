@@ -14,6 +14,8 @@ function private.FrameXML.SpellBookFrame()
 
 	local SpellBookFrame = _G.SpellBookFrame
 	F.ReskinPortraitFrame(SpellBookFrame, true)
+	_G.SetUIPanelAttribute(SpellBookFrame, "width", 490)
+	_G.SetUIPanelAttribute(SpellBookFrame, "height", 492)
 	SpellBookFrame:SetSize(465, 472)
 	_G.SpellBookPage1:Hide()
 	_G.SpellBookPage2:Hide()
