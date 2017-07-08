@@ -34,7 +34,7 @@ function private.SharedXML.SharedUIPanelTemplates()
 
             button.pixels = {}
 
-            local lineOfs = 2.5
+            local lineOfs = 4
             local line = button:CreateLine()
             line:SetColorTexture(1, 1, 1)
             line:SetThickness(0.5)

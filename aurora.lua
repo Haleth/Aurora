@@ -270,7 +270,8 @@ local function clearClose(f)
 end
 
 F.ReskinClose = function(f, a1, p, a2, x, y)
-	f:SetSize(17, 17)
+    local size = private.is730 and 16.5 or 17
+	f:SetSize(size, size)
 
 	if not a1 then
 		f:SetPoint("TOPRIGHT", -6, -6)
@@ -296,11 +297,11 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 
 	f.pixels = {}
 
-	local lineOfs = 2.5
+	local lineOfs = private.is730 and 4 or 2.5
 	for i = 1, 2 do
 		local line = f:CreateLine()
 		line:SetColorTexture(1, 1, 1)
-		line:SetThickness(0.5)
+		line:SetThickness(private.is730 and 0.7 or 0.5)
 		if i == 1 then
 			line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
 			line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
