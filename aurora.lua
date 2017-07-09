@@ -913,15 +913,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 	-- all this should be moved out of the main file when I have time
 	if addon == "Aurora" then
 
-		-- Ghost frame
-
-		_G.GhostFrameContentsFrameIcon:SetTexCoord(.08, .92, .08, .92)
-
-		local GhostBD = CreateFrame("Frame", nil, _G.GhostFrameContentsFrame)
-		GhostBD:SetPoint("TOPLEFT", _G.GhostFrameContentsFrameIcon, -1, 1)
-		GhostBD:SetPoint("BOTTOMRIGHT", _G.GhostFrameContentsFrameIcon, 1, -1)
-		F.CreateBD(GhostBD, 0)
-
 		-- Currency frame
 
 		_G.TokenFramePopupCorner:Hide()
@@ -1298,15 +1289,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 		F.Reskin(PVPReadyDialog.leaveButton)
 		F.ReskinClose(_G.PVPReadyDialogCloseButton)
 
-		-- [[ Hide regions ]]
-
-		_G.GhostFrameLeft:Hide()
-		_G.GhostFrameRight:Hide()
-		_G.GhostFrameMiddle:Hide()
-		for i = 3, 6 do
-			select(i, _G.GhostFrame:GetRegions()):Hide()
-		end
-
 		-- [[ Text colour functions ]]
 		_G.GameFontBlackMedium:SetTextColor(1, 1, 1)
 		_G.QuestFont:SetTextColor(1, 1, 1)
@@ -1330,16 +1312,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 		_G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 
 		-- [[ Buttons ]]
-
-		local buttons = {"GhostFrame"}
-		for i = 1, #buttons do
-		local reskinbutton = _G[buttons[i]]
-			if reskinbutton then
-				F.Reskin(reskinbutton)
-			else
-				_G.print("Aurora: "..buttons[i].." was not found.")
-			end
-		end
 
 		F.ReskinClose(_G.ItemRefCloseButton)
 	end

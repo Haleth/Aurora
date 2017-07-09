@@ -14,6 +14,17 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         F.CreateBD(button, 0)
         F.CreateGradient(button)
     end
+    function Skin.UIPanelLargeSilverButton(button)
+        local buttonName = button:GetName()
+        _G[buttonName.."Left"]:Hide()
+        _G[buttonName.."Right"]:Hide()
+        _G[buttonName.."Middle"]:Hide()
+        for i = 3, 6 do
+            _G.select(i, button:GetRegions()):Hide()
+        end
+        Aurora.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Aurora.SetHighlight(button, "backdrop")
+    end
     function Skin.TranslucentFrameTemplate(frame)
         frame.Bg:Hide()
 

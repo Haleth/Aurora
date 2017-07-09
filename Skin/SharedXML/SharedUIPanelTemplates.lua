@@ -52,7 +52,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             _G.tinsert(button._auroraHighlight, line)
         end
 
-        Aurora.SetHighlight(button)
+        Aurora.SetHighlight(button, "color")
     end
     function Skin.PortraitFrameTemplate(frame, noCloseButton)
         local name = frame:GetName()
@@ -142,7 +142,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
                 vline:SetPoint("LEFT", 4, -1)
             end
 
-            Aurora.SetHighlight(button)
+            Aurora.SetHighlight(button, "color")
         end
     end
 end
