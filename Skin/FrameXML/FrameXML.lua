@@ -230,7 +230,7 @@ local next = _G.next
 -- [[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 function private.FrameXML.Foo()
     --[[

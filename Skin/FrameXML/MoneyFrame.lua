@@ -2,7 +2,6 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F = _G.unpack(Aurora)
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\MoneyFrame.lua ]]
@@ -33,7 +32,7 @@ do --[[ FrameXML\MoneyFrame.xml ]]
         local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
         moneyBG:SetSize(moneyFrame.maxDisplayWidth, 18)
         if addBackdrop then
-            F.CreateBD(moneyBG, .3)
+            Aurora.Base.SetBackdrop(moneyBG)
             moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
         end
 

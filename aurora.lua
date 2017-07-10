@@ -22,6 +22,7 @@ local F, C = _G.unpack(Aurora)
 
 -- [[ Constants and settings ]]
 
+C.frames = {}
 C.classicons = { -- adjusted for borderless icons
 	["WARRIOR"]     = {0.01953125, 0.234375, 0.01953125, 0.234375},
 	["MAGE"]        = {0.26953125, 0.48046875, 0.01953125, 0.234375},
@@ -67,14 +68,6 @@ C.defaults = {
 	["tooltips"] = true,
 }
 
-C.backdrop = {
-	bgFile = C.media.backdrop,
-	edgeFile = C.media.backdrop,
-	edgeSize = 1,
-}
-
-C.frames = {}
-
 -- [[ Cached variables ]]
 
 local useButtonGradientColour
@@ -84,13 +77,6 @@ local red, green, blue
 -- [[ Functions ]]
 
 F.dummy = function() end
-
-F.CreateBD = function(f, a)
-	f:SetBackdrop(C.backdrop)
-	f:SetBackdropColor(0, 0, 0, a or AuroraConfig.alpha)
-	f:SetBackdropBorderColor(0, 0, 0)
-	if not a then _G.tinsert(C.frames, f) end
-end
 
 F.CreateBG = function(frame)
 	local f = frame
@@ -253,67 +239,6 @@ F.ReskinDropDown = function(f, borderless)
 		button:SetPoint("TOPRIGHT", right, -19, -21)
 		bg:SetPoint("TOPLEFT", 20, -4)
 	end
-end
-
-local function colourClose(f)
-	if f:IsEnabled() then
-		for _, pixel in next, f.pixels do
-			pixel:SetColorTexture(red, green, blue)
-		end
-	end
-end
-
-local function clearClose(f)
-	for _, pixel in next, f.pixels do
-		pixel:SetColorTexture(1, 1, 1)
-	end
-end
-
-F.ReskinClose = function(f, a1, p, a2, x, y)
-    local size = private.is730 and 16.5 or 17
-	f:SetSize(size, size)
-
-	if not a1 then
-		f:SetPoint("TOPRIGHT", -6, -6)
-	else
-		f:ClearAllPoints()
-		f:SetPoint(a1, p, a2, x, y)
-	end
-
-	f:SetNormalTexture("")
-	f:SetHighlightTexture("")
-	f:SetPushedTexture("")
-	f:SetDisabledTexture("")
-
-	F.CreateBD(f, 0)
-
-	F.CreateGradient(f)
-
-	f:SetDisabledTexture(C.media.backdrop)
-	local dis = f:GetDisabledTexture()
-	dis:SetVertexColor(0, 0, 0, .4)
-	dis:SetDrawLayer("OVERLAY")
-	dis:SetAllPoints()
-
-	f.pixels = {}
-
-	local lineOfs = private.is730 and 4 or 2.5
-	for i = 1, 2 do
-		local line = f:CreateLine()
-		line:SetColorTexture(1, 1, 1)
-		line:SetThickness(private.is730 and 0.7 or 0.5)
-		if i == 1 then
-			line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
-			line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
-		else
-			line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-			line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-		end
-		_G.tinsert(f.pixels, line)
-	end
-
-	f:HookScript("OnEnter", colourClose)
-	f:HookScript("OnLeave", clearClose)
 end
 
 F.ReskinInput = function(f, height, width)
@@ -840,11 +765,12 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             end
 
             if AuroraConfig.useCustomColour then
-                red, green, blue = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+                private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
             else
-                red, green, blue = _G.CUSTOM_CLASS_COLORS[class].r, _G.CUSTOM_CLASS_COLORS[class].g, _G.CUSTOM_CLASS_COLORS[class].b
+                private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class].r, _G.CUSTOM_CLASS_COLORS[class].g, _G.CUSTOM_CLASS_COLORS[class].b)
             end
-            -- for modules
+
+            red, green, blue = private.highlightColor:GetRGB()
             C.r, C.g, C.b = red, green, blue
         end
         function private.classColorsHaveChanged()
@@ -868,16 +794,23 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 		useButtonGradientColour = AuroraConfig.useButtonGradientColour
 
 		if useButtonGradientColour then
-			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonGradientColour)
+            private.buttonColor:SetRGBA(_G.unpack(AuroraConfig.buttonGradientColour))
 		else
-			buttonR, buttonG, buttonB, buttonA = _G.unpack(AuroraConfig.buttonSolidColour)
+            private.buttonColor:SetRGBA(_G.unpack(AuroraConfig.buttonSolidColour))
 		end
+        buttonR, buttonG, buttonB, buttonA = private.buttonColor:GetRGBA()
+        private.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
 
 		-- [[ Splash screen for first time users ]]
 
 		if not AuroraConfig.acknowledgedSplashScreen then
 			_G.AuroraSplashScreen:Show()
 		end
+
+        function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
+            if not a then _G.tinsert(C.frames, frame) end
+        end
+
 
 		-- [[ Load FrameXML ]]
 		for i = 1, #private.FrameXML do
