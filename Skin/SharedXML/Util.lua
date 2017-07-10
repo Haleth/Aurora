@@ -70,7 +70,7 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
     function private.classColorsReset(colors)
         colors = colors or _G.CUSTOM_CLASS_COLORS
         for class, color in next, _G.RAID_CLASS_COLORS do
-            if colors[class].SetRGB then
+            if colors[class] and colors[class].SetRGB then
                 colors[class]:SetRGB(color.r, color.g, color.b)
             else
                 colors[class] = _G.setmetatable({}, {
