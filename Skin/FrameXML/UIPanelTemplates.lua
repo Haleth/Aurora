@@ -22,8 +22,8 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         for i = 3, 6 do
             _G.select(i, button:GetRegions()):Hide()
         end
-        Aurora.SetBackdrop(button, private.buttonColor:GetRGBA())
-        Aurora.SetHighlight(button, "backdrop")
+        Aurora.Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Aurora.Base.SetHighlight(button, "backdrop")
     end
     function Skin.TranslucentFrameTemplate(frame)
         frame.Bg:Hide()

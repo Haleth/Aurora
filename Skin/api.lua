@@ -26,11 +26,11 @@ local backdrop = {
 }
 private.backdrop = backdrop
 
-do -- Aurora.SetHighlight
+do -- Aurora.Base.SetHighlight
     local function OnEnter(button, isBackground)
         if button:IsEnabled() then
             if isBackground then
-                Aurora.SetBackdrop(button, highlightColor:GetRGBA())
+                Aurora.Base.SetBackdrop(button, highlightColor:GetRGBA())
             else
                 for _, texture in next, button._auroraHighlight do
                     button._auroraSetColor(texture, highlightColor:GetRGBA())
@@ -40,14 +40,14 @@ do -- Aurora.SetHighlight
     end
     local function OnLeave(button, isBackground)
         if isBackground then
-            Aurora.SetBackdrop(button, buttonColor:GetRGBA())
+            Aurora.Base.SetBackdrop(button, buttonColor:GetRGBA())
         else
             for _, texture in next, button._auroraHighlight do
                 button._auroraSetColor(texture, normalColor:GetRGBA())
             end
         end
     end
-    function Aurora.SetHighlight(button, highlightType)
+    function Aurora.Base.SetHighlight(button, highlightType)
         local setColor
         if highlightType == "color" then
             setColor = button.SetColorTexture
@@ -64,8 +64,8 @@ do -- Aurora.SetHighlight
     end
 end
 
-do -- Aurora.SetBackdrop
-    function Aurora.SetBackdrop(frame, r, g, b, a)
+do -- Aurora.Base.SetBackdrop
+    function Aurora.Base.SetBackdrop(frame, r, g, b, a)
         if not frame:GetBackdrop() then
             frame:SetBackdrop(backdrop)
         end

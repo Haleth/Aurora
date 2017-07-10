@@ -34,8 +34,9 @@ local debug do
 end
 
 local Aurora = {
+    Base = {},
     Hook = {},
-    Skin = {}
+    Skin = {},
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
