@@ -36,8 +36,8 @@ function private.AddOns.Blizzard_ChallengesUI()
     --[[ ChallengesFrame ]]--
     local ChallengesFrame = _G.ChallengesFrame
     ChallengesFrame:DisableDrawLayer("BACKGROUND")
-	_G.ChallengesFrameInset:DisableDrawLayer("BORDER")
-	_G.ChallengesFrameInsetBg:Hide()
+    _G.ChallengesFrameInset:DisableDrawLayer("BORDER")
+    _G.ChallengesFrameInsetBg:Hide()
 
     ChallengesFrame.WeeklyBest:SetPoint("TOPLEFT")
     ChallengesFrame.WeeklyBest:SetPoint("BOTTOMRIGHT")

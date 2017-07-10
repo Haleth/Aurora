@@ -4,19 +4,19 @@ local _, private = ...
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.RecruitAFriendFrame()
-	local RecruitAFriendFrame = _G.RecruitAFriendFrame
-	local RecruitAFriendSentFrame = _G.RecruitAFriendSentFrame
+    local RecruitAFriendFrame = _G.RecruitAFriendFrame
+    local RecruitAFriendSentFrame = _G.RecruitAFriendSentFrame
 
-	RecruitAFriendFrame.NoteFrame:DisableDrawLayer("BACKGROUND")
+    RecruitAFriendFrame.NoteFrame:DisableDrawLayer("BACKGROUND")
 
-	F.CreateBD(RecruitAFriendFrame)
-	F.ReskinClose(_G.RecruitAFriendFrameCloseButton)
-	F.Reskin(RecruitAFriendFrame.SendButton)
-	F.ReskinInput(_G.RecruitAFriendNameEditBox)
+    F.CreateBD(RecruitAFriendFrame)
+    F.ReskinClose(_G.RecruitAFriendFrameCloseButton)
+    F.Reskin(RecruitAFriendFrame.SendButton)
+    F.ReskinInput(_G.RecruitAFriendNameEditBox)
 
-	F.CreateBDFrame(RecruitAFriendFrame.NoteFrame, .25)
+    F.CreateBDFrame(RecruitAFriendFrame.NoteFrame, .25)
 
-	F.CreateBD(RecruitAFriendSentFrame)
-	F.Reskin(RecruitAFriendSentFrame.OKButton)
-	F.ReskinClose(_G.RecruitAFriendSentFrameCloseButton)
+    F.CreateBD(RecruitAFriendSentFrame)
+    F.Reskin(RecruitAFriendSentFrame.OKButton)
+    F.ReskinClose(_G.RecruitAFriendSentFrameCloseButton)
 end

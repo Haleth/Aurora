@@ -7,10 +7,10 @@ local next = _G.next
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.CharacterFrame()
-	_G.CharacterFrameInsetRight:DisableDrawLayer("BACKGROUND")
-	_G.CharacterFrameInsetRight:DisableDrawLayer("BORDER")
+    _G.CharacterFrameInsetRight:DisableDrawLayer("BACKGROUND")
+    _G.CharacterFrameInsetRight:DisableDrawLayer("BORDER")
 
-	F.ReskinPortraitFrame(_G.CharacterFrame, true)
+    F.ReskinPortraitFrame(_G.CharacterFrame, true)
 
     local CharacterStatsPane = _G.CharacterStatsPane
     CharacterStatsPane.ClassBackground:Hide()
@@ -35,9 +35,9 @@ function private.FrameXML.CharacterFrame()
         end
     end)
 
-	local i = 1
-	while _G["CharacterFrameTab"..i] do
-		F.ReskinTab(_G["CharacterFrameTab"..i])
-		i = i + 1
-	end
+    local i = 1
+    while _G["CharacterFrameTab"..i] do
+        F.ReskinTab(_G["CharacterFrameTab"..i])
+        i = i + 1
+    end
 end

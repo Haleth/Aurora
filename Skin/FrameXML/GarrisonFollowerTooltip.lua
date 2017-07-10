@@ -7,86 +7,86 @@ local select = _G.select
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.GarrisonFollowerTooltip()
-	local function restyleGarrisonFollowerTooltipTemplate(frame)
-		for i = 1, 9 do
-			select(i, frame:GetRegions()):Hide()
-		end
+    local function restyleGarrisonFollowerTooltipTemplate(frame)
+        for i = 1, 9 do
+            select(i, frame:GetRegions()):Hide()
+        end
 
-		F.CreateBD(frame)
-	end
+        F.CreateBD(frame)
+    end
 
-	local function restyleGarrisonFollowerAbilityTooltipTemplate(frame)
-		for i = 1, 9 do
-			select(i, frame:GetRegions()):Hide()
-		end
+    local function restyleGarrisonFollowerAbilityTooltipTemplate(frame)
+        for i = 1, 9 do
+            select(i, frame:GetRegions()):Hide()
+        end
 
-		local icon = frame.Icon
+        local icon = frame.Icon
 
-		icon:SetTexCoord(.08, .92, .08, .92)
-		F.CreateBG(icon)
+        icon:SetTexCoord(.08, .92, .08, .92)
+        F.CreateBG(icon)
 
-		F.CreateBD(frame)
-	end
+        F.CreateBD(frame)
+    end
 
-	restyleGarrisonFollowerTooltipTemplate(_G.GarrisonFollowerTooltip)
-	restyleGarrisonFollowerAbilityTooltipTemplate(_G.GarrisonFollowerAbilityTooltip)
+    restyleGarrisonFollowerTooltipTemplate(_G.GarrisonFollowerTooltip)
+    restyleGarrisonFollowerAbilityTooltipTemplate(_G.GarrisonFollowerAbilityTooltip)
 
-	restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonFollowerTooltip)
-	F.ReskinClose(_G.FloatingGarrisonFollowerTooltip.CloseButton)
+    restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonFollowerTooltip)
+    F.ReskinClose(_G.FloatingGarrisonFollowerTooltip.CloseButton)
 
-	restyleGarrisonFollowerAbilityTooltipTemplate(_G.FloatingGarrisonFollowerAbilityTooltip)
-	F.ReskinClose(_G.FloatingGarrisonFollowerAbilityTooltip.CloseButton)
+    restyleGarrisonFollowerAbilityTooltipTemplate(_G.FloatingGarrisonFollowerAbilityTooltip)
+    F.ReskinClose(_G.FloatingGarrisonFollowerAbilityTooltip.CloseButton)
 
-	_G.hooksecurefunc("GarrisonFollowerTooltipTemplate_SetGarrisonFollower", function(tooltipFrame)
-		-- Abilities
+    _G.hooksecurefunc("GarrisonFollowerTooltipTemplate_SetGarrisonFollower", function(tooltipFrame)
+        -- Abilities
 
-		if tooltipFrame.numAbilitiesStyled == nil then
-			tooltipFrame.numAbilitiesStyled = 1
-		end
+        if tooltipFrame.numAbilitiesStyled == nil then
+            tooltipFrame.numAbilitiesStyled = 1
+        end
 
-		local numAbilitiesStyled = tooltipFrame.numAbilitiesStyled
+        local numAbilitiesStyled = tooltipFrame.numAbilitiesStyled
 
-		local abilities = tooltipFrame.Abilities
+        local abilities = tooltipFrame.Abilities
 
-		local ability = abilities[numAbilitiesStyled]
-		while ability do
-			local icon = ability.Icon
+        local ability = abilities[numAbilitiesStyled]
+        while ability do
+            local icon = ability.Icon
 
-			icon:SetTexCoord(.08, .92, .08, .92)
-			F.CreateBG(icon)
+            icon:SetTexCoord(.08, .92, .08, .92)
+            F.CreateBG(icon)
 
-			numAbilitiesStyled = numAbilitiesStyled + 1
-			ability = abilities[numAbilitiesStyled]
-		end
+            numAbilitiesStyled = numAbilitiesStyled + 1
+            ability = abilities[numAbilitiesStyled]
+        end
 
-		tooltipFrame.numAbilitiesStyled = numAbilitiesStyled
+        tooltipFrame.numAbilitiesStyled = numAbilitiesStyled
 
-		-- Traits
+        -- Traits
 
-		if tooltipFrame.numTraitsStyled == nil then
-			tooltipFrame.numTraitsStyled = 1
-		end
+        if tooltipFrame.numTraitsStyled == nil then
+            tooltipFrame.numTraitsStyled = 1
+        end
 
-		local numTraitsStyled = tooltipFrame.numTraitsStyled
+        local numTraitsStyled = tooltipFrame.numTraitsStyled
 
-		local traits = tooltipFrame.Traits
+        local traits = tooltipFrame.Traits
 
-		local trait = traits[numTraitsStyled]
-		while trait do
-			local icon = trait.Icon
+        local trait = traits[numTraitsStyled]
+        while trait do
+            local icon = trait.Icon
 
-			icon:SetTexCoord(.08, .92, .08, .92)
-			F.CreateBG(icon)
+            icon:SetTexCoord(.08, .92, .08, .92)
+            F.CreateBG(icon)
 
-			numTraitsStyled = numTraitsStyled + 1
-			trait = traits[numTraitsStyled]
-		end
+            numTraitsStyled = numTraitsStyled + 1
+            trait = traits[numTraitsStyled]
+        end
 
-		tooltipFrame.numTraitsStyled = numTraitsStyled
-	end)
+        tooltipFrame.numTraitsStyled = numTraitsStyled
+    end)
 
-	-- Mission tooltip
+    -- Mission tooltip
 
-	restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonMissionTooltip)
-	F.ReskinClose(_G.FloatingGarrisonMissionTooltip.CloseButton)
+    restyleGarrisonFollowerTooltipTemplate(_G.FloatingGarrisonMissionTooltip)
+    F.ReskinClose(_G.FloatingGarrisonMissionTooltip.CloseButton)
 end
