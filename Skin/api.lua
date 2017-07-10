@@ -50,9 +50,9 @@ do -- Aurora.Base.SetHighlight
     function Aurora.Base.SetHighlight(button, highlightType)
         local setColor
         if highlightType == "color" then
-            setColor = button.SetColorTexture
+            setColor = button._auroraHighlight[1].SetColorTexture
         elseif highlightType == "texture" then
-            setColor = button.SetVertexColor
+            setColor = button._auroraHighlight[1].SetVertexColor
         end
         button._auroraSetColor = setColor
         button:HookScript("OnEnter", function(self)
