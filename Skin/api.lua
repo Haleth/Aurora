@@ -66,9 +66,7 @@ end
 
 do -- Aurora.Base.SetBackdrop
     function Aurora.Base.SetBackdrop(frame, r, g, b, a)
-        if not frame:GetBackdrop() then
-            frame:SetBackdrop(backdrop)
-        end
+        frame:SetBackdrop(backdrop)
         frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
         frame:SetBackdropBorderColor(r, g, b, 1)
     end
