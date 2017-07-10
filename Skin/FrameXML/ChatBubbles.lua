@@ -42,7 +42,7 @@ function private.FrameXML.ChatBubbles()
         frame:HookScript("OnHide", function() frame._auroraUsing = false end)
     end
 
-    local defaultColor = {r = 1, g = 1, b = 1}
+    local defaultColor = "ffffffff"
     local function UpdateChatBubble(frame, guid, name)
         if not frame._auroraName then styleBubble(frame) end
 
@@ -50,11 +50,11 @@ function private.FrameXML.ChatBubbles()
             local color
             if guid ~= nil and guid ~= "" then
                 local _, class = _G.GetPlayerInfoByGUID(guid)
-                color = _G.CUSTOM_CLASS_COLORS[class]
+                color = _G.CUSTOM_CLASS_COLORS[class].colorStr
             else
                 color = defaultColor
             end
-            frame._auroraName:SetFormattedText("|cff%2x%2x%2x%s|r", color.r * 255, color.g * 255, color.b * 255, name)
+            frame._auroraName:SetFormattedText("|c%s%s|r", color, name)
         end
     end
 

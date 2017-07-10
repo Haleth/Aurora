@@ -5,17 +5,34 @@ local next = _G.next
 
 -- [[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 
-local highlightColor = _G.CreateColor()
+local colorMeta = _G.Mixin({}, _G.ColorMixin)
+function colorMeta:SetRGBA(r, g, b, a)
+    self.r = r
+    self.g = g
+    self.b = b
+    self.a = a
+    self.colorStr = self:GenerateHexColor()
+end
+local function CreateColor(r, g, b, a)
+    local color = _G.CreateFromMixins(colorMeta)
+    color:OnLoad(r, g, b, a)
+    return color
+end
+Base.CreateColor = CreateColor
+
+
+local highlightColor = CreateColor(0, 0, 1, 1) -- Temporary, the proper highlight color will be set later
 private.highlightColor = highlightColor
 
-local normalColor = _G.CreateColor(1, 1, 1, 1)
+local normalColor = CreateColor(1, 1, 1, 1)
 private.normalColor = normalColor
 
-local buttonColor = _G.CreateColor(.2, .2, .2, 1)
+local buttonColor = CreateColor(.2, .2, .2, 1)
 private.buttonColor = buttonColor
 
-local frameColor = _G.CreateColor(0, 0, 0, 0.6)
+local frameColor = CreateColor(0, 0, 0, 0.6)
 private.frameColor = frameColor
 
 
@@ -26,7 +43,7 @@ local backdrop = {
 }
 private.backdrop = backdrop
 
-do -- Aurora.Base.SetHighlight
+do -- Base.SetHighlight
     local function OnEnter(button, isBackground)
         if button:IsEnabled() then
             if isBackground then
@@ -47,7 +64,7 @@ do -- Aurora.Base.SetHighlight
             end
         end
     end
-    function Aurora.Base.SetHighlight(button, highlightType)
+    function Base.SetHighlight(button, highlightType)
         local setColor
         if highlightType == "color" then
             setColor = button._auroraHighlight[1].SetColorTexture
@@ -64,8 +81,9 @@ do -- Aurora.Base.SetHighlight
     end
 end
 
-do -- Aurora.Base.SetBackdrop
-    function Aurora.Base.SetBackdrop(frame, r, g, b, a)
+do -- Base.SetBackdrop
+    function Base.SetBackdrop(frame, r, g, b, a)
+        if not r then r, g, b, a = frameColor:GetRGBA() end
         frame:SetBackdrop(backdrop)
         frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
         frame:SetBackdropBorderColor(r, g, b, 1)

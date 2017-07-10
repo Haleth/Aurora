@@ -4,6 +4,10 @@ local _, private = ...
 local next = _G.next
 local assert, type, pcall = _G.assert, _G.type, _G.pcall
 
+-- [[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+
 do --[[ CUSTOM_CLASS_COLORS ]]--
     local classColors = {}
 
@@ -66,12 +70,13 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
     function private.classColorsReset(colors)
         colors = colors or _G.CUSTOM_CLASS_COLORS
         for class, color in next, _G.RAID_CLASS_COLORS do
-            colors[class] = {
-                r = color.r,
-                g = color.g,
-                b = color.b,
-                colorStr = color.colorStr
-            }
+            if colors[class].SetRGB then
+                colors[class]:SetRGB(color.r, color.g, color.b)
+            else
+                colors[class] = _G.setmetatable({}, {
+                    __index = Base.CreateColor(color.r, color.g, color.b)
+                })
+            end
         end
 
         if colors then
@@ -82,6 +87,7 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
     end
 
     _G.CUSTOM_CLASS_COLORS = {}
+    private.classColorsReset()
 
     _G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = classColors})
 end
@@ -89,8 +95,6 @@ end
 function private.SharedXML.Util()
     if private.classColorsInit then
         private.classColorsInit()
-    else
-        private.classColorsReset()
     end
 
     if not private.highlightColor.r then

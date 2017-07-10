@@ -127,9 +127,8 @@ function private.FrameXML.LootHistory()
 		info = _G.UIDropDownMenu_CreateInfo();
 		info.notCheckable = 1;
 		local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx);
-		local classColor = _G.CUSTOM_CLASS_COLORS[class];
-		local colorCode = ("|cFF%02x%02x%02x"):format(classColor.r*255,  classColor.g*255,  classColor.b*255);
-		info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorCode..name.."|r");
+		local colorStr = _G.CUSTOM_CLASS_COLORS[class].colorStr;
+		info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorStr..name.."|r");
 		info.func = _G.LootHistoryDropDown_OnClick;
 		_G.UIDropDownMenu_AddButton(info);
 	end

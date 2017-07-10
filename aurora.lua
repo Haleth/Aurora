@@ -64,7 +64,7 @@ C.defaults = {
 	["loot"] = true,
 	["useCustomColour"] = false,
 		["customColour"] = {r = 1, g = 1, b = 1},
-    ["customClassColors"] = false,
+	["customClassColors"] = false,
 	["tooltips"] = true,
 }
 
@@ -743,12 +743,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             -- replace classcolors
             if customStyle.classcolors then
                 for classToken, color in next, customStyle.classcolors do
-                    AuroraConfig.customClassColors[classToken] = {
-                        r = color.r,
-                        g = color.g,
-                        b = color.b,
-                        colorStr = ("ff%02x%02x%02x"):format(color.r * 255, color.g * 255, color.b * 255)
-                    }
+                    AuroraConfig.customClassColors[classToken]:SetRGB(color.r, color.g, color.b)
                 end
             end
 		end
@@ -756,18 +751,13 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         -- setup class colours
         function private.classColorsInit()
             for classToken, color in next, AuroraConfig.customClassColors do
-                _G.CUSTOM_CLASS_COLORS[classToken] = {
-                    r = color.r,
-                    g = color.g,
-                    b = color.b,
-                    colorStr = ("ff%02x%02x%02x"):format(color.r * 255, color.g * 255, color.b * 255)
-                }
+                _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
             end
 
             if AuroraConfig.useCustomColour then
                 private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
             else
-                private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class].r, _G.CUSTOM_CLASS_COLORS[class].g, _G.CUSTOM_CLASS_COLORS[class].b)
+                private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class]:GetRGB())
             end
 
             red, green, blue = private.highlightColor:GetRGB()
@@ -779,13 +769,9 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
                 local color = _G.CUSTOM_CLASS_COLORS[classToken]
                 local cache = AuroraConfig.customClassColors[classToken]
 
-                if cache.r ~= color.r or cache.g ~= color.g or cache.b ~= color.b then
+                if not color:IsEqualTo(cache) then
                     --print("Change found in", classToken)
-                    color.r = cache.r
-                    color.g = cache.g
-                    color.b = cache.b
-                    color.colorStr = cache.colorStr
-
+                    color:SetRGB(cache.r, cache.g, cache.b)
                     return true
                 end
             end

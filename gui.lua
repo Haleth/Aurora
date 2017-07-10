@@ -115,7 +115,6 @@ local createColorSwatch do
 		local value = _G.AuroraConfig[swatch.value]
 		if swatch.class then
 			value = value[swatch.class]
-			value.colorStr = ("ff%02x%02x%02x"):format(r * 255, g * 255, b * 255)
 			_G.CUSTOM_CLASS_COLORS:NotifyChanges()
 		end
 		value.r, value.g, value.b = r, g, b
@@ -126,7 +125,6 @@ local createColorSwatch do
 		local value = _G.AuroraConfig[swatch.value]
 		if swatch.class then
 			value = value[swatch.class]
-			value.colorStr = ("ff%02x%02x%02x"):format(restore.r * 255, restore.g * 255, restore.b * 255)
 		end
 		value.r, value.g, value.b = restore.r, restore.g, restore.b
 	end
