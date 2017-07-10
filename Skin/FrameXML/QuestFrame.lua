@@ -132,9 +132,9 @@ function private.FrameXML.QuestFrame()
 				local questTitleButton = _G["QuestTitleButton"..i]
 				local title = _G.GetAvailableTitle(i - numActiveQuests)
 				if _G.GetAvailableQuestInfo(i - numActiveQuests) then
-					questTitleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, title);
+					questTitleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, title)
 				else
-					questTitleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, title);
+					questTitleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, title)
 				end
 			end
 		end

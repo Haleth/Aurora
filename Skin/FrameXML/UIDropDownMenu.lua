@@ -56,9 +56,9 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                 check:SetAlpha(0.6)
             end
 
-            local checked = info.checked;
+            local checked = info.checked
             if _G.type(checked) == "function" then
-                checked = checked(menuButton);
+                checked = checked(menuButton)
             end
 
             if checked then
@@ -67,8 +67,8 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                 check:Hide()
             end
 
-            _G[menuButtonName.."Check"]:Hide();
-            _G[menuButtonName.."UnCheck"]:Hide();
+            _G[menuButtonName.."Check"]:Hide()
+            _G[menuButtonName.."UnCheck"]:Hide()
         else
             checkBox:Hide()
         end

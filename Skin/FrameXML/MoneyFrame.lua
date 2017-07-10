@@ -6,17 +6,17 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\MoneyFrame.lua ]]
     function Hook.MoneyFrame_Update(frameName, money, forceShow)
-        local moneyFrame;
+        local moneyFrame
         if ( _G.type(frameName) == "table" ) then
-            moneyFrame = frameName;
-            frameName = moneyFrame:GetName();
+            moneyFrame = frameName
+            frameName = moneyFrame:GetName()
         else
-            moneyFrame = _G[frameName];
+            moneyFrame = _G[frameName]
         end
 
         if moneyFrame._auroraMoneyBG then
             local copperButton = _G[frameName.."CopperButton"]
-            copperButton:ClearAllPoints();
+            copperButton:ClearAllPoints()
             copperButton:SetPoint("BOTTOMRIGHT", frameName, -2, 2)
         end
     end

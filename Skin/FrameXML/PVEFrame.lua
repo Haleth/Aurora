@@ -14,9 +14,9 @@ function private.FrameXML.PVEFrame()
 	_G.PVEFrameLeftInsetBg:Hide()
 	_G.PVEFrameBlueBg:Hide()
 	_G.PVEFrameBlueBg.Show = F.dummy
-	_G.PVEFrameTopFiligree:Hide();
+	_G.PVEFrameTopFiligree:Hide()
 	_G.PVEFrameTopFiligree.Show = F.dummy
-	_G.PVEFrameBottomFiligree:Hide();
+	_G.PVEFrameBottomFiligree:Hide()
 	_G.PVEFrameBottomFiligree.Show = F.dummy
 	_G.PVEFrame.shadows:Hide()
 	_G.PVEFrame.shadows.Show = F.dummy

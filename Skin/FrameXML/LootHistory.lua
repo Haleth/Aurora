@@ -117,19 +117,19 @@ function private.FrameXML.LootHistory()
 	-- [[ Dropdown ]]
 
 	_G.LootHistoryDropDown.initialize = function(self)
-		local info = _G.UIDropDownMenu_CreateInfo();
-		info.isTitle = 1;
-		info.text = _G.MASTER_LOOTER;
-		info.fontObject = _G.GameFontNormalLeft;
-		info.notCheckable = 1;
-		_G.UIDropDownMenu_AddButton(info);
+		local info = _G.UIDropDownMenu_CreateInfo()
+		info.isTitle = 1
+		info.text = _G.MASTER_LOOTER
+		info.fontObject = _G.GameFontNormalLeft
+		info.notCheckable = 1
+		_G.UIDropDownMenu_AddButton(info)
 
-		info = _G.UIDropDownMenu_CreateInfo();
-		info.notCheckable = 1;
-		local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx);
-		local colorStr = _G.CUSTOM_CLASS_COLORS[class].colorStr;
-		info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorStr..name.."|r");
-		info.func = _G.LootHistoryDropDown_OnClick;
-		_G.UIDropDownMenu_AddButton(info);
+		info = _G.UIDropDownMenu_CreateInfo()
+		info.notCheckable = 1
+		local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx)
+		local colorStr = _G.CUSTOM_CLASS_COLORS[class].colorStr
+		info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorStr..name.."|r")
+		info.func = _G.LootHistoryDropDown_OnClick
+		_G.UIDropDownMenu_AddButton(info)
 	end
 end

@@ -173,9 +173,9 @@ function private.AddOns.Blizzard_GuildUI()
 		local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
 		local button, index
 		for i = 1, #GuildApplicantButtons do
-			button = GuildApplicantButtons[i];
-			index = offset + i;
-			local name, _, class = _G.GetGuildApplicantInfo(index);
+			button = GuildApplicantButtons[i]
+			index = offset + i
+			local name, _, class = _G.GetGuildApplicantInfo(index)
 			if name then
 				button.class:SetTexCoord(_G.unpack(C.classicons[class]))
 			end

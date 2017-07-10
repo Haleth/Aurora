@@ -991,9 +991,9 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 				local titleText, _, isTrivial = select(i, ...)
 				local titleButton = _G["GossipTitleButton" .. buttonIndex]
 				if isTrivial then
-					titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText);
+					titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText)
 				else
-					titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText);
+					titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText)
 				end
 				buttonIndex = buttonIndex + 1
 			end
@@ -1005,9 +1005,9 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 				local titleText, _, isTrivial = select(i, ...)
 				local titleButton = _G["GossipTitleButton" .. buttonIndex]
 				if isTrivial then
-					titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText);
+					titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText)
 				else
-					titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText);
+					titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText)
 				end
 				buttonIndex = buttonIndex + 1
 			end

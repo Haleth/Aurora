@@ -103,9 +103,9 @@ function private.FrameXML.LFGFrame()
 
 		local texturePath, _
 		if rewardType == "reward" then
-			_, texturePath, _ = _G.GetLFGDungeonRewardInfo(dungeonID, rewardIndex);
+			_, texturePath, _ = _G.GetLFGDungeonRewardInfo(dungeonID, rewardIndex)
 		elseif rewardType == "shortage" then
-			_, texturePath, _ = _G.GetLFGDungeonShortageRewardInfo(dungeonID, rewardArg, rewardIndex);
+			_, texturePath, _ = _G.GetLFGDungeonShortageRewardInfo(dungeonID, rewardArg, rewardIndex)
 		end
 		if texturePath then
 			button.texture:SetTexture(texturePath)
@@ -336,8 +336,8 @@ function private.FrameXML.LFGFrame()
 
 	--Reward frame functions
 	hooksecurefunc("LFGRewardsFrame_SetItemButton", function(parentFrame, dungeonID, index, id, name, texture, numItems, rewardType, rewardID, shortageIndex, showTankIcon, showHealerIcon, showDamageIcon)
-		local parentName = parentFrame:GetName();
-		local button = _G[parentName.."Item"..index];
+		local parentName = parentFrame:GetName()
+		local button = _G[parentName.."Item"..index]
 		if button and not button._auroraNameBG then
 			styleRewardButton(button)
 		end
