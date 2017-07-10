@@ -42,7 +42,7 @@ local apiMeta = {
                 end
                 local ret = value(...)
                 if table.Post[key] then
-                    table.Post[key](ret, ...)
+                    table.Post[key](...)
                 end
                 return ret
             end)
