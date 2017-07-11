@@ -7,6 +7,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\HybridScrollFrame.lua ]]
     function Hook.HybridScrollFrame_CreateButtons(self, buttonTemplate, initialOffsetX, initialOffsetY, initialPoint, initialRelative, offsetX, offsetY, point, relativePoint)
+        --print("Hook.HybridScrollFrame_CreateButtons", buttonTemplate)
         if Skin[buttonTemplate] then
             local numButtons = #self.buttons
             local numSkinned = self._auroraNumSkinned or 0

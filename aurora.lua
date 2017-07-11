@@ -813,6 +813,20 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             if not a then _G.tinsert(C.frames, frame) end
         end
 
+        --[[
+        function private.FrameXML.Post.CharacterFrame()
+            _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
+            _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
+            _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
+
+            _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
+                if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
+                    _G.CharacterStatsPane.ItemLevelCategory:Hide()
+                    _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
+                end
+            end)
+        end]]
+
 
         -- [[ Load FrameXML ]]
         for i = 1, #private.FrameXML do
