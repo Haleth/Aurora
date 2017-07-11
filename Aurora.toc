@@ -4,6 +4,7 @@
 ## Author: Haleth/Lightsword, Gethe
 ## Version: 7.2.5.1
 ## SavedVariables: AuroraConfig
+## X-Website: http://www.wowinterface.com/downloads/info18589.html
 
 Skin\skin.xml
 
