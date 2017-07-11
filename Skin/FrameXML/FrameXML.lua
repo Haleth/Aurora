@@ -220,8 +220,8 @@ local FrameXML = {
     "LocalizationPost",
 }
 
-private.FrameXML = FrameXML
-private.SharedXML = {}
+private.FrameXML = private.CreateAPI(FrameXML)
+private.SharedXML = private.CreateAPI({})
 
 --[==[ Some boilerplate stuff for new files
 --[[ Lua Globals ]]

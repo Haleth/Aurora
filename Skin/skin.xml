@@ -7,4 +7,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 
     <Include file="FrameXML\FrameXML.xml"/>
     <Include file="AddOns\AddOns.xml"/>
+
+    <Script file="cleanup.lua"/>
 </Ui>

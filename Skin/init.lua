@@ -33,26 +33,34 @@ local debug do
     private.debug = debug
 end
 
-local apiMeta = {
-    __newindex = function(table, key, value)
-        if _G.type(value) == "function" then
-            _G.rawset(table, key, function(...)
-                if table.Pre[key] then
-                    table.Pre[key](...)
-                end
-                local ret = value(...)
-                if table.Post[key] then
-                    table.Post[key](...)
-                end
-                return ret
-            end)
+do
+    local apiMeta = {
+        __newindex = function(table, key, value)
+            if _G.type(value) == "function" then
+                _G.rawset(table, key, function(...)
+                    if table.Pre[key] then
+                        table.Pre[key](...)
+                    end
+                    local ret = value(...)
+                    if table.Post[key] then
+                        table.Post[key](...)
+                    end
+                    return ret
+                end)
+            end
         end
+    }
+    function private.CreateAPI(api)
+        api.Pre = {}
+        api.Post = {}
+        return _G.setmetatable(api, apiMeta)
     end
-}
+end
+
 local Aurora = {
-    Base = _G.setmetatable({Pre = {}, Post = {}}, apiMeta),
-    Hook = _G.setmetatable({Pre = {}, Post = {}}, apiMeta),
-    Skin = _G.setmetatable({Pre = {}, Post = {}}, apiMeta),
+    Base = private.CreateAPI({}),
+    Hook = private.CreateAPI({}),
+    Skin = private.CreateAPI({}),
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora

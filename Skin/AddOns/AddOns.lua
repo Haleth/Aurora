@@ -1,6 +1,6 @@
 local _, private = ...
 
-private.AddOns = {}
+private.AddOns = private.CreateAPI({})
 
 --[==[ Some boilerplate stuff for new files
 --[[ Lua Globals ]]
