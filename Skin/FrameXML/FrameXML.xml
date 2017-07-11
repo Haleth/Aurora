@@ -66,6 +66,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="WorldStateFrame.lua"/>
 
     <Script file="..\SharedXML\AddonList.lua"/>
+    <Script file="..\SharedXML\HybridScrollFrame.lua"/>
     <Script file="..\SharedXML\ModelPreviewFrame.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>

@@ -6,8 +6,6 @@ local F = _G.unpack(private.Aurora)
 function private.FrameXML.ContainerFrame()
     if not _G.AuroraConfig.bags then return end
 
-    _G.BackpackTokenFrame:GetRegions():Hide()
-
     local BAG_FILTER_ICONS = {
         ["bags-icon-equipment"] = [[Interface\Icons\INV_Chest_Chain]],
         ["bags-icon-consumables"] = [[Interface\Icons\INV_Potion_93]],
@@ -77,13 +75,6 @@ function private.FrameXML.ContainerFrame()
         F.CreateBD(f)
 
         F.ReskinClose(_G[frameName.."CloseButton"])
-    end
-
-    for i = 1, 3 do
-        local ic = _G["BackpackTokenFrameToken"..i.."Icon"]
-        ic:SetDrawLayer("OVERLAY")
-        ic:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBG(ic)
     end
 
     _G.hooksecurefunc("ContainerFrame_Update", function(frame)

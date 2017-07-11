@@ -3,12 +3,16 @@ local _, private = ...
 private.AddOns = {}
 
 --[==[ Some boilerplate stuff for new files
--- [[ Lua Globals ]]
-local next, tinsert = _G.next, _G.tinsert
+--[[ Lua Globals ]]
+local next = _G.next
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-function private.AddOns.Baz()
+function private.AddOns.Blizzard_Baz()
+    --[[
+    ]]
 end
 ]==]

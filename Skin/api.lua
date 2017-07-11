@@ -89,3 +89,16 @@ do -- Base.SetBackdrop
         frame:SetBackdropBorderColor(r, g, b, 1)
     end
 end
+
+do -- Base.CropIcon
+    function Base.CropIcon(texture, parent)
+        texture:SetTexCoord(.08, .92, .08, .92)
+        if parent then
+            local layer, subLevel = texture:GetDrawLayer()
+            local iconBorder = parent:CreateTexture(nil, layer, nil, subLevel - 1)
+            iconBorder:SetPoint("TOPLEFT", texture, -1, 1)
+            iconBorder:SetPoint("BOTTOMRIGHT", texture, 1, -1)
+            iconBorder:SetColorTexture(0, 0, 0)
+        end
+    end
+end

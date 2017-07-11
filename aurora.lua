@@ -827,6 +827,14 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             end
         end
 
+        -- [[ Load AddOns - some may have loaded before Aurora ]]
+        for addonName, func in next, private.AddOns do
+            local loaded = _G.IsAddOnLoaded(addonName)
+            if loaded then
+                func()
+            end
+        end
+
         -- from this point, plugins added with F.AddPlugin are executed directly instead of cached
         AURORA_LOADED = true
     end
@@ -847,76 +855,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
-
-        -- Currency frame
-
-        _G.TokenFramePopupCorner:Hide()
-        _G.TokenFramePopup:SetPoint("TOPLEFT", _G.TokenFrame, "TOPRIGHT", 1, -28)
-        F.CreateBD(_G.TokenFramePopup)
-        F.ReskinClose(_G.TokenFramePopupCloseButton)
-        F.ReskinCheck(_G.TokenFramePopupInactiveCheckBox)
-        F.ReskinCheck(_G.TokenFramePopupBackpackCheckBox)
-
-        local function updateButtons()
-            local buttons = _G.TokenFrameContainer.buttons
-
-            if not buttons then return end
-
-            for i = 1, #buttons do
-                local bu = buttons[i]
-
-                if not bu.styled then
-                    bu.highlight:SetPoint("TOPLEFT", 1, 0)
-                    bu.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
-                    bu.highlight.SetPoint = F.dummy
-                    bu.highlight:SetColorTexture(red, green, blue, .2)
-                    bu.highlight.SetTexture = F.dummy
-
-                    bu.expandIcon:SetTexture("")
-
-                    local minus = bu:CreateTexture(nil, "OVERLAY")
-                    minus:SetSize(7, 1)
-                    minus:SetPoint("LEFT", 8, 0)
-                    minus:SetTexture(C.media.backdrop)
-                    minus:SetVertexColor(1, 1, 1)
-                    minus:Hide()
-                    bu.minus = minus
-
-                    local plus = bu:CreateTexture(nil, "OVERLAY")
-                    plus:SetSize(1, 7)
-                    plus:SetPoint("LEFT", 11, 0)
-                    plus:SetTexture(C.media.backdrop)
-                    plus:SetVertexColor(1, 1, 1)
-                    plus:Hide()
-                    bu.plus = plus
-
-                    bu.categoryMiddle:SetAlpha(0)
-                    bu.categoryLeft:SetAlpha(0)
-                    bu.categoryRight:SetAlpha(0)
-
-                    bu.icon:SetTexCoord(.08, .92, .08, .92)
-                    bu.bg = F.CreateBG(bu.icon)
-
-                    bu.styled = true
-                end
-
-                if bu.isHeader then
-                    bu.bg:Hide()
-                    bu.minus:Show()
-                    bu.plus:SetShown(not bu.isExpanded)
-                else
-                    bu.bg:Show()
-                    bu.plus:Hide()
-                    bu.minus:Hide()
-                end
-            end
-        end
-
-        _G.TokenFrame:HookScript("OnShow", updateButtons)
-        hooksecurefunc("TokenFrame_Update", updateButtons)
-        hooksecurefunc(_G.TokenFrameContainer, "update", updateButtons)
-
-        F.ReskinScroll(_G.TokenFrameContainerScrollBar)
 
         -- Reputation frame
 
