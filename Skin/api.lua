@@ -57,7 +57,7 @@ do -- Base.SetHighlight
     end
     local function OnLeave(button, isBackground)
         if isBackground then
-            Aurora.Base.SetBackdrop(button, buttonColor:GetRGBA())
+            Aurora.Base.SetBackdrop(button, button._returnColor:GetRGBA())
         else
             for _, texture in next, button._auroraHighlight do
                 button._auroraSetColor(texture, normalColor:GetRGBA())
@@ -84,6 +84,9 @@ end
 do -- Base.SetBackdrop
     function Base.SetBackdrop(frame, r, g, b, a)
         if not r then r, g, b, a = frameColor:GetRGBA() end
+        if not frame._returnColor then
+            frame._returnColor = CreateColor(r, g, b, a)
+        end
         frame:SetBackdrop(backdrop)
         frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
         frame:SetBackdropBorderColor(r, g, b, 1)
