@@ -102,6 +102,7 @@ do -- Base.CropIcon
             iconBorder:SetPoint("TOPLEFT", texture, -1, 1)
             iconBorder:SetPoint("BOTTOMRIGHT", texture, 1, -1)
             iconBorder:SetColorTexture(0, 0, 0)
+            return iconBorder
         end
     end
 end
