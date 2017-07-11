@@ -813,7 +813,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             if not a then _G.tinsert(C.frames, frame) end
         end
 
-        --[[
         function private.FrameXML.Post.CharacterFrame()
             _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
             _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
@@ -825,7 +824,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
                     _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
                 end
             end)
-        end]]
+        end
 
 
         -- [[ Load FrameXML ]]
