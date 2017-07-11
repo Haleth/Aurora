@@ -115,10 +115,15 @@ local createColorSwatch do
         local value = _G.AuroraConfig[swatch.value]
         if swatch.class then
             value = value[swatch.class]
-            _G.CUSTOM_CLASS_COLORS:NotifyChanges()
         end
         value.r, value.g, value.b = r, g, b
         swatch:SetBackdropColor(r, g, b)
+
+        if swatch.class then
+            _G.CUSTOM_CLASS_COLORS:NotifyChanges()
+        else
+            private.updateHighlightColor()
+        end
     end
 
     function info.cancelFunc(restore)
@@ -337,6 +342,7 @@ colourBox:SetScript("OnClick", function(self)
         colourButton:Disable()
         colourButton:SetAlpha(.7)
     end
+    private.updateHighlightColor()
 end)
 
 alphaSlider:SetScript("OnValueChanged", function(_, value)
@@ -348,7 +354,6 @@ reloadButton:SetScript("OnClick", _G.ReloadUI)
 
 resetButton:SetScript("OnClick", function(self)
     private.classColorsReset(_G.AuroraConfig.customClassColors)
-    gui.refresh()
 end)
 
 

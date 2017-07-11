@@ -711,9 +711,9 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         end
 
         -- init class colors
-        if not AuroraConfig.customClassColors then
+        if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[class].colorStr then
             local customClassColors = {}
-            private.classColorsReset(customClassColors)
+            private.classColorsReset(customClassColors, true)
             AuroraConfig.customClassColors = customClassColors
         end
 
@@ -749,17 +749,33 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         end
 
         -- setup class colours
-        function private.classColorsInit()
-            for classToken, color in next, AuroraConfig.customClassColors do
-                _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
-            end
-
+        function private.updateHighlightColor()
             if AuroraConfig.useCustomColour then
                 private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
             else
                 private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class]:GetRGB())
             end
+        end
 
+        _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
+            for classToken, color in next, _G.CUSTOM_CLASS_COLORS do
+                local ccc = AuroraConfig.customClassColors[classToken]
+                ccc.r = color.r
+                ccc.g = color.g
+                ccc.b = color.b
+                ccc.colorStr = color.colorStr
+            end
+
+            _G.AuroraOptions.refresh()
+            private.updateHighlightColor()
+        end)
+
+        function private.classColorsInit()
+            for classToken, color in next, AuroraConfig.customClassColors do
+                _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
+            end
+
+            private.updateHighlightColor()
             red, green, blue = private.highlightColor:GetRGB()
             C.r, C.g, C.b = red, green, blue
         end

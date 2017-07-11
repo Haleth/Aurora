@@ -67,15 +67,24 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
         return className and classTokens[className]
     end
 
-    function private.classColorsReset(colors)
+    function private.classColorsReset(colors, noMeta)
         colors = colors or _G.CUSTOM_CLASS_COLORS
         for class, color in next, _G.RAID_CLASS_COLORS do
-            if colors[class] and colors[class].SetRGB then
-                colors[class]:SetRGB(color.r, color.g, color.b)
+            if noMeta then
+                colors[class] = {
+                    r = color.r,
+                    g = color.g,
+                    b = color.b,
+                    colorStr = color.colorStr
+                }
             else
-                colors[class] = _G.setmetatable({}, {
-                    __index = Base.CreateColor(color.r, color.g, color.b)
-                })
+                if colors[class] and colors[class].SetRGB then
+                    colors[class]:SetRGB(color.r, color.g, color.b)
+                else
+                    colors[class] = _G.setmetatable({}, {
+                        __index = Base.CreateColor(color.r, color.g, color.b)
+                    })
+                end
             end
         end
 
