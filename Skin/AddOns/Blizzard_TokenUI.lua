@@ -79,7 +79,20 @@ function private.AddOns.Blizzard_TokenUI()
 
 
     Base.SetBackdrop(_G.TokenFramePopup)
+    _G.TokenFramePopup:SetSize(175, 90)
+
+    local titleText = _G.TokenFramePopupTitle
+    titleText:ClearAllPoints()
+    titleText:SetPoint("TOPLEFT")
+    titleText:SetPoint("BOTTOMRIGHT", _G.TokenFramePopup, "TOPRIGHT", 0, -23)
+
     _G.TokenFramePopupCorner:Hide()
+
+    Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupInactiveCheckBox)
+    _G.TokenFramePopupInactiveCheckBox:SetPoint("TOPLEFT", _G.TokenFramePopup, 24, -26)
+    Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupBackpackCheckBox)
+    _G.TokenFramePopupBackpackCheckBox:SetPoint("TOPLEFT", _G.TokenFramePopupInactiveCheckBox, "BOTTOMLEFT", 0, -8)
+
     Skin.UIPanelCloseButton(_G.TokenFramePopupCloseButton)
 
 
