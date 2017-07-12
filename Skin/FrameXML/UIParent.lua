@@ -1,22 +1,21 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
-function private.FrameXML.UIParent()
-    function private.SkinIconArray(baseName, rowSize, numRows)
-        for i = 1, rowSize * numRows do
-            local bu = _G[baseName..i]
-            bu:SetCheckedTexture(C.media.checked)
-            _G.select(2, bu:GetRegions()):Hide()
-
-            F.ReskinIcon(_G[baseName..i.."Icon"])
+do --[[ FrameXML\UIParent.lua ]]
+    function Hook.BuildIconArray(parent, baseName, template, rowSize, numRows, onButtonCreated)
+        if Skin[template] then
+            for i = 1, rowSize * numRows do
+                Skin[template](_G[baseName..i])
+            end
         end
     end
-    _G.hooksecurefunc("BuildIconArray", function(parent, baseName, template, rowSize, numRows, onButtonCreated)
-        -- This is used to create icons for the GuildBankPopupFrame, MacroPopupFrame, and GearManagerDialogPopup
-        private.SkinIconArray(baseName, rowSize, numRows)
-    end)
+end
+
+function private.FrameXML.UIParent()
+    _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
 
     -- Blizzard doesn't create the chat bubbles in lua, so we're calling it here
     if private.FrameXML.ChatBubbles then

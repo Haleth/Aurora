@@ -4,203 +4,190 @@ local _, private = ...
 local select, next = _G.select, _G.next
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-function private.FrameXML.PaperDollFrame()
-    local r, g, b = C.r, C.g, C.b
-    local classDisplayName = _G.UnitClass("player")
-
-    _G.CharacterModelFrame:DisableDrawLayer("BACKGROUND")
-    _G.CharacterModelFrame:DisableDrawLayer("BORDER")
-    _G.CharacterModelFrame:DisableDrawLayer("OVERLAY")
-
-    -- [[ Item buttons ]]
-
-    local function colourPopout(self)
-        local aR, aG, aB
-        local glow = self:GetParent().IconBorder
-
-        if glow:IsShown() then
-            aR, aG, aB = glow:GetVertexColor()
-        else
-            aR, aG, aB = r, g, b
-        end
-
-        self.arrow:SetVertexColor(aR, aG, aB)
-    end
-
-    local function clearPopout(self)
-        self.arrow:SetVertexColor(1, 1, 1)
-    end
-
-    local slots = {
-        "Head", "Neck", "Shoulder", "Shirt", "Chest", "Waist", "Legs", "Feet", "Wrist",
-        "Hands", "Finger0", "Finger1", "Trinket0", "Trinket1", "Back", "MainHand",
-        "SecondaryHand", "Tabard",
-    }
-
-    for i = 1, #slots do
-        local slot = _G["Character"..slots[i].."Slot"]
-        local border = slot.IconBorder
-
-        _G["Character"..slots[i].."SlotFrame"]:Hide()
-
-        slot:SetNormalTexture("")
-        slot:SetPushedTexture("")
-        slot.icon:SetTexCoord(.08, .92, .08, .92)
-
-        border:SetPoint("TOPLEFT", -1, 1)
-        border:SetPoint("BOTTOMRIGHT", 1, -1)
-        border:SetDrawLayer("BACKGROUND")
-
-        local popout = slot.popoutButton
-
-        popout:SetNormalTexture("")
-        popout:SetHighlightTexture("")
-
-        local arrow = popout:CreateTexture(nil, "OVERLAY")
-
-        if slot.verticalFlyout then
-            arrow:SetSize(13, 8)
-            arrow:SetTexture(C.media.arrowDown)
-            arrow:SetPoint("TOP", slot, "BOTTOM", 0, 1)
-        else
-            arrow:SetSize(8, 14)
-            arrow:SetTexture(C.media.arrowRight)
-            arrow:SetPoint("LEFT", slot, "RIGHT", -1, 0)
-        end
-
-        popout.arrow = arrow
-
-        popout:HookScript("OnEnter", clearPopout)
-        popout:HookScript("OnLeave", colourPopout)
-    end
-
-    select(11, _G.CharacterMainHandSlot:GetRegions()):Hide()
-    select(11, _G.CharacterSecondaryHandSlot:GetRegions()):Hide()
-
-    _G.hooksecurefunc("PaperDollItemSlotButton_Update", function(button)
-        -- also fires for bag slots, we don't want that
-        if button.popoutButton then
-            button.IconBorder:SetTexture(C.media.backdrop)
-            button.icon:SetShown(button.hasItem)
-            colourPopout(button.popoutButton)
-        end
-    end)
-    _G.hooksecurefunc("PaperDollFrame_SetLevel", function()
-        local classColorString = ("ff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
+do --[[ FrameXML\PaperDollFrame.lua ]]
+    function Hook.PaperDollFrame_SetLevel()
+        local classLocale, classColor = private.charClass.locale, _G.CUSTOM_CLASS_COLORS[private.charClass.token]
 
         local _, specName = _G.GetSpecializationInfo(_G.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
         if specName and specName ~= "" then
-            _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColorString, specName, classDisplayName)
+            _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColor.colorStr, specName, classLocale)
         end
-    end)
 
-    -- [[ Sidebar tabs ]]
-    F.Reskin(_G.PaperDollEquipmentManagerPaneSaveSet)
-
-    _G.PaperDollSidebarTabs:GetRegions():Hide()
-    select(2, _G.PaperDollSidebarTabs:GetRegions()):Hide()
-    for i = 1, #_G.PAPERDOLL_SIDEBARS do
-        local tab = _G["PaperDollSidebarTab"..i]
-
-        if i == 1 then
-            for j = 1, 4 do
-                local region = select(j, tab:GetRegions())
-                region:SetTexCoord(0.16, 0.86, 0.16, 0.86)
-                region.SetTexCoord = F.dummy
+        local showTrialCap = false;
+        if _G.GameLimitedMode_IsActive() then
+            local rLevel = _G.GetRestrictedAccountData();
+            if _G.UnitLevel("player") >= rLevel then
+                showTrialCap = true;
             end
         end
-
-        tab.Highlight:SetColorTexture(r, g, b, .2)
-        tab.Highlight:SetPoint("TOPLEFT", 3, -4)
-        tab.Highlight:SetPoint("BOTTOMRIGHT", -1, 0)
-        tab.Hider:SetColorTexture(.3, .3, .3, .4)
-        tab.TabBg:SetAlpha(0)
-
-        select(2, tab:GetRegions()):ClearAllPoints()
-        if i == 1 then
-            select(2, tab:GetRegions()):SetPoint("TOPLEFT", 3, -4)
-            select(2, tab:GetRegions()):SetPoint("BOTTOMRIGHT", -1, 0)
+        if showTrialCap then
+            _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "TOP", 0, -36)
         else
-            select(2, tab:GetRegions()):SetPoint("TOPLEFT", 2, -4)
-            select(2, tab:GetRegions()):SetPoint("BOTTOMRIGHT", -1, -1)
+            --_G.CharacterTrialLevelErrorText:Show();
+            _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "BOTTOM", 0, -4)
         end
+    end
+end
 
-        tab.bg = _G.CreateFrame("Frame", nil, tab)
-        tab.bg:SetPoint("TOPLEFT", 2, -3)
-        tab.bg:SetPoint("BOTTOMRIGHT", 0, -1)
-        tab.bg:SetFrameLevel(0)
-        F.CreateBD(tab.bg)
+do --[[ FrameXML\PaperDollFrame.xml ]]
+    function Skin.PaperDollItemSlotButtonTemplate(button)
+        Skin.ItemButtonTemplate(button)
+        _G[button:GetName().."Frame"]:Hide()
+    end
+    function Skin.PlayerTitleButtonTemplate(button)
+        button.BgTop:SetTexture("")
+        button.BgBottom:SetTexture("")
+        button.BgMiddle:SetTexture("")
 
-        tab.Hider:SetPoint("TOPLEFT", tab.bg, 1, -1)
-        tab.Hider:SetPoint("BOTTOMRIGHT", tab.bg, -1, 1)
+        button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+        button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2)
+    end
+    function Skin.GearSetButtonTemplate(button)
+        button.BgTop:SetTexture("")
+        button.BgBottom:SetTexture("")
+        button.BgMiddle:SetTexture("")
+
+        button.HighlightBar:SetColorTexture(0, 0, 1, 0.3)
+        button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+
+        Base.CropIcon(button.icon, button)
+    end
+    function Skin.GearSetPopupButtonTemplate(checkbutton)
+        Skin.SimplePopupButtonTemplate(checkbutton)
+        Base.CropIcon(_G[checkbutton:GetName().."Icon"], checkbutton)
+        checkbutton:SetCheckedTexture(C.media.checked)
+    end
+    function Skin.PaperDollSidebarTabTemplate(button)
+        button.TabBg:SetAlpha(0)
+        button.Hider:SetTexture("")
+
+        button.Icon:ClearAllPoints()
+        button.Icon:SetPoint("TOPLEFT", 1, -1)
+        button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
+
+        button.Highlight:SetTexture("")
+
+        Base.SetBackdrop(button, private.buttonColor:GetRGB())
+        Base.SetHighlight(button, "backdrop")
+    end
+end
+
+function private.FrameXML.PaperDollFrame()
+    _G.hooksecurefunc("PaperDollFrame_SetLevel", Hook.PaperDollFrame_SetLevel)
+
+    if private.is730 then
+        local classBG = _G.PaperDollFrame:CreateTexture(nil, "BORDER")
+        classBG:SetAtlas("dressingroom-background-"..private.charClass.token)
+        classBG:SetPoint("TOPLEFT", _G.CharacterFrame)
+        classBG:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, 4, -4)
+        classBG:SetAlpha(0.5)
     end
 
-    -- [[ Titles pane ]]
+    _G.PaperDollSidebarTabs:ClearAllPoints()
+    _G.PaperDollSidebarTabs:SetPoint("BOTTOM", _G.CharacterFrameInsetRight, "TOP", 0, -3)
+    _G.PaperDollSidebarTabs.DecorLeft:Hide()
+    _G.PaperDollSidebarTabs.DecorRight:Hide()
 
-    F.ReskinScroll(_G.PaperDollTitlesPaneScrollBar)
-    _G.PaperDollTitlesPane:HookScript("OnShow", function(titles)
-        for x, object in next, titles.buttons do
-            object:DisableDrawLayer("BACKGROUND")
-            object.text:SetFont(C.media.font, 11)
+    for i = 1, #_G.PAPERDOLL_SIDEBARS do
+        local tab = _G["PaperDollSidebarTab"..i]
+        Skin.PaperDollSidebarTabTemplate(tab)
+    end
+
+
+    Hook.HybridScrollFrame_CreateButtons(_G.PaperDollTitlesPane, "PlayerTitleButtonTemplate") -- Called here since the original is called OnLoad
+    _G.PaperDollTitlesPane:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInsetRight, -4, 4)
+    Skin.HybridScrollBarTemplate(_G.PaperDollTitlesPane.scrollBar)
+    _G.PaperDollTitlesPane.scrollBar:ClearAllPoints()
+    _G.PaperDollTitlesPane.scrollBar:SetPoint("TOPRIGHT", 2, -19)
+    _G.PaperDollTitlesPane.scrollBar:SetPoint("BOTTOMRIGHT", 2, 15)
+
+
+    local PaperDollEquipmentManagerPane = _G.PaperDollEquipmentManagerPane
+    Hook.HybridScrollFrame_CreateButtons(PaperDollEquipmentManagerPane, "GearSetButtonTemplate") -- Called here since the original is called OnLoad
+    PaperDollEquipmentManagerPane:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInsetRight, -4, 4)
+
+    Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.EquipSet)
+    PaperDollEquipmentManagerPane.EquipSet.ButtonBackground:Hide()
+    Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.SaveSet)
+
+    Skin.HybridScrollBarTemplate(PaperDollEquipmentManagerPane.scrollBar)
+    PaperDollEquipmentManagerPane.scrollBar:ClearAllPoints()
+    PaperDollEquipmentManagerPane.scrollBar:SetPoint("TOPRIGHT", 2, -19)
+    PaperDollEquipmentManagerPane.scrollBar:SetPoint("BOTTOMRIGHT", 2, 15)
+
+
+    _G.CharacterModelFrame:SetPoint("TOPLEFT", _G.CharacterFrameInset, 45, -10)
+    _G.CharacterModelFrame:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, -45, 30)
+
+    _G.CharacterModelFrameBackgroundTopLeft:Hide()
+    _G.CharacterModelFrameBackgroundTopRight:Hide()
+    _G.CharacterModelFrameBackgroundBotLeft:Hide()
+    _G.CharacterModelFrameBackgroundBotRight:Hide()
+
+    _G.CharacterModelFrameBackgroundOverlay:Hide()
+
+    _G.PaperDollInnerBorderTopLeft:Hide()
+    _G.PaperDollInnerBorderTopRight:Hide()
+    _G.PaperDollInnerBorderBottomLeft:Hide()
+    _G.PaperDollInnerBorderBottomRight:Hide()
+    _G.PaperDollInnerBorderLeft:Hide()
+    _G.PaperDollInnerBorderRight:Hide()
+    _G.PaperDollInnerBorderTop:Hide()
+    _G.PaperDollInnerBorderBottom:Hide()
+    _G.PaperDollInnerBorderBottom2:Hide()
+
+
+    local slots = {
+        "Head", "Neck", "Shoulder", "Back", "Chest", "Shirt", "Tabard", "Wrist",
+        "Hands", "Waist", "Legs", "Feet", "Finger0", "Finger1", "Trinket0", "Trinket1",
+        "MainHand", "SecondaryHand",
+    }
+
+    for i = 1, #slots do
+        local name = "Character"..slots[i].."Slot"
+        local button = _G[name]
+        Skin.PaperDollItemSlotButtonTemplate(button)
+
+        if i > 16 then
+            -- weapons
+            _G.select(11, button:GetRegions()):Hide()
+            if i == 17 then
+                -- main hand
+                button:SetPoint("BOTTOMLEFT", 130, 8)
+            end
+        elseif i % 8 == 1 then
+            -- healm and gloves
+        else
+            button:SetPoint("TOPLEFT", _G["Character"..slots[i - 1].."Slot"], "BOTTOMLEFT", 0, -9)
         end
-    end)
+    end
 
-    -- [[ Equipment manager ]]
-
-    _G.PaperDollEquipmentManagerPaneSaveSet:SetPoint("LEFT", _G.PaperDollEquipmentManagerPaneEquipSet, "RIGHT", 1, 0)
-    _G.PaperDollEquipmentManagerPaneEquipSet:SetWidth(_G.PaperDollEquipmentManagerPaneEquipSet:GetWidth()-1)
-    F.Reskin(_G.PaperDollEquipmentManagerPaneSaveSet)
-    F.Reskin(_G.PaperDollEquipmentManagerPaneEquipSet)
-    F.ReskinScroll(_G.PaperDollEquipmentManagerPaneScrollBar)
-    --select(6, _G.PaperDollEquipmentManagerPaneEquipSet:GetRegions()):Hide()
 
     local GearManagerDialogPopup = _G.GearManagerDialogPopup
-    GearManagerDialogPopup:SetHeight(520)
-    F.CreateBD(GearManagerDialogPopup)
+    Base.SetBackdrop(GearManagerDialogPopup)
+    GearManagerDialogPopup:SetSize(510, 520)
     GearManagerDialogPopup.BG:Hide()
+    Hook.BuildIconArray(GearManagerDialogPopup, "GearManagerDialogPopupButton", "GearSetPopupButtonTemplate", _G.NUM_GEARSET_ICONS_PER_ROW, _G.NUM_GEARSET_ICON_ROWS)
+
+    local BorderBox = GearManagerDialogPopup.BorderBox
     for i = 1, 8 do
-        select(i, GearManagerDialogPopup.BorderBox:GetRegions()):Hide()
+        select(i, BorderBox:GetRegions()):Hide()
     end
 
     _G.GearManagerDialogPopupEditBoxLeft:Hide()
     _G.GearManagerDialogPopupEditBoxMiddle:Hide()
     _G.GearManagerDialogPopupEditBoxRight:Hide()
-    F.CreateBD(_G.GearManagerDialogPopupEditBox, .25)
-    F.Reskin(_G.GearManagerDialogPopupCancel)
-    F.Reskin(_G.GearManagerDialogPopupOkay)
+    Base.SetBackdrop(_G.GearManagerDialogPopupEditBox)
 
-    _G.GearManagerDialogPopupScrollFrameTop:Hide()
-    _G.GearManagerDialogPopupScrollFrameMiddle:Hide()
-    _G.GearManagerDialogPopupScrollFrameBottom:Hide()
-    F.ReskinScroll(_G.GearManagerDialogPopupScrollFrameScrollBar)
-    _G.GearManagerDialogPopupScrollFrame:SetHeight(400)
-    private.SkinIconArray("GearManagerDialogPopupButton", _G.NUM_GEARSET_ICONS_PER_ROW, _G.NUM_GEARSET_ICON_ROWS)
+    Skin.UIPanelButtonTemplate(_G.GearManagerDialogPopupCancel)
+    Skin.UIPanelButtonTemplate(_G.GearManagerDialogPopupOkay)
 
-    local sets = false
-    _G.PaperDollSidebarTab3:HookScript("OnClick", function()
-        if sets == false then
-            for i = 1, 9 do
-                local bu = _G["PaperDollEquipmentManagerPaneButton"..i]
-                local bd = _G["PaperDollEquipmentManagerPaneButton"..i.."Stripe"]
-                local ic = _G["PaperDollEquipmentManagerPaneButton"..i.."Icon"]
-                _G["PaperDollEquipmentManagerPaneButton"..i.."BgTop"]:SetAlpha(0)
-                _G["PaperDollEquipmentManagerPaneButton"..i.."BgMiddle"]:Hide()
-                _G["PaperDollEquipmentManagerPaneButton"..i.."BgBottom"]:SetAlpha(0)
-
-                bu.HighlightBar:SetColorTexture(r, g, b, .1)
-                bu.HighlightBar:SetDrawLayer("BACKGROUND")
-                bu.SelectedBar:SetColorTexture(r, g, b, .2)
-                bu.SelectedBar:SetDrawLayer("BACKGROUND")
-
-                bd:Hide()
-                bd.Show = F.dummy
-                ic:SetTexCoord(.08, .92, .08, .92)
-
-                F.CreateBG(ic)
-            end
-            sets = true
-        end
-    end)
+    Skin.ListScrollFrameTemplate(_G.GearManagerDialogPopupScrollFrame)
+    _G.GearManagerDialogPopupScrollFrame:ClearAllPoints()
+    _G.GearManagerDialogPopupScrollFrame:SetPoint("TOPLEFT", 22, -81)
+    _G.GearManagerDialogPopupScrollFrame:SetPoint("BOTTOMRIGHT", -29, 42)
 end

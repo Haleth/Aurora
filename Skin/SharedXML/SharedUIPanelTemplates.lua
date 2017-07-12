@@ -54,6 +54,16 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Aurora.Base.SetHighlight(button, "color")
     end
+    function Skin.UIPanelButtonTemplate(button)
+        button.Left:SetAlpha(0)
+        button.Right:SetAlpha(0)
+        button.Middle:SetAlpha(0)
+        button:SetHighlightTexture("")
+
+        F.CreateBD(button, 0)
+        F.CreateGradient(button)
+        Aurora.Base.SetHighlight(button, "backdrop")
+    end
     function Skin.PortraitFrameTemplate(frame, noCloseButton)
         local name = frame:GetName()
 
@@ -106,6 +116,58 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         _G[name.."ButtonBottomBorder"]:SetTexture("")
         Skin.InsetFrameTemplate(frame.Inset)
     end
+
+    function Skin.UIPanelScrollBarButton(button)
+        button:SetSize(17, 17)
+        button:SetNormalTexture("")
+        button:SetPushedTexture("")
+        button:SetDisabledTexture("")
+        button:SetHighlightTexture("")
+
+        F.CreateBD(button, 0)
+        F.CreateGradient(button)
+    end
+    function Skin.UIPanelScrollUpButtonTemplate(button)
+        Skin.UIPanelScrollBarButton(button)
+        F.CreateArrow(button, "Up")
+    end
+    function Skin.UIPanelScrollDownButtonTemplate(button)
+        Skin.UIPanelScrollBarButton(button)
+        F.CreateArrow(button, "Down")
+    end
+    function Skin.UIPanelScrollBarTemplate(slider)
+        Skin.UIPanelScrollUpButtonTemplate(slider.ScrollUpButton)
+        Skin.UIPanelScrollDownButtonTemplate(slider.ScrollDownButton)
+
+        local thumb = slider.ThumbTexture
+        thumb:SetAlpha(0)
+        thumb:SetWidth(17)
+
+        local bg = _G.CreateFrame("Frame", nil, slider)
+        bg:SetPoint("TOPLEFT", thumb, 0, -2)
+        bg:SetPoint("BOTTOMRIGHT", thumb, 0, 4)
+        F.CreateBD(bg, 0)
+
+        local tex = F.CreateGradient(slider)
+        tex:SetPoint("TOPLEFT", bg, 1, -1)
+        tex:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+    end
+    function Skin.UIPanelScrollFrameTemplate(scrollframe)
+        Skin.UIPanelScrollBarTemplate(scrollframe.ScrollBar)
+        scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 2, -19)
+        scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", 2, 19)
+    end
+    function Skin.FauxScrollFrameTemplate(scrollframe)
+        Skin.UIPanelScrollFrameTemplate(scrollframe)
+    end
+    function Skin.ListScrollFrameTemplate(scrollframe)
+        Skin.FauxScrollFrameTemplate(scrollframe)
+        local name = scrollframe:GetName()
+        _G[name.."Top"]:Hide()
+        _G[name.."Bottom"]:Hide()
+        _G[name.."Middle"]:Hide()
+    end
+
     function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
             local button = frame[name]

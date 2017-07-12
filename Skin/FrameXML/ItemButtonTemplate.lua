@@ -1,8 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F = _G.unpack(private.Aurora)
-local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\ItemButtonTemplate.lua ]]
     local size = 6
@@ -63,38 +64,46 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
 end
 
 do --[[ FrameXML\ItemButtonTemplate.xml ]]
-    function Skin.ItemButtonTemplate(itemButton)
-        itemButton:SetNormalTexture("")
-        itemButton:SetHighlightTexture("")
-        itemButton:SetPushedTexture("")
-        itemButton._auroraBG = F.ReskinIcon(itemButton.icon)
+    function Skin.ItemButtonTemplate(button)
+        button:SetNormalTexture("")
+        button:SetHighlightTexture("")
+        button:SetPushedTexture("")
+        button._auroraBG = F.ReskinIcon(button.icon)
     end
-    function Skin.LargeItemButtonTemplate(itemButton)
-        local icon = itemButton.Icon
-        itemButton._auroraBG = F.ReskinIcon(icon)
+    function Skin.SimplePopupButtonTemplate(checkbutton)
+        _G.select(2, checkbutton:GetRegions()):Hide()
+    end
+    function Skin.PopupButtonTemplate(checkbutton)
+        Skin.SimplePopupButtonTemplate(checkbutton)
+        Base.CropIcon(_G[checkbutton:GetName().."Icon"], checkbutton)
+        checkbutton:SetCheckedTexture(C.media.checked)
+    end
+    function Skin.LargeItemButtonTemplate(button)
+        local icon = button.Icon
+        button._auroraBG = F.ReskinIcon(icon)
 
-        local nameFrame = itemButton.NameFrame
+        local nameFrame = button.NameFrame
         nameFrame:SetAlpha(0)
 
-        local bg = _G.CreateFrame("Frame", nil, itemButton)
+        local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", -3, 1)
         F.CreateBD(bg, .2)
-        itemButton._auroraNameBG = bg
+        button._auroraNameBG = bg
     end
-    function Skin.SmallItemButtonTemplate(itemButton)
-        local icon = itemButton.Icon
+    function Skin.SmallItemButtonTemplate(button)
+        local icon = button.Icon
         icon:SetSize(29, 29)
-        itemButton._auroraBG = F.ReskinIcon(icon)
+        button._auroraBG = F.ReskinIcon(icon)
 
-        local nameFrame = itemButton.NameFrame
+        local nameFrame = button.NameFrame
         nameFrame:SetAlpha(0)
 
-        local bg = _G.CreateFrame("Frame", nil, itemButton)
+        local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
         F.CreateBD(bg, .2)
-        itemButton._auroraNameBG = bg
+        button._auroraNameBG = bg
     end
 end
 
