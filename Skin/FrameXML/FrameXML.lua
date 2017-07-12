@@ -21,6 +21,7 @@ local FrameXML = {
     "SharedXML.ModelSceneTemplates",
     "SharedXML.ModelSceneMixin",
     "SharedXML.ModelSceneActorMixin",
+    "SharedXML.FrameStack",
 
     "AnimatedStatusBar",
     "FlowContainer",
@@ -38,7 +39,7 @@ local FrameXML = {
     "WorldFrame",
     "UIParent",
     "QuestUtils",
-    -- IME needs to be loaded after UIParent"/>
+    -- IME needs to be loaded after UIParent
     "SharedXML.IME",
     "MoneyFrame",
     "MoneyInputFrame",
