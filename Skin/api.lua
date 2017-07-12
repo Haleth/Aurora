@@ -47,6 +47,9 @@ do -- Base.SetHighlight
     local function OnEnter(button, isBackground)
         if button:IsEnabled() then
             if isBackground then
+                if not button._returnColor then
+                    button._returnColor = CreateColor(button:GetBackdropColor())
+                end
                 Aurora.Base.SetBackdrop(button, highlightColor:GetRGBA())
             else
                 for _, texture in next, button._auroraHighlight do
@@ -84,9 +87,6 @@ end
 do -- Base.SetBackdrop
     function Base.SetBackdrop(frame, r, g, b, a)
         if not r then r, g, b, a = frameColor:GetRGBA() end
-        if not frame._returnColor then
-            frame._returnColor = CreateColor(r, g, b, a)
-        end
         frame:SetBackdrop(backdrop)
         frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
         frame:SetBackdropBorderColor(r, g, b, 1)
