@@ -1,7 +1,7 @@
 local _, private = ...
 
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base, Skin = Aurora.Base, Aurora.Skin
 
 local F, C = {}, {}
 Aurora[1] = F

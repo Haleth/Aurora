@@ -1,27 +1,34 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local select, next = _G.select, _G.next
+local select = _G.select
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
+local _, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\PaperDollFrame.lua ]]
     function Hook.PaperDollFrame_SetLevel()
         local classLocale, classColor = private.charClass.locale, _G.CUSTOM_CLASS_COLORS[private.charClass.token]
 
+        local level = _G.UnitLevel("player");
+        local effectiveLevel = _G.UnitEffectiveLevel("player")
+
+        if ( effectiveLevel ~= level ) then
+            level = _G.EFFECTIVE_LEVEL_FORMAT:format(effectiveLevel, level)
+        end
+
         local _, specName = _G.GetSpecializationInfo(_G.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
         if specName and specName ~= "" then
-            _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, _G.UnitLevel("player"), classColor.colorStr, specName, classLocale)
+            _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, level, classColor.colorStr, specName, classLocale)
         end
 
         local showTrialCap = false;
         if _G.GameLimitedMode_IsActive() then
-            local rLevel = _G.GetRestrictedAccountData();
+            local rLevel = _G.GetRestrictedAccountData()
             if _G.UnitLevel("player") >= rLevel then
-                showTrialCap = true;
+                showTrialCap = true
             end
         end
         if showTrialCap then
@@ -159,7 +166,7 @@ function private.FrameXML.PaperDollFrame()
                 -- main hand
                 button:SetPoint("BOTTOMLEFT", 130, 8)
             end
-        elseif i % 8 == 1 then
+        elseif i % 8 == 1 then -- luacheck: ignore
             -- healm and gloves
         else
             button:SetPoint("TOPLEFT", _G["Character"..slots[i - 1].."Slot"], "BOTTOMLEFT", 0, -9)
