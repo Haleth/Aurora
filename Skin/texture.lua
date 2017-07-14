@@ -78,7 +78,7 @@ end
 
 local snapshots = {}
 
-function Base:SetTexture(texture, textureName, useTextureSize)
+function Base.SetTexture(texture, textureName, useTextureSize)
     local snapshot = snapshots[textureName]
     if not snapshot.id or not SnapshotFrame:IsSnapshotValid(snapshot.id) then
         snapshot.create(textureFrame)
@@ -104,7 +104,7 @@ function Base:SetTexture(texture, textureName, useTextureSize)
     texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
 end
 
-function Base:RegisterTexture(textureName, createFunc)
+function Base.RegisterTexture(textureName, createFunc)
     snapshots[textureName] = {
         create = createFunc
     }
@@ -132,22 +132,22 @@ do -- arrows
         return texture
     end
 
-    Base:RegisterTexture("arrowUp", function(frame)
+    Base.RegisterTexture("arrowUp", function(frame)
         local texture = setup(frame)
         texture:SetVertexOffset(map.up[1], offset, 0)
         texture:SetVertexOffset(map.up[2], -offset, 0)
     end)
-    Base:RegisterTexture("arrowDown", function(frame)
+    Base.RegisterTexture("arrowDown", function(frame)
         local texture = setup(frame)
         texture:SetVertexOffset(map.down[1], offset, 0)
         texture:SetVertexOffset(map.down[2], -offset, 0)
     end)
-    Base:RegisterTexture("arrowLeft", function(frame)
+    Base.RegisterTexture("arrowLeft", function(frame)
         local texture = setup(frame)
         texture:SetVertexOffset(map.left[1], 0, -offset)
         texture:SetVertexOffset(map.left[2], 0, offset)
     end)
-    Base:RegisterTexture("arrowRight", function(frame)
+    Base.RegisterTexture("arrowRight", function(frame)
         local texture = setup(frame)
         texture:SetVertexOffset(map.left[1], 0, -offset)
         texture:SetVertexOffset(map.left[2], 0, offset)
@@ -167,19 +167,19 @@ do -- gradients
         return texture
     end
 
-    Base:RegisterTexture("gradientUp", function(frame)
+    Base.RegisterTexture("gradientUp", function(frame)
         local texture = setup(frame)
         texture:SetGradient("VERTICAL", min, min, min, max, max, max)
     end)
-    Base:RegisterTexture("gradientDown", function(frame)
+    Base.RegisterTexture("gradientDown", function(frame)
         local texture = setup(frame)
         texture:SetGradient("VERTICAL", max, max, max, min, min, min)
     end)
-    Base:RegisterTexture("gradientLeft", function(frame)
+    Base.RegisterTexture("gradientLeft", function(frame)
         local texture = setup(frame)
         texture:SetGradient("HORIZONTAL", max, max, max, min, min, min)
     end)
-    Base:RegisterTexture("gradientRight", function(frame)
+    Base.RegisterTexture("gradientRight", function(frame)
         local texture = setup(frame)
         texture:SetGradient("HORIZONTAL", min, min, min, max, max, max)
     end)
@@ -212,7 +212,7 @@ do -- LFG Icons
         icon:AddMaskTexture(mask)
         return icon
     end
-    Base:RegisterTexture("lfgIcons", function(frame)
+    Base.RegisterTexture("lfgIcons", function(frame)
         frame:SetSize(256, 256)
 
         local bg = frame:CreateTexture(nil, "BACKGROUND")
@@ -239,7 +239,7 @@ end
 
 
 --[[
-Base:RegisterTexture("test", function(frame)
+Base.RegisterTexture("test", function(frame)
     frame:SetSize(256, 256)
 
     local prevIcon = CreateIcon(frame, 1)
