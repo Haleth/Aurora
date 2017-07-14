@@ -21,36 +21,43 @@ do --[[ SharedXML\HybridScrollFrame.lua ]]
 end
 
 do --[[ SharedXML\HybridScrollFrame.xml ]]
-    function Skin.HybridScrollBarTemplate(scrollbar)
-        local name = scrollbar:GetName()
+    function Skin.HybridScrollBarTemplate(slider)
+        local name = slider:GetName()
 
-        scrollbar.trackBG:Hide()
+        local parent = slider:GetParent()
+        slider:SetPoint("TOPLEFT", parent, "TOPRIGHT", 0, -17)
+        slider:SetPoint("BOTTOMLEFT", parent, "BOTTOMRIGHT", 0, 17)
 
-        scrollbar.ScrollBarTop:Hide()
-        scrollbar.ScrollBarMiddle:Hide()
-        scrollbar.ScrollBarBottom:Hide()
+        slider.trackBG:Hide()
 
-        local up = _G[name.."ScrollUpButton"]
-        F.ReskinArrow(up, "Up")
-        up:SetSize(17, 17)
-        up:SetPoint("BOTTOM", scrollbar, "TOP")
+        slider.ScrollBarTop:Hide()
+        slider.ScrollBarMiddle:Hide()
+        slider.ScrollBarBottom:Hide()
 
-        local down = _G[name.."ScrollDownButton"]
-        F.ReskinArrow(down, "Down")
-        down:SetSize(17, 17)
+        local upButton = _G[name.."ScrollUpButton"]
+        upButton:SetPoint("BOTTOM", slider, "TOP")
+        Skin.UIPanelScrollUpButtonTemplate(upButton)
 
-        local thumb = scrollbar.thumbTexture
+        local downButton = _G[name.."ScrollDownButton"]
+        downButton:SetPoint("TOP", slider, "BOTTOM")
+        Skin.UIPanelScrollDownButtonTemplate(downButton)
+
+        local thumb = slider.thumbTexture
         thumb:SetAlpha(0)
         thumb:SetWidth(17)
 
-        thumb.bg = _G.CreateFrame("Frame", nil, scrollbar)
+        thumb.bg = _G.CreateFrame("Frame", nil, slider)
         thumb.bg:SetPoint("TOPLEFT", thumb, 0, -2)
-        thumb.bg:SetPoint("BOTTOMRIGHT", thumb, 0, 4)
+        thumb.bg:SetPoint("BOTTOMRIGHT", thumb, 0, 2)
         F.CreateBD(thumb.bg, 0)
 
-        local tex = F.CreateGradient(scrollbar)
+        local tex = F.CreateGradient(slider)
         tex:SetPoint("TOPLEFT", thumb.bg, 1, -1)
         tex:SetPoint("BOTTOMRIGHT", thumb.bg, -1, 1)
+    end
+    function Skin.BasicHybridScrollFrameTemplate(scrollframe)
+        local name = scrollframe:GetName()
+        Skin.HybridScrollBarTemplate(_G[name.."ScrollBar"])
     end
 end
 

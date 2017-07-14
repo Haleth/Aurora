@@ -6,7 +6,7 @@ local next, tinsert = _G.next, _G.tinsert
 -- [[ Core ]]
 local Aurora = private.Aurora
 local F = _G.unpack(Aurora)
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
     function Hook.PanelTemplates_DeselectTab(tab)
@@ -121,19 +121,36 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         button:SetSize(17, 17)
         button:SetNormalTexture("")
         button:SetPushedTexture("")
-        button:SetDisabledTexture("")
         button:SetHighlightTexture("")
+
+        local disabled = button:GetDisabledTexture()
+        disabled:SetVertexColor(0, 0, 0, .3)
+        disabled:SetDrawLayer("OVERLAY")
 
         F.CreateBD(button, 0)
         F.CreateGradient(button)
     end
     function Skin.UIPanelScrollUpButtonTemplate(button)
         Skin.UIPanelScrollBarButton(button)
-        F.CreateArrow(button, "Up")
+
+        local arrow = button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", 4, -6)
+        arrow:SetPoint("BOTTOMRIGHT", -5, 7)
+        Base.SetTexture(arrow, "arrowUp")
+
+        button._auroraHighlight = {arrow}
+        Base.SetHighlight(button, "texture")
     end
     function Skin.UIPanelScrollDownButtonTemplate(button)
         Skin.UIPanelScrollBarButton(button)
-        F.CreateArrow(button, "Down")
+
+        local arrow = button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", 4, -7)
+        arrow:SetPoint("BOTTOMRIGHT", -5, 6)
+        Base.SetTexture(arrow, "arrowDown")
+
+        button._auroraHighlight = {arrow}
+        Base.SetHighlight(button, "texture")
     end
     function Skin.UIPanelScrollBarTemplate(slider)
         Skin.UIPanelScrollUpButtonTemplate(slider.ScrollUpButton)
@@ -145,7 +162,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         local bg = _G.CreateFrame("Frame", nil, slider)
         bg:SetPoint("TOPLEFT", thumb, 0, -2)
-        bg:SetPoint("BOTTOMRIGHT", thumb, 0, 4)
+        bg:SetPoint("BOTTOMRIGHT", thumb, 0, 2)
         F.CreateBD(bg, 0)
 
         local tex = F.CreateGradient(slider)
@@ -154,8 +171,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.UIPanelScrollFrameTemplate(scrollframe)
         Skin.UIPanelScrollBarTemplate(scrollframe.ScrollBar)
-        scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 2, -19)
-        scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", 2, 19)
+        scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 2, -17)
+        scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", 2, 17)
     end
     function Skin.FauxScrollFrameTemplate(scrollframe)
         Skin.UIPanelScrollFrameTemplate(scrollframe)

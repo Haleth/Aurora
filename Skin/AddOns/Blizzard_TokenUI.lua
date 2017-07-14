@@ -74,8 +74,6 @@ function private.AddOns.Blizzard_TokenUI()
 
 
     Skin.HybridScrollBarTemplate(_G.TokenFrameContainer.scrollBar)
-    _G.TokenFrameContainer.scrollBar:SetPoint("TOPLEFT", _G.TokenFrameContainer, "TOPRIGHT", 0, -19)
-    _G.TokenFrameContainer.scrollBar:SetPoint("BOTTOMLEFT", _G.TokenFrameContainer, "BOTTOMRIGHT", 0, 15)
 
 
     Base.SetBackdrop(_G.TokenFramePopup)
