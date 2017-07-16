@@ -4,9 +4,66 @@ local _, private = ...
 local next = _G.next
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+
+do --[[ SharedXML\GameTooltipTemplate.xml ]]
+    function Skin.GameTooltipTemplate(gametooltip)
+        Base.SetBackdrop(gametooltip, private.frameColor:GetRGBA())
+    end
+    function Skin.ShoppingTooltipTemplate(gametooltip)
+        Base.SetBackdrop(gametooltip, private.frameColor:GetRGBA())
+    end
+    function Skin.TooltipMoneyFrameTemplate(frame)
+        Skin.SmallMoneyFrameTemplate(frame)
+    end
+    function Skin.TooltipStatusBarTemplate(statusbar)
+    end
+    function Skin.TooltipProgressBarTemplate(frame)
+        Base.SetTexture(frame.Bar:GetStatusBarTexture(), "gradientUp")
+
+        local bar = frame.Bar
+        Base.SetBackdrop(bar, private.frameColor:GetRGBA())
+        bar:SetBackdropBorderColor(private.buttonColor:GetRGB())
+        bar:GetStatusBarTexture():SetDrawLayer("BORDER")
+
+        bar.BorderLeft:Hide()
+        bar.BorderRight:Hide()
+        bar.BorderMid:Hide()
+
+        local LeftDivider = bar.LeftDivider
+        LeftDivider:SetColorTexture(private.buttonColor:GetRGB())
+        LeftDivider:SetSize(1, 15)
+        LeftDivider:SetPoint("LEFT", 73, 0)
+
+        local RightDivider = bar.RightDivider
+        RightDivider:SetColorTexture(private.buttonColor:GetRGB())
+        RightDivider:SetSize(1, 15)
+        RightDivider:SetPoint("RIGHT", -73, 0)
+
+        _G.select(7, bar:GetRegions()):Hide()
+    end
+end
+
+do --[[ FrameXML\GameTooltip.lua ]]
+    function Hook.GameTooltip_OnHide(gametooltip)
+        Base.SetBackdropColor(gametooltip, private.frameColor:GetRGBA())
+    end
+end
+do --[[ FrameXML\GameTooltip.xml ]]
+    function Skin.EmbeddedItemTooltip(frame)
+        Base.CropIcon(frame.Icon)
+        local bg = _G.CreateFrame("Frame", nil, frame)
+        bg:SetPoint("TOPLEFT", frame.Icon, -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", frame.Icon, 1, -1)
+        Base.SetBackdrop(bg, 0,0,0,0)
+        frame._auroraBG = bg
+    end
+end
 
 function private.FrameXML.GameTooltip()
+    _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
     if not _G.AuroraConfig.tooltips then return end
 
     local tooltips = {

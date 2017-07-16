@@ -12,7 +12,7 @@ do --[[ FrameXML\PaperDollFrame.lua ]]
     function Hook.PaperDollFrame_SetLevel()
         local classLocale, classColor = private.charClass.locale, _G.CUSTOM_CLASS_COLORS[private.charClass.token]
 
-        local level = _G.UnitLevel("player");
+        local level = _G.UnitLevel("player")
         local effectiveLevel = _G.UnitEffectiveLevel("player")
 
         if ( effectiveLevel ~= level ) then
@@ -24,7 +24,7 @@ do --[[ FrameXML\PaperDollFrame.lua ]]
             _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, level, classColor.colorStr, specName, classLocale)
         end
 
-        local showTrialCap = false;
+        local showTrialCap = false
         if _G.GameLimitedMode_IsActive() then
             local rLevel = _G.GetRestrictedAccountData()
             if _G.UnitLevel("player") >= rLevel then
@@ -34,7 +34,7 @@ do --[[ FrameXML\PaperDollFrame.lua ]]
         if showTrialCap then
             _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "TOP", 0, -36)
         else
-            --_G.CharacterTrialLevelErrorText:Show();
+            --_G.CharacterTrialLevelErrorText:Show()
             _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "BOTTOM", 0, -4)
         end
     end

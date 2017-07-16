@@ -8,6 +8,54 @@ local Aurora = private.Aurora
 local F = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
+do -- ExpandOrCollapse - Not a template, but it should be
+    local function Hook_SetNormalTexture(self, texture)
+        if self.settingTexture then return end
+        self.settingTexture = true
+        self:SetNormalTexture("")
+
+        if texture and texture ~= "" then
+            if texture:find("Plus") then
+                self._auroraBG.plus:Show()
+            elseif texture:find("Minus") then
+                self._auroraBG.plus:Hide()
+            end
+            self._auroraBG:Show()
+        else
+            self._auroraBG:Hide()
+        end
+        self.settingTexture = nil
+    end
+
+    function Skin.ExpandOrCollapse(button)
+        button:SetHighlightTexture("")
+        button:SetPushedTexture("")
+
+        local bg = _G.CreateFrame("Frame", nil, button)
+        F.CreateBD(bg, .0)
+        F.CreateGradient(bg)
+        bg:SetSize(13, 13)
+        bg:SetPoint("TOPLEFT", button:GetNormalTexture(), 0, -2)
+        button._auroraBG = bg
+
+        button._auroraHighlight = {}
+        bg.minus = bg:CreateTexture(nil, "OVERLAY")
+        bg.minus:SetSize(7, 1)
+        bg.minus:SetPoint("CENTER")
+        bg.minus:SetColorTexture(1, 1, 1)
+        _G.tinsert(button._auroraHighlight, bg.minus)
+
+        bg.plus = bg:CreateTexture(nil, "OVERLAY")
+        bg.plus:SetSize(1, 7)
+        bg.plus:SetPoint("CENTER")
+        bg.plus:SetColorTexture(1, 1, 1)
+        _G.tinsert(button._auroraHighlight, bg.plus)
+
+        Base.SetHighlight(button, "color")
+        _G.hooksecurefunc(button, "SetNormalTexture", Hook_SetNormalTexture)
+    end
+end
+
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
     function Hook.PanelTemplates_DeselectTab(tab)
         local text = tab.Text or _G[tab:GetName().."Text"]
