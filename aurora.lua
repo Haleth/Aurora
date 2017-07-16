@@ -869,12 +869,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Battlenet toast frame
-
-        F.CreateBD(_G.BNToastFrame)
-        F.CreateBD(_G.BNToastFrame.TooltipFrame)
-        _G.BNToastFrameCloseButton:SetAlpha(0)
-
         -- Gossip Frame
 
         _G.GossipGreetingScrollFrameTop:Hide()
