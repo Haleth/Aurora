@@ -18,9 +18,9 @@ local SnapshotFrame = _G.CreateFrame("OffScreenFrame")
 SnapshotFrame:Hide() -- Keep hidden unless taking a shot, even though it's invisible it still intercepts the mouse
 SnapshotFrame:SetSize(1024, 1024) -- This is required, we can't just call "SetAllPoints" without setting its size first
 SnapshotFrame:SetPoint("CENTER")
-if SnapshotFrame.UsesNPOT() then -- If frame is not covering the entire screen fonts aren't scaled correctly
-    SnapshotFrame:SetAllPoints()
-end
+--if SnapshotFrame.UsesNPOT() then -- If frame is not covering the entire screen fonts aren't scaled correctly
+    --SnapshotFrame:SetAllPoints()
+--end
 
 local textureFrame do
     textureFrame = _G.CreateFrame("Frame", nil, SnapshotFrame)
@@ -155,10 +155,10 @@ do -- arrows
 end
 
 do -- gradients
-    local min, max = 0.1, 0.9
+    local min, max = 0.3, 0.7
 
     local function setup(frame)
-        frame:SetSize(256, 256)
+        frame:SetAllPoints() --Size(256, 256)
 
         local texture = frame:CreateTexture(nil, "BACKGROUND")
         texture:SetColorTexture(1, 1, 1)
