@@ -650,7 +650,7 @@ end
 
 F.ReskinItemFrame = function(frame)
     local icon = frame.Icon
-    frame._auroraBG = F.ReskinIcon(icon)
+    frame._auroraIconBorder = F.ReskinIcon(icon)
 
     local nameFrame = frame.NameFrame
     nameFrame:SetAlpha(0)

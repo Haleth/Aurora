@@ -34,7 +34,7 @@ function private.FrameXML.BankFrame()
 
         F.ReskinIcon(button.icon)
         button.icon:SetTexCoord(.08, .92, .08, .92)
-        button._auroraBG = F.CreateBDFrame(button, 0)
+        button._auroraIconBorder = F.CreateBDFrame(button, 0)
 
         local searchOverlay = button.searchOverlay
         searchOverlay:SetPoint("TOPLEFT", -1, 1)
@@ -67,7 +67,7 @@ function private.FrameXML.BankFrame()
 
     _G.hooksecurefunc("BankFrameItemButton_Update", function(button)
         if not button.isBag and button.IconQuestTexture:IsShown() then
-            button._auroraBG:SetBackdropBorderColor(1, 1, 0)
+            button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
         end
     end)
 

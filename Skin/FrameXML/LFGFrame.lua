@@ -343,9 +343,9 @@ function private.FrameXML.LFGFrame()
         end
         button.IconBorder:Hide()
         if shortageIndex then
-            button._auroraBG:SetBackdropBorderColor(1, .9, .06)
+            button._auroraIconBorder:SetBackdropBorderColor(1, .9, .06)
         elseif rewardType ~= "item" then
-            button._auroraBG:SetBackdropBorderColor(0, 0, 0)
+            button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
         end
     end)
 

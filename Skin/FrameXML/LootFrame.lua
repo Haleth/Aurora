@@ -20,7 +20,7 @@ function private.FrameXML.LootFrame()
     for index = 1, 4 do
         local item = _G["LootButton"..index]
         local icon = _G["LootButton"..index.."IconTexture"]
-        item._auroraBG = F.ReskinIcon(icon)
+        item._auroraIconBorder = F.ReskinIcon(icon)
 
         _G["LootButton"..index.."IconQuestTexture"]:SetTexCoord(.08, .92, .08, .92)
         local nameFrame = _G["LootButton"..index.."NameFrame"]
@@ -36,7 +36,7 @@ function private.FrameXML.LootFrame()
 
     hooksecurefunc("LootFrame_UpdateButton", function(index)
         if _G["LootButton"..index.."IconQuestTexture"]:IsShown() then
-            _G["LootButton"..index]._auroraBG:SetBackdropBorderColor(1, 1, 0)
+            _G["LootButton"..index]._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
         end
     end)
 
@@ -64,7 +64,7 @@ function private.FrameXML.LootFrame()
     item.NameBorderLeft:Hide()
     item.NameBorderRight:Hide()
     item.NameBorderMid:Hide()
-    item._auroraBG = F.ReskinIcon(item.Icon)
+    item._auroraIconBorder = F.ReskinIcon(item.Icon)
 
     MasterLooterFrame:HookScript("OnShow", function(MLFrame)
         _G.LootFrame:SetAlpha(.4)

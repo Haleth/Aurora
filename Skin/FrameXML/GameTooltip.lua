@@ -58,7 +58,7 @@ do --[[ FrameXML\GameTooltip.xml ]]
         bg:SetPoint("TOPLEFT", frame.Icon, -1, 1)
         bg:SetPoint("BOTTOMRIGHT", frame.Icon, 1, -1)
         Base.SetBackdrop(bg, 0,0,0,0)
-        frame._auroraBG = bg
+        frame._auroraIconBorder = bg
     end
 end
 

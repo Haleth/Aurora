@@ -42,22 +42,22 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
         end
     end
     function Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
-        if button._auroraBG then
+        if button._auroraIconBorder then
             local isRelic = (itemIDOrLink and _G.IsArtifactRelicItem(itemIDOrLink))
 
             if quality then
                 local color = _G.type(quality) == "table" and quality or _G.BAG_ITEM_QUALITY_COLORS[quality]
                 if color and color == quality or quality >= _G.LE_ITEM_QUALITY_COMMON then
                     SetRelic(button, isRelic, color)
-                    button._auroraBG:SetBackdropBorderColor(color.r, color.g, color.b)
+                    button._auroraIconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
                     button.IconBorder:Hide()
                 else
                     SetRelic(button, false)
-                    button._auroraBG:SetBackdropBorderColor(0, 0, 0)
+                    button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
                 end
             else
                 SetRelic(button, false)
-                button._auroraBG:SetBackdropBorderColor(0, 0, 0)
+                button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
             end
         end
     end
@@ -68,7 +68,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         button:SetNormalTexture("")
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
-        button._auroraBG = F.ReskinIcon(button.icon)
+        button._auroraIconBorder = F.ReskinIcon(button.icon)
     end
     function Skin.SimplePopupButtonTemplate(checkbutton)
         _G.select(2, checkbutton:GetRegions()):Hide()
@@ -80,7 +80,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
     end
     function Skin.LargeItemButtonTemplate(button)
         local icon = button.Icon
-        button._auroraBG = F.ReskinIcon(icon)
+        button._auroraIconBorder = F.ReskinIcon(icon)
 
         local nameFrame = button.NameFrame
         nameFrame:SetAlpha(0)
@@ -94,7 +94,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.SmallItemButtonTemplate(button)
         local icon = button.Icon
         icon:SetSize(29, 29)
-        button._auroraBG = F.ReskinIcon(icon)
+        button._auroraIconBorder = F.ReskinIcon(icon)
 
         local nameFrame = button.NameFrame
         nameFrame:SetAlpha(0)

@@ -42,7 +42,7 @@ function private.FrameXML.MailFrame()
         _G[name.."ButtonSlot"]:Hide()
         _G[name.."ButtonIcon"]:SetTexCoord(.08, .92, .08, .92)
         _G[name.."ButtonIcon"]:SetPoint("BOTTOMRIGHT")
-        button._auroraBG = bg
+        button._auroraIconBorder = bg
     end
     hooksecurefunc("InboxFrame_Update", function()
         local numItems = _G.GetInboxNumItems()
@@ -54,14 +54,14 @@ function private.FrameXML.MailFrame()
                 local _, _, _, _, _, _, _, _, wasRead, _, _, _, _, firstItemQuantity, firstItemID = _G.GetInboxHeaderInfo(index)
 
                 if not firstItemQuantity then
-                    item.Button._auroraBG:SetBackdropBorderColor(0, 0, 0)
+                    item.Button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
                 end
 
                 if wasRead then
                     Hook.SetItemButtonQuality(item.Button, _G.GRAY_FONT_COLOR, firstItemID)
                 end
             else
-                item.Button._auroraBG:SetBackdropBorderColor(0, 0, 0)
+                item.Button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
             end
             index = index + 1
         end
@@ -123,7 +123,7 @@ function private.FrameXML.MailFrame()
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
         F.CreateBD(bg, .25)
-        button._auroraBG = bg
+        button._auroraIconBorder = bg
     end
     hooksecurefunc("SendMailFrame_Update", function()
         for i = 1, _G.ATTACHMENTS_MAX_SEND do
@@ -203,16 +203,16 @@ function private.FrameXML.MailFrame()
     _G.OpenMailArithmeticLine:SetSize(256, 1)
     _G.OpenMailInvoiceAmountReceived:SetPoint("TOPRIGHT", _G.OpenMailArithmeticLine, "BOTTOMRIGHT", -14, -5)
 
-    _G.OpenMailLetterButton._auroraBG = F.ReskinIcon(_G.OpenMailLetterButton.icon)
+    _G.OpenMailLetterButton._auroraIconBorder = F.ReskinIcon(_G.OpenMailLetterButton.icon)
     _G.OpenMailLetterButton:SetNormalTexture("")
     _G.OpenMailLetterButton:SetPushedTexture("")
     for i = 1, _G.ATTACHMENTS_MAX_RECEIVE do
         local button = OpenMailFrame.OpenMailAttachments[i]
-        button._auroraBG = F.ReskinIcon(button.icon)
+        button._auroraIconBorder = F.ReskinIcon(button.icon)
         button:SetNormalTexture("")
         button:SetPushedTexture("")
     end
-    _G.OpenMailMoneyButton._auroraBG = F.ReskinIcon(_G.OpenMailMoneyButton.icon)
+    _G.OpenMailMoneyButton._auroraIconBorder = F.ReskinIcon(_G.OpenMailMoneyButton.icon)
     _G.OpenMailMoneyButton:SetNormalTexture("")
     _G.OpenMailMoneyButton:SetPushedTexture("")
 

@@ -58,7 +58,7 @@ function private.FrameXML.ContainerFrame()
 
             F.ReskinIcon(button.icon)
             button.icon:SetTexCoord(.08, .92, .08, .92)
-            button._auroraBG = F.CreateBDFrame(button, 0)
+            button._auroraIconBorder = F.CreateBDFrame(button, 0)
 
             -- easiest way to 'hide' it without breaking stuff
             newItemTexture:SetDrawLayer("BACKGROUND")
@@ -93,7 +93,7 @@ function private.FrameXML.ContainerFrame()
 
             local questTexture = _G[name.."Item"..i.."IconQuestTexture"]
             if questTexture:IsShown() then
-                itemButton._auroraBG:SetBackdropBorderColor(1, 1, 0)
+                itemButton._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
             end
         end
     end)

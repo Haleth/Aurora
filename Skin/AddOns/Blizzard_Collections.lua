@@ -661,7 +661,7 @@ function private.AddOns.Blizzard_Collections()
 
     hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", function(self, itemFrame)
         if not itemFrame.skinned then
-            itemFrame._auroraBG = F.ReskinIcon(itemFrame.Icon)
+            itemFrame._auroraIconBorder = F.ReskinIcon(itemFrame.Icon)
             itemFrame.skinned = true
         end
 

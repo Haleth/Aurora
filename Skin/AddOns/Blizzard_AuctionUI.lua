@@ -41,7 +41,7 @@ function private.AddOns.Blizzard_AuctionUI()
             local icon = _G[name.."ItemIconTexture"]
 
             if button and item then
-                item._auroraBG = F.ReskinIcon(icon)
+                item._auroraIconBorder = F.ReskinIcon(icon)
                 item:SetNormalTexture("")
                 item:SetPushedTexture("")
 
@@ -154,7 +154,7 @@ function private.AddOns.Blizzard_AuctionUI()
     SkinScroll(_G.AuctionsScrollFrame)
     SkinList("AuctionsButton", 4, _G.NUM_AUCTIONS_TO_DISPLAY)
 
-    _G.AuctionsItemButton._auroraBG = F.CreateBDFrame(_G.AuctionsItemButton, .2)
+    _G.AuctionsItemButton._auroraIconBorder = F.CreateBDFrame(_G.AuctionsItemButton, .2)
     local nameFrame = select(2, _G.AuctionsItemButton:GetRegions())
     nameFrame:Hide()
     local nameBG = F.CreateBDFrame(_G.AuctionsItemButton, .2)

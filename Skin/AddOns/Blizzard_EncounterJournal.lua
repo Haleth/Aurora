@@ -512,8 +512,8 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     --[[ EncounterJournalTooltip ]]
     F.CreateBD(EncounterJournalTooltip)
-    EncounterJournalTooltip.Item1._auroraBG = F.ReskinIcon(EncounterJournalTooltip.Item1.icon)
-    EncounterJournalTooltip.Item2._auroraBG = F.ReskinIcon(EncounterJournalTooltip.Item2.icon)
+    EncounterJournalTooltip.Item1._auroraIconBorder = F.ReskinIcon(EncounterJournalTooltip.Item1.icon)
+    EncounterJournalTooltip.Item2._auroraIconBorder = F.ReskinIcon(EncounterJournalTooltip.Item2.icon)
 
 
     -- [[ LootJournal ]]
