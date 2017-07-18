@@ -189,7 +189,7 @@ do -- gradients
     local min, max = 0.3, 0.7
 
     local function setup(frame)
-        frame:SetAllPoints() --Size(256, 256)
+        frame:SetSize(1024, 1024)
 
         local texture = frame:CreateTexture(nil, "BACKGROUND")
         texture:SetColorTexture(1, 1, 1)
@@ -273,25 +273,17 @@ end
 Base.RegisterTexture("test", function(frame)
     frame:SetSize(256, 256)
 
-    local prevIcon = CreateIcon(frame, 1)
-    local cornerIcon = prevIcon
-    prevIcon:SetPoint("TOPLEFT", frame)
-
-    for i = 2, #map do
-        local icon = CreateIcon(frame, i)
-        if i % 3 == 1 then
-            icon:SetPoint("TOPLEFT", cornerIcon, "BOTTOMLEFT")
-            cornerIcon = icon
-        else
-            icon:SetPoint("TOPLEFT", prevIcon, "TOPRIGHT")
-        end
-        prevIcon = icon
-    end
+    local line1 = frame:CreateLine()
+    line1:SetThickness(5)
+    line1:SetColorTexture(1, 1, 1)
+    line1:SetStartPoint("TOPLEFT")
+    line1:SetEndPoint("BOTTOMRIGHT")
+    line1:Show()
 end)
 
 local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")
 snapshot:SetPoint("CENTER")
-snapshot:SetSize(16, 8)
+snapshot:SetSize(16, 16)
 Base.SetTexture(snapshot, "gradientLeft", true)
 Base.SetTexture(snapshot, "lfgIcons", true)
 Base.SetTexture(snapshot, "gradientUp", true)
