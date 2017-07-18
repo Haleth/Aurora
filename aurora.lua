@@ -6,7 +6,6 @@ local next = _G.next
 
 -- [[ WoW API ]]
 local CreateFrame = _G.CreateFrame
-local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -868,61 +867,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
 
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
-
-        -- Gossip Frame
-
-        _G.GossipGreetingScrollFrameTop:Hide()
-        _G.GossipGreetingScrollFrameBottom:Hide()
-        _G.GossipGreetingScrollFrameMiddle:Hide()
-        select(19, _G.GossipFrame:GetRegions()):Hide()
-
-        _G.GossipGreetingText:SetTextColor(1, 1, 1)
-
-        _G.NPCFriendshipStatusBar:GetRegions():Hide()
-        _G.NPCFriendshipStatusBarNotch1:SetColorTexture(0, 0, 0)
-        _G.NPCFriendshipStatusBarNotch1:SetSize(1, 16)
-        _G.NPCFriendshipStatusBarNotch2:SetColorTexture(0, 0, 0)
-        _G.NPCFriendshipStatusBarNotch2:SetSize(1, 16)
-        _G.NPCFriendshipStatusBarNotch3:SetColorTexture(0, 0, 0)
-        _G.NPCFriendshipStatusBarNotch3:SetSize(1, 16)
-        _G.NPCFriendshipStatusBarNotch4:SetColorTexture(0, 0, 0)
-        _G.NPCFriendshipStatusBarNotch4:SetSize(1, 16)
-        select(7, _G.NPCFriendshipStatusBar:GetRegions()):Hide()
-
-        _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -30, 7)
-        F.CreateBDFrame(_G.NPCFriendshipStatusBar, .25)
-
-        F.ReskinPortraitFrame(_G.GossipFrame, true)
-        F.Reskin(_G.GossipFrameGreetingGoodbyeButton)
-        F.ReskinScroll(_G.GossipGreetingScrollFrameScrollBar)
-        hooksecurefunc("GossipFrameAvailableQuestsUpdate", function(...)
-            local numAvailQuestsData = select("#", ...)
-            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numAvailQuestsData / 7)
-            for i = 1, numAvailQuestsData, 7 do
-                local titleText, _, isTrivial = select(i, ...)
-                local titleButton = _G["GossipTitleButton" .. buttonIndex]
-                if isTrivial then
-                    titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText)
-                else
-                    titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText)
-                end
-                buttonIndex = buttonIndex + 1
-            end
-        end)
-        hooksecurefunc("GossipFrameActiveQuestsUpdate", function(...)
-            local numActiveQuestsData = select("#", ...)
-            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numActiveQuestsData / 6)
-            for i = 1, numActiveQuestsData, 6 do
-                local titleText, _, isTrivial = select(i, ...)
-                local titleButton = _G["GossipTitleButton" .. buttonIndex]
-                if isTrivial then
-                    titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText)
-                else
-                    titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText)
-                end
-                buttonIndex = buttonIndex + 1
-            end
-        end)
 
         -- Tutorial Frame
 
