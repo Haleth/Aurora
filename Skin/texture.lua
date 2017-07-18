@@ -45,7 +45,9 @@ local textureFrame do
     local texturePool = _G.CreateObjectPool(TextureFactory, reset)
     function textureFrame:CreateTexture(name, layer, template, sublayer)
         local texture = texturePool:Acquire()
-        texture:SetDrawLayer(layer, sublayer)
+        if layer then
+            texture:SetDrawLayer(layer, sublayer)
+        end
         return texture
     end
 
@@ -57,7 +59,9 @@ local textureFrame do
     local linePool = _G.CreateObjectPool(LineFactory, reset)
     function textureFrame:CreateLine(name, layer, template, sublayer)
         local line = linePool:Acquire()
-        line:SetDrawLayer(layer, sublayer)
+        if layer then
+            line:SetDrawLayer(layer, sublayer)
+        end
         return line
     end
 
@@ -69,7 +73,9 @@ local textureFrame do
     local maskPool = _G.CreateObjectPool(MaskTextureFactory, reset)
     function textureFrame:CreateMaskTexture(name, layer, template, sublayer)
         local mask = maskPool:Acquire()
-        mask:SetDrawLayer(layer, sublayer)
+        if layer then
+            mask:SetDrawLayer(layer, sublayer)
+        end
         return mask
     end
 
