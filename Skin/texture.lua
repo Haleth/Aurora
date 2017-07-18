@@ -37,13 +37,33 @@ local textureFrame do
             region:SetVertexOffset(4, 0, 0)
         end
         if self.type == "texture" then
-            region:RemoveMaskTexture()
+            if region.masks then
+                region:RemoveMaskTexture()
+            end
+        end
+    end
+
+    local function AddMaskTexture(self, mask)
+        if not self.masks then
+            self.masks = {}
+        end
+        _G.tinsert(self.masks, mask)
+    end
+    local function RemoveMaskTexture(self, mask)
+        if not mask and self.masks then
+            for i = #self.masks, 1, -1 do
+                local m = _G.tremove(self.masks, i)
+                self:RemoveMaskTexture(m)
+            end
         end
     end
 
     local CreateTexture = textureFrame.CreateTexture
     local function TextureFactory(texturePool)
-        return CreateTexture(textureFrame)
+        local texture = CreateTexture(textureFrame)
+        _G.hooksecurefunc(texture, "AddMaskTexture", AddMaskTexture)
+        _G.hooksecurefunc(texture, "RemoveMaskTexture", RemoveMaskTexture)
+        return texture
     end
     local texturePool = _G.CreateObjectPool(TextureFactory, reset)
     texturePool.type = "texture"
