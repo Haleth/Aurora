@@ -25,16 +25,19 @@ SnapshotFrame:SetPoint("CENTER")
 local textureFrame do
     textureFrame = _G.CreateFrame("Frame", nil, SnapshotFrame)
     textureFrame:SetPoint("TOPLEFT")
-    local function reset(self, texture)
-        texture:Hide()
-        texture:SetTexture("")
-        if texture.RemoveMaskTexture then
-            texture:ClearAllPoints()
-            texture:RemoveMaskTexture()
-            texture:SetVertexOffset(1, 0, 0)
-            texture:SetVertexOffset(2, 0, 0)
-            texture:SetVertexOffset(3, 0, 0)
-            texture:SetVertexOffset(4, 0, 0)
+    local function reset(self, region)
+        region:Hide()
+        region:SetGradient("HORIZONTAL", 1, 1, 1, 1, 1, 1)
+        region:SetTexture("")
+        if self.type ~= "line" then
+            region:ClearAllPoints()
+            region:SetVertexOffset(1, 0, 0)
+            region:SetVertexOffset(2, 0, 0)
+            region:SetVertexOffset(3, 0, 0)
+            region:SetVertexOffset(4, 0, 0)
+        end
+        if self.type == "texture" then
+            region:RemoveMaskTexture()
         end
     end
 
@@ -43,6 +46,7 @@ local textureFrame do
         return CreateTexture(textureFrame)
     end
     local texturePool = _G.CreateObjectPool(TextureFactory, reset)
+    texturePool.type = "texture"
     function textureFrame:CreateTexture(name, layer, template, sublayer)
         local texture = texturePool:Acquire()
         if layer then
@@ -57,6 +61,7 @@ local textureFrame do
         return CreateLine(textureFrame)
     end
     local linePool = _G.CreateObjectPool(LineFactory, reset)
+    linePool.type = "line"
     function textureFrame:CreateLine(name, layer, template, sublayer)
         local line = linePool:Acquire()
         if layer then
@@ -71,6 +76,7 @@ local textureFrame do
         return CreateMaskTexture(textureFrame)
     end
     local maskPool = _G.CreateObjectPool(MaskTextureFactory, reset)
+    maskPool.type = "mask"
     function textureFrame:CreateMaskTexture(name, layer, template, sublayer)
         local mask = maskPool:Acquire()
         if layer then
