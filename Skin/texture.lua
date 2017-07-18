@@ -40,33 +40,37 @@ local textureFrame do
 
     local CreateTexture = textureFrame.CreateTexture
     local function TextureFactory(texturePool)
-        return CreateTexture(textureFrame, nil, texturePool.layer, texturePool.template, texturePool.sublayer)
+        return CreateTexture(textureFrame)
     end
     local texturePool = _G.CreateObjectPool(TextureFactory, reset)
     function textureFrame:CreateTexture(name, layer, template, sublayer)
-        texturePool.layer, texturePool.template, texturePool.sublayer = layer, template, sublayer
-        return texturePool:Acquire()
+        local texture = texturePool:Acquire()
+        texture:SetDrawLayer(layer, sublayer)
+        return texture
     end
 
 
     local CreateLine = textureFrame.CreateLine
     local function LineFactory(linePool)
-        return CreateLine(textureFrame, nil, linePool.layer, linePool.template, linePool.sublayer)
+        return CreateLine(textureFrame)
     end
     local linePool = _G.CreateObjectPool(LineFactory, reset)
     function textureFrame:CreateLine(name, layer, template, sublayer)
-        linePool.layer, linePool.template, linePool.sublayer = layer, template, sublayer
-        return linePool:Acquire()
+        local line = linePool:Acquire()
+        line:SetDrawLayer(layer, sublayer)
+        return line
     end
+
 
     local CreateMaskTexture = textureFrame.CreateMaskTexture
     local function MaskTextureFactory(maskPool)
-        return CreateMaskTexture(textureFrame, nil, maskPool.layer, maskPool.template, maskPool.sublayer)
+        return CreateMaskTexture(textureFrame)
     end
     local maskPool = _G.CreateObjectPool(MaskTextureFactory, reset)
     function textureFrame:CreateMaskTexture(name, layer, template, sublayer)
-        maskPool.layer, maskPool.template, maskPool.sublayer = layer, template, sublayer
-        return maskPool:Acquire()
+        local mask = maskPool:Acquire()
+        mask:SetDrawLayer(layer, sublayer)
+        return mask
     end
 
     function textureFrame:ReleaseAll()
