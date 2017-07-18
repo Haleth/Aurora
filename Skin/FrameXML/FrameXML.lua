@@ -233,11 +233,17 @@ local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-function private.FrameXML.Foo()
+do --[[ FrameXML\File.lua ]]
+end
+
+do --[[ FrameXML\File.xml ]]
+end
+
+function private.FrameXML.File()
     --[[
     ]]
 end
-function private.SharedXML.Bar()
+function private.SharedXML.File()
     --[[
     ]]
 end

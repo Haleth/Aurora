@@ -11,7 +11,13 @@ local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-function private.AddOns.Blizzard_Baz()
+do --[[ AddOns\Blizzard_FileUI.lua ]]
+end
+
+do --[[ AddOns\Blizzard_FileUI.xml ]]
+end
+
+function private.AddOns.Blizzard_FileUI()
     --[[
     ]]
 end
