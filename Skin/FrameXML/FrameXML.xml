@@ -23,6 +23,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="GameTooltip.lua"/>
     <Script file="GarrisonFollowerTooltip.lua"/>
     <Script file="GhostFrame.lua"/>
+    <Script file="GossipFrame.lua"/>
     <Script file="GuildInviteFrame.lua"/>
     <Script file="HelpFrame.lua"/>
     <Script file="InterfaceOptionsFrame.lua"/>
