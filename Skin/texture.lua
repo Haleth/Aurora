@@ -69,9 +69,7 @@ local textureFrame do
     texturePool.type = "texture"
     function textureFrame:CreateTexture(name, layer, template, sublayer)
         local texture = texturePool:Acquire()
-        if layer then
-            texture:SetDrawLayer(layer, sublayer)
-        end
+        texture:SetDrawLayer(layer or "ARTWORK", sublayer or 0)
         return texture
     end
 
@@ -84,9 +82,7 @@ local textureFrame do
     linePool.type = "line"
     function textureFrame:CreateLine(name, layer, template, sublayer)
         local line = linePool:Acquire()
-        if layer then
-            line:SetDrawLayer(layer, sublayer)
-        end
+        line:SetDrawLayer(layer or "ARTWORK", sublayer or 0)
         return line
     end
 
@@ -99,9 +95,7 @@ local textureFrame do
     maskPool.type = "mask"
     function textureFrame:CreateMaskTexture(name, layer, template, sublayer)
         local mask = maskPool:Acquire()
-        if layer then
-            mask:SetDrawLayer(layer, sublayer)
-        end
+        mask:SetDrawLayer(layer or "ARTWORK", sublayer or 0)
         return mask
     end
 
