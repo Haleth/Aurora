@@ -185,7 +185,7 @@ function private.FrameXML.ReputationFrame()
     _G.ReputationDetailDivider:SetHeight(1)
 
     Skin.UIPanelCloseButton(_G.ReputationDetailCloseButton)
-    Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailAtWarCheckBox) -- doesn't use the template, but it should
+    Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailAtWarCheckBox) -- BlizzWTF: doesn't use the template, but it should
     _G.ReputationDetailAtWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 8, -8)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
     _G.ReputationDetailInactiveCheckBox:SetPoint("LEFT", _G.ReputationDetailAtWarCheckBox, "RIGHT", 50, 0)

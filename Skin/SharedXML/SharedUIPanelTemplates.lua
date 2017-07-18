@@ -8,7 +8,7 @@ local Aurora = private.Aurora
 local F = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-do -- ExpandOrCollapse - Not a template, but it should be
+do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
     local function Hook_SetNormalTexture(self, texture)
         if self.settingTexture then return end
         self.settingTexture = true
