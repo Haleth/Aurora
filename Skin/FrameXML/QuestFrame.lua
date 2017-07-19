@@ -4,9 +4,52 @@ local _, private = ...
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F = _G.unpack(Aurora)
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+
+do --[[ FrameXML\QuestFrame.lua ]]
+    function Hook.QuestFrame_UpdatePortraitText(text)
+        if text and text ~= "" then
+            _G.QuestNPCModelText:SetWidth(191)
+            local textHeight = _G.QuestNPCModelText:GetHeight()
+            local scrollHeight = _G.QuestNPCModelTextScrollFrame:GetHeight()
+            if textHeight > scrollHeight then
+                _G.QuestNPCModelTextScrollChildFrame:SetHeight(textHeight + 10)
+                _G.QuestNPCModelText:SetWidth(176)
+            else
+                _G.QuestNPCModelTextScrollChildFrame:SetHeight(textHeight)
+            end
+        end
+    end
+    function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portrait, text, name, x, y)
+        if parentFrame == _G.WorldMapFrame then
+            x = x + 1
+        else
+            x = x + 4
+        end
+
+        _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
+    end
+end
+
+do --[[ FrameXML\QuestFrameTemplates.xml ]]
+    function Skin.QuestFramePanelTemplate(frame)
+    end
+    function Skin.QuestItemTemplate(button)
+    end
+    function Skin.QuestSpellTemplate(button)
+    end
+    function Skin.QuestTitleButtonTemplate(button)
+    end
+    function Skin.QuestScrollFrameTemplate(scrollframe)
+    end
+end
 
 function private.FrameXML.QuestFrame()
+    hooksecurefunc("QuestFrame_UpdatePortraitText", Hook.QuestFrame_UpdatePortraitText)
+    hooksecurefunc("QuestFrame_ShowQuestPortrait", Hook.QuestFrame_ShowQuestPortrait)
+
     F.ReskinPortraitFrame(_G.QuestFrame, true)
     --[[ QuestFrame ]]
 
@@ -142,34 +185,58 @@ function private.FrameXML.QuestFrame()
     _G.QuestFrameGreetingPanel:HookScript("OnShow", UpdateGreetingPanel)
     hooksecurefunc("QuestFrameGreetingPanel_OnShow", UpdateGreetingPanel)
 
-    -- [[ Quest NPC model ]]
+    -- [[ QuestNPCModel ]]--
+    local QuestNPCModel = _G.QuestNPCModel
+
+    local modelBackground = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
+    modelBackground:SetPoint("TOPLEFT", 0, 1)
+    modelBackground:SetPoint("BOTTOMRIGHT", 1, -2)
+    modelBackground:SetFrameLevel(0)
+    Base.SetBackdrop(modelBackground)
+
     _G.QuestNPCModelBg:Hide()
-    _G.QuestNPCModel:DisableDrawLayer("OVERLAY")
-    _G.QuestNPCModelNameText:SetDrawLayer("ARTWORK")
+    _G.QuestNPCModelTopBg:Hide()
+    _G.QuestNPCModelShadowOverlay:Hide()
 
-    _G.QuestNPCModelTextFrame:DisableDrawLayer("OVERLAY")
+    QuestNPCModel.BorderBottomLeft:Hide()
+    QuestNPCModel.BorderBottomRight:Hide()
+    QuestNPCModel.BorderTop:Hide()
+    QuestNPCModel.BorderBottom:Hide()
+    QuestNPCModel.BorderLeft:Hide()
+    QuestNPCModel.BorderRight:Hide()
+
+    _G.QuestNPCCornerTopLeft:Hide()
+    _G.QuestNPCCornerTopRight:Hide()
+    _G.QuestNPCCornerBottomLeft:Hide()
+    _G.QuestNPCCornerBottomRight:Hide()
+
+    _G.QuestNPCModelNameplate:SetAlpha(0)
+
+    _G.QuestNPCModelNameText:SetPoint("TOPLEFT", modelBackground, "BOTTOMLEFT")
+    _G.QuestNPCModelNameText:SetPoint("BOTTOMRIGHT", _G.QuestNPCModelTextFrame, "TOPRIGHT")
+
+    _G.QuestNPCModelNameTooltipFrame:SetPoint("TOPLEFT", _G.QuestNPCModelNameText, 0, 1)
+    _G.QuestNPCModelNameTooltipFrame:SetPoint("BOTTOMRIGHT", _G.QuestNPCModelNameText, 0, -1)
+    _G.QuestNPCModelNameTooltipFrame:SetFrameLevel(0)
+    Base.SetBackdrop(_G.QuestNPCModelNameTooltipFrame)
+
+    local QuestNPCModelTextFrame = _G.QuestNPCModelTextFrame
+    Base.SetBackdrop(QuestNPCModelTextFrame)
+    QuestNPCModelTextFrame:SetWidth(199)
     _G.QuestNPCModelTextFrameBg:Hide()
-    F.ReskinScroll(_G.QuestNPCModelTextScrollFrameScrollBar)
 
-    local npcbd = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
-    npcbd:SetPoint("TOPLEFT", -1, 1)
-    npcbd:SetPoint("RIGHT", 2, 0)
-    npcbd:SetPoint("BOTTOM", _G.QuestNPCModelTextScrollFrame)
-    npcbd:SetFrameLevel(0)
-    F.CreateBD(npcbd)
+    QuestNPCModelTextFrame.BorderBottomLeft:Hide()
+    QuestNPCModelTextFrame.BorderBottomRight:Hide()
+    QuestNPCModelTextFrame.BorderBottom:Hide()
+    QuestNPCModelTextFrame.BorderLeft:Hide()
+    QuestNPCModelTextFrame.BorderRight:Hide()
 
-    local npcLine = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
-    npcLine:SetPoint("BOTTOMLEFT", 0, -1)
-    npcLine:SetPoint("BOTTOMRIGHT", 1, -1)
-    npcLine:SetHeight(1)
-    npcLine:SetFrameLevel(0)
-    F.CreateBD(npcLine, 0)
+    local npcModelScroll = _G.QuestNPCModelTextScrollFrame
+    Skin.UIPanelScrollFrameTemplate(npcModelScroll)
+    npcModelScroll:SetPoint("TOPLEFT", 4, -4)
+    npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)
 
-    hooksecurefunc("QuestFrame_ShowQuestPortrait", function(parentFrame, _, _, _, x, y)
-        if parentFrame == _G.QuestLogPopupDetailFrame or parentFrame == _G.QuestFrame then
-            x = x + 3
-        end
-
-        _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
-    end)
+    npcModelScroll.ScrollBar._auroraThumb:Hide()
+    npcModelScroll.ScrollBar:SetPoint("TOPLEFT", npcModelScroll, "TOPRIGHT", -14, -15)
+    npcModelScroll.ScrollBar:SetPoint("BOTTOMLEFT", npcModelScroll, "BOTTOMRIGHT", -14, 15)
 end
