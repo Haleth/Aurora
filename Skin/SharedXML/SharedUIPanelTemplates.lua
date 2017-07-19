@@ -204,18 +204,18 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.UIPanelScrollUpButtonTemplate(slider.ScrollUpButton)
         Skin.UIPanelScrollDownButtonTemplate(slider.ScrollDownButton)
 
-        local thumb = slider.ThumbTexture
-        thumb:SetAlpha(0)
-        thumb:SetWidth(17)
+        slider.ThumbTexture:SetAlpha(0)
+        slider.ThumbTexture:SetWidth(17)
 
-        local bg = _G.CreateFrame("Frame", nil, slider)
-        bg:SetPoint("TOPLEFT", thumb, 0, -2)
-        bg:SetPoint("BOTTOMRIGHT", thumb, 0, 2)
-        F.CreateBD(bg, 0)
+        local thumb = _G.CreateFrame("Frame", nil, slider)
+        thumb:SetPoint("TOPLEFT", slider.ThumbTexture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", slider.ThumbTexture, 0, 2)
+        F.CreateBD(thumb, 0)
 
-        local tex = F.CreateGradient(slider)
-        tex:SetPoint("TOPLEFT", bg, 1, -1)
-        tex:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        local tex = F.CreateGradient(thumb)
+        tex:SetPoint("TOPLEFT", thumb, 1, -1)
+        tex:SetPoint("BOTTOMRIGHT", thumb, -1, 1)
+        slider._auroraThumb = thumb
     end
     function Skin.UIPanelScrollFrameTemplate(scrollframe)
         Skin.UIPanelScrollBarTemplate(scrollframe.ScrollBar)

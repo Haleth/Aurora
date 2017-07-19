@@ -42,18 +42,18 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         downButton:SetPoint("TOP", slider, "BOTTOM")
         Skin.UIPanelScrollDownButtonTemplate(downButton)
 
-        local thumb = slider.thumbTexture
-        thumb:SetAlpha(0)
-        thumb:SetWidth(17)
+        slider.thumbTexture:SetAlpha(0)
+        slider.thumbTexture:SetWidth(17)
 
-        thumb.bg = _G.CreateFrame("Frame", nil, slider)
-        thumb.bg:SetPoint("TOPLEFT", thumb, 0, -2)
-        thumb.bg:SetPoint("BOTTOMRIGHT", thumb, 0, 2)
-        F.CreateBD(thumb.bg, 0)
+        local thumb = _G.CreateFrame("Frame", nil, slider)
+        thumb:SetPoint("TOPLEFT", slider.thumbTexture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", slider.thumbTexture, 0, 2)
+        F.CreateBD(thumb, 0)
 
-        local tex = F.CreateGradient(slider)
-        tex:SetPoint("TOPLEFT", thumb.bg, 1, -1)
-        tex:SetPoint("BOTTOMRIGHT", thumb.bg, -1, 1)
+        local tex = F.CreateGradient(thumb)
+        tex:SetPoint("TOPLEFT", thumb, 1, -1)
+        tex:SetPoint("BOTTOMRIGHT", thumb, -1, 1)
+        slider._auroraThumb = thumb
     end
     function Skin.BasicHybridScrollFrameTemplate(scrollframe)
         local name = scrollframe:GetName()
