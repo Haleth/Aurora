@@ -40,9 +40,9 @@ function private.FrameXML.BNet()
     local scrollframe = _G.BNetReportFrameCommentScrollFrame
     Skin.UIPanelScrollFrameTemplate(scrollframe)
 
-    scrollframe.ScrollBar:ClearAllPoints();
-    scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", -18, -13);
-    scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", -18, 13);
+    scrollframe.ScrollBar:ClearAllPoints()
+    scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", -18, -13)
+    scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", -18, 13)
 
     scrollframe.ScrollBar.ScrollUpButton:SetPoint("BOTTOM", scrollframe.ScrollBar, "TOP")
     scrollframe.ScrollBar.ScrollDownButton:SetPoint("TOP", scrollframe.ScrollBar, "BOTTOM")
