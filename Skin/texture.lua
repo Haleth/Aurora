@@ -180,8 +180,8 @@ do -- arrows
     end)
     Base.RegisterTexture("arrowRight", function(frame)
         local texture = setup(frame)
-        texture:SetVertexOffset(map.left[1], 0, -offset)
-        texture:SetVertexOffset(map.left[2], 0, offset)
+        texture:SetVertexOffset(map.right[1], 0, -offset)
+        texture:SetVertexOffset(map.right[2], 0, offset)
     end)
 end
 
