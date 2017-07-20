@@ -43,6 +43,32 @@ local backdrop = {
 }
 private.backdrop = backdrop
 
+do -- Base.CropIcon
+    function Base.CropIcon(texture, parent)
+        texture:SetTexCoord(.08, .92, .08, .92)
+        if parent then
+            local layer, subLevel = texture:GetDrawLayer()
+            local iconBorder = parent:CreateTexture(nil, layer, nil, subLevel - 1)
+            iconBorder:SetPoint("TOPLEFT", texture, -1, 1)
+            iconBorder:SetPoint("BOTTOMRIGHT", texture, 1, -1)
+            iconBorder:SetColorTexture(0, 0, 0)
+            return iconBorder
+        end
+    end
+end
+
+do -- Base.SetBackdrop
+    function Base.SetBackdrop(frame, r, g, b, a)
+        frame:SetBackdrop(backdrop)
+        Base.SetBackdropColor(frame, r, g, b, a)
+    end
+    function Base.SetBackdropColor(frame, r, g, b, a)
+        if not r then r, g, b, a = frameColor:GetRGBA() end
+        frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
+        frame:SetBackdropBorderColor(r, g, b, 1)
+    end
+end
+
 do -- Base.SetHighlight
     local function GetColorTexture(string)
         string = string:gsub("Color%-", "")
@@ -104,32 +130,6 @@ do -- Base.SetHighlight
         button:HookScript("OnLeave", function(self)
             (leave or OnLeave)(self, highlightType == "backdrop")
         end)
-    end
-end
-
-do -- Base.SetBackdrop
-    function Base.SetBackdrop(frame, r, g, b, a)
-        frame:SetBackdrop(backdrop)
-        Base.SetBackdropColor(frame, r, g, b, a)
-    end
-    function Base.SetBackdropColor(frame, r, g, b, a)
-        if not r then r, g, b, a = frameColor:GetRGBA() end
-        frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
-        frame:SetBackdropBorderColor(r, g, b, 1)
-    end
-end
-
-do -- Base.CropIcon
-    function Base.CropIcon(texture, parent)
-        texture:SetTexCoord(.08, .92, .08, .92)
-        if parent then
-            local layer, subLevel = texture:GetDrawLayer()
-            local iconBorder = parent:CreateTexture(nil, layer, nil, subLevel - 1)
-            iconBorder:SetPoint("TOPLEFT", texture, -1, 1)
-            iconBorder:SetPoint("BOTTOMRIGHT", texture, 1, -1)
-            iconBorder:SetColorTexture(0, 0, 0)
-            return iconBorder
-        end
     end
 end
 
