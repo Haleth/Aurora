@@ -11,11 +11,10 @@ C.classcolours = _G.CUSTOM_CLASS_COLORS
 C.backdrop = private.backdrop
 
 F.CreateBD = function(frame, alpha)
-    local r, g, b, a = private.frameColor:GetRGBA()
+    local r, g, b, a
     if alpha then
+        r, g, b = private.frameColor:GetRGB()
         a = alpha
-    else
-        _G.tinsert(C.frames, frame)
     end
 
     Base.SetBackdrop(frame, r, g, b, a)
