@@ -24,9 +24,9 @@ do --[[ FrameXML\QuestFrame.lua ]]
     end
     function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portrait, text, name, x, y)
         if parentFrame == _G.WorldMapFrame then
-            x = x + 1
+            x = x + 2
         else
-            x = x + 4
+            x = x + 5
         end
 
         _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
@@ -189,7 +189,7 @@ function private.FrameXML.QuestFrame()
     local QuestNPCModel = _G.QuestNPCModel
 
     local modelBackground = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
-    modelBackground:SetPoint("TOPLEFT", 0, 1)
+    modelBackground:SetPoint("TOPLEFT", -1, 1)
     modelBackground:SetPoint("BOTTOMRIGHT", 1, -2)
     modelBackground:SetFrameLevel(0)
     Base.SetBackdrop(modelBackground)
@@ -222,7 +222,8 @@ function private.FrameXML.QuestFrame()
 
     local QuestNPCModelTextFrame = _G.QuestNPCModelTextFrame
     Base.SetBackdrop(QuestNPCModelTextFrame)
-    QuestNPCModelTextFrame:SetWidth(199)
+    QuestNPCModelTextFrame:SetPoint("TOPLEFT", _G.QuestNPCModelNameplate, "BOTTOMLEFT", -1, 12)
+    QuestNPCModelTextFrame:SetWidth(200)
     _G.QuestNPCModelTextFrameBg:Hide()
 
     QuestNPCModelTextFrame.BorderBottomLeft:Hide()
