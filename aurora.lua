@@ -868,39 +868,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Tutorial Frame
-
-        F.CreateBD(_G.TutorialFrame)
-
-        _G.TutorialFrameBackground:Hide()
-        _G.TutorialFrameBackground.Show = F.dummy
-        _G.TutorialFrame:DisableDrawLayer("BORDER")
-
-        local tutOkay = _G.TutorialFrameOkayButton
-        local tutPrev = _G.TutorialFramePrevButton
-        local tutNext = _G.TutorialFrameNextButton
-        F.Reskin(tutOkay, true)
-        F.ReskinClose(_G.TutorialFrameCloseButton)
-        F.ReskinArrow(tutPrev, "Left")
-        F.ReskinArrow(tutNext, "Right")
-
-        tutOkay:ClearAllPoints()
-        tutOkay:SetPoint("BOTTOMLEFT", tutNext, "BOTTOMRIGHT", 10, 0)
-
-        -- because gradient alpha and OnUpdate doesn't work for some reason...
-
-        if select(14, tutOkay:GetRegions()) then
-            select(14, tutOkay:GetRegions()):Hide()
-            select(15, tutPrev:GetRegions()):Hide()
-            select(15, tutNext:GetRegions()):Hide()
-            select(14, _G.TutorialFrameCloseButton:GetRegions()):Hide()
-        end
-        tutPrev:SetScript("OnEnter", nil)
-        tutNext:SetScript("OnEnter", nil)
-        tutOkay:SetBackdropColor(0, 0, 0, .25)
-        tutPrev:SetBackdropColor(0, 0, 0, .25)
-        tutNext:SetBackdropColor(0, 0, 0, .25)
-
         -- Guild registrar frame
 
         _G.GuildRegistrarFrameTop:Hide()
