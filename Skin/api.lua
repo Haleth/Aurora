@@ -132,3 +132,143 @@ do -- Base.CropIcon
         end
     end
 end
+
+do -- Base.SetTexture
+    --[[ OffScreenFrame
+        TakeSnapshot - Generates a texture from the contents of the frame
+        ApplySnapshot(texture, snapshotID) - Similar to SetTexture, applies a given snapshot to a specified texture
+        Flush - Clears all snapshots out of memory
+        SetMaxSnapshots - Sets the number of snapshots the frame will keep in memory
+        GetMaxSnapshots
+        IsSnapshotValid(snapshotID) - Returns whether the snapshot id still exists, errors on "nil"
+        UsesNPOT - "Uses non-power of two", returns if GPU supports snapshots that don't use dimensions that are powers of 2
+    --]]
+
+    local SnapshotFrame = _G.CreateFrame("OffScreenFrame")
+    SnapshotFrame:Hide() -- Keep hidden unless taking a shot, even though it's invisible it still intercepts the mouse
+    SnapshotFrame:SetSize(1024, 1024) -- This is required, we can't just call "SetAllPoints" without setting its size first
+    SnapshotFrame:SetPoint("CENTER")
+    --if SnapshotFrame.UsesNPOT() then -- If frame is not covering the entire screen fonts aren't scaled correctly
+        --SnapshotFrame:SetAllPoints()
+    --end
+
+    local textureFrame do
+        textureFrame = _G.CreateFrame("Frame", nil, SnapshotFrame)
+        textureFrame:SetPoint("TOPLEFT")
+        local function reset(self, region)
+            region:Hide()
+            region:SetGradient("HORIZONTAL", 1, 1, 1, 1, 1, 1)
+            region:SetTexture("")
+            if self.type ~= "line" then
+                region:ClearAllPoints()
+                region:SetVertexOffset(1, 0, 0)
+                region:SetVertexOffset(2, 0, 0)
+                region:SetVertexOffset(3, 0, 0)
+                region:SetVertexOffset(4, 0, 0)
+            end
+            if self.type == "texture" then
+                if region.masks then
+                    region:RemoveMaskTexture()
+                end
+            end
+        end
+
+        local function AddMaskTexture(self, mask)
+            if not self.masks then
+                self.masks = {}
+            end
+            _G.tinsert(self.masks, mask)
+        end
+        local function RemoveMaskTexture(self, mask)
+            if not mask and self.masks then
+                for i = #self.masks, 1, -1 do
+                    local m = _G.tremove(self.masks, i)
+                    self:RemoveMaskTexture(m)
+                end
+            end
+        end
+
+        local CreateTexture = textureFrame.CreateTexture
+        local function TextureFactory(texturePool)
+            local texture = CreateTexture(textureFrame)
+            _G.hooksecurefunc(texture, "AddMaskTexture", AddMaskTexture)
+            _G.hooksecurefunc(texture, "RemoveMaskTexture", RemoveMaskTexture)
+            return texture
+        end
+        local texturePool = _G.CreateObjectPool(TextureFactory, reset)
+        texturePool.type = "texture"
+        function textureFrame:CreateTexture(name, layer, template, sublayer)
+            local texture = texturePool:Acquire()
+            texture:SetDrawLayer(layer or "ARTWORK", sublayer or 0)
+            return texture
+        end
+
+
+        local CreateLine = textureFrame.CreateLine
+        local function LineFactory(linePool)
+            return CreateLine(textureFrame)
+        end
+        local linePool = _G.CreateObjectPool(LineFactory, reset)
+        linePool.type = "line"
+        function textureFrame:CreateLine(name, layer, template, sublayer)
+            local line = linePool:Acquire()
+            line:SetDrawLayer(layer or "ARTWORK", sublayer or 0)
+            return line
+        end
+
+
+        local CreateMaskTexture = textureFrame.CreateMaskTexture
+        local function MaskTextureFactory(maskPool)
+            return CreateMaskTexture(textureFrame)
+        end
+        local maskPool = _G.CreateObjectPool(MaskTextureFactory, reset)
+        maskPool.type = "mask"
+        function textureFrame:CreateMaskTexture(name, layer, template, sublayer)
+            local mask = maskPool:Acquire()
+            mask:SetDrawLayer(layer or "ARTWORK", sublayer or 0)
+            return mask
+        end
+
+        function textureFrame:ReleaseAll()
+            texturePool:ReleaseAll()
+            linePool:ReleaseAll()
+            maskPool:ReleaseAll()
+        end
+    end
+
+    local snapshots = {}
+
+    function Base.SetTexture(texture, textureName, useTextureSize)
+        local snapshot = snapshots[textureName]
+        _G.assert(snapshot, textureName .. " is not a registered texture.")
+        if not snapshot.id or not SnapshotFrame:IsSnapshotValid(snapshot.id) then
+            snapshot.create(textureFrame)
+            local width, height = textureFrame:GetSize()
+
+            SnapshotFrame:Show()
+            local id = SnapshotFrame:TakeSnapshot()
+            SnapshotFrame:Hide()
+            textureFrame:ReleaseAll()
+
+            local snapshotWidth, snapshotHeight = SnapshotFrame:GetSize()
+
+            snapshot.id = id
+            snapshot.width = width
+            snapshot.height = height
+            snapshot.x = width / snapshotWidth
+            snapshot.y = height / snapshotHeight
+        end
+        if useTextureSize then
+            texture:SetSize(snapshot.width, snapshot.height)
+        end
+        SnapshotFrame:ApplySnapshot(texture, snapshot.id)
+        texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
+    end
+
+    function Base.RegisterTexture(textureName, createFunc)
+        snapshots[textureName] = {
+            create = createFunc
+        }
+        SnapshotFrame:SetMaxSnapshots(SnapshotFrame:GetMaxSnapshots() + 1)
+    end
+end
