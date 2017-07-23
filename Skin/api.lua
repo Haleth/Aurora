@@ -70,23 +70,25 @@ do -- Base.SetBackdrop
 end
 
 do -- Base.SetHighlight
+    local tempColor = {}
     local function GetColorTexture(string)
+        _G.wipe(tempColor)
         string = string:gsub("Color%-", "")
-        if string == "000ff" then
-            return 0, 0, 0, 1
-        else
-            local r = string:sub(1, 2)
-            local g = string:sub(3, 4)
-            local b = string:sub(5, 6)
-            local a = string:sub(7, 8)
 
-            r = _G.tonumber(r, 16) / 255
-            g = _G.tonumber(g, 16) / 255
-            b = _G.tonumber(b, 16) / 255
-            a = _G.tonumber(a, 16) / 255
+        local prevChar, val
+        string:gsub("(%x)", function(char)
+            if prevChar then
+                val = _G.tonumber(prevChar..char, 16) / 255 -- convert hex to perc decimal
+                _G.tinsert(tempColor, val - (val % 0.01)) -- round val to two decimal places
+                prevChar = nil
+            elseif char == "0" then
+                _G.tinsert(tempColor, 0)
+            else
+                prevChar = char
+            end
+        end)
 
-            return r, g, b, a
-        end
+        return tempColor[1], tempColor[2], tempColor[3], tempColor[4]
     end
     local function OnEnter(button, isBackground)
         if button:IsEnabled() then
