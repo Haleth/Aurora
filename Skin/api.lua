@@ -37,8 +37,6 @@ private.frameColor = frameColor
 
 
 local backdrop = {
-    bgFile = [[Interface\Buttons\White8x8]],
-    edgeFile = [[Interface\Buttons\White8x8]],
     edgeSize = 1,
 }
 private.backdrop = backdrop
@@ -58,7 +56,186 @@ do -- Base.CropIcon
 end
 
 do -- Base.SetBackdrop
+    local sides = {
+        l = {coords = {0, 0.125, 0, 1}, tileV = true},
+        r = {coords = {0.125, 0.25, 0, 1}, tileV = true},
+        t = {coords = {0.25, 0.375, 0, 1}, tileH = true},
+        b = {coords = {0.375, 0.5, 0, 1}, tileH = true},
+    }
+    local corners = {
+        tl = {coords = {0.5, 0.625, 0, 1}, point = "TOPLEFT"},
+        tr = {coords = {0.625, 0.75, 0, 1}, point = "TOPRIGHT"},
+        bl = {coords = {0.75, 0.875, 0, 1}, point = "BOTTOMLEFT"},
+        br = {coords = {0.875, 1, 0, 1}, point = "BOTTOMRIGHT"},
+    }
+    local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
+    local function SetBackdrop(frame, options)
+        if frame.settingBD then return end
+        frame.settingBD = true
+        old_SetBackdrop(frame, nil)
+        if options then
+            if not frame._auroraBackdrop then
+                frame._auroraBackdrop = {
+                    bg = frame:CreateTexture(nil, "BACKGROUND", nil, -8),
+
+                    l = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                    r = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                    t = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                    b = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+
+                    tl = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                    tr = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                    bl = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                    br = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+                }
+            end
+            local bd = frame._auroraBackdrop
+
+            if options.bgFile then
+                --[[ The tile size is fixed at the original texture size, so this option is DOA.
+                if options.tileSize then
+                    bd.bg:SetSize(options.tileSize, options.tileSize)
+                end]]
+                bd.bg:SetTexture(options.bgFile, "REPEAT", "REPEAT")
+                bd.bg:SetHorizTile(options.tile)
+                bd.bg:SetVertTile(options.tile)
+                bd.bgIsColor = false
+            else
+                bd.bg:SetColorTexture(0, 0, 1)
+                bd.bgIsColor = true
+            end
+
+            local insets = options.insets
+            if insets then
+                bd.bg:SetPoint("TOPLEFT", insets.left, -insets.top)
+                bd.bg:SetPoint("BOTTOMRIGHT", -insets.right, insets.bottom)
+            else
+                bd.bg:SetPoint("TOPLEFT")
+                bd.bg:SetPoint("BOTTOMRIGHT")
+            end
+
+
+            if options.edgeFile then
+                for side, info in next, sides do
+                    bd[side]:SetTexture(options.edgeFile, info.tileH, info.tileV)
+                    if info.tileH then
+                        bd[side]:SetTexCoord(info.coords[1], info.coords[4], info.coords[2], info.coords[4], info.coords[1], info.coords[3], info.coords[2], info.coords[3])
+                    else
+                        bd[side]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
+                    end
+                end
+
+                for corner, info in next, corners do
+                    bd[corner]:SetTexture(options.edgeFile)
+                    bd[corner]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
+                end
+
+                bd.borderIsColor = false
+            else
+                for side, info in next, sides do
+                    bd[side]:SetColorTexture(1, 0, 0)
+                    bd[side]:SetTexCoord(0, 1, 0, 1)
+                end
+
+                for corner, info in next, corners do
+                    bd[corner]:SetColorTexture(0, 1, 0)
+                    bd[corner]:SetTexCoord(0, 1, 0, 1)
+                end
+
+                bd.borderIsColor = true
+            end
+
+            bd.l:SetPoint("TOPLEFT", bd.tl, "BOTTOMLEFT")
+            bd.l:SetPoint("BOTTOMRIGHT", bd.bl, "TOPRIGHT")
+
+            bd.r:SetPoint("TOPLEFT", bd.tr, "BOTTOMLEFT")
+            bd.r:SetPoint("BOTTOMRIGHT", bd.br, "TOPRIGHT")
+
+            bd.t:SetPoint("TOPLEFT", bd.tl, "TOPRIGHT")
+            bd.t:SetPoint("BOTTOMRIGHT", bd.tr, "BOTTOMLEFT")
+
+            bd.b:SetPoint("TOPLEFT", bd.bl, "TOPRIGHT")
+            bd.b:SetPoint("BOTTOMRIGHT", bd.br, "BOTTOMLEFT")
+
+            for corner, info in next, corners do
+                bd[corner]:SetSize(options.edgeSize, options.edgeSize)
+                bd[corner]:SetPoint(info.point)
+            end
+        else
+            if frame._auroraBackdrop then
+                local bd = frame._auroraBackdrop
+                bd.bg:Hide()
+                for side, info in next, sides do
+                    bd[side]:Hide()
+                end
+
+                for corner, info in next, corners do
+                    bd[corner]:Hide()
+                end
+            end
+        end
+        frame.settingBD = nil
+    end
+    local function SetBackdropColor(frame, red, green, blue, alpha)
+        if frame._auroraBackdrop then
+            local bd = frame._auroraBackdrop
+            bd.bgRed = red
+            bd.bgGreen = green
+            bd.bgBlue = blue
+            bd.bgAlpha = alpha
+            if bd.bgIsColor then
+                bd.bg:SetColorTexture(red, green, blue, alpha)
+            else
+                bd.bg:SetVertexColor(red, green, blue, alpha)
+            end
+        end
+    end
+    local function GetBackdropColor(frame)
+        if frame._auroraBackdrop then
+            local bd = frame._auroraBackdrop
+            return bd.bgRed, bd.bgGreen, bd.bgBlue, bd.bgAlpha
+        end
+    end
+    local function SetBackdropBorderColor(frame, red, green, blue, alpha)
+        if frame._auroraBackdrop then
+            local bd = frame._auroraBackdrop
+            bd.borderRed = red
+            bd.borderGreen = green
+            bd.borderBlue = blue
+            bd.borderAlpha = alpha
+            if bd.borderIsColor then
+                for side, info in next, sides do
+                    bd[side]:SetColorTexture(red, green, blue, alpha)
+                end
+
+                for corner, info in next, corners do
+                    bd[corner]:SetColorTexture(red, green, blue, alpha)
+                end
+            else
+                for side, info in next, sides do
+                    bd[side]:SetVertexColor(red, green, blue, alpha)
+                end
+
+                for corner, info in next, corners do
+                    bd[corner]:SetVertexColor(red, green, blue, alpha)
+                end
+            end
+        end
+    end
+    local function GetBackdropBorderColor(frame, red, green, blue, alpha)
+        if frame._auroraBackdrop then
+            local bd = frame._auroraBackdrop
+            return bd.borderRed, bd.borderGreen, bd.borderBlue, bd.borderAlpha
+        end
+    end
+
     function Base.SetBackdrop(frame, r, g, b, a)
+        frame.SetBackdrop = SetBackdrop
+        frame.SetBackdropColor = SetBackdropColor
+        frame.GetBackdropColor = GetBackdropColor
+        frame.SetBackdropBorderColor = SetBackdropBorderColor
+        frame.GetBackdropBorderColor = GetBackdropBorderColor
+
         frame:SetBackdrop(backdrop)
         Base.SetBackdropColor(frame, r, g, b, a)
     end
