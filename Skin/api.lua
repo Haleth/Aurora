@@ -90,6 +90,7 @@ do -- Base.SetBackdrop
                 }
             end
             local bd = frame._auroraBackdrop
+            bd.options = options
 
             if options.bgFile then
                 --[[ The tile size is fixed at the original texture size, so this option is DOA.
@@ -182,6 +183,9 @@ do -- Base.SetBackdrop
         end
         frame.settingBD = nil
     end
+    local function GetBackdrop(frame)
+        return frame._auroraBackdrop and frame._auroraBackdrop.options
+    end
     local function SetBackdropColor(frame, red, green, blue, alpha)
         if frame._auroraBackdrop then
             local bd = frame._auroraBackdrop
@@ -228,19 +232,26 @@ do -- Base.SetBackdrop
             end
         end
     end
-    local function GetBackdropBorderColor(frame, red, green, blue, alpha)
+    local function GetBackdropBorderColor(frame)
         if frame._auroraBackdrop then
             local bd = frame._auroraBackdrop
             return bd.borderRed, bd.borderGreen, bd.borderBlue, bd.borderAlpha
         end
     end
+    local function GetBackdropTexture(frame, texture)
+        if frame._auroraBackdrop then
+            return frame._auroraBackdrop[texture]
+        end
+    end
 
     function Base.SetBackdrop(frame, r, g, b, a)
         frame.SetBackdrop = SetBackdrop
+        frame.GetBackdrop = GetBackdrop
         frame.SetBackdropColor = SetBackdropColor
         frame.GetBackdropColor = GetBackdropColor
         frame.SetBackdropBorderColor = SetBackdropBorderColor
         frame.GetBackdropBorderColor = GetBackdropBorderColor
+        frame.GetBackdropTexture = GetBackdropTexture
 
         frame:SetBackdrop(backdrop)
         Base.SetBackdropColor(frame, r, g, b, a)
