@@ -104,10 +104,8 @@ do -- Base.SetBackdrop
                     bd.bg:SetHorizTile(options.tile)
                     bd.bg:SetVertTile(options.tile)
                 end
-                bd.bgIsColor = false
             else
                 bd.bg:SetColorTexture(0, 0, 1)
-                bd.bgIsColor = true
             end
 
             local insets = options.insets
@@ -136,8 +134,6 @@ do -- Base.SetBackdrop
                     bd[corner]:SetTexture(options.edgeFile)
                     bd[corner]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
                 end
-
-                bd.borderIsColor = false
             else
                 for side, info in next, sides do
                     bd[side]:SetColorTexture(1, 0, 0)
@@ -148,8 +144,6 @@ do -- Base.SetBackdrop
                     bd[corner]:SetColorTexture(0, 1, 0)
                     bd[corner]:SetTexCoord(0, 1, 0, 1)
                 end
-
-                bd.borderIsColor = true
             end
 
             bd.l:SetPoint("TOPLEFT", bd.tl, "BOTTOMLEFT")
@@ -193,7 +187,7 @@ do -- Base.SetBackdrop
             bd.bgGreen = green
             bd.bgBlue = blue
             bd.bgAlpha = alpha
-            if bd.bgIsColor then
+            if bd.bg:GetTexture():find("Color%-") then
                 bd.bg:SetColorTexture(red, green, blue, alpha)
             else
                 bd.bg:SetVertexColor(red, green, blue, alpha)
@@ -213,7 +207,7 @@ do -- Base.SetBackdrop
             bd.borderGreen = green
             bd.borderBlue = blue
             bd.borderAlpha = alpha
-            if bd.borderIsColor then
+            if bd.t:GetTexture():find("Color%-") then
                 for side, info in next, sides do
                     bd[side]:SetColorTexture(red, green, blue, alpha)
                 end
