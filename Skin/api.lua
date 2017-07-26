@@ -121,7 +121,9 @@ do -- Base.SetBackdrop
 
             if options.edgeFile then
                 for side, info in next, sides do
-                    bd[side]:SetTexture(options.edgeFile, info.tileH, info.tileV)
+                    bd[side]:SetTexture(options.edgeFile, "REPEAT", "REPEAT")
+                    bd[side]:SetHorizTile(info.tileH)
+                    bd[side]:SetVertTile(info.tileV)
                     if info.tileH then
                         bd[side]:SetTexCoord(info.coords[1], info.coords[4], info.coords[2], info.coords[4], info.coords[1], info.coords[3], info.coords[2], info.coords[3])
                     else
