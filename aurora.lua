@@ -54,9 +54,7 @@ C.defaults = {
 
     ["alpha"] = 0.5,
     ["bags"] = true,
-    ["buttonGradientColour"] = {.3, .3, .3, .3},
-    ["buttonSolidColour"] = {.2, .2, .2, 1},
-    ["useButtonGradientColour"] = true,
+    ["buttonsHaveGradient"] = true,
     ["chatBubbles"] = true,
         ["chatBubbleNames"] = true,
     ["enableFont"] = true,
@@ -69,7 +67,7 @@ C.defaults = {
 
 -- [[ Cached variables ]]
 
-local useButtonGradientColour
+local buttonsHaveGradient
 local _, class = _G.UnitClass("player")
 local red, green, blue
 
@@ -98,7 +96,7 @@ F.CreateGradient = function(f)
     local tex = f:CreateTexture(nil, "BORDER")
     tex:SetPoint("TOPLEFT", 1, -1)
     tex:SetPoint("BOTTOMRIGHT", -1, 1)
-    tex:SetTexture(useButtonGradientColour and C.media.gradient or C.media.backdrop)
+    tex:SetTexture(buttonsHaveGradient and C.media.gradient or C.media.backdrop)
     tex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
 
     return tex
@@ -107,7 +105,7 @@ end
 local function colourButton(f)
     if not f:IsEnabled() then return end
 
-    if useButtonGradientColour then
+    if buttonsHaveGradient then
         f:SetBackdropColor(red, green, blue, .3)
     else
         f._auroraTex:SetVertexColor(red / 4, green / 4, blue / 4)
@@ -117,7 +115,7 @@ local function colourButton(f)
 end
 
 local function clearButton(f)
-    if useButtonGradientColour then
+    if buttonsHaveGradient then
         f:SetBackdropColor(0, 0, 0, 0)
     else
         f._auroraTex:SetVertexColor(buttonR, buttonG, buttonB, buttonA)
@@ -688,6 +686,10 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         _G.AuroraConfig = _G.AuroraConfig or {}
         AuroraConfig = _G.AuroraConfig
 
+        if AuroraConfig.useButtonGradientColour ~= nil then
+            AuroraConfig.buttonsHaveGradient = AuroraConfig.useButtonGradientColour
+        end
+
         -- remove deprecated or corrupt variables
         for key, value in next, AuroraConfig do
             if C.defaults[key] == nil then
@@ -792,12 +794,10 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             end
         end
 
-        useButtonGradientColour = AuroraConfig.useButtonGradientColour
+        buttonsHaveGradient = AuroraConfig.buttonsHaveGradient
 
-        if useButtonGradientColour then
-            private.buttonColor:SetRGBA(_G.unpack(AuroraConfig.buttonGradientColour))
-        else
-            private.buttonColor:SetRGBA(_G.unpack(AuroraConfig.buttonSolidColour))
+        if buttonsHaveGradient then
+            private.buttonColor:SetRGBA(.3, .3, .3, 0.7)
         end
         buttonR, buttonG, buttonB, buttonA = private.buttonColor:GetRGBA()
         private.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
@@ -809,7 +809,7 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         end
 
         function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
-            if useButtonGradientColour and private.buttonColor:IsEqualTo(r, g, b, a) then
+            if buttonsHaveGradient and private.buttonColor:IsEqualTo(r, g, b, a) then
                 Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
                 frame:SetBackdropColor(r, g, b, a)
             elseif not a then
