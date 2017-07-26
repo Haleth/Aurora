@@ -2,8 +2,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F = _G.unpack(Aurora)
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\HybridScrollFrame.lua ]]
     function Hook.HybridScrollFrame_CreateButtons(self, buttonTemplate, initialOffsetX, initialOffsetY, initialPoint, initialRelative, offsetX, offsetY, point, relativePoint)
@@ -48,11 +47,7 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.thumbTexture, 0, -2)
         thumb:SetPoint("BOTTOMRIGHT", slider.thumbTexture, 0, 2)
-        F.CreateBD(thumb, 0)
-
-        local tex = F.CreateGradient(thumb)
-        tex:SetPoint("TOPLEFT", thumb, 1, -1)
-        tex:SetPoint("BOTTOMRIGHT", thumb, -1, 1)
+        Base.SetBackdrop(thumb, private.buttonColor:GetRGBA())
         slider._auroraThumb = thumb
     end
     function Skin.BasicHybridScrollFrameTemplate(scrollframe)

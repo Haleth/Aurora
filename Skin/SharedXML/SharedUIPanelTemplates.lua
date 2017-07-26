@@ -5,7 +5,6 @@ local next, tinsert = _G.next, _G.tinsert
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
@@ -32,10 +31,9 @@ do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
         button:SetPushedTexture("")
 
         local bg = _G.CreateFrame("Frame", nil, button)
-        F.CreateBD(bg, .0)
-        F.CreateGradient(bg)
         bg:SetSize(13, 13)
         bg:SetPoint("TOPLEFT", button:GetNormalTexture(), 0, -2)
+        Base.SetBackdrop(bg, private.buttonColor:GetRGBA())
         button._auroraBG = bg
 
         button._auroraHighlight = {}
@@ -80,11 +78,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         dis:SetDrawLayer("OVERLAY")
         dis:SetAllPoints()
 
-        F.CreateBD(button, 0)
-        F.CreateGradient(button)
+        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
 
         button._auroraHighlight = {}
-
         local lineOfs = private.is730 and 4 or 2.5
         for i = 1, 2 do
             local line = button:CreateLine()
@@ -100,7 +96,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             _G.tinsert(button._auroraHighlight, line)
         end
 
-        Aurora.Base.SetHighlight(button, "color")
+        Base.SetHighlight(button, "color")
     end
     function Skin.UIPanelButtonTemplate(button)
         button.Left:SetAlpha(0)
@@ -108,9 +104,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         button.Middle:SetAlpha(0)
         button:SetHighlightTexture("")
 
-        F.CreateBD(button, 0)
-        F.CreateGradient(button)
-        Aurora.Base.SetHighlight(button, "backdrop")
+        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Base.SetHighlight(button, "backdrop")
     end
     function Skin.PortraitFrameTemplate(frame, noCloseButton)
         local name = frame:GetName()
@@ -135,7 +130,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         frame.leftBorderBar:Hide()
         _G[name.."RightBorder"]:Hide()
 
-        F.CreateBD(frame)
+        Base.SetBackdrop(frame)
         if not noCloseButton then
             Skin.UIPanelCloseButton(frame.CloseButton)
             frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
@@ -174,9 +169,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local disabled = button:GetDisabledTexture()
         disabled:SetVertexColor(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
+        disabled:SetAllPoints()
 
-        F.CreateBD(button, 0)
-        F.CreateGradient(button)
+        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
     end
     function Skin.UIPanelScrollUpButtonTemplate(button)
         Skin.UIPanelScrollBarButton(button)
@@ -210,11 +205,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.ThumbTexture, 0, -2)
         thumb:SetPoint("BOTTOMRIGHT", slider.ThumbTexture, 0, 2)
-        F.CreateBD(thumb, 0)
-
-        local tex = F.CreateGradient(thumb)
-        tex:SetPoint("TOPLEFT", thumb, 1, -1)
-        tex:SetPoint("BOTTOMRIGHT", thumb, -1, 1)
+        Base.SetBackdrop(thumb, private.buttonColor:GetRGBA())
         slider._auroraThumb = thumb
     end
     function Skin.UIPanelScrollFrameTemplate(scrollframe)
@@ -237,9 +228,14 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
             local button = frame[name]
             button:SetSize(17, 17)
+            button:SetNormalTexture("")
+            button:SetPushedTexture("")
+            button:SetHighlightTexture("")
+
+            Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+
             button:ClearAllPoints()
             button:SetPoint("CENTER")
-            F.Reskin(button)
 
             button._auroraHighlight = {}
 
@@ -269,7 +265,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
                 vline:SetPoint("LEFT", 4, -1)
             end
 
-            Aurora.Base.SetHighlight(button, "color")
+            Base.SetHighlight(button, "color")
         end
     end
 end

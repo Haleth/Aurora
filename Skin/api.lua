@@ -15,6 +15,19 @@ function colorMeta:SetRGBA(r, g, b, a)
     self.a = a
     self.colorStr = self:GenerateHexColor()
 end
+function colorMeta:IsEqualTo(r, g, b, a)
+    if _G.type(r) == "table" then
+        return self.r == r.r
+            and self.g == r.g
+            and self.b == r.b
+            and self.a == r.a
+    else
+        return self.r == r
+            and self.g == g
+            and self.b == b
+            and self.a == a
+    end
+end
 local function CreateColor(r, g, b, a)
     local color = _G.CreateFromMixins(colorMeta)
     color:OnLoad(r, g, b, a)

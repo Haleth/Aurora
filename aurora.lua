@@ -809,7 +809,12 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         end
 
         function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
-            if not a then _G.tinsert(C.frames, frame) end
+            if useButtonGradientColour and private.buttonColor:IsEqualTo(r, g, b, a) then
+                Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
+                frame:SetBackdropColor(r, g, b, a)
+            elseif not a then
+                _G.tinsert(C.frames, frame)
+            end
         end
 
         function private.FrameXML.Post.CharacterFrame()
