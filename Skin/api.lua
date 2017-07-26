@@ -96,9 +96,13 @@ do -- Base.SetBackdrop
                 if options.tileSize then
                     bd.bg:SetSize(options.tileSize, options.tileSize)
                 end]]
-                bd.bg:SetTexture(options.bgFile, "REPEAT", "REPEAT")
-                bd.bg:SetHorizTile(options.tile)
-                bd.bg:SetVertTile(options.tile)
+                if Base.IsTextureRegistered(options.bgFile) then
+                    Base.SetTexture(bd.bg, options.bgFile)
+                else
+                    bd.bg:SetTexture(options.bgFile, "REPEAT", "REPEAT")
+                    bd.bg:SetHorizTile(options.tile)
+                    bd.bg:SetVertTile(options.tile)
+                end
                 bd.bgIsColor = false
             else
                 bd.bg:SetColorTexture(0, 0, 1)
@@ -416,6 +420,10 @@ do -- Base.SetTexture
     end
 
     local snapshots = {}
+
+    function Base.IsTextureRegistered(textureName)
+        return not not snapshots[textureName]
+    end
 
     function Base.SetTexture(texture, textureName, useTextureSize)
         local snapshot = snapshots[textureName]
