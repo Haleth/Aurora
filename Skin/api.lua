@@ -293,7 +293,6 @@ do -- Base.SetHighlight
     end
     local function OnEnter(button, isBackground)
         if button:IsEnabled() then
-            --print("OnEnter", isBackground)
             if isBackground then
                 Base.SetBackdropColor(button, highlightColor:GetRGBA())
             else
@@ -304,7 +303,6 @@ do -- Base.SetHighlight
         end
     end
     local function OnLeave(button, isBackground)
-        --print("OnLeave", isBackground)
         if isBackground then
             Base.SetBackdropColor(button, button._returnColor:GetRGBA())
         else
