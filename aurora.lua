@@ -282,21 +282,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Guild registrar frame
-
-        _G.GuildRegistrarFrameTop:Hide()
-        _G.GuildRegistrarFrameBottom:Hide()
-        _G.GuildRegistrarFrameMiddle:Hide()
-        select(19, _G.GuildRegistrarFrame:GetRegions()):Hide()
-
-        _G.GuildRegistrarFrameEditBox:SetHeight(20)
-
-        F.ReskinPortraitFrame(_G.GuildRegistrarFrame, true)
-        F.CreateBD(_G.GuildRegistrarFrameEditBox, .25)
-        F.Reskin(_G.GuildRegistrarFrameGoodbyeButton)
-        F.Reskin(_G.GuildRegistrarFramePurchaseButton)
-        F.Reskin(_G.GuildRegistrarFrameCancelButton)
-
         --[[ Item text ]]
 
         select(18, _G.ItemTextFrame:GetRegions()):Hide()
