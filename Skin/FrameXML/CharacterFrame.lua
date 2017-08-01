@@ -31,7 +31,7 @@ function private.FrameXML.CharacterFrame()
     Skin.ButtonFrameTemplate(_G.CharacterFrame)
 
     _G.CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, "TOPRIGHT", 0, 0)
-    _G.CharacterFrameInset:SetPoint("TOPLEFT", 4, -private.PORTRAIT_TITLE_HEIGHT)
+    _G.CharacterFrameInset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
     _G.CharacterFrameInset:SetPoint("BOTTOMRIGHT", _G.CharacterFrame, "BOTTOMLEFT", _G.CharacterFrame:GetWidth() - 4, 4)
 
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab1)

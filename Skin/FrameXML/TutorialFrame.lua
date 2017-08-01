@@ -89,7 +89,7 @@ function private.FrameXML.TutorialFrame()
     local title = _G.TutorialFrameTitle
     title:ClearAllPoints()
     title:SetPoint("TOPLEFT")
-    title:SetPoint("BOTTOMRIGHT", _G.TutorialFrame, "TOPRIGHT", 0, -private.PORTRAIT_TITLE_HEIGHT)
+    title:SetPoint("BOTTOMRIGHT", _G.TutorialFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     title:SetJustifyH("CENTER")
     title:SetJustifyV("MIDDLE")
 

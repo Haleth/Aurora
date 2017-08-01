@@ -121,7 +121,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local titleText = frame.TitleText
         titleText:ClearAllPoints()
         titleText:SetPoint("TOPLEFT")
-        titleText:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, -private.PORTRAIT_TITLE_HEIGHT)
+        titleText:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
         frame.TopTileStreaks:SetTexture("")
         _G[name.."BotLeftCorner"]:Hide()

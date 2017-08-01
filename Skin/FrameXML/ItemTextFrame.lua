@@ -21,10 +21,10 @@ do --[[ FrameXML\ItemTextFrame.lua ]]
 
             _G.ItemTextScrollFrame:ClearAllPoints()
             if (page > 1) or hasNext then
-                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.PORTRAIT_TITLE_HEIGHT * 2 + 4))
+                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT * 2 + 4))
                 _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
             else
-                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.PORTRAIT_TITLE_HEIGHT + 4))
+                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
                 _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
             end
         end
@@ -45,7 +45,7 @@ function private.FrameXML.ItemTextFrame()
     _G.ItemTextMaterialBotLeft:SetAlpha(0)
     _G.ItemTextMaterialBotRight:SetAlpha(0)
 
-    _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.PORTRAIT_TITLE_HEIGHT * 1.25))
+    _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT * 1.25))
 
     Skin.UIPanelStretchableArtScrollBarTemplate(_G.ItemTextScrollFrame.ScrollBar)
 
@@ -82,11 +82,11 @@ function private.FrameXML.ItemTextFrame()
         Base.SetBackdrop(button, private.buttonColor:GetRGBA())
         Base.SetHighlight(button, "backdrop")
         if i == 1 then
-            button:SetPoint("TOPLEFT", 32, -(private.PORTRAIT_TITLE_HEIGHT * 1.2))
+            button:SetPoint("TOPLEFT", 32, -(private.FRAME_TITLE_HEIGHT * 1.2))
             button:GetRegions():SetPoint("LEFT", button, "RIGHT", 3, 0)
             Base.SetTexture(arrow, "arrowLeft")
         else
-            button:SetPoint("TOPRIGHT", -32, -(private.PORTRAIT_TITLE_HEIGHT * 1.2))
+            button:SetPoint("TOPRIGHT", -32, -(private.FRAME_TITLE_HEIGHT * 1.2))
             button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
             Base.SetTexture(arrow, "arrowRight")
         end

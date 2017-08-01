@@ -13,9 +13,9 @@ do --[[ FrameXML\GossipFrame.lua ]]
             local titleText, _, isTrivial = _G.select(i, ...)
             local titleButton = _G["GossipTitleButton" .. buttonIndex]
             if isTrivial then
-                titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText)
+                titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
             else
-                titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText)
+                titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
             end
             buttonIndex = buttonIndex + 1
         end
@@ -27,9 +27,9 @@ do --[[ FrameXML\GossipFrame.lua ]]
             local titleText, _, isTrivial = _G.select(i, ...)
             local titleButton = _G["GossipTitleButton" .. buttonIndex]
             if isTrivial then
-                titleButton:SetFormattedText(_G.AURORA_TRIVIAL_QUEST_DISPLAY, titleText)
+                titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
             else
-                titleButton:SetFormattedText(_G.AURORA_NORMAL_QUEST_DISPLAY, titleText)
+                titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
             end
             buttonIndex = buttonIndex + 1
         end

@@ -82,7 +82,7 @@ function private.AddOns.Blizzard_TokenUI()
     local titleText = _G.TokenFramePopupTitle
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT")
-    titleText:SetPoint("BOTTOMRIGHT", _G.TokenFramePopup, "TOPRIGHT", 0, -private.PORTRAIT_TITLE_HEIGHT)
+    titleText:SetPoint("BOTTOMRIGHT", _G.TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
     _G.TokenFramePopupCorner:Hide()
 

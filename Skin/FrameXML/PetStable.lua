@@ -46,7 +46,7 @@ function private.FrameXML.PetStable()
     _G.PetStableFrameModelBg:SetTexCoord(0.2, 0.8, 0, 0.8)
 
     Skin.InsetFrameTemplate(PetStableFrame.LeftInset)
-    PetStableFrame.LeftInset:SetPoint("TOPLEFT", 0, -private.PORTRAIT_TITLE_HEIGHT)
+    PetStableFrame.LeftInset:SetPoint("TOPLEFT", 0, -private.FRAME_TITLE_HEIGHT)
     PetStableFrame.LeftInset:SetPoint("BOTTOMRIGHT", PetStableFrame, "BOTTOMLEFT", 91, 0)
     _G.PetStableActiveBg:Hide()
 
