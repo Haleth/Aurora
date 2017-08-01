@@ -64,10 +64,7 @@ function private.FrameXML.GossipFrame()
     _G.select(19, _G.GossipFrame:GetRegions()):Hide() -- GossipFrameBg
 
     -- BlizzWTF: This should use the title text included in the template
-    local npcName = _G.GossipFrameNpcNameText
-    npcName:ClearAllPoints()
-    npcName:SetPoint("TOPLEFT")
-    npcName:SetPoint("BOTTOMRIGHT", _G.GossipFrame, "TOPRIGHT", 0, -23)
+    _G.GossipFrameNpcNameText:SetAllPoints(_G.GossipFrame.TitleText)
 
     Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
     Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)

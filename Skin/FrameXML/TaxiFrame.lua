@@ -11,6 +11,6 @@ function private.FrameXML.TaxiFrame()
     TaxiFrame.TitleBg:Hide()
     TaxiFrame.TopTileStreaks:Hide()
 
-    F.SetBD(TaxiFrame, 3, -23, -5, 3)
+    F.SetBD(TaxiFrame, 3, -private.PORTRAIT_TITLE_HEIGHT, -5, 3)
     F.ReskinClose(TaxiFrame.CloseButton, "TOPRIGHT", _G.TaxiRouteMap, "TOPRIGHT", -6, -6)
 end
