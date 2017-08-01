@@ -68,7 +68,11 @@ function private.FrameXML.GossipFrame()
 
     Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
     Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
+    _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
+
     Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
+    _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
+    _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", _G.GossipFrame, -23, 30)
 
     _G.GossipGreetingScrollFrameTop:Hide()
     _G.GossipGreetingScrollFrameBottom:Hide()
