@@ -1,7 +1,6 @@
 local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
-local select = _G.select
 local next = _G.next
 
 -- [[ WoW API ]]
@@ -282,22 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Petition frame
-
-        select(18, _G.PetitionFrame:GetRegions()):Hide()
-        select(19, _G.PetitionFrame:GetRegions()):Hide()
-        select(23, _G.PetitionFrame:GetRegions()):Hide()
-        select(24, _G.PetitionFrame:GetRegions()):Hide()
-        _G.PetitionFrameTop:Hide()
-        _G.PetitionFrameBottom:Hide()
-        _G.PetitionFrameMiddle:Hide()
-
-        F.ReskinPortraitFrame(_G.PetitionFrame, true)
-        F.Reskin(_G.PetitionFrameSignButton)
-        F.Reskin(_G.PetitionFrameRequestButton)
-        F.Reskin(_G.PetitionFrameRenameButton)
-        F.Reskin(_G.PetitionFrameCancelButton)
-
         -- Micro button alerts
 
         local microButtons = {_G.TalentMicroButtonAlert, _G.CollectionsMicroButtonAlert}
@@ -421,12 +404,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         _G.MailFont_Large:SetShadowOffset(1, -1)
         _G.AvailableServicesText:SetTextColor(1, 1, 1)
         _G.AvailableServicesText:SetShadowColor(0, 0, 0)
-        _G.PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
-        _G.PetitionFrameCharterTitle:SetShadowColor(0, 0, 0)
-        _G.PetitionFrameMasterTitle:SetTextColor(1, 1, 1)
-        _G.PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
-        _G.PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
-        _G.PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
         _G.CoreAbilityFont:SetTextColor(1, 1, 1)
 
         -- [[ Change positions ]]
