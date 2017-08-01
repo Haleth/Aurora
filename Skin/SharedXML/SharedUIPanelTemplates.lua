@@ -208,6 +208,15 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Base.SetBackdrop(thumb, private.buttonColor:GetRGBA())
         slider._auroraThumb = thumb
     end
+    function Skin.UIPanelStretchableArtScrollBarTemplate(slider)
+        Skin.UIPanelScrollBarTemplate(slider)
+
+        slider.Top:Hide()
+        slider.Bottom:Hide()
+        slider.Middle:Hide()
+
+        slider.Background:Hide()
+    end
     function Skin.UIPanelScrollFrameTemplate(scrollframe)
         Skin.UIPanelScrollBarTemplate(scrollframe.ScrollBar)
         scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 2, -17)

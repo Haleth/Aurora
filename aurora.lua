@@ -282,22 +282,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        --[[ Item text ]]
-
-        select(18, _G.ItemTextFrame:GetRegions()):Hide()
-        _G.ItemTextFramePageBg:SetAlpha(0)
-        _G.ItemTextPrevPageButton:GetRegions():Hide()
-        _G.ItemTextNextPageButton:GetRegions():Hide()
-        _G.ItemTextMaterialTopLeft:SetAlpha(0)
-        _G.ItemTextMaterialTopRight:SetAlpha(0)
-        _G.ItemTextMaterialBotLeft:SetAlpha(0)
-        _G.ItemTextMaterialBotRight:SetAlpha(0)
-
-        F.ReskinPortraitFrame(_G.ItemTextFrame, true)
-        F.ReskinScroll(_G.ItemTextScrollFrameScrollBar)
-        F.ReskinArrow(_G.ItemTextPrevPageButton, "Left")
-        F.ReskinArrow(_G.ItemTextNextPageButton, "Right")
-
         -- Petition frame
 
         select(18, _G.PetitionFrame:GetRegions()):Hide()
@@ -443,8 +427,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
         _G.PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
         _G.PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
         _G.PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
-        _G.ItemTextPageText:SetTextColor(1, 1, 1)
-        _G.ItemTextPageText.SetTextColor = F.dummy
         _G.CoreAbilityFont:SetTextColor(1, 1, 1)
 
         -- [[ Change positions ]]
