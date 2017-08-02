@@ -309,17 +309,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             end
         end)
 
-        -- Movie Frame
-
-        local MovieFrame = _G.MovieFrame
-        MovieFrame.CloseDialog:HookScript("OnShow", function(mov)
-            mov:SetScale(_G.UIParent:GetScale())
-        end)
-
-        F.CreateBD(MovieFrame.CloseDialog)
-        F.Reskin(MovieFrame.CloseDialog.ConfirmButton)
-        F.Reskin(MovieFrame.CloseDialog.ResumeButton)
-
         -- Pet battle queue popup
 
         local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
