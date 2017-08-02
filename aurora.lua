@@ -281,16 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Cinematic popup
-
-        _G.CinematicFrameCloseDialog:HookScript("OnShow", function(cinemaFrame)
-            cinemaFrame:SetScale(_G.UIParent:GetScale())
-        end)
-
-        F.CreateBD(_G.CinematicFrameCloseDialog)
-        F.Reskin(_G.CinematicFrameCloseDialogConfirmButton)
-        F.Reskin(_G.CinematicFrameCloseDialogResumeButton)
-
         -- Bonus roll
 
         local BonusRollFrame = _G.BonusRollFrame
