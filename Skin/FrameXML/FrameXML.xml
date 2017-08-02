@@ -3,6 +3,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
     <Script file="FrameXML.lua"/>
 
+    <Script file="ActionBarController.lua"/>
     <Script file="AlertFrames.lua"/>
     <Script file="AutoComplete.lua"/>
     <Script file="BankFrame.lua"/>
@@ -36,6 +37,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="LootFrame.lua"/>
     <Script file="LootHistory.lua"/>
     <Script file="MailFrame.lua"/>
+    <Script file="MainMenuBarMicroButtons.lua"/>
     <Script file="MerchantFrame.lua"/>
     <Script file="MoneyFrame.lua"/>
     <Script file="NavigationBar.lua"/>

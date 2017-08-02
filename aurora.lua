@@ -281,18 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Micro button alerts
-
-        local microButtons = {_G.TalentMicroButtonAlert, _G.CollectionsMicroButtonAlert}
-            for _, button in next, microButtons do
-            button:DisableDrawLayer("BACKGROUND")
-            button:DisableDrawLayer("BORDER")
-            button.Arrow:Hide()
-
-            F.SetBD(button)
-            F.ReskinClose(button.CloseButton)
-        end
-
         -- Cinematic popup
 
         _G.CinematicFrameCloseDialog:HookScript("OnShow", function(cinemaFrame)
