@@ -127,8 +127,13 @@ function private.FrameXML.QuestInfo()
                     else
                         Skin.LargeItemButtonTemplate(spellReward)
                     end
-                    local border = _G.select(4, spellReward:GetRegions())
-                    border:Hide()
+                    if private.is730 then
+                        local border = _G.select(3, spellReward:GetRegions())
+                        border:Hide()
+                    else
+                        local border = _G.select(4, spellReward:GetRegions())
+                        border:Hide()
+                    end
                     if not isMapQuest then
                         spellReward.Icon:SetPoint("TOPLEFT", 0, 0)
                         spellReward:SetHitRectInsets(0,0,0,0)
