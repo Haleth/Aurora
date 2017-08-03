@@ -281,21 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Bonus roll
-
-        local BonusRollFrame = _G.BonusRollFrame
-        BonusRollFrame.Background:SetAlpha(0)
-        BonusRollFrame.IconBorder:Hide()
-        BonusRollFrame.BlackBackgroundHoist.Background:Hide()
-
-        BonusRollFrame.PromptFrame.Icon:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBG(BonusRollFrame.PromptFrame.Icon)
-
-        BonusRollFrame.PromptFrame.Timer.Bar:SetTexture(C.media.backdrop)
-
-        F.CreateBD(BonusRollFrame)
-        F.CreateBDFrame(BonusRollFrame.PromptFrame.Timer, .25)
-
         -- Level up display
 
         _G.LevelUpDisplaySide:HookScript("OnShow", function(lvlUp)

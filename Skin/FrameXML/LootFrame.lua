@@ -7,7 +7,48 @@ local select = _G.select
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+
+do --[[ FrameXML\LootFrame.xml ]]
+    function Skin.BonusRollFrameTemplate(frame)
+        Base.SetBackdrop(frame)
+        frame:SetSize(270, 60)
+
+        frame.Background:SetAlpha(0)
+        frame.LootSpinnerBG:SetPoint("TOPLEFT", 4, -4)
+        frame.IconBorder:Hide()
+
+        frame.SpecRing:SetAlpha(0)
+
+        local textFrame = _G.CreateFrame("Frame", nil, frame)
+        Base.SetBackdrop(textFrame, private.frameColor:GetRGBA())
+        textFrame:SetFrameLevel(frame:GetFrameLevel())
+
+        local rollingFrame = frame.RollingFrame
+        rollingFrame.Label:SetAllPoints(textFrame)
+        rollingFrame.LootSpinnerFinalText:SetAllPoints(textFrame)
+        rollingFrame.DieIcon:SetPoint("TOPRIGHT", -40, -10)
+        rollingFrame.DieIcon:SetSize(32, 32)
+
+        local promptFrame = frame.PromptFrame
+        Base.CropIcon(promptFrame.Icon, promptFrame)
+        promptFrame.Icon:SetAllPoints(frame.LootSpinnerBG)
+
+        promptFrame.InfoFrame:SetPoint("TOPLEFT", textFrame, 4, 0)
+        promptFrame.InfoFrame:SetPoint("BOTTOMRIGHT", textFrame)
+
+        Base.SetTexture(promptFrame.Timer.Bar, "gradientUp")
+        promptFrame.Timer:SetPoint("BOTTOMLEFT", 1, 1)
+        promptFrame.RollButton:SetPoint("TOPRIGHT", -40, -10)
+
+        textFrame:SetPoint("TOPLEFT", promptFrame.Icon, "TOPRIGHT", 4, 1)
+        textFrame:SetPoint("BOTTOMRIGHT", promptFrame.Timer, "TOPRIGHT", 0, 3)
+
+        frame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", -2, 0)
+    end
+end
 
 function private.FrameXML.LootFrame()
     if not _G.AuroraConfig.loot then return end
@@ -51,6 +92,8 @@ function private.FrameXML.LootFrame()
     F.ReskinArrow(_G.LootFrameUpButton, "Up")
     F.ReskinArrow(_G.LootFrameDownButton, "Down")
 
+    --[[ BonusRollFrame ]]--
+    Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
 
     --[[ MasterLooterFrame ]]--
     local MasterLooterFrame = _G.MasterLooterFrame
