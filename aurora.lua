@@ -281,14 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Pet battle queue popup
-
-        local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
-        F.CreateBD(PetBattleQueueReadyFrame)
-        F.CreateBG(PetBattleQueueReadyFrame.Art)
-        F.Reskin(PetBattleQueueReadyFrame.AcceptButton)
-        F.Reskin(PetBattleQueueReadyFrame.DeclineButton)
-
         -- PVP Ready Dialog
 
         local PVPReadyDialog = _G.PVPReadyDialog

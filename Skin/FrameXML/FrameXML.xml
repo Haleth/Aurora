@@ -67,6 +67,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="SplashFrame.lua"/>
     <Script file="StackSplitFrame.lua"/>
     <Script file="StaticPopup.lua"/>
+    <Script file="StaticPopupSpecial.lua"/>
     <Script file="TabardFrame.lua"/>
     <Script file="TaxiFrame.lua"/>
     <Script file="TradeFrame.lua"/>
