@@ -32,6 +32,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="InterfaceOptionsFrame.lua"/>
     <Script file="ItemButtonTemplate.lua"/>
     <Script file="ItemTextFrame.lua"/>
+    <Script file="LevelUpDisplay.lua"/>
     <Script file="LFDFrame.lua"/>
     <Script file="LFGFrame.lua"/>
     <Script file="LFGList.lua"/>

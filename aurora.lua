@@ -281,19 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- Level up display
-
-        _G.LevelUpDisplaySide:HookScript("OnShow", function(lvlUp)
-            for i = 1, #lvlUp.unlockList do
-                local f = _G["LevelUpDisplaySideUnlockFrame"..i]
-
-                if not f.restyled then
-                    f.icon:SetTexCoord(.08, .92, .08, .92)
-                    F.CreateBG(f.icon)
-                end
-            end
-        end)
-
         -- Pet battle queue popup
 
         local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
