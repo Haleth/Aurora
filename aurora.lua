@@ -1,10 +1,7 @@
-local ADDON_NAME, private = ...
+local _, private = ...
 
 -- [[ Lua Globals ]]
 local next = _G.next
-
--- [[ WoW API ]]
-local CreateFrame = _G.CreateFrame
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -87,194 +84,150 @@ end
 
 -- [[ Initialize addon ]]
 
-local SetSkin = CreateFrame("Frame", nil, _G.UIParent)
-SetSkin:RegisterEvent("ADDON_LOADED")
-SetSkin:SetScript("OnEvent", function(self, event, addon)
-    if addon == ADDON_NAME then
-        -- [[ Load Variables ]]
-        _G.AuroraConfig = _G.AuroraConfig or {}
-        AuroraConfig = _G.AuroraConfig
+function private.OnLoad()
+    -- Load Variables
+    _G.AuroraConfig = _G.AuroraConfig or {}
+    AuroraConfig = _G.AuroraConfig
 
-        if AuroraConfig.useButtonGradientColour ~= nil then
-            AuroraConfig.buttonsHaveGradient = AuroraConfig.useButtonGradientColour
+    if AuroraConfig.useButtonGradientColour ~= nil then
+        AuroraConfig.buttonsHaveGradient = AuroraConfig.useButtonGradientColour
+    end
+
+    -- Remove deprecated or corrupt variables
+    for key, value in next, AuroraConfig do
+        if C.defaults[key] == nil then
+            AuroraConfig[key] = nil
         end
+    end
 
-        -- remove deprecated or corrupt variables
-        for key, value in next, AuroraConfig do
-            if C.defaults[key] == nil then
-                AuroraConfig[key] = nil
-            end
-        end
-
-        -- load or init variables
-        for key, value in next, C.defaults do
-            if AuroraConfig[key] == nil then
-                if _G.type(value) == "table" then
-                    AuroraConfig[key] = {}
-                    for k, v in next, value do
-                        AuroraConfig[key][k] = value[k]
-                    end
-                else
-                    AuroraConfig[key] = value
+    -- Load or init variables
+    for key, value in next, C.defaults do
+        if AuroraConfig[key] == nil then
+            if _G.type(value) == "table" then
+                AuroraConfig[key] = {}
+                for k, v in next, value do
+                    AuroraConfig[key][k] = value[k]
                 end
-            end
-        end
-
-        -- init class colors
-        if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[class].colorStr then
-            local customClassColors = {}
-            private.classColorsReset(customClassColors, true)
-            AuroraConfig.customClassColors = customClassColors
-        end
-
-        -- [[ Custom style support ]]
-        local customStyle = _G.AURORA_CUSTOM_STYLE
-        if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
-            local protectedFunctions = {
-                ["AddPlugin"] = true,
-            }
-
-            -- override settings
-            if customStyle.defaults then
-                for setting, value in next, customStyle.defaults do
-                    AuroraConfig[setting] = value
-                end
-            end
-
-            -- replace functions
-            if customStyle.functions then
-                for funcName, func in next, customStyle.functions do
-                    if F[funcName] and not protectedFunctions[funcName] then
-                        F[funcName] = func
-                    end
-                end
-            end
-
-            -- replace classcolors
-            if customStyle.classcolors then
-                for classToken, color in next, customStyle.classcolors do
-                    AuroraConfig.customClassColors[classToken]:SetRGB(color.r, color.g, color.b)
-                end
-            end
-        end
-
-        -- setup class colours
-        function private.updateHighlightColor()
-            if AuroraConfig.useCustomColour then
-                private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
             else
-                private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class]:GetRGB())
+                AuroraConfig[key] = value
             end
         end
-
-        _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
-            for classToken, color in next, _G.CUSTOM_CLASS_COLORS do
-                local ccc = AuroraConfig.customClassColors[classToken]
-                ccc.r = color.r
-                ccc.g = color.g
-                ccc.b = color.b
-                ccc.colorStr = color.colorStr
-            end
-
-            _G.AuroraOptions.refresh()
-            private.updateHighlightColor()
-        end)
-
-        function private.classColorsInit()
-            for classToken, color in next, AuroraConfig.customClassColors do
-                _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
-            end
-
-            private.updateHighlightColor()
-            red, green, blue = private.highlightColor:GetRGB()
-            C.r, C.g, C.b = red, green, blue
-        end
-        function private.classColorsHaveChanged()
-            for i = 1, #_G.CLASS_SORT_ORDER do
-                local classToken = _G.CLASS_SORT_ORDER[i]
-                local color = _G.CUSTOM_CLASS_COLORS[classToken]
-                local cache = AuroraConfig.customClassColors[classToken]
-
-                if not color:IsEqualTo(cache) then
-                    --print("Change found in", classToken)
-                    color:SetRGB(cache.r, cache.g, cache.b)
-                    return true
-                end
-            end
-        end
-
-        buttonsHaveGradient = AuroraConfig.buttonsHaveGradient
-
-        if buttonsHaveGradient then
-            private.buttonColor:SetRGBA(.3, .3, .3, 0.7)
-        end
-        private.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
-
-        -- [[ Splash screen for first time users ]]
-
-        if not AuroraConfig.acknowledgedSplashScreen then
-            _G.AuroraSplashScreen:Show()
-        end
-
-        function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
-            if buttonsHaveGradient and private.buttonColor:IsEqualTo(r, g, b, a) then
-                Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
-                Aurora.Base.SetBackdropColor(frame, r, g, b, a)
-            elseif not a then
-                _G.tinsert(C.frames, frame)
-            end
-        end
-
-        function private.FrameXML.Post.CharacterFrame()
-            _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
-            _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
-            _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
-
-            _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
-                if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
-                    _G.CharacterStatsPane.ItemLevelCategory:Hide()
-                    _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
-                end
-            end)
-        end
-
-
-        -- [[ Load FrameXML ]]
-        for i = 1, #private.FrameXML do
-            local file, isShared = _G.strsplit(".", private.FrameXML[i])
-            local fileList = private.FrameXML
-            if isShared then
-                file = isShared
-                fileList = private.SharedXML
-            end
-            if fileList[file] then
-                fileList[file]()
-            end
-        end
-
-        -- [[ Load AddOns - some may have loaded before Aurora ]]
-        for addonName, func in next, private.AddOns do
-            local loaded = _G.IsAddOnLoaded(addonName)
-            if loaded then
-                func()
-            end
-        end
-
-        -- from this point, plugins added with F.AddPlugin are executed directly instead of cached
-        AURORA_LOADED = true
     end
 
-    -- [[ Load modules ]]
+    -- Init class colors
+    if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[class].colorStr then
+        local customClassColors = {}
+        private.classColorsReset(customClassColors, true)
+        AuroraConfig.customClassColors = customClassColors
+    end
 
-    -- check if the addon loaded is supported by Aurora, and if it is, execute its module
-    local addonModule = private.AddOns[addon] or C.themes[addon]
-    if addonModule then
-        if _G.type(addonModule) == "function" then
-            addonModule()
+    -- Apply custom style
+    local customStyle = _G.AURORA_CUSTOM_STYLE
+    if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
+        local protectedFunctions = {
+            ["AddPlugin"] = true,
+        }
+
+        -- override settings
+        if customStyle.defaults then
+            for setting, value in next, customStyle.defaults do
+                AuroraConfig[setting] = value
+            end
+        end
+
+        -- replace functions
+        if customStyle.functions then
+            for funcName, func in next, customStyle.functions do
+                if F[funcName] and not protectedFunctions[funcName] then
+                    F[funcName] = func
+                end
+            end
+        end
+
+        -- replace classcolors
+        if customStyle.classcolors then
+            for classToken, color in next, customStyle.classcolors do
+                AuroraConfig.customClassColors[classToken]:SetRGB(color.r, color.g, color.b)
+            end
+        end
+    end
+
+    -- Setup colors
+    function private.updateHighlightColor()
+        if AuroraConfig.useCustomColour then
+            private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
         else
-            for _, moduleFunc in next, addonModule do
-                moduleFunc()
+            private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class]:GetRGB())
+        end
+    end
+    function private.classColorsInit()
+        for classToken, color in next, AuroraConfig.customClassColors do
+            _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
+        end
+
+        private.updateHighlightColor()
+        red, green, blue = private.highlightColor:GetRGB()
+        C.r, C.g, C.b = red, green, blue
+    end
+    function private.classColorsHaveChanged()
+        for i = 1, #_G.CLASS_SORT_ORDER do
+            local classToken = _G.CLASS_SORT_ORDER[i]
+            local color = _G.CUSTOM_CLASS_COLORS[classToken]
+            local cache = AuroraConfig.customClassColors[classToken]
+
+            if not color:IsEqualTo(cache) then
+                --print("Change found in", classToken)
+                color:SetRGB(cache.r, cache.g, cache.b)
+                return true
             end
         end
     end
-end)
+    _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
+        for classToken, color in next, _G.CUSTOM_CLASS_COLORS do
+            local ccc = AuroraConfig.customClassColors[classToken]
+            ccc.r = color.r
+            ccc.g = color.g
+            ccc.b = color.b
+            ccc.colorStr = color.colorStr
+        end
+
+        _G.AuroraOptions.refresh()
+        private.updateHighlightColor()
+    end)
+
+    buttonsHaveGradient = AuroraConfig.buttonsHaveGradient
+    if buttonsHaveGradient then
+        private.buttonColor:SetRGBA(.3, .3, .3, 0.7)
+    end
+    private.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
+
+    -- Show splash screen for first time users
+    if not AuroraConfig.acknowledgedSplashScreen then
+        _G.AuroraSplashScreen:Show()
+    end
+
+    -- Create API hooks
+    function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
+        if buttonsHaveGradient and private.buttonColor:IsEqualTo(r, g, b, a) then
+            Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
+            Aurora.Base.SetBackdropColor(frame, r, g, b, a)
+        elseif not a then
+            _G.tinsert(C.frames, frame)
+        end
+    end
+
+    function private.FrameXML.Post.CharacterFrame()
+        _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
+        _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
+        _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
+
+        _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
+            if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
+                _G.CharacterStatsPane.ItemLevelCategory:Hide()
+                _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
+            end
+        end)
+    end
+
+    AURORA_LOADED = true
+end

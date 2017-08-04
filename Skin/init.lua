@@ -1,10 +1,9 @@
 local ADDON_NAME, private = ...
 
---  Lua Globals --
-local select, tostring = _G.select, _G.tostring
+-- luacheck: globals select tostring tonumber
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.is730 = _G.tonumber(xpac) == 7 and (_G.tonumber(major) >= 3 and _G.tonumber(minor) >= 0)
+private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
 local classLocale, class, classID = _G.UnitClass("player")
 private.charClass = {
     locale = classLocale,
@@ -15,7 +14,7 @@ private.charClass = {
 local debug do
     if _G.LibStub then
         local debugger
-        local LTD = _G.LibStub((_G.RealUI and "RealUI_" or "").."LibTextDump-1.0", true)
+        local LTD = _G.LibStub("LibTextDump-1.0", true)
         function debug(...)
             if not debugger then
                 if LTD then
@@ -70,3 +69,48 @@ local Aurora = {
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
+
+
+local eventFrame = _G.CreateFrame("Frame")
+eventFrame:RegisterEvent("ADDON_LOADED")
+eventFrame:SetScript("OnEvent", function(self, event, addonName)
+    if addonName == ADDON_NAME then
+        -- Setup function for the host addon
+        if private.OnLoad then
+            private.OnLoad()
+        end
+
+        -- Skin FrameXML
+        for i = 1, #private.FrameXML do
+            local file, isShared = _G.strsplit(".", private.FrameXML[i])
+            local fileList = private.FrameXML
+            if isShared then
+                file = isShared
+                fileList = private.SharedXML
+            end
+            if fileList[file] then
+                fileList[file]()
+            end
+        end
+
+        -- Skin prior loaded AddOns
+        for addon, func in _G.next, private.AddOns do
+            local loaded = _G.IsAddOnLoaded(addon)
+            if loaded then
+                func()
+            end
+        end
+    else
+        -- Skin AddOn
+        local addonModule = private.AddOns[addonName] or Aurora[2].themes[addonName]
+        if addonModule then
+            if _G.type(addonModule) == "function" then
+                addonModule()
+            else
+                for _, moduleFunc in _G.next, addonModule do
+                    moduleFunc()
+                end
+            end
+        end
+    end
+end)
