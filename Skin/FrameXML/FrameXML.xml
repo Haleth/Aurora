@@ -50,6 +50,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="PetStable.lua"/>
     <Script file="ProductChoice.lua"/>
     <Script file="PVEFrame.lua"/>
+    <Script file="PVPHelper.lua"/>
     <Script file="QuestFrame.lua"/>
     <Script file="QuestInfo.lua"/>
     <Script file="QuestMapFrame.lua"/>
