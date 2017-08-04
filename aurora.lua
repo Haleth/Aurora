@@ -5,17 +5,13 @@ local next = _G.next
 
 -- [[ Core ]]
 local Aurora = private.Aurora
+local _, C = _G.unpack(Aurora)
 
 -- for custom APIs (see docs online)
 local LATEST_API_VERSION = "7.0"
 
--- see F.AddPlugin
-local AURORA_LOADED = false
-local AuroraConfig
-
-local F, C = _G.unpack(Aurora)
-
 -- [[ Constants and settings ]]
+local AuroraConfig
 
 C.frames = {}
 C.classicons = { -- adjusted for borderless icons
@@ -69,18 +65,6 @@ local red, green, blue
 
 -- [[ Variable and module handling ]]
 
-C.themes = {}
-C.themes["Aurora"] = {}
-
--- use of this function ensures that Aurora and custom style (if used) are properly initialised
--- prior to loading third party plugins
-F.AddPlugin = function(func)
-    if AURORA_LOADED then
-        func()
-    else
-        _G.tinsert(C.themes["Aurora"], func)
-    end
-end
 
 -- [[ Initialize addon ]]
 
@@ -228,6 +212,4 @@ function private.OnLoad()
             end
         end)
     end
-
-    AURORA_LOADED = true
 end

@@ -1,4 +1,4 @@
-local _, private = ...
+local ADDON_NAME, private = ...
 
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
@@ -9,6 +9,19 @@ Aurora[2] = C
 
 C.classcolours = _G.CUSTOM_CLASS_COLORS
 C.backdrop = private.backdrop
+
+C.themes = {}
+C.themes[ADDON_NAME] = {}
+
+-- use of this function ensures that Aurora and custom style (if used) are properly initialised
+-- prior to loading third party plugins
+F.AddPlugin = function(func)
+    if private.isLoaded then
+        func()
+    else
+        _G.tinsert(C.themes[ADDON_NAME], func)
+    end
+end
 
 F.dummy = function() end
 

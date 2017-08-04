@@ -1,7 +1,6 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next = _G.next
+-- luacheck: globals next assert
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -53,6 +52,13 @@ local backdrop = {
     edgeSize = 1,
 }
 private.backdrop = backdrop
+
+do -- Base.AddSkin
+    function Base.AddSkin(addonName, func)
+        assert(not private.AddOns[addonName], addonName .. "already has a registered skin." )
+        private.AddOns[addonName] = func
+    end
+end
 
 do -- Base.CropIcon
     function Base.CropIcon(texture, parent)

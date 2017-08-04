@@ -100,9 +100,18 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
                 func()
             end
         end
+
+        private.isLoaded = true
     else
         -- Skin AddOn
-        local addonModule = private.AddOns[addonName] or Aurora[2].themes[addonName]
+        local addonModule = private.AddOns[addonName]
+        if addonModule then
+            addonModule()
+        end
+    end
+
+    -- Load deprected themes
+    local addonModule = Aurora[2].themes[addonName]
         if addonModule then
             if _G.type(addonModule) == "function" then
                 addonModule()
@@ -112,5 +121,4 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
         end
-    end
 end)
