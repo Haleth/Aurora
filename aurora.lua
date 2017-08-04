@@ -281,16 +281,6 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
     -- all this should be moved out of the main file when I have time
     if addon == "Aurora" then
 
-        -- [[ Text colour functions ]]
-        _G.GameFontBlackMedium:SetTextColor(1, 1, 1)
-        _G.QuestFont:SetTextColor(1, 1, 1)
-        _G.MailFont_Large:SetTextColor(1, 1, 1)
-        _G.MailFont_Large:SetShadowColor(0, 0, 0)
-        _G.MailFont_Large:SetShadowOffset(1, -1)
-        _G.AvailableServicesText:SetTextColor(1, 1, 1)
-        _G.AvailableServicesText:SetShadowColor(0, 0, 0)
-        _G.CoreAbilityFont:SetTextColor(1, 1, 1)
-
         -- [[ Change positions ]]
 
         _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)

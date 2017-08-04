@@ -270,6 +270,27 @@ do -- Base.SetBackdrop
     end
 end
 
+do -- Base.SetFont
+    function Base.SetFont(fontObj, fontPath, fontSize, fontStyle, fontColor, shadowColor, shadowX, shadowY)
+        if _G.type(fontObj) == "string" then fontObj = _G[fontObj] end
+        if not fontObj then return end
+
+        fontObj:SetFont(fontPath, fontSize, fontStyle)
+        if _G.type(fontColor) == "table" then
+            fontObj:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
+        elseif fontColor then
+            fontObj:SetAlpha(fontColor)
+        end
+
+        if shadowColor then
+            fontObj:SetShadowColor(shadowColor[1], shadowColor[2], shadowColor[3], shadowColor[4])
+        end
+        if shadowX and shadowY then
+            fontObj:SetShadowOffset(shadowX, shadowY)
+        end
+    end
+end
+
 do -- Base.SetHighlight
     local tempColor = {}
     local function GetColorTexture(string)
