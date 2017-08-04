@@ -2,8 +2,11 @@ local ADDON_NAME, private = ...
 
 -- luacheck: globals select tostring tonumber
 
+private.API_MAJOR, private.API_MINOR = 8, 0
+
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
+
 local classLocale, class, classID = _G.UnitClass("player")
 private.charClass = {
     locale = classLocale,
@@ -112,13 +115,13 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
 
     -- Load deprected themes
     local addonModule = Aurora[2].themes[addonName]
-        if addonModule then
-            if _G.type(addonModule) == "function" then
-                addonModule()
-            else
-                for _, moduleFunc in _G.next, addonModule do
-                    moduleFunc()
-                end
+    if addonModule then
+        if _G.type(addonModule) == "function" then
+            addonModule()
+        else
+            for _, moduleFunc in _G.next, addonModule do
+                moduleFunc()
             end
         end
+    end
 end)

@@ -7,9 +7,6 @@ local next = _G.next
 local Aurora = private.Aurora
 local _, C = _G.unpack(Aurora)
 
--- for custom APIs (see docs online)
-local LATEST_API_VERSION = "7.0"
-
 -- [[ Constants and settings ]]
 local AuroraConfig
 
@@ -103,37 +100,6 @@ function private.OnLoad()
         local customClassColors = {}
         private.classColorsReset(customClassColors, true)
         AuroraConfig.customClassColors = customClassColors
-    end
-
-    -- Apply custom style
-    local customStyle = _G.AURORA_CUSTOM_STYLE
-    if customStyle and customStyle.apiVersion ~= nil and customStyle.apiVersion == LATEST_API_VERSION then
-        local protectedFunctions = {
-            ["AddPlugin"] = true,
-        }
-
-        -- override settings
-        if customStyle.defaults then
-            for setting, value in next, customStyle.defaults do
-                AuroraConfig[setting] = value
-            end
-        end
-
-        -- replace functions
-        if customStyle.functions then
-            for funcName, func in next, customStyle.functions do
-                if F[funcName] and not protectedFunctions[funcName] then
-                    F[funcName] = func
-                end
-            end
-        end
-
-        -- replace classcolors
-        if customStyle.classcolors then
-            for classToken, color in next, customStyle.classcolors do
-                AuroraConfig.customClassColors[classToken]:SetRGB(color.r, color.g, color.b)
-            end
-        end
     end
 
     -- Setup colors
