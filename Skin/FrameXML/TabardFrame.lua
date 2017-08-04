@@ -22,6 +22,7 @@ function private.FrameXML.TabardFrame()
 
     F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
     F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
+    _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 
     _G.TabardFrameCostFrame:SetBackdrop(nil)
 

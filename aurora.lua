@@ -277,16 +277,4 @@ SetSkin:SetScript("OnEvent", function(self, event, addon)
             end
         end
     end
-
-    -- all this should be moved out of the main file when I have time
-    if addon == "Aurora" then
-
-        -- [[ Change positions ]]
-
-        _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
-
-        -- [[ Buttons ]]
-
-        F.ReskinClose(_G.ItemRefCloseButton)
-    end
 end)

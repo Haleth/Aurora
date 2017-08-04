@@ -98,6 +98,8 @@ function private.FrameXML.GameTooltip()
 
     F.CreateBD(_G.FriendsTooltip)
 
+    F.ReskinClose(_G.ItemRefCloseButton)
+
     -- [[ Pet battle tooltips ]]
 
     local petTooltips = {"PetBattlePrimaryAbilityTooltip", "PetBattlePrimaryUnitTooltip", "FloatingBattlePetTooltip", "BattlePetTooltip", "FloatingPetBattleAbilityTooltip"}
