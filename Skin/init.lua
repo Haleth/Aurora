@@ -41,7 +41,7 @@ local debug do
     private.debug = debug
 end
 
-do
+do -- private.CreateAPI
     local apiMeta = {
         __newindex = function(table, key, value)
             if _G.type(value) == "function" then

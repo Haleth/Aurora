@@ -54,17 +54,6 @@ C.defaults = {
     ["tooltips"] = true,
 }
 
--- [[ Cached variables ]]
-
-local buttonsHaveGradient
-local _, class = _G.UnitClass("player")
-local red, green, blue
-
--- [[ Variable and module handling ]]
-
-
--- [[ Initialize addon ]]
-
 function private.OnLoad()
     -- Load Variables
     _G.AuroraConfig = _G.AuroraConfig or {}
@@ -95,19 +84,12 @@ function private.OnLoad()
         end
     end
 
-    -- Init class colors
-    if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[class].colorStr then
-        local customClassColors = {}
-        private.classColorsReset(customClassColors, true)
-        AuroraConfig.customClassColors = customClassColors
-    end
-
     -- Setup colors
     function private.updateHighlightColor()
         if AuroraConfig.useCustomColour then
             private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
         else
-            private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[class]:GetRGB())
+            private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
         end
     end
     function private.classColorsInit()
@@ -116,8 +98,7 @@ function private.OnLoad()
         end
 
         private.updateHighlightColor()
-        red, green, blue = private.highlightColor:GetRGB()
-        C.r, C.g, C.b = red, green, blue
+        C.r, C.g, C.b = private.highlightColor:GetRGB()
     end
     function private.classColorsHaveChanged()
         for i = 1, #_G.CLASS_SORT_ORDER do
@@ -145,8 +126,13 @@ function private.OnLoad()
         private.updateHighlightColor()
     end)
 
-    buttonsHaveGradient = AuroraConfig.buttonsHaveGradient
-    if buttonsHaveGradient then
+    if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[private.charClass.token].colorStr then
+        local customClassColors = {}
+        private.classColorsReset(customClassColors, true)
+        AuroraConfig.customClassColors = customClassColors
+    end
+
+    if AuroraConfig.buttonsHaveGradient then
         private.buttonColor:SetRGBA(.3, .3, .3, 0.7)
     end
     private.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
@@ -158,7 +144,7 @@ function private.OnLoad()
 
     -- Create API hooks
     function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
-        if buttonsHaveGradient and private.buttonColor:IsEqualTo(r, g, b, a) then
+        if AuroraConfig.buttonsHaveGradient and private.buttonColor:IsEqualTo(r, g, b, a) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)
         elseif not a then
