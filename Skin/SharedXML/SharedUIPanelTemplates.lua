@@ -55,6 +55,55 @@ do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
+    function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
+        if not tab.auroraTabResize then return end
+        local sideWidths = 14
+        local tabText = tab.Text or _G[tab:GetName().."Text"]
+
+        local width, tabWidth
+        local textWidth
+        if absoluteTextSize then
+            textWidth = absoluteTextSize
+        else
+            tabText:SetWidth(0)
+            textWidth = tabText:GetStringWidth()
+        end
+        -- If there's an absolute size specified then use it
+        if absoluteSize then
+            if absoluteSize < sideWidths then
+                width = 1;
+                tabWidth = sideWidths
+            else
+                width = absoluteSize - sideWidths
+                tabWidth = absoluteSize
+            end
+            tabText:SetWidth(width)
+        else
+            -- Otherwise try to use padding
+            if padding then
+                width = textWidth + padding
+            else
+                width = textWidth + 24
+            end
+            -- If greater than the maxWidth then cap it
+            if maxWidth and width > maxWidth then
+                if ( padding ) then
+                    width = maxWidth + padding
+                else
+                    width = maxWidth + 24
+                end
+                tabText:SetWidth(width)
+            else
+                tabText:SetWidth(0)
+            end
+            if (minWidth and width < minWidth) then
+                width = minWidth
+            end
+            tabWidth = width + sideWidths
+        end
+
+        tab:SetWidth(tabWidth)
+    end
     function Hook.PanelTemplates_DeselectTab(tab)
         local text = tab.Text or _G[tab:GetName().."Text"]
         text:SetPoint("CENTER", tab, "CENTER")
@@ -232,6 +281,20 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         _G[name.."Bottom"]:Hide()
         _G[name.."Middle"]:Hide()
     end
+    function Skin.InputBoxTemplate(editbox)
+        editbox.Left:Hide()
+        editbox.Right:Hide()
+        editbox.Middle:Hide()
+
+        local bg = _G.CreateFrame("Frame", nil, editbox)
+        bg:SetPoint("TOPLEFT", -2, -7)
+        bg:SetPoint("BOTTOMRIGHT", 0, 7)
+        bg:SetFrameLevel(editbox:GetFrameLevel() - 1)
+        Base.SetBackdrop(bg, private.frameColor:GetRGBA())
+    end
+    function Skin.InputBoxInstructionsTemplate(editbox)
+        Skin.InputBoxTemplate(editbox)
+    end
 
     function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
@@ -280,6 +343,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
+    _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)
 end

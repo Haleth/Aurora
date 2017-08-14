@@ -5,6 +5,9 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 
 do --[[ FrameXML\UIPanelTemplates.xml ]]
+    function Skin.SearchBoxTemplate(editbox)
+        Skin.InputBoxInstructionsTemplate(editbox)
+    end
     function Skin.UIPanelSquareButton(button)
         button:SetSize(19.5, 19.5)
         button:SetNormalTexture("")
