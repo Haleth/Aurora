@@ -116,6 +116,8 @@ function private.FrameXML.Fonts()
         Base.SetFont("SystemFont_LargeNamePlate",      NORMAL, 12)
         Base.SetFont("SystemFont_NamePlateCastBar",    NORMAL, 10)
 
+        -- FrameXML\FontStyles.xml
+
         -- SharedXML\SharedFonts.xml
         Base.SetFont("SystemFont_Tiny2",                NORMAL, 8)
         Base.SetFont("SystemFont_Tiny",                 NORMAL, 9)

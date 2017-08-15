@@ -64,6 +64,13 @@ do -- private.CreateAPI
         return _G.setmetatable(api, apiMeta)
     end
 end
+do -- private.FindUsage
+    function private.FindUsage(table, func)
+        hooksecurefunc(table, func, function()
+            error("Found usage")
+        end)
+    end
+end
 
 local Aurora = {
     Base = private.CreateAPI({}),
