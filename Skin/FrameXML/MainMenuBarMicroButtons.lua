@@ -141,8 +141,7 @@ function private.FrameXML.MainMenuBarMicroButtons()
             SetTexture(_G.MainMenuBarPerformanceBar, 0.2, 0.8, 0.08, 0.94)
             _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
         elseif name == "StoreMicroButton" then
-            iconTexture = ""
-            left, right, top, bottom = 0.2, 0.8, 0.47, 0.87
+            iconTexture = [[Interface\Icons\WoW_Store]]
         else
             iconTexture = ""
         end
