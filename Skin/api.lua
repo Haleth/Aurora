@@ -36,16 +36,13 @@ Base.CreateColor = CreateColor
 
 
 local highlightColor = CreateColor(0, 0, 1, 1) -- Temporary, the proper highlight color will be set later
-private.highlightColor = highlightColor
-
-local normalColor = CreateColor(1, 1, 1, 1)
-private.normalColor = normalColor
+Aurora.highlightColor = highlightColor
 
 local buttonColor = CreateColor(.2, .2, .2, 1)
-private.buttonColor = buttonColor
+Aurora.buttonColor = buttonColor
 
 local frameColor = CreateColor(0, 0, 0, 0.6)
-private.frameColor = frameColor
+Aurora.frameColor = frameColor
 
 
 local backdrop = {

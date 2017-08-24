@@ -101,7 +101,7 @@ function private.FrameXML.TutorialFrame()
     _G.TutorialFrameOkayButton:SetNormalTexture("")
     _G.TutorialFrameOkayButton:SetPushedTexture("")
     _G.TutorialFrameOkayButton:SetHighlightTexture("")
-    Base.SetBackdrop(_G.TutorialFrameOkayButton, private.buttonColor:GetRGBA())
+    Base.SetBackdrop(_G.TutorialFrameOkayButton, Aurora.buttonColor:GetRGBA())
     Base.SetHighlight(_G.TutorialFrameOkayButton, "backdrop")
 
     for i, suffix in next, {"PrevButton", "NextButton"} do
@@ -119,7 +119,7 @@ function private.FrameXML.TutorialFrame()
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
 
-        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
         Base.SetHighlight(button, "backdrop")
         if i == 1 then
             button:SetPoint("BOTTOMLEFT", 30, 10)

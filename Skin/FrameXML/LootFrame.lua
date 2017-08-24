@@ -9,7 +9,7 @@ local hooksecurefunc = _G.hooksecurefunc
 -- [[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base, Skin = Aurora.Base, Aurora.Skin
 
 do --[[ FrameXML\LootFrame.xml ]]
     function Skin.BonusRollFrameTemplate(frame)
@@ -23,7 +23,7 @@ do --[[ FrameXML\LootFrame.xml ]]
         frame.SpecRing:SetAlpha(0)
 
         local textFrame = _G.CreateFrame("Frame", nil, frame)
-        Base.SetBackdrop(textFrame, private.frameColor:GetRGBA())
+        Base.SetBackdrop(textFrame, Aurora.frameColor:GetRGBA())
         textFrame:SetFrameLevel(frame:GetFrameLevel())
 
         local rollingFrame = frame.RollingFrame

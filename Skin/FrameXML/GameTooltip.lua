@@ -10,10 +10,10 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.GameTooltipTemplate(gametooltip)
-        Base.SetBackdrop(gametooltip, private.frameColor:GetRGBA())
+        Base.SetBackdrop(gametooltip, Aurora.frameColor:GetRGBA())
     end
     function Skin.ShoppingTooltipTemplate(gametooltip)
-        Base.SetBackdrop(gametooltip, private.frameColor:GetRGBA())
+        Base.SetBackdrop(gametooltip, Aurora.frameColor:GetRGBA())
     end
     function Skin.TooltipMoneyFrameTemplate(frame)
         Skin.SmallMoneyFrameTemplate(frame)
@@ -24,8 +24,8 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
         Base.SetTexture(frame.Bar:GetStatusBarTexture(), "gradientUp")
 
         local bar = frame.Bar
-        Base.SetBackdrop(bar, private.frameColor:GetRGBA())
-        bar:SetBackdropBorderColor(private.buttonColor:GetRGB())
+        Base.SetBackdrop(bar, Aurora.frameColor:GetRGBA())
+        bar:SetBackdropBorderColor(Aurora.buttonColor:GetRGB())
         bar:GetStatusBarTexture():SetDrawLayer("BORDER")
 
         bar.BorderLeft:Hide()
@@ -33,12 +33,12 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
         bar.BorderMid:Hide()
 
         local LeftDivider = bar.LeftDivider
-        LeftDivider:SetColorTexture(private.buttonColor:GetRGB())
+        LeftDivider:SetColorTexture(Aurora.buttonColor:GetRGB())
         LeftDivider:SetSize(1, 15)
         LeftDivider:SetPoint("LEFT", 73, 0)
 
         local RightDivider = bar.RightDivider
-        RightDivider:SetColorTexture(private.buttonColor:GetRGB())
+        RightDivider:SetColorTexture(Aurora.buttonColor:GetRGB())
         RightDivider:SetSize(1, 15)
         RightDivider:SetPoint("RIGHT", -73, 0)
 
@@ -48,7 +48,7 @@ end
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_OnHide(gametooltip)
-        Base.SetBackdropColor(gametooltip, private.frameColor:GetRGBA())
+        Base.SetBackdropColor(gametooltip, Aurora.frameColor:GetRGBA())
     end
 end
 do --[[ FrameXML\GameTooltip.xml ]]

@@ -106,9 +106,9 @@ function private.SharedXML.Util()
         private.classColorsInit()
     end
 
-    if not private.highlightColor.r then
+    if not Aurora.highlightColor.r then
         local _, class = _G.UnitClass("player")
         local color = _G.CUSTOM_CLASS_COLORS[class]
-        private.highlightColor:SetRGB(color.r, color.g, color.b)
+        Aurora.highlightColor:SetRGB(color.r, color.g, color.b)
     end
 end

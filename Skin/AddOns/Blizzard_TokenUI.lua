@@ -12,7 +12,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
         for i = 1, #buttons do
             local button = buttons[i]
 
-            local r, g, b = private.highlightColor:GetRGB()
+            local r, g, b = Aurora.highlightColor:GetRGB()
             button.highlight:SetColorTexture(r, g, b, 0.2)
             button.highlight:SetPoint("TOPLEFT", 1, 0)
             button.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
@@ -44,7 +44,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
 
         local layer, subLevel = button.categoryMiddle:GetDrawLayer()
         local bg = button:CreateTexture(nil, layer, subLevel + 3)
-        bg:SetColorTexture(private.buttonColor:GetRGB())
+        bg:SetColorTexture(Aurora.buttonColor:GetRGB())
         bg:SetAllPoints()
         button._auroraBG = bg
 

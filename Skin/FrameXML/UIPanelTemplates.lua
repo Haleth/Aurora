@@ -13,7 +13,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         button:SetNormalTexture("")
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
-        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
     end
     function Skin.UIPanelLargeSilverButton(button)
         local buttonName = button:GetName()
@@ -23,7 +23,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         for i = 3, 6 do
             _G.select(i, button:GetRegions()):Hide()
         end
-        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
         Base.SetHighlight(button, "backdrop")
     end
     function Skin.GlowBoxTemplate(frame)

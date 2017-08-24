@@ -78,7 +78,7 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
 
         button.Highlight:SetTexture("")
 
-        Base.SetBackdrop(button, private.buttonColor:GetRGB())
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGB())
         Base.SetHighlight(button, "backdrop")
     end
 end

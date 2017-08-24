@@ -28,7 +28,7 @@ F.dummy = function() end
 F.CreateBD = function(frame, alpha)
     local r, g, b, a
     if alpha then
-        r, g, b = private.frameColor:GetRGB()
+        r, g, b = Aurora.frameColor:GetRGB()
         a = alpha
     end
 
@@ -54,7 +54,7 @@ F.CreateGradient = function(f)
         if _G.AuroraConfig.buttonsHaveGradient then
             tex = f:GetBackdropTexture("bg")
             Aurora.Base.SetTexture(tex, "gradientUp")
-            f:SetBackdropColor(private.buttonColor:GetRGBA())
+            f:SetBackdropColor(Aurora.buttonColor:GetRGBA())
         end
     else
         tex = f:CreateTexture(nil, "BORDER")
@@ -65,7 +65,7 @@ F.CreateGradient = function(f)
         else
             tex:SetTexture(C.media.backdrop)
         end
-        tex:SetVertexColor(private.buttonColor:GetRGBA())
+        tex:SetVertexColor(Aurora.buttonColor:GetRGBA())
     end
     return tex
 end
@@ -94,7 +94,7 @@ F.Reskin = function(f, noHighlight)
     if f.LeftSeparator then f.LeftSeparator:Hide() end
     if f.RightSeparator then f.RightSeparator:Hide() end
 
-    Base.SetBackdrop(f, private.buttonColor:GetRGBA())
+    Base.SetBackdrop(f, Aurora.buttonColor:GetRGBA())
     if not noHighlight then
         Base.SetHighlight(f, "backdrop")
     end
@@ -117,7 +117,7 @@ F.ReskinTab = function(f, numTabs)
         bg:SetFrameLevel(f:GetFrameLevel()-1)
         Base.SetBackdrop(bg)
 
-        local red, green, blue = private.highlightColor:GetRGB()
+        local red, green, blue = Aurora.highlightColor:GetRGB()
         f:SetHighlightTexture(C.media.backdrop)
         local hl = f:GetHighlightTexture()
         hl:SetPoint("TOPLEFT", 9, -4)
@@ -145,7 +145,7 @@ F.ReskinScroll = function(f, parent)
     bu.bg = _G.CreateFrame("Frame", nil, f)
     bu.bg:SetPoint("TOPLEFT", bu, 0, -2)
     bu.bg:SetPoint("BOTTOMRIGHT", bu, 0, 4)
-    Base.SetBackdrop(bu.bg, private.buttonColor:GetRGBA())
+    Base.SetBackdrop(bu.bg, Aurora.buttonColor:GetRGBA())
 
     local up = (f.ScrollUpButton or f.UpButton) or _G[(frame or parent).."ScrollUpButton"]
     local down = (f.ScrollDownButton or f.DownButton) or _G[(frame or parent).."ScrollDownButton"]
@@ -164,7 +164,7 @@ F.ReskinDropDown = function(f, borderless)
     local bg = _G.CreateFrame("Frame", nil, f)
     bg:SetPoint("BOTTOMRIGHT", button, "BOTTOMLEFT", 1, 0)
     bg:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bg, private.buttonColor:GetRGBA())
+    Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
 
     if borderless then
         button:SetPoint("TOPRIGHT", 0, -6)
@@ -198,7 +198,7 @@ F.ReskinInput = function(f, height, width)
     bd:SetPoint("TOPLEFT", -2, 0)
     bd:SetPoint("BOTTOMRIGHT")
     bd:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bd, private.frameColor:GetRGBA())
+    Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
 
     if height then f:SetHeight(height) end
     if width then f:SetWidth(width) end
@@ -244,7 +244,7 @@ F.ReskinArrow = function(f, direction)
 end
 
 F.ReskinCheck = function(f, isTriState)
-    local red, green, blue = private.highlightColor:GetRGB()
+    local red, green, blue = Aurora.highlightColor:GetRGB()
 
     f:SetNormalTexture("")
     f:SetPushedTexture("")
@@ -258,7 +258,7 @@ F.ReskinCheck = function(f, isTriState)
     bd:SetPoint("TOPLEFT", 4, -4)
     bd:SetPoint("BOTTOMRIGHT", -4, 4)
     bd:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bd, private.frameColor:GetRGBA())
+    Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
 
     local ch = f:GetCheckedTexture()
     ch:SetDesaturated(true)
@@ -285,7 +285,7 @@ F.ReskinCheck = function(f, isTriState)
 end
 
 F.ReskinRadio = function(f)
-    local red, green, blue = private.highlightColor:GetRGB()
+    local red, green, blue = Aurora.highlightColor:GetRGB()
 
     f:SetNormalTexture("")
     f:SetHighlightTexture("")
@@ -301,7 +301,7 @@ F.ReskinRadio = function(f)
     bd:SetPoint("BOTTOMRIGHT", -3, 3)
     bd:SetFrameLevel(f:GetFrameLevel()-1)
 
-    Base.SetBackdrop(bd, private.frameColor:GetRGBA())
+    Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
     Base.SetHighlight(bd, "backdrop")
 end
 
@@ -314,7 +314,7 @@ F.ReskinSlider = function(f, isVert)
     bd:SetPoint("BOTTOMRIGHT", -15, 3)
     bd:SetFrameStrata("BACKGROUND")
     bd:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bd, private.frameColor:GetRGBA())
+    Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
 
     local slider = _G.select(4, f:GetRegions())
     slider:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
@@ -348,7 +348,7 @@ F.ReskinExpandOrCollapse = function(f)
     local bg = _G.CreateFrame("Frame", nil, f)
     bg:SetSize(13, 13)
     bg:SetPoint("TOPLEFT", f:GetNormalTexture(), 0, -2)
-    Base.SetBackdrop(bg, private.buttonColor:GetRGBA())
+    Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
     f._auroraBG = bg
 
     f._auroraHighlight = {}
@@ -506,7 +506,7 @@ F.ReskinTooltip = function(f)
     bg:SetPoint("TOPLEFT")
     bg:SetPoint("BOTTOMRIGHT")
 
-    Base.SetBackdrop(bg, private.frameColor:GetRGBA())
+    Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
 end
 
 F.ReskinItemFrame = function(frame)

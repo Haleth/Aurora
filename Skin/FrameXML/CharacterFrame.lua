@@ -13,7 +13,7 @@ do --[[ FrameXML\CharacterFrame.xml ]]
         bg:SetPoint("CENTER", 0, -5)
         bg:SetSize(210, 30)
 
-        local r, g, b = private.highlightColor:GetRGB()
+        local r, g, b = Aurora.highlightColor:GetRGB()
         bg:SetVertexColor(r * 0.7, g * 0.7, b * 0.7)
     end
     function Skin.CharacterStatFrameTemplate(button)

@@ -48,7 +48,7 @@ do --[[ FrameXML\GossipFrame.xml ]]
     end
     function Skin.GossipTitleButtonTemplate(button)
         local highlight = button:GetHighlightTexture()
-        local r, g, b = private.highlightColor:GetRGB()
+        local r, g, b = Aurora.highlightColor:GetRGB()
         highlight:SetColorTexture(r, g, b, 0.2)
     end
 end

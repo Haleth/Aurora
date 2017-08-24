@@ -87,9 +87,9 @@ function private.OnLoad()
     -- Setup colors
     function private.updateHighlightColor()
         if AuroraConfig.useCustomColour then
-            private.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
+            Aurora.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
         else
-            private.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
+            Aurora.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
         end
     end
     function private.classColorsInit()
@@ -98,7 +98,7 @@ function private.OnLoad()
         end
 
         private.updateHighlightColor()
-        C.r, C.g, C.b = private.highlightColor:GetRGB()
+        C.r, C.g, C.b = Aurora.highlightColor:GetRGB()
     end
     function private.classColorsHaveChanged()
         for i = 1, #_G.CLASS_SORT_ORDER do
@@ -133,9 +133,9 @@ function private.OnLoad()
     end
 
     if AuroraConfig.buttonsHaveGradient then
-        private.buttonColor:SetRGBA(.3, .3, .3, 0.7)
+        Aurora.buttonColor:SetRGBA(.3, .3, .3, 0.7)
     end
-    private.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
+    Aurora.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
 
     -- Show splash screen for first time users
     if not AuroraConfig.acknowledgedSplashScreen then
@@ -144,7 +144,7 @@ function private.OnLoad()
 
     -- Create API hooks
     function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
-        if AuroraConfig.buttonsHaveGradient and private.buttonColor:IsEqualTo(r, g, b, a) then
+        if AuroraConfig.buttonsHaveGradient and Aurora.buttonColor:IsEqualTo(r, g, b, a) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)
         elseif not a then

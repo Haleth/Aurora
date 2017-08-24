@@ -82,7 +82,7 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
         button.Flash:SetPoint("TOPLEFT")
         button.Flash:SetPoint("BOTTOMRIGHT")
 
-        Base.SetBackdrop(button, private.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
         Base.SetHighlight(button, "backdrop")
     end
     function Skin.MicroButtonAlertTemplate(frame)

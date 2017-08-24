@@ -16,7 +16,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         check:ClearAllPoints()
         check:SetPoint("CENTER")
         check:SetDesaturated(true)
-        check:SetVertexColor(private.highlightColor:GetRGB())
+        check:SetVertexColor(Aurora.highlightColor:GetRGB())
 
         Base.SetBackdrop(checkbutton)
         Base.SetHighlight(checkbutton, "backdrop")
