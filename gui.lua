@@ -299,8 +299,9 @@ gui:SetScript("OnEvent", function(self, _, addon)
 end)
 
 local function updateFrames()
+    local r, g, b = _G.Aurora.frameColor:GetRGB()
     for i = 1, #C.frames do
-        F.CreateBD(C.frames[i], _G.AuroraConfig.alpha)
+        C.frames[i]:SetBackdropColor(r, g, b, _G.AuroraConfig.alpha)
     end
 end
 

@@ -41,7 +41,7 @@ Aurora.highlightColor = highlightColor
 local buttonColor = CreateColor(.2, .2, .2, 1)
 Aurora.buttonColor = buttonColor
 
-local frameColor = CreateColor(0, 0, 0, 0.6)
+local frameColor = CreateColor(0, 0, 0, 0.2)
 Aurora.frameColor = frameColor
 
 

@@ -135,7 +135,6 @@ function private.OnLoad()
     if AuroraConfig.buttonsHaveGradient then
         Aurora.buttonColor:SetRGBA(.3, .3, .3, 0.7)
     end
-    Aurora.frameColor:SetRGBA(0, 0, 0, AuroraConfig.alpha)
 
     -- Show splash screen for first time users
     if not AuroraConfig.acknowledgedSplashScreen then
@@ -148,6 +147,8 @@ function private.OnLoad()
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)
         elseif not a then
+            r, g, b = Aurora.frameColor:GetRGB()
+            frame:SetBackdropColor(r, g, b, AuroraConfig.alpha)
             _G.tinsert(C.frames, frame)
         end
     end
