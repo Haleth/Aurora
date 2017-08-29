@@ -127,9 +127,8 @@ function private.OnLoad()
     end)
 
     if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[private.charClass.token].colorStr then
-        local customClassColors = {}
-        private.classColorsReset(customClassColors, true)
-        AuroraConfig.customClassColors = customClassColors
+        AuroraConfig.customClassColors = {}
+        private.classColorsReset(AuroraConfig.customClassColors, true)
     end
 
     if AuroraConfig.buttonsHaveGradient then
