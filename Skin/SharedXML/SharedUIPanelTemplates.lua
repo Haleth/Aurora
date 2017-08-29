@@ -116,8 +116,7 @@ end
 
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.UIPanelCloseButton(button)
-        local size = private.is730 and 16.5 or 17
-        button:SetSize(size, size)
+        button:SetSize(17, 17)
         button:SetNormalTexture("")
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
@@ -297,6 +296,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
+        frame:SetSize(17, 17)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
             local button = frame[name]
             button:SetSize(17, 17)

@@ -38,12 +38,19 @@ function private.FrameXML.DressUpFrames()
         F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
 
         Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
+        DressUpFrame.MaxMinButtonFrame:ClearAllPoints()
+        DressUpFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", DressUpFrame.CloseButton, "TOPLEFT", -1, 0)
+        DressUpFrame.MaxMinButtonFrame:GetRegions():Hide()
 
         F.Reskin(_G.DressUpFrameCancelButton)
         F.Reskin(_G.DressUpFrameResetButton)
         _G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
 
         DressUpFrame.ModelBackground:SetDrawLayer("BACKGROUND", 3)
+        DressUpFrame.ModelBackground:ClearAllPoints()
+        DressUpFrame.ModelBackground:SetPoint("TOPLEFT")
+        DressUpFrame.ModelBackground:SetPoint("BOTTOMRIGHT")
+        DressUpFrame.ModelBackground:SetAlpha(0.6)
     else
         _G.DressUpFramePortrait:Hide()
         _G.DressUpBackgroundTopLeft:Hide()

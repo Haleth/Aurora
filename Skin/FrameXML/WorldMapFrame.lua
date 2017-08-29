@@ -48,6 +48,8 @@ function private.FrameXML.WorldMapFrame()
 
     if private.is730 then
         Skin.MaximizeMinimizeButtonFrameTemplate(BorderFrame.MaxMinButtonFrame)
+        BorderFrame.MaxMinButtonFrame:ClearAllPoints()
+        BorderFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", BorderFrame.CloseButton, "TOPLEFT", -1, 0)
     else
         for _, buttonName in pairs{"WorldMapFrameSizeUpButton", "WorldMapFrameSizeDownButton"} do
             local button = _G[buttonName]
