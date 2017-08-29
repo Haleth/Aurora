@@ -71,12 +71,19 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
         colors = colors or _G.CUSTOM_CLASS_COLORS
         for class, color in next, _G.RAID_CLASS_COLORS do
             if noMeta then
-                colors[class] = {
-                    r = color.r,
-                    g = color.g,
-                    b = color.b,
-                    colorStr = color.colorStr
-                }
+                if colors[class] then
+                    colors[class].r = color.r
+                    colors[class].g = color.g
+                    colors[class].b = color.b
+                    colors[class].colorStr = color.colorStr
+                else
+                    colors[class] = {
+                        r = color.r,
+                        g = color.g,
+                        b = color.b,
+                        colorStr = color.colorStr
+                    }
+                end
             else
                 if colors[class] and colors[class].SetRGB then
                     colors[class]:SetRGB(color.r, color.g, color.b)

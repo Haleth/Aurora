@@ -7,7 +7,8 @@ local next, ipairs = _G.next, _G.ipairs
 local CreateFrame = _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]
 
@@ -132,6 +133,13 @@ local createColorSwatch do
             value = value[swatch.class]
         end
         value.r, value.g, value.b = restore.r, restore.g, restore.b
+        swatch:SetBackdropColor(restore.r, restore.g, restore.b)
+
+        if swatch.class then
+            _G.CUSTOM_CLASS_COLORS:NotifyChanges()
+        else
+            private.updateHighlightColor()
+        end
     end
 
     local function OnClick(self)
@@ -147,9 +155,8 @@ local createColorSwatch do
     function createColorSwatch(parent, value, text)
         local button = CreateFrame("Button", nil, parent)
         button:SetScript("OnClick", OnClick)
-        button:SetBackdrop(C.backdrop)
-        button:SetBackdropBorderColor(0, 0, 0)
         button:SetSize(16, 16)
+        Aurora.Base.SetBackdrop(button, Aurora.frameColor:GetRGBA())
         button.value = value
 
         if text then
@@ -354,7 +361,7 @@ end)
 reloadButton:SetScript("OnClick", _G.ReloadUI)
 
 resetButton:SetScript("OnClick", function(self)
-    private.classColorsReset(_G.AuroraConfig.customClassColors)
+    private.classColorsReset()
 end)
 
 
