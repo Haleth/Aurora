@@ -117,7 +117,6 @@ function private.FrameXML.Fonts()
         Base.SetFont("SystemFont_NamePlateCastBar",    NORMAL, 10)
 
         -- FrameXML\FontStyles.xml
-        _G.QuestFont:SetTextColor(1, 1, 1)
 
         -- SharedXML\SharedFonts.xml
         Base.SetFont("SystemFont_Tiny2",                NORMAL, 8)
@@ -157,12 +156,14 @@ function private.FrameXML.Fonts()
         -- This uses GameFontNormal, which inherits from SystemFont_Shadow_Med1,
         -- but for some reason the above changes do not propagate to it.
         Base.SetFont(_G.WorldMapFrame.NavBar.home.text, NORMAL, 12, nil, {1, 0.82, 0}, {0, 0, 0}, 1, -1)
-        _G.GameFontBlackMedium:SetTextColor(1, 1, 1)
-        _G.MailFont_Large:SetTextColor(1, 1, 1)
-        _G.MailFont_Large:SetShadowColor(0, 0, 0)
-        _G.MailFont_Large:SetShadowOffset(1, -1)
-        _G.AvailableServicesText:SetTextColor(1, 1, 1)
-        _G.AvailableServicesText:SetShadowColor(0, 0, 0)
-        _G.CoreAbilityFont:SetTextColor(1, 1, 1)
     end
+
+    _G.QuestFont:SetTextColor(1, 1, 1)
+    _G.GameFontBlackMedium:SetTextColor(1, 1, 1)
+    _G.MailFont_Large:SetTextColor(1, 1, 1)
+    _G.MailFont_Large:SetShadowColor(0, 0, 0)
+    _G.MailFont_Large:SetShadowOffset(1, -1)
+    _G.AvailableServicesText:SetTextColor(1, 1, 1)
+    _G.AvailableServicesText:SetShadowColor(0, 0, 0)
+    _G.CoreAbilityFont:SetTextColor(1, 1, 1)
 end
