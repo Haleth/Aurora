@@ -1,8 +1,8 @@
-## Interface: 70200
+## Interface: 70300
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 7.3.0.1
+## Version: 7.3.0.2
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
 
