@@ -506,7 +506,7 @@ F.ReskinTooltip = function(f)
     bg:SetPoint("TOPLEFT")
     bg:SetPoint("BOTTOMRIGHT")
 
-    Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+    Base.SetBackdrop(bg)
 end
 
 F.ReskinItemFrame = function(frame)

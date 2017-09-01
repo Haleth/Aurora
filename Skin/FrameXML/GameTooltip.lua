@@ -10,10 +10,10 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.GameTooltipTemplate(gametooltip)
-        Base.SetBackdrop(gametooltip, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(gametooltip)
     end
     function Skin.ShoppingTooltipTemplate(gametooltip)
-        Base.SetBackdrop(gametooltip, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(gametooltip)
     end
     function Skin.TooltipMoneyFrameTemplate(frame)
         Skin.SmallMoneyFrameTemplate(frame)
@@ -48,7 +48,7 @@ end
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_OnHide(gametooltip)
-        Base.SetBackdropColor(gametooltip, Aurora.frameColor:GetRGBA())
+        Base.SetBackdropColor(gametooltip)
     end
 end
 do --[[ FrameXML\GameTooltip.xml ]]
