@@ -46,12 +46,12 @@ do --[[ FrameXML\ReputationFrame.lua ]]
             if factionRow.index == _G.GetSelectedFaction() then
                 if ( _G.ReputationDetailFrame:IsShown() ) then
                     for _, texture in next, factionRow._auroraHighlight do
-                        texture:SetColorTexture(Aurora.highlightColor:GetRGBA())
+                        texture:SetColorTexture(Aurora.highlightColor:GetRGB())
                     end
                 end
             else
                 for _, texture in next, factionRow._auroraHighlight do
-                    texture:SetColorTexture(factionRow._returnColor:GetRGBA())
+                    texture:SetColorTexture(factionRow._returnColor:GetRGB())
                 end
             end
         end

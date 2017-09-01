@@ -86,11 +86,13 @@ function private.OnLoad()
 
     -- Setup colors
     function private.updateHighlightColor()
+        local r, g, b
         if AuroraConfig.useCustomColour then
-            Aurora.highlightColor:SetRGB(AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b)
+            r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
         else
-            Aurora.highlightColor:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
+            r, g, b = _G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB()
         end
+        Aurora.highlightColor:SetRGBA(r, g, b, Aurora.frameColor.a)
     end
     function private.classColorsInit()
         for classToken, color in next, AuroraConfig.customClassColors do

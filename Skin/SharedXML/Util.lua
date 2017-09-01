@@ -116,6 +116,6 @@ function private.SharedXML.Util()
     if not Aurora.highlightColor.r then
         local _, class = _G.UnitClass("player")
         local color = _G.CUSTOM_CLASS_COLORS[class]
-        Aurora.highlightColor:SetRGB(color.r, color.g, color.b)
+        Aurora.highlightColor:SetRGBA(color.r, color.g, color.b, Aurora.frameColor.a)
     end
 end

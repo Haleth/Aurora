@@ -318,10 +318,10 @@ do -- Base.SetHighlight
     local function OnEnter(button, isBackground)
         if button:IsEnabled() then
             if isBackground then
-                Base.SetBackdropColor(button, highlightColor:GetRGBA())
+                Base.SetBackdropColor(button, highlightColor:GetRGB())
             else
                 for _, texture in next, button._auroraHighlight do
-                    button._auroraSetColor(texture, highlightColor:GetRGBA())
+                    button._auroraSetColor(texture, highlightColor:GetRGB())
                 end
             end
         end
