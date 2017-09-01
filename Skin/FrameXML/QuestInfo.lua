@@ -7,8 +7,9 @@ local next = _G.next
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
-local Skin = private.Aurora.Skin
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Base, Skin = Aurora.Base, Aurora.Skin
 
 function private.FrameXML.QuestInfo()
     local r, g, b = C.r, C.g, C.b
@@ -189,7 +190,7 @@ function private.FrameXML.QuestInfo()
 
     local function clearHighlight()
         for _, button in next, QuestInfoRewardsFrame.RewardButtons do
-            button.bg:SetBackdropColor(0, 0, 0, .25)
+            Base.SetBackdropColor(button._auroraNameBG, Aurora.frameColor:GetRGBA())
         end
     end
     local function setHighlight(self)
@@ -197,7 +198,7 @@ function private.FrameXML.QuestInfo()
 
         local _, point = self:GetPoint()
         if point then
-            point.bg:SetBackdropColor(r, g, b, .2)
+            Base.SetBackdropColor(point._auroraNameBG, Aurora.highlightColor:GetRGBA())
         end
     end
 
