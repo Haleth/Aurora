@@ -17,7 +17,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
         if isRelic then
             if not button._auroraRelicTex then
                 local relic = _G.CreateFrame("Frame", nil, button)
-                relic:SetAllPoints()
+                relic:SetAllPoints(button._auroraIconBorder)
 
                 for i = 1, 4 do
                     local tex = relic:CreateTexture(nil, "OVERLAY")
@@ -88,7 +88,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", -3, 1)
-        F.CreateBD(bg, .2)
+        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
         button._auroraNameBG = bg
     end
     function Skin.SmallItemButtonTemplate(button)
@@ -102,7 +102,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
-        F.CreateBD(bg, .2)
+        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
         button._auroraNameBG = bg
     end
 end
