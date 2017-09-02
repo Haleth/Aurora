@@ -1,7 +1,7 @@
-local _, private = ...
+local ADDON_NAME, private = ...
 
 -- [[ Lua Globals ]]
-local next = _G.next
+-- luacheck: globals next type
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -54,7 +54,21 @@ C.defaults = {
     ["tooltips"] = true,
 }
 
+local hostDev
+if ADDON_NAME == "Aurora" then
+    for i = 1, _G.GetNumAddOns() do
+        local meta = _G.GetAddOnMetadata(i, "X-Aurora-Host")
+        if meta and type(_G[meta]) == "function" then
+            hostDev = _G[meta]
+        end
+    end
+end
+
 function private.OnLoad()
+    if hostDev then
+        return hostDev(private)
+    end
+
     -- Load Variables
     _G.AuroraConfig = _G.AuroraConfig or {}
     AuroraConfig = _G.AuroraConfig

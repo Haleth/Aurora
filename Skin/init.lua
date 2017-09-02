@@ -66,8 +66,8 @@ do -- private.CreateAPI
 end
 do -- private.FindUsage
     function private.FindUsage(table, func)
-        hooksecurefunc(table, func, function()
-            error("Found usage")
+        _G.hooksecurefunc(table, func, function()
+            _G.error("Found usage")
         end)
     end
 end

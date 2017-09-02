@@ -32,7 +32,7 @@ function private.AddOns.Blizzard_TalentUI()
     _G.PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.Seperator:SetColorTexture(1, 1, 1)
     _G.PlayerTalentFrameSpecializationSpellScrollFrameScrollChild.Seperator:SetAlpha(.2)
 
-    if select(2, _G.UnitClass("player")) == "HUNTER" then
+    if private.charClass.token == "HUNTER" then
         for i = 1, 6 do
             select(i, _G.PlayerTalentFramePetSpecialization:GetRegions()):Hide()
         end
