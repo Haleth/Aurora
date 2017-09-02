@@ -129,11 +129,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
 
         button._auroraHighlight = {}
-        local lineOfs = private.is730 and 4 or 2.5
+        local lineOfs = 4
         for i = 1, 2 do
             local line = button:CreateLine()
             line:SetColorTexture(1, 1, 1)
-            line:SetThickness(private.is730 and 0.7 or 0.5)
+            line:SetThickness(0.7)
             if i == 1 then
                 line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
                 line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)

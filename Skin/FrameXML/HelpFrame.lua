@@ -95,20 +95,6 @@ function private.FrameXML.HelpFrame()
     F.CreateBD(_G.TicketStatusFrameButton)
     _G.TicketStatusFrameIcon:SetTexCoord(.08, .92, .08, .92)
 
-    if not private.is730 then
-        -- ReportPlayerNameDialog
-        local ReportPlayerNameDialog = _G.ReportPlayerNameDialog
-        F.CreateBD(ReportPlayerNameDialog)
-        F.ReskinRadio(ReportPlayerNameDialog.playerNameCheckButton)
-        F.ReskinRadio(ReportPlayerNameDialog.guildNameCheckButton)
-        F.CreateBD(ReportPlayerNameDialog.CommentFrame, .25)
-        for i = 1, 9 do
-            select(i, ReportPlayerNameDialog.CommentFrame:GetRegions()):Hide()
-        end
-        F.Reskin(ReportPlayerNameDialog.reportButton)
-        F.Reskin(_G.ReportPlayerNameDialogCancelButton)
-    end
-
     -- ReportCheatingDialog
     local ReportCheatingDialog = _G.ReportCheatingDialog
     F.CreateBD(ReportCheatingDialog)

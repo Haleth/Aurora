@@ -31,8 +31,7 @@ function private.FrameXML.PVPHelper()
 
     do
         local button = _G["PVPReadyDialogCloseButton"]
-        local size = private.is730 and 16.5 or 17
-        button:SetSize(size, size)
+        button:SetSize(17, 17)
         button:SetNormalTexture("")
         button:SetHighlightTexture("")
         button:SetPushedTexture("")

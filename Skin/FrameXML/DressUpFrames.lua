@@ -30,47 +30,24 @@ function private.FrameXML.DressUpFrames()
 
 
     -- Dressup Frame
-    if private.is730 then
-        local DressUpFrame = _G.DressUpFrame
-        F.ReskinPortraitFrame(DressUpFrame, true)
+    local DressUpFrame = _G.DressUpFrame
+    F.ReskinPortraitFrame(DressUpFrame, true)
 
-        F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
-        F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
+    F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
+    F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
 
-        Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
-        DressUpFrame.MaxMinButtonFrame:ClearAllPoints()
-        DressUpFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", DressUpFrame.CloseButton, "TOPLEFT", -1, 0)
-        DressUpFrame.MaxMinButtonFrame:GetRegions():Hide()
+    Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
+    DressUpFrame.MaxMinButtonFrame:ClearAllPoints()
+    DressUpFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", DressUpFrame.CloseButton, "TOPLEFT", -1, 0)
+    DressUpFrame.MaxMinButtonFrame:GetRegions():Hide()
 
-        F.Reskin(_G.DressUpFrameCancelButton)
-        F.Reskin(_G.DressUpFrameResetButton)
-        _G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
+    F.Reskin(_G.DressUpFrameCancelButton)
+    F.Reskin(_G.DressUpFrameResetButton)
+    _G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
 
-        DressUpFrame.ModelBackground:SetDrawLayer("BACKGROUND", 3)
-        DressUpFrame.ModelBackground:ClearAllPoints()
-        DressUpFrame.ModelBackground:SetPoint("TOPLEFT")
-        DressUpFrame.ModelBackground:SetPoint("BOTTOMRIGHT")
-        DressUpFrame.ModelBackground:SetAlpha(0.6)
-    else
-        _G.DressUpFramePortrait:Hide()
-        _G.DressUpBackgroundTopLeft:Hide()
-        _G.DressUpBackgroundTopRight:Hide()
-        _G.DressUpBackgroundBotLeft:Hide()
-        _G.DressUpBackgroundBotRight:Hide()
-        for i = 2, 5 do
-            select(i, _G.DressUpFrame:GetRegions()):Hide()
-        end
-
-        F.SetBD(_G.DressUpFrame, 10, -12, -34, 74)
-        F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
-        F.Reskin(_G.DressUpFrameCancelButton)
-        F.Reskin(_G.DressUpFrameResetButton)
-        F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
-        F.ReskinClose(_G.DressUpFrameCloseButton, "TOPRIGHT", _G.DressUpFrame, "TOPRIGHT", -38, -16)
-
-        _G.DressUpFrameOutfitDropDown:SetHeight(32)
-        _G.DressUpFrameOutfitDropDown.SaveButton:SetPoint("LEFT", _G.DressUpFrameOutfitDropDown, "RIGHT", -13, 2)
-        _G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
-    end
-
+    DressUpFrame.ModelBackground:SetDrawLayer("BACKGROUND", 3)
+    DressUpFrame.ModelBackground:ClearAllPoints()
+    DressUpFrame.ModelBackground:SetPoint("TOPLEFT")
+    DressUpFrame.ModelBackground:SetPoint("BOTTOMRIGHT")
+    DressUpFrame.ModelBackground:SetAlpha(0.6)
 end

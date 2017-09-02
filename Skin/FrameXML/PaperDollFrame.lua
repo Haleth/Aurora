@@ -86,13 +86,11 @@ end
 function private.FrameXML.PaperDollFrame()
     _G.hooksecurefunc("PaperDollFrame_SetLevel", Hook.PaperDollFrame_SetLevel)
 
-    if private.is730 then
-        local classBG = _G.PaperDollFrame:CreateTexture(nil, "BORDER")
-        classBG:SetAtlas("dressingroom-background-"..private.charClass.token)
-        classBG:SetPoint("TOPLEFT", _G.CharacterFrame)
-        classBG:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, 4, -4)
-        classBG:SetAlpha(0.5)
-    end
+    local classBG = _G.PaperDollFrame:CreateTexture(nil, "BORDER")
+    classBG:SetAtlas("dressingroom-background-"..private.charClass.token)
+    classBG:SetPoint("TOPLEFT", _G.CharacterFrame)
+    classBG:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, 4, -4)
+    classBG:SetAlpha(0.5)
 
     _G.PaperDollSidebarTabs:ClearAllPoints()
     _G.PaperDollSidebarTabs:SetPoint("BOTTOM", _G.CharacterFrameInsetRight, "TOP", 0, -3)

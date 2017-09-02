@@ -1,15 +1,13 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local select, pairs, tinsert = _G.select, _G.pairs, _G.tinsert
+-- luacheck: globals select
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local F = _G.unpack(private.Aurora)
 local Skin = private.Aurora.Skin
 
 function private.FrameXML.WorldMapFrame()
-    local r, g, b = C.r, C.g, C.b
-
     local WorldMapFrame = _G.WorldMapFrame
     local BorderFrame = WorldMapFrame.BorderFrame
 
@@ -45,70 +43,11 @@ function private.FrameXML.WorldMapFrame()
     _G.WorldMapLevelDropDown.Text:SetPoint("RIGHT", -38, 2)
 
     -- [[ Size up / down buttons ]]
-
-    if private.is730 then
-        Skin.MaximizeMinimizeButtonFrameTemplate(BorderFrame.MaxMinButtonFrame)
-        BorderFrame.MaxMinButtonFrame:ClearAllPoints()
-        BorderFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", BorderFrame.CloseButton, "TOPLEFT", -1, 0)
-    else
-        for _, buttonName in pairs{"WorldMapFrameSizeUpButton", "WorldMapFrameSizeDownButton"} do
-            local button = _G[buttonName]
-
-            button:SetSize(17, 17)
-            button:ClearAllPoints()
-            button:SetPoint("RIGHT", BorderFrame.CloseButton, "LEFT", -1, 0)
-
-            F.Reskin(button)
-
-            local function colourArrow(f)
-                if f:IsEnabled() then
-                    for _, pixel in pairs(f.pixels) do
-                        pixel:SetColorTexture(r, g, b)
-                    end
-                end
-            end
-
-            local function clearArrow(f)
-                for _, pixel in pairs(f.pixels) do
-                    pixel:SetColorTexture(1, 1, 1)
-                end
-            end
-
-            button.pixels = {}
-
-            local lineOfs = 2.5
-            local line = button:CreateLine()
-            line:SetColorTexture(1, 1, 1)
-            line:SetThickness(0.5)
-            line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-            line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-            tinsert(button.pixels, line)
-
-            local hline = button:CreateTexture()
-            hline:SetColorTexture(1, 1, 1)
-            hline:SetSize(7, 1)
-            tinsert(button.pixels, hline)
-
-            local vline = button:CreateTexture()
-            vline:SetColorTexture(1, 1, 1)
-            vline:SetSize(1, 7)
-            tinsert(button.pixels, vline)
-
-            if buttonName == "WorldMapFrameSizeUpButton" then
-                hline:SetPoint("TOP", 1, -4)
-                vline:SetPoint("RIGHT", -4, 1)
-            else
-                hline:SetPoint("BOTTOM", -1, 4)
-                vline:SetPoint("LEFT", 4, -1)
-            end
-
-            button:SetScript("OnEnter", colourArrow)
-            button:SetScript("OnLeave", clearArrow)
-        end
-    end
+    Skin.MaximizeMinimizeButtonFrameTemplate(BorderFrame.MaxMinButtonFrame)
+    BorderFrame.MaxMinButtonFrame:ClearAllPoints()
+    BorderFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", BorderFrame.CloseButton, "TOPLEFT", -1, 0)
 
     -- [[ Misc ]]
-
     _G.WorldMapFrameTutorialButton.Ring:Hide()
     _G.WorldMapFrameTutorialButton:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -12, 12)
 
@@ -127,7 +66,6 @@ function private.FrameXML.WorldMapFrame()
     end
 
     -- [[ Tracking options ]]
-
     local TrackingOptions = WorldMapFrame.UIElementsFrame.TrackingOptionsButton
 
     TrackingOptions:GetRegions():Hide()
