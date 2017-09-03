@@ -2,7 +2,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base, Skin, Hook = Aurora.Base, Aurora.Skin, Aurora.Hook
 
 do --[[ FrameXML\MoneyFrame.lua ]]
     function Hook.MoneyFrame_Update(frameName, money, forceShow)
@@ -40,6 +40,16 @@ do --[[ FrameXML\MoneyFrame.xml ]]
         moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG)
         moneyFrame:SetPoint("TOPRIGHT", moneyBG)
         return moneyBG
+    end
+    function Skin.SmallDenominationTemplate(button)
+        local name = button:GetName()
+        Base.CropIcon(_G[name.."Texture"], button)
+    end
+    function Skin.SmallAlternateCurrencyFrameTemplate(frame)
+        local name = frame:GetName()
+        Skin.SmallDenominationTemplate(_G[name.."Item1"])
+        Skin.SmallDenominationTemplate(_G[name.."Item2"])
+        Skin.SmallDenominationTemplate(_G[name.."Item3"])
     end
 end
 

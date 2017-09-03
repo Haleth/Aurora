@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
-local Skin, Hook = Aurora.Skin, Aurora.Hook
+local Base, Skin, Hook = Aurora.Base, Aurora.Skin, Aurora.Hook
 
 do --[[ FrameXML\UIDropDownMenu.lua ]]
     local skinnedLevels, skinnedButtons = 2, 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
@@ -116,6 +116,39 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         end
     end
     function Skin.UIDropDownMenuTemplate(frame)
+        local name = frame:GetName()
+
+        _G[name.."Left"]:SetAlpha(0)
+        _G[name.."Middle"]:SetAlpha(0)
+        _G[name.."Right"]:SetAlpha(0)
+
+        local button = frame.Button
+        button:SetSize(18, 18)
+        button:ClearAllPoints()
+        button:SetPoint("TOPRIGHT", _G[name.."Right"], -19, -21)
+
+        button:SetNormalTexture("")
+        button:SetPushedTexture("")
+        button:SetHighlightTexture("")
+
+        local disabled = button:GetDisabledTexture()
+        disabled:SetColorTexture(0, 0, 0, .3)
+        disabled:SetDrawLayer("OVERLAY")
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+
+        local arrow = button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", 4, -7)
+        arrow:SetPoint("BOTTOMRIGHT", -5, 6)
+        Base.SetTexture(arrow, "arrowDown")
+
+        button._auroraHighlight = {arrow}
+        Base.SetHighlight(button, "texture")
+
+        local bg = _G.CreateFrame("Frame", nil, frame)
+        bg:SetPoint("BOTTOMRIGHT", button, "BOTTOMLEFT", 1, 0)
+        bg:SetPoint("TOPLEFT", 20, -4)
+        bg:SetFrameLevel(frame:GetFrameLevel())
+        Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
     end
 end
 

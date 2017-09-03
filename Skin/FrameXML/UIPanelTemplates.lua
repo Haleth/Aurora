@@ -69,6 +69,15 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         frame.RightBorder:Hide()
         Base.SetBackdrop(frame)
     end
+    function Skin.ThinGoldEdgeTemplate(frame)
+        local name = frame:GetName()
+        _G[name.."Left"]:Hide()
+        _G[name.."Right"]:Hide()
+        _G[name.."Middle"]:Hide()
+
+        Base.SetBackdrop(frame, Aurora.frameColor:GetRGBA())
+        frame:SetBackdropBorderColor(1, 0.95, 0.15)
+    end
 end
 
 function private.FrameXML.UIPanelTemplates()
