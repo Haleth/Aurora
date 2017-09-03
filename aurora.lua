@@ -109,15 +109,14 @@ function private.OnLoad()
         else
             r, g, b = _G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB()
         end
+
+        C.r, C.g, C.b = r, g, b -- deprecated
         Aurora.highlightColor:SetRGBA(r, g, b, Aurora.frameColor.a)
     end
     function private.classColorsInit()
         for classToken, color in next, AuroraConfig.customClassColors do
             _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
         end
-
-        private.updateHighlightColor()
-        C.r, C.g, C.b = Aurora.highlightColor:GetRGB()
     end
     function private.classColorsHaveChanged()
         for i = 1, #_G.CLASS_SORT_ORDER do

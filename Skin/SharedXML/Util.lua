@@ -101,6 +101,13 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
             DispatchCallbacks()
         end
     end
+    function private.updateHighlightColor()
+        local color = _G.CUSTOM_CLASS_COLORS[private.charClass.token]
+        Aurora.highlightColor:SetRGBA(color.r, color.g, color.b, Aurora.frameColor.a)
+
+        local C = Aurora[2] -- deprecated
+        C.r, C.g, C.b = color.r, color.g, color.b
+    end
 
     _G.CUSTOM_CLASS_COLORS = {}
     private.classColorsReset()
@@ -113,9 +120,5 @@ function private.SharedXML.Util()
         private.classColorsInit()
     end
 
-    if not Aurora.highlightColor.r then
-        local _, class = _G.UnitClass("player")
-        local color = _G.CUSTOM_CLASS_COLORS[class]
-        Aurora.highlightColor:SetRGBA(color.r, color.g, color.b, Aurora.frameColor.a)
-    end
+    private.updateHighlightColor()
 end
