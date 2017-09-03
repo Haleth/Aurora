@@ -59,7 +59,10 @@ if ADDON_NAME == "Aurora" then
     for i = 1, _G.GetNumAddOns() do
         local meta = _G.GetAddOnMetadata(i, "X-Aurora-Host")
         if meta and type(_G[meta]) == "function" then
-            hostDev = _G[meta]
+            local _, _, _, enabled = _G.GetAddOnInfo(i)
+            if enabled then
+                hostDev = _G[meta]
+            end
         end
     end
 end
