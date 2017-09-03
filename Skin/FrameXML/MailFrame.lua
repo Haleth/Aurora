@@ -154,12 +154,11 @@ function private.FrameXML.MailFrame()
     F.ReskinRadio(_G.SendMailSendMoneyButton)
     F.ReskinRadio(_G.SendMailCODButton)
 
-    _G.SendMailMoneyInset:DisableDrawLayer("BORDER")
-    _G.SendMailMoneyInsetBg:Hide()
-    _G.SendMailMoneyBg:Hide()
-
-    local sendMoneyBG = Skin.SmallMoneyFrameTemplate(_G.SendMailMoneyFrame, true)
-    sendMoneyBG:SetPoint("BOTTOMLEFT", SendMailFrame, 5, 7)
+    Skin.InsetFrameTemplate(_G.SendMailMoneyInset)
+    Skin.ThinGoldEdgeTemplate(_G.SendMailMoneyBg)
+    _G.SendMailMoneyBg:SetPoint("TOPRIGHT", _G.SendMailFrame, "BOTTOMLEFT", 166, 26)
+    _G.SendMailMoneyBg:SetPoint("BOTTOMLEFT", 7, 7)
+    _G.SendMailMoneyFrame:SetPoint("BOTTOMLEFT", 175, 9)
 
     F.Reskin(_G.SendMailCancelButton)
     _G.SendMailCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)

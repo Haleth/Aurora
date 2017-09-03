@@ -15,9 +15,6 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.ShoppingTooltipTemplate(gametooltip)
         Base.SetBackdrop(gametooltip)
     end
-    function Skin.TooltipMoneyFrameTemplate(frame)
-        Skin.SmallMoneyFrameTemplate(frame)
-    end
     function Skin.TooltipStatusBarTemplate(statusbar)
     end
     function Skin.TooltipProgressBarTemplate(frame)

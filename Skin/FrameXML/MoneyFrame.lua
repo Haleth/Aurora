@@ -28,19 +28,6 @@ do --[[ FrameXML\MoneyFrame.lua ]]
 end
 
 do --[[ FrameXML\MoneyFrame.xml ]]
-    function Skin.SmallMoneyFrameTemplate(moneyFrame, addBackdrop)
-        local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
-        moneyBG:SetSize(moneyFrame.maxDisplayWidth, 18)
-        if addBackdrop then
-            Aurora.Base.SetBackdrop(moneyBG)
-            moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-        end
-
-        moneyFrame._auroraMoneyBG = moneyBG
-        moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG)
-        moneyFrame:SetPoint("TOPRIGHT", moneyBG)
-        return moneyBG
-    end
     function Skin.SmallDenominationTemplate(button)
         local name = button:GetName()
         Base.CropIcon(_G[name.."Texture"], button)

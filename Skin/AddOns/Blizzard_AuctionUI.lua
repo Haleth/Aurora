@@ -7,8 +7,9 @@ local select = _G.select
 local CreateFrame = _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
-local Skin = private.Aurora.Skin
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_AuctionUI()
     F.SetBD(_G.AuctionFrame, 11, -12, -1, 10)
@@ -19,8 +20,12 @@ function private.AddOns.Blizzard_AuctionUI()
         F.ReskinTab(_G["AuctionFrameTab"..i])
     end
 
-    local moneyBG = Skin.SmallMoneyFrameTemplate(_G.AuctionFrameMoneyFrame, true)
-    moneyBG:SetPoint("BOTTOMLEFT", _G.AuctionFrame, 18, 17)
+    local moneyBG = _G.CreateFrame("Frame", nil, _G.AuctionFrame)
+    Base.SetBackdrop(moneyBG, Aurora.frameColor:GetRGBA())
+    moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+    moneyBG:SetPoint("BOTTOMLEFT", 20, 18)
+    moneyBG:SetPoint("TOPRIGHT", _G.AuctionFrame, "BOTTOMLEFT", 175, 35)
+
     F.ReskinClose(_G.AuctionFrameCloseButton, "TOPRIGHT", _G.AuctionFrame, "TOPRIGHT", -4, -15)
 
     local function SkinSort(sortButtons)

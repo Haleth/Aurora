@@ -4,6 +4,7 @@ local _, private = ...
 local F = _G.unpack(private.Aurora)
 local Skin = private.Aurora.Skin
 
+-- /run TradeFrame_OnEvent(TradeFrame, "TRADE_SHOW")
 function private.FrameXML.TradeFrame()
     local function SkinHighlightFrames(user)
         local name = "TradeHighlight" .. user
@@ -30,10 +31,8 @@ function private.FrameXML.TradeFrame()
     end
     local function SkinTradeItems(user)
         local prefix = "Trade"..user
-        _G[prefix.."ItemsInset"]:DisableDrawLayer("BORDER")
-        _G[prefix.."ItemsInsetBg"]:Hide()
-        _G[prefix.."EnchantInset"]:DisableDrawLayer("BORDER")
-        _G[prefix.."EnchantInsetBg"]:Hide()
+        Skin.InsetFrameTemplate(_G[prefix.."ItemsInset"])
+        Skin.InsetFrameTemplate(_G[prefix.."EnchantInset"])
 
         prefix = prefix.."Item"
         local xOfs, yOfs
@@ -88,10 +87,9 @@ function private.FrameXML.TradeFrame()
     _G.TradeFramePlayerNameText:SetPoint("TOPLEFT")
     _G.TradeFramePlayerNameText:SetPoint("BOTTOMRIGHT", _G.TradeFrame, "TOPLEFT", 172, -29)
 
-    _G.TradePlayerInputMoneyInset:DisableDrawLayer("BORDER")
-    _G.TradePlayerInputMoneyInsetBg:Hide()
+    Skin.InsetFrameTemplate(_G.TradePlayerInputMoneyInset)
     F.ReskinMoneyInput(_G.TradePlayerInputMoneyFrame)
-    _G.TradePlayerInputMoneyFrame:SetPoint("TOPLEFT", 15, -35)
+    _G.TradePlayerInputMoneyFrame:SetPoint("TOPLEFT", 15, -(private.FRAME_TITLE_HEIGHT + 13))
 
     SkinHighlightFrames("Player")
     SkinTradeItems("Player")
@@ -107,10 +105,10 @@ function private.FrameXML.TradeFrame()
     _G.TradeFrameRecipientNameText:SetPoint("TOPLEFT", _G.TradeFrame, "TOPRIGHT", -172, 0)
     _G.TradeFrameRecipientNameText:SetPoint("BOTTOMRIGHT", _G.TradeFrame, "TOPRIGHT", 0, -29)
 
-    _G.TradeRecipientMoneyInset:DisableDrawLayer("BORDER")
-    _G.TradeRecipientMoneyBg:Hide()
-    local moneyBG = Skin.SmallMoneyFrameTemplate(_G.TradeRecipientMoneyFrame, true)
-    moneyBG:SetPoint("TOPRIGHT", _G.TradeFrame, -6, -36)
+    Skin.InsetFrameTemplate(_G.TradeRecipientMoneyInset)
+    Skin.ThinGoldEdgeTemplate(_G.TradeRecipientMoneyBg)
+    _G.TradeRecipientMoneyBg:SetPoint("TOPRIGHT", -6, -(private.FRAME_TITLE_HEIGHT + 13))
+    _G.TradeRecipientMoneyBg:SetPoint("BOTTOMLEFT", _G.TradeFrame, "TOPRIGHT", -168, -(private.FRAME_TITLE_HEIGHT + 33))
 
     SkinHighlightFrames("Recipient")
     SkinTradeItems("Recipient")

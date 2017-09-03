@@ -37,11 +37,8 @@ function private.FrameXML.TabardFrame()
         F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "Right")
     end
 
-    _G.TabardFrameMoneyInset:DisableDrawLayer("BORDER")
-    _G.TabardFrameMoneyInsetBg:Hide()
-    _G.TabardFrameMoneyBg:Hide()
-    local moneyBG = Skin.SmallMoneyFrameTemplate(_G.TabardFrameMoneyFrame, true)
-    moneyBG:SetPoint("BOTTOMLEFT", _G.TabardFrame, 6, 6)
+    Skin.InsetFrameTemplate(_G.TabardFrameMoneyInset)
+    Skin.ThinGoldEdgeTemplate(_G.TabardFrameMoneyBg)
 
     F.Reskin(_G.TabardFrameAcceptButton)
     F.Reskin(_G.TabardFrameCancelButton)
