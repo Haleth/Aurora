@@ -121,6 +121,7 @@ do -- Base.SetBackdrop
                     bd.bg:SetVertTile(options.tile)
                 end
             else
+                options.bgFile = [[Interface\Buttons\WHITE8x8]]
                 bd.bg:SetColorTexture(0, 0, 1)
             end
 
@@ -151,6 +152,7 @@ do -- Base.SetBackdrop
                     bd[corner]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
                 end
             else
+                options.edgeFile = [[Interface\Buttons\WHITE8x8]]
                 for side, info in next, sides do
                     bd[side]:SetColorTexture(1, 0, 0)
                     bd[side]:SetTexCoord(0, 1, 0, 1)

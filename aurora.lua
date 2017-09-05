@@ -67,6 +67,8 @@ if ADDON_NAME == "Aurora" then
     end
 end
 
+local nop = private.nop
+
 function private.OnLoad()
     if hostDev then
         return hostDev(private)
@@ -158,8 +160,15 @@ function private.OnLoad()
         _G.AuroraSplashScreen:Show()
     end
 
+    local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+
     -- Create API hooks
-    function Aurora.Base.Post.SetBackdrop(frame, r, g, b, a)
+    function Hook.GameTooltip_OnHide(gametooltip)
+        local color = Aurora.frameColor
+        Base.SetBackdropColor(gametooltip, color.r, color.g, color.b, AuroraConfig.alpha)
+    end
+
+    function Base.Post.SetBackdrop(frame, r, g, b, a)
         if AuroraConfig.buttonsHaveGradient and Aurora.buttonColor:IsEqualTo(r, g, b, a) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)
@@ -181,5 +190,16 @@ function private.OnLoad()
                 _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
             end
         end)
+    end
+
+
+    -- Remove skins as per user settings
+    if not AuroraConfig.tooltips then
+        Skin.GameTooltipTemplate = nop
+        Skin.ShoppingTooltipTemplate = nop
+        Skin.TooltipStatusBarTemplate = nop
+        Skin.TooltipProgressBarTemplate = nop
+        Skin.EmbeddedItemTooltip = nop
+        private.FrameXML.GameTooltip = nil
     end
 end

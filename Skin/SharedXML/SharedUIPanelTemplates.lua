@@ -122,9 +122,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         button:SetPushedTexture("")
 
         local dis = button:GetDisabledTexture()
-        dis:SetColorTexture(0, 0, 0, .4)
-        dis:SetDrawLayer("OVERLAY")
-        dis:SetAllPoints()
+        if dis then
+            dis:SetColorTexture(0, 0, 0, .4)
+            dis:SetDrawLayer("OVERLAY")
+            dis:SetAllPoints()
+        end
 
         Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
 

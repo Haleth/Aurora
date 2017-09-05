@@ -196,9 +196,4 @@ function private.FrameXML.ReputationFrame()
 
 
     --[[ ReputationWatchBar ]]--
-
-
-    --[[ ReputationParagonTooltip ]]--
-    Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
-    Skin.EmbeddedItemTooltip(_G.ReputationParagonTooltip.ItemTooltip)
 end

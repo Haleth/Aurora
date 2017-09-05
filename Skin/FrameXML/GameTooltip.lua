@@ -1,16 +1,34 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local next = _G.next
+-- luacheck: globals next
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local F = _G.unpack(Aurora)
+
+do --[[ FrameXML\GameTooltip.lua ]]
+    function Hook.GameTooltip_OnHide(gametooltip)
+        Base.SetBackdropColor(gametooltip)
+    end
+end
 
 do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.GameTooltipTemplate(gametooltip)
         Base.SetBackdrop(gametooltip)
+
+        local name = gametooltip:GetName()
+        local status = _G[name.."StatusBar"]
+        status:SetHeight(4)
+        status:SetPoint("TOPLEFT", gametooltip, "BOTTOMLEFT", 1, 0)
+        status:SetPoint("TOPRIGHT", gametooltip, "BOTTOMRIGHT", -1, 0)
+        Base.SetTexture(_G[name.."StatusBarTexture"], "gradientUp")
+
+        local statusBG = status:CreateTexture(nil, "BACKGROUND")
+        statusBG:SetColorTexture(0, 0, 0)
+        statusBG:SetPoint("TOPLEFT", -1, 1)
+        statusBG:SetPoint("BOTTOMRIGHT", 1, -1)
     end
     function Skin.ShoppingTooltipTemplate(gametooltip)
         Base.SetBackdrop(gametooltip)
@@ -43,11 +61,6 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     end
 end
 
-do --[[ FrameXML\GameTooltip.lua ]]
-    function Hook.GameTooltip_OnHide(gametooltip)
-        Base.SetBackdropColor(gametooltip)
-    end
-end
 do --[[ FrameXML\GameTooltip.xml ]]
     function Skin.EmbeddedItemTooltip(frame)
         Base.CropIcon(frame.Icon)
@@ -61,44 +74,34 @@ end
 
 function private.FrameXML.GameTooltip()
     _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
-    if not _G.AuroraConfig.tooltips then return end
 
-    local tooltips = {
-        "GameTooltip",
-        "ItemRefTooltip",
-        "ShoppingTooltip1",
-        "ShoppingTooltip2",
-        "WorldMapTooltip",
-        "ChatMenu",
-        "EmoteMenu",
-        "LanguageMenu",
-        "VoiceMacroMenu",
-    }
+    --[[ FrameXML\GameTooltip ]]
+    Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
+    Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
+    Skin.GameTooltipTemplate(_G.GameTooltip)
 
-    for i = 1, #tooltips do
-        F.ReskinTooltip(_G[tooltips[i]])
-    end
+    --[[ FrameXML\ItemRef ]]
+    Skin.ShoppingTooltipTemplate(_G.ItemRefShoppingTooltip1)
+    Skin.ShoppingTooltipTemplate(_G.ItemRefShoppingTooltip2)
 
-    local sb = _G["GameTooltipStatusBar"]
-    sb:SetHeight(3)
-    sb:ClearAllPoints()
-    sb:SetPoint("BOTTOMLEFT", _G.GameTooltip, "BOTTOMLEFT", 1, 1)
-    sb:SetPoint("BOTTOMRIGHT", _G.GameTooltip, "BOTTOMRIGHT", -1, 1)
-    sb:SetStatusBarTexture(C.media.backdrop)
+    Skin.GameTooltipTemplate(_G.ItemRefTooltip)
+    Skin.UIPanelCloseButton(_G.ItemRefCloseButton)
+    _G.ItemRefCloseButton:SetPoint("TOPRIGHT", -3, -3)
 
-    local sep = _G.GameTooltipStatusBar:CreateTexture(nil, "ARTWORK")
-    sep:SetHeight(1)
-    sep:SetPoint("BOTTOMLEFT", 0, 3)
-    sep:SetPoint("BOTTOMRIGHT", 0, 3)
-    sep:SetTexture(C.media.backdrop)
-    sep:SetVertexColor(0, 0, 0)
+    --[[ FrameXML\FriendsFrame ]]
+    Base.SetBackdrop(_G.FriendsTooltip)
 
-    F.CreateBD(_G.FriendsTooltip)
+    --[[ FrameXML\WorldMapFrame ]]
+    Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
+    Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
+    Skin.GameTooltipTemplate(_G.WorldMapTooltip)
+    Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
 
-    F.ReskinClose(_G.ItemRefCloseButton)
+    --[[ FrameXML\ReputationFrame ]]--
+    Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
+    Skin.EmbeddedItemTooltip(_G.ReputationParagonTooltip.ItemTooltip)
 
     -- [[ Pet battle tooltips ]]
-
     local petTooltips = {"PetBattlePrimaryAbilityTooltip", "PetBattlePrimaryUnitTooltip", "FloatingBattlePetTooltip", "BattlePetTooltip", "FloatingPetBattleAbilityTooltip"}
     for _, tooltipName in next, petTooltips do
         local tooltip = _G[tooltipName]
