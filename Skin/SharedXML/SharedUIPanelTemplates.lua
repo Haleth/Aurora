@@ -210,6 +210,22 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.InsetFrameTemplate(frame.Inset)
     end
 
+    function Skin.TooltipBorderedFrameTemplate(frame)
+        frame.BorderTopLeft:Hide()
+        frame.BorderTopRight:Hide()
+
+        frame.BorderBottomLeft:Hide()
+        frame.BorderBottomRight:Hide()
+
+        frame.BorderTop:Hide()
+        frame.BorderBottom:Hide()
+        frame.BorderLeft:Hide()
+        frame.BorderRight:Hide()
+
+        frame.Background:Hide()
+        Base.SetBackdrop(frame)
+    end
+
     function Skin.UIPanelScrollBarButton(button)
         button:SetSize(17, 17)
         button:SetNormalTexture("")

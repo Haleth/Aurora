@@ -7,14 +7,41 @@ local select, pairs = _G.select, _G.pairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
+local Aurora = private.Aurora
+local Base, Skin = Aurora.Base, Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
+
+do --[[ AddOns\Blizzard_GarrisonUI\Blizzard_GarrisonShipyardUI.xml ]]
+    function Skin.GarrisonBonusEffectFrameTemplate(frame)
+        Base.CropIcon(frame.Icon, frame)
+    end
+    function Skin.GarrisonBonusAreaTooltipFrameTemplate(frame)
+        Skin.GarrisonBonusEffectFrameTemplate(frame.BonusEffectFrame)
+    end
+end
 
 function private.AddOns.Blizzard_GarrisonUI()
     local r, g, b = C.r, C.g, C.b
 
-    -- [[ Building frame ]]
 
+    --[[ AddOns\Blizzard_GarrisonUI\Blizzard_GarrisonBuildingUI ]]
     local GarrisonBuildingFrame = _G.GarrisonBuildingFrame
+
+    if not private.disabled.tooltips then
+        Skin.TooltipBorderedFrameTemplate(GarrisonBuildingFrame.BuildingLevelTooltip)
+    end
+
+    --[[ AddOns\Blizzard_GarrisonUI\Blizzard_GarrisonShipyardUI ]]
+    if not private.disabled.tooltips then
+        Base.SetBackdrop(_G.GarrisonBonusAreaTooltip)
+        Skin.GarrisonBonusAreaTooltipFrameTemplate(_G.GarrisonBonusAreaTooltip.BonusArea)
+
+        Base.SetBackdrop(_G.GarrisonShipyardMapMissionTooltip)
+        Skin.EmbeddedItemTooltip(_G.GarrisonShipyardMapMissionTooltip.ItemTooltip)
+        Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusEffect)
+        Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusReward)
+    end
+
 
     for i = 1, 14 do
         select(i, GarrisonBuildingFrame:GetRegions()):Hide()
@@ -96,15 +123,6 @@ function private.AddOns.Blizzard_GarrisonUI()
             end
         end
     end)
-
-    -- Building level tooltip
-
-    local BuildingLevelTooltip = GarrisonBuildingFrame.BuildingLevelTooltip
-
-    for i = 1, 9 do
-        select(i, BuildingLevelTooltip:GetRegions()):Hide()
-        F.CreateBD(BuildingLevelTooltip)
-    end
 
     -- Follower list
     do
@@ -613,14 +631,6 @@ function private.AddOns.Blizzard_GarrisonUI()
         bg:SetPoint("BOTTOMRIGHT", 0, 1)
     end
 
-    -- Mechanic tooltip
-
-    if _G.AuroraConfig.tooltips then
-        _G.GarrisonMissionMechanicTooltip:SetBackdrop(nil)
-        _G.GarrisonMissionMechanicFollowerCounterTooltip:SetBackdrop(nil)
-        F.CreateBDFrame(_G.GarrisonMissionMechanicTooltip, .6)
-        F.CreateBDFrame(_G.GarrisonMissionMechanicFollowerCounterTooltip, .6)
-    end
 
     -- [[ Recruiter frame ]]
 
@@ -812,11 +822,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     hooksecurefunc(GarrisonMissionFrame.FollowerList, "ShowFollower", onShowFollower)
     hooksecurefunc(_G.GarrisonLandingPageFollowerList, "ShowFollower", onShowFollower)
 
-    -- [[ Shipyard ]]
-
-    if _G.AuroraConfig.tooltips then
-        F.CreateBD(_G.GarrisonShipyardMapMissionTooltip)
-    end
 
     -- Follower tab
 
