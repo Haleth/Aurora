@@ -9,7 +9,7 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\GarrisonBaseUtils.lua ]]
     function Hook.GarrisonFollowerPortraitMixin_SetQuality(self, quality)
-        local color = _G.FOLLOWER_QUALITY_COLORS[quality]
+        local color = _G.ITEM_QUALITY_COLORS[quality]
         self:SetBackdropBorderColor(color.r, color.g, color.b)
     end
 end
