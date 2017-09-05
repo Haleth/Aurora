@@ -6,8 +6,10 @@ private.API_MAJOR, private.API_MINOR = 8, 0
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
-function private.nop() end
 
+private.disabled = {
+    tooltips = false,
+}
 
 local classLocale, class, classID = _G.UnitClass("player")
 private.charClass = {
@@ -16,6 +18,7 @@ private.charClass = {
     id = classID,
 }
 
+function private.nop() end
 local debug do
     if _G.LibStub then
         local debugger

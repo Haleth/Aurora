@@ -73,6 +73,8 @@ do --[[ FrameXML\GameTooltip.xml ]]
 end
 
 function private.FrameXML.GameTooltip()
+    if private.disabled.tooltips then return end
+
     _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
 
     --[[ FrameXML\GameTooltip ]]
