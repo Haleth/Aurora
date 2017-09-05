@@ -6,7 +6,6 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local F = _G.unpack(Aurora)
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_OnHide(gametooltip)
@@ -102,29 +101,4 @@ function private.FrameXML.GameTooltip()
     --[[ FrameXML\ReputationFrame ]]--
     Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
     Skin.EmbeddedItemTooltip(_G.ReputationParagonTooltip.ItemTooltip)
-
-    -- [[ Pet battle tooltips ]]
-    local petTooltips = {"PetBattlePrimaryAbilityTooltip", "PetBattlePrimaryUnitTooltip", "FloatingBattlePetTooltip", "BattlePetTooltip", "FloatingPetBattleAbilityTooltip"}
-    for _, tooltipName in next, petTooltips do
-        local tooltip = _G[tooltipName]
-        tooltip:DisableDrawLayer("BACKGROUND")
-        local bg = _G.CreateFrame("Frame", nil, tooltip)
-        bg:SetAllPoints()
-        bg:SetFrameLevel(0)
-        F.CreateBD(bg)
-
-        if tooltip.Delimiter then
-            tooltip.Delimiter:SetColorTexture(0, 0, 0)
-            tooltip.Delimiter:SetHeight(1)
-        elseif tooltip.Delimiter1 then
-            tooltip.Delimiter1:SetHeight(1)
-            tooltip.Delimiter1:SetColorTexture(0, 0, 0)
-            tooltip.Delimiter2:SetHeight(1)
-            tooltip.Delimiter2:SetColorTexture(0, 0, 0)
-        end
-
-        if tooltip.CloseButton then
-            F.ReskinClose(tooltip.CloseButton)
-        end
-    end
 end

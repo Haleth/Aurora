@@ -7,10 +7,18 @@ local select, pairs = _G.select, _G.pairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_Collections()
     local r, g, b = C.r, C.g, C.b
+
+    --[[ AddOns\Blizzard_Collections\Blizzard_PetCollection ]]
+    if not private.disabled.tooltips then
+        Skin.SharedPetBattleAbilityTooltipTemplate(_G.PetJournalPrimaryAbilityTooltip)
+        Skin.SharedPetBattleAbilityTooltipTemplate(_G.PetJournalSecondaryAbilityTooltip)
+    end
 
     -- [[ General ]]
 
@@ -176,16 +184,6 @@ function private.AddOns.Blizzard_Collections()
         local ic = MountJournal.MountDisplay.InfoButton.Icon
         ic:SetTexCoord(.08, .92, .08, .92)
         F.CreateBG(ic)
-    end
-
-    if _G.AuroraConfig.tooltips then
-        for _, f in pairs({_G.PetJournalPrimaryAbilityTooltip, _G.PetJournalSecondaryAbilityTooltip}) do
-            f:DisableDrawLayer("BACKGROUND")
-            local bg = CreateFrame("Frame", nil, f)
-            bg:SetAllPoints()
-            bg:SetFrameLevel(0)
-            F.CreateBD(bg)
-        end
     end
 
     _G.PetJournalLoadoutBorderSlotHeaderText:SetParent(PetJournal)
