@@ -190,11 +190,19 @@ function private.OnLoad()
     end
 
     -- Disable skins as per user settings
+    private.disabled.fonts = not AuroraConfig.enableFont
     private.disabled.tooltips = not AuroraConfig.tooltips
     if not AuroraConfig.chatBubbles then
         private.FrameXML.ChatBubbles = nil
     end
     if not AuroraConfig.chatBubbleNames then
         Hook.UpdateChatBubble = private.nop
+    end
+    if not AuroraConfig.bags then
+        private.FrameXML.BankFrame = nil
+        private.FrameXML.ContainerFrame = nil
+    end
+    if not AuroraConfig.loot then
+        private.FrameXML.LootFrame = nil
     end
 end

@@ -9,6 +9,7 @@ private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor
 
 private.disabled = {
     tooltips = false,
+    fonts = false,
 }
 
 local classLocale, class, classID = _G.UnitClass("player")

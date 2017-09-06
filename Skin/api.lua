@@ -280,7 +280,10 @@ do -- Base.SetFont
         if _G.type(fontObj) == "string" then fontObj = _G[fontObj] end
         if not fontObj then return end
 
-        fontObj:SetFont(fontPath, fontSize, fontStyle)
+        if not private.disabled.fonts then
+            fontObj:SetFont(fontPath, fontSize, fontStyle)
+        end
+
         if _G.type(fontColor) == "table" then
             fontObj:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
         elseif fontColor then

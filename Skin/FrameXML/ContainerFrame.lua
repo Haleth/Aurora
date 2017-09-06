@@ -4,8 +4,6 @@ local _, private = ...
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.ContainerFrame()
-    if not _G.AuroraConfig.bags then return end
-
     local BAG_FILTER_ICONS = {
         ["bags-icon-equipment"] = [[Interface\Icons\INV_Chest_Chain]],
         ["bags-icon-consumables"] = [[Interface\Icons\INV_Potion_93]],

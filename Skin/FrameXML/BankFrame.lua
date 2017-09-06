@@ -7,8 +7,6 @@ local select = _G.select
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.BankFrame()
-    if not _G.AuroraConfig.bags then return end
-
     -- [[ Bank ]]
 
     select(16, _G.BankFrame:GetRegions()):Hide()

@@ -51,8 +51,6 @@ do --[[ FrameXML\LootFrame.xml ]]
 end
 
 function private.FrameXML.LootFrame()
-    if not _G.AuroraConfig.loot then return end
-
     --[[ LootFrame ]]--
     _G.LootFramePortraitOverlay:Hide()
 
