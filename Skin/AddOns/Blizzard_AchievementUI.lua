@@ -35,7 +35,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
     function Hook.AchievementButton_UpdatePlusMinusTexture(button)
-        if button:IsForbidden() then return end -- twitter UI is protected
+        if button:IsForbidden() then return end -- twitter achievement share is protected
         if button.plusMinus:IsShown() then
             button._auroraPlusMinus:Show()
             if button.collapsed then
@@ -43,7 +43,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
             else
                 button._auroraPlusMinus.plus:Hide()
             end
-        else
+        elseif button._auroraPlusMinus then
             button._auroraPlusMinus:Hide()
         end
     end
