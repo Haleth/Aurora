@@ -1,6 +1,8 @@
 local _, private = ...
 
 -- [[ Core ]]
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
 local F = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_DebugTools()
@@ -29,8 +31,8 @@ function private.AddOns.Blizzard_DebugTools()
     F.CreateBD(etraceBG, 0)
     F.CreateGradient(etraceBG)
 
-    F.ReskinTooltip(_G.EventTraceTooltip)
-
-    --[[ FrameStack ]]--
-    F.ReskinTooltip(_G.FrameStackTooltip)
+    if not private.disabled.tooltips then
+        Skin.GameTooltipTemplate(_G.FrameStackTooltip)
+        Skin.GameTooltipTemplate(_G.EventTraceTooltip)
+    end
 end

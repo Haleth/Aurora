@@ -13,6 +13,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_Calendar.lua"/>
     <Script file="Blizzard_ChallengesUI.lua"/>
     <Script file="Blizzard_Collections.lua"/>
+    <Script file="Blizzard_Contribution.lua"/>
     <Script file="Blizzard_DeathRecap.lua"/>
     <Script file="Blizzard_DebugTools.lua"/>
     <Script file="Blizzard_EncounterJournal.lua"/>

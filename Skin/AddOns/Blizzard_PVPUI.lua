@@ -7,6 +7,8 @@ local select, pairs = _G.select, _G.pairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
+local Aurora = private.Aurora
+local Base, Skin = Aurora.Base, Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_PVPUI()
@@ -16,6 +18,11 @@ function private.AddOns.Blizzard_PVPUI()
     local HonorFrame = _G.HonorFrame
     local ConquestFrame = _G.ConquestFrame
     local WarGamesFrame = _G.WarGamesFrame
+
+    if not private.disabled.tooltips then
+        Base.SetBackdrop(_G.PVPRewardTooltip)
+        Skin.EmbeddedItemTooltip(_G.PVPRewardTooltip.ItemTooltip)
+    end
 
     local function SkinRoleInset(roleInset)
         roleInset:DisableDrawLayer("BACKGROUND")

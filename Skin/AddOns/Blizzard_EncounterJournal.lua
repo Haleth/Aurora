@@ -7,6 +7,8 @@ local select, next, ipairs = _G.select, _G.next, _G.ipairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_EncounterJournal()
@@ -410,7 +412,6 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     -- [[ SuggestFrame ]]
     local suggestFrame = EncounterJournal.suggestFrame
-    local EncounterJournalTooltip = _G.EncounterJournalTooltip
     do
         -- Suggestion 1
         local suggestion = suggestFrame.Suggestion1
@@ -511,9 +512,11 @@ function private.AddOns.Blizzard_EncounterJournal()
 
 
     --[[ EncounterJournalTooltip ]]
-    F.CreateBD(EncounterJournalTooltip)
-    EncounterJournalTooltip.Item1._auroraIconBorder = F.ReskinIcon(EncounterJournalTooltip.Item1.icon)
-    EncounterJournalTooltip.Item2._auroraIconBorder = F.ReskinIcon(EncounterJournalTooltip.Item2.icon)
+    if not private.disabled.tooltips then
+        Base.SetBackdrop(_G.EncounterJournalTooltip)
+        _G.EncounterJournalTooltip.Item1._auroraIconBorder = F.ReskinIcon(_G.EncounterJournalTooltip.Item1.icon)
+        _G.EncounterJournalTooltip.Item2._auroraIconBorder = F.ReskinIcon(_G.EncounterJournalTooltip.Item2.icon)
+    end
 
 
     -- [[ LootJournal ]]
