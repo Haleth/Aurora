@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Base
+local Skin = Aurora.Skin
 
 --[[ do FrameXML\ItemRef.lua
 end ]]
