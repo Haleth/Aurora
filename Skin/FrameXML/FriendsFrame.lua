@@ -4,9 +4,15 @@ local _, private = ...
 local next, select = _G.next, _G.select
 
 -- [[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.FriendsFrame()
+    if not private.disabled.tooltips then
+        Base.SetBackdrop(_G.FriendsTooltip)
+    end
+
     F.ReskinPortraitFrame(_G.FriendsFrame, true)
     _G.FriendsFrameIcon:Hide()
 

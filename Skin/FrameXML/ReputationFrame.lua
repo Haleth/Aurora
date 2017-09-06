@@ -196,4 +196,9 @@ function private.FrameXML.ReputationFrame()
 
 
     --[[ ReputationWatchBar ]]--
+
+    if not private.disabled.tooltips then
+        Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
+        Skin.EmbeddedItemTooltip(_G.ReputationParagonTooltip.ItemTooltip)
+    end
 end

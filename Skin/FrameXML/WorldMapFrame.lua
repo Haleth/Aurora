@@ -8,6 +8,13 @@ local F = _G.unpack(private.Aurora)
 local Skin = private.Aurora.Skin
 
 function private.FrameXML.WorldMapFrame()
+    if not private.disabled.tooltips then
+        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
+        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
+        Skin.GameTooltipTemplate(_G.WorldMapTooltip)
+        Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
+    end
+
     local WorldMapFrame = _G.WorldMapFrame
     local BorderFrame = WorldMapFrame.BorderFrame
 

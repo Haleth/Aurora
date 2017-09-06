@@ -76,29 +76,7 @@ function private.FrameXML.GameTooltip()
 
     _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
 
-    --[[ FrameXML\GameTooltip ]]
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
     Skin.GameTooltipTemplate(_G.GameTooltip)
-
-    --[[ FrameXML\ItemRef ]]
-    Skin.ShoppingTooltipTemplate(_G.ItemRefShoppingTooltip1)
-    Skin.ShoppingTooltipTemplate(_G.ItemRefShoppingTooltip2)
-
-    Skin.GameTooltipTemplate(_G.ItemRefTooltip)
-    Skin.UIPanelCloseButton(_G.ItemRefCloseButton)
-    _G.ItemRefCloseButton:SetPoint("TOPRIGHT", -3, -3)
-
-    --[[ FrameXML\FriendsFrame ]]
-    Base.SetBackdrop(_G.FriendsTooltip)
-
-    --[[ FrameXML\WorldMapFrame ]]
-    Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
-    Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
-    Skin.GameTooltipTemplate(_G.WorldMapTooltip)
-    Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
-
-    --[[ FrameXML\ReputationFrame ]]--
-    Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
-    Skin.EmbeddedItemTooltip(_G.ReputationParagonTooltip.ItemTooltip)
 end
