@@ -72,6 +72,7 @@ function private.FrameXML.Fonts()
     Base.SetFont("Game48FontShadow", NORMAL, 48, nil, nil, {0, 0, 0}, 1, -1)
     Base.SetFont("Game60Font", NORMAL, 60)
     Base.SetFont("Game72Font", NORMAL, 72)
+    Base.SetFont("Game120Font", NORMAL, 120)
 
     Base.SetFont("Game11Font_ol", NORMAL, 11, "OUTLINE")
     Base.SetFont("Game12Font_ol", NORMAL, 12, "OUTLINE")
@@ -88,8 +89,6 @@ function private.FrameXML.Fonts()
     Base.SetFont("SpellFont_Small",   NORMAL, 10)
     Base.SetFont("InvoiceFont_Med",   NORMAL, 12)
     Base.SetFont("InvoiceFont_Small", NORMAL, 10)
-        Base.SetFont("Tooltip_Med",       NORMAL, 12)
-        Base.SetFont("Tooltip_Small",     NORMAL, 10)
 
     Base.SetFont("AchievementFont_Small", NORMAL, 12)
     Base.SetFont("ReputationDetailFont",  NORMAL, 10, nil, {1, 1, 1}, {0, 0, 0}, 1, -1)
@@ -157,8 +156,12 @@ function private.FrameXML.Fonts()
     Base.SetFont("SystemFont_Outline_WTF2",         NORMAL, 36, "OUTLINE")
     Base.SetFont("GameTooltipHeader",               NORMAL, 14)
     Base.SetFont("System_IME",                      NORMAL, 16)
+    Base.SetFont("NumberFont_Shadow_Tiny",          CHAT, 10, nil, nil, {0, 0, 0}, 1, -1)
     Base.SetFont("NumberFont_Shadow_Small",         CHAT, 12, nil, nil, {0, 0, 0}, 1, -1)
     Base.SetFont("NumberFont_Shadow_Med",           CHAT, 14, nil, nil, {0, 0, 0}, 1, -1)
+
+    Base.SetFont("Tooltip_Med",       NORMAL, 12)
+    Base.SetFont("Tooltip_Small",     NORMAL, 10)
 
     -- This uses GameFontNormal, which inherits from SystemFont_Shadow_Med1,
     -- but for some reason the above changes do not propagate to it.
