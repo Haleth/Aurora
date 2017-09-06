@@ -189,8 +189,12 @@ function private.OnLoad()
         end)
     end
 
-    -- Remove skins as per user settings
-    if not AuroraConfig.tooltips then
-        private.disabled.tooltips = true
+    -- Disable skins as per user settings
+    private.disabled.tooltips = not AuroraConfig.tooltips
+    if not AuroraConfig.chatBubbles then
+        private.FrameXML.ChatBubbles = nil
+    end
+    if not AuroraConfig.chatBubbleNames then
+        Hook.UpdateChatBubble = private.nop
     end
 end

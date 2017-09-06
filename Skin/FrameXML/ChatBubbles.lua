@@ -3,14 +3,27 @@ local _, private = ...
 -- [[ Lua Globals ]]
 local next = _G.next
 
--- [[ Core ]]
-local F = _G.unpack(private.Aurora)
+--[[ Core ]]
+local Aurora = private.Aurora
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-function private.FrameXML.ChatBubbles()
-    if not _G.AuroraConfig.chatBubbles then return end
+do --[[ FrameXML\ChatBubbles.lua ]]
+    local defaultColor = "ffffffff"
+    function Hook.UpdateChatBubble(chatbubble, guid, name)
+        local color
+        if guid ~= nil and guid ~= "" then
+            local _, class = _G.GetPlayerInfoByGUID(guid)
+            color = _G.CUSTOM_CLASS_COLORS[class].colorStr
+        else
+            color = defaultColor
+        end
+        chatbubble._auroraName:SetFormattedText("|c%s%s|r", color, name)
+    end
+end
 
+do --[[ FrameXML\ChatBubbles.xml ]]
     local tailSize = 16
-    local function styleBubble(frame)
+    function Skin.ChatBubbleFrame(frame)
         local font
         for i = 1, frame:GetNumRegions() do
             local region = _G.select(i, frame:GetRegions())
@@ -22,7 +35,7 @@ function private.FrameXML.ChatBubbles()
             end
         end
 
-        F.CreateBD(frame)
+        Base.SetBackdrop(frame)
         frame:SetScale(_G.UIParent:GetScale())
 
         local tail = frame:CreateTexture(nil, "BORDER")
@@ -38,44 +51,18 @@ function private.FrameXML.ChatBubbles()
         name:SetJustifyH("LEFT")
         name:SetFontObject(font)
         frame._auroraName = name
-
-        frame:HookScript("OnHide", function() frame._auroraUsing = false end)
     end
+end
 
-    local defaultColor = "ffffffff"
-    local function UpdateChatBubble(frame, guid, name)
-        if not frame._auroraName then styleBubble(frame) end
-
-        if _G.AuroraConfig.chatBubbleNames then
-            local color
-            if guid ~= nil and guid ~= "" then
-                local _, class = _G.GetPlayerInfoByGUID(guid)
-                color = _G.CUSTOM_CLASS_COLORS[class].colorStr
-            else
-                color = defaultColor
-            end
-            frame._auroraName:SetFormattedText("|c%s%s|r", color, name)
-        end
-    end
-
-    local frameCache = {}
+function private.FrameXML.ChatBubbles()
     local function FindChatBubble(msg)
-        for frame, text in next, frameCache do
-            if text:GetText() == msg then
-                return frame
-            end
-        end
-
-        for index = 1, _G.WorldFrame:GetNumChildren() do
-            local frame = _G.select(index, _G.WorldFrame:GetChildren())
-            if frame:IsForbidden() then return end
-            if not frame:GetName() and not frame._auroraUsing then
-                for i = 1, _G.select("#", frame:GetRegions()) do
-                    local region = _G.select(i, frame:GetRegions())
-                    if region:GetObjectType() == "FontString" and region:GetText() == msg then
-                        frameCache[frame] = region
-                        return frame
-                    end
+        local chatbubbles = _G.C_ChatBubbles.GetAllChatBubbles()
+        for index = 1, #chatbubbles do
+            local chatbubble = chatbubbles[index]
+            for i = 1, _G.select("#", chatbubble:GetRegions()) do
+                local region = _G.select(i, chatbubble:GetRegions())
+                if region:GetObjectType() == "FontString" and region:GetText() == msg then
+                    return chatbubble
                 end
             end
         end
@@ -103,10 +90,15 @@ function private.FrameXML.ChatBubbles()
     end)
     bubbleHook:SetScript("OnUpdate", function(self, elapsed)
         self.elapsed = self.elapsed + elapsed
-        local frame = FindChatBubble(self.msg)
-        if frame or self.elapsed > 0.3 then
+        local chatbubble = FindChatBubble(self.msg)
+        if chatbubble or self.elapsed > 0.3 then
             self:Hide()
-            if frame then UpdateChatBubble(frame, self.guid, self.sender) end
+            if chatbubble then
+                if not chatbubble._auroraTail then
+                    Skin.ChatBubbleFrame(chatbubble)
+                end
+                Hook.UpdateChatBubble(chatbubble, self.guid, self.sender)
+            end
         end
     end)
     bubbleHook:Hide()
