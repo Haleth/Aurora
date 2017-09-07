@@ -7,6 +7,7 @@ private.API_MAJOR, private.API_MINOR = 8, 0
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
 
+private.host = ADDON_NAME
 private.disabled = {
     tooltips = false,
     fonts = false,
@@ -90,10 +91,18 @@ _G.Aurora = Aurora
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if addonName == ADDON_NAME then
+    if addonName == private.host then
         -- Setup function for the host addon
         if private.OnLoad then
-            private.OnLoad()
+            if _G[private.OnLoad] then
+                _G[private.OnLoad](private)
+            else
+                private.OnLoad()
+            end
+        end
+
+        if _G.AuroraConfig then
+            Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
         end
 
         -- Skin FrameXML

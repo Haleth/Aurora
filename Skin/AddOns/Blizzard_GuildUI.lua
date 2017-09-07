@@ -7,7 +7,8 @@ local select, pairs = _G.select, _G.pairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_GuildUI()
     local r, g, b = C.r, C.g, C.b
@@ -177,7 +178,7 @@ function private.AddOns.Blizzard_GuildUI()
             index = offset + i
             local name, _, class = _G.GetGuildApplicantInfo(index)
             if name then
-                button.class:SetTexCoord(_G.unpack(C.classicons[class]))
+                button.class:SetTexCoord(_G.unpack(Aurora.classIcons[class]))
             end
         end
     end
@@ -251,7 +252,7 @@ function private.AddOns.Blizzard_GuildUI()
             index = offset + i
             local name, _, _, _, _, _, _, _, _, _, class  = _G.GetGuildRosterInfo(index)
             if name and index <= visibleMembers and bu.icon:IsShown() then
-                bu.icon:SetTexCoord(_G.unpack(C.classicons[class]))
+                bu.icon:SetTexCoord(_G.unpack(Aurora.classIcons[class]))
                 bu.bg:Show()
             else
                 bu.bg:Hide()

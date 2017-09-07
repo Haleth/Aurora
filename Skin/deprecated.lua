@@ -9,6 +9,18 @@ Aurora[2] = C
 
 C.classcolours = _G.CUSTOM_CLASS_COLORS
 C.backdrop = private.backdrop
+C.media = {
+    ["arrowUp"] = [[Interface\AddOns\Aurora\media\arrow-up-active]],
+    ["arrowDown"] = [[Interface\AddOns\Aurora\media\arrow-down-active]],
+    ["arrowLeft"] = [[Interface\AddOns\Aurora\media\arrow-left-active]],
+    ["arrowRight"] = [[Interface\AddOns\Aurora\media\arrow-right-active]],
+    ["backdrop"] = [[Interface\ChatFrame\ChatFrameBackground]],
+    ["checked"] = [[Interface\AddOns\Aurora\media\CheckButtonHilight]],
+    ["font"] = [[Interface\AddOns\Aurora\media\font.ttf]],
+    ["gradient"] = [[Interface\AddOns\Aurora\media\gradient]],
+    ["roleIcons"] = [[Interface\AddOns\Aurora\media\UI-LFG-ICON-ROLES]],
+}
+
 
 C.themes = {}
 C.themes[ADDON_NAME] = {}
@@ -51,7 +63,7 @@ end
 F.CreateGradient = function(f)
     local tex
     if f.GetBackdropTexture then
-        if _G.AuroraConfig.buttonsHaveGradient then
+        if C.buttonsHaveGradient then
             tex = f:GetBackdropTexture("bg")
             Aurora.Base.SetTexture(tex, "gradientUp")
             f:SetBackdropColor(Aurora.buttonColor:GetRGBA())
@@ -60,7 +72,7 @@ F.CreateGradient = function(f)
         tex = f:CreateTexture(nil, "BORDER")
         tex:SetPoint("TOPLEFT", 1, -1)
         tex:SetPoint("BOTTOMRIGHT", -1, 1)
-        if _G.AuroraConfig.buttonsHaveGradient then
+        if C.buttonsHaveGradient then
             Aurora.Base.SetTexture(tex, "gradientUp")
         else
             tex:SetTexture(C.media.backdrop)

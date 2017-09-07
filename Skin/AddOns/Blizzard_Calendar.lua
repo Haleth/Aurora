@@ -8,7 +8,8 @@ local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 local IsAddOnLoaded = _G.IsAddOnLoaded
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_Calendar()
     local r, g, b = C.r, C.g, C.b
@@ -123,7 +124,7 @@ function private.AddOns.Blizzard_Calendar()
         F.CreateBG(bu)
 
         local ic = bu:GetNormalTexture()
-        ic:SetTexCoord(_G.unpack(C.classicons[class]))
+        ic:SetTexCoord(_G.unpack(Aurora.classIcons[class]))
     end
 
     local bd = CreateFrame("Frame", nil, _G.CalendarFilterFrame)

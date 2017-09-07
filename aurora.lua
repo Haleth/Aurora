@@ -3,6 +3,20 @@ local ADDON_NAME, private = ...
 -- [[ Lua Globals ]]
 -- luacheck: globals next type
 
+if ADDON_NAME == "Aurora" then
+    for i = 1, _G.GetNumAddOns() do
+        local meta = _G.GetAddOnMetadata(i, "X-Aurora-Host")
+        if meta then
+            local name, _, _, enabled = _G.GetAddOnInfo(i)
+            if enabled then
+                private.host = name
+                private.OnLoad = meta
+                return
+            end
+        end
+    end
+end
+
 -- [[ Core ]]
 local Aurora = private.Aurora
 local _, C = _G.unpack(Aurora)
@@ -11,33 +25,6 @@ local _, C = _G.unpack(Aurora)
 local AuroraConfig
 
 C.frames = {}
-C.classicons = { -- adjusted for borderless icons
-    ["WARRIOR"]     = {0.01953125, 0.234375, 0.01953125, 0.234375},
-    ["MAGE"]        = {0.26953125, 0.48046875, 0.01953125, 0.234375},
-    ["ROGUE"]       = {0.515625, 0.7265625, 0.01953125, 0.234375},
-    ["DRUID"]       = {0.76171875, 0.97265625, 0.01953125, 0.234375},
-    ["HUNTER"]      = {0.01953125, 0.234375, 0.26953125, 0.484375},
-    ["SHAMAN"]      = {0.26953125, 0.48046875, 0.26953125, 0.484375},
-    ["PRIEST"]      = {0.515625, 0.7265625, 0.26953125, 0.484375},
-    ["WARLOCK"]     = {0.76171875, 0.97265625, 0.26953125, 0.484375},
-    ["PALADIN"]     = {0.01953125, 0.234375, 0.51953125, 0.734375},
-    ["DEATHKNIGHT"] = {0.26953125, 0.48046875, 0.51953125, 0.734375},
-    ["MONK"]        = {0.515625, 0.7265625, 0.51953125, 0.734375},
-    ["DEMONHUNTER"] = {0.76171875, 0.97265625, 0.51953125, 0.734375},
-}
-
-C.media = {
-    ["arrowUp"] = "Interface\\AddOns\\Aurora\\media\\arrow-up-active",
-    ["arrowDown"] = "Interface\\AddOns\\Aurora\\media\\arrow-down-active",
-    ["arrowLeft"] = "Interface\\AddOns\\Aurora\\media\\arrow-left-active",
-    ["arrowRight"] = "Interface\\AddOns\\Aurora\\media\\arrow-right-active",
-    ["backdrop"] = "Interface\\ChatFrame\\ChatFrameBackground",
-    ["checked"] = "Interface\\AddOns\\Aurora\\media\\CheckButtonHilight",
-    ["font"] = "Interface\\AddOns\\Aurora\\media\\font.ttf",
-    ["gradient"] = "Interface\\AddOns\\Aurora\\media\\gradient",
-    ["roleIcons"] = "Interface\\Addons\\Aurora\\media\\UI-LFG-ICON-ROLES",
-}
-
 C.defaults = {
     ["acknowledgedSplashScreen"] = false,
 
@@ -54,24 +41,7 @@ C.defaults = {
     ["tooltips"] = true,
 }
 
-local hostDev
-if ADDON_NAME == "Aurora" then
-    for i = 1, _G.GetNumAddOns() do
-        local meta = _G.GetAddOnMetadata(i, "X-Aurora-Host")
-        if meta and type(_G[meta]) == "function" then
-            local _, _, _, enabled = _G.GetAddOnInfo(i)
-            if enabled then
-                hostDev = _G[meta]
-            end
-        end
-    end
-end
-
 function private.OnLoad()
-    if hostDev then
-        return hostDev(private)
-    end
-
     -- Load Variables
     _G.AuroraConfig = _G.AuroraConfig or {}
     AuroraConfig = _G.AuroraConfig
