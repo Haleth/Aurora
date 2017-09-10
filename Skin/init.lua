@@ -93,12 +93,10 @@ eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
     if addonName == private.host then
         -- Setup function for the host addon
-        if private.OnLoad then
-            if _G[private.OnLoad] then
-                _G[private.OnLoad](private)
-            else
-                private.OnLoad()
-            end
+        if private.host ~= ADDON_NAME then
+            _G[private.OnLoad](private)
+        else
+            private.OnLoad()
         end
 
         if _G.AuroraConfig then
