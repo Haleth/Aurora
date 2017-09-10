@@ -17,12 +17,12 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.GameTooltipTemplate(gametooltip)
         Base.SetBackdrop(gametooltip)
 
-        local name = gametooltip:GetName()
-        local status = _G[name.."StatusBar"]
+        -- BlizzWTF: the global name for this frame conflicts with ReputationParagonTooltipStatusBar
+        local status = gametooltip:GetChildren()
         status:SetHeight(4)
         status:SetPoint("TOPLEFT", gametooltip, "BOTTOMLEFT", 1, 0)
         status:SetPoint("TOPRIGHT", gametooltip, "BOTTOMRIGHT", -1, 0)
-        Base.SetTexture(_G[name.."StatusBarTexture"], "gradientUp")
+        Base.SetTexture(status:GetStatusBarTexture(), "gradientUp")
 
         local statusBG = status:CreateTexture(nil, "BACKGROUND")
         statusBG:SetColorTexture(0, 0, 0)
@@ -35,12 +35,13 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.TooltipStatusBarTemplate(statusbar)
     end
     function Skin.TooltipProgressBarTemplate(frame)
-        Base.SetTexture(frame.Bar:GetStatusBarTexture(), "gradientUp")
-
         local bar = frame.Bar
         Base.SetBackdrop(bar, Aurora.frameColor:GetRGBA())
         bar:SetBackdropBorderColor(Aurora.buttonColor:GetRGB())
-        bar:GetStatusBarTexture():SetDrawLayer("BORDER")
+
+        local texture = bar:GetStatusBarTexture()
+        Base.SetTexture(texture, "gradientUp")
+        texture:SetDrawLayer("BORDER")
 
         bar.BorderLeft:Hide()
         bar.BorderRight:Hide()
