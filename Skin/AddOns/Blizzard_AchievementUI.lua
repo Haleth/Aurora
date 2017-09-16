@@ -218,7 +218,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Base.SetBackdrop(button)
         Base.SetHighlight(button, "backdrop")
-        button.auroraTabResize = true
+        button._auroraTabResize = true
     end
     function Skin.MiniAchievementTemplate(frame)
         Base.CropIcon(frame.icon, frame)

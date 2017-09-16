@@ -56,7 +56,7 @@ end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
     function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
-        if not tab.auroraTabResize then return end
+        if not tab._auroraTabResize then return end
         local sideWidths = 14
         local tabText = tab.Text or _G[tab:GetName().."Text"]
 
