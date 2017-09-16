@@ -63,32 +63,17 @@ function private.FrameXML.ItemTextFrame()
     statusBG:SetPoint("BOTTOMRIGHT")
 
 
-    for i, delta in _G.next, {"Prev", "Next"} do
-        local button = _G["ItemText"..delta.."PageButton"]
+    for i, delta in _G.next, {"PrevPageButton", "NextPageButton"} do
+        local button = _G["ItemText"..delta]
         button:ClearAllPoints()
-        button:SetSize(18, 18)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
-
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 6, -5)
-        arrow:SetPoint("BOTTOMRIGHT", -6, 5)
-
-        local disabled = button:GetDisabledTexture()
-        disabled:SetColorTexture(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
-        Base.SetHighlight(button, "backdrop")
         if i == 1 then
+            Skin.NavButtonPrevious(button)
             button:SetPoint("TOPLEFT", 32, -(private.FRAME_TITLE_HEIGHT * 1.2))
             button:GetRegions():SetPoint("LEFT", button, "RIGHT", 3, 0)
-            Base.SetTexture(arrow, "arrowLeft")
         else
+            Skin.NavButtonNext(button)
             button:SetPoint("TOPRIGHT", -32, -(private.FRAME_TITLE_HEIGHT * 1.2))
             button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
-            Base.SetTexture(arrow, "arrowRight")
         end
     end
 end

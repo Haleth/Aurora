@@ -94,40 +94,18 @@ function private.FrameXML.MerchantFrame()
     _G.MerchantMoneyInset:Hide()
     Skin.ThinGoldEdgeTemplate(_G.MerchantMoneyBg, true)
 
-    for i, delta in _G.next, {"Prev", "Next"} do
-        local button = _G["Merchant"..delta.."PageButton"]
+    for i, delta in _G.next, {"PrevPageButton", "NextPageButton"} do
+        local button = _G["Merchant"..delta]
         button:ClearAllPoints()
-        button:SetSize(18, 18)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
-
-        local disabled = button:GetDisabledTexture()
-        disabled:SetColorTexture(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
-
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 6, -5)
-        arrow:SetPoint("BOTTOMRIGHT", -6, 5)
-
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
 
         local label, bg = button:GetRegions()
         bg:Hide()
         if i == 1 then
-            arrow:SetPoint("TOPLEFT", 6, -4)
-            arrow:SetPoint("BOTTOMRIGHT", -7, 5)
-            Base.SetTexture(arrow, "arrowLeft")
-
+            Skin.NavButtonPrevious(button)
             button:SetPoint("BOTTOMLEFT", 16, 82)
             label:SetPoint("LEFT", button, "RIGHT", 3, 0)
         else
-            arrow:SetPoint("TOPLEFT", 7, -5)
-            arrow:SetPoint("BOTTOMRIGHT", -6, 4)
-            Base.SetTexture(arrow, "arrowRight")
-
+            Skin.NavButtonNext(button)
             button:SetPoint("BOTTOMRIGHT", -16, 82)
             label:SetPoint("RIGHT", button, "LEFT", -3, 0)
         end

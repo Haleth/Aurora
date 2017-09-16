@@ -106,29 +106,14 @@ function private.FrameXML.TutorialFrame()
 
     for i, suffix in next, {"PrevButton", "NextButton"} do
         local button = _G["TutorialFrame"..suffix]
-        button:SetSize(18, 18)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
-
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 6, -5)
-        arrow:SetPoint("BOTTOMRIGHT", -6, 5)
-
-        local disabled = button:GetDisabledTexture()
-        disabled:SetColorTexture(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
-        Base.SetHighlight(button, "backdrop")
         if i == 1 then
+            Skin.NavButtonPrevious(button)
             button:SetPoint("BOTTOMLEFT", 30, 10)
             button:GetRegions():SetPoint("LEFT", button, "RIGHT", 3, 0)
-            Base.SetTexture(arrow, "arrowLeft")
         else
+            Skin.NavButtonNext(button)
             button:SetPoint("BOTTOMRIGHT", -132, 10)
             button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
-            Base.SetTexture(arrow, "arrowRight")
         end
     end
 

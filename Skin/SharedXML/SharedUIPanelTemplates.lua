@@ -7,7 +7,8 @@ local next, tinsert = _G.next, _G.tinsert
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
+do -- BlizzWTF: These are not templates, but they should be
+    -- ExpandOrCollapse
     local function Hook_SetNormalTexture(self, texture)
         if self.settingTexture then return end
         self.settingTexture = true
@@ -25,7 +26,6 @@ do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
         end
         self.settingTexture = nil
     end
-
     function Skin.ExpandOrCollapse(button)
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
@@ -51,6 +51,42 @@ do -- ExpandOrCollapse - BlizzWTF: Not a template, but it should be
 
         Base.SetHighlight(button, "color")
         _G.hooksecurefunc(button, "SetNormalTexture", Hook_SetNormalTexture)
+    end
+
+    -- Nav buttons
+    local function NavButton(button)
+        button:SetSize(18, 18)
+        button:SetNormalTexture("")
+        button:SetPushedTexture("")
+        button:SetHighlightTexture("")
+
+        local disabled = button:GetDisabledTexture()
+        disabled:SetColorTexture(0, 0, 0, .3)
+        disabled:SetDrawLayer("OVERLAY")
+
+        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+    end
+    function Skin.NavButtonPrevious(button)
+        NavButton(button)
+
+        local arrow = button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", 6, -4)
+        arrow:SetPoint("BOTTOMRIGHT", -7, 5)
+        Base.SetTexture(arrow, "arrowLeft")
+
+        button._auroraHighlight = {arrow}
+        Base.SetHighlight(button, "texture")
+    end
+    function Skin.NavButtonNext(button)
+        NavButton(button)
+
+        local arrow = button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", 7, -5)
+        arrow:SetPoint("BOTTOMRIGHT", -6, 4)
+        Base.SetTexture(arrow, "arrowRight")
+
+        button._auroraHighlight = {arrow}
+        Base.SetHighlight(button, "texture")
     end
 end
 

@@ -49,27 +49,10 @@ function private.SharedXML.SharedBasicControls()
     Skin.UIPanelButtonTemplate(ScriptErrorsFrame.Reload)
 
     for i, delta in _G.next, {"Previous", "Next"} do
-        local button = ScriptErrorsFrame[delta.."Error"]
-        --button:ClearAllPoints()
-        button:SetSize(18, 18)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
-
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 6, -5)
-        arrow:SetPoint("BOTTOMRIGHT", -6, 5)
-
-        local disabled = button:GetDisabledTexture()
-        disabled:SetColorTexture(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
-        Base.SetHighlight(button, "backdrop")
         if i == 1 then
-            Base.SetTexture(arrow, "arrowLeft")
+            Skin.NavButtonPrevious(ScriptErrorsFrame[delta.."Error"])
         else
-            Base.SetTexture(arrow, "arrowRight")
+            Skin.NavButtonNext(ScriptErrorsFrame[delta.."Error"])
         end
     end
 
