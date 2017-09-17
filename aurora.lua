@@ -37,6 +37,7 @@ C.defaults = {
         ["customColour"] = {r = 1, g = 1, b = 1},
     ["customClassColors"] = false,
     ["tooltips"] = true,
+    mainmenubar = false,
 }
 
 function private.OnLoad()
@@ -160,6 +161,7 @@ function private.OnLoad()
     -- Disable skins as per user settings
     private.disabled.fonts = not AuroraConfig.enableFont
     private.disabled.tooltips = not AuroraConfig.tooltips
+    private.disabled.mainmenubar = not AuroraConfig.mainmenubar
     if not AuroraConfig.chatBubbles then
         private.FrameXML.ChatBubbles = nil
     end

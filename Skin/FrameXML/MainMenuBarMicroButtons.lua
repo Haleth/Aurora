@@ -97,56 +97,58 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
 end
 
 function private.FrameXML.MainMenuBarMicroButtons()
-    _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
-    _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButton_OnUpdate)
+    if not private.disabled.mainmenubar then
+        _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
+        _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButton_OnUpdate)
 
-    local prev
-    for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
-        local button = _G[name]
-        Skin.MainMenuBarMicroButton(button)
+        local prev
+        for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
+            local button = _G[name]
+            Skin.MainMenuBarMicroButton(button)
 
-        if prev then
-            button:SetPoint("BOTTOMLEFT", prev, "BOTTOMRIGHT", 3, 0)
-        else
-            button:SetPoint("BOTTOMLEFT", 554, 5)
+            if prev then
+                button:SetPoint("BOTTOMLEFT", prev, "BOTTOMRIGHT", 3, 0)
+            else
+                button:SetPoint("BOTTOMLEFT", 554, 5)
+            end
+            prev = button
+
+            local iconTexture, left, right, top, bottom
+            if name == "CharacterMicroButton" then
+                _G.MicroButtonPortrait:ClearAllPoints()
+                _G.MicroButtonPortrait:SetPoint("TOPLEFT", 1, -1)
+                _G.MicroButtonPortrait:SetPoint("BOTTOMRIGHT", -1, 1)
+            elseif name == "SpellbookMicroButton" then
+                iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
+            elseif name == "TalentMicroButton" then
+                iconTexture = [[Interface\Icons\Ability_Marksmanship]]
+            elseif name == "GuildMicroButton" then
+                iconTexture = ""
+
+                _G.GuildMicroButtonTabard:ClearAllPoints()
+                _G.GuildMicroButtonTabard:SetPoint("TOPLEFT", 1, -1)
+                _G.GuildMicroButtonTabard:SetPoint("BOTTOMRIGHT", -1, 1)
+
+                SetTexture(_G.GuildMicroButtonTabard.background, 0.1, 0.9, 0.45, 0.9)
+                _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, 2)
+            elseif name == "EJMicroButton" then
+                iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
+            elseif name == "CollectionsMicroButton" then
+                iconTexture = [[Interface\Icons\MountJournalPortrait]]
+                left, right, top, bottom = 0.3, 0.92, 0.08, 0.92
+            elseif name == "MainMenuMicroButton" then
+                iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
+
+                SetTexture(_G.MainMenuBarPerformanceBar, 0.2, 0.8, 0.08, 0.94)
+                _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
+            elseif name == "StoreMicroButton" then
+                iconTexture = [[Interface\Icons\WoW_Store]]
+            else
+                iconTexture = ""
+            end
+
+            SetMicroButton(button, iconTexture, left, right, top, bottom)
         end
-        prev = button
-
-        local iconTexture, left, right, top, bottom
-        if name == "CharacterMicroButton" then
-            _G.MicroButtonPortrait:ClearAllPoints()
-            _G.MicroButtonPortrait:SetPoint("TOPLEFT", 1, -1)
-            _G.MicroButtonPortrait:SetPoint("BOTTOMRIGHT", -1, 1)
-        elseif name == "SpellbookMicroButton" then
-            iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
-        elseif name == "TalentMicroButton" then
-            iconTexture = [[Interface\Icons\Ability_Marksmanship]]
-        elseif name == "GuildMicroButton" then
-            iconTexture = ""
-
-            _G.GuildMicroButtonTabard:ClearAllPoints()
-            _G.GuildMicroButtonTabard:SetPoint("TOPLEFT", 1, -1)
-            _G.GuildMicroButtonTabard:SetPoint("BOTTOMRIGHT", -1, 1)
-
-            SetTexture(_G.GuildMicroButtonTabard.background, 0.1, 0.9, 0.45, 0.9)
-            _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, 2)
-        elseif name == "EJMicroButton" then
-            iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
-        elseif name == "CollectionsMicroButton" then
-            iconTexture = [[Interface\Icons\MountJournalPortrait]]
-            left, right, top, bottom = 0.3, 0.92, 0.08, 0.92
-        elseif name == "MainMenuMicroButton" then
-            iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
-
-            SetTexture(_G.MainMenuBarPerformanceBar, 0.2, 0.8, 0.08, 0.94)
-            _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
-        elseif name == "StoreMicroButton" then
-            iconTexture = [[Interface\Icons\WoW_Store]]
-        else
-            iconTexture = ""
-        end
-
-        SetMicroButton(button, iconTexture, left, right, top, bottom)
     end
 
     Skin.MicroButtonAlertTemplate(_G.TalentMicroButtonAlert)

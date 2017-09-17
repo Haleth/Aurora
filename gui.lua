@@ -191,6 +191,9 @@ bagsBox:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -20)
 local lootBox = createToggleBox(gui, "loot", "Loot")
 lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 90, 0)
 
+local mainmenubarBox = createToggleBox(gui, "mainmenubar", "Main Menu Bar")
+mainmenubarBox:SetPoint("LEFT", lootBox, "RIGHT", 90, 0)
+
 local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
 chatBubbleBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
 

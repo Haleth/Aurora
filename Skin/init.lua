@@ -11,6 +11,7 @@ private.host = ADDON_NAME
 private.disabled = {
     tooltips = false,
     fonts = false,
+    mainmenubar = false,
 }
 
 local classLocale, class, classID = _G.UnitClass("player")
