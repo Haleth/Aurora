@@ -24,20 +24,24 @@ local AuroraConfig
 
 C.frames = {}
 C.defaults = {
-    ["acknowledgedSplashScreen"] = false,
+    acknowledgedSplashScreen = false,
 
-    ["alpha"] = 0.5,
-    ["bags"] = true,
-    ["buttonsHaveGradient"] = true,
-    ["chatBubbles"] = true,
-        ["chatBubbleNames"] = true,
-    ["enableFont"] = true,
-    ["loot"] = true,
-    ["useCustomColour"] = false,
-        ["customColour"] = {r = 1, g = 1, b = 1},
-    ["customClassColors"] = false,
-    ["tooltips"] = true,
+    bags = true,
+    loot = true,
     mainmenubar = false,
+
+    chatBubbles = true,
+        chatBubbleNames = true,
+    tooltips = true,
+
+    enableFont = true,
+    useCustomColour = false,
+        customColour = {r = 1, g = 1, b = 1},
+    buttonsHaveGradient = true,
+
+    alpha = 0.5,
+
+    customClassColors = false,
 }
 
 function private.OnLoad()
@@ -119,7 +123,7 @@ function private.OnLoad()
     end
 
     if AuroraConfig.buttonsHaveGradient then
-        Aurora.buttonColor:SetRGBA(.3, .3, .3, 0.7)
+        Aurora.buttonColor:SetRGBA(.4, .4, .4, 1)
     end
 
     -- Show splash screen for first time users
@@ -174,5 +178,9 @@ function private.OnLoad()
     end
     if not AuroraConfig.loot then
         private.FrameXML.LootFrame = nil
+    end
+
+    function private.AddOns.Aurora()
+        private.SetupGUI()
     end
 end

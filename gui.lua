@@ -10,7 +10,8 @@ local CreateFrame = _G.CreateFrame
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
+local Base, Skin = Aurora.Base, Aurora.Skin
+local _, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]
 
@@ -62,8 +63,14 @@ end
 
 -- these variables are loaded on init and updated only on gui.okay. Calling gui.cancel resets the saved vars to these
 local old = {}
-
 local checkboxes = {}
+
+local function updateFrames()
+    local r, g, b = _G.Aurora.frameColor:GetRGB()
+    for i = 1, #C.frames do
+        C.frames[i]:SetBackdropColor(r, g, b, _G.AuroraConfig.alpha)
+    end
+end
 
 -- function to copy table contents and inner table
 local function copyTable(source, target)
@@ -92,24 +99,21 @@ local function addSubCategory(parent, name)
 end
 
 local createToggleBox do
-    local function toggle(f)
-        _G.AuroraConfig[f.value] = f:GetChecked()
+    local function toggle(self)
+        _G.AuroraConfig[self.value] = self:GetChecked()
     end
 
     function createToggleBox(parent, value, text)
-        local f = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
-        f.value = value
+        local checkbutton = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
+        checkbutton.Text:SetText(text)
+        checkbutton.value = value
 
-        f.Text:SetText(text)
+        _G.tinsert(checkboxes, checkbutton)
 
-        f:SetScript("OnClick", toggle)
-
-        _G.tinsert(checkboxes, f)
-
-        return f
+        checkbutton:SetScript("OnClick", toggle)
+        return checkbutton
     end
 end
-
 
 local createColorSwatch do
     local info, swatch = {}
@@ -154,11 +158,12 @@ local createColorSwatch do
         _G.OpenColorPicker(info)
     end
 
+    local frameColor = Aurora.frameColor
     function createColorSwatch(parent, value, text)
         local button = CreateFrame("Button", nil, parent)
         button:SetScript("OnClick", OnClick)
         button:SetSize(16, 16)
-        Aurora.Base.SetBackdrop(button, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(button, frameColor.r, frameColor.g, frameColor.b, 1)
         button.value = value
 
         if text then
@@ -171,78 +176,139 @@ local createColorSwatch do
     end
 end
 
+local createSlider do
+    local numSliders = 0
+    local function OnValueChanged(self, value)
+        _G.AuroraConfig[self.value] = value
+        if self.update then
+            self.update()
+        end
+    end
+
+    function createSlider(parent, value, text)
+        numSliders = numSliders + 1
+        local slider = CreateFrame("Slider", "AuroraOptionsSlider"..numSliders, parent, "OptionsSliderTemplate")
+        slider:SetMinMaxValues(0, 1)
+        slider:SetValueStep(0.1)
+        slider.value = value
+
+        if text then
+            _G[slider:GetName().."Text"]:SetText(text)
+        end
+
+        _G.BlizzardOptionsPanel_Slider_Enable(slider)
+
+        slider:SetScript("OnValueChanged", OnValueChanged)
+        return slider
+    end
+end
+
+local createButton do
+    function createButton(parent, func, text)
+        local button = CreateFrame("Button", nil, parent, "OptionsButtonTemplate")
+        button:SetText(text)
+
+        button:SetScript("OnClick", function(self)
+            func()
+        end)
+        return button
+    end
+end
 
 -- create frames/widgets
-
 local gui = CreateFrame("Frame", "AuroraOptions", _G.UIParent)
 gui.name = "Aurora"
 _G.InterfaceOptions_AddCategory(gui)
 
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-title:SetPoint("TOP", 0, -26)
+title:SetPoint("TOP", -30, -26)
 title:SetText("Aurora " .. _G.GetAddOnMetadata("Aurora", "Version"))
 
+--[[ Features ]]--
 local features = addSubCategory(gui, "Features")
 features:SetPoint("TOPLEFT", 16, -80)
 
 local bagsBox = createToggleBox(gui, "bags", "Bags")
-bagsBox:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -20)
+bagsBox:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 10, -20)
 
 local lootBox = createToggleBox(gui, "loot", "Loot")
-lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 90, 0)
+lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 105, 0)
 
 local mainmenubarBox = createToggleBox(gui, "mainmenubar", "Main Menu Bar")
-mainmenubarBox:SetPoint("LEFT", lootBox, "RIGHT", 90, 0)
+mainmenubarBox:SetPoint("LEFT", lootBox, "RIGHT", 105, 0)
 
 local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
-chatBubbleBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -8)
+chatBubbleBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -15)
 
 local chatBubbleNamesBox = createToggleBox(gui, "chatBubbleNames", "Show names")
-chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -5, 0)
-chatBubbleNamesBox:SetSize(22, 22)
+chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -5, -5)
+
+chatBubbleBox:SetScript("OnClick", function(self)
+    if self:GetChecked() then
+        _G.AuroraConfig.chatBubbles = true
+        chatBubbleNamesBox:Enable()
+    else
+        _G.AuroraConfig.chatBubbles = false
+        chatBubbleNamesBox:Disable()
+    end
+end)
 
 local tooltipsBox = createToggleBox(gui, "tooltips", "Tooltips")
-tooltipsBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 90, 0)
+tooltipsBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 105, 0)
 
+--[[ Appearance ]]--
 local appearance = addSubCategory(gui, "Appearance")
-appearance:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMLEFT", 0, -35)
+appearance:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -110)
 
 local fontBox = createToggleBox(gui, "enableFont", "Replace default game fonts")
-fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -20)
+fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 10, -20)
 
 local colourBox = createToggleBox(gui, "useCustomColour", "Custom highlight colour")
-colourBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -8)
+colourBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
 
 local colourButton = createColorSwatch(gui, "customColour")
 colourButton:SetPoint("LEFT", colourBox.Text, "RIGHT", 10, 0)
 
+colourBox:SetScript("OnClick", function(self)
+    if self:GetChecked() then
+        _G.AuroraConfig.useCustomColour = true
+        colourButton:Enable()
+        colourButton:SetAlpha(1)
+    else
+        _G.AuroraConfig.useCustomColour = false
+        colourButton:Disable()
+        colourButton:SetAlpha(.7)
+    end
+    private.updateHighlightColor()
+end)
+
 local buttonsHaveGradientBox = createToggleBox(gui, "buttonsHaveGradient", "Gradient button style")
-buttonsHaveGradientBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -8)
+buttonsHaveGradientBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -15)
 
-local alphaSlider = CreateFrame("Slider", "AuroraOptionsAlpha", gui, "OptionsSliderTemplate")
+local alphaSlider = createSlider(gui, "alpha", "Backdrop opacity *")
 alphaSlider:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -40)
-_G.BlizzardOptionsPanel_Slider_Enable(alphaSlider)
-alphaSlider:SetMinMaxValues(0, 1)
-alphaSlider:SetValueStep(0.1)
-_G.AuroraOptionsAlphaText:SetText("Backdrop opacity *")
+alphaSlider.update = updateFrames
 
+--[[ Misc ]]--
 local line = gui:CreateTexture(nil, "ARTWORK")
 line:SetSize(600, 1)
-line:SetPoint("TOPLEFT", alphaSlider, "BOTTOMLEFT", 0, -30)
+line:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -210)
 line:SetColorTexture(1, 1, 1, .2)
 
-local reloadText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-reloadText:SetPoint("TOPLEFT", line, "BOTTOMLEFT", 0, -40)
-reloadText:SetText("Settings not marked with an asterisk (*) require a UI reload.")
-
-local reloadButton = CreateFrame("Button", nil, gui, "UIPanelButtonTemplate")
-reloadButton:SetPoint("LEFT", reloadText, "RIGHT", 20, 0)
-reloadButton:SetSize(128, 25)
-reloadButton:SetText("Reload UI")
-
 local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-credits:SetText("Aurora by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com")
-credits:SetPoint("BOTTOM", 0, 40)
+credits:SetText([[
+Aurora by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com
+
+Maintained by Gethe
+]])
+credits:SetPoint("TOP", line, "BOTTOM", 0, -20)
+
+local reloadText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+reloadText:SetPoint("BOTTOMLEFT", 20, 26)
+reloadText:SetText("* Does not require a Reload UI.")
+
+local reloadButton = createButton(gui, _G.C_UI.Reload, _G.RELOADUI)
+reloadButton:SetPoint("BOTTOMRIGHT", -20, 20)
 
 
 local classColors = {}
@@ -258,13 +324,10 @@ for i, class in ipairs(_G.CLASS_SORT_ORDER) do
     end
 end
 
-local resetButton = CreateFrame("Button", nil, gui, "UIPanelButtonTemplate")
+local resetButton = createButton(gui, private.classColorsReset, _G.RESET)
 resetButton:SetPoint("RIGHT", classColors[1], "LEFT", -10, 0)
-resetButton:SetSize(50, 20)
-resetButton:SetText(_G.RESET)
+resetButton:SetWidth(50)
 
-
--- add event handlers
 
 gui.refresh = function()
     alphaSlider:SetValue(_G.AuroraConfig.alpha)
@@ -288,35 +351,6 @@ gui.refresh = function()
     end
 end
 
-gui:RegisterEvent("ADDON_LOADED")
-gui:SetScript("OnEvent", function(self, _, addon)
-    if addon ~= "Aurora" then return end
-
-    -- fill 'old' table
-    copyTable(_G.AuroraConfig, old)
-
-    F.CreateBD(splash)
-    F.Reskin(splash.okayButton)
-    F.ReskinClose(splash.closeButton)
-
-    F.Reskin(resetButton)
-    F.Reskin(reloadButton)
-    F.ReskinSlider(alphaSlider)
-
-    for i = 1, #checkboxes do
-        F.ReskinCheck(checkboxes[i])
-    end
-
-    self:UnregisterEvent("ADDON_LOADED")
-end)
-
-local function updateFrames()
-    local r, g, b = _G.Aurora.frameColor:GetRGB()
-    for i = 1, #C.frames do
-        C.frames[i]:SetBackdropColor(r, g, b, _G.AuroraConfig.alpha)
-    end
-end
-
 gui.okay = function()
     copyTable(_G.AuroraConfig, old)
 end
@@ -335,43 +369,27 @@ gui.default = function()
     gui.refresh()
 end
 
-chatBubbleBox:SetScript("OnClick", function(self)
-    if self:GetChecked() then
-        _G.AuroraConfig.chatBubbles = true
-        chatBubbleNamesBox:Enable()
-    else
-        _G.AuroraConfig.chatBubbles = false
-        chatBubbleNamesBox:Disable()
+function private.SetupGUI()
+    -- fill 'old' table
+    copyTable(_G.AuroraConfig, old)
+
+    Base.SetBackdrop(splash)
+    Skin.UIPanelButtonTemplate(splash.okayButton)
+    Skin.UIPanelCloseButton(splash.closeButton)
+
+    Skin.OptionsSliderTemplate(alphaSlider)
+    for i = 1, #checkboxes do
+        Skin.InterfaceOptionsCheckButtonTemplate(checkboxes[i])
     end
-end)
+    chatBubbleNamesBox:SetSize(14, 14)
 
-colourBox:SetScript("OnClick", function(self)
-    if self:GetChecked() then
-        _G.AuroraConfig.useCustomColour = true
-        colourButton:Enable()
-        colourButton:SetAlpha(1)
-    else
-        _G.AuroraConfig.useCustomColour = false
-        colourButton:Disable()
-        colourButton:SetAlpha(.7)
-    end
-    private.updateHighlightColor()
-end)
+    Skin.OptionsButtonTemplate(reloadButton)
 
-alphaSlider:SetScript("OnValueChanged", function(_, value)
-    _G.AuroraConfig.alpha = value
-    updateFrames()
-end)
-
-reloadButton:SetScript("OnClick", _G.ReloadUI)
-
-resetButton:SetScript("OnClick", function(self)
-    private.classColorsReset()
-end)
-
+    Skin.OptionsButtonTemplate(resetButton)
+end
 
 -- easy slash command
-
+_G.SLASH_AURORA1 = "/aurora"
 _G.SlashCmdList.AURORA = function(msg, editBox)
     private.debug("/aurora", msg)
     if msg == "debug" then
@@ -387,6 +405,6 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
         end
     else
         _G.InterfaceOptionsFrame_OpenToCategory(gui)
+        _G.InterfaceOptionsFrame_OpenToCategory(gui)
     end
 end
-_G.SLASH_AURORA1 = "/aurora"
