@@ -132,6 +132,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         button:SetHighlightTexture("")
 
         local disabled = button:GetDisabledTexture()
+        disabled:SetAllPoints(button)
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
         Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())

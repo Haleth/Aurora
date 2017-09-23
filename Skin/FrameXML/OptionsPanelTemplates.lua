@@ -50,7 +50,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         bg:SetFrameLevel(slider:GetFrameLevel())
         Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
 
-        local thumbTexture = _G[slider:GetName().."Thumb"]
+        local thumbTexture = slider:GetThumbTexture()
         thumbTexture:SetAlpha(0)
         thumbTexture:SetSize(8, 16)
 

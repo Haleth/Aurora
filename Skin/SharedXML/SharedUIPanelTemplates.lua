@@ -340,8 +340,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         editbox.Middle:Hide()
 
         local bg = _G.CreateFrame("Frame", nil, editbox)
-        bg:SetPoint("TOPLEFT", -2, -7)
-        bg:SetPoint("BOTTOMRIGHT", 0, 7)
+        bg:SetPoint("TOPLEFT", editbox.Left)
+        bg:SetPoint("BOTTOMRIGHT", editbox.Right)
         bg:SetFrameLevel(editbox:GetFrameLevel() - 1)
         Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
     end
