@@ -13,6 +13,9 @@ local FrameXML = {
     "SharedXML.Vector2D",
     "SharedXML.Vector3D",
     "SharedXML.Spline",
+    "SharedXML.LayoutFrame",
+    "SharedXML.ManagedLayoutFrame",
+    "SharedXML.BulletPoint",
     "MixinUtil",
 
     -- intrinsics
@@ -212,7 +215,6 @@ local FrameXML = {
     "ArtifactToasts",
     "SharedXML.ModelPreviewFrame",
     "SplashFrame",
-    "SharedXML.LayoutFrame",
 
     -- Save off whatever we need available unmodified.
     "SecureCapsule",
