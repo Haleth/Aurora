@@ -1,0 +1,13 @@
+sudo: false
+language: c
+
+addons:
+  apt:
+    packages:
+    - luarocks
+    - pandoc
+
+before_install: luarocks install --local luacheck
+
+before_script: /home/travis/.luarocks/bin/luacheck . -q
+script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash

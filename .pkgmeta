@@ -1,0 +1,5 @@
+package-as: Aurora
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
