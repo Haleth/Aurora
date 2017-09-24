@@ -402,6 +402,8 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
                 return
             end
             debugger:Display()
+        else
+            _G.print("LibTextDump is not available.")
         end
     else
         _G.InterfaceOptionsFrame_OpenToCategory(gui)

@@ -44,7 +44,7 @@ local debug do
             debugger:AddLine(text)
         end
     else
-        debug = function() end
+        debug = private.nop
     end
     private.debug = debug
 end
