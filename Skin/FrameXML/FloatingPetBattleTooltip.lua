@@ -5,10 +5,10 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 
-do --[[ FrameXML\FloatingPetBattleTooltip.lua ]]
-end
+--[[ do FrameXML\FloatingPetBattleTooltip.lua
+end ]]
 
 do --[[ FrameXML\FloatingPetBattleTooltip.xml ]]
     function Skin.BattlePetTooltipTemplate(frame)

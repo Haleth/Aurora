@@ -5,13 +5,13 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 
-do --[[ FrameXML\BattlePetTooltip.lua ]]
-end
+--[[ do FrameXML\BattlePetTooltip.lua
+end ]]
 
-do --[[ FrameXML\BattlePetTooltip.xml ]]
-end
+--[[ do FrameXML\BattlePetTooltip.xml
+end ]]
 
 function private.FrameXML.BattlePetTooltip()
     if private.disabled.tooltips then return end

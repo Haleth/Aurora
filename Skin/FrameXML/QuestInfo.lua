@@ -8,12 +8,10 @@ local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
+local F = _G.unpack(Aurora)
 local Base, Skin = Aurora.Base, Aurora.Skin
 
 function private.FrameXML.QuestInfo()
-    local r, g, b = C.r, C.g, C.b
-
     local function restyleSpellButton(bu)
         local name = bu:GetName()
         local icon = bu.Icon
