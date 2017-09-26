@@ -7,6 +7,9 @@
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
 
+## X-Curse-Project-ID: 278735
+## X-WoWI-ID: 18589
+
 Skin\skin.xml
 
 aurora.lua
