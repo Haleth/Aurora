@@ -9,8 +9,9 @@ private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor
 
 private.host = ADDON_NAME
 private.disabled = {
-    tooltips = false,
+    bags = false,
     fonts = false,
+    tooltips = false,
     mainmenubar = false,
 }
 

@@ -8,6 +8,9 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.SearchBoxTemplate(editbox)
         Skin.InputBoxInstructionsTemplate(editbox)
     end
+    function Skin.BagSearchBoxTemplate(editbox)
+        Skin.SearchBoxTemplate(editbox)
+    end
     function Skin.UIPanelSquareButton(button)
         button:SetSize(19.5, 19.5)
         button:SetNormalTexture("")
@@ -50,8 +53,11 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         frame.ShadowRight:Hide()
         Base.SetBackdrop(frame, 0.8, 0.8, 0, 0.75)
     end
-    function Skin.GlowBoxArrowTemplate(frame)
-        Base.SetTexture(frame.Arrow, "arrowDown")
+    function Skin.GlowBoxArrowTemplate(frame, direction)
+        if direction and direction == "Left" or direction == "Right" then
+            frame:SetSize(21, 53)
+        end
+        Base.SetTexture(frame.Arrow, direction and "arrow"..direction or "arrowDown")
         frame.Arrow:SetVertexColor(1, 1, 0)
         frame.Glow:Hide()
     end

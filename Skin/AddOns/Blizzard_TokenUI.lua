@@ -93,10 +93,18 @@ function private.AddOns.Blizzard_TokenUI()
 
     Skin.UIPanelCloseButton(_G.TokenFramePopupCloseButton)
 
+    if not private.disabled.bags then
+        local BackpackTokenFrame = _G.BackpackTokenFrame
+        BackpackTokenFrame:GetRegions():Hide()
 
-    local BackpackTokenFrame = _G.BackpackTokenFrame
-    BackpackTokenFrame:GetRegions():Hide()
-    for i = 1, #BackpackTokenFrame.Tokens do
-        Skin.BackpackTokenTemplate(BackpackTokenFrame.Tokens[i])
+        local tokenBG = _G.CreateFrame("Frame", nil, BackpackTokenFrame)
+        Base.SetBackdrop(tokenBG, Aurora.frameColor:GetRGBA())
+        tokenBG:SetBackdropBorderColor(0.15, 0.95, 0.15)
+        tokenBG:SetPoint("TOPLEFT", 5, -6)
+        tokenBG:SetPoint("BOTTOMRIGHT", -9, 8)
+
+        for i = 1, #BackpackTokenFrame.Tokens do
+            Skin.BackpackTokenTemplate(BackpackTokenFrame.Tokens[i])
+        end
     end
 end
