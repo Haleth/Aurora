@@ -5,7 +5,7 @@ Aurora is an addon which restyles the default Blizzard interface to a clean, min
 
 A lot of time has been spent on not only basic development and updates, but also refining and perfecting the appearance of each window and every frame.
 
-A single colour, that either matches your current class or is a colour of your choosing, is used for highlights and emphasis.
+A single color, that either matches your current class or is a color of your choosing, is used for highlights and emphasis.
 
 Options
 -------
