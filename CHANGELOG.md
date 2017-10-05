@@ -1,4 +1,10 @@
 ## [Unreleased] ##
+### Fixed ###
+
+  * An error may occor when opening the Reagent Bank.
+  * A minor conflict with Bagnon.
+
+
 
 ## [v7.3.0.4] - 2017-09-24 ##
 ### Changed ###
