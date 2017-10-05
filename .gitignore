@@ -1,1 +1,4 @@
 .release
+
+## Sublime Text ##
+*.sublime-workspace
