@@ -1,5 +1,8 @@
 package-as: Aurora
 
+ignore:
+    - *.sublime*
+
 manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown
