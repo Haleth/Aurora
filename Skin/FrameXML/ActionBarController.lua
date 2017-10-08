@@ -12,7 +12,7 @@ function private.FrameXML.ActionBarController()
     --private.FrameXML.MultiActionBars()
     --private.FrameXML.OverrideActionBar()
     --private.FrameXML.StanceBar()
-    --private.FrameXML.ExtraActionBar()
+    private.FrameXML.ExtraActionBar()
     --private.FrameXML.PossessActionBar()
 
     --[[ FrameXML\ActionBarController ]]--

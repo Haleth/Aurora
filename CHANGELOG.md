@@ -1,4 +1,8 @@
 ## [Unreleased] ##
+### Changed ###
+
+  * Added ExtraActionBar skin.
+
 ### Fixed ###
 
   * An error may occor when opening the Reagent Bank.

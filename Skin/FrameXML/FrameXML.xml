@@ -20,6 +20,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="ContainerFrame.lua"/>
     <Script file="DressUpFrames.lua"/>
     <Script file="EquipmentFlyout.lua"/>
+    <Script file="ExtraActionBar.lua"/>
     <Script file="FloatingChatFrame.lua"/>
     <Script file="FloatingGarrisonFollowerTooltip.lua"/>
     <Script file="FloatingPetBattleTooltip.lua"/>
