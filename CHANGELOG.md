@@ -2,11 +2,13 @@
 ### Changed ###
 
   * Added ExtraActionBar skin.
+  * Updated PvP score frame skin.
 
 ### Fixed ###
 
-  * An error may occor when opening the Reagent Bank.
+  * An error may occur when opening the Reagent Bank.
   * A minor conflict with Bagnon.
+  * An error may occur while in Silvershard Mines.
 
 
 

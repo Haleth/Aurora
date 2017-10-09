@@ -105,6 +105,7 @@ do -- Base.SetBackdrop
         old_SetBackdrop(frame, nil)
         if options then
             if not frame._auroraBackdrop then
+
                 frame._auroraBackdrop = {
                     bg = frame:CreateTexture(nil, "BACKGROUND", nil, -8),
 
@@ -117,6 +118,9 @@ do -- Base.SetBackdrop
                     tr = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
                     bl = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
                     br = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
+
+                    borderLayer = "BACKGROUND",
+                    borderSublevel = -7,
                 }
             end
             local bd = frame._auroraBackdrop
@@ -264,6 +268,26 @@ do -- Base.SetBackdrop
             return bd.borderRed, bd.borderGreen, bd.borderBlue, bd.borderAlpha
         end
     end
+    local function SetBackdropBorderLayer(frame, layer, sublevel)
+        local bd = frame._auroraBackdrop
+        bd.l:SetDrawLayer(layer, sublevel)
+        bd.r:SetDrawLayer(layer, sublevel)
+        bd.t:SetDrawLayer(layer, sublevel)
+        bd.b:SetDrawLayer(layer, sublevel)
+
+        bd.tl:SetDrawLayer(layer, sublevel)
+        bd.tr:SetDrawLayer(layer, sublevel)
+        bd.bl:SetDrawLayer(layer, sublevel)
+        bd.br:SetDrawLayer(layer, sublevel)
+
+        bd.borderLayer = layer
+        bd.borderSublevel = sublevel
+    end
+    local function GetBackdropBorderLayer(frame)
+        if frame._auroraBackdrop then
+            return frame._auroraBackdrop.borderLayer, frame._auroraBackdrop.borderSublevel
+        end
+    end
     local function GetBackdropTexture(frame, texture)
         if frame._auroraBackdrop then
             return frame._auroraBackdrop[texture]
@@ -277,6 +301,8 @@ do -- Base.SetBackdrop
         frame.GetBackdropColor = GetBackdropColor
         frame.SetBackdropBorderColor = SetBackdropBorderColor
         frame.GetBackdropBorderColor = GetBackdropBorderColor
+        frame.SetBackdropBorderLayer = SetBackdropBorderLayer
+        frame.GetBackdropBorderLayer = GetBackdropBorderLayer
         frame.GetBackdropTexture = GetBackdropTexture
 
         frame:SetBackdrop(backdrop)
