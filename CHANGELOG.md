@@ -6,9 +6,10 @@
 
 ### Fixed ###
 
-  * An error may occur when opening the Reagent Bank.
-  * A minor conflict with Bagnon.
-  * An error may occur while in Silvershard Mines.
+  * Opening the Reagent Bank with a quest item in it would produce an error.
+  * Bagnon item buttons would be darker than usual.
+  * Controlling two carts at once in Silvershard Mines would produce an error.
+  * An error would occur for some users with very high resolutions.
 
 
 

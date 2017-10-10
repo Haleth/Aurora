@@ -512,10 +512,18 @@ do -- Base.SetTexture
         return not not snapshots[textureName]
     end
 
+    local function IsSnapshotValid(id)
+        private.debug("IsSnapshotValid", id)
+        if not id then
+            return false
+        else
+            return SnapshotFrame:IsSnapshotValid(id)
+        end
+    end
     function Base.SetTexture(texture, textureName, useTextureSize)
         local snapshot = snapshots[textureName]
         _G.assert(snapshot, textureName .. " is not a registered texture.")
-        if not snapshot.id or not (snapshot.id and SnapshotFrame:IsSnapshotValid(snapshot.id)) then
+        if not IsSnapshotValid(snapshot.id) then
             snapshot.create(textureFrame)
             local width, height = textureFrame:GetSize()
 
