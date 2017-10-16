@@ -1,4 +1,4 @@
-## [Unreleased] ##
+## [v7.3.0.5] - 2017-10-16 ##
 ### Changed ###
 
   * Added ExtraActionBar skin.
@@ -10,6 +10,7 @@
   * Bagnon item buttons would be darker than usual.
   * Controlling two carts at once in Silvershard Mines would produce an error.
   * An error would occur for some users with very high resolutions.
+  * The reputation frame may produce an error if there are not enough factions to list.
 
 
 
@@ -100,4 +101,5 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[v7.3.0.5]: https://github.com/Haleth/Aurora/compare/v7.3.0.4...v7.3.0.5
 [v7.3.0.4]: https://github.com/Haleth/Aurora/compare/v7.3.0.3...v7.3.0.4
