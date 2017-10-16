@@ -5,7 +5,6 @@ local select = _G.select
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local _, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\PaperDollFrame.lua ]]
@@ -66,7 +65,8 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
     function Skin.GearSetPopupButtonTemplate(checkbutton)
         Skin.SimplePopupButtonTemplate(checkbutton)
         Base.CropIcon(_G[checkbutton:GetName().."Icon"], checkbutton)
-        checkbutton:SetCheckedTexture(C.media.checked)
+        Base.CropIcon(checkbutton:GetHighlightTexture())
+        Base.CropIcon(checkbutton:GetCheckedTexture())
     end
     function Skin.PaperDollSidebarTabTemplate(button)
         button.TabBg:SetAlpha(0)
