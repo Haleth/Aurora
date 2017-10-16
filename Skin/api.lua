@@ -524,11 +524,17 @@ do -- Base.SetTexture
         local snapshot = snapshots[textureName]
         _G.assert(snapshot, textureName .. " is not a registered texture.")
         if not IsSnapshotValid(snapshot.id) then
+            private.debug("Create snapshot", textureName)
             snapshot.create(textureFrame)
             local width, height = textureFrame:GetSize()
 
             SnapshotFrame:Show()
-            local id = SnapshotFrame:TakeSnapshot()
+            local rep, id = 0
+            repeat
+                id = SnapshotFrame:TakeSnapshot()
+                rep = rep + 1
+            until id
+            private.debug("snapshot taken", rep, id)
             SnapshotFrame:Hide()
             textureFrame:ReleaseAll()
 
@@ -543,7 +549,7 @@ do -- Base.SetTexture
         if useTextureSize then
             texture:SetSize(snapshot.width, snapshot.height)
         end
-        private.debug("ApplySnapshot", textureName, texture, snapshot.id)
+        private.debug("ApplySnapshot", texture, snapshot.id)
         SnapshotFrame:ApplySnapshot(texture, snapshot.id)
         texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
     end
