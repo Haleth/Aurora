@@ -29,7 +29,8 @@ do --[[ FrameXML\ReputationFrame.lua ]]
             local factionRow = _G[factionRowName]
             local factionButton = _G[factionRowName.."ExpandOrCollapseButton"]
             local factionBackground = _G[factionRowName.."Background"]
-            local _, _, _, _, _, _, atWarWith = _G.GetFactionInfo(factionRow.index)
+
+            if not factionRow.index then return end
 
             if factionRow.isCollapsed then
                 factionButton:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up")
@@ -37,6 +38,7 @@ do --[[ FrameXML\ReputationFrame.lua ]]
                 factionButton:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up")
             end
 
+            local _, _, _, _, _, _, atWarWith = _G.GetFactionInfo(factionRow.index)
             if atWarWith then
                 factionBackground:SetColorTexture(0.6, 0.2, 0.2)
             else
