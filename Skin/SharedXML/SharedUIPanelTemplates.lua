@@ -166,23 +166,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
 
-        button._auroraHighlight = {}
-        local lineOfs = 4
-        for i = 1, 2 do
-            local line = button:CreateLine()
-            line:SetColorTexture(1, 1, 1)
-            line:SetThickness(0.7)
-            if i == 1 then
-                line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
-                line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
-            else
-                line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-                line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-            end
-            _G.tinsert(button._auroraHighlight, line)
-        end
+        local cross = button:CreateTexture(nil, "ARTWORK")
+        cross:SetPoint("TOPLEFT", 4, -4)
+        cross:SetPoint("BOTTOMRIGHT", -4, 4)
+        Base.SetTexture(cross, "lineCross")
 
-        Base.SetHighlight(button, "color")
+        button._auroraHighlight = {cross}
+        Base.SetHighlight(button, "texture")
     end
     function Skin.UIPanelButtonTemplate(button)
         button.Left:SetAlpha(0)

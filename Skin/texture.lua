@@ -4,6 +4,26 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 
+do -- lines
+    Base.RegisterTexture("lineCross", function(frame)
+        frame:SetSize(256, 256)
+
+        for i = 1, 2 do
+            local line = frame:CreateLine(nil, "BACKGROUND")
+            line:SetColorTexture(1, 1, 1)
+            line:SetThickness(10)
+            line:Show(1)
+            if i == 1 then
+                line:SetStartPoint("TOPLEFT")
+                line:SetEndPoint("BOTTOMRIGHT")
+            else
+                line:SetStartPoint("TOPRIGHT")
+                line:SetEndPoint("BOTTOMLEFT")
+            end
+        end
+    end)
+end
+
 do -- arrows
     local size = 64
     local offset = size / 2
@@ -121,18 +141,25 @@ end
 Base.RegisterTexture("test", function(frame)
     frame:SetSize(256, 256)
 
-    local line1 = frame:CreateLine()
-    line1:SetThickness(5)
-    line1:SetColorTexture(1, 1, 1)
-    line1:SetStartPoint("TOPLEFT")
-    line1:SetEndPoint("BOTTOMRIGHT")
-    line1:Show()
+    for i = 1, 2 do
+        local line = frame:CreateLine(nil, "BACKGROUND")
+        line:SetColorTexture(1, 1, 1)
+        line:SetThickness(10)
+        line:Show(1)
+        if i == 1 then
+            line:SetStartPoint("TOPLEFT")
+            line:SetEndPoint("BOTTOMRIGHT")
+        else
+            line:SetStartPoint("TOPRIGHT")
+            line:SetEndPoint("BOTTOMLEFT")
+        end
+    end
 end)
 
 local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")
 snapshot:SetPoint("CENTER")
 snapshot:SetSize(16, 16)
-Base.SetTexture(snapshot, "gradientLeft", true)
+Base.SetTexture(snapshot, "test", true)
 Base.SetTexture(snapshot, "roleDAMAGER", true)
 Base.SetTexture(snapshot, "gradientUp", true)
 Base.SetTexture(snapshot, "arrowLeft", true)
