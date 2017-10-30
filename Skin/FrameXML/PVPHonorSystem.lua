@@ -20,7 +20,7 @@ do --[[ FrameXML\PVPHonorSystem.lua ]]
 
         self.Bar.Spark:Hide()
 
-        if not self.rewardInfo.texCoords then
+        if self.rewardInfo and not self.rewardInfo.texCoords then
             Base.CropIcon(self.NextAvailable.Icon)
         end
     end
