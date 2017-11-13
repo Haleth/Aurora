@@ -512,34 +512,44 @@ do -- Base.SetTexture
         return not not snapshots[textureName]
     end
 
+    local useSnapshots = true
     function Base.SetTexture(texture, textureName, useTextureSize)
         local snapshot = snapshots[textureName]
         _G.assert(snapshot, textureName .. " is not a registered texture.")
-        if not snapshot.id or not SnapshotFrame:IsSnapshotValid(snapshot.id) then
-            snapshot.create(textureFrame)
-            local width, height = textureFrame:GetSize()
 
-            SnapshotFrame:Show()
-            local id = SnapshotFrame:TakeSnapshot()
-            SnapshotFrame:Hide()
-            textureFrame:ReleaseAll()
+        if useSnapshots then
+            if not snapshot.id or not SnapshotFrame:IsSnapshotValid(snapshot.id) then
+                snapshot.create(textureFrame)
+                local width, height = textureFrame:GetSize()
 
-            local snapshotWidth, snapshotHeight = SnapshotFrame:GetSize()
+                SnapshotFrame:Show()
+                local id = SnapshotFrame:TakeSnapshot()
+                SnapshotFrame:Hide()
+                textureFrame:ReleaseAll()
 
-            snapshot.id = id
-            snapshot.width = width
-            snapshot.height = height
-            snapshot.x = width / snapshotWidth
-            snapshot.y = height / snapshotHeight
+                local snapshotWidth, snapshotHeight = SnapshotFrame:GetSize()
 
-            if not snapshot.id then return end
+                snapshot.id = id
+                snapshot.width = width
+                snapshot.height = height
+                snapshot.x = width / snapshotWidth
+                snapshot.y = height / snapshotHeight
+
+                if not snapshot.id then
+                    private.debug("No snapshots")
+                    useSnapshots = false
+                    return snapshot.create(texture:GetParent(), texture)
+                end
+            end
+            if useTextureSize then
+                texture:SetSize(snapshot.width, snapshot.height)
+            end
+            private.debug("ApplySnapshot", texture, snapshot.id)
+            SnapshotFrame:ApplySnapshot(texture, snapshot.id)
+            texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
+        else
+            snapshot.create(texture:GetParent(), texture)
         end
-        if useTextureSize then
-            texture:SetSize(snapshot.width, snapshot.height)
-        end
-        private.debug("ApplySnapshot", texture, snapshot.id)
-        SnapshotFrame:ApplySnapshot(texture, snapshot.id)
-        texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
     end
 
     function Base.RegisterTexture(textureName, createFunc)

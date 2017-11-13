@@ -455,11 +455,11 @@ end
 F.ReskinFilterButton = function(f, direction)
     F.ReskinStretchButton(f)
 
-    direction = direction or "Right"
-    Base.SetTexture(f.Icon, "arrow"..direction)
-
     f.Icon:SetPoint("RIGHT", -7, 0)
     f.Icon:SetSize(4, 8)
+
+    direction = direction or "Right"
+    Base.SetTexture(f.Icon, "arrow"..direction)
 end
 
 F.ReskinNavBar = function(f)
