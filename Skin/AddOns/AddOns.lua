@@ -10,7 +10,8 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base, Scale = Aurora.Base, Aurora.Scale
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ AddOns\Blizzard_FileUI.lua ]]
 end

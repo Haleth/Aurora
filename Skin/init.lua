@@ -15,6 +15,8 @@ private.disabled = {
     mainmenubar = false,
 }
 
+private.uiScale = 1
+
 local classLocale, class, classID = _G.UnitClass("player")
 private.charClass = {
     locale = classLocale,
@@ -83,66 +85,82 @@ end
 
 local Aurora = {
     Base = private.CreateAPI({}),
+    Scale = private.CreateAPI({}),
     Hook = private.CreateAPI({}),
     Skin = private.CreateAPI({}),
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
 
-
+local disableUIScale = true
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
+eventFrame:RegisterEvent("UI_SCALE_CHANGED")
 eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if addonName == private.host then
-        -- Setup function for the host addon
-        if private.host ~= ADDON_NAME then
-            _G[private.OnLoad](private)
-        else
-            private.OnLoad()
-        end
-
-        if _G.AuroraConfig then
-            Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
-        end
-
-        -- Skin FrameXML
-        for i = 1, #private.FrameXML do
-            local file, isShared = _G.strsplit(".", private.FrameXML[i])
-            local fileList = private.FrameXML
-            if isShared then
-                file = isShared
-                fileList = private.SharedXML
-            end
-            if fileList[file] then
-                fileList[file]()
-            end
-        end
-
-        -- Skin prior loaded AddOns
-        for addon, func in _G.next, private.AddOns do
-            local loaded = _G.IsAddOnLoaded(addon)
-            if loaded then
-                func()
-            end
-        end
-
-        private.isLoaded = true
+    if event == "UI_SCALE_CHANGED" then
+        private.UpdateUIScale()
     else
-        -- Skin AddOn
-        local addonModule = private.AddOns[addonName]
-        if addonModule then
-            addonModule()
-        end
-    end
+        if addonName == private.host then
+            -- Disable UI scaling until we finish rewriting the skins
+            if disableUIScale then
+                private.uiScale = nil
+                function Aurora.Scale.Value(value)
+                    return value
+                end
+            end
 
-    -- Load deprected themes
-    local addonModule = Aurora[2].themes[addonName]
-    if addonModule then
-        if _G.type(addonModule) == "function" then
-            addonModule()
+            -- Setup function for the host addon
+            if private.host ~= ADDON_NAME then
+                _G[private.OnLoad](private)
+            else
+                private.OnLoad()
+            end
+
+            private.UpdateUIScale()
+
+            if _G.AuroraConfig then
+                Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
+            end
+
+            -- Skin FrameXML
+            for i = 1, #private.FrameXML do
+                local file, isShared = _G.strsplit(".", private.FrameXML[i])
+                local fileList = private.FrameXML
+                if isShared then
+                    file = isShared
+                    fileList = private.SharedXML
+                end
+                if fileList[file] then
+                    fileList[file]()
+                end
+            end
+
+            -- Skin prior loaded AddOns
+            for addon, func in _G.next, private.AddOns do
+                local loaded = _G.IsAddOnLoaded(addon)
+                if loaded then
+                    func()
+                end
+            end
+
+            private.isLoaded = true
         else
-            for _, moduleFunc in _G.next, addonModule do
-                moduleFunc()
+            -- Skin AddOn
+            local addonModule = private.AddOns[addonName]
+            if addonModule then
+                addonModule()
+            end
+        end
+
+        -- Load deprected themes
+        local addonModule = Aurora[2].themes[addonName]
+        if addonModule then
+            if _G.type(addonModule) == "function" then
+                addonModule()
+            else
+                for _, moduleFunc in _G.next, addonModule do
+                    moduleFunc()
+                end
             end
         end
     end
