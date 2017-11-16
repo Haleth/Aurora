@@ -19,7 +19,7 @@ do -- lines
             local line = frame:CreateLine(nil, "BACKGROUND")
             line:SetColorTexture(1, 1, 1)
             line:SetThickness(texture and 1 or 10)
-            line:Show(1)
+            line:Show()
             if i == 1 then
                 line:SetStartPoint("TOPLEFT", anchor)
                 line:SetEndPoint("BOTTOMRIGHT", anchor)

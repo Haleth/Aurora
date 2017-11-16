@@ -322,7 +322,7 @@ do -- Base API
             if not fontObj then return end
 
             if not private.disabled.fonts then
-                fontObj:SetFont(fontPath, fontSize, fontStyle)
+                fontObj:SetFont(fontPath, Scale.Value(fontSize), fontStyle)
             end
 
             if _G.type(fontColor) == "table" then
@@ -335,7 +335,7 @@ do -- Base API
                 fontObj:SetShadowColor(shadowColor[1], shadowColor[2], shadowColor[3], shadowColor[4])
             end
             if shadowX and shadowY then
-                fontObj:SetShadowOffset(shadowX, shadowY)
+                fontObj:SetShadowOffset(Scale.Value(shadowX), Scale.Value(shadowY))
             end
         end
     end
@@ -545,7 +545,6 @@ do -- Base API
                 if useTextureSize then
                     texture:SetSize(snapshot.width, snapshot.height)
                 end
-                private.debug("ApplySnapshot", texture, snapshot.id)
                 SnapshotFrame:ApplySnapshot(texture, snapshot.id)
                 texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
             else
@@ -572,9 +571,8 @@ do -- Scale API
 
         -- Set UI scale modifier
         local pysWidth, pysHeight = _G.GetPhysicalScreenSize()
-        private.debug("physical size", pysWidth, pysHeight)
-
         uiMod = (pysHeight / 768) * (private.uiScale or 1)
+        private.debug("physical size", pysWidth, pysHeight)
         private.debug("uiMod", uiMod)
 
         -- Calculate current UI scale
@@ -600,7 +598,6 @@ do -- Scale API
         return floor((value * uiMod) * mult + 0.5) / mult
     end
 
-    -- Aurora.Scale.Size(UIParent, 25, 25)
     function Scale.Size(self, width, height)
         if not (width and height) then
             width, height = self:GetSize()
@@ -614,6 +611,7 @@ do -- Scale API
         end
         return self:SetHeight(Scale.Value(height))
     end
+
     function Scale.Width(self, width)
         if not (width) then
             width = self:GetWidth()
@@ -621,43 +619,24 @@ do -- Scale API
         return self:SetWidth(Scale.Value(width))
     end
 
-    function Scale.Point(self, point, relTo, relPoint, xOfs, yOfs)
-        private.debug(self:GetName(), "SetPoint", point, relTo, relPoint, xOfs, yOfs)
-        if not point or _G.type(point) == "number" then
-            point, relTo, relPoint, xOfs, yOfs = self:GetPoint(point)
+    function Scale.Point(self, ...)
+        if self.debug then
+            private.debug("Scale.Point raw args", ...)
         end
-        if relTo and _G.type(relTo) ~= "number" then
-            relPoint = relPoint or point
-        elseif _G.type(relTo) == "number" and _G.type(relPoint) == "number" then
-            relTo, relPoint, xOfs, yOfs = nil, nil, relTo, relPoint
-        end
-        private.debug(self:GetName(), "SetPoint post", point, relTo, relPoint, xOfs, yOfs)
-        if relTo and relPoint then
-            if xOfs and yOfs then
-                private.debug(self:GetName(), "SetPoint full")
-                return self:SetPoint(point, relTo, relPoint, Scale.Value(xOfs), Scale.Value(yOfs))
-            else
-                private.debug(self:GetName(), "SetPoint relative")
-                return self:SetPoint(point, relTo, relPoint)
-            end
+        local args
+        if not ... then
+            args = {self:GetPoint()}
         else
-            if xOfs and yOfs then
-                private.debug(self:GetName(), "SetPoint offset")
-                return self:SetPoint(point, Scale.Value(xOfs), Scale.Value(yOfs))
-            else
-                private.debug(self:GetName(), "SetPoint point")
-                return self:SetPoint(point)
+            args = {...}
+        end
+        for i = 1, #args do
+            if _G.type(args[i]) == "number" then
+                args[i] = Scale.Value(args[i])
             end
         end
-    end
-    function Scale.Font(self, fontFile, fontSize, fontFlags)
-        local xOfs, yOfs = self:GetShadowOffset()
-        if xOfs > 0 or yOfs > 0 then
-            self:SetShadowOffset(Scale.Value(xOfs), Scale.Value(yOfs))
+        if self.debug then
+            private.debug("Scale.Point final args", _G.unpack(args))
         end
-        if not (fontFile and fontSize) then
-            fontFile, fontSize, fontFlags = self:GetFont()
-        end
-        return self:SetFont(fontFile, Scale.Value(fontSize), fontFlags)
+        self:SetPoint(_G.unpack(args))
     end
 end
