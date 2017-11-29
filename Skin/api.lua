@@ -224,10 +224,16 @@ do -- Base API
                 bd.bgGreen = green
                 bd.bgBlue = blue
                 bd.bgAlpha = alpha
-                if bd.bg:GetTexture():find("Color%-") then
-                    bd.bg:SetColorTexture(red, green, blue, alpha)
+
+                local tex = bd.bg:GetTexture()
+                if tex then
+                    if tex:find("Color%-") then
+                        bd.bg:SetColorTexture(red, green, blue, alpha)
+                    else
+                        bd.bg:SetVertexColor(red, green, blue, alpha)
+                    end
                 else
-                    bd.bg:SetVertexColor(red, green, blue, alpha)
+                    private.debug("SetBackdropColor no texture", frame:GetName(), tex)
                 end
             end
         end
@@ -244,22 +250,28 @@ do -- Base API
                 bd.borderGreen = green
                 bd.borderBlue = blue
                 bd.borderAlpha = alpha
-                if bd.t:GetTexture():find("Color%-") then
-                    for side, info in next, sides do
-                        bd[side]:SetColorTexture(red, green, blue, alpha)
-                    end
 
-                    for corner, info in next, corners do
-                        bd[corner]:SetColorTexture(red, green, blue, alpha)
+                local tex = bd.t:GetTexture()
+                if tex then
+                    if tex:find("Color%-") then
+                        for side, info in next, sides do
+                            bd[side]:SetColorTexture(red, green, blue, alpha)
+                        end
+
+                        for corner, info in next, corners do
+                            bd[corner]:SetColorTexture(red, green, blue, alpha)
+                        end
+                    else
+                        for side, info in next, sides do
+                            bd[side]:SetVertexColor(red, green, blue, alpha)
+                        end
+
+                        for corner, info in next, corners do
+                            bd[corner]:SetVertexColor(red, green, blue, alpha)
+                        end
                     end
                 else
-                    for side, info in next, sides do
-                        bd[side]:SetVertexColor(red, green, blue, alpha)
-                    end
-
-                    for corner, info in next, corners do
-                        bd[corner]:SetVertexColor(red, green, blue, alpha)
-                    end
+                    private.debug("SetBackdropBorderColor no texture", frame:GetName(), tex)
                 end
             end
         end
