@@ -24,6 +24,7 @@ private.charClass = {
     id = classID,
 }
 
+private.disableUIScale = true
 function private.nop() end
 local debug do
     if _G.LibStub then
@@ -92,7 +93,6 @@ local Aurora = {
 private.Aurora = Aurora
 _G.Aurora = Aurora
 
-local disableUIScale = true
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("UI_SCALE_CHANGED")
@@ -102,7 +102,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
     else
         if addonName == private.host then
             -- Disable UI scaling until we finish rewriting the skins
-            if disableUIScale then
+            if private.disableUIScale then
                 private.uiScale = nil
                 function Aurora.Scale.Value(value)
                     return value

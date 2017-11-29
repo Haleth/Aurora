@@ -604,6 +604,7 @@ do -- Scale API
         end
         uiScaleChanging = false
     end
+    private.UpdateUIScale()
 
     function Scale.Value(value, getFloat)
         local mult = getFloat and 100 or 1
@@ -631,24 +632,43 @@ do -- Scale API
         return self:SetWidth(Scale.Value(width))
     end
 
-    function Scale.Point(self, ...)
+    function Scale.Thickness(self, thickness)
+        if not (thickness) then
+            thickness = self:GetThickness()
+        end
+        return self:SetThickness(Scale.Value(thickness))
+    end
+
+    function Scale.Args(self, method, ...)
         if self.debug then
-            private.debug("Scale.Point raw args", ...)
+            private.debug("raw args", method, ...)
         end
         local args
-        if not ... then
-            args = {self:GetPoint()}
-        else
+        if ... then
             args = {...}
+        else
+            args = {self["Get"..method](self)}
         end
+
         for i = 1, #args do
             if _G.type(args[i]) == "number" then
                 args[i] = Scale.Value(args[i])
             end
         end
         if self.debug then
-            private.debug("Scale.Point final args", _G.unpack(args))
+            private.debug("final args", method, _G.unpack(args))
         end
-        self:SetPoint(_G.unpack(args))
+        return args
+    end
+
+    function Scale.Point(self, ...)
+        self:SetPoint(_G.unpack(Scale.Args(self, "Point", ...)))
+    end
+
+    function Scale.EndPoint(self, ...)
+        self:SetEndPoint(_G.unpack(Scale.Args(self, "EndPoint", ...)))
+    end
+    function Scale.StartPoint(self, ...)
+        self:SetStartPoint(_G.unpack(Scale.Args(self, "StartPoint", ...)))
     end
 end
