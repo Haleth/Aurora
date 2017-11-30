@@ -7,7 +7,6 @@ private.API_MAJOR, private.API_MINOR = 8, 0
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
 
-private.host = ADDON_NAME
 private.disabled = {
     bags = false,
     fonts = false,
@@ -100,7 +99,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
     if event == "UI_SCALE_CHANGED" then
         private.UpdateUIScale()
     else
-        if addonName == private.host then
+        if addonName == ADDON_NAME then
             -- Disable UI scaling until we finish rewriting the skins
             if private.disableUIScale then
                 private.uiScale = nil
@@ -110,12 +109,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
             end
 
             -- Setup function for the host addon
-            if private.host ~= ADDON_NAME then
-                _G[private.OnLoad](private)
-            else
-                private.OnLoad()
-            end
-
+            private.OnLoad()
             private.UpdateUIScale()
 
             if _G.AuroraConfig then

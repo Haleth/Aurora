@@ -1,19 +1,7 @@
-local ADDON_NAME, private = ...
+local _, private = ...
 
 -- [[ Lua Globals ]]
 -- luacheck: globals next type
-
-if ADDON_NAME == "Aurora" then
-    local character = _G.UnitName("player")
-    for i = 1, _G.GetNumAddOns() do
-        local meta = _G.GetAddOnMetadata(i, "X-Aurora-Host")
-        if meta and _G.GetAddOnEnableState(character , i) > 0 then
-            private.host = _G.GetAddOnInfo(i)
-            private.OnLoad = meta
-            return
-        end
-    end
-end
 
 -- [[ Core ]]
 local Aurora = private.Aurora

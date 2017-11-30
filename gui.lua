@@ -1,6 +1,4 @@
-local ADDON_NAME, private = ...
-
-if private.host ~= ADDON_NAME then return end
+local _, private = ...
 
 -- [[ Lua Globals ]]
 local next, ipairs = _G.next, _G.ipairs
