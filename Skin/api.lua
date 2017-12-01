@@ -639,36 +639,47 @@ do -- Scale API
         return self:SetThickness(Scale.Value(thickness))
     end
 
-    function Scale.Args(self, method, ...)
-        if self.debug then
-            private.debug("raw args", method, ...)
-        end
-        local args
-        if ... then
-            args = {...}
-        else
-            args = {self["Get"..method](self)}
-        end
-
-        for i = 1, #args do
-            if _G.type(args[i]) == "number" then
-                args[i] = Scale.Value(args[i])
+    local ScaleArgs do
+        local function pack(t, ...)
+            for i = 1, _G.select("#", ...) do
+                t[i] = _G.select(i, ...)
             end
         end
-        if self.debug then
-            private.debug("final args", method, _G.unpack(args))
+
+        local args = {}
+        function ScaleArgs(self, method, ...)
+            if self.debug then
+                private.debug("raw args", method, ...)
+            end
+            _G.wipe(args)
+            --[[ This function gets called A LOT, so we recycle this table
+                to reduce needless garbage creation.]]
+            if ... then
+                pack(args, ...)
+            else
+                pack(args, self["Get"..method](self))
+            end
+
+            for i = 1, #args do
+                if _G.type(args[i]) == "number" then
+                    args[i] = Scale.Value(args[i])
+                end
+            end
+            if self.debug then
+                private.debug("final args", method, _G.unpack(args))
+            end
+            return args
         end
-        return args
     end
 
     function Scale.Point(self, ...)
-        self:SetPoint(_G.unpack(Scale.Args(self, "Point", ...)))
+        self:SetPoint(_G.unpack(ScaleArgs(self, "Point", ...)))
     end
 
     function Scale.EndPoint(self, ...)
-        self:SetEndPoint(_G.unpack(Scale.Args(self, "EndPoint", ...)))
+        self:SetEndPoint(_G.unpack(ScaleArgs(self, "EndPoint", ...)))
     end
     function Scale.StartPoint(self, ...)
-        self:SetStartPoint(_G.unpack(Scale.Args(self, "StartPoint", ...)))
+        self:SetStartPoint(_G.unpack(ScaleArgs(self, "StartPoint", ...)))
     end
 end
