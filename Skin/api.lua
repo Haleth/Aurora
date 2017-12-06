@@ -579,7 +579,7 @@ do -- Scale API
     local uiScaleChanging = false
     local uiMod, pixelScale
     function private.UpdateUIScale()
-        if uiScaleChanging then return end
+        if private.disableUIScale or uiScaleChanging then return end
 
         -- Set UI scale modifier
         local pysWidth, pysHeight = _G.GetPhysicalScreenSize()
