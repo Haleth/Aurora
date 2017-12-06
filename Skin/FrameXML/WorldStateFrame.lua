@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-do --[[ FrameXML\File.lua ]]
+do --[[ FrameXML\WorldStateFrame.lua ]]
     function Hook.CaptureBar_Create(id)
         Skin.WorldStateCaptureBarTemplate(_G["WorldStateCaptureBar"..id])
      end
@@ -29,12 +29,21 @@ do --[[ FrameXML\File.lua ]]
      end
 end
 
-do --[[ FrameXML\File.xml ]]
+do --[[ FrameXML\WorldStateFrame.xml ]]
     function Skin.WorldStateScoreTemplate(frame)
+        frame.factionLeft:ClearAllPoints()
+        frame.factionLeft:SetPoint("TOPLEFT", 20, -1)
+        frame.factionLeft:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", 0, 1)
         frame.factionLeft:SetTexture([[Interface\Buttons\WHITE8x8]])
         frame.factionLeft:SetBlendMode("ADD")
+        frame.factionLeft:SetAlpha(0.8)
+
+        frame.factionRight:ClearAllPoints()
+        frame.factionRight:SetPoint("TOPLEFT", frame.factionLeft, "TOPRIGHT", 0, 0)
+        frame.factionRight:SetPoint("BOTTOMRIGHT", 0, 1)
         frame.factionRight:SetTexture([[Interface\Buttons\WHITE8x8]])
         frame.factionRight:SetBlendMode("ADD")
+        frame.factionRight:SetAlpha(0.8)
     end
     function Skin.WorldStateCaptureBarTemplate(frame)
         frame.BarBackground:Hide()

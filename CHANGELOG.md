@@ -1,4 +1,12 @@
 ## [Unreleased] ##
+### Changed ###
+
+  * Added ExtraActionBar skin.
+  * Tweak PvP score frame skin.
+
+### Fixed ###
+
+  * Added a workaround if ApplySnapshot fails.
 
 
 
