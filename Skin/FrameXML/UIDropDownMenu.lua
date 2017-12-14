@@ -123,7 +123,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         _G[name.."Right"]:SetAlpha(0)
 
         local button = frame.Button
-        button:SetSize(18, 18)
+        button:SetSize(20, 20)
         button:ClearAllPoints()
         button:SetPoint("TOPRIGHT", _G[name.."Right"], -19, -21)
 
@@ -139,17 +139,33 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
 
         local arrow = button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 4, -7)
-        arrow:SetPoint("BOTTOMRIGHT", -5, 6)
+        arrow:SetPoint("BOTTOMRIGHT", -4, 7)
         Base.SetTexture(arrow, "arrowDown")
 
         button._auroraHighlight = {arrow}
         Base.SetHighlight(button, "texture")
 
         local bg = _G.CreateFrame("Frame", nil, frame)
-        bg:SetPoint("BOTTOMRIGHT", button, "BOTTOMLEFT", 1, 0)
-        bg:SetPoint("TOPLEFT", 20, -4)
+        bg:SetPoint("TOPLEFT", _G[name.."Left"], 20, -21)
+        bg:SetPoint("BOTTOMRIGHT", _G[name.."Right"], -19, 23)
         bg:SetFrameLevel(frame:GetFrameLevel())
         Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
+
+
+        --[[Scale]]
+        if not frame.noResize then
+            frame:SetWidth(40)
+            _G[name.."Middle"]:SetWidth(115)
+        end
+        frame:SetHeight(32)
+
+        _G[name.."Left"]:SetSize(25, 64)
+        _G[name.."Left"]:SetPoint("TOPLEFT", 0, 17)
+        _G[name.."Middle"]:SetHeight(64)
+        _G[name.."Right"]:SetSize(25, 64)
+
+        frame.Text:SetSize(0, 10)
+        frame.Text:SetPoint("RIGHT", _G[name.."Right"], -43, 2)
     end
 end
 

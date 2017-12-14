@@ -252,6 +252,30 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Base.SetBackdrop(frame)
     end
 
+    function Skin.UIMenuButtonStretchTemplate(button)
+        button:SetSize(button:GetSize())
+
+        button.TopLeft:Hide()
+        button.TopRight:Hide()
+        button.BottomLeft:Hide()
+        button.BottomRight:Hide()
+        button.TopMiddle:Hide()
+        button.MiddleLeft:Hide()
+        button.MiddleRight:Hide()
+        button.BottomMiddle:Hide()
+        button.MiddleMiddle:Hide()
+        button:SetHighlightTexture("")
+
+        local bd = _G.CreateFrame("Frame", nil, button)
+        bd:SetPoint("TOPLEFT", 1, -1)
+        bd:SetPoint("BOTTOMRIGHT", -1, 1)
+        bd:SetFrameLevel(button:GetFrameLevel())
+        Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
+
+        button._auroraBDFrame = bd
+        Base.SetHighlight(button, "backdrop")
+    end
+
     function Skin.UIPanelScrollBarButton(button)
         button:SetSize(17, 17)
         button:SetNormalTexture("")

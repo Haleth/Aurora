@@ -1,7 +1,7 @@
 ## [Unreleased] ##
 ### Changed ###
 
-  * Added ExtraActionBar skin.
+  * Added RaidFrameManager skin.
   * Tweak PvP score frame skin.
 
 ### Fixed ###

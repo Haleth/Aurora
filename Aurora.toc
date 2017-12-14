@@ -3,6 +3,7 @@
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
 ## Version: 7.3.0.5
+## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
