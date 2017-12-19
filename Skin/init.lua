@@ -5,7 +5,7 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 8, 0
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.is730 = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
+private.isPatch = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 5)
 
 private.disabled = {
     bags = false,

@@ -215,6 +215,7 @@ local FrameXML = {
     "ArtifactToasts",
     "SharedXML.ModelPreviewFrame",
     "SplashFrame",
+    "QuestChoiceFrameMixin",
 
     -- Save off whatever we need available unmodified.
     "SecureCapsule",

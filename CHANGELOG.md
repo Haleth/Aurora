@@ -1,6 +1,7 @@
 ## [Unreleased] ##
 ### Changed ###
 
+  * Updated QuestChoiceFrame skin.
   * Added RaidFrameManager skin.
   * Tweak PvP score frame skin.
 
