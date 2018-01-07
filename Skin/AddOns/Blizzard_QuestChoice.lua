@@ -6,7 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 local F = _G.unpack(Aurora)
 
@@ -38,6 +38,7 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         frame.Item:SetPoint("TOPLEFT", 30, -5)
         frame._auroraNoSetHeight = true
     end
+
     function Skin.QuestChoiceOptionTemplate(button)
         button.Artwork:SetTexCoord(0.140625, 0.84375, 0.2265625, 0.78125)
         button.Artwork:ClearAllPoints()
@@ -49,32 +50,28 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
 
         button.Header.Background:Hide()
         button.Header.Text:SetTextColor(.9, .9, .9)
-
-        button.OptionText:SetText("Text")
         button.OptionText:SetTextColor(.9, .9, .9)
-        button.OptionText:SetPoint("LEFT", 5, 0)
-        button.OptionText:SetPoint("RIGHT", -5, 0)
-        button.OptionText:SetPoint("TOP", button.Artwork, "BOTTOM", 0, -37)
-        button.OptionText:SetPoint("BOTTOM", button.Rewards, "TOP", 0, 35)
 
         --[[ Scale ]]--
         button:SetSize(210, 268)
         button.OptionButton:SetSize(175, 22)
-        local oldGetContentHeight =  button.OptionText.GetContentHeight
-        function button.OptionText:GetContentHeight()
-            return Scale.Value(oldGetContentHeight(self))
-        end
         button.Rewards:SetPoint("BOTTOM", button.OptionButton, "TOP", 0, 5)
-
-        button._auroraNoSetHeight = true
-        button._auroraNoSetPoint = true
-        button.OptionText._auroraNoSetWidth = true
+        button.Header:SetSize(256, 32)
+        button.Header:SetPoint("TOP", 10)
+        button.Header.Text:SetWidth(180)
+        button.Header.Text:SetPoint("TOPLEFT", 28, 2)
+        button.Header.Text:SetPoint("BOTTOMRIGHT", -28, 2)
+        button.OptionText:SetWidth(200)
+        button.OptionText:SetPoint("TOP", button.Artwork, "BOTTOM", 0, -8)
+        button.OptionText:SetPoint("BOTTOM", button.Rewards, "TOP", 0, 35)
+        button.OptionText:SetText("Text")
     end
 end
 
 --/dump QuestChoiceFrame.Option1.OptionText:GetContentHeight()
 function private.AddOns.Blizzard_QuestChoice()
     local QuestChoiceFrame = _G.QuestChoiceFrame
+    Skin.HorizontalLayoutFrame(QuestChoiceFrame)
 
     QuestChoiceFrame.BottomLeftCorner:Hide()
     QuestChoiceFrame.BottomRightCorner:Hide()

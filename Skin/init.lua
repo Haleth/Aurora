@@ -66,6 +66,8 @@ do -- private.CreateAPI
                     end
                     return ret
                 end)
+            else
+                _G.rawset(table, key, value)
             end
         end
     }
