@@ -683,4 +683,76 @@ do -- Scale API
     function Scale.StartPoint(self, ...)
         self:SetStartPoint(_G.unpack(ScaleArgs(self, "StartPoint", ...)))
     end
+
+
+    -- Widget Hooks --
+    local function doSet(self, method)
+        if self:IsForbidden() or self["_setting"..method] then
+            return false
+        end
+        return not self["_auroraNoSet"..method]
+    end
+    local positionMethods = {
+        "Size",
+        "Height",
+        "Width",
+        "Point",
+        "StartPoint",
+        "EndPoint",
+        "Thickness",
+    }
+
+    local widgets = {
+        Frame = {
+            Texture = false,
+            Line = false,
+            MaskTexture = false,
+            FontString = false,
+        },
+        Button = false,
+        CheckButton = false,
+        Cooldown = false,
+        ColorSelect = false,
+        EditBox = false,
+        GameTooltip = false,
+        MessageFrame = false,
+        Model = false,
+        ScrollFrame = false,
+        ScrollingMessageFrame = false,
+        SimpleHTML = false,
+        Slider = false,
+        StatusBar = false,
+    }
+
+    local function HookSetters(widget)
+        local mt = _G.getmetatable(widget).__index
+        for _, method in next, positionMethods do
+            local methodName = "Set" .. method
+            if widget[methodName] then
+                Scale["Raw"..methodName] = mt[methodName]
+                if not private.disableUIScale then
+                    local methodCheck = "_setting"..method
+                    _G.hooksecurefunc(mt, methodName, function(self, ...)
+                        if not doSet(self, method) then return end
+                        self[methodCheck] = true
+                        Scale[method](self, ...)
+                        self[methodCheck] = nil
+                    end)
+                end
+            end
+        end
+    end
+
+    for widgetType, children in _G.next, widgets do
+        local widget = _G.CreateFrame(widgetType, nil, _G.UIParent)
+        HookSetters(widget)
+        if children then
+            for childType, hasChildren in _G.next, children do
+                local child = widget["Create"..childType](widget)
+                HookSetters(child)
+            end
+        end
+        widget:Hide()
+    end
+    HookSetters(_G.Minimap)
 end
