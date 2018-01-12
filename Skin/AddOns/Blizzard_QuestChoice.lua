@@ -5,8 +5,8 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Skin = Aurora.Skin
 
 local F = _G.unpack(Aurora)
 

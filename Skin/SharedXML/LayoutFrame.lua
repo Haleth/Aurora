@@ -6,7 +6,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Scale = Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\LayoutFrame.lua ]]
