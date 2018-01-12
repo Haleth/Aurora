@@ -182,6 +182,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
         Base.SetHighlight(button, "backdrop")
+
+        --[[ Scale ]]--
+        button:SetSize(button:GetSize())
     end
     function Skin.PortraitFrameTemplate(frame, noCloseButton)
         local name = frame:GetName()
