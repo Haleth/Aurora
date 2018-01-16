@@ -43,6 +43,7 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
 
                 local newWidth = (neededWidth*2)+430
                 self.fixedWidth = max(600, newWidth)
+                self.leftPadding = ((self.fixedWidth - self.Option1:GetWidth()) / 2) - 4
                 self.Title:SetPoint("LEFT", self.Option1, "LEFT", -neededWidth, 0)
                 self.Title:SetPoint("RIGHT", self.Option1, "RIGHT", neededWidth, 0)
             else
