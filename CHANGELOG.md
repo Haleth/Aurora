@@ -1,8 +1,21 @@
-## [Unreleased] ##
+## [v7.3.5.1] - 2017-10-16 ##
+### Fixed ###
+
+  * Typo caused an error in raid manager skin.
+
+
+
+## [v7.3.5.0] - 2018-01-16 ##
+### Added ###
+
+  * Pet Battle UI skin
+  * Primary Action bar skin
+  * Warboard UI
+  * Raid Frame manager skin
+
 ### Changed ###
 
   * Updated QuestChoiceFrame skin.
-  * Added RaidFrameManager skin.
   * Tweak PvP score frame skin.
 
 ### Fixed ###
