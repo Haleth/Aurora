@@ -83,7 +83,7 @@ do --[[ FrameXML\FlowContainer.lua ]]
                     currentPrimaryLine = currentPrimaryLine + 1
                     lineMaxSize = max(lineMaxSize, object["Get"..secondaryDirection](object))
                 elseif objectType == "number" then  --This is a spacer.
-                    currentSecondaryOffset = currentSecondaryOffset + Scale.Vaule(object)
+                    currentSecondaryOffset = currentSecondaryOffset + Scale.Value(object)
                 elseif objectType == "string" then
                     if object == "beginatomic" then
                         if currentSecondaryOffset == 0 then
