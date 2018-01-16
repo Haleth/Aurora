@@ -4,55 +4,52 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
-local function SetTexture(texture, left, right, top, bottom)
-    texture:SetTexCoord(left, right, top, bottom)
+local function SetTexture(texture, anchor, left, right, top, bottom)
+    if left then
+        texture:SetTexCoord(left, right, top, bottom)
+    end
     texture:ClearAllPoints()
-    texture:SetPoint("TOPLEFT", 1, -1)
-    texture:SetPoint("BOTTOMRIGHT", -1, 1)
+    texture:SetPoint("TOPLEFT", anchor, 1, -1)
+    texture:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
 end
 local function SetMicroButton(button, file, left, right, top, bottom)
     if file == "" then
         if not left then
             left, right, top, bottom = 0.2, 0.8, 0.5, 0.9
         end
-        SetTexture(button:GetNormalTexture(), left, right, top, bottom)
-        SetTexture(button:GetPushedTexture(), left, right, top, bottom)
-        SetTexture(button:GetDisabledTexture(), left, right, top, bottom)
+        SetTexture(button:GetNormalTexture(), button._auroraBDFrame, left, right, top, bottom)
+        SetTexture(button:GetPushedTexture(), button._auroraBDFrame, left, right, top, bottom)
+        SetTexture(button:GetDisabledTexture(), button._auroraBDFrame, left, right, top, bottom)
     elseif file then
         if not left then
             left, right, top, bottom = 0.2, 0.8, 0.08, 0.92
         end
         button:SetNormalTexture(file)
-        SetTexture(button:GetNormalTexture(), left, right - 0.04, top + 0.04, bottom)
+        SetTexture(button:GetNormalTexture(), button._auroraBDFrame, left, right - 0.04, top + 0.04, bottom)
 
         button:SetPushedTexture(file)
         local pushed = button:GetPushedTexture()
-        SetTexture(pushed, left + 0.04, right, top, bottom - 0.04)
+        SetTexture(pushed, button._auroraBDFrame, left + 0.04, right, top, bottom - 0.04)
         pushed:SetVertexColor(0.5, 0.5, 0.5)
 
         button:SetDisabledTexture(file)
         local disabled = button:GetDisabledTexture()
-        SetTexture(disabled, left, right, top, bottom)
+        SetTexture(disabled, button._auroraBDFrame, left, right, top, bottom)
         disabled:SetDesaturated(true)
+    else
+        button:SetNormalTexture("")
+        button:SetPushedTexture("")
+        button:SetDisabledTexture("")
     end
 end
 
 do --[[ FrameXML\MainMenuBarMicroButtons.lua ]]
     function Hook.MoveMicroButtons(anchor, anchorTo, relAnchor, x, y, isStacked)
-        _G.CharacterMicroButton:ClearAllPoints()
-        if anchorTo == _G.PetBattleFrame.BottomFrame.MicroButtonFrame then
-            _G.CharacterMicroButton:SetPoint(anchor, anchorTo, relAnchor, -12, 5)
-        elseif anchorTo == _G.OverrideActionBar then
-            _G.CharacterMicroButton:SetPoint(anchor, anchorTo, relAnchor, x, y + 4)
-        else
-            _G.CharacterMicroButton:SetPoint(anchor, anchorTo, relAnchor, 554, 5)
-        end
-
         _G.LFDMicroButton:ClearAllPoints()
         if isStacked then
-            _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, -3)
+            _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, 22)
         else
-            _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 3, 0)
+            _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", -2, 0)
         end
     end
     function Hook.MainMenuMicroButton_OnUpdate(self, elapsed)
@@ -73,17 +70,24 @@ end
 
 do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
     function Skin.MainMenuBarMicroButton(button)
-        button:SetSize(24, 32)
+        -- 24 x 34
+        local bd = _G.CreateFrame("Frame", nil, button)
+        bd:SetPoint("TOPLEFT", 2, -22)
+        bd:SetPoint("BOTTOMRIGHT", -2, 2)
+        bd:SetFrameLevel(button:GetFrameLevel())
+        Base.SetBackdrop(bd, Aurora.buttonColor:GetRGBA())
+
         button:SetHighlightTexture("")
-
-        button:SetHitRectInsets(0, 1, 0, 1)
-
         button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)
-        button.Flash:SetPoint("TOPLEFT")
-        button.Flash:SetPoint("BOTTOMRIGHT")
+        button.Flash:SetPoint("TOPLEFT", bd)
+        button.Flash:SetPoint("BOTTOMRIGHT", bd)
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        button._auroraBDFrame = bd
         Base.SetHighlight(button, "backdrop")
+
+        --[[ Scale ]]--
+        button:SetSize(28, 58)
+        button:SetPoint(button:GetPoint())
     end
     function Skin.MicroButtonAlertTemplate(frame)
         Skin.GlowBoxTemplate(frame)
@@ -93,6 +97,11 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
 
         Skin.GlowBoxArrowTemplate(frame.Arrow)
         frame.Arrow:SetPoint("TOP", frame, "BOTTOM")
+
+        --[[ Scale ]]--
+        frame:SetSize(220, 100)
+        frame.Text:SetSize(188, 0)
+        frame.Text:SetPoint("TOPLEFT", 16, -24)
     end
 end
 
@@ -101,36 +110,25 @@ function private.FrameXML.MainMenuBarMicroButtons()
         _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
         _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButton_OnUpdate)
 
-        local prev
         for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
             local button = _G[name]
             Skin.MainMenuBarMicroButton(button)
 
-            if prev then
-                button:SetPoint("BOTTOMLEFT", prev, "BOTTOMRIGHT", 3, 0)
-            else
-                button:SetPoint("BOTTOMLEFT", 554, 5)
-            end
-            prev = button
-
             local iconTexture, left, right, top, bottom
             if name == "CharacterMicroButton" then
-                _G.MicroButtonPortrait:ClearAllPoints()
-                _G.MicroButtonPortrait:SetPoint("TOPLEFT", 1, -1)
-                _G.MicroButtonPortrait:SetPoint("BOTTOMRIGHT", -1, 1)
+                SetTexture(_G.MicroButtonPortrait, button._auroraBDFrame)
             elseif name == "SpellbookMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
             elseif name == "TalentMicroButton" then
                 iconTexture = [[Interface\Icons\Ability_Marksmanship]]
             elseif name == "GuildMicroButton" then
                 iconTexture = ""
+                SetTexture(_G.GuildMicroButtonTabard.background, button._auroraBDFrame, 0.13, 0.87, 0.48, 0.9)
 
-                _G.GuildMicroButtonTabard:ClearAllPoints()
-                _G.GuildMicroButtonTabard:SetPoint("TOPLEFT", 1, -1)
-                _G.GuildMicroButtonTabard:SetPoint("BOTTOMRIGHT", -1, 1)
-
-                SetTexture(_G.GuildMicroButtonTabard.background, 0.1, 0.9, 0.45, 0.9)
-                _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, 2)
+                --[[ Scale ]]--
+                _G.GuildMicroButtonTabard:SetSize(28, 58)
+                _G.GuildMicroButtonTabard.emblem:SetSize(16, 16)
+                _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, -9)
             elseif name == "EJMicroButton" then
                 iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
             elseif name == "CollectionsMicroButton" then
@@ -139,8 +137,9 @@ function private.FrameXML.MainMenuBarMicroButtons()
             elseif name == "MainMenuMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
 
-                SetTexture(_G.MainMenuBarPerformanceBar, 0.2, 0.8, 0.08, 0.94)
+                SetTexture(_G.MainMenuBarPerformanceBar, button._auroraBDFrame, 0.2, 0.8, 0.08, 0.94)
                 _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
+                button:SetPoint("BOTTOMLEFT", _G.StoreMicroButton, "BOTTOMRIGHT", -2, 0)
             elseif name == "StoreMicroButton" then
                 iconTexture = [[Interface\Icons\WoW_Store]]
             else
@@ -152,11 +151,13 @@ function private.FrameXML.MainMenuBarMicroButtons()
     end
 
     Skin.MicroButtonAlertTemplate(_G.TalentMicroButtonAlert)
-    _G.TalentMicroButtonAlert:SetPoint("BOTTOM", _G.TalentMicroButtonAlert.MicroButton, "TOP", 0, 16)
     Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)
-    _G.CollectionsMicroButtonAlert:SetPoint("BOTTOM", _G.CollectionsMicroButtonAlert.MicroButton, "TOP", 0, 16)
     Skin.MicroButtonAlertTemplate(_G.LFDMicroButtonAlert)
-    _G.LFDMicroButtonAlert:SetPoint("BOTTOM", _G.LFDMicroButtonAlert.MicroButton, "TOP", 0, 16)
     Skin.MicroButtonAlertTemplate(_G.EJMicroButtonAlert)
-    _G.EJMicroButtonAlert:SetPoint("BOTTOM", _G.EJMicroButtonAlert.MicroButton, "TOP", 0, 16)
+
+    --[[ Scale ]]--
+    _G.TalentMicroButtonAlert:SetPoint("BOTTOM", _G.TalentMicroButtonAlert.MicroButton, "TOP", 0, -8)
+    _G.CollectionsMicroButtonAlert:SetPoint("BOTTOM", _G.CollectionsMicroButtonAlert.MicroButton, "TOP", 0, -8)
+    _G.LFDMicroButtonAlert:SetPoint("BOTTOM", _G.LFDMicroButtonAlert.MicroButton, "TOP", 0, -8)
+    _G.EJMicroButtonAlert:SetPoint("BOTTOM", _G.EJMicroButtonAlert.MicroButton, "TOP", 0, -8)
 end

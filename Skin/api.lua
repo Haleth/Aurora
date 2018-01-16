@@ -1,6 +1,6 @@
 local _, private = ...
 
--- luacheck: globals next assert
+-- luacheck: globals next assert type
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -140,7 +140,6 @@ do -- Base API
                         bd.bg:SetVertTile(options.tile)
                     end
                 else
-                    options.bgFile = [[Interface\Buttons\WHITE8x8]]
                     bd.bg:SetColorTexture(0, 0, 1)
                 end
 
@@ -171,7 +170,6 @@ do -- Base API
                         bd[corner]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
                     end
                 else
-                    options.edgeFile = [[Interface\Buttons\WHITE8x8]]
                     for side, info in next, sides do
                         bd[side]:SetColorTexture(1, 0, 0)
                         bd[side]:SetTexCoord(0, 1, 0, 1)
@@ -215,7 +213,16 @@ do -- Base API
             frame.settingBD = nil
         end
         local function GetBackdrop(frame)
-            return frame._auroraBackdrop and frame._auroraBackdrop.options
+            if frame._auroraBackdrop then
+                local options = frame._auroraBackdrop.options
+                return {
+                    bgFile = options.bgFile or [[Interface\Buttons\WHITE8x8]],
+                    tile = options.tile,
+                    insets = options.insets,
+                    edgeFile = options.edgeFile or [[Interface\Buttons\WHITE8x8]],
+                    edgeSize = options.edgeSize,
+                }
+            end
         end
         local function SetBackdropColor(frame, red, green, blue, alpha)
             if frame._auroraBackdrop then
@@ -307,7 +314,7 @@ do -- Base API
             end
         end
 
-        function Base.SetBackdrop(frame, r, g, b, a)
+        function Base.CreateBackdrop(frame, options)
             frame.SetBackdrop = SetBackdrop
             frame.GetBackdrop = GetBackdrop
             frame.SetBackdropColor = SetBackdropColor
@@ -318,7 +325,11 @@ do -- Base API
             frame.GetBackdropBorderLayer = GetBackdropBorderLayer
             frame.GetBackdropTexture = GetBackdropTexture
 
-            frame:SetBackdrop(backdrop)
+            frame:SetBackdrop(options)
+        end
+
+        function Base.SetBackdrop(frame, r, g, b, a)
+            Base.CreateBackdrop(frame, backdrop)
             Base.SetBackdropColor(frame, r, g, b, a)
         end
         function Base.SetBackdropColor(frame, r, g, b, a)

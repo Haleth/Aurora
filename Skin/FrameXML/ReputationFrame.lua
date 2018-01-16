@@ -197,7 +197,9 @@ function private.FrameXML.ReputationFrame()
     _G.ReputationDetailLFGBonusReputationCheckBox:SetPoint("TOPLEFT", _G.ReputationDetailMainScreenCheckBox, "BOTTOMLEFT", 0, -6)
 
 
-    --[[ ReputationWatchBar ]]--
+    if not private.disabled.mainmenubar then
+        Skin.MainMenuBarWatchBarTemplate(_G.ReputationWatchBar)
+    end
 
     if not private.disabled.tooltips then
         Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)

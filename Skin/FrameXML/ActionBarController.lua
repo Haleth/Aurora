@@ -6,9 +6,9 @@ local _, private = ...
 
 function private.FrameXML.ActionBarController()
     private.FrameXML.MainMenuBarMicroButtons()
-    --private.FrameXML.MainMenuBar()
-    --private.FrameXML.ActionButtonTemplate()
-    --private.FrameXML.ActionBarFrame()
+    private.FrameXML.MainMenuBar()
+    private.FrameXML.ActionButtonTemplate()
+    private.FrameXML.ActionBarFrame()
     --private.FrameXML.MultiActionBars()
     --private.FrameXML.OverrideActionBar()
     --private.FrameXML.StanceBar()
