@@ -34,7 +34,7 @@ function private.FrameXML.StaticPopup()
 
         F.CreateBD(frame)
 
-        for j = 1, 3 do
+        for j = 1, 4 do
             F.Reskin(frame["button"..j])
         end
 
