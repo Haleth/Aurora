@@ -58,6 +58,8 @@ function private.FrameXML.CharacterFrame()
     ClassBackground:SetAlpha(0.4)
 
 
+    CharacterStatsPane.ItemLevelCategory.Title:Hide()
+    CharacterStatsPane.ItemLevelCategory.Background:Hide()
     CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Shadow_Huge2")
     CharacterStatsPane.ItemLevelFrame.Value:SetShadowOffset(0, 0)
     CharacterStatsPane.ItemLevelFrame.Background:Hide()
