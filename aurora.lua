@@ -126,7 +126,7 @@ function private.OnLoad()
         Base.SetBackdropColor(gametooltip, color.r, color.g, color.b, AuroraConfig.alpha)
     end
 
-    function Base.Post.SetBackdrop(frame, r, g, b, a)
+    function Base.Post.SetBackdrop(ret, frame, r, g, b, a)
         if AuroraConfig.buttonsHaveGradient and Aurora.buttonColor:IsEqualTo(r, g, b, a) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)

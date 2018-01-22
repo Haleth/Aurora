@@ -67,7 +67,7 @@ do -- Base API
 
     do -- Base.AddSkin
         function Base.AddSkin(addonName, func)
-            assert(not private.AddOns[addonName], addonName .. "already has a registered skin." )
+            assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
             private.AddOns[addonName] = func
         end
     end
@@ -348,15 +348,14 @@ do -- Base API
                 fontObj:SetFont(fontPath, Scale.Value(fontSize), fontStyle)
             end
 
-            if _G.type(fontColor) == "table" then
-                fontObj:SetTextColor(fontColor[1], fontColor[2], fontColor[3], fontColor[4])
-            elseif fontColor then
-                fontObj:SetAlpha(fontColor)
+            if fontColor then
+                fontObj:SetTextColor(fontColor.r, fontColor.g, fontColor.b)
             end
 
             if shadowColor then
-                fontObj:SetShadowColor(shadowColor[1], shadowColor[2], shadowColor[3], shadowColor[4])
+                fontObj:SetShadowColor(shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a)
             end
+
             if shadowX and shadowY then
                 fontObj:SetShadowOffset(Scale.Value(shadowX), Scale.Value(shadowY))
             end

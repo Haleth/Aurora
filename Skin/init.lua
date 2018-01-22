@@ -2,7 +2,7 @@ local ADDON_NAME, private = ...
 
 -- luacheck: globals select tostring tonumber
 
-private.API_MAJOR, private.API_MINOR = 8, 0
+private.API_MAJOR, private.API_MINOR = 0, 1
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.isPatch = tonumber(xpac) == 7 and (tonumber(major) >= 3 and tonumber(minor) >= 5)
@@ -62,7 +62,7 @@ do -- private.CreateAPI
                     end
                     local ret = value(...)
                     if table.Post[key] then
-                        table.Post[key](...)
+                        table.Post[key](ret, ...)
                     end
                     return ret
                 end)

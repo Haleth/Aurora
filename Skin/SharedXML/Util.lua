@@ -103,7 +103,7 @@ do --[[ CUSTOM_CLASS_COLORS ]]--
     end
     function private.updateHighlightColor()
         local color = _G.CUSTOM_CLASS_COLORS[private.charClass.token]
-        Aurora.highlightColor:SetRGBA(color.r, color.g, color.b, Aurora.frameColor.a)
+        Aurora.highlightColor:SetRGBA(color.r, color.g, color.b, color.a)
 
         local C = Aurora[2] -- deprecated
         C.r, C.g, C.b = color.r, color.g, color.b
