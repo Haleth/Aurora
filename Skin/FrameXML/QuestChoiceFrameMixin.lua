@@ -200,6 +200,5 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
 end
 
 function private.FrameXML.QuestChoiceFrameMixin()
-    if not private.isPatch then return end
     _G.Mixin(_G.QuestChoiceFrameMixin, Hook.QuestChoiceFrameMixin)
 end

@@ -407,11 +407,7 @@ function private.AddOns.Blizzard_PetBattleUI()
     xpBar._auroraDivs = {}
     for i = 1, 6 do
         local texture
-        if private.isPatch then
-            texture = _G["PetBattleXPBarDiv"..i]
-        else
-            texture = _G.select(i + 6, xpBar:GetRegions())
-        end
+        texture = _G["PetBattleXPBarDiv"..i]
         texture:SetColorTexture(0, 0, 0)
         texture:SetSize(1, 10)
         xpBar._auroraDivs[i] = texture
