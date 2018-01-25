@@ -107,5 +107,5 @@ do --[[ FrameXML\FlowContainer.lua ]]
 end
 
 function private.FrameXML.FlowContainer()
-    _G.FlowContainer_DoLayout = Hook.FlowContainer_DoLayout
+    _G.hooksecurefunc("FlowContainer_DoLayout", Hook.FlowContainer_DoLayout)
 end
