@@ -15,6 +15,7 @@ private.disabled = {
 }
 
 private.uiScale = 1
+private.disableUIScale = true
 
 local classLocale, class, classID = _G.UnitClass("player")
 private.charClass = {
@@ -23,7 +24,24 @@ private.charClass = {
     id = classID,
 }
 
-private.disableUIScale = true
+do -- private.font
+    local fontPath = [[Interface\AddOns\Aurora\media\font.ttf]]
+    if _G.LOCALE_koKR then
+        fontPath = [[Fonts/2002.ttf]]
+    elseif _G.LOCALE_zhCN then
+        fontPath = [[Fonts/ARKai_T.ttf]]
+    elseif _G.LOCALE_zhTW then
+        fontPath = [[Fonts/blei00d.ttf]]
+    end
+
+    private.font = {
+        normal = fontPath,
+        chat = fontPath,
+        crit = fontPath,
+        header = fontPath,
+    }
+end
+
 function private.nop() end
 local debug do
     if _G.LibStub then

@@ -2,7 +2,6 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local _, C = _G.unpack(Aurora)
 local Base = Aurora.Base
 
 local yellow = Base.CreateColor(1, 0.82, 0)
@@ -12,28 +11,21 @@ local darkGrey = Base.CreateColor(0.1, 0.1, 0.1)
 local grey = Base.CreateColor(0.4, 0.4, 0.4, 0.75)
 local white = Base.CreateColor(1, 1, 1)
 
-
 function private.FrameXML.Fonts()
     if not private.disabled.fonts then
-        if _G.LOCALE_koKR then
-            C.media.font = [[Fonts/2002.ttf]]
-        elseif _G.LOCALE_zhCN then
-            C.media.font = [[Fonts/ARKai_T.ttf]]
-        elseif _G.LOCALE_zhTW then
-            C.media.font = [[Fonts/blei00d.ttf]]
-        end
+        local font = private.font
 
         -- Regular text: replaces FRIZQT__.TTF
-        local NORMAL = C.media.normalFont or C.media.font
+        local NORMAL = font.normal
 
         -- Chat Font: replaces ARIALN.TTF
-        local CHAT   = C.media.chatFont or C.media.font
+        local CHAT   = font.chat
 
         -- Crit Font: replaces skurri.ttf
-        local CRIT   = C.media.critFont or C.media.font
+        local CRIT   = font.crit
 
         -- Header Font: replaces MORPHEUS.ttf
-        local HEADER = C.media.headerFont or C.media.font
+        local HEADER = font.header
 
 
         _G.STANDARD_TEXT_FONT = NORMAL
