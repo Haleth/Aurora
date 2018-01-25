@@ -20,6 +20,8 @@ do --[[ FrameXML\MainMenuBarBagButtons.xml ]]
 end
 
 function private.FrameXML.MainMenuBarBagButtons()
+    if private.disabled.mainmenubar then return end
+
     Skin.BagSlotButtonTemplate(_G.MainMenuBarBackpackButton)
 
     Skin.BagSlotButtonTemplate(_G.CharacterBag0Slot)
