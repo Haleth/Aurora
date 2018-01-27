@@ -216,17 +216,8 @@ F.ReskinInput = function(f, height, width)
     if width then f:SetWidth(width) end
 end
 
-local money = {"gold", "silver", "copper"}
 F.ReskinMoneyInput = function(f)
-    for i = 1, #money do
-        local input = f[money[i]]
-        F.ReskinInput(input)
-        if i > 1 then
-            input:SetPoint("LEFT", f[money[i - 1]], "RIGHT", 6, 0)
-            input:SetWidth(35)
-            input.texture:SetPoint("RIGHT", -4, 0)
-        end
-    end
+    Skin.MoneyInputFrameTemplate(f)
 end
 
 F.CreateArrow = function(f, direction)

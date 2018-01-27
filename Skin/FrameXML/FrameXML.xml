@@ -54,6 +54,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="MainMenuBarMicroButtons.lua"/>
     <Script file="MerchantFrame.lua"/>
     <Script file="MoneyFrame.lua"/>
+    <Script file="MoneyInputFrame.lua"/>
     <Script file="MovieFrame.lua"/>
     <Script file="NavigationBar.lua"/>
     <Script file="OptionsFrameTemplates.lua"/>
