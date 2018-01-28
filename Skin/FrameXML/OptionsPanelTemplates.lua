@@ -42,23 +42,27 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         _G[name.."Text"]:SetPoint("LEFT", checkbutton, "RIGHT", 3, 0)
     end
     function Skin.OptionsSliderTemplate(slider)
-        slider:SetBackdrop(nil)
+        if private.isPatch then
+            Skin.HorizontalSliderTemplate(slider)
+        else
+            slider:SetBackdrop(nil)
 
-        local bg = _G.CreateFrame("Frame", nil, slider)
-        bg:SetPoint("TOPLEFT", slider, 5, -5)
-        bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
-        bg:SetFrameLevel(slider:GetFrameLevel())
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+            local bg = _G.CreateFrame("Frame", nil, slider)
+            bg:SetPoint("TOPLEFT", slider, 5, -5)
+            bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
+            bg:SetFrameLevel(slider:GetFrameLevel())
+            Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
 
-        local thumbTexture = slider:GetThumbTexture()
-        thumbTexture:SetAlpha(0)
-        thumbTexture:SetSize(8, 16)
+            local thumbTexture = slider:GetThumbTexture()
+            thumbTexture:SetAlpha(0)
+            thumbTexture:SetSize(8, 16)
 
-        local thumb = _G.CreateFrame("Frame", nil, bg)
-        thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
-        thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
-        Base.SetBackdrop(thumb, Aurora.buttonColor:GetRGBA())
-        slider._auroraThumb = thumb
+            local thumb = _G.CreateFrame("Frame", nil, bg)
+            thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
+            thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
+            Base.SetBackdrop(thumb, Aurora.buttonColor:GetRGBA())
+            slider._auroraThumb = thumb
+        end
     end
 end
 

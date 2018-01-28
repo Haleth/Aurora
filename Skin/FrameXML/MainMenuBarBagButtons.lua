@@ -34,5 +34,9 @@ function private.FrameXML.MainMenuBarBagButtons()
     _G.CharacterBag3Slot:SetPoint("RIGHT", _G.CharacterBag2Slot, "LEFT", -3, 0)
 
     --[[ Scale ]]--
-    _G.MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", -4, 6)
+    if private.isPatch then
+        _G.MainMenuBarBackpackButton:SetPoint("TOPRIGHT", -4, -4)
+    else
+        _G.MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", -4, 6)
+    end
 end

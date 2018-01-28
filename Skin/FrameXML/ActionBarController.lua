@@ -6,6 +6,12 @@ local _, private = ...
 
 function private.FrameXML.ActionBarController()
     private.FrameXML.MainMenuBarMicroButtons()
+    --private.FrameXML.StatusTrackingBarTemplate()
+    --private.FrameXML.ExpBar()
+    --private.FrameXML.ReputationBar()
+    --private.FrameXML.ArtifactBar()
+    --private.FrameXML.HonorBar()
+    --private.FrameXML.StatusTrackingBar()
     private.FrameXML.MainMenuBar()
     private.FrameXML.ActionButtonTemplate()
     private.FrameXML.ActionBarFrame()

@@ -37,6 +37,13 @@ local FrameXML = {
     "Fonts",
     "FontStyles",
 
+    "SharedXML.PropertyBindingMixin",
+    "SharedXML.PropertyButton",
+    "SharedXML.PropertyFontString",
+    "SharedXML.PropertySlider",
+
+    "ObjectAPI_ItemLocation",
+    "ObjectAPI_Item",
 
     -- add new modules below here
     "WorldFrame",
@@ -213,6 +220,7 @@ local FrameXML = {
     "ProductChoice",
     "ZoneAbility",
     "ArtifactToasts",
+    "AzeriteItemToasts",
     "SharedXML.ModelPreviewFrame",
     "SplashFrame",
     "QuestChoiceFrameMixin",

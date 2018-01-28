@@ -66,7 +66,10 @@ function private.FrameXML.VideoOptionsFrame()
         end
 
         --[[ Advanced ]]--
-        checkboxes = {"Advanced_UseUIScale", "Advanced_MaxFPSCheckBox", "Advanced_MaxFPSBKCheckBox", "Advanced_ShowHDModels", "Advanced_DesktopGamma"}
+        checkboxes = {"Advanced_UseUIScale", "Advanced_MaxFPSCheckBox", "Advanced_MaxFPSBKCheckBox", "Advanced_ShowHDModels"}
+        if not private.isPatch then
+            _G.tinsert(checkboxes, "Advanced_DesktopGamma")
+        end
         for i = 1, #checkboxes do
             F.ReskinCheck(_G[checkboxes[i]])
         end
@@ -74,7 +77,10 @@ function private.FrameXML.VideoOptionsFrame()
         for i = 1, #dropdowns do
             F.ReskinDropDown(_G[dropdowns[i]])
         end
-        sliders = {"Advanced_UIScaleSlider", "Advanced_MaxFPSSlider", "Advanced_MaxFPSBKSlider", "Advanced_RenderScaleSlider", "Advanced_GammaSlider"}
+        sliders = {"Advanced_UIScaleSlider", "Advanced_MaxFPSSlider", "Advanced_MaxFPSBKSlider", "Advanced_RenderScaleSlider"}
+        if not private.isPatch then
+            _G.tinsert(sliders, "Advanced_GammaSlider")
+        end
         for i = 1, #sliders do
             F.ReskinSlider(_G[sliders[i]])
         end

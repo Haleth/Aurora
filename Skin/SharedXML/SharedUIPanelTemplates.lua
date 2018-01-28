@@ -186,16 +186,54 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         --[[ Scale ]]--
         button:SetSize(button:GetSize())
     end
+
+    function Skin.UICheckButtonTemplate(checkbutton)
+        local bd = _G.CreateFrame("Frame", nil, checkbutton)
+        bd:SetPoint("TOPLEFT", 6, -6)
+        bd:SetPoint("BOTTOMRIGHT", -6, 6)
+        bd:SetFrameLevel(checkbutton:GetFrameLevel())
+        Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
+
+        checkbutton:SetNormalTexture("")
+        checkbutton:SetPushedTexture("")
+        checkbutton:SetHighlightTexture("")
+
+        local check = checkbutton:GetCheckedTexture()
+        check:ClearAllPoints()
+        check:SetPoint("TOPLEFT", bd, -7, 7)
+        check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
+        check:SetDesaturated(true)
+        check:SetVertexColor(Aurora.highlightColor:GetRGB())
+
+        local disabled = checkbutton:GetDisabledCheckedTexture()
+        disabled:ClearAllPoints()
+        disabled:SetPoint("TOPLEFT", -7, 7)
+        disabled:SetPoint("BOTTOMRIGHT", 7, -7)
+
+        checkbutton._auroraBDFrame = bd
+        Base.SetHighlight(checkbutton, "backdrop")
+
+        --[[ Scale ]]--
+        checkbutton:SetSize(checkbutton:GetSize())
+    end
+
     function Skin.PortraitFrameTemplate(frame, noCloseButton)
         local name = frame:GetName()
 
         frame.Bg:Hide()
         _G[name.."TitleBg"]:Hide()
         frame.portrait:SetAlpha(0)
-        frame.portraitFrame:SetTexture("")
-        _G[name.."TopRightCorner"]:Hide()
-        frame.topLeftCorner:Hide()
-        frame.topBorderBar:SetTexture("")
+        if private.isPatch then
+            frame.PortraitFrame:SetTexture("")
+            frame.TopRightCorner:Hide()
+            frame.TopLeftCorner:Hide()
+            frame.TopBorder:SetTexture("")
+        else
+            frame.portraitFrame:SetTexture("")
+            _G[name.."TopRightCorner"]:Hide()
+            frame.topLeftCorner:Hide()
+            frame.topBorderBar:SetTexture("")
+        end
 
         local titleText = frame.TitleText
         titleText:ClearAllPoints()
@@ -203,11 +241,19 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         titleText:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
         frame.TopTileStreaks:SetTexture("")
-        _G[name.."BotLeftCorner"]:Hide()
-        _G[name.."BotRightCorner"]:Hide()
-        _G[name.."BottomBorder"]:Hide()
-        frame.leftBorderBar:Hide()
-        _G[name.."RightBorder"]:Hide()
+        if private.isPatch then
+            frame.BotLeftCorner:Hide()
+            frame.BotRightCorner:Hide()
+            frame.BottomBorder:Hide()
+            frame.LeftBorder:Hide()
+            frame.RightBorder:Hide()
+        else
+            _G[name.."BotLeftCorner"]:Hide()
+            _G[name.."BotRightCorner"]:Hide()
+            _G[name.."BottomBorder"]:Hide()
+            frame.leftBorderBar:Hide()
+            _G[name.."RightBorder"]:Hide()
+        end
 
         Base.SetBackdrop(frame)
         if not noCloseButton then
@@ -277,6 +323,26 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         button._auroraBDFrame = bd
         Base.SetHighlight(button, "backdrop")
+    end
+
+    function Skin.HorizontalSliderTemplate(slider)
+        slider:SetBackdrop(nil)
+
+        local bg = _G.CreateFrame("Frame", nil, slider)
+        bg:SetPoint("TOPLEFT", slider, 5, -5)
+        bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
+        bg:SetFrameLevel(slider:GetFrameLevel())
+        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+
+        local thumbTexture = slider:GetThumbTexture()
+        thumbTexture:SetAlpha(0)
+        thumbTexture:SetSize(8, 16)
+
+        local thumb = _G.CreateFrame("Frame", nil, bg)
+        thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
+        thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
+        Base.SetBackdrop(thumb, Aurora.buttonColor:GetRGBA())
+        slider._auroraThumb = thumb
     end
 
     function Skin.UIPanelScrollBarButton(button)

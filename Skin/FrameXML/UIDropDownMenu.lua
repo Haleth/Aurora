@@ -118,20 +118,41 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
     function Skin.UIDropDownMenuTemplate(frame)
         local name = frame:GetName()
 
-        _G[name.."Left"]:SetAlpha(0)
-        _G[name.."Middle"]:SetAlpha(0)
-        _G[name.."Right"]:SetAlpha(0)
+        local left, middle, right
+        if private.isPatch then
+            left = frame.Left
+            middle = frame.Middle
+            right = frame.Right
+        else
+            left = _G[name.."Left"]
+            middle = _G[name.."Middle"]
+            right = _G[name.."Right"]
+        end
+        left:SetAlpha(0)
+        middle:SetAlpha(0)
+        right:SetAlpha(0)
 
         local button = frame.Button
         button:SetSize(20, 20)
         button:ClearAllPoints()
-        button:SetPoint("TOPRIGHT", _G[name.."Right"], -19, -21)
+        button:SetPoint("TOPRIGHT", right, -19, -21)
 
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
+        if private.isPatch then
+            button.Normal:SetTexture("")
+            button.Pushed:SetTexture("")
+            button.Highlight:SetTexture("")
+        else
+            button:SetNormalTexture("")
+            button:SetPushedTexture("")
+            button:SetHighlightTexture("")
+        end
 
-        local disabled = button:GetDisabledTexture()
+        local disabled
+        if private.isPatch then
+            disabled = button.DisabledTexture
+        else
+            disabled = button:GetDisabledTexture()
+        end
         disabled:SetAllPoints(button)
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
@@ -146,8 +167,8 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         Base.SetHighlight(button, "texture")
 
         local bg = _G.CreateFrame("Frame", nil, frame)
-        bg:SetPoint("TOPLEFT", _G[name.."Left"], 20, -21)
-        bg:SetPoint("BOTTOMRIGHT", _G[name.."Right"], -19, 23)
+        bg:SetPoint("TOPLEFT", left, 20, -21)
+        bg:SetPoint("BOTTOMRIGHT", right, -19, 23)
         bg:SetFrameLevel(frame:GetFrameLevel())
         Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
 
@@ -155,17 +176,17 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         --[[Scale]]
         if not frame.noResize then
             frame:SetWidth(40)
-            _G[name.."Middle"]:SetWidth(115)
+            middle:SetWidth(115)
         end
         frame:SetHeight(32)
 
-        _G[name.."Left"]:SetSize(25, 64)
-        _G[name.."Left"]:SetPoint("TOPLEFT", 0, 17)
-        _G[name.."Middle"]:SetHeight(64)
-        _G[name.."Right"]:SetSize(25, 64)
+        left:SetSize(25, 64)
+        left:SetPoint("TOPLEFT", 0, 17)
+        middle:SetHeight(64)
+        right:SetSize(25, 64)
 
         frame.Text:SetSize(0, 10)
-        frame.Text:SetPoint("RIGHT", _G[name.."Right"], -43, 2)
+        frame.Text:SetPoint("RIGHT", right, -43, 2)
     end
 end
 

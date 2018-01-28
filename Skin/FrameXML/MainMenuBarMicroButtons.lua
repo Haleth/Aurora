@@ -47,7 +47,11 @@ do --[[ FrameXML\MainMenuBarMicroButtons.lua ]]
     function Hook.MoveMicroButtons(anchor, anchorTo, relAnchor, x, y, isStacked)
         _G.LFDMicroButton:ClearAllPoints()
         if isStacked then
-            _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, 22)
+            if private.isPatch then
+                _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, -1)
+            else
+                _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, 22)
+            end
         else
             _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", -2, 0)
         end
@@ -86,7 +90,11 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
         Base.SetHighlight(button, "backdrop")
 
         --[[ Scale ]]--
-        button:SetSize(28, 58)
+        if private.isPatch then
+            button:SetSize(26, 30)
+        else
+            button:SetSize(28, 58)
+        end
         button:SetPoint(button:GetPoint())
     end
     function Skin.MicroButtonAlertTemplate(frame)
@@ -156,8 +164,10 @@ function private.FrameXML.MainMenuBarMicroButtons()
     Skin.MicroButtonAlertTemplate(_G.EJMicroButtonAlert)
 
     --[[ Scale ]]--
-    _G.TalentMicroButtonAlert:SetPoint("BOTTOM", _G.TalentMicroButtonAlert.MicroButton, "TOP", 0, -8)
-    _G.CollectionsMicroButtonAlert:SetPoint("BOTTOM", _G.CollectionsMicroButtonAlert.MicroButton, "TOP", 0, -8)
-    _G.LFDMicroButtonAlert:SetPoint("BOTTOM", _G.LFDMicroButtonAlert.MicroButton, "TOP", 0, -8)
-    _G.EJMicroButtonAlert:SetPoint("BOTTOM", _G.EJMicroButtonAlert.MicroButton, "TOP", 0, -8)
+    if not private.isPatch then
+        _G.TalentMicroButtonAlert:SetPoint("BOTTOM", _G.TalentMicroButtonAlert.MicroButton, "TOP", 0, -8)
+        _G.CollectionsMicroButtonAlert:SetPoint("BOTTOM", _G.CollectionsMicroButtonAlert.MicroButton, "TOP", 0, -8)
+        _G.LFDMicroButtonAlert:SetPoint("BOTTOM", _G.LFDMicroButtonAlert.MicroButton, "TOP", 0, -8)
+        _G.EJMicroButtonAlert:SetPoint("BOTTOM", _G.EJMicroButtonAlert.MicroButton, "TOP", 0, -8)
+    end
 end

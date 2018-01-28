@@ -11,34 +11,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.BagSearchBoxTemplate(editbox)
         Skin.SearchBoxTemplate(editbox)
     end
-    function Skin.UICheckButtonTemplate(checkbutton)
-        checkbutton:SetSize(checkbutton:GetSize())
-
-        local bd = _G.CreateFrame("Frame", nil, checkbutton)
-        bd:SetPoint("TOPLEFT", 6, -6)
-        bd:SetPoint("BOTTOMRIGHT", -6, 6)
-        bd:SetFrameLevel(checkbutton:GetFrameLevel())
-        Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
-
-        checkbutton:SetNormalTexture("")
-        checkbutton:SetPushedTexture("")
-        checkbutton:SetHighlightTexture("")
-
-        local check = checkbutton:GetCheckedTexture()
-        check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", bd, -7, 7)
-        check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
-        check:SetDesaturated(true)
-        check:SetVertexColor(Aurora.highlightColor:GetRGB())
-
-        local disabled = checkbutton:GetDisabledCheckedTexture()
-        disabled:ClearAllPoints()
-        disabled:SetPoint("TOPLEFT", -7, 7)
-        disabled:SetPoint("BOTTOMRIGHT", 7, -7)
-
-        checkbutton._auroraBDFrame = bd
-        Base.SetHighlight(checkbutton, "backdrop")
-    end
     function Skin.UIPanelInfoButton(button)
         button:SetSize(16, 16)
         button.texture:SetTexture([[Interface\Common\help-i]])
