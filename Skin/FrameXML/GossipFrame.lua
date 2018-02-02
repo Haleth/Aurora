@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\GossipFrame.lua ]]
     local availDataPerQuest, activeDataPerQuest = 7, 6
@@ -48,7 +49,7 @@ do --[[ FrameXML\GossipFrame.xml ]]
     end
     function Skin.GossipTitleButtonTemplate(button)
         local highlight = button:GetHighlightTexture()
-        local r, g, b = Aurora.highlightColor:GetRGB()
+        local r, g, b = Color.highlight:GetRGB()
         highlight:SetColorTexture(r, g, b, 0.2)
     end
 end

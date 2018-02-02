@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 local function SetTexture(texture, anchor, left, right, top, bottom)
     if left then
@@ -79,7 +80,7 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
         bd:SetPoint("TOPLEFT", 2, -22)
         bd:SetPoint("BOTTOMRIGHT", -2, 2)
         bd:SetFrameLevel(button:GetFrameLevel())
-        Base.SetBackdrop(bd, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(bd, Color.button:GetRGBA())
 
         button:SetHighlightTexture("")
         button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)

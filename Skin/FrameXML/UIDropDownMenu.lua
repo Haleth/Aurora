@@ -4,6 +4,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Base, Skin, Hook = Aurora.Base, Aurora.Skin, Aurora.Hook
+local Color = Aurora.Color
 
 do --[[ FrameXML\UIDropDownMenu.lua ]]
     local skinnedLevels, skinnedButtons = 2, 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
@@ -156,7 +157,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         disabled:SetAllPoints(button)
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
 
         local arrow = button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 4, -7)
@@ -170,7 +171,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         bg:SetPoint("TOPLEFT", left, 20, -21)
         bg:SetPoint("BOTTOMRIGHT", right, -19, 23)
         bg:SetFrameLevel(frame:GetFrameLevel())
-        Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.button:GetRGBA())
 
 
         --[[Scale]]

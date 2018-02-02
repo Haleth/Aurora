@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\PVPHelper.lua ]]
     function Hook.PVPReadyDialog_Display(self, index, displayName, isRated, queueType, gameType, role)
@@ -36,7 +37,7 @@ function private.FrameXML.PVPHelper()
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
 
         button._auroraHighlight = {}
         local hline = button:CreateTexture()

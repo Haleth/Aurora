@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 --[[ do FrameXML\MoneyInputFrame.lua
 end ]]
@@ -26,7 +27,7 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
             bd:SetPoint("TOPLEFT", -2, 0)
             bd:SetPoint("BOTTOMRIGHT")
             bd:SetFrameLevel(editbox:GetFrameLevel()-1)
-            Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
+            Base.SetBackdrop(bd, Color.frame:GetRGBA())
 
             if i > 1 then
                 editbox:SetPoint("LEFT", frame[money[i - 1]], "RIGHT", 6, 0)

@@ -4,6 +4,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\ItemButtonTemplate.lua ]]
     local size = 6
@@ -88,7 +89,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", -3, 1)
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame:GetRGBA())
         button._auroraNameBG = bg
     end
     function Skin.SmallItemButtonTemplate(button)
@@ -102,7 +103,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame:GetRGBA())
         button._auroraNameBG = bg
     end
 end

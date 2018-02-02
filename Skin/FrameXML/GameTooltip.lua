@@ -6,6 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_OnHide(gametooltip)
@@ -36,8 +37,8 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     end
     function Skin.TooltipProgressBarTemplate(frame)
         local bar = frame.Bar
-        Base.SetBackdrop(bar, Aurora.frameColor:GetRGBA())
-        bar:SetBackdropBorderColor(Aurora.buttonColor:GetRGB())
+        Base.SetBackdrop(bar, Color.frame:GetRGBA())
+        bar:SetBackdropBorderColor(Color.button:GetRGB())
 
         local texture = bar:GetStatusBarTexture()
         Base.SetTexture(texture, "gradientUp")
@@ -48,12 +49,12 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
         bar.BorderMid:Hide()
 
         local LeftDivider = bar.LeftDivider
-        LeftDivider:SetColorTexture(Aurora.buttonColor:GetRGB())
+        LeftDivider:SetColorTexture(Color.button:GetRGB())
         LeftDivider:SetSize(1, 15)
         LeftDivider:SetPoint("LEFT", 73, 0)
 
         local RightDivider = bar.RightDivider
-        RightDivider:SetColorTexture(Aurora.buttonColor:GetRGB())
+        RightDivider:SetColorTexture(Color.button:GetRGB())
         RightDivider:SetSize(1, 15)
         RightDivider:SetPoint("RIGHT", -73, 0)
 

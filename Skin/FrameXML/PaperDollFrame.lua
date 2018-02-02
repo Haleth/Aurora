@@ -6,6 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\PaperDollFrame.lua ]]
     function Hook.PaperDollFrame_SetLevel()
@@ -78,7 +79,7 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
 
         button.Highlight:SetTexture("")
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGB())
+        Base.SetBackdrop(button, Color.button:GetRGB())
         Base.SetHighlight(button, "backdrop")
     end
 end

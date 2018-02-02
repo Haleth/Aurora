@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\ContainerFrame.lua ]]
     local BAG_FILTER_ICONS = {
@@ -17,9 +18,9 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         local color
         if id > _G.NUM_BAG_FRAMES then
             -- bank bags
-            color = Aurora.buttonColor
+            color = Color.button
         else
-            color = Aurora.frameColor
+            color = Color.frame
         end
 
         frame._auroraBDFrame:SetBackdropColor(color.r, color.g, color.b)
@@ -90,7 +91,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
         local moneyFrame = _G[name.."MoneyFrame"]
         local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
-        Base.SetBackdrop(moneyBG, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(moneyBG, Color.frame:GetRGBA())
         moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
         moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
         moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)

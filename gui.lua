@@ -64,7 +64,7 @@ local old = {}
 local checkboxes = {}
 
 local function updateFrames()
-    local r, g, b = _G.Aurora.frameColor:GetRGB()
+    local r, g, b = Aurora.Color.frame:GetRGB()
     for i = 1, #C.frames do
         C.frames[i]:SetBackdropColor(r, g, b, _G.AuroraConfig.alpha)
     end
@@ -156,7 +156,7 @@ local createColorSwatch do
         _G.OpenColorPicker(info)
     end
 
-    local frameColor = Aurora.frameColor
+    local frameColor = Aurora.Color.frame
     function createColorSwatch(parent, value, text)
         local button = CreateFrame("Button", nil, parent)
         button:SetScript("OnClick", OnClick)

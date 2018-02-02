@@ -6,6 +6,7 @@ local next = _G.next
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\ReputationFrame.lua ]]
     function Hook.ReputationFrame_OnShow(self)
@@ -42,13 +43,13 @@ do --[[ FrameXML\ReputationFrame.lua ]]
             if atWarWith then
                 factionBackground:SetColorTexture(0.6, 0.2, 0.2)
             else
-                factionBackground:SetColorTexture(Aurora.buttonColor:GetRGB())
+                factionBackground:SetColorTexture(Color.button:GetRGB())
             end
 
             if factionRow.index == _G.GetSelectedFaction() then
                 if ( _G.ReputationDetailFrame:IsShown() ) then
                     for _, texture in next, factionRow._auroraHighlight do
-                        texture:SetColorTexture(Aurora.highlightColor:GetRGB())
+                        texture:SetColorTexture(Color.highlight:GetRGB())
                     end
                 end
             else
@@ -73,35 +74,35 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         local factionRowName = button:GetName()
 
         local background = _G[factionRowName.."Background"]
-        background:SetColorTexture(Aurora.buttonColor:GetRGB())
+        background:SetColorTexture(Color.button:GetRGB())
         background:SetPoint("TOPRIGHT")
         background:SetHeight(20)
 
         do -- highlight
             button._auroraHighlight = {}
             local left = button:CreateTexture(nil, "ARTWORK", nil, 3)
-            left:SetColorTexture(Aurora.frameColor:GetRGB())
+            left:SetColorTexture(Color.frame:GetRGB())
             left:SetPoint("TOPLEFT")
             left:SetPoint("BOTTOMLEFT")
             left:SetWidth(1)
             _G.tinsert(button._auroraHighlight, left)
 
             local right = button:CreateTexture(nil, "ARTWORK", nil, 3)
-            right:SetColorTexture(Aurora.frameColor:GetRGB())
+            right:SetColorTexture(Color.frame:GetRGB())
             right:SetPoint("TOPRIGHT")
             right:SetPoint("BOTTOMRIGHT")
             right:SetWidth(1)
             _G.tinsert(button._auroraHighlight, right)
 
             local top = button:CreateTexture(nil, "ARTWORK", nil, 3)
-            top:SetColorTexture(Aurora.frameColor:GetRGB())
+            top:SetColorTexture(Color.frame:GetRGB())
             top:SetPoint("TOPLEFT")
             top:SetPoint("TOPRIGHT")
             top:SetHeight(1)
             _G.tinsert(button._auroraHighlight, top)
 
             local bottom = button:CreateTexture(nil, "ARTWORK", nil, 3)
-            bottom:SetColorTexture(Aurora.frameColor:GetRGB())
+            bottom:SetColorTexture(Color.frame:GetRGB())
             bottom:SetPoint("BOTTOMLEFT")
             bottom:SetPoint("BOTTOMRIGHT")
             bottom:SetHeight(1)
@@ -120,7 +121,7 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         _G[statusName.."LeftTexture"]:Hide()
 
         local statusBG = _G[statusName.."RightTexture"]
-        statusBG:SetColorTexture(Aurora.frameColor:GetRGB())
+        statusBG:SetColorTexture(Color.frame:GetRGB())
         statusBG:SetDrawLayer("BACKGROUND", -3)
         statusBG:ClearAllPoints()
         statusBG:SetPoint("TOPLEFT")
@@ -167,7 +168,7 @@ function private.FrameXML.ReputationFrame()
 
     --[[ ReputationDetailFrame ]]--
     _G.ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
-    Base.SetBackdrop(_G.ReputationDetailFrame, Aurora.frameColor:GetRGBA())
+    Base.SetBackdrop(_G.ReputationDetailFrame, Color.frame:GetRGBA())
 
     _G.ReputationDetailFactionName:SetPoint("TOPLEFT", 10, -10)
     _G.ReputationDetailFactionName:SetPoint("TOPRIGHT", -10, -10)
@@ -177,10 +178,10 @@ function private.FrameXML.ReputationFrame()
     local detailBG = _G.select(3, _G.ReputationDetailFrame:GetRegions())
     detailBG:SetPoint("TOPLEFT", 1, -1)
     detailBG:SetPoint("BOTTOMRIGHT", _G.ReputationDetailFrame, "TOPRIGHT", -1, -142)
-    detailBG:SetColorTexture(Aurora.buttonColor:GetRGB())
+    detailBG:SetColorTexture(Color.button:GetRGB())
     _G.ReputationDetailCorner:Hide()
 
-    _G.ReputationDetailDivider:SetColorTexture(Aurora.frameColor:GetRGB())
+    _G.ReputationDetailDivider:SetColorTexture(Color.frame:GetRGB())
     _G.ReputationDetailDivider:ClearAllPoints()
     _G.ReputationDetailDivider:SetPoint("BOTTOMLEFT", detailBG)
     _G.ReputationDetailDivider:SetPoint("BOTTOMRIGHT", detailBG)

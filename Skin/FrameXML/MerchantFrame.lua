@@ -6,6 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\MoneyFrame.lua ]]
     local numCurrencies = 0
@@ -29,7 +30,7 @@ do --[[ FrameXML\MerchantFrame.xml ]]
         local bg = _G.CreateFrame("Frame", nil, frame)
         bg:SetPoint("TOPLEFT", frame.ItemButton.icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", 0, -4)
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame:GetRGBA())
 
         frame.Name:ClearAllPoints()
         frame.Name:SetPoint("TOPLEFT", bg, 2, -1)
@@ -79,7 +80,7 @@ function private.FrameXML.MerchantFrame()
         local bg = _G.CreateFrame("Frame", nil, _G.MerchantBuyBackItem)
         bg:SetPoint("TOPLEFT", _G.MerchantBuyBackItem.ItemButton.icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", 0, -1)
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame:GetRGBA())
 
         _G.MerchantBuyBackItem.Name:ClearAllPoints()
         _G.MerchantBuyBackItem.Name:SetPoint("TOPLEFT", bg, 2, -1)

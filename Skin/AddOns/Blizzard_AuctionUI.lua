@@ -9,6 +9,7 @@ local CreateFrame = _G.CreateFrame
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
+local Color = Aurora.Color
 local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_AuctionUI()
@@ -21,7 +22,7 @@ function private.AddOns.Blizzard_AuctionUI()
     end
 
     local moneyBG = _G.CreateFrame("Frame", nil, _G.AuctionFrame)
-    Base.SetBackdrop(moneyBG, Aurora.frameColor:GetRGBA())
+    Base.SetBackdrop(moneyBG, Color.frame:GetRGBA())
     moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
     moneyBG:SetPoint("BOTTOMLEFT", 20, 18)
     moneyBG:SetPoint("TOPRIGHT", _G.AuctionFrame, "BOTTOMLEFT", 175, 35)

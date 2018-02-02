@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.SearchBoxTemplate(editbox)
@@ -27,7 +28,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         button:SetNormalTexture("")
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
     end
     function Skin.UIPanelLargeSilverButton(button)
         local buttonName = button:GetName()
@@ -37,7 +38,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         for i = 3, 6 do
             _G.select(i, button:GetRegions()):Hide()
         end
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
         Base.SetHighlight(button, "backdrop")
     end
     function Skin.GlowBoxTemplate(frame)
@@ -92,7 +93,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         _G[name.."Right"]:Hide()
         _G[name.."Middle"]:Hide()
 
-        Base.SetBackdrop(frame, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(frame, Color.frame:GetRGBA())
         frame:SetBackdropBorderColor(1, 0.95, 0.15)
     end
 end

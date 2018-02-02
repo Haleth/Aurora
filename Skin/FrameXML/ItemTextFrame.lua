@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\ItemTextFrame.lua ]]
     function Hook.ItemTextFrame_OnEvent(self, event, ...)
@@ -56,7 +57,7 @@ function private.FrameXML.ItemTextFrame()
     _G.ItemTextStatusBar:SetHeight(17)
     Base.SetTexture(_G.ItemTextStatusBar:GetStatusBarTexture(), "gradientUp")
     local statusBG = _G.ItemTextStatusBar:GetRegions()
-    statusBG:SetColorTexture(Aurora.frameColor:GetRGB())
+    statusBG:SetColorTexture(Color.frame:GetRGB())
     statusBG:SetDrawLayer("BACKGROUND", -3)
     statusBG:ClearAllPoints()
     statusBG:SetPoint("TOPLEFT")

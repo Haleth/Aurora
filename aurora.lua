@@ -63,6 +63,7 @@ function private.OnLoad()
     end
 
     -- Setup colors
+    local Color = Aurora.Color
     function private.updateHighlightColor()
         local r, g, b
         if AuroraConfig.useCustomColour then
@@ -72,11 +73,20 @@ function private.OnLoad()
         end
 
         C.r, C.g, C.b = r, g, b -- deprecated
-        Aurora.highlightColor:SetRGBA(r, g, b, Aurora.frameColor.a)
+        Color.highlight:SetRGBA(r, g, b, Color.frame.a)
     end
     function private.classColorsInit()
-        for classToken, color in next, AuroraConfig.customClassColors do
-            _G.CUSTOM_CLASS_COLORS[classToken]:SetRGB(color.r, color.g, color.b)
+        local color, hasChanged
+        for classToken, classColor in next, AuroraConfig.customClassColors do
+            color = _G.CUSTOM_CLASS_COLORS[classToken]
+            if not color:IsEqualTo(classColor) then
+                color:SetRGB(classColor.r, classColor.g, classColor.b)
+                hasChanged = true
+            end
+        end
+
+        if hasChanged then
+            private.updateHighlightColor()
         end
     end
     function private.classColorsHaveChanged()
@@ -111,7 +121,7 @@ function private.OnLoad()
     end
 
     if AuroraConfig.buttonsHaveGradient then
-        Aurora.buttonColor:SetRGBA(.4, .4, .4, 1)
+        Color.button:SetRGBA(.4, .4, .4, 1)
     end
 
     -- Show splash screen for first time users
@@ -122,16 +132,16 @@ function private.OnLoad()
     -- Create API hooks
     local Base, Hook = Aurora.Base, Aurora.Hook
     function Hook.GameTooltip_OnHide(gametooltip)
-        local color = Aurora.frameColor
+        local color = Color.frame
         Base.SetBackdropColor(gametooltip, color.r, color.g, color.b, AuroraConfig.alpha)
     end
 
     function Base.Post.SetBackdrop(ret, frame, r, g, b, a)
-        if AuroraConfig.buttonsHaveGradient and Aurora.buttonColor:IsEqualTo(r, g, b, a) then
+        if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(r, g, b, a) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)
         elseif not a then
-            r, g, b = Aurora.frameColor:GetRGB()
+            r, g, b = Color.frame:GetRGB()
             frame:SetBackdropColor(r, g, b, AuroraConfig.alpha)
             _G.tinsert(C.frames, frame)
         end

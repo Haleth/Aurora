@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\OptionsPanelTemplates.xml ]]
     function Skin.OptionsButtonTemplate(button)
@@ -20,14 +21,14 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         check:SetPoint("TOPLEFT", -7, 7)
         check:SetPoint("BOTTOMRIGHT", 7, -7)
         check:SetDesaturated(true)
-        check:SetVertexColor(Aurora.highlightColor:GetRGB())
+        check:SetVertexColor(Color.highlight:GetRGB())
 
         local disabled = checkbutton:GetDisabledCheckedTexture()
         disabled:ClearAllPoints()
         disabled:SetPoint("TOPLEFT", -7, 7)
         disabled:SetPoint("BOTTOMRIGHT", 7, -7)
 
-        Base.SetBackdrop(checkbutton, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(checkbutton, Color.frame:GetRGBA())
         Base.SetHighlight(checkbutton, "backdrop")
     end
 
@@ -51,7 +52,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
             bg:SetPoint("TOPLEFT", slider, 5, -5)
             bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
             bg:SetFrameLevel(slider:GetFrameLevel())
-            Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+            Base.SetBackdrop(bg, Color.frame:GetRGBA())
 
             local thumbTexture = slider:GetThumbTexture()
             thumbTexture:SetAlpha(0)
@@ -60,7 +61,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
             local thumb = _G.CreateFrame("Frame", nil, bg)
             thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
             thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
-            Base.SetBackdrop(thumb, Aurora.buttonColor:GetRGBA())
+            Base.SetBackdrop(thumb, Color.button:GetRGBA())
             slider._auroraThumb = thumb
         end
     end

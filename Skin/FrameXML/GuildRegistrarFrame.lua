@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
+local Color = Aurora.Color
 
 function private.FrameXML.GuildRegistrarFrame()
     Skin.ButtonFrameTemplate(_G.GuildRegistrarFrame)
@@ -21,7 +22,7 @@ function private.FrameXML.GuildRegistrarFrame()
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFramePurchaseButton)
 
     _G.GuildRegistrarFrameEditBox:SetHeight(20)
-    Base.SetBackdrop(_G.GuildRegistrarFrameEditBox, Aurora.frameColor:GetRGBA())
+    Base.SetBackdrop(_G.GuildRegistrarFrameEditBox, Color.frame:GetRGBA())
     local _, _, left, right = _G.GuildRegistrarFrameEditBox:GetRegions()
     left:Hide()
     right:Hide()

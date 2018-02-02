@@ -6,6 +6,7 @@ local next = _G.next
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\TutorialFrame.lua ]]
     local MAX_TUTORIAL_IMAGES = 3
@@ -101,7 +102,7 @@ function private.FrameXML.TutorialFrame()
     _G.TutorialFrameOkayButton:SetNormalTexture("")
     _G.TutorialFrameOkayButton:SetPushedTexture("")
     _G.TutorialFrameOkayButton:SetHighlightTexture("")
-    Base.SetBackdrop(_G.TutorialFrameOkayButton, Aurora.buttonColor:GetRGBA())
+    Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button:GetRGBA())
     Base.SetHighlight(_G.TutorialFrameOkayButton, "backdrop")
 
     for i, suffix in next, {"PrevButton", "NextButton"} do

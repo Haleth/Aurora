@@ -1,48 +1,11 @@
 local _, private = ...
 
--- luacheck: globals next assert type
+-- luacheck: globals next assert type pcall
 
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
-
-local colorMeta = _G.Mixin({}, _G.ColorMixin)
-function colorMeta:SetRGBA(r, g, b, a)
-    self.r = r
-    self.g = g
-    self.b = b
-    self.a = a
-    self.colorStr = self:GenerateHexColor()
-end
-function colorMeta:IsEqualTo(r, g, b, a)
-    if _G.type(r) == "table" then
-        return self.r == r.r
-            and self.g == r.g
-            and self.b == r.b
-            and self.a == r.a
-    else
-        return self.r == r
-            and self.g == g
-            and self.b == b
-            and self.a == a
-    end
-end
-local function CreateColor(r, g, b, a)
-    local color = _G.CreateFromMixins(colorMeta)
-    color:OnLoad(r, g, b, a)
-    return color
-end
-Base.CreateColor = CreateColor
-
-
-local highlightColor = CreateColor(0, 0, 1, 1) -- Temporary, the proper highlight color will be set later
-Aurora.highlightColor = highlightColor
-
-local buttonColor = CreateColor(.2, .2, .2, 1)
-Aurora.buttonColor = buttonColor
-
-local frameColor = CreateColor(0, 0, 0, 0.2)
-Aurora.frameColor = frameColor
+local Color = Aurora.Color
 
 Aurora.classIcons = { -- adjusted for borderless icons
     ["WARRIOR"]     = {0.01953125, 0.234375, 0.01953125, 0.234375},
@@ -333,7 +296,7 @@ do -- Base API
             Base.SetBackdropColor(frame, r, g, b, a)
         end
         function Base.SetBackdropColor(frame, r, g, b, a)
-            if not r then r, g, b, a = frameColor:GetRGBA() end
+            if not r then r, g, b, a = Color.frame:GetRGBA() end
             frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
             frame:SetBackdropBorderColor(r, g, b, 1)
         end
@@ -353,7 +316,7 @@ do -- Base API
             end
 
             if shadowColor then
-                fontObj:SetShadowColor(shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a)
+                fontObj:SetShadowColor(shadowColor.r, shadowColor.g, shadowColor.b, 0.5)
             end
 
             if shadowX and shadowY then
@@ -386,10 +349,10 @@ do -- Base API
         local function OnEnter(button, isBackground)
             if button:IsEnabled() then
                 if isBackground then
-                    Base.SetBackdropColor(button._auroraBDFrame or button, highlightColor:GetRGB())
+                    Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight:GetRGB())
                 else
                     for _, texture in next, button._auroraHighlight do
-                        button._auroraSetColor(texture, highlightColor:GetRGB())
+                        button._auroraSetColor(texture, Color.highlight:GetRGB())
                     end
                 end
             end
@@ -416,7 +379,7 @@ do -- Base API
                 r, g, b = bdFrame:GetBackdropBorderColor()
                 _, _, _, a = bdFrame:GetBackdropColor()
             end
-            button._returnColor = CreateColor(r, g, b, a)
+            button._returnColor = Color.Create(r, g, b, a)
             button._auroraSetColor = setColor
             button:HookScript("OnEnter", function(self)
                 (enter or OnEnter)(self, highlightType == "backdrop")
@@ -765,4 +728,150 @@ do -- Scale API
         widget:Hide()
     end
     HookSetters(_G.Minimap)
+end
+
+do -- Color API
+    local colorMeta = _G.Mixin({}, _G.ColorMixin)
+    function colorMeta:SetRGBA(r, g, b, a)
+        self.r = r
+        self.g = g
+        self.b = b
+        self.a = a
+        self.colorStr = self:GenerateHexColor()
+    end
+    function colorMeta:IsEqualTo(r, g, b, a)
+        if _G.type(r) == "table" then
+            return self.r == r.r
+                and self.g == r.g
+                and self.b == r.b
+                and self.a == r.a
+        else
+            return self.r == r
+                and self.g == g
+                and self.b == b
+                and self.a == a
+        end
+    end
+
+    function Color.Create(r, g, b, a)
+        local color = _G.CreateFromMixins(colorMeta)
+        color:OnLoad(r, g, b, a)
+        return color
+    end
+
+    Color.yellow = Color.Create(1, 0.82, 0)
+    Color.black = Color.Create(0, 0, 0)
+    Color.darkGray = Color.Create(0.2, 0.2, 0.2)
+    Color.gray = Color.Create(0.5, 0.5, 0.5)
+    Color.white = Color.Create(1, 1, 1)
+
+    do -- CUSTOM_CLASS_COLORS
+        local classColors = {}
+
+        local callbacks, numCallbacks = {}, 0
+        function classColors:RegisterCallback(method, handler)
+            --print("CUSTOM_CLASS_COLORS:RegisterCallback", method, handler)
+            assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :RegisterCallback (string or function expected)")
+            if type(method) == "string" then
+                assert(type(handler) == "table", "Bad argument #2 to :RegisterCallback (table expected)")
+                assert(type(handler[method]) == "function", "Bad argument #1 to :RegisterCallback (method \"" .. method .. "\" not found)")
+                method = handler[method]
+            end
+            -- assert(not callbacks[method] "Callback already registered!")
+            callbacks[method] = handler or true
+            numCallbacks = numCallbacks + 1
+        end
+        function classColors:UnregisterCallback(method, handler)
+            --print("CUSTOM_CLASS_COLORS:UnregisterCallback", method, handler)
+            assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :UnregisterCallback (string or function expected)")
+            if type(method) == "string" then
+                assert(type(handler) == "table", "Bad argument #2 to :UnregisterCallback (table expected)")
+                assert(type(handler[method]) == "function", "Bad argument #1 to :UnregisterCallback (method \"" .. method .. "\" not found)")
+                method = handler[method]
+            end
+            -- assert(callbacks[method], "Callback not registered!")
+            callbacks[method] = nil
+            numCallbacks = numCallbacks - 1
+        end
+        local function DispatchCallbacks()
+            if numCallbacks < 1 then return end
+            --print("CUSTOM_CLASS_COLORS:DispatchCallbacks")
+            for method, handler in next, callbacks do
+                local ok, err = pcall(method, handler ~= true and handler or nil)
+                if not ok then
+                    _G.print("ERROR:", err)
+                end
+            end
+        end
+
+        function classColors:NotifyChanges()
+            --print("CUSTOM_CLASS_COLORS:NotifyChanges", private.classColorsHaveChanged)
+            if not private.classColorsHaveChanged then
+                -- We can't determine if the colors have changed, dispatch just in case.
+                DispatchCallbacks()
+            elseif private.classColorsHaveChanged() then
+                DispatchCallbacks()
+            end
+        end
+
+        local classTokens = {}
+        for token, class in next, _G.LOCALIZED_CLASS_NAMES_MALE do
+            classTokens[class] = token
+        end
+        for token, class in next, _G.LOCALIZED_CLASS_NAMES_FEMALE do
+            classTokens[class] = token
+        end
+        function classColors:GetClassToken(className)
+            return className and classTokens[className]
+        end
+
+        function private.classColorsReset(colors, noMeta)
+            colors = colors or _G.CUSTOM_CLASS_COLORS
+            for class, color in next, _G.RAID_CLASS_COLORS do
+                if noMeta then
+                    if colors[class] then
+                        colors[class].r = color.r
+                        colors[class].g = color.g
+                        colors[class].b = color.b
+                        colors[class].colorStr = color.colorStr
+                    else
+                        colors[class] = {
+                            r = color.r,
+                            g = color.g,
+                            b = color.b,
+                            colorStr = color.colorStr
+                        }
+                    end
+                else
+                    if colors[class] and colors[class].SetRGB then
+                        colors[class]:SetRGB(color.r, color.g, color.b)
+                    else
+                        colors[class] = _G.setmetatable({}, {
+                            __index = Color.Create(color.r, color.g, color.b)
+                        })
+                    end
+                end
+            end
+
+            if colors then
+                classColors:NotifyChanges()
+            else
+                DispatchCallbacks()
+            end
+        end
+        function private.updateHighlightColor()
+            Color.highlight:SetRGBA(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGBA())
+        end
+
+        _G.CUSTOM_CLASS_COLORS = {}
+        private.classColorsReset()
+
+        _G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = classColors})
+    end
+
+
+    local color = _G.CUSTOM_CLASS_COLORS[private.charClass.token]
+    Color.highlight = Color.Create(color.r, color.g, color.b)
+    Color.button = Color.Create(Color.darkGray.r, Color.darkGray.g, Color.darkGray.b)
+    Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
 end

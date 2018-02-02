@@ -6,6 +6,7 @@ local next, tinsert = _G.next, _G.tinsert
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do -- BlizzWTF: These are not templates, but they should be
     -- ExpandOrCollapse
@@ -33,7 +34,7 @@ do -- BlizzWTF: These are not templates, but they should be
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetSize(13, 13)
         bg:SetPoint("TOPLEFT", button:GetNormalTexture(), 0, -2)
-        Base.SetBackdrop(bg, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.button:GetRGBA())
         button._auroraBG = bg
 
         button._auroraHighlight = {}
@@ -64,7 +65,7 @@ do -- BlizzWTF: These are not templates, but they should be
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
     end
     function Skin.NavButtonPrevious(button)
         NavButton(button)
@@ -164,7 +165,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             dis:SetAllPoints()
         end
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
 
         local cross = button:CreateTexture(nil, "ARTWORK")
         cross:SetPoint("TOPLEFT", 4, -4)
@@ -180,7 +181,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         button.Middle:SetAlpha(0)
         button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
         Base.SetHighlight(button, "backdrop")
 
         --[[ Scale ]]--
@@ -192,7 +193,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bd:SetPoint("TOPLEFT", 6, -6)
         bd:SetPoint("BOTTOMRIGHT", -6, 6)
         bd:SetFrameLevel(checkbutton:GetFrameLevel())
-        Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bd, Color.frame:GetRGBA())
 
         checkbutton:SetNormalTexture("")
         checkbutton:SetPushedTexture("")
@@ -203,7 +204,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         check:SetPoint("TOPLEFT", bd, -7, 7)
         check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
         check:SetDesaturated(true)
-        check:SetVertexColor(Aurora.highlightColor:GetRGB())
+        check:SetVertexColor(Color.highlight:GetRGB())
 
         local disabled = checkbutton:GetDisabledCheckedTexture()
         disabled:ClearAllPoints()
@@ -319,7 +320,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bd:SetPoint("TOPLEFT", 1, -1)
         bd:SetPoint("BOTTOMRIGHT", -1, 1)
         bd:SetFrameLevel(button:GetFrameLevel())
-        Base.SetBackdrop(bd, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bd, Color.frame:GetRGBA())
 
         button._auroraBDFrame = bd
         Base.SetHighlight(button, "backdrop")
@@ -332,7 +333,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bg:SetPoint("TOPLEFT", slider, 5, -5)
         bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
         bg:SetFrameLevel(slider:GetFrameLevel())
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame:GetRGBA())
 
         local thumbTexture = slider:GetThumbTexture()
         thumbTexture:SetAlpha(0)
@@ -341,7 +342,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local thumb = _G.CreateFrame("Frame", nil, bg)
         thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
-        Base.SetBackdrop(thumb, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(thumb, Color.button:GetRGBA())
         slider._auroraThumb = thumb
     end
 
@@ -356,7 +357,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         disabled:SetDrawLayer("OVERLAY")
         disabled:SetAllPoints()
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
     end
     function Skin.UIPanelScrollUpButtonTemplate(button)
         Skin.UIPanelScrollBarButton(button)
@@ -390,7 +391,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.ThumbTexture, 0, -2)
         thumb:SetPoint("BOTTOMRIGHT", slider.ThumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(thumb, Color.button:GetRGBA())
         slider._auroraThumb = thumb
     end
     function Skin.UIPanelStretchableArtScrollBarTemplate(slider)
@@ -426,7 +427,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bg:SetPoint("TOPLEFT", editbox.Left)
         bg:SetPoint("BOTTOMRIGHT", editbox.Right)
         bg:SetFrameLevel(editbox:GetFrameLevel() - 1)
-        Base.SetBackdrop(bg, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame:GetRGBA())
     end
     function Skin.InputBoxInstructionsTemplate(editbox)
         Skin.InputBoxTemplate(editbox)
@@ -441,7 +442,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             button:SetPushedTexture("")
             button:SetHighlightTexture("")
 
-            Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+            Base.SetBackdrop(button, Color.button:GetRGBA())
 
             button:ClearAllPoints()
             button:SetPoint("CENTER")

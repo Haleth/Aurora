@@ -3,15 +3,15 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-
-local yellow = Base.CreateColor(1, 0.82, 0)
-local tan = Base.CreateColor(0.49, 0.35, 0.05)
-local black = Base.CreateColor(0, 0, 0)
-local darkGrey = Base.CreateColor(0.1, 0.1, 0.1)
-local grey = Base.CreateColor(0.4, 0.4, 0.4, 0.75)
-local white = Base.CreateColor(1, 1, 1)
+local Color = Aurora.Color
 
 function private.FrameXML.Fonts()
+    local white = Color.white
+    local gray = Color.gray
+    local darkGray = Color.darkGray
+    local black = Color.black
+    local yellow = Color.yellow
+
     if not private.disabled.fonts then
         local font = private.font
 
@@ -37,7 +37,7 @@ function private.FrameXML.Fonts()
         -- FrameXML\Fonts.xml
         Base.SetFont("SystemFont_Outline_Small",       NORMAL, 10, "OUTLINE")
         Base.SetFont("SystemFont_Outline",             NORMAL, 13, "OUTLINE")
-        Base.SetFont("SystemFont_InverseShadow_Small", NORMAL, 10, nil, nil, grey, 1, -1)
+        Base.SetFont("SystemFont_InverseShadow_Small", NORMAL, 10, nil, nil, gray, 1, -1)
         Base.SetFont("SystemFont_Huge1",               NORMAL, 20)
         Base.SetFont("SystemFont_Huge1_Outline",       NORMAL, 20, "OUTLINE")
         Base.SetFont("SystemFont_OutlineThick_Huge2",  NORMAL, 22, "THICKOUTLINE")
@@ -83,11 +83,11 @@ function private.FrameXML.Fonts()
         Base.SetFont("Game15Font_ol", NORMAL, 15, "OUTLINE")
 
         Base.SetFont("QuestFont_Enormous",     HEADER, 30, nil, yellow)
-        Base.SetFont("DestinyFontMed",         HEADER, 14, nil, darkGrey)
-        Base.SetFont("DestinyFontLarge",       HEADER, 18, nil, darkGrey)
-        Base.SetFont("CoreAbilityFont",        HEADER, 32, nil, darkGrey)
-        Base.SetFont("DestinyFontHuge",        HEADER, 32, nil, darkGrey)
-        Base.SetFont("QuestFont_Shadow_Small", HEADER, 14, nil, nil, tan, 1, -1)
+        Base.SetFont("DestinyFontMed",         HEADER, 14, nil, darkGray)
+        Base.SetFont("DestinyFontLarge",       HEADER, 18, nil, darkGray)
+        Base.SetFont("CoreAbilityFont",        HEADER, 32, nil, darkGray)
+        Base.SetFont("DestinyFontHuge",        HEADER, 32, nil, darkGray)
+        Base.SetFont("QuestFont_Shadow_Small", HEADER, 14, nil, nil, black, 1, -1)
 
         Base.SetFont("MailFont_Large",    HEADER, 15)
         Base.SetFont("SpellFont_Small",   NORMAL, 10)

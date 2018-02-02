@@ -6,6 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\PVPHonorSystem.lua ]]
     function Hook.PVPHonorXPBar_Update(self)
@@ -35,7 +36,7 @@ do --[[ FrameXML\PVPHonorSystem.xml ]]
 
         local bar = frame.Bar
         bar.Background:Hide()
-        Base.SetBackdrop(bar, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(bar, Color.frame:GetRGBA())
 
         local layer, sublevel = bar:GetStatusBarTexture():GetDrawLayer()
         bar:SetBackdropBorderLayer(layer, sublevel + 1)

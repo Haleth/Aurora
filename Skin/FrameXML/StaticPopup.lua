@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\StaticPopup.lua ]]
     function Hook.StaticPopup_Resize(dialog, which)
@@ -84,7 +85,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         button:SetDisabledTexture("")
         button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Aurora.buttonColor:GetRGBA())
+        Base.SetBackdrop(button, Color.button:GetRGBA())
         Base.SetHighlight(button, "backdrop")
 
         --[[ Scale ]]--
@@ -139,7 +140,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         editboxBG:SetPoint("TOPLEFT", -2, -6)
         editboxBG:SetPoint("BOTTOMRIGHT", 2, 6)
         editboxBG:SetFrameLevel(frame.editBox:GetFrameLevel() - 1)
-        Base.SetBackdrop(editboxBG, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(editboxBG, Color.frame:GetRGBA())
 
         Skin.SmallMoneyFrameTemplate(frame.moneyFrame)
         Skin.MoneyInputFrameTemplate(frame.moneyInputFrame)
@@ -152,7 +153,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         nameBG:SetPoint("TOPLEFT", frame.ItemFrame.icon, "TOPRIGHT", 2, 1)
         nameBG:SetPoint("BOTTOMLEFT", frame.ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
         nameBG:SetPoint("RIGHT", 120, 0)
-        Base.SetBackdrop(nameBG, Aurora.frameColor:GetRGBA())
+        Base.SetBackdrop(nameBG, Color.frame:GetRGBA())
 
         --[[ Scale ]]--
         _G[name .. "Text"]:SetSize(290, 0)

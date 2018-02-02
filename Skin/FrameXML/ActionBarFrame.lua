@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 --[[ do FrameXML\ActionButton.lua
 end ]]
@@ -21,7 +22,7 @@ do --[[ FrameXML\ActionBarFrame.xml ]]
             insets = {left = 1, right = 1, top = 1, bottom = 1}
         })
         checkbutton:SetBackdropColor(1, 1, 1, 0.75)
-        checkbutton:SetBackdropBorderColor(Aurora.frameColor:GetRGB())
+        checkbutton:SetBackdropBorderColor(Color.frame:GetRGB())
         Base.CropIcon(checkbutton:GetBackdropTexture("bg"))
 
         checkbutton.icon:SetPoint("TOPLEFT", 1, -1)

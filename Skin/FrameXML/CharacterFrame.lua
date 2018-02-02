@@ -3,6 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\CharacterFrame.xml ]]
     function Skin.CharacterStatFrameCategoryTemplate(button)
@@ -13,7 +14,7 @@ do --[[ FrameXML\CharacterFrame.xml ]]
         bg:SetPoint("CENTER", 0, -5)
         bg:SetSize(210, 30)
 
-        local r, g, b = Aurora.highlightColor:GetRGB()
+        local r, g, b = Color.highlight:GetRGB()
         bg:SetVertexColor(r * 0.7, g * 0.7, b * 0.7)
     end
     function Skin.CharacterStatFrameTemplate(button)

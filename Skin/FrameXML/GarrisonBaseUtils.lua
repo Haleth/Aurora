@@ -6,6 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\GarrisonBaseUtils.lua ]]
     function Hook.GarrisonFollowerPortraitMixin_SetQuality(self, quality)
@@ -25,7 +26,7 @@ do --[[ FrameXML\GarrisonBaseUtils.xml ]]
 
         local size = frame.Portrait:GetSize() + 2
         frame:SetSize(size, size)
-        Base.SetBackdrop(frame, Aurora.frameColor.r, Aurora.frameColor.g, Aurora.frameColor.b, 1)
+        Base.SetBackdrop(frame, Color.frame.r, Color.frame.g, Color.frame.b, 1)
 
         frame.PortraitRing:Hide()
 
