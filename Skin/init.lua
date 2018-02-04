@@ -7,15 +7,16 @@ private.API_MAJOR, private.API_MINOR = 0, 2
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 0 and tonumber(minor) >= 1)
 
+private.uiScale = 1
 private.disabled = {
     bags = false,
     fonts = false,
     tooltips = false,
     mainmenubar = false,
+    uiScale = true,
+    pixelScale = true
 }
 
-private.uiScale = 1
-private.disableUIScale = true
 
 local classLocale, class, classID = _G.UnitClass("player")
 private.charClass = {
@@ -121,17 +122,16 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
         private.UpdateUIScale()
     else
         if addonName == ADDON_NAME then
-            -- Disable UI scaling until we finish rewriting the skins
-            if private.disableUIScale then
+            -- Setup function for the host addon
+            private.OnLoad()
+            private.UpdateUIScale()
+
+            if private.disabled.uiScale then
                 private.uiScale = nil
                 function Aurora.Scale.Value(value)
                     return value
                 end
             end
-
-            -- Setup function for the host addon
-            private.OnLoad()
-            private.UpdateUIScale()
 
             if _G.AuroraConfig then
                 Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient

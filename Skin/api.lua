@@ -566,30 +566,34 @@ do -- Scale API
     local uiScaleChanging = false
     local uiMod, pixelScale
     function private.UpdateUIScale()
-        if private.disableUIScale or uiScaleChanging then return end
-
-        -- Set UI scale modifier
+        if uiScaleChanging then return end
         local pysWidth, pysHeight = _G.GetPhysicalScreenSize()
-        uiMod = (pysHeight / 768) * (private.uiScale or 1)
-        private.debug("physical size", pysWidth, pysHeight)
-        private.debug("uiMod", uiMod)
 
-        -- Calculate current UI scale
-        pixelScale = 768 / pysHeight
-        local cvarScale, parentScale = _G.tonumber(_G.GetCVar("uiscale")), floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
-        private.debug("scale", pixelScale, cvarScale, parentScale)
+        if not private.disabled.uiScale then
+            -- Set UI scale modifier
+            uiMod = (pysHeight / 768) * (private.uiScale or 1)
+            private.debug("physical size", pysWidth, pysHeight)
+            private.debug("uiMod", uiMod)
+        end
 
-        uiScaleChanging = true
-        -- Set Scale (WoW CVar can't go below .64)
-        if cvarScale ~= pixelScale then
-            --[[ Setting the `uiScale` cvar will taint the ObjectiveTracker, and by extention the
-                WorldMap and map action button. As such, we only use that if we absolutly have to.]]
-            _G.SetCVar("uiScale", _G.max(pixelScale, 0.64))
+        if not private.disabled.pixelScale then
+            -- Calculate current UI scale
+            pixelScale = 768 / pysHeight
+            local cvarScale, parentScale = _G.tonumber(_G.GetCVar("uiscale")), floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
+            private.debug("scale", pixelScale, cvarScale, parentScale)
+
+            uiScaleChanging = true
+            -- Set Scale (WoW CVar can't go below .64)
+            if cvarScale ~= pixelScale then
+                --[[ Setting the `uiScale` cvar will taint the ObjectiveTracker, and by extention the
+                    WorldMap and map action button. As such, we only use that if we absolutly have to.]]
+                _G.SetCVar("uiScale", _G.max(pixelScale, 0.64))
+            end
+            if parentScale ~= pixelScale then
+                _G.UIParent:SetScale(pixelScale)
+            end
+            uiScaleChanging = false
         end
-        if parentScale ~= pixelScale then
-            _G.UIParent:SetScale(pixelScale)
-        end
-        uiScaleChanging = false
     end
     private.UpdateUIScale()
 
@@ -716,7 +720,7 @@ do -- Scale API
             local methodName = "Set" .. method
             if widget[methodName] then
                 Scale["Raw"..methodName] = mt[methodName]
-                if not private.disableUIScale then
+                if not private.disabled.uiScale then
                     local methodCheck = "_setting"..method
                     _G.hooksecurefunc(mt, methodName, function(self, ...)
                         if not doSet(self, method) then return end
