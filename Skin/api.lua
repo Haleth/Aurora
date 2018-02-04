@@ -1,6 +1,6 @@
 local _, private = ...
 
--- luacheck: globals next assert type pcall
+-- luacheck: globals next assert type pcall tinsert
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -32,6 +32,19 @@ do -- Base API
         function Base.AddSkin(addonName, func)
             assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
             private.AddOns[addonName] = func
+        end
+
+        local skinList
+        function Base.GetSkinList()
+            if not skinList then
+                skinList = {}
+                for name in next, private.AddOns do
+                    if not name:find("Blizzard") and not (name == "Pre" or name == "Post") then
+                        tinsert(skinList, name)
+                    end
+                end
+            end
+            return _G.CopyTable(skinList)
         end
     end
 
