@@ -31,7 +31,5 @@ do --[[ FrameXML\ExtraActionBar.xml ]]
 end
 
 function private.FrameXML.ExtraActionBar()
-    if private.disabled.mainmenubar then return end
-
     Skin.ExtraActionButtonTemplate(_G.ExtraActionButton1)
 end
