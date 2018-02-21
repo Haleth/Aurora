@@ -127,7 +127,6 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
             private.UpdateUIScale()
 
             if private.disabled.uiScale then
-                private.uiScale = nil
                 function Aurora.Scale.Value(value)
                     return value
                 end
