@@ -39,14 +39,14 @@ do -- BlizzWTF: These are not templates, but they should be
 
         button._auroraHighlight = {}
         bg.minus = bg:CreateTexture(nil, "OVERLAY")
-        bg.minus:SetSize(7, 1)
-        bg.minus:SetPoint("CENTER")
+        bg.minus:SetPoint("TOPLEFT", 2, -6)
+        bg.minus:SetPoint("BOTTOMRIGHT", -2, 6)
         bg.minus:SetColorTexture(1, 1, 1)
         _G.tinsert(button._auroraHighlight, bg.minus)
 
         bg.plus = bg:CreateTexture(nil, "OVERLAY")
-        bg.plus:SetSize(1, 7)
-        bg.plus:SetPoint("CENTER")
+        bg.plus:SetPoint("TOPLEFT", 6, -2)
+        bg.plus:SetPoint("BOTTOMRIGHT", -6, 2)
         bg.plus:SetColorTexture(1, 1, 1)
         _G.tinsert(button._auroraHighlight, bg.plus)
 
@@ -386,7 +386,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.UIPanelScrollDownButtonTemplate(slider.ScrollDownButton)
 
         slider.ThumbTexture:SetAlpha(0)
-        slider.ThumbTexture:SetWidth(17)
+        slider.ThumbTexture:SetSize(17, 24)
 
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.ThumbTexture, 0, -2)

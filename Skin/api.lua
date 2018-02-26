@@ -630,6 +630,13 @@ do -- Scale API
         return self:SetThickness(Scale.Value(thickness))
     end
 
+    function Scale.Atlas(self, atlas, useAtlasSize)
+        if useAtlasSize then
+            local _, x, y = _G.GetAtlasInfo(atlas or self:GetAtlas())
+            self:SetSize(x, y)
+        end
+    end
+
     local ScaleArgs do
         local function pack(t, ...)
             for i = 1, _G.select("#", ...) do
@@ -677,7 +684,7 @@ do -- Scale API
 
     -- Widget Hooks --
     local function doSet(self, method)
-        if self:IsForbidden() or self["_setting"..method] then
+        if (self:IsForbidden() or _G.InCombatLockdown()) or self["_setting"..method] then
             return false
         end
         return not self["_auroraNoSet"..method]
@@ -690,6 +697,7 @@ do -- Scale API
         "StartPoint",
         "EndPoint",
         "Thickness",
+        "Atlas",
     }
 
     local widgets = {
