@@ -1,12 +1,19 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
-local Base, Skin, Hook = Aurora.Base, Aurora.Skin, Aurora.Hook
+local Base, Scale = Aurora.Base, Aurora.Scale
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\UIDropDownMenu.lua ]]
+    function Hook.UIDropDownMenu_RefreshDropDownSize(self)
+        Scale.RawSetWidth(self, self.maxWidth + Scale.Value(25))
+    end
+
     local skinnedLevels, skinnedButtons = 2, 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
     function Hook.UIDropDownMenu_CreateFrames(level, index)
         while level > skinnedLevels do
@@ -52,7 +59,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             else
                 checkBox:SetSize(8, 8)
                 checkBox:SetPoint("LEFT", 4, 0)
-                check:SetTexture(C.media.backdrop)
+                check:SetTexture([[Interface\Buttons\WHITE8x8]])
                 check:SetSize(6, 6)
                 check:SetAlpha(0.6)
             end
@@ -80,6 +87,16 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             icon:SetHeight(1)
         end
     end
+    function Hook.UIDropDownMenuButton_OnClick(self)
+        if self.checked then
+            self._auroraCheckBox.check:Show()
+        else
+            self._auroraCheckBox.check:Hide()
+        end
+
+        _G[self:GetName().."Check"]:Hide()
+        _G[self:GetName().."UnCheck"]:Hide()
+    end
 end
 
 do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
@@ -93,25 +110,28 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         highlight:SetPoint("RIGHT", listFrame, -1, 0)
         highlight:SetPoint("TOP", 0, 0)
         highlight:SetPoint("BOTTOM", 0, 0)
-        highlight:SetColorTexture(C.r, C.g, C.b, .2)
+        highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
 
         local checkBox = _G.CreateFrame("Frame", nil, menuButton)
-        F.CreateBD(checkBox)
+        Base.SetBackdrop(checkBox, Color.button:GetRGBA())
         menuButton._auroraCheckBox = checkBox
 
         local check = checkBox:CreateTexture(nil, "ARTWORK")
         check:SetDesaturated(true)
-        check:SetVertexColor(C.r, C.g, C.b)
+        check:SetVertexColor(Color.highlight:GetRGB())
         check:SetPoint("CENTER")
         checkBox.check = check
 
         local arrow = _G[menuButtonName.."ExpandArrow"]
-        arrow:SetNormalTexture(C.media.arrowRight)
-        arrow:SetSize(8, 8)
+        Base.SetTexture(arrow:GetNormalTexture(), "arrowRight")
+        arrow:SetSize(7, 8)
+        arrow:SetPoint("RIGHT", -2, 0)
+
+        menuButton:HookScript("OnClick", Hook.UIDropDownMenuButton_OnClick)
     end
     function Skin.UIDropDownListTemplate(listFrameName)
-        F.CreateBD(_G[listFrameName.."Backdrop"])
-        F.CreateBD(_G[listFrameName.."MenuBackdrop"])
+        Base.SetBackdrop(_G[listFrameName.."Backdrop"])
+        Base.SetBackdrop(_G[listFrameName.."MenuBackdrop"])
         for i = 1, _G.UIDROPDOWNMENU_MINBUTTONS do
             Skin.UIDropDownMenuButtonTemplate(listFrameName, listFrameName.."Button"..i)
         end
@@ -192,6 +212,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
 end
 
 function private.FrameXML.UIDropDownMenu()
+    _G.hooksecurefunc("UIDropDownMenu_RefreshDropDownSize", Hook.UIDropDownMenu_RefreshDropDownSize)
     _G.hooksecurefunc("UIDropDownMenu_CreateFrames", Hook.UIDropDownMenu_CreateFrames)
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)
