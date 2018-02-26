@@ -70,6 +70,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="QuestFrame.lua"/>
     <Script file="QuestInfo.lua"/>
     <Script file="QuestMapFrame.lua"/>
+    <Script file="QuestPOI.lua"/>
     <Script file="QueueStatusFrame.lua"/>
     <Script file="QuickJoin.lua"/>
     <Script file="RaidFinder.lua"/>
