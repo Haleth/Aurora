@@ -464,6 +464,8 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_ScenarioObjectiveTracker --
     ----====####$$$$%%%%%%%$$$$####====----
+    _G.ScenarioObjectiveBlock._auroraHeight = 0
+
     --[[ Scale ]]--
     _G.ScenarioStageBlock:SetSize(201, 83)
 end
