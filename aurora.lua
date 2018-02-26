@@ -140,7 +140,7 @@ function private.OnLoad()
         if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(r, g, b, a) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
             Aurora.Base.SetBackdropColor(frame, r, g, b, a)
-        elseif not a then
+        elseif not r and not a then
             r, g, b = Color.frame:GetRGB()
             frame:SetBackdropColor(r, g, b, AuroraConfig.alpha)
             _G.tinsert(C.frames, frame)
