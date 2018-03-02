@@ -8,7 +8,7 @@ local Color = Aurora.Color
 function private.FrameXML.Fonts()
     local white = Color.white
     local gray = Color.gray
-    local darkGray = Color.darkGray
+    local grayDark = Color.grayDark
     local black = Color.black
     local yellow = Color.yellow
 
@@ -83,10 +83,10 @@ function private.FrameXML.Fonts()
         Base.SetFont("Game15Font_o1", NORMAL, 15, "OUTLINE")
 
         Base.SetFont("QuestFont_Enormous",     HEADER, 30, nil, yellow)
-        Base.SetFont("DestinyFontMed",         HEADER, 14, nil, darkGray)
-        Base.SetFont("DestinyFontLarge",       HEADER, 18, nil, darkGray)
-        Base.SetFont("CoreAbilityFont",        HEADER, 32, nil, darkGray)
-        Base.SetFont("DestinyFontHuge",        HEADER, 32, nil, darkGray)
+        Base.SetFont("DestinyFontMed",         HEADER, 14, nil, grayDark)
+        Base.SetFont("DestinyFontLarge",       HEADER, 18, nil, grayDark)
+        Base.SetFont("CoreAbilityFont",        HEADER, 32, nil, grayDark)
+        Base.SetFont("DestinyFontHuge",        HEADER, 32, nil, grayDark)
         Base.SetFont("QuestFont_Shadow_Small", HEADER, 14, nil, nil, black, 1, -1)
 
         Base.SetFont("MailFont_Large",    HEADER, 15)

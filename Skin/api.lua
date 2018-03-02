@@ -763,6 +763,8 @@ do -- Color API
         self.b = b
         self.a = a
         self.colorStr = self:GenerateHexColor()
+
+        self.isAchromatic = (r == g) and (g == b)
     end
     function colorMeta:IsEqualTo(r, g, b, a)
         if _G.type(r) == "table" then
@@ -778,6 +780,72 @@ do -- Color API
         end
     end
 
+    do -- Color modification
+        local function HueToRBG(p, q, t)
+            if t < 0   then t = t + 1 end
+            if t > 1   then t = t - 1 end
+            if t < 1/6 then return p + (q - p) * 6 * t end
+            if t < 1/2 then return q end
+            if t < 2/3 then return p + (q - p) * (2/3 - t) * 6 end
+            return p
+        end
+        local function HSLToRGB(h, s, l)
+            local r, g, b
+
+            if s <= 0 then
+                return l, l, l -- achromatic
+            else
+                local q
+                q = l < 0.5 and l * (1 + s) or l + s - l * s
+                local p = 2 * l - q
+
+                r = HueToRBG(p, q, h + 1/3)
+                g = HueToRBG(p, q, h)
+                b = HueToRBG(p, q, h - 1/3)
+            end
+
+            return r, g, b
+        end
+
+        local min, max = math.min, math.max
+        local function RGBToHSL(r, g, b)
+            local minVal, maxVal = min(r, g, b), max(r, g, b)
+            local h, s, l
+
+            l = (maxVal + minVal) / 2
+            if maxVal == minVal then
+                h, s = 0, 0 -- achromatic
+            else
+                local d = maxVal - minVal
+                s = l > 0.5 and d / (2 - maxVal - minVal) or d / (maxVal + minVal)
+                if maxVal == r then
+                    h = (g - b) / d
+                    if g < b then h = h + 6 end
+                elseif maxVal == g then
+                    h = (b - r) / d + 2
+                else
+                    h = (r - g) / d + 4
+                end
+                h = h / 6
+            end
+            return h, s, l
+        end
+
+        local Clamp = _G.Clamp
+        function colorMeta:Hue(delta)
+            local h, s, l = RGBToHSL(self.r, self.g, self.b)
+            return HSLToRGB(h + delta, s, l)
+        end
+        function colorMeta:Saturation(delta)
+            local h, s, l = RGBToHSL(self.r, self.g, self.b)
+            return HSLToRGB(h, Clamp(s + delta, 0, 1), l)
+        end
+        function colorMeta:Lightness(delta)
+            local h, s, l = RGBToHSL(self.r, self.g, self.b)
+            return HSLToRGB(h, s, Clamp(l + delta, 0, 1))
+        end
+    end
+
     function Color.Create(r, g, b, a)
         local color = _G.Mixin({}, _G.ColorMixin, colorMeta)
         color:OnLoad(r, g, b, a)
@@ -786,10 +854,11 @@ do -- Color API
 
     Color.yellow = Color.Create(1, 0.82, 0)
     Color.black = Color.Create(0, 0, 0)
-    Color.darkGray = Color.Create(0.2, 0.2, 0.2)
     Color.gray = Color.Create(0.5, 0.5, 0.5)
-    Color.grayLight = Color.Create(0.8, 0.8, 0.8)
     Color.white = Color.Create(1, 1, 1)
+
+    Color.grayDark = Color.Create(Color.black:Lightness(0.2))
+    Color.grayLight = Color.Create(Color.white:Lightness(-0.2))
 
     do -- CUSTOM_CLASS_COLORS
         local classColors = {}
@@ -898,6 +967,6 @@ do -- Color API
 
     local color = _G.CUSTOM_CLASS_COLORS[private.charClass.token]
     Color.highlight = Color.Create(color.r, color.g, color.b)
-    Color.button = Color.Create(Color.darkGray.r, Color.darkGray.g, Color.darkGray.b)
+    Color.button = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b)
     Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
 end
