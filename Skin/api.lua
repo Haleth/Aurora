@@ -788,6 +788,7 @@ do -- Color API
     Color.black = Color.Create(0, 0, 0)
     Color.darkGray = Color.Create(0.2, 0.2, 0.2)
     Color.gray = Color.Create(0.5, 0.5, 0.5)
+    Color.grayLight = Color.Create(0.8, 0.8, 0.8)
     Color.white = Color.Create(1, 1, 1)
 
     do -- CUSTOM_CLASS_COLORS
