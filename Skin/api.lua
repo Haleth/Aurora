@@ -666,19 +666,19 @@ do -- Scale API
             if self.debug then
                 private.debug("final args", method, _G.unpack(args))
             end
-            return args
+            return _G.unpack(args)
         end
     end
 
     function Scale.Point(self, ...)
-        self:SetPoint(_G.unpack(ScaleArgs(self, "Point", ...)))
+        self:SetPoint(ScaleArgs(self, "Point", ...))
     end
 
     function Scale.EndPoint(self, ...)
-        self:SetEndPoint(_G.unpack(ScaleArgs(self, "EndPoint", ...)))
+        self:SetEndPoint(ScaleArgs(self, "EndPoint", ...))
     end
     function Scale.StartPoint(self, ...)
-        self:SetStartPoint(_G.unpack(ScaleArgs(self, "StartPoint", ...)))
+        self:SetStartPoint(ScaleArgs(self, "StartPoint", ...))
     end
 
 
@@ -756,7 +756,7 @@ do -- Scale API
 end
 
 do -- Color API
-    local colorMeta = _G.Mixin({}, _G.ColorMixin)
+    local colorMeta = {}
     function colorMeta:SetRGBA(r, g, b, a)
         self.r = r
         self.g = g
@@ -779,7 +779,7 @@ do -- Color API
     end
 
     function Color.Create(r, g, b, a)
-        local color = _G.CreateFromMixins(colorMeta)
+        local color = _G.Mixin({}, _G.ColorMixin, colorMeta)
         color:OnLoad(r, g, b, a)
         return color
     end
