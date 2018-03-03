@@ -29,12 +29,15 @@ do -- Base API
     private.backdrop = backdrop
 
     do -- Base.AddSkin
+        local skinList
         function Base.AddSkin(addonName, func)
             assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
             private.AddOns[addonName] = func
+            if skinList then
+                tinsert(skinList, addonName)
+            end
         end
 
-        local skinList
         function Base.GetSkinList()
             if not skinList then
                 skinList = {}
