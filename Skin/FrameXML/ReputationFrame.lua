@@ -168,7 +168,7 @@ function private.FrameXML.ReputationFrame()
 
     --[[ ReputationDetailFrame ]]--
     _G.ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
-    Base.SetBackdrop(_G.ReputationDetailFrame, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.ReputationDetailFrame, Color.frame)
 
     _G.ReputationDetailFactionName:SetPoint("TOPLEFT", 10, -10)
     _G.ReputationDetailFactionName:SetPoint("TOPRIGHT", -10, -10)

@@ -27,7 +27,7 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
             bd:SetPoint("TOPLEFT", -2, 0)
             bd:SetPoint("BOTTOMRIGHT")
             bd:SetFrameLevel(editbox:GetFrameLevel()-1)
-            Base.SetBackdrop(bd, Color.frame:GetRGBA())
+            Base.SetBackdrop(bd, Color.frame)
 
             if i > 1 then
                 editbox:SetPoint("LEFT", frame[money[i - 1]], "RIGHT", 6, 0)

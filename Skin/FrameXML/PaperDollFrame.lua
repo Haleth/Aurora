@@ -79,7 +79,7 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
 
         button.Highlight:SetTexture("")
 
-        Base.SetBackdrop(button, Color.button:GetRGB())
+        Base.SetBackdrop(button, Color.button)
         Base.SetHighlight(button, "backdrop")
     end
 end

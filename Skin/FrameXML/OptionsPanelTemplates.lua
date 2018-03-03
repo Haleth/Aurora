@@ -28,7 +28,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         disabled:SetPoint("TOPLEFT", -7, 7)
         disabled:SetPoint("BOTTOMRIGHT", 7, -7)
 
-        Base.SetBackdrop(checkbutton, Color.frame:GetRGBA())
+        Base.SetBackdrop(checkbutton, Color.frame)
         Base.SetHighlight(checkbutton, "backdrop")
     end
 
@@ -52,7 +52,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
             bg:SetPoint("TOPLEFT", slider, 5, -5)
             bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
             bg:SetFrameLevel(slider:GetFrameLevel())
-            Base.SetBackdrop(bg, Color.frame:GetRGBA())
+            Base.SetBackdrop(bg, Color.frame)
 
             local thumbTexture = slider:GetThumbTexture()
             thumbTexture:SetAlpha(0)
@@ -61,7 +61,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
             local thumb = _G.CreateFrame("Frame", nil, bg)
             thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
             thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
-            Base.SetBackdrop(thumb, Color.button:GetRGBA())
+            Base.SetBackdrop(thumb, Color.button)
             slider._auroraThumb = thumb
         end
     end

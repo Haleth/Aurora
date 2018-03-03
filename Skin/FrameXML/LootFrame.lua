@@ -24,7 +24,7 @@ do --[[ FrameXML\LootFrame.xml ]]
         frame.SpecRing:SetAlpha(0)
 
         local textFrame = _G.CreateFrame("Frame", nil, frame)
-        Base.SetBackdrop(textFrame, Color.frame:GetRGBA())
+        Base.SetBackdrop(textFrame, Color.frame)
         textFrame:SetFrameLevel(frame:GetFrameLevel())
 
         local rollingFrame = frame.RollingFrame

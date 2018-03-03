@@ -80,7 +80,7 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
         bd:SetPoint("TOPLEFT", 2, -22)
         bd:SetPoint("BOTTOMRIGHT", -2, 2)
         bd:SetFrameLevel(button:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.button:GetRGBA())
+        Base.SetBackdrop(bd, Color.button)
 
         button:SetHighlightTexture("")
         button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)

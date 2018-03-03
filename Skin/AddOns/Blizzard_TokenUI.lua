@@ -99,7 +99,7 @@ function private.AddOns.Blizzard_TokenUI()
         BackpackTokenFrame:GetRegions():Hide()
 
         local tokenBG = _G.CreateFrame("Frame", nil, BackpackTokenFrame)
-        Base.SetBackdrop(tokenBG, Color.frame:GetRGBA())
+        Base.SetBackdrop(tokenBG, Color.frame)
         tokenBG:SetBackdropBorderColor(0.15, 0.95, 0.15)
         tokenBG:SetPoint("TOPLEFT", 5, -6)
         tokenBG:SetPoint("BOTTOMRIGHT", -9, 8)

@@ -37,8 +37,8 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     end
     function Skin.TooltipProgressBarTemplate(frame)
         local bar = frame.Bar
-        Base.SetBackdrop(bar, Color.frame:GetRGBA())
-        bar:SetBackdropBorderColor(Color.button:GetRGB())
+        Base.SetBackdrop(bar, Color.frame)
+        bar:SetBackdropBorderColor(Color.button)
 
         local texture = bar:GetStatusBarTexture()
         Base.SetTexture(texture, "gradientUp")
@@ -68,7 +68,7 @@ do --[[ FrameXML\GameTooltip.xml ]]
         local bg = _G.CreateFrame("Frame", nil, frame)
         bg:SetPoint("TOPLEFT", frame.Icon, -1, 1)
         bg:SetPoint("BOTTOMRIGHT", frame.Icon, 1, -1)
-        Base.SetBackdrop(bg, 0,0,0,0)
+        Base.SetBackdrop(bg, Color.black, 0)
         frame._auroraIconBorder = bg
     end
 end

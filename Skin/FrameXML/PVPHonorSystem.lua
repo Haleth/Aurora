@@ -36,7 +36,7 @@ do --[[ FrameXML\PVPHonorSystem.xml ]]
 
         local bar = frame.Bar
         bar.Background:Hide()
-        Base.SetBackdrop(bar, Color.frame:GetRGBA())
+        Base.SetBackdrop(bar, Color.frame)
 
         local layer, sublevel = bar:GetStatusBarTexture():GetDrawLayer()
         bar:SetBackdropBorderLayer(layer, sublevel + 1)

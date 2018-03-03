@@ -18,8 +18,7 @@ end
 
 do --[[ AddOns\Blizzard_AchievementUI.lua ]]
     local IN_GUILD_VIEW = false
-    local redR, redG, redB, redA = 0.8, 0.2, 0.2, 0.8
-    local blueR, blueG, blueB, blueA = 0.2, 0.6, 0.8, 0.8
+    local COLOR_ALPHA = 0.8
 
     function Hook.AchievementFrame_UpdateTabs(clickedTab)
         for i = 1, 3 do
@@ -50,12 +49,12 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
     end
     function Hook.AchievementButton_Saturate(self)
         if IN_GUILD_VIEW then
-            Base.SetBackdropColor(self, redR, redG, redB, redA)
+            Base.SetBackdropColor(self, Color.red, COLOR_ALPHA)
         else
             if self.accountWide then
-                Base.SetBackdropColor(self, blueR, blueG, blueB, blueA)
+                Base.SetBackdropColor(self, Color.blue, COLOR_ALPHA)
             else
-                Base.SetBackdropColor(self, redR, redG, redB, redA)
+                Base.SetBackdropColor(self, Color.red, COLOR_ALPHA)
             end
         end
 
@@ -66,12 +65,12 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
     end
     function Hook.AchievementButton_Desaturate(self)
         if IN_GUILD_VIEW then
-            Base.SetBackdropColor(self, redR * 0.6, redG * 0.6, redB * 0.6, redA)
+            Base.SetBackdropColor(self, Color.red:Saturation(-0.3), COLOR_ALPHA)
         else
             if self.accountWide then
-                Base.SetBackdropColor(self, blueR * 0.6, blueG * 0.6, blueB * 0.6, blueA)
+                Base.SetBackdropColor(self, Color.blue:Saturation(-0.3), COLOR_ALPHA)
             else
-                Base.SetBackdropColor(self, redR * 0.6, redG * 0.6, redB * 0.6, redA)
+                Base.SetBackdropColor(self, Color.red:Saturation(-0.3), COLOR_ALPHA)
             end
         end
     end
@@ -248,7 +247,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Base.SetTexture(statusbar:GetStatusBarTexture(), "gradientUp")
     end
     function Skin.AchievementCategoryTemplate(button)
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
         button.background:Hide()
 
         button.label:SetPoint("BOTTOMLEFT", 6, 0)
@@ -269,7 +268,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         hooksecurefunc(button, "Saturate", Hook.AchievementButton_Saturate)
         hooksecurefunc(button, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(button, Color.frame:GetRGBA())
+        Base.SetBackdrop(button, Color.frame)
         button.background:Hide()
 
         local name = button:GetName()
@@ -289,7 +288,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         button.plusMinus:SetAlpha(0)
 
         local plusMinus = _G.CreateFrame("Frame", nil, button)
-        Base.SetBackdrop(plusMinus, Color.button:GetRGB())
+        Base.SetBackdrop(plusMinus, Color.button)
         plusMinus:SetAllPoints(button.plusMinus)
 
         plusMinus.plus = plusMinus:CreateTexture(nil, "ARTWORK")
@@ -303,7 +302,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         plusMinus.minus:SetColorTexture(1, 1, 1)
         button._auroraPlusMinus = plusMinus
 
-        Base.SetBackdrop(button.highlight, 1, 1, 1, 0)
+        Base.SetBackdrop(button.highlight, Color.white, 0)
         button.highlight:DisableDrawLayer("OVERLAY")
         button.highlight:ClearAllPoints()
         button.highlight:SetPoint("TOPLEFT", 1, -1)
@@ -316,7 +315,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         hooksecurefunc(frame, "Saturate", Hook.AchievementButton_Saturate)
         hooksecurefunc(frame, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(frame, Color.frame:GetRGBA())
+        Base.SetBackdrop(frame, Color.frame)
         frame.background:Hide()
         frame.titleBar:Hide()
         frame.glow:Hide()
@@ -330,7 +329,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Skin.ComparisonPlayerTemplate(frame)
 
-        Base.SetBackdrop(frame.highlight, 1, 1, 1, 0)
+        Base.SetBackdrop(frame.highlight, Color.white, 0)
         frame.highlight:DisableDrawLayer("OVERLAY")
         frame.highlight:ClearAllPoints()
         frame.highlight:SetPoint("TOPLEFT", 1, -1)
@@ -342,7 +341,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         hooksecurefunc(frame.friend, "Saturate", Hook.AchievementButton_Saturate)
         hooksecurefunc(frame.friend, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(frame.friend, Color.frame:GetRGBA())
+        Base.SetBackdrop(frame.friend, Color.frame)
         frame.friend.background:Hide()
         frame.friend.titleBar:Hide()
         frame.friend.glow:Hide()
@@ -437,14 +436,14 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
-    Base.SetBackdrop(_G.AchievementFrameCategories, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.AchievementFrameCategories, Color.frame)
     Skin.HybridScrollBarTemplate(_G.AchievementFrameCategoriesContainerScrollBar)
     _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameCategoriesContainer, "TOPRIGHT", 0, -12)
     _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameCategoriesContainer, "BOTTOMRIGHT", 0, 12)
 
 
 
-    Base.SetBackdrop(_G.AchievementFrameAchievements, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.AchievementFrameAchievements, Color.frame)
     _G.AchievementFrameAchievementsBackground:Hide()
     select(3, _G.AchievementFrameAchievements:GetRegions()):Hide()
 
@@ -455,7 +454,7 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
-    Base.SetBackdrop(_G.AchievementFrameStats, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.AchievementFrameStats, Color.frame)
     _G.AchievementFrameStatsBG:Hide()
     Skin.HybridScrollBarTemplate(_G.AchievementFrameStatsContainerScrollBar)
     _G.AchievementFrameStatsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameStatsContainer, "TOPRIGHT", 0, -12)
@@ -464,7 +463,7 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
-    Base.SetBackdrop(_G.AchievementFrameSummary, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.AchievementFrameSummary, Color.frame)
     _G.AchievementFrameSummaryBackground:Hide()
     _G.AchievementFrameSummary:GetChildren():Hide()
 
@@ -483,7 +482,7 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
-    Base.SetBackdrop(_G.AchievementFrameComparison, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.AchievementFrameComparison, Color.frame)
     _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonSummaryFriend, "TOPLEFT")
     _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", _G.AchievementFrameComparisonSummaryFriend, "TOPRIGHT")
     _G.AchievementFrameComparisonHeader:SetHeight(private.FRAME_TITLE_HEIGHT * 2)
@@ -548,11 +547,11 @@ function private.AddOns.Blizzard_AchievementUI()
     filterBG:SetPoint("TOPLEFT", 0, -6)
     filterBG:SetPoint("BOTTOMRIGHT", _G.AchievementFrameFilterDropDownButton, "BOTTOMLEFT", 1, 0)
     filterBG:SetFrameLevel(_G.AchievementFrameFilterDropDown:GetFrameLevel()-1)
-    Base.SetBackdrop(filterBG, Color.frame:GetRGBA())
+    Base.SetBackdrop(filterBG, Color.frame)
 
     _G.AchievementFrameFilterDropDownText:SetPoint("LEFT", filterBG, 5, 0)
 
-    Base.SetBackdrop(_G.AchievementFrameFilterDropDownButton, Color.button:GetRGBA())
+    Base.SetBackdrop(_G.AchievementFrameFilterDropDownButton, Color.button)
     _G.AchievementFrameFilterDropDownButton:SetPoint("TOPRIGHT", 0, -6)
     _G.AchievementFrameFilterDropDownButton:SetSize(16, 16)
     _G.AchievementFrameFilterDropDownButton:SetNormalTexture("")
@@ -577,7 +576,7 @@ function private.AddOns.Blizzard_AchievementUI()
     prevContainerBG:SetPoint("TOPRIGHT", 1, 1)
     prevContainerBG:SetPoint("BOTTOMLEFT", prevContainer.borderAnchor, 6, 4)
     prevContainerBG:SetFrameLevel(prevContainer:GetFrameLevel() - 1)
-    Base.SetBackdrop(prevContainerBG, Color.frame:GetRGBA())
+    Base.SetBackdrop(prevContainerBG, Color.frame)
 
     for i = 1, #_G.AchievementFrame.searchPreview do
         Skin.AchievementSearchPreviewButton(_G.AchievementFrame.searchPreview[i])

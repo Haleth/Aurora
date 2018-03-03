@@ -28,7 +28,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         button:SetNormalTexture("")
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
     end
     function Skin.UIPanelLargeSilverButton(button)
         local buttonName = button:GetName()
@@ -38,7 +38,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         for i = 3, 6 do
             _G.select(i, button:GetRegions()):Hide()
         end
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
         Base.SetHighlight(button, "backdrop")
     end
     function Skin.GlowBoxTemplate(frame)
@@ -63,7 +63,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         frame.ShadowBottom:Hide()
         frame.ShadowLeft:Hide()
         frame.ShadowRight:Hide()
-        Base.SetBackdrop(frame, 0.8, 0.8, 0, 0.75)
+        Base.SetBackdrop(frame, Color.yellow, 0.75)
     end
     function Skin.GlowBoxArrowTemplate(frame, direction)
         if direction and direction == "Left" or direction == "Right" then
@@ -93,8 +93,8 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         _G[name.."Right"]:Hide()
         _G[name.."Middle"]:Hide()
 
-        Base.SetBackdrop(frame, Color.frame:GetRGBA())
-        frame:SetBackdropBorderColor(1, 0.95, 0.15)
+        Base.SetBackdrop(frame, Color.frame)
+        frame:SetBackdropBorderColor(Color.yellow)
     end
 end
 

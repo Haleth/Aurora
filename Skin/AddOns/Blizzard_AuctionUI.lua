@@ -22,7 +22,7 @@ function private.AddOns.Blizzard_AuctionUI()
     end
 
     local moneyBG = _G.CreateFrame("Frame", nil, _G.AuctionFrame)
-    Base.SetBackdrop(moneyBG, Color.frame:GetRGBA())
+    Base.SetBackdrop(moneyBG, Color.frame)
     moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
     moneyBG:SetPoint("BOTTOMLEFT", 20, 18)
     moneyBG:SetPoint("TOPRIGHT", _G.AuctionFrame, "BOTTOMLEFT", 175, 35)

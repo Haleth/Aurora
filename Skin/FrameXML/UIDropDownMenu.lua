@@ -113,7 +113,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
 
         local checkBox = _G.CreateFrame("Frame", nil, menuButton)
-        Base.SetBackdrop(checkBox, Color.button:GetRGBA())
+        Base.SetBackdrop(checkBox, Color.button)
         menuButton._auroraCheckBox = checkBox
 
         local check = checkBox:CreateTexture(nil, "ARTWORK")
@@ -177,7 +177,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         disabled:SetAllPoints(button)
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
 
         local arrow = button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 4, -7)
@@ -191,7 +191,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         bg:SetPoint("TOPLEFT", left, 20, -21)
         bg:SetPoint("BOTTOMRIGHT", right, -19, 23)
         bg:SetFrameLevel(frame:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.button:GetRGBA())
+        Base.SetBackdrop(bg, Color.button)
 
 
         --[[Scale]]

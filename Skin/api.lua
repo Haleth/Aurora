@@ -1,6 +1,6 @@
 local _, private = ...
 
--- luacheck: globals next assert type pcall tinsert
+-- luacheck: globals next assert type pcall tinsert math error
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -63,6 +63,15 @@ do -- Base API
     end
 
     do -- Base.SetBackdrop
+        local function GetRGBA(red, green, blue, alpha)
+            local a
+            if type(red) == "table" then
+                a = green
+                red, green, blue, alpha = red:GetRGBA()
+            end
+            return red, green, blue, a or alpha
+        end
+
         local sides = {
             l = {coords = {0, 0.125, 0, 1}, tileV = true},
             r = {coords = {0.125, 0.25, 0, 1}, tileV = true},
@@ -202,6 +211,8 @@ do -- Base API
         end
         local function SetBackdropColor(frame, red, green, blue, alpha)
             if frame._auroraBackdrop then
+                red, green, blue, alpha = GetRGBA(red, green, blue, alpha)
+
                 local bd = frame._auroraBackdrop
                 bd.bgRed = red
                 bd.bgGreen = green
@@ -228,6 +239,8 @@ do -- Base API
         end
         local function SetBackdropBorderColor(frame, red, green, blue, alpha)
             if frame._auroraBackdrop then
+                red, green, blue, alpha = GetRGBA(red, green, blue, alpha)
+
                 local bd = frame._auroraBackdrop
                 bd.borderRed = red
                 bd.borderGreen = green
@@ -304,14 +317,21 @@ do -- Base API
             frame:SetBackdrop(options)
         end
 
-        function Base.SetBackdrop(frame, r, g, b, a)
+        function Base.SetBackdrop(frame, color, alpha)
             Base.CreateBackdrop(frame, backdrop)
-            Base.SetBackdropColor(frame, r, g, b, a)
+            Base.SetBackdropColor(frame, color, alpha)
         end
-        function Base.SetBackdropColor(frame, r, g, b, a)
-            if not r then r, g, b, a = Color.frame:GetRGBA() end
-            frame:SetBackdropColor(r * 0.6, g * 0.6, b * 0.6, a or 1)
-            frame:SetBackdropBorderColor(r, g, b, 1)
+        function Base.SetBackdropColor(frame, color, alpha)
+            if not color then color = Color.frame end
+            if type(color) ~= "table" then error("`color` must be a Color object. See Color.Create") end
+
+            if color.isAchromatic then
+                frame:SetBackdropColor(color:Lightness(-0.1), alpha or color.a)
+            else
+                frame:SetBackdropColor(color:Lightness(-0.3), alpha or color.a)
+            end
+
+            frame:SetBackdropBorderColor(color, 1)
         end
     end
 
@@ -362,7 +382,7 @@ do -- Base API
         local function OnEnter(button, isBackground)
             if button:IsEnabled() then
                 if isBackground then
-                    Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight:GetRGB())
+                    Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight)
                 else
                     for _, texture in next, button._auroraHighlight do
                         button._auroraSetColor(texture, Color.highlight:GetRGB())
@@ -372,7 +392,7 @@ do -- Base API
         end
         local function OnLeave(button, isBackground)
             if isBackground then
-                Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor:GetRGBA())
+                Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             else
                 for _, texture in next, button._auroraHighlight do
                     button._auroraSetColor(texture, button._returnColor:GetRGBA())
@@ -834,15 +854,15 @@ do -- Color API
         local Clamp = _G.Clamp
         function colorMeta:Hue(delta)
             local h, s, l = RGBToHSL(self.r, self.g, self.b)
-            return HSLToRGB(h + delta, s, l)
+            return Color.Create(HSLToRGB(h + delta, s, l))
         end
         function colorMeta:Saturation(delta)
             local h, s, l = RGBToHSL(self.r, self.g, self.b)
-            return HSLToRGB(h, Clamp(s + delta, 0, 1), l)
+            return Color.Create(HSLToRGB(h, Clamp(s + delta, 0, 1), l))
         end
         function colorMeta:Lightness(delta)
             local h, s, l = RGBToHSL(self.r, self.g, self.b)
-            return HSLToRGB(h, s, Clamp(l + delta, 0, 1))
+            return Color.Create(HSLToRGB(h, s, Clamp(l + delta, 0, 1)))
         end
     end
 
@@ -852,13 +872,15 @@ do -- Color API
         return color
     end
 
+    Color.red = Color.Create(0.8, 0.2, 0.2)
     Color.yellow = Color.Create(1, 0.82, 0)
+    Color.blue = Color.Create(0.2, 0.6, 0.8)
     Color.black = Color.Create(0, 0, 0)
     Color.gray = Color.Create(0.5, 0.5, 0.5)
     Color.white = Color.Create(1, 1, 1)
 
-    Color.grayDark = Color.Create(Color.black:Lightness(0.2))
-    Color.grayLight = Color.Create(Color.white:Lightness(-0.2))
+    Color.grayDark = Color.black:Lightness(0.2)
+    Color.grayLight = Color.white:Lightness(-0.2)
 
     do -- CUSTOM_CLASS_COLORS
         local classColors = {}

@@ -102,7 +102,7 @@ function private.FrameXML.TutorialFrame()
     _G.TutorialFrameOkayButton:SetNormalTexture("")
     _G.TutorialFrameOkayButton:SetPushedTexture("")
     _G.TutorialFrameOkayButton:SetHighlightTexture("")
-    Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button:GetRGBA())
+    Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button)
     Base.SetHighlight(_G.TutorialFrameOkayButton, "backdrop")
 
     for i, suffix in next, {"PrevButton", "NextButton"} do

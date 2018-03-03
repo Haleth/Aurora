@@ -228,7 +228,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bdFrame:SetPoint("TOPLEFT", 4, -4)
         bdFrame:SetPoint("BOTTOMRIGHT", -4, 4)
         bdFrame:SetFrameLevel(button:GetFrameLevel())
-        Base.SetBackdrop(bdFrame, Color.button:GetRGBA())
+        Base.SetBackdrop(bdFrame, Color.button)
 
         button._auroraBDFrame = bdFrame
         Base.SetHighlight(button, "backdrop")
@@ -374,7 +374,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         local bd = _G.CreateFrame("Frame", nil, bar)
         bd:SetPoint("TOPLEFT", -1, 1)
         bd:SetPoint("BOTTOMRIGHT", 1, -1)
-        Base.SetBackdrop(bd, Color.frame:GetRGBA())
+        Base.SetBackdrop(bd, Color.frame)
 
         --[[ Scale ]]--
         frame:SetSize(192, 38)
@@ -414,7 +414,7 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     minimizeButton:SetSize(12, 12)
     minimizeButton:SetPoint("TOPRIGHT", -2, -6)
 
-    Base.SetBackdrop(minimizeButton, Color.button:GetRGBA())
+    Base.SetBackdrop(minimizeButton, Color.button)
 
     local line = minimizeButton:CreateTexture(nil, "OVERLAY")
     line:SetColorTexture(1, 1, 1)

@@ -89,7 +89,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", -3, 1)
-        Base.SetBackdrop(bg, Color.frame:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame)
         button._auroraNameBG = bg
     end
     function Skin.SmallItemButtonTemplate(button)
@@ -103,7 +103,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         local bg = _G.CreateFrame("Frame", nil, button)
         bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
-        Base.SetBackdrop(bg, Color.frame:GetRGBA())
+        Base.SetBackdrop(bg, Color.frame)
         button._auroraNameBG = bg
     end
 end

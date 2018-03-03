@@ -18,7 +18,7 @@ do --[[ FrameXML\CinematicFrame.xml ]]
         button:SetDisabledTexture("")
         button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
         Base.SetHighlight(button, "backdrop")
     end
 end

@@ -161,7 +161,7 @@ local createColorSwatch do
         local button = CreateFrame("Button", nil, parent)
         button:SetScript("OnClick", OnClick)
         button:SetSize(16, 16)
-        Base.SetBackdrop(button, frameColor.r, frameColor.g, frameColor.b, 1)
+        Base.SetBackdrop(button, frameColor, 1)
         button.value = value
 
         if text then

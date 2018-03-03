@@ -85,7 +85,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         button:SetDisabledTexture("")
         button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
         Base.SetHighlight(button, "backdrop")
 
         --[[ Scale ]]--
@@ -140,7 +140,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         editboxBG:SetPoint("TOPLEFT", -2, -6)
         editboxBG:SetPoint("BOTTOMRIGHT", 2, 6)
         editboxBG:SetFrameLevel(frame.editBox:GetFrameLevel() - 1)
-        Base.SetBackdrop(editboxBG, Color.frame:GetRGBA())
+        Base.SetBackdrop(editboxBG, Color.frame)
 
         Skin.SmallMoneyFrameTemplate(frame.moneyFrame)
         Skin.MoneyInputFrameTemplate(frame.moneyInputFrame)
@@ -153,7 +153,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         nameBG:SetPoint("TOPLEFT", frame.ItemFrame.icon, "TOPRIGHT", 2, 1)
         nameBG:SetPoint("BOTTOMLEFT", frame.ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
         nameBG:SetPoint("RIGHT", 120, 0)
-        Base.SetBackdrop(nameBG, Color.frame:GetRGBA())
+        Base.SetBackdrop(nameBG, Color.frame)
 
         --[[ Scale ]]--
         _G[name .. "Text"]:SetSize(290, 0)

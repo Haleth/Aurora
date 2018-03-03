@@ -22,7 +22,7 @@ function private.FrameXML.GuildRegistrarFrame()
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFramePurchaseButton)
 
     _G.GuildRegistrarFrameEditBox:SetHeight(20)
-    Base.SetBackdrop(_G.GuildRegistrarFrameEditBox, Color.frame:GetRGBA())
+    Base.SetBackdrop(_G.GuildRegistrarFrameEditBox, Color.frame)
     local _, _, left, right = _G.GuildRegistrarFrameEditBox:GetRegions()
     left:Hide()
     right:Hide()

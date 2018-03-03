@@ -73,7 +73,7 @@ function private.OnLoad()
         end
 
         C.r, C.g, C.b = r, g, b -- deprecated
-        Color.highlight:SetRGBA(r, g, b, Color.frame.a)
+        Color.highlight:SetRGBA(r, g, b)
     end
     function private.classColorsInit()
         local color, hasChanged
@@ -133,16 +133,15 @@ function private.OnLoad()
     local Base, Hook = Aurora.Base, Aurora.Hook
     function Hook.GameTooltip_OnHide(gametooltip)
         local color = Color.frame
-        Base.SetBackdropColor(gametooltip, color.r, color.g, color.b, AuroraConfig.alpha)
+        Base.SetBackdropColor(gametooltip, color, AuroraConfig.alpha)
     end
 
-    function Base.Post.SetBackdrop(ret, frame, r, g, b, a)
-        if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(r, g, b, a) then
+    function Base.Post.SetBackdrop(ret, frame, color, alpha)
+        if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
             Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
-            Aurora.Base.SetBackdropColor(frame, r, g, b, a)
-        elseif not r and not a then
-            r, g, b = Color.frame:GetRGB()
-            frame:SetBackdropColor(r, g, b, AuroraConfig.alpha)
+            Aurora.Base.SetBackdropColor(frame, color, alpha)
+        elseif not color and not alpha then
+            frame:SetBackdropColor(Color.frame, AuroraConfig.alpha)
             _G.tinsert(C.frames, frame)
         end
     end

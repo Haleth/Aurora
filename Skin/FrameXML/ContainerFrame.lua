@@ -91,7 +91,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
         local moneyFrame = _G[name.."MoneyFrame"]
         local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
-        Base.SetBackdrop(moneyBG, Color.frame:GetRGBA())
+        Base.SetBackdrop(moneyBG, Color.frame)
         moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
         moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
         moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)

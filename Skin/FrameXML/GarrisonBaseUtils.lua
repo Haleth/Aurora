@@ -26,7 +26,7 @@ do --[[ FrameXML\GarrisonBaseUtils.xml ]]
 
         local size = frame.Portrait:GetSize() + 2
         frame:SetSize(size, size)
-        Base.SetBackdrop(frame, Color.frame.r, Color.frame.g, Color.frame.b, 1)
+        Base.SetBackdrop(frame, Color.frame, 1)
 
         frame.PortraitRing:Hide()
 

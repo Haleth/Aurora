@@ -37,7 +37,7 @@ function private.FrameXML.PVPHelper()
         button:SetHighlightTexture("")
         button:SetPushedTexture("")
 
-        Base.SetBackdrop(button, Color.button:GetRGBA())
+        Base.SetBackdrop(button, Color.button)
 
         button._auroraHighlight = {}
         local hline = button:CreateTexture()

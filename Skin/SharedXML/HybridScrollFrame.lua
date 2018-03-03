@@ -48,7 +48,7 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.thumbTexture, 0, -2)
         thumb:SetPoint("BOTTOMRIGHT", slider.thumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Color.button:GetRGBA())
+        Base.SetBackdrop(thumb, Color.button)
         slider._auroraThumb = thumb
     end
     function Skin.HybridScrollBarTrimTemplate(slider)
@@ -76,7 +76,7 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.thumbTexture, 0, -2)
         thumb:SetPoint("BOTTOMRIGHT", slider.thumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Color.button:GetRGBA())
+        Base.SetBackdrop(thumb, Color.button)
         slider._auroraThumb = thumb
     end
     function Skin.BasicHybridScrollFrameTemplate(scrollframe)
