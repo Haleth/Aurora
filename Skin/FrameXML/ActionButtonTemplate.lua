@@ -9,20 +9,27 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 do --[[ FrameXML\ActionButtonTemplate.xml ]]
-	function Skin.ActionButtonTemplate(checkbutton)
+    function Skin.ActionButtonTemplate(checkbutton)
         Base.CropIcon(checkbutton.icon)
 
         checkbutton.Flash:SetColorTexture(1, 0, 0, 0.5)
-        Base.CropIcon(checkbutton.NewActionTexture)
-        Base.CropIcon(checkbutton.SpellHighlightTexture)
+        checkbutton.NewActionTexture:SetAllPoints()
+        checkbutton.NewActionTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+        checkbutton.SpellHighlightTexture:SetAllPoints()
+        checkbutton.SpellHighlightTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+        checkbutton.AutoCastable:SetAllPoints()
+        checkbutton.AutoCastable:SetTexCoord(0.21875, 0.765625, 0.21875, 0.765625)
+        checkbutton.AutoCastShine:ClearAllPoints()
+        checkbutton.AutoCastShine:SetPoint("TOPLEFT", 2, -2)
+        checkbutton.AutoCastShine:SetPoint("BOTTOMRIGHT", -2, 2)
 
         checkbutton:SetNormalTexture("")
         Base.CropIcon(checkbutton:GetPushedTexture())
         Base.CropIcon(checkbutton:GetHighlightTexture())
         Base.CropIcon(checkbutton:GetCheckedTexture())
 
-		--[[ Scale ]]--
-		checkbutton:SetSize(36, 36)
+        --[[ Scale ]]--
+        checkbutton:SetSize(36, 36)
         checkbutton.HotKey:SetPoint("TOPLEFT", 1, -3)
         checkbutton.HotKey:SetPoint("BOTTOMRIGHT", checkbutton, "TOPRIGHT", -1, -13)
         checkbutton.Count:SetPoint("BOTTOMRIGHT", -2, 2)
@@ -33,7 +40,7 @@ do --[[ FrameXML\ActionButtonTemplate.xml ]]
 
         checkbutton.cooldown:SetPoint("TOPLEFT")
         checkbutton.cooldown:SetPoint("BOTTOMRIGHT")
-	end
+    end
 end
 
 function private.FrameXML.ActionButtonTemplate()
