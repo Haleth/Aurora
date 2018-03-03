@@ -261,6 +261,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             Skin.UIPanelCloseButton(frame.CloseButton)
             frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
         end
+
+        --[[ Scale ]]--
+        frame:SetSize(frame:GetSize())
     end
     function Skin.InsetFrameTemplate(frame)
         frame.Bg:Hide()
@@ -284,6 +287,21 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         _G[name.."BtnCornerRight"]:SetTexture("")
         _G[name.."ButtonBottomBorder"]:SetTexture("")
         Skin.InsetFrameTemplate(frame.Inset)
+
+        --[[ Scale ]]--
+        frame.Inset:SetPoint("TOPLEFT", 4, -60)
+        frame.Inset:SetPoint("BOTTOMRIGHT", -6, 26)
+    end
+
+    function Skin.MagicButtonTemplate(button)
+        Skin.UIPanelButtonTemplate(button)
+
+        if button.LeftSeparator then
+            button.LeftSeparator:Hide()
+        end
+        if button.RightSeparator then
+            button.RightSeparator:Hide()
+        end
     end
 
     function Skin.TooltipBorderedFrameTemplate(frame)
@@ -393,6 +411,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", slider.ThumbTexture, 0, 2)
         Base.SetBackdrop(thumb, Color.button)
         slider._auroraThumb = thumb
+
+        --[[ Scale ]]--
+        slider:SetWidth(slider:GetWidth())
     end
     function Skin.UIPanelStretchableArtScrollBarTemplate(slider)
         Skin.UIPanelScrollBarTemplate(slider)

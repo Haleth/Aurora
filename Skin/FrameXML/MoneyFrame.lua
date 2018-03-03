@@ -37,17 +37,23 @@ do --[[ FrameXML\MoneyFrame.lua ]]
         iconWidth = Scale.Value(iconWidth)
         spacing = Scale.Value(spacing)
 
-        local maxDisplayWidth = frame.maxDisplayWidth
+        local maxDisplayWidth = frame.maxDisplayWidth and Scale.Value(frame.maxDisplayWidth)
 
         -- Set values for each denomination
         if ( _G.ENABLE_COLORBLIND_MODE == "1" ) then
             Scale.RawSetWidth(goldButton, goldButton:GetTextWidth())
+            goldButton:Show()
             Scale.RawSetWidth(silverButton, silverButton:GetTextWidth())
+            silverButton:Show()
             Scale.RawSetWidth(copperButton, copperButton:GetTextWidth())
+            copperButton:Show()
         else
             Scale.RawSetWidth(goldButton, goldButton:GetTextWidth() + iconWidth)
+            goldButton:Show()
             Scale.RawSetWidth(silverButton, silverButton:GetTextWidth() + iconWidth)
+            silverButton:Show()
             Scale.RawSetWidth(copperButton, copperButton:GetTextWidth() + iconWidth)
+            copperButton:Show()
         end
 
         -- Store how much money the frame is displaying

@@ -43,13 +43,16 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Skin.UIPanelScrollDownButtonTemplate(downButton)
 
         slider.thumbTexture:SetAlpha(0)
-        slider.thumbTexture:SetWidth(17)
+        slider.thumbTexture:SetSize(17, 24)
 
         local thumb = _G.CreateFrame("Frame", nil, slider)
         thumb:SetPoint("TOPLEFT", slider.thumbTexture, 0, -2)
         thumb:SetPoint("BOTTOMRIGHT", slider.thumbTexture, 0, 2)
         Base.SetBackdrop(thumb, Color.button)
         slider._auroraThumb = thumb
+
+        --[[ Scale ]]--
+        slider:SetSize(slider:GetSize())
     end
     function Skin.HybridScrollBarTrimTemplate(slider)
         local parent = slider:GetParent()

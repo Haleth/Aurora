@@ -12,6 +12,27 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.BagSearchBoxTemplate(editbox)
         Skin.SearchBoxTemplate(editbox)
     end
+    function Skin.UIServiceButtonTemplate(button)
+        Base.SetBackdrop(button, Color.button)
+        Skin.SmallMoneyFrameTemplate(button.money)
+        Base.CropIcon(button.icon, button)
+
+        button.selectedTex:SetTexCoord(0.005859375, 0.5703125, 0.853515625, 0.9375)
+        button.disabledBG:SetAllPoints()
+
+        button:SetNormalTexture("")
+        button:GetHighlightTexture():SetTexCoord(0.005859375, 0.5703125, 0.7578125, 0.841796875)
+
+        --[[ Scale ]]--
+        button:SetSize(button:GetSize())
+        button.money:SetPoint("TOPRIGHT", 5, -7)
+        button.icon:SetSize(36, 36)
+        button.icon:SetPoint("LEFT", 6, 0)
+        button.name:SetPoint("TOPLEFT", button.icon, "TOPRIGHT", 6, -1)
+        button.name:SetPoint("RIGHT", button.money, "LEFT", -2, 0)
+        button.subText:SetSize(240, 30)
+        button.subText:SetPoint("LEFT", button.name, 0, -19)
+    end
     function Skin.UIPanelInfoButton(button)
         button:SetSize(16, 16)
         button.texture:SetTexture([[Interface\Common\help-i]])

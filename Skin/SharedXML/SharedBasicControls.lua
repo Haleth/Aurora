@@ -37,6 +37,9 @@ do --[[ FrameXML\SharedBasicControls.xml ]]
 
         Skin.UIPanelCloseButton(_G[name.."Close"])
         _G[name.."Close"]:SetPoint("TOPRIGHT", -3, -3)
+
+        --[[ Scale ]]--
+        frame:SetSize(frame:GetSize())
     end
 end
 
