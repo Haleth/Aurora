@@ -5,12 +5,12 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Skin = Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ AddOns\Blizzard_TrainerUI.lua ]]
-end
+--[[ do AddOns\Blizzard_TrainerUI.lua
+end ]]
 
 do --[[ AddOns\Blizzard_TrainerUI.xml ]]
     function Skin.ClassTrainerSkillButtonTemplate(button)
