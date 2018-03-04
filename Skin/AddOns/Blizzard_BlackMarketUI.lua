@@ -7,7 +7,9 @@ local select, pairs = _G.select, _G.pairs
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_BlackMarketUI()
     local r, g, b = C.r, C.g, C.b
@@ -23,8 +25,7 @@ function private.AddOns.Blizzard_BlackMarketUI()
     BlackMarketFrame.HotDeal.Right:Hide()
     select(4, BlackMarketFrame.HotDeal:GetRegions()):Hide()
 
-    F.CreateBG(BlackMarketFrame.HotDeal.Item)
-    BlackMarketFrame.HotDeal.Item.IconTexture:SetTexCoord(.08, .92, .08, .92)
+    BlackMarketFrame.HotDeal.Item._auroraIconBorder = F.ReskinIcon(BlackMarketFrame.HotDeal.Item.IconTexture)
 
     local headers = {"ColumnName", "ColumnLevel", "ColumnType", "ColumnDuration", "ColumnHighBidder", "ColumnCurrentBid"}
     for _, headerName in pairs(headers) do
@@ -47,12 +48,15 @@ function private.AddOns.Blizzard_BlackMarketUI()
     F.ReskinInput(_G.BlackMarketBidPriceGold)
     F.ReskinScroll(_G.BlackMarketScrollFrameScrollBar)
 
+    Skin.ThinGoldEdgeTemplate(BlackMarketFrame.MoneyFrameBorder)
+    Skin.SmallMoneyFrameTemplate(_G.BlackMarketMoneyFrame)
+
     hooksecurefunc("BlackMarketScrollFrame_Update", function()
         local buttons = _G.BlackMarketScrollFrame.buttons
         for i = 1, #buttons do
             local bu = buttons[i]
 
-            bu.Item.IconTexture:SetTexCoord(.08, .92, .08, .92)
+            --bu.Item.IconTexture:SetTexCoord(.08, .92, .08, .92)
             if not bu.reskinned then
                 bu.Left:Hide()
                 bu.Right:Hide()
@@ -60,7 +64,7 @@ function private.AddOns.Blizzard_BlackMarketUI()
 
                 bu.Item:SetNormalTexture("")
                 bu.Item:SetPushedTexture("")
-                F.CreateBG(bu.Item)
+                bu.Item._auroraIconBorder = F.ReskinIcon(bu.Item.IconTexture)
 
                 local bg = CreateFrame("Frame", nil, bu)
                 bg:SetPoint("TOPLEFT")
@@ -89,19 +93,6 @@ function private.AddOns.Blizzard_BlackMarketUI()
 
                 bu.reskinned = true
             end
-
-            if bu:IsShown() and bu.itemLink then
-                local _, _, quality = _G.GetItemInfo(bu.itemLink)
-                bu.Name:SetTextColor(_G.GetItemQualityColor(quality))
-            end
-        end
-    end)
-
-    hooksecurefunc("BlackMarketFrame_UpdateHotItem", function(self)
-        local hotDeal = self.HotDeal
-        if hotDeal:IsShown() and hotDeal.itemLink then
-            local _, _, quality = _G.GetItemInfo(hotDeal.itemLink)
-            hotDeal.Name:SetTextColor(_G.GetItemQualityColor(quality))
         end
     end)
 end
