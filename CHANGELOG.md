@@ -1,3 +1,23 @@
+## [Unreleased] ##
+### Added ###
+
+  * Zone Ability skin
+  * PvP Timer skin
+  * Objective tracker skin
+
+### Changed ###
+
+  * Updated StaticPopup skin.
+
+### Fixed ###
+
+  * Raid frame manager taint
+  * The text layout for the Artifact history lore was off.
+  * Icon border in the BMAH were not properly skinned.
+
+
+
+
 ## [v7.3.5.1] - 2017-10-16 ##
 ### Fixed ###
 
