@@ -1,7 +1,7 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local select = _G.select
+-- luacheck: globals select
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -44,6 +44,15 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
     function Skin.PaperDollItemSlotButtonTemplate(button)
         Skin.ItemButtonTemplate(button)
         _G[button:GetName().."Frame"]:Hide()
+    end
+    function Skin.PaperDollItemSlotButtonLeftTemplate(button)
+        Skin.PaperDollItemSlotButtonTemplate(button)
+    end
+    function Skin.PaperDollItemSlotButtonRightTemplate(button)
+        Skin.PaperDollItemSlotButtonTemplate(button)
+    end
+    function Skin.PaperDollItemSlotButtonBottomTemplate(button)
+        Skin.PaperDollItemSlotButtonTemplate(button)
     end
     function Skin.PlayerTitleButtonTemplate(button)
         button.BgTop:SetTexture("")
@@ -147,29 +156,51 @@ function private.FrameXML.PaperDollFrame()
     _G.PaperDollInnerBorderBottom2:Hide()
 
 
-    local slots = {
-        "Head", "Neck", "Shoulder", "Back", "Chest", "Shirt", "Tabard", "Wrist",
-        "Hands", "Waist", "Legs", "Feet", "Finger0", "Finger1", "Trinket0", "Trinket1",
-        "MainHand", "SecondaryHand",
+    local EquipmentSlots = {
+        "CharacterHeadSlot", "CharacterNeckSlot", "CharacterShoulderSlot", "CharacterBackSlot", "CharacterChestSlot", "CharacterShirtSlot", "CharacterTabardSlot", "CharacterWristSlot",
+        "CharacterHandsSlot", "CharacterWaistSlot", "CharacterLegsSlot", "CharacterFeetSlot", "CharacterFinger0Slot", "CharacterFinger1Slot", "CharacterTrinket0Slot", "CharacterTrinket1Slot"
+    }
+    local WeaponSlots = {
+        "CharacterMainHandSlot", "CharacterSecondaryHandSlot"
     }
 
-    for i = 1, #slots do
-        local name = "Character"..slots[i].."Slot"
-        local button = _G[name]
-        Skin.PaperDollItemSlotButtonTemplate(button)
+    local prevSlot
+    for i = 1, #EquipmentSlots do
+        local button = _G[EquipmentSlots[i]]
 
-        if i > 16 then
-            -- weapons
-            _G.select(11, button:GetRegions()):Hide()
-            if i == 17 then
-                -- main hand
-                button:SetPoint("BOTTOMLEFT", 130, 8)
-            end
-        elseif i % 8 == 1 then -- luacheck: ignore
-            -- healm and gloves
-        else
-            button:SetPoint("TOPLEFT", _G["Character"..slots[i - 1].."Slot"], "BOTTOMLEFT", 0, -9)
+        if not private.isPatch then
+            button.IsLeftSide = i <= 8
         end
+
+        if i % 8 == 1 then
+            if button.IsLeftSide then
+                button:SetPoint("TOPLEFT", _G.CharacterFrameInset, 4, -11)
+            else
+                button:SetPoint("TOPRIGHT", _G.CharacterFrameInset, -4, -11)
+            end
+        else
+            button:SetPoint("TOPLEFT", prevSlot, "BOTTOMLEFT", 0, -6)
+        end
+
+        if button.IsLeftSide then
+            Skin.PaperDollItemSlotButtonLeftTemplate(button)
+        elseif button.IsLeftSide == false then
+            Skin.PaperDollItemSlotButtonRightTemplate(button)
+        end
+
+        prevSlot = button
+    end
+
+    for i = 1, #WeaponSlots do
+        local button = _G[WeaponSlots[i]]
+
+        if i == 1 then
+            -- main hand
+            button:SetPoint("BOTTOMLEFT", 130, 8)
+        end
+
+        Skin.PaperDollItemSlotButtonBottomTemplate(button)
+        _G.select(11, button:GetRegions()):Hide()
     end
 
 
