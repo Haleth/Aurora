@@ -64,6 +64,12 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
             Base.SetBackdrop(thumb, Color.button)
             slider._auroraThumb = thumb
         end
+
+        --[[ Scale ]]--
+        slider:SetSize(slider:GetSize())
+    end
+    function Skin.OptionsBoxTemplate(frame)
+        Base.SetBackdrop(frame, Color.frame)
     end
 end
 

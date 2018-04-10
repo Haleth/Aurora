@@ -10,8 +10,8 @@ local F = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_GarrisonTemplates()
     --[[
-        This addon is a dependancy for the GarrisonUI, which is in turn a dependancy for the OrderHallUI.
-        The hooks made here will persist into both of those, greatly reducing posible duplicate code.
+        This addon is a dependency for the GarrisonUI, which is in turn a dependency for the OrderHallUI.
+        The hooks made here will persist into both of those, greatly reducing possible duplicate code.
     ]]
 
     --[[ AddOns\Blizzard_GarrisonTemplates\Blizzard_GarrisonSharedTemplates ]]

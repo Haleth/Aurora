@@ -103,6 +103,13 @@ do -- private.FindUsage
         end)
     end
 end
+do -- private.TestHook
+    function private.TestHook(table, func, name)
+        _G.hooksecurefunc(table, func, function(...)
+            _G.print("Test", name, ...)
+        end)
+    end
+end
 
 local Aurora = {
     Base = private.CreateAPI({}),
