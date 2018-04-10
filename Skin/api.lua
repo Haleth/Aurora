@@ -328,12 +328,7 @@ do -- Base API
             if not color then color = Color.frame end
             if type(color) ~= "table" then error("`color` must be a Color object. See Color.Create") end
 
-            if color.isAchromatic then
-                frame:SetBackdropColor(color:Lightness(-0.1), alpha or color.a)
-            else
-                frame:SetBackdropColor(color:Lightness(-0.3), alpha or color.a)
-            end
-
+            frame:SetBackdropColor(color:Lightness(-0.3), alpha or color.a)
             frame:SetBackdropBorderColor(color, 1)
         end
     end
@@ -819,8 +814,13 @@ do -- Color API
                 return l, l, l -- achromatic
             else
                 local q
-                q = l < 0.5 and l * (1 + s) or l + s - l * s
-                local p = 2 * l - q
+                if l <= 0.5 then
+                    q = l * (s + 1)
+                else
+                    q = l + s - l * s
+                end
+
+                local p = l * 2 - q
 
                 r = HueToRBG(p, q, h + 1/3)
                 g = HueToRBG(p, q, h)
@@ -833,22 +833,26 @@ do -- Color API
         local min, max = math.min, math.max
         local function RGBToHSL(r, g, b)
             local minVal, maxVal = min(r, g, b), max(r, g, b)
-            local h, s, l
+            local delta = maxVal - minVal
 
-            l = (maxVal + minVal) / 2
-            if maxVal == minVal then
-                h, s = 0, 0 -- achromatic
-            else
-                local d = maxVal - minVal
-                s = l > 0.5 and d / (2 - maxVal - minVal) or d / (maxVal + minVal)
-                if maxVal == r then
-                    h = (g - b) / d
-                    if g < b then h = h + 6 end
-                elseif maxVal == g then
-                    h = (b - r) / d + 2
-                else
-                    h = (r - g) / d + 4
+            local h, s, l = 0, 0, (maxVal + minVal) / 2
+
+            if l > 0 and l < 0.5 then s = delta / (maxVal + minVal) end
+            if l >= 0.5 and l < 1 then s = delta / (2 - maxVal - minVal) end
+
+            if delta > 0 then
+                if maxVal == r and maxVal ~= g then
+                    h = h + (g - b) / delta
                 end
+
+                if maxVal == g and maxVal ~= b then
+                    h = h + 2 + (b - r) / delta
+                end
+
+                if maxVal == b and maxVal ~= r then
+                    h = h + 4 + (r - g) / delta
+                end
+
                 h = h / 6
             end
             return h, s, l
@@ -861,11 +865,11 @@ do -- Color API
         end
         function colorMeta:Saturation(delta)
             local h, s, l = RGBToHSL(self.r, self.g, self.b)
-            return Color.Create(HSLToRGB(h, Clamp(s + delta, 0, 1), l))
+            return Color.Create(HSLToRGB(h, Clamp(s + s * delta, 0, 1), l))
         end
         function colorMeta:Lightness(delta)
             local h, s, l = RGBToHSL(self.r, self.g, self.b)
-            return Color.Create(HSLToRGB(h, s, Clamp(l + delta, 0, 1)))
+            return Color.Create(HSLToRGB(h, s, Clamp(l + l * delta, 0, 1)))
         end
     end
 
@@ -882,8 +886,8 @@ do -- Color API
     Color.gray = Color.Create(0.5, 0.5, 0.5)
     Color.white = Color.Create(1, 1, 1)
 
-    Color.grayDark = Color.black:Lightness(0.2)
-    Color.grayLight = Color.white:Lightness(-0.2)
+    Color.grayDark = Color.gray:Lightness(-.5)
+    Color.grayLight = Color.gray:Lightness(.5)
 
     do -- CUSTOM_CLASS_COLORS
         local classColors = {}
