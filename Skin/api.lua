@@ -338,7 +338,11 @@ do -- Base API
             if _G.type(fontObj) == "string" then fontObj = _G[fontObj] end
             if not fontObj then return end
 
-            if not private.disabled.fonts then
+            if fontPath then
+                if private.disabled.fonts then
+                    fontPath = fontObj:GetFont()
+                end
+
                 fontObj:SetFont(fontPath, Scale.Value(fontSize), fontStyle)
             end
 
