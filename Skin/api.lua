@@ -954,16 +954,16 @@ do -- Color API
         end
 
         function private.classColorsReset(colors, noMeta)
-            colors = colors or _G.CUSTOM_CLASS_COLORS
+            local colorTable = colors or _G.CUSTOM_CLASS_COLORS
             for class, color in next, _G.RAID_CLASS_COLORS do
                 if noMeta then
-                    if colors[class] then
-                        colors[class].r = color.r
-                        colors[class].g = color.g
-                        colors[class].b = color.b
-                        colors[class].colorStr = color.colorStr
+                    if colorTable[class] then
+                        colorTable[class].r = color.r
+                        colorTable[class].g = color.g
+                        colorTable[class].b = color.b
+                        colorTable[class].colorStr = color.colorStr
                     else
-                        colors[class] = {
+                        colorTable[class] = {
                             r = color.r,
                             g = color.g,
                             b = color.b,
@@ -971,10 +971,10 @@ do -- Color API
                         }
                     end
                 else
-                    if colors[class] and colors[class].SetRGB then
-                        colors[class]:SetRGB(color.r, color.g, color.b)
+                    if colorTable[class] and colorTable[class].SetRGB then
+                        colorTable[class]:SetRGB(color.r, color.g, color.b)
                     else
-                        colors[class] = _G.setmetatable({}, {
+                        colorTable[class] = _G.setmetatable({}, {
                             __index = Color.Create(color.r, color.g, color.b)
                         })
                     end
@@ -988,7 +988,7 @@ do -- Color API
             end
         end
         function private.updateHighlightColor()
-            Color.highlight:SetRGBA(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGBA())
+            Color.highlight:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
         end
 
         _G.CUSTOM_CLASS_COLORS = {}

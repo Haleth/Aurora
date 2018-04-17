@@ -29,7 +29,7 @@ C.defaults = {
 
     alpha = 0.5,
 
-    customClassColors = false,
+    customClassColors = {},
 }
 
 function private.OnLoad()
@@ -64,6 +64,11 @@ function private.OnLoad()
 
     -- Setup colors
     local Color = Aurora.Color
+    local customClassColors = AuroraConfig.customClassColors
+    if not customClassColors[private.charClass.token] then
+        private.classColorsReset(customClassColors, true)
+    end
+
     function private.updateHighlightColor()
         local r, g, b
         if AuroraConfig.useCustomColour then
@@ -73,38 +78,31 @@ function private.OnLoad()
         end
 
         C.r, C.g, C.b = r, g, b -- deprecated
-        Color.highlight:SetRGBA(r, g, b)
-    end
-    function private.classColorsInit()
-        local color, hasChanged
-        for classToken, classColor in next, AuroraConfig.customClassColors do
-            color = _G.CUSTOM_CLASS_COLORS[classToken]
-            if not color:IsEqualTo(classColor) then
-                color:SetRGB(classColor.r, classColor.g, classColor.b)
-                hasChanged = true
-            end
-        end
-
-        if hasChanged then
-            private.updateHighlightColor()
-        end
+        Color.highlight:SetRGB(r, g, b)
     end
     function private.classColorsHaveChanged()
+        local hasChanged = false
         for i = 1, #_G.CLASS_SORT_ORDER do
             local classToken = _G.CLASS_SORT_ORDER[i]
             local color = _G.CUSTOM_CLASS_COLORS[classToken]
-            local cache = AuroraConfig.customClassColors[classToken]
+            local cache = customClassColors[classToken]
 
             if not color:IsEqualTo(cache) then
                 --print("Change found in", classToken)
                 color:SetRGB(cache.r, cache.g, cache.b)
-                return true
+                hasChanged = true
             end
+        end
+        return hasChanged
+    end
+    function private.classColorsInit()
+        if private.classColorsHaveChanged() then
+            private.updateHighlightColor()
         end
     end
     _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
         for classToken, color in next, _G.CUSTOM_CLASS_COLORS do
-            local ccc = AuroraConfig.customClassColors[classToken]
+            local ccc = customClassColors[classToken]
             ccc.r = color.r
             ccc.g = color.g
             ccc.b = color.b
@@ -115,13 +113,8 @@ function private.OnLoad()
         private.updateHighlightColor()
     end)
 
-    if not AuroraConfig.customClassColors or not AuroraConfig.customClassColors[private.charClass.token].colorStr then
-        AuroraConfig.customClassColors = {}
-        private.classColorsReset(AuroraConfig.customClassColors, true)
-    end
-
     if AuroraConfig.buttonsHaveGradient then
-        Color.button:SetRGBA(.4, .4, .4, 1)
+        Color.button:SetRGB(.4, .4, .4)
     end
 
     -- Show splash screen for first time users
