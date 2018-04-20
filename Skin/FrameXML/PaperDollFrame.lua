@@ -74,7 +74,7 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
     end
     function Skin.GearSetPopupButtonTemplate(checkbutton)
         Skin.SimplePopupButtonTemplate(checkbutton)
-        Base.CropIcon(_G[checkbutton:GetName().."Icon"], checkbutton)
+        Base.CropIcon(_G[checkbutton:GetName().."Icon"])
         Base.CropIcon(checkbutton:GetHighlightTexture())
         Base.CropIcon(checkbutton:GetCheckedTexture())
     end

@@ -2,7 +2,6 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -66,45 +65,81 @@ end
 
 do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.ItemButtonTemplate(button)
+        Base.CropIcon(button.icon)
+
+        local bg = _G.CreateFrame("Frame", nil, button)
+        bg:SetFrameLevel(button:GetFrameLevel() - 1)
+        bg:SetPoint("TOPLEFT", -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        Base.SetBackdrop(bg)
+        button._auroraIconBorder = bg
+
         button:SetNormalTexture("")
-        button:SetHighlightTexture("")
-        button:SetPushedTexture("")
-        button._auroraIconBorder = F.ReskinIcon(button.icon)
+        Base.CropIcon(button:GetPushedTexture())
+        Base.CropIcon(button:GetHighlightTexture())
+
+        --[[ Scale ]]--
+        button:SetSize(button:GetSize())
     end
     function Skin.SimplePopupButtonTemplate(checkbutton)
         _G.select(2, checkbutton:GetRegions()):Hide()
+
+        local bg = _G.CreateFrame("Frame", nil, checkbutton)
+        bg:SetFrameLevel(checkbutton:GetFrameLevel() - 1)
+        bg:SetPoint("TOPLEFT", -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+
+        Base.CreateBackdrop(bg, {
+            edgeSize = 1,
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            insets = {left = 1, right = 1, top = 1, bottom = 1}
+        })
+        Base.CropIcon(bg:GetBackdropTexture("bg"))
+        bg:SetBackdropColor(1, 1, 1, 0.75)
+        bg:SetBackdropBorderColor(Color.frame, 1)
     end
     function Skin.PopupButtonTemplate(checkbutton)
         Skin.SimplePopupButtonTemplate(checkbutton)
-        Base.CropIcon(_G[checkbutton:GetName().."Icon"], checkbutton)
-        checkbutton:SetCheckedTexture(C.media.checked)
+        Base.CropIcon(_G[checkbutton:GetName().."Icon"])
+        Base.CropIcon(checkbutton:GetHighlightTexture())
+        Base.CropIcon(checkbutton:GetCheckedTexture())
     end
     function Skin.LargeItemButtonTemplate(button)
-        local icon = button.Icon
-        button._auroraIconBorder = F.ReskinIcon(icon)
+        Base.CropIcon(button.Icon)
 
-        local nameFrame = button.NameFrame
-        nameFrame:SetAlpha(0)
+        local iconBG = _G.CreateFrame("Frame", nil, button)
+        iconBG:SetFrameLevel(button:GetFrameLevel() - 1)
+        iconBG:SetPoint("TOPLEFT", button.Icon, -1, 1)
+        iconBG:SetPoint("BOTTOMRIGHT", button.Icon, 1, -1)
+        Base.SetBackdrop(iconBG)
+        button._auroraIconBorder = iconBG
 
-        local bg = _G.CreateFrame("Frame", nil, button)
-        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
-        bg:SetPoint("BOTTOMRIGHT", -3, 1)
-        Base.SetBackdrop(bg, Color.frame)
-        button._auroraNameBG = bg
+        button.NameFrame:SetAlpha(0)
+
+        local nameBG = _G.CreateFrame("Frame", nil, button)
+        nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
+        nameBG:SetPoint("BOTTOMRIGHT", -3, 1)
+        Base.SetBackdrop(nameBG, Color.frame)
+        button._auroraNameBG = nameBG
     end
     function Skin.SmallItemButtonTemplate(button)
-        local icon = button.Icon
-        icon:SetSize(29, 29)
-        button._auroraIconBorder = F.ReskinIcon(icon)
+        button.Icon:SetSize(29, 29)
+        Base.CropIcon(button.Icon)
 
-        local nameFrame = button.NameFrame
-        nameFrame:SetAlpha(0)
+        local iconBG = _G.CreateFrame("Frame", nil, button)
+        iconBG:SetFrameLevel(button:GetFrameLevel() - 1)
+        iconBG:SetPoint("TOPLEFT", button.Icon, -1, 1)
+        iconBG:SetPoint("BOTTOMRIGHT", button.Icon, 1, -1)
+        Base.SetBackdrop(iconBG)
+        button._auroraIconBorder = iconBG
 
-        local bg = _G.CreateFrame("Frame", nil, button)
-        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 2, 1)
-        bg:SetPoint("BOTTOMRIGHT", nameFrame, 0, 0)
-        Base.SetBackdrop(bg, Color.frame)
-        button._auroraNameBG = bg
+        button.NameFrame:SetAlpha(0)
+
+        local nameBG = _G.CreateFrame("Frame", nil, button)
+        nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
+        nameBG:SetPoint("BOTTOMRIGHT", button.NameFrame, 0, -1)
+        Base.SetBackdrop(nameBG, Color.frame)
+        button._auroraNameBG = nameBG
     end
 end
 
