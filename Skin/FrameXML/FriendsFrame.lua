@@ -6,7 +6,15 @@ local next, select = _G.next, _G.select
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
+local Skin = Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
+
+do --[[ FrameXML\FriendsFrame.xml ]]
+    function Skin.FriendsFrameTabTemplate(button)
+        Skin.CharacterFrameTabButtonTemplate(button)
+        button._auroraTabResize = true
+    end
+end
 
 function private.FrameXML.FriendsFrame()
     if not private.disabled.tooltips then

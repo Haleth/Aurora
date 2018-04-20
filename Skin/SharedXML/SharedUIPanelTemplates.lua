@@ -5,7 +5,8 @@ local next, tinsert = _G.next, _G.tinsert
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base, Scale = Aurora.Base, Aurora.Scale
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do -- BlizzWTF: These are not templates, but they should be
@@ -94,7 +95,7 @@ end
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
     function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
         if not tab._auroraTabResize then return end
-        local sideWidths = 14
+        local sideWidths = Scale.Value(14)
         local tabText = tab.Text or _G[tab:GetName().."Text"]
 
         local width, tabWidth
@@ -108,7 +109,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         -- If there's an absolute size specified then use it
         if absoluteSize then
             if absoluteSize < sideWidths then
-                width = 1;
+                width = Scale.Value(1)
                 tabWidth = sideWidths
             else
                 width = absoluteSize - sideWidths
@@ -118,18 +119,18 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         else
             -- Otherwise try to use padding
             if padding then
-                width = textWidth + padding
+                width = textWidth + Scale.Value(padding)
             else
-                width = textWidth + 24
+                width = textWidth + Scale.Value(24)
             end
             -- If greater than the maxWidth then cap it
             if maxWidth and width > maxWidth then
-                if ( padding ) then
-                    width = maxWidth + padding
+                if padding then
+                    width = maxWidth + Scale.Value(padding)
                 else
-                    width = maxWidth + 24
+                    width = maxWidth + Scale.Value(24)
                 end
-                tabText:SetWidth(width)
+                Scale.RawSetWidth(tabText, width)
             else
                 tabText:SetWidth(0)
             end
@@ -139,7 +140,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
             tabWidth = width + sideWidths
         end
 
-        tab:SetWidth(tabWidth)
+        Scale.RawSetWidth(tab, tabWidth)
     end
     function Hook.PanelTemplates_DeselectTab(tab)
         local text = tab.Text or _G[tab:GetName().."Text"]
@@ -188,6 +189,29 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         button:SetSize(button:GetSize())
     end
 
+    function Skin.UIRadioButtonTemplate(checkbutton)
+        local bd = _G.CreateFrame("Frame", nil, checkbutton)
+        bd:SetPoint("TOPLEFT", 4, -4)
+        bd:SetPoint("BOTTOMRIGHT", -4, 4)
+        bd:SetFrameLevel(checkbutton:GetFrameLevel())
+        Base.SetBackdrop(bd, Color.frame)
+
+        checkbutton:SetNormalTexture("")
+        checkbutton:SetPushedTexture("")
+        checkbutton:SetHighlightTexture("")
+
+        local check = checkbutton:GetCheckedTexture()
+        check:SetColorTexture(Color.highlight:GetRGB())
+        check:ClearAllPoints()
+        check:SetPoint("TOPLEFT", bd, 1, -1)
+        check:SetPoint("BOTTOMRIGHT", bd, -1, 1)
+
+        checkbutton._auroraBDFrame = bd
+        Base.SetHighlight(checkbutton, "backdrop")
+
+        --[[ Scale ]]--
+        checkbutton:SetSize(checkbutton:GetSize())
+    end
     function Skin.UICheckButtonTemplate(checkbutton)
         local bd = _G.CreateFrame("Frame", nil, checkbutton)
         bd:SetPoint("TOPLEFT", 6, -6)
