@@ -34,13 +34,13 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
 
     function Skin.OptionsCheckButtonTemplate(checkbutton)
         Skin.OptionsBaseCheckButtonTemplate(checkbutton)
-        local name = checkbutton:GetName()
-        _G[name.."Text"]:SetPoint("LEFT", checkbutton, "RIGHT", 3, 0)
+        checkbutton.Text = _G[checkbutton:GetName().."Text"]
+        checkbutton.Text:SetPoint("LEFT", checkbutton, "RIGHT", 3, 0)
     end
     function Skin.OptionsSmallCheckButtonTemplate(checkbutton)
         Skin.OptionsBaseCheckButtonTemplate(checkbutton)
-        local name = checkbutton:GetName()
-        _G[name.."Text"]:SetPoint("LEFT", checkbutton, "RIGHT", 3, 0)
+        checkbutton.Text = _G[checkbutton:GetName().."Text"]
+        checkbutton.Text:SetPoint("LEFT", checkbutton, "RIGHT", 3, 0)
     end
     function Skin.OptionsSliderTemplate(slider)
         if private.isPatch then

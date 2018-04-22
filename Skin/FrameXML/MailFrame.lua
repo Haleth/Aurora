@@ -11,10 +11,7 @@ local Color = Aurora.Color
 
 do --[[ FrameXML\MailFrame.lua ]]
     function Hook.MailFrame_UpdateTrialState(self)
-        local isTrialOrVeteran = true
-        _G.MailFrameTab2:SetShown(not isTrialOrVeteran);
-        self.trialError:SetShown(isTrialOrVeteran);
-
+        local isTrialOrVeteran = _G.GameLimitedMode_IsActive()
         _G.InboxTitleText:SetShown(not isTrialOrVeteran)
     end
     function Hook.InboxFrame_Update()
@@ -115,13 +112,6 @@ do --[[ FrameXML\MailFrame.lua ]]
         _G.OpenMailScrollChildFrame:SetHeight(scrollHeight)
     end
 end
-
---[[
-local oldGetInboxNumItems = _G.GetInboxNumItems
-function GetInboxNumItems()
-    return oldGetInboxNumItems()--, 100
-end
-]]
 
 do --[[ FrameXML\MailFrame.xml ]]
     function Skin.SendMailRadioButtonTemplate(checkbutton)
@@ -254,7 +244,7 @@ function private.FrameXML.MailFrame()
         Skin.MailItemTemplate(item)
 
         if index == 1 then
-            item:SetPoint("TOPLEFT", _G.InboxFrame, 13, -(private.FRAME_TITLE_HEIGHT + 5))
+            item:SetPoint("TOPLEFT", 13, -(private.FRAME_TITLE_HEIGHT + 5))
         else
             item:SetPoint("TOPLEFT", _G["MailItem"..(index - 1)], "BOTTOMLEFT", 0, -7)
         end
