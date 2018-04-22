@@ -27,7 +27,8 @@ function private.FrameXML.FriendsFrame()
     --F.ReskinDropDown(_G.FriendsDropDown)
     --F.ReskinDropDown(_G.TravelPassDropDown)
 
-    for i = 1, 4 do
+    local numTabs = private.isPatch and 3 or 4
+    for i = 1, numTabs do
         local name = "FriendsFrameTab"..i
         local tab = _G[name]
         F.ReskinTab(tab)

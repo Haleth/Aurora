@@ -15,6 +15,8 @@ function private.FrameXML.WorldMapFrame()
         Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
     end
 
+    if private.isPatch then return end
+
     local WorldMapFrame = _G.WorldMapFrame
     local BorderFrame = WorldMapFrame.BorderFrame
 

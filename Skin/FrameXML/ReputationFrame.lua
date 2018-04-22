@@ -204,7 +204,7 @@ function private.FrameXML.ReputationFrame()
     _G.ReputationDetailLFGBonusReputationCheckBox:SetPoint("TOPLEFT", _G.ReputationDetailMainScreenCheckBox, "BOTTOMLEFT", 0, -6)
 
 
-    if not private.disabled.mainmenubar then
+    if not private.disabled.mainmenubar and not private.isPatch then
         Skin.MainMenuBarWatchBarTemplate(_G.ReputationWatchBar)
     end
 

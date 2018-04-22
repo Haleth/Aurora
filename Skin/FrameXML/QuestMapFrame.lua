@@ -7,6 +7,8 @@ local select, next = _G.select, _G.next
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.QuestMapFrame()
+
+    if private.isPatch then return end
     local r, g, b = C.r, C.g, C.b
 
     local QuestMapFrame = _G.QuestMapFrame

@@ -60,6 +60,10 @@ function private.FrameXML.MainMenuBar()
     if private.disabled.mainmenubar then return end
 
     if private.isPatch then
+        _G.MicroButtonAndBagsBar.MicroBagBar:Hide()
+        _G.MainMenuBarArtFrameBackground.BackgroundLarge:SetAlpha(0)
+        _G.MainMenuBarArtFrameBackground.BackgroundSmall:SetAlpha(0)
+
         _G.MainMenuBarArtFrame.LeftEndCap:Hide()
         _G.MainMenuBarArtFrame.RightEndCap:Hide()
     else

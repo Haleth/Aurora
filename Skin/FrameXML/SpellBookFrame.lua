@@ -134,7 +134,9 @@ function private.FrameXML.SpellBookFrame()
     _G.SecondaryProfession1:SetPoint("TOPLEFT", _G.PrimaryProfession2, "BOTTOMLEFT", 0, -18)
     _G.SecondaryProfession2:SetPoint("TOPLEFT", _G.SecondaryProfession1, "BOTTOMLEFT", 0, -8)
     _G.SecondaryProfession3:SetPoint("TOPLEFT", _G.SecondaryProfession2, "BOTTOMLEFT", 0, -8)
-    _G.SecondaryProfession4:SetPoint("TOPLEFT", _G.SecondaryProfession3, "BOTTOMLEFT", 0, -8)
+    if not private.isPatch then
+        _G.SecondaryProfession4:SetPoint("TOPLEFT", _G.SecondaryProfession3, "BOTTOMLEFT", 0, -8)
+    end
     local professions = {
         PrimaryProfession1 = true,
         PrimaryProfession2 = true,
@@ -142,8 +144,10 @@ function private.FrameXML.SpellBookFrame()
         SecondaryProfession1 = false,
         SecondaryProfession2 = false,
         SecondaryProfession3 = false,
-        SecondaryProfession4 = false
     }
+    if not private.isPatch then
+        professions.SecondaryProfession4 = false
+    end
     for name, isPrimary in next, professions do
         local prof = _G[name]
         F.CreateBD(prof, .25)

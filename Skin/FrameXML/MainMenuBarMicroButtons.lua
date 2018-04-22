@@ -16,7 +16,11 @@ end
 local function SetMicroButton(button, file, left, right, top, bottom)
     if file == "" then
         if not left then
-            left, right, top, bottom = 0.2, 0.8, 0.5, 0.9
+            if private.isPatch then
+                left, right, top, bottom = .19, .81, .21, .82
+            else
+                left, right, top, bottom = 0.2, 0.8, 0.5, 0.9
+            end
         end
         SetTexture(button:GetNormalTexture(), button._auroraBDFrame, left, right, top, bottom)
         SetTexture(button:GetPushedTexture(), button._auroraBDFrame, left, right, top, bottom)
@@ -45,16 +49,26 @@ local function SetMicroButton(button, file, left, right, top, bottom)
 end
 
 do --[[ FrameXML\MainMenuBarMicroButtons.lua ]]
+    local anchors = {
+        [_G.MicroButtonAndBagsBar] = 11
+    }
     function Hook.MoveMicroButtons(anchor, anchorTo, relAnchor, x, y, isStacked)
-        _G.LFDMicroButton:ClearAllPoints()
-        if isStacked then
-            if private.isPatch then
+        if private.isPatch then
+            _G.CharacterMicroButton:ClearAllPoints()
+            _G.CharacterMicroButton:SetPoint(anchor, anchorTo, relAnchor, anchors[anchorTo], y)
+            _G.LFDMicroButton:ClearAllPoints()
+            if isStacked then
                 _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, -1)
             else
-                _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, 22)
+                _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 1, 0)
             end
         else
-            _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", -2, 0)
+            _G.LFDMicroButton:ClearAllPoints()
+            if isStacked then
+                _G.LFDMicroButton:SetPoint("TOPLEFT", _G.CharacterMicroButton, "BOTTOMLEFT", 0, 22)
+            else
+                _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", -2, 0)
+            end
         end
     end
     function Hook.MainMenuMicroButton_OnUpdate(self, elapsed)
@@ -75,28 +89,33 @@ end
 
 do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
     function Skin.MainMenuBarMicroButton(button)
+        if private.isPatch then
+            button:SetSize(24, 34)
+        else
+            button:SetSize(28, 58)
+        end
+
         -- 24 x 34
-        local bd = _G.CreateFrame("Frame", nil, button)
-        bd:SetPoint("TOPLEFT", 2, -22)
-        bd:SetPoint("BOTTOMRIGHT", -2, 2)
-        bd:SetFrameLevel(button:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.button)
+        local bd
+        if private.isPatch then
+            bd = button
+            Base.SetBackdrop(bd, Color.button)
+            button._auroraBDFrame = bd
+        else
+            bd = _G.CreateFrame("Frame", nil, button)
+            bd:SetPoint("TOPLEFT", 2, -22)
+            bd:SetPoint("BOTTOMRIGHT", -2, 2)
+            bd:SetFrameLevel(button:GetFrameLevel())
+            Base.SetBackdrop(bd, Color.button)
+            button._auroraBDFrame = bd
+        end
 
         button:SetHighlightTexture("")
         button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)
         button.Flash:SetPoint("TOPLEFT", bd)
         button.Flash:SetPoint("BOTTOMRIGHT", bd)
 
-        button._auroraBDFrame = bd
         Base.SetHighlight(button, "backdrop")
-
-        --[[ Scale ]]--
-        if private.isPatch then
-            button:SetSize(26, 30)
-        else
-            button:SetSize(28, 58)
-        end
-        button:SetPoint(button:GetPoint())
     end
     function Skin.MicroButtonAlertTemplate(frame)
         Skin.GlowBoxTemplate(frame)
@@ -126,33 +145,47 @@ function private.FrameXML.MainMenuBarMicroButtons()
             local iconTexture, left, right, top, bottom
             if name == "CharacterMicroButton" then
                 SetTexture(_G.MicroButtonPortrait, button._auroraBDFrame)
+                button:SetPoint("BOTTOMLEFT", _G.MicroButtonAndBagsBar, "BOTTOMLEFT", 11, 3)
             elseif name == "SpellbookMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
+                button:SetPoint("BOTTOMLEFT", _G.CharacterMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "TalentMicroButton" then
                 iconTexture = [[Interface\Icons\Ability_Marksmanship]]
+                button:SetPoint("BOTTOMLEFT", _G.SpellbookMicroButton, "BOTTOMRIGHT", 2, 0)
+            elseif name == "AchievementMicroButton" then
+                iconTexture = ""
+                button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
+            elseif name == "QuestLogMicroButton" then
+                iconTexture = ""
+                button:SetPoint("BOTTOMLEFT", _G.AchievementMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "GuildMicroButton" then
                 iconTexture = ""
                 SetTexture(_G.GuildMicroButtonTabard.background, button._auroraBDFrame, 0.13, 0.87, 0.48, 0.9)
+                button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
 
                 --[[ Scale ]]--
                 _G.GuildMicroButtonTabard:SetSize(28, 58)
                 _G.GuildMicroButtonTabard.emblem:SetSize(16, 16)
                 _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, -9)
-            elseif name == "EJMicroButton" then
-                iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
+            elseif name == "LFDMicroButton" then
+                iconTexture = ""
+                button:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "CollectionsMicroButton" then
                 iconTexture = [[Interface\Icons\MountJournalPortrait]]
                 left, right, top, bottom = 0.3, 0.92, 0.08, 0.92
+                button:SetPoint("BOTTOMLEFT", _G.LFDMicroButton, "BOTTOMRIGHT", 2, 0)
+            elseif name == "EJMicroButton" then
+                iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
+                button:SetPoint("BOTTOMLEFT", _G.CollectionsMicroButton, "BOTTOMRIGHT", 2, 0)
+            elseif name == "StoreMicroButton" then
+                iconTexture = [[Interface\Icons\WoW_Store]]
+                button:SetPoint("BOTTOMLEFT", _G.EJMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "MainMenuMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
 
                 SetTexture(_G.MainMenuBarPerformanceBar, button._auroraBDFrame, 0.2, 0.8, 0.08, 0.94)
                 _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
-                button:SetPoint("BOTTOMLEFT", _G.StoreMicroButton, "BOTTOMRIGHT", -2, 0)
-            elseif name == "StoreMicroButton" then
-                iconTexture = [[Interface\Icons\WoW_Store]]
-            else
-                iconTexture = ""
+                button:SetPoint("BOTTOMLEFT", _G.StoreMicroButton, "BOTTOMRIGHT", 2, 0)
             end
 
             SetMicroButton(button, iconTexture, left, right, top, bottom)

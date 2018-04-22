@@ -38,7 +38,11 @@ function private.FrameXML.ActionBarFrame()
     end
 
     --[[ Scale ]]--
-    _G.ActionButton1:SetPoint("BOTTOMLEFT", 8, 4)
+    if private.isPatch then
+        _G.ActionButton1:SetPoint("BOTTOMLEFT", _G.MainMenuBarArtFrameBackground, 8, 4)
+    else
+        _G.ActionButton1:SetPoint("BOTTOMLEFT", 8, 4)
+    end
     for i = 2, 12 do
         _G["ActionButton"..i]:SetPoint("LEFT", _G["ActionButton"..i - 1], "RIGHT", 6, 0)
     end

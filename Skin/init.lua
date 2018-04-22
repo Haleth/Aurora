@@ -13,7 +13,7 @@ private.disabled = {
     fonts = false,
     tooltips = false,
     mainmenubar = false,
-    --uiScale = true,
+    uiScale = true,
     pixelScale = true
 }
 
@@ -154,6 +154,10 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
                 if fileList[file] then
                     fileList[file]()
                 end
+            end
+
+            if not private.isPatch then
+                private.FrameXML.ChannelFrame()
             end
 
             -- Skin prior loaded AddOns

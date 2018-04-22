@@ -79,16 +79,20 @@ do --[[ FrameXML\WorldStateFrame.xml ]]
 end
 
 function private.FrameXML.WorldStateFrame()
-    _G.hooksecurefunc(_G.ExtendedUI["CAPTUREPOINT"], "create", Hook.CaptureBar_Create)
-    _G.hooksecurefunc(_G.ExtendedUI["CAPTUREPOINT"], "update", Hook.CaptureBar_Update)
+    if not private.isPatch then
+        _G.hooksecurefunc(_G.ExtendedUI["CAPTUREPOINT"], "create", Hook.CaptureBar_Create)
+        _G.hooksecurefunc(_G.ExtendedUI["CAPTUREPOINT"], "update", Hook.CaptureBar_Update)
+    end
 
+    local MAX_SCORE_BUTTONS = 20
 
     Skin.ButtonFrameTemplate(_G.WorldStateScoreFrame)
     Skin.PVPHonorSystemLargeXPBar(_G.WorldStateScoreFrame.XPBar)
 
-    for i = 1, _G.MAX_WORLDSTATE_SCORE_BUTTONS do
+    for i = 1, MAX_SCORE_BUTTONS do
         Skin.WorldStateScoreTemplate(_G["WorldStateScoreButton" .. i])
     end
+
     Skin.FauxScrollFrameTemplate(_G.WorldStateScoreScrollFrame)
     local top, mid, bottom = _G.WorldStateScoreScrollFrame:GetRegions()
     top:Hide()

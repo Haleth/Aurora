@@ -159,9 +159,9 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         button:SetPoint("TOPRIGHT", right, -19, -21)
 
         if private.isPatch then
-            button.Normal:SetTexture("")
-            button.Pushed:SetTexture("")
-            button.Highlight:SetTexture("")
+            button.NormalTexture:SetTexture("")
+            button.PushedTexture:SetTexture("")
+            button.HighlightTexture:SetTexture("")
         else
             button:SetNormalTexture("")
             button:SetPushedTexture("")
