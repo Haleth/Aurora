@@ -362,7 +362,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bd:SetPoint("TOPLEFT", 1, -1)
         bd:SetPoint("BOTTOMRIGHT", -1, 1)
         bd:SetFrameLevel(button:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.frame)
+        Base.SetBackdrop(bd, Color.button, 0.3)
 
         button._auroraBDFrame = bd
         Base.SetHighlight(button, "backdrop")
@@ -375,7 +375,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bg:SetPoint("TOPLEFT", slider, 5, -5)
         bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
         bg:SetFrameLevel(slider:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.frame)
+        Base.SetBackdrop(bg, Color.button, 0.3)
 
         local thumbTexture = slider:GetThumbTexture()
         thumbTexture:SetAlpha(0)
@@ -476,6 +476,16 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.InputBoxInstructionsTemplate(editbox)
         Skin.InputBoxTemplate(editbox)
+    end
+    function Skin.TabButtonTemplate(Button)
+        Button.LeftDisabled:SetAlpha(0)
+        Button.MiddleDisabled:SetAlpha(0)
+        Button.RightDisabled:SetAlpha(0)
+        Button.Left:SetAlpha(0)
+        Button.Middle:SetAlpha(0)
+        Button.Right:SetAlpha(0)
+
+        Button.HighlightTexture:SetTexture("")
     end
 
     function Skin.MaximizeMinimizeButtonFrameTemplate(frame)

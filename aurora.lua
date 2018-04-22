@@ -130,12 +130,14 @@ function private.OnLoad()
     end
 
     function Base.Post.SetBackdrop(ret, frame, color, alpha)
-        if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
-            Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
-            Aurora.Base.SetBackdropColor(frame, color, alpha)
-        elseif not color and not alpha then
-            frame:SetBackdropColor(Color.frame, AuroraConfig.alpha)
-            _G.tinsert(C.frames, frame)
+        if not alpha then
+            if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
+                Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
+                Aurora.Base.SetBackdropColor(frame, color)
+            elseif not color then
+                frame:SetBackdropColor(Color.frame, AuroraConfig.alpha)
+                _G.tinsert(C.frames, frame)
+            end
         end
     end
 

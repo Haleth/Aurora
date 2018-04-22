@@ -49,9 +49,12 @@ local function SetMicroButton(button, file, left, right, top, bottom)
 end
 
 do --[[ FrameXML\MainMenuBarMicroButtons.lua ]]
-    local anchors = {
-        [_G.MicroButtonAndBagsBar] = 11
-    }
+    local anchors
+    if private.isPatch then
+        anchors = {
+            [_G.MicroButtonAndBagsBar] = 11
+        }
+    end
     function Hook.MoveMicroButtons(anchor, anchorTo, relAnchor, x, y, isStacked)
         if private.isPatch then
             _G.CharacterMicroButton:ClearAllPoints()

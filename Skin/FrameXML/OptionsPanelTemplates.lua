@@ -10,16 +10,20 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         Skin.UIPanelButtonTemplate(button)
     end
     function Skin.OptionsBaseCheckButtonTemplate(checkbutton)
-        checkbutton:SetSize(18, 18)
-
         checkbutton:SetNormalTexture("")
         checkbutton:SetPushedTexture("")
         checkbutton:SetHighlightTexture("")
 
+        local bd = _G.CreateFrame("Frame", nil, checkbutton)
+        bd:SetPoint("TOPLEFT", 4, -4)
+        bd:SetPoint("BOTTOMRIGHT", -4, 4)
+        bd:SetFrameLevel(checkbutton:GetFrameLevel())
+        Base.SetBackdrop(bd, Color.button, 0.3)
+
         local check = checkbutton:GetCheckedTexture()
         check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", -7, 7)
-        check:SetPoint("BOTTOMRIGHT", 7, -7)
+        check:SetPoint("TOPLEFT", bd, -7, 7)
+        check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
 
@@ -28,8 +32,10 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         disabled:SetPoint("TOPLEFT", -7, 7)
         disabled:SetPoint("BOTTOMRIGHT", 7, -7)
 
-        Base.SetBackdrop(checkbutton, Color.frame)
+        checkbutton._auroraBDFrame = bd
         Base.SetHighlight(checkbutton, "backdrop")
+
+        checkbutton:SetSize(checkbutton:GetSize())
     end
 
     function Skin.OptionsCheckButtonTemplate(checkbutton)
@@ -43,30 +49,13 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         checkbutton.Text:SetPoint("LEFT", checkbutton, "RIGHT", 3, 0)
     end
     function Skin.OptionsSliderTemplate(slider)
-        if private.isPatch then
-            Skin.HorizontalSliderTemplate(slider)
-        else
-            slider:SetBackdrop(nil)
-
-            local bg = _G.CreateFrame("Frame", nil, slider)
-            bg:SetPoint("TOPLEFT", slider, 5, -5)
-            bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
-            bg:SetFrameLevel(slider:GetFrameLevel())
-            Base.SetBackdrop(bg, Color.frame)
-
-            local thumbTexture = slider:GetThumbTexture()
-            thumbTexture:SetAlpha(0)
-            thumbTexture:SetSize(8, 16)
-
-            local thumb = _G.CreateFrame("Frame", nil, bg)
-            thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
-            thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
-            Base.SetBackdrop(thumb, Color.button)
-            slider._auroraThumb = thumb
-        end
+        Skin.HorizontalSliderTemplate(slider)
 
         --[[ Scale ]]--
         slider:SetSize(slider:GetSize())
+    end
+    function Skin.OptionsDropdownTemplate(frame)
+        Skin.UIDropDownMenuTemplate(frame)
     end
     function Skin.OptionsBoxTemplate(frame)
         Base.SetBackdrop(frame, Color.frame)
