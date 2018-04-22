@@ -69,7 +69,9 @@ end
 function private.FrameXML.TutorialFrame()
     _G.hooksecurefunc("TutorialFrame_Update", Hook.TutorialFrame_Update)
 
-    --[[ TutorialFrame ]]--
+    -------------------
+    -- TutorialFrame --
+    -------------------
     Base.SetBackdrop(_G.TutorialFrame)
     _G.TutorialFrameTop:SetAlpha(0)
     _G.TutorialFrameBottom:SetAlpha(0)
@@ -119,7 +121,9 @@ function private.FrameXML.TutorialFrame()
     end
 
 
-    --[[ TutorialFrameAlertButton ]]--
+    ------------------------------
+    -- TutorialFrameAlertButton --
+    ------------------------------
     local mask = _G.TutorialFrameAlertButton:CreateMaskTexture(nil, "BORDER")
     mask:SetTexture([[Interface\PetBattles\BattleBar-AbilityBadge-Neutral]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
     mask:SetPoint("CENTER", 3, 3)
@@ -129,6 +133,8 @@ function private.FrameXML.TutorialFrame()
     _G.TutorialFrameAlertButton:GetHighlightTexture():AddMaskTexture(mask)
 
 
-    --[[ TutorialFrameAlertButtonBadge ]]--
+    -----------------------------------
+    -- TutorialFrameAlertButtonBadge --
+    -----------------------------------
     -- Not used
 end

@@ -21,7 +21,14 @@ do --[[ AddOns\Blizzard_FileUI.xml ]]
 end
 
 function private.AddOns.Blizzard_FileUI()
-    --[[
-    ]]
+    ----====####$$$$%%%%$$$$####====----
+    --              File              --
+    ----====####$$$$%%%%$$$$####====----
+
+    -------------
+    -- Section --
+    -------------
+
+    --[[ Scale ]]--
 end
 ]==]

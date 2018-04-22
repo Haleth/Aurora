@@ -92,7 +92,9 @@ end
 function private.FrameXML.FloatingGarrisonFollowerTooltip()
     if private.disabled.tooltips then return end
 
-    --[[ FrameXML\FloatingGarrisonFollowerTooltip ]]
+    ----====####$$$$%%%%%$$$$####====----
+    -- FloatingGarrisonFollowerTooltip --
+    ----====####$$$$%%%%%$$$$####====----
     _G.hooksecurefunc("GarrisonFollowerAbilityTooltipTemplate_SetAbility", Hook.GarrisonFollowerAbilityTooltipTemplate_SetAbility)
     _G.hooksecurefunc("GarrisonFollowerTooltipTemplate_SetGarrisonFollower", Hook.GarrisonFollowerTooltipTemplate_SetGarrisonFollower)
 
@@ -109,7 +111,9 @@ function private.FrameXML.FloatingGarrisonFollowerTooltip()
         frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
     end
 
-    --[[ FrameXML\GarrisonFollowerTooltip ]]
+    ----====####$$$$%%%%%$$$$####====----
+    --     GarrisonFollowerTooltip     --
+    ----====####$$$$%%%%%$$$$####====----
     Skin.GarrisonFollowerTooltipTemplate(_G.GarrisonFollowerTooltip)
     Skin.GarrisonFollowerAbilityTooltipTemplate(_G.GarrisonFollowerAbilityTooltip)
     Skin.GarrisonFollowerAbilityWithoutCountersTooltipTemplate(_G.GarrisonFollowerAbilityWithoutCountersTooltip)

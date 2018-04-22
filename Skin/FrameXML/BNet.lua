@@ -5,7 +5,9 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 
 function private.FrameXML.BNet()
-    --[[ BNToastFrame ]]--
+    ------------------
+    -- BNToastFrame --
+    ------------------
     Base.SetBackdrop(_G.BNToastFrame)
 
     _G.BNToastFrameGlowFrame.glow:SetColorTexture(1, 1, 1, 0.5)
@@ -19,7 +21,9 @@ function private.FrameXML.BNet()
     Base.SetBackdrop(_G.BNToastFrame.TooltipFrame)
 
 
-    --[[ BNetReportFrame ]]--
+    ---------------------
+    -- BNetReportFrame --
+    ---------------------
     Base.SetBackdrop(_G.BNetReportFrame)
 
     _G.BNetReportFrameCommentTopLeft:Hide()
@@ -51,7 +55,9 @@ function private.FrameXML.BNet()
     Skin.UIPanelButtonTemplate(_G.BNetReportFrameCancelButton)
 
 
-    --[[ TimeAlertFrame ]]--
+    --------------------
+    -- TimeAlertFrame --
+    --------------------
     Base.SetBackdrop(_G.TimeAlertFrameBG)
 
     _G.TimeAlertFrameGlowFrame.glow:SetColorTexture(1, 1, 1, 0.5)

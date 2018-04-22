@@ -13,7 +13,7 @@ private.disabled = {
     fonts = false,
     tooltips = false,
     mainmenubar = false,
-    uiScale = true,
+    --uiScale = true,
     pixelScale = true
 }
 

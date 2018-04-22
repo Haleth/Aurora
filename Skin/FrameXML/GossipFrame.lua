@@ -58,7 +58,9 @@ function private.FrameXML.GossipFrame()
     _G.hooksecurefunc("GossipFrameAvailableQuestsUpdate", Hook.GossipFrameAvailableQuestsUpdate)
     _G.hooksecurefunc("GossipFrameActiveQuestsUpdate", Hook.GossipFrameActiveQuestsUpdate)
 
-    --[[ GossipFrame ]]--
+    -----------------
+    -- GossipFrame --
+    -----------------
     Skin.ButtonFrameTemplate(_G.GossipFrame)
 
     -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
@@ -84,7 +86,9 @@ function private.FrameXML.GossipFrame()
     end
 
 
-    --[[ NPCFriendshipStatusBar ]]--
+    ----------------------------
+    -- NPCFriendshipStatusBar --
+    ----------------------------
     _G.NPCFriendshipStatusBar:GetRegions():Hide()
     _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
     for i = 1, 4 do

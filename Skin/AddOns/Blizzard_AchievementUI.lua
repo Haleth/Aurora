@@ -395,7 +395,9 @@ function private.AddOns.Blizzard_AchievementUI()
         Hook.AchievementButton_Desaturate(self)
     end)
 
-    -- AchievementFrame
+    ----------------------
+    -- AchievementFrame --
+    ----------------------
     Base.SetBackdrop(_G.AchievementFrame)
 
     _G.AchievementFrameBackground:Hide()

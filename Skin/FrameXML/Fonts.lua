@@ -35,7 +35,10 @@ function private.FrameXML.Fonts()
     local black = Color.black
     local yellow = Color.yellow
 
-    -- SharedXML\SharedFonts.xml
+
+    ----====####$$$$%%%%%$$$$####====----
+    --           SharedFonts           --
+    ----====####$$$$%%%%%$$$$####====----
     Base.SetFont("SystemFont_Tiny2",                NORMAL, 8)
     Base.SetFont("SystemFont_Tiny",                 NORMAL, 9)
     Base.SetFont("SystemFont_Shadow_Small",         NORMAL, 10, nil, nil, black, 1, -1)
@@ -74,7 +77,10 @@ function private.FrameXML.Fonts()
     Base.SetFont("Tooltip_Med",       NORMAL, 12)
     Base.SetFont("Tooltip_Small",     NORMAL, 10)
 
-    -- FrameXML\Fonts.xml
+
+    ----====####$$$$%%%%%$$$$####====----
+    --              Fonts              --
+    ----====####$$$$%%%%%$$$$####====----
     Base.SetFont("SystemFont_Outline_Small",       NORMAL, 10, "OUTLINE")
     Base.SetFont("SystemFont_Outline",             NORMAL, 13, "OUTLINE")
     Base.SetFont("SystemFont_InverseShadow_Small", NORMAL, 10, nil, nil, gray, 1, -1)
@@ -165,10 +171,16 @@ function private.FrameXML.Fonts()
     -- but for some reason the above changes do not propagate to it.
     Base.SetFont(_G.WorldMapFrame.NavBar.home.text, NORMAL, 12, nil, yellow, black, 1, -1)
 
-    -- SharedXML\SharedFontStyles.xml
+
+    ----====####$$$$%%%%$$$$####====----
+    --        SharedFontStyles        --
+    ----====####$$$$%%%%$$$$####====----
     _G.GameFontBlackMedium:SetTextColor(white:GetRGB())
 
-    -- FrameXML\FontStyles.xml
+
+    ----====####$$$$%%%%$$$$####====----
+    --           FontStyles           --
+    ----====####$$$$%%%%$$$$####====----
     _G.QuestTitleFont:SetTextColor(white:GetRGB())
     _G.QuestFont:SetTextColor(white:GetRGB())
     _G.MailTextFontNormal:SetTextColor(white:GetRGB())

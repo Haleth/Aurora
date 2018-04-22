@@ -142,11 +142,15 @@ function private.FrameXML.ReputationFrame()
     _G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
     _G.hooksecurefunc("ReputationFrame_Update", Hook.ReputationFrame_Update)
 
-    --[[ ReputationParagonTooltipStatusBar ]]--
+    ---------------------------------------
+    -- ReputationParagonTooltipStatusBar --
+    ---------------------------------------
     Skin.TooltipProgressBarTemplate(_G.ReputationParagonTooltipStatusBar)
 
 
-    --[[ ReputationFrame ]]--
+    ---------------------
+    -- ReputationFrame --
+    ---------------------
     Skin.ReputationBarTemplate(_G.ReputationBar1)
     for i = 2, _G.NUM_FACTIONS_DISPLAYED do
         local factionRow = _G["ReputationBar"..i]
@@ -166,7 +170,9 @@ function private.FrameXML.ReputationFrame()
     bottom:Hide()
 
 
-    --[[ ReputationDetailFrame ]]--
+    ---------------------------
+    -- ReputationDetailFrame --
+    ---------------------------
     _G.ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
     Base.SetBackdrop(_G.ReputationDetailFrame, Color.frame)
 
