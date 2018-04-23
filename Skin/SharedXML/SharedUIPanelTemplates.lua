@@ -194,7 +194,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bd:SetPoint("TOPLEFT", 4, -4)
         bd:SetPoint("BOTTOMRIGHT", -4, 4)
         bd:SetFrameLevel(checkbutton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.frame)
+        Base.SetBackdrop(bd, Color.button, 0.3)
 
         checkbutton:SetNormalTexture("")
         checkbutton:SetPushedTexture("")
@@ -217,7 +217,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bd:SetPoint("TOPLEFT", 6, -6)
         bd:SetPoint("BOTTOMRIGHT", -6, 6)
         bd:SetFrameLevel(checkbutton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.frame)
+        Base.SetBackdrop(bd, Color.button, 0.3)
 
         checkbutton:SetNormalTexture("")
         checkbutton:SetPushedTexture("")

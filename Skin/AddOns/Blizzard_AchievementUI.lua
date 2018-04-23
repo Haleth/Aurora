@@ -194,7 +194,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
 
-        Base.SetBackdrop(checkbutton)
+        Base.SetBackdrop(checkbutton, Color.button, 0.3)
         Base.SetHighlight(checkbutton, "backdrop")
     end
     function Skin.AchievementFrameTabButtonTemplate(button)

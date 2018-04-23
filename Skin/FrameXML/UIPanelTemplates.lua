@@ -94,6 +94,33 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         frame.Arrow:SetVertexColor(1, 1, 0)
         frame.Glow:Hide()
     end
+    function Skin.BaseBasicFrameTemplate(frame)
+        frame.TopLeftCorner:Hide()
+        frame.TopRightCorner:Hide()
+        frame.TopBorder:SetTexture("")
+
+        local titleText = frame.TitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT")
+        titleText:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        frame.BotLeftCorner:Hide()
+        frame.BotRightCorner:Hide()
+        frame.BottomBorder:Hide()
+        frame.LeftBorder:Hide()
+        frame.RightBorder:Hide()
+        Base.SetBackdrop(frame)
+
+        Skin.UIPanelCloseButton(frame.CloseButton)
+        frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
+    end
+    function Skin.BasicFrameTemplate(frame)
+        Skin.BaseBasicFrameTemplate(frame)
+
+        frame.Bg:Hide()
+        frame.TitleBg:Hide()
+        frame.TopTileStreaks:SetTexture("")
+    end
     function Skin.TranslucentFrameTemplate(frame)
         frame.Bg:Hide()
 

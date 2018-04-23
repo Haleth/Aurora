@@ -384,7 +384,8 @@ do -- Base API
         local function OnEnter(button, isBackground)
             if button:IsEnabled() then
                 if isBackground then
-                    Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight)
+                    local alpha = button._returnColor.a or Color.highlight.a
+                    Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight, alpha)
                 else
                     for _, texture in next, button._auroraHighlight do
                         button._auroraSetColor(texture, Color.highlight:GetRGB())
