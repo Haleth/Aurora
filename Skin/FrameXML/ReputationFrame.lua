@@ -195,13 +195,10 @@ function private.FrameXML.ReputationFrame()
 
     Skin.UIPanelCloseButton(_G.ReputationDetailCloseButton)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailAtWarCheckBox) -- BlizzWTF: doesn't use the template, but it should
-    _G.ReputationDetailAtWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 8, -8)
+    _G.ReputationDetailAtWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 10, -6)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
-    _G.ReputationDetailInactiveCheckBox:SetPoint("LEFT", _G.ReputationDetailAtWarCheckBox, "RIGHT", 50, 0)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
-    _G.ReputationDetailMainScreenCheckBox:SetPoint("TOPLEFT", _G.ReputationDetailAtWarCheckBox, "BOTTOMLEFT", 0, -6)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailLFGBonusReputationCheckBox)
-    _G.ReputationDetailLFGBonusReputationCheckBox:SetPoint("TOPLEFT", _G.ReputationDetailMainScreenCheckBox, "BOTTOMLEFT", 0, -6)
 
 
     if not private.disabled.mainmenubar and not private.isPatch then

@@ -182,7 +182,7 @@ function private.FrameXML.QuestInfo()
 
     local function clearHighlight()
         for _, button in next, QuestInfoRewardsFrame.RewardButtons do
-            Base.SetBackdropColor(button._auroraNameBG, Color.frame:GetRGBA())
+            Base.SetBackdropColor(button._auroraNameBG, Color.frame)
         end
     end
     local function setHighlight(self)
@@ -190,7 +190,7 @@ function private.FrameXML.QuestInfo()
 
         local _, point = self:GetPoint()
         if point then
-            Base.SetBackdropColor(point._auroraNameBG, Color.highlight:GetRGBA())
+            Base.SetBackdropColor(point._auroraNameBG, Color.highlight, 0.3)
         end
     end
 
