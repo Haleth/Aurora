@@ -8,7 +8,7 @@ local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_Collections()
@@ -667,7 +667,7 @@ function private.AddOns.Blizzard_Collections()
         if itemFrame.collected then
             quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
         end
-        _G.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
+        Hook.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
     end)
 
     -- [[ Wardrobe ]]
