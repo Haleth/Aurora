@@ -8,6 +8,14 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
+--[[ do FrameXML\AzeritePaperDollItemOverlay.lua
+end ]]
+do --[[ FrameXML\AzeritePaperDollItemOverlay.xml ]]
+    function Skin.PaperDollAzeriteItemOverlayTemplate(Frame)
+        Frame.RankFrame.Label:SetPoint("CENTER", Frame.RankFrame.Texture, 0, 0)
+    end
+end
+
 do --[[ FrameXML\PaperDollFrame.lua ]]
     function Hook.PaperDollFrame_SetLevel()
         local classLocale, classColor = private.charClass.locale, _G.CUSTOM_CLASS_COLORS[private.charClass.token]
@@ -43,6 +51,9 @@ end
 do --[[ FrameXML\PaperDollFrame.xml ]]
     function Skin.PaperDollItemSlotButtonTemplate(button)
         Skin.ItemButtonTemplate(button)
+        if private.isPatch then
+            Skin.PaperDollAzeriteItemOverlayTemplate(button)
+        end
         _G[button:GetName().."Frame"]:Hide()
     end
     function Skin.PaperDollItemSlotButtonLeftTemplate(button)
@@ -200,7 +211,11 @@ function private.FrameXML.PaperDollFrame()
         end
 
         Skin.PaperDollItemSlotButtonBottomTemplate(button)
+        if private.isPatch then
+            _G.select(13, button:GetRegions()):Hide()
+        else
         _G.select(11, button:GetRegions()):Hide()
+    end
     end
 
 
