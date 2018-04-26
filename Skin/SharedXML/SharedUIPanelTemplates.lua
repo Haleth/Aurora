@@ -1,7 +1,7 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next, tinsert = _G.next, _G.tinsert
+--[[ Lua Globals ]]
+-- luacheck: globals next tinsert
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -388,57 +388,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         slider._auroraThumb = thumb
     end
 
-    function Skin.UIPanelScrollBarButton(button)
-        button:SetSize(17, 17)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
-
-        local disabled = button:GetDisabledTexture()
-        disabled:SetVertexColor(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-        disabled:SetAllPoints()
-
-        Base.SetBackdrop(button, Color.button)
-    end
-    function Skin.UIPanelScrollUpButtonTemplate(button)
-        Skin.UIPanelScrollBarButton(button)
-
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 4, -6)
-        arrow:SetPoint("BOTTOMRIGHT", -5, 7)
-        Base.SetTexture(arrow, "arrowUp")
-
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
-    end
-    function Skin.UIPanelScrollDownButtonTemplate(button)
-        Skin.UIPanelScrollBarButton(button)
-
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 4, -7)
-        arrow:SetPoint("BOTTOMRIGHT", -5, 6)
-        Base.SetTexture(arrow, "arrowDown")
-
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
-    end
-    function Skin.UIPanelScrollBarTemplate(slider)
-        Skin.UIPanelScrollUpButtonTemplate(slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(slider.ScrollDownButton)
-
-        slider.ThumbTexture:SetAlpha(0)
-        slider.ThumbTexture:SetSize(17, 24)
-
-        local thumb = _G.CreateFrame("Frame", nil, slider)
-        thumb:SetPoint("TOPLEFT", slider.ThumbTexture, 0, -2)
-        thumb:SetPoint("BOTTOMRIGHT", slider.ThumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Color.button)
-        slider._auroraThumb = thumb
-
-        --[[ Scale ]]--
-        slider:SetWidth(slider:GetWidth())
-    end
     function Skin.UIPanelStretchableArtScrollBarTemplate(slider)
         Skin.UIPanelScrollBarTemplate(slider)
 
@@ -447,32 +396,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         slider.Middle:Hide()
 
         slider.Background:Hide()
-    end
-    function Skin.UIPanelScrollFrameTemplate(scrollframe)
-        Skin.UIPanelScrollBarTemplate(scrollframe.ScrollBar)
-        scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 2, -17)
-        scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", 2, 17)
-    end
-    function Skin.FauxScrollFrameTemplate(scrollframe)
-        Skin.UIPanelScrollFrameTemplate(scrollframe)
-    end
-    function Skin.ListScrollFrameTemplate(scrollframe)
-        Skin.FauxScrollFrameTemplate(scrollframe)
-        local name = scrollframe:GetName()
-        _G[name.."Top"]:Hide()
-        _G[name.."Bottom"]:Hide()
-        _G[name.."Middle"]:Hide()
-    end
-    function Skin.InputBoxTemplate(editbox)
-        editbox.Left:Hide()
-        editbox.Right:Hide()
-        editbox.Middle:Hide()
-
-        local bg = _G.CreateFrame("Frame", nil, editbox)
-        bg:SetPoint("TOPLEFT", editbox.Left)
-        bg:SetPoint("BOTTOMRIGHT", editbox.Right)
-        bg:SetFrameLevel(editbox:GetFrameLevel() - 1)
-        Base.SetBackdrop(bg, Color.frame)
     end
     function Skin.InputBoxInstructionsTemplate(editbox)
         Skin.InputBoxTemplate(editbox)
