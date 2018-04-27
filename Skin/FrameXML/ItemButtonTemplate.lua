@@ -82,25 +82,37 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         button:SetSize(button:GetSize())
     end
     function Skin.SimplePopupButtonTemplate(checkbutton)
-        _G.select(2, checkbutton:GetRegions()):Hide()
+        local name, bg = checkbutton:GetRegions()
+        name:ClearAllPoints()
+        name:SetPoint("BOTTOMLEFT")
+        name:SetPoint("BOTTOMRIGHT")
+        bg:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, checkbutton)
-        bg:SetFrameLevel(checkbutton:GetFrameLevel() - 1)
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        local bd = _G.CreateFrame("Frame", nil, checkbutton)
+        bd:SetFrameLevel(checkbutton:GetFrameLevel() - 1)
+        bd:SetPoint("TOPLEFT", -1, 1)
+        bd:SetPoint("BOTTOMRIGHT", 1, -1)
 
-        Base.CreateBackdrop(bg, {
+        Base.CreateBackdrop(bd, {
             edgeSize = 1,
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             insets = {left = 1, right = 1, top = 1, bottom = 1}
         })
-        Base.CropIcon(bg:GetBackdropTexture("bg"))
-        bg:SetBackdropColor(1, 1, 1, 0.75)
-        bg:SetBackdropBorderColor(Color.frame, 1)
+        Base.CropIcon(bd:GetBackdropTexture("bg"))
+        bd:SetBackdropColor(1, 1, 1, 0.75)
+        bd:SetBackdropBorderColor(Color.frame, 1)
+
+        --[[ Scale ]]--
+        checkbutton:SetSize(checkbutton:GetSize())
+        name:SetHeight(10)
     end
     function Skin.PopupButtonTemplate(checkbutton)
         Skin.SimplePopupButtonTemplate(checkbutton)
-        Base.CropIcon(_G[checkbutton:GetName().."Icon"])
+
+        local icon = _G[checkbutton:GetName().."Icon"]
+        icon:SetAllPoints()
+        Base.CropIcon(icon)
+
         Base.CropIcon(checkbutton:GetHighlightTexture())
         Base.CropIcon(checkbutton:GetCheckedTexture())
     end

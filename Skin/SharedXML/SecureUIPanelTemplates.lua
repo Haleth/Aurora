@@ -93,6 +93,14 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         _G[name.."Middle"]:Hide()
     end
     function Skin.SelectionFrameTemplate(frame)
+        frame.TopLeft:ClearAllPoints()
+        frame.TopRight:ClearAllPoints()
+        frame.BottomLeft:ClearAllPoints()
+        frame.BottomRight:ClearAllPoints()
+
+        Skin.UIPanelButtonTemplate(frame.CancelButton)
+        frame.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
+        Skin.UIPanelButtonTemplate(frame.OkayButton)
     end
 end
 

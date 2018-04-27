@@ -409,6 +409,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Button.Right:SetAlpha(0)
 
         Button.HighlightTexture:SetTexture("")
+        Button._auroraTabResize = true
     end
 
     function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
