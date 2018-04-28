@@ -2,7 +2,8 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 local function SetTexture(texture, anchor, left, right, top, bottom)
@@ -104,6 +105,11 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
             bd = button
             Base.SetBackdrop(bd, Color.button)
             button._auroraBDFrame = bd
+
+            button:SetHighlightTexture("")
+            button.Flash:SetPoint("TOPLEFT", bd, 1, -1)
+            button.Flash:SetPoint("BOTTOMRIGHT", bd, -1, 1)
+            button.Flash:SetTexCoord(.18, .82, .18, .82)
         else
             bd = _G.CreateFrame("Frame", nil, button)
             bd:SetPoint("TOPLEFT", 2, -22)
@@ -111,12 +117,12 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
             bd:SetFrameLevel(button:GetFrameLevel())
             Base.SetBackdrop(bd, Color.button)
             button._auroraBDFrame = bd
-        end
 
-        button:SetHighlightTexture("")
-        button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)
-        button.Flash:SetPoint("TOPLEFT", bd)
-        button.Flash:SetPoint("BOTTOMRIGHT", bd)
+            button:SetHighlightTexture("")
+            button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)
+            button.Flash:SetPoint("TOPLEFT", bd)
+            button.Flash:SetPoint("BOTTOMRIGHT", bd)
+        end
 
         Base.SetHighlight(button, "backdrop")
     end
@@ -148,7 +154,9 @@ function private.FrameXML.MainMenuBarMicroButtons()
             local iconTexture, left, right, top, bottom
             if name == "CharacterMicroButton" then
                 SetTexture(_G.MicroButtonPortrait, button._auroraBDFrame)
-                button:SetPoint("BOTTOMLEFT", _G.MicroButtonAndBagsBar, "BOTTOMLEFT", 11, 3)
+                if private.isPatch then
+                    button:SetPoint("BOTTOMLEFT", _G.MicroButtonAndBagsBar, "BOTTOMLEFT", 11, 3)
+                end
             elseif name == "SpellbookMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
                 button:SetPoint("BOTTOMLEFT", _G.CharacterMicroButton, "BOTTOMRIGHT", 2, 0)
@@ -201,7 +209,9 @@ function private.FrameXML.MainMenuBarMicroButtons()
     Skin.MicroButtonAlertTemplate(_G.EJMicroButtonAlert)
 
     --[[ Scale ]]--
-    if not private.isPatch then
+    if private.isPatch then
+        _G.MicroButtonAndBagsBar:SetSize(298, 88)
+    else
         _G.TalentMicroButtonAlert:SetPoint("BOTTOM", _G.TalentMicroButtonAlert.MicroButton, "TOP", 0, -8)
         _G.CollectionsMicroButtonAlert:SetPoint("BOTTOM", _G.CollectionsMicroButtonAlert.MicroButton, "TOP", 0, -8)
         _G.LFDMicroButtonAlert:SetPoint("BOTTOM", _G.LFDMicroButtonAlert.MicroButton, "TOP", 0, -8)
