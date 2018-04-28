@@ -38,17 +38,17 @@ do --[[ FrameXML\GossipFrame.lua ]]
 end
 
 do --[[ FrameXML\GossipFrame.xml ]]
-    function Skin.GossipFramePanelTemplate(frame)
-        local name = frame:GetName()
-        frame:SetPoint("BOTTOMRIGHT")
+    function Skin.GossipFramePanelTemplate(Frame)
+        local name = Frame:GetName()
+        Frame:SetPoint("BOTTOMRIGHT")
 
         _G[name.."MaterialTopLeft"]:SetAlpha(0)
         _G[name.."MaterialTopRight"]:SetAlpha(0)
         _G[name.."MaterialBotLeft"]:SetAlpha(0)
         _G[name.."MaterialBotRight"]:SetAlpha(0)
     end
-    function Skin.GossipTitleButtonTemplate(button)
-        local highlight = button:GetHighlightTexture()
+    function Skin.GossipTitleButtonTemplate(Button)
+        local highlight = Button:GetHighlightTexture()
         local r, g, b = Color.highlight:GetRGB()
         highlight:SetColorTexture(r, g, b, 0.2)
     end

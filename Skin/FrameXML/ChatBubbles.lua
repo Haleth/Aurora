@@ -23,34 +23,34 @@ end
 
 do --[[ FrameXML\ChatBubbles.xml ]]
     local tailSize = 16
-    function Skin.ChatBubbleFrame(frame)
+    function Skin.ChatBubbleFrame(Frame)
         local font
-        for i = 1, frame:GetNumRegions() do
-            local region = _G.select(i, frame:GetRegions())
+        for i = 1, Frame:GetNumRegions() do
+            local region = _G.select(i, Frame:GetRegions())
             if region:GetObjectType() == "Texture" then
                 region:SetTexture(nil)
             elseif region:GetObjectType() == "FontString" then
                 font = region:GetFontObject()
-                frame._auroraText = region
+                Frame._auroraText = region
             end
         end
 
-        Base.SetBackdrop(frame)
-        frame:SetScale(_G.UIParent:GetScale())
+        Base.SetBackdrop(Frame)
+        Frame:SetScale(_G.UIParent:GetScale())
 
-        local tail = frame:CreateTexture(nil, "BORDER")
-        tail:SetPoint("TOP", frame, "BOTTOM", -(tailSize / 2), 0) -- places tail about where the old one was
+        local tail = Frame:CreateTexture(nil, "BORDER")
+        tail:SetPoint("TOP", Frame, "BOTTOM", -(tailSize / 2), 0) -- places tail about where the old one was
         tail:SetSize(tailSize, tailSize)
         tail:SetColorTexture(0, 0, 0)
         tail:SetVertexOffset(2, tailSize, 0)
-        frame._auroraTail = tail
+        Frame._auroraTail = tail
 
-        local name = frame:CreateFontString(nil, "BORDER")
+        local name = Frame:CreateFontString(nil, "BORDER")
         name:SetPoint("TOPLEFT", 5, 5)
-        name:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -5, -5)
+        name:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", -5, -5)
         name:SetJustifyH("LEFT")
         name:SetFontObject(font)
-        frame._auroraName = name
+        Frame._auroraName = name
     end
 end
 

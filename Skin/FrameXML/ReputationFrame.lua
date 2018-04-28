@@ -70,8 +70,8 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         end
     end
 
-    function Skin.ReputationBarTemplate(button)
-        local factionRowName = button:GetName()
+    function Skin.ReputationBarTemplate(Button)
+        local factionRowName = Button:GetName()
 
         local background = _G[factionRowName.."Background"]
         background:SetColorTexture(Color.button:GetRGB())
@@ -79,45 +79,45 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         background:SetHeight(20)
 
         do -- highlight
-            button._auroraHighlight = {}
-            local left = button:CreateTexture(nil, "ARTWORK", nil, 3)
+            Button._auroraHighlight = {}
+            local left = Button:CreateTexture(nil, "ARTWORK", nil, 3)
             left:SetColorTexture(Color.frame:GetRGB())
             left:SetPoint("TOPLEFT")
             left:SetPoint("BOTTOMLEFT")
             left:SetWidth(1)
-            _G.tinsert(button._auroraHighlight, left)
+            _G.tinsert(Button._auroraHighlight, left)
 
-            local right = button:CreateTexture(nil, "ARTWORK", nil, 3)
+            local right = Button:CreateTexture(nil, "ARTWORK", nil, 3)
             right:SetColorTexture(Color.frame:GetRGB())
             right:SetPoint("TOPRIGHT")
             right:SetPoint("BOTTOMRIGHT")
             right:SetWidth(1)
-            _G.tinsert(button._auroraHighlight, right)
+            _G.tinsert(Button._auroraHighlight, right)
 
-            local top = button:CreateTexture(nil, "ARTWORK", nil, 3)
+            local top = Button:CreateTexture(nil, "ARTWORK", nil, 3)
             top:SetColorTexture(Color.frame:GetRGB())
             top:SetPoint("TOPLEFT")
             top:SetPoint("TOPRIGHT")
             top:SetHeight(1)
-            _G.tinsert(button._auroraHighlight, top)
+            _G.tinsert(Button._auroraHighlight, top)
 
-            local bottom = button:CreateTexture(nil, "ARTWORK", nil, 3)
+            local bottom = Button:CreateTexture(nil, "ARTWORK", nil, 3)
             bottom:SetColorTexture(Color.frame:GetRGB())
             bottom:SetPoint("BOTTOMLEFT")
             bottom:SetPoint("BOTTOMRIGHT")
             bottom:SetHeight(1)
-            _G.tinsert(button._auroraHighlight, bottom)
+            _G.tinsert(Button._auroraHighlight, bottom)
 
-            Base.SetHighlight(button, "color", nil, OnLeave)
+            Base.SetHighlight(Button, "color", nil, OnLeave)
         end
 
         Skin.ExpandOrCollapse(_G[factionRowName.."ExpandOrCollapseButton"])
 
         local statusName = factionRowName.."ReputationBar"
-        local statusbar = _G[statusName]
-        statusbar:ClearAllPoints()
-        statusbar:SetPoint("TOPRIGHT", -2, -2)
-        statusbar:SetPoint("BOTTOMLEFT", button, "BOTTOMRIGHT", -102, 2)
+        local statusBar = _G[statusName]
+        statusBar:ClearAllPoints()
+        statusBar:SetPoint("TOPRIGHT", -2, -2)
+        statusBar:SetPoint("BOTTOMLEFT", Button, "BOTTOMRIGHT", -102, 2)
         _G[statusName.."LeftTexture"]:Hide()
 
         local statusBG = _G[statusName.."RightTexture"]
@@ -133,7 +133,7 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         _G[statusName.."Highlight2"]:SetAlpha(0)
         _G[statusName.."Highlight1"]:SetAlpha(0)
 
-        Base.SetTexture(statusbar:GetStatusBarTexture(), "gradientUp")
+        Base.SetTexture(statusBar:GetStatusBarTexture(), "gradientUp")
     end
 end
 

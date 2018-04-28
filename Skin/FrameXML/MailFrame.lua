@@ -114,23 +114,23 @@ do --[[ FrameXML\MailFrame.lua ]]
 end
 
 do --[[ FrameXML\MailFrame.xml ]]
-    function Skin.SendMailRadioButtonTemplate(checkbutton)
-        Skin.UIRadioButtonTemplate(checkbutton)
+    function Skin.SendMailRadioButtonTemplate(CheckButton)
+        Skin.UIRadioButtonTemplate(CheckButton)
     end
-    function Skin.MailItemTemplate(frame)
-        local name = frame:GetName()
+    function Skin.MailItemTemplate(Frame)
+        local name = Frame:GetName()
 
-        local left, right, div = frame:GetRegions()
+        local left, right, div = Frame:GetRegions()
         left:Hide()
         right:Hide()
         div:Hide()
 
-        local button = frame.Button
+        local button = Frame.Button
         button:SetPoint("TOPLEFT", 2, -2)
         button:SetSize(39, 39)
 
         _G[name.."ButtonSlot"]:Hide()
-        local bg = _G.CreateFrame("Frame", nil, frame)
+        local bg = _G.CreateFrame("Frame", nil, Frame)
         bg:SetFrameLevel(button:GetFrameLevel() - 1)
         bg:SetPoint("TOPLEFT", button, -1, 1)
         bg:SetPoint("BOTTOMRIGHT", button, 1, -1)
@@ -152,36 +152,36 @@ do --[[ FrameXML\MailFrame.xml ]]
         Base.CropIcon(button:GetCheckedTexture())
 
         --[[ Scale ]]--
-        frame:SetSize(305, 45)
+        Frame:SetSize(305, 45)
         _G[name.."Sender"]:SetSize(200, 16)
         _G[name.."Sender"]:SetPoint("TOPLEFT", 47, -4)
         _G[name.."Subject"]:SetSize(248, 18)
         _G[name.."ExpireTime"]:SetSize(100, 16)
         _G[name.."ExpireTime"]:SetPoint("TOPRIGHT", -4, -4)
     end
-    function Skin.SendMailInputBox(editbox)
-        editbox:SetHeight(22)
+    function Skin.SendMailInputBox(EditBox)
+        EditBox:SetHeight(22)
 
-        local name = editbox:GetName()
+        local name = EditBox:GetName()
         _G[name.."Left"]:Hide()
         _G[name.."Middle"]:Hide()
         _G[name.."Right"]:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, editbox)
+        local bg = _G.CreateFrame("Frame", nil, EditBox)
         bg:SetPoint("TOPLEFT", -8, -1)
         bg:SetPoint("BOTTOMRIGHT", 8, 1)
-        bg:SetFrameLevel(editbox:GetFrameLevel() - 1)
+        bg:SetFrameLevel(EditBox:GetFrameLevel() - 1)
         Base.SetBackdrop(bg, Color.frame)
 
         --[[ Scale ]]--
-        editbox:SetWidth(editbox:GetWidth())
-        editbox:GetRegions():SetPoint("RIGHT", editbox, "LEFT", -12, 0)
+        EditBox:SetWidth(EditBox:GetWidth())
+        EditBox:GetRegions():SetPoint("RIGHT", EditBox, "LEFT", -12, 0)
     end
-    function Skin.SendMailAttachment(button)
-        button:GetRegions():Hide()
+    function Skin.SendMailAttachment(Button)
+        Button:GetRegions():Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, button)
-        bg:SetFrameLevel(button:GetFrameLevel() - 1)
+        local bg = _G.CreateFrame("Frame", nil, Button)
+        bg:SetFrameLevel(Button:GetFrameLevel() - 1)
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
 
@@ -193,15 +193,15 @@ do --[[ FrameXML\MailFrame.xml ]]
         Base.CropIcon(bg:GetBackdropTexture("bg"))
         bg:SetBackdropColor(1, 1, 1, 0.75)
         bg:SetBackdropBorderColor(Color.frame, 1)
-        button._auroraIconBorder = bg
+        Button._auroraIconBorder = bg
 
-        Base.CropIcon(button:GetHighlightTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
 
         --[[ Scale ]]--
-        button:SetSize(button:GetSize())
+        Button:SetSize(Button:GetSize())
     end
-    function Skin.OpenMailAttachment(button)
-        Skin.ItemButtonTemplate(button)
+    function Skin.OpenMailAttachment(Button)
+        Skin.ItemButtonTemplate(Button)
     end
 end
 

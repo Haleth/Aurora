@@ -5,9 +5,9 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 
 do --[[ FrameXML\CharacterFrameTemplates.xml ]]
-    function Skin.CharacterFrameTabButtonTemplate(button)
-        local name = button:GetName()
-        button:SetHeight(28)
+    function Skin.CharacterFrameTabButtonTemplate(Button)
+        local name = Button:GetName()
+        Button:SetHeight(28)
 
         _G[name.."LeftDisabled"]:SetTexture("")
         _G[name.."MiddleDisabled"]:SetTexture("")
@@ -15,10 +15,10 @@ do --[[ FrameXML\CharacterFrameTemplates.xml ]]
         _G[name.."Left"]:SetTexture("")
         _G[name.."Middle"]:SetTexture("")
         _G[name.."Right"]:SetTexture("")
-        button:SetHighlightTexture("")
+        Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button)
-        Base.SetHighlight(button, "backdrop")
+        Base.SetBackdrop(Button)
+        Base.SetHighlight(Button, "backdrop")
     end
 end
 

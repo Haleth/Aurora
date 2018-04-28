@@ -58,29 +58,29 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_WarboardUI.xml ]]
-    function Skin.WarboardQuestChoiceOptionTemplate(button)
-        button.Nail:Hide()
-        button.Artwork:ClearAllPoints()
-        button.Artwork:SetPoint("TOPLEFT", 31, -31)
-        button.Artwork:SetPoint("BOTTOMRIGHT", button, "TOPRIGHT", -31, -112)
-        button.Border:Hide()
+    function Skin.WarboardQuestChoiceOptionTemplate(Button)
+        Button.Nail:Hide()
+        Button.Artwork:ClearAllPoints()
+        Button.Artwork:SetPoint("TOPLEFT", 31, -31)
+        Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -31, -112)
+        Button.Border:Hide()
 
-        Skin.UIPanelButtonTemplate(button.OptionButton)
+        Skin.UIPanelButtonTemplate(Button.OptionButton)
 
-        button.Header.Background:Hide()
-        button.Header.Text:SetTextColor(.9, .9, .9)
-        button.OptionText:SetTextColor(.9, .9, .9)
+        Button.Header.Background:Hide()
+        Button.Header.Text:SetTextColor(.9, .9, .9)
+        Button.OptionText:SetTextColor(.9, .9, .9)
 
         --[[ Scale ]]--
-        button:SetSize(240, 332)
-        button.OptionButton:SetSize(175, 22)
-        button.OptionButton:SetPoint("BOTTOM", 0, 46)
-        button.Header.Text:SetWidth(180)
-        button.Header.Text:SetPoint("TOP", button.Artwork, "BOTTOM", 0, -21)
-        button.OptionText:SetWidth(180)
-        button.OptionText:SetPoint("TOP", button.Header.Text, "BOTTOM", 0, -12)
-        button.OptionText:SetPoint("BOTTOM", button.OptionButton, "TOP", 0, 39)
-        button.OptionText:SetText("Text")
+        Button:SetSize(240, 332)
+        Button.OptionButton:SetSize(175, 22)
+        Button.OptionButton:SetPoint("BOTTOM", 0, 46)
+        Button.Header.Text:SetWidth(180)
+        Button.Header.Text:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -21)
+        Button.OptionText:SetWidth(180)
+        Button.OptionText:SetPoint("TOP", Button.Header.Text, "BOTTOM", 0, -12)
+        Button.OptionText:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 39)
+        Button.OptionText:SetText("Text")
     end
 end
 

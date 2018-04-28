@@ -6,8 +6,8 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\CharacterFrame.xml ]]
-    function Skin.CharacterStatFrameCategoryTemplate(button)
-        local bg = button.Background
+    function Skin.CharacterStatFrameCategoryTemplate(Button)
+        local bg = Button.Background
         bg:SetTexture([[Interface\LFGFrame\UI-LFG-SEPARATOR]])
         bg:SetTexCoord(0, 0.6640625, 0, 0.3125)
         bg:ClearAllPoints()
@@ -17,8 +17,8 @@ do --[[ FrameXML\CharacterFrame.xml ]]
         local r, g, b = Color.highlight:GetRGB()
         bg:SetVertexColor(r * 0.7, g * 0.7, b * 0.7)
     end
-    function Skin.CharacterStatFrameTemplate(button)
-        local bg = button.Background
+    function Skin.CharacterStatFrameTemplate(Button)
+        local bg = Button.Background
         bg:ClearAllPoints()
         bg:SetPoint("TOPLEFT")
         bg:SetPoint("BOTTOMRIGHT")

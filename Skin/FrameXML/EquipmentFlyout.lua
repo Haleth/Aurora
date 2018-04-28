@@ -31,16 +31,16 @@ do --[[ FrameXML\EquipmentFlyout.lua ]]
 end
 
 do --[[ FrameXML\EquipmentFlyout.xml ]]
-    function Skin.EquipmentFlyoutButtonTemplate(button)
-        Skin.ItemButtonTemplate(button)
+    function Skin.EquipmentFlyoutButtonTemplate(Button)
+        Skin.ItemButtonTemplate(Button)
     end
-    function Skin.EquipmentFlyoutPopoutButtonTemplate(button)
-        local tex = button:GetNormalTexture()
+    function Skin.EquipmentFlyoutPopoutButtonTemplate(Button)
+        local tex = Button:GetNormalTexture()
         Base.SetTexture(tex, "arrowRight")
         tex:SetVertexColor(Color.highlight:GetRGB())
-        button._auroraArrow = tex
+        Button._auroraArrow = tex
 
-        button:SetHighlightTexture("")
+        Button:SetHighlightTexture("")
     end
 end
 

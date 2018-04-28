@@ -13,29 +13,29 @@ local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\LootFrame.xml ]]
-    function Skin.BonusRollFrameTemplate(frame)
-        Base.SetBackdrop(frame)
-        frame:SetSize(270, 60)
+    function Skin.BonusRollFrameTemplate(Frame)
+        Base.SetBackdrop(Frame)
+        Frame:SetSize(270, 60)
 
-        frame.Background:SetAlpha(0)
-        frame.LootSpinnerBG:SetPoint("TOPLEFT", 4, -4)
-        frame.IconBorder:Hide()
+        Frame.Background:SetAlpha(0)
+        Frame.LootSpinnerBG:SetPoint("TOPLEFT", 4, -4)
+        Frame.IconBorder:Hide()
 
-        frame.SpecRing:SetAlpha(0)
+        Frame.SpecRing:SetAlpha(0)
 
-        local textFrame = _G.CreateFrame("Frame", nil, frame)
+        local textFrame = _G.CreateFrame("Frame", nil, Frame)
         Base.SetBackdrop(textFrame, Color.frame)
-        textFrame:SetFrameLevel(frame:GetFrameLevel())
+        textFrame:SetFrameLevel(Frame:GetFrameLevel())
 
-        local rollingFrame = frame.RollingFrame
+        local rollingFrame = Frame.RollingFrame
         rollingFrame.Label:SetAllPoints(textFrame)
         rollingFrame.LootSpinnerFinalText:SetAllPoints(textFrame)
         rollingFrame.DieIcon:SetPoint("TOPRIGHT", -40, -10)
         rollingFrame.DieIcon:SetSize(32, 32)
 
-        local promptFrame = frame.PromptFrame
+        local promptFrame = Frame.PromptFrame
         Base.CropIcon(promptFrame.Icon, promptFrame)
-        promptFrame.Icon:SetAllPoints(frame.LootSpinnerBG)
+        promptFrame.Icon:SetAllPoints(Frame.LootSpinnerBG)
 
         promptFrame.InfoFrame:SetPoint("TOPLEFT", textFrame, 4, 0)
         promptFrame.InfoFrame:SetPoint("BOTTOMRIGHT", textFrame)
@@ -47,7 +47,7 @@ do --[[ FrameXML\LootFrame.xml ]]
         textFrame:SetPoint("TOPLEFT", promptFrame.Icon, "TOPRIGHT", 4, 1)
         textFrame:SetPoint("BOTTOMRIGHT", promptFrame.Timer, "TOPRIGHT", 0, 3)
 
-        frame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", -2, 0)
+        Frame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", -2, 0)
     end
 end
 

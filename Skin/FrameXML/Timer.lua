@@ -18,23 +18,23 @@ do --[[ FrameXML\Timer.lua ]]
 end
 
 do --[[ FrameXML\Timer.xml ]]
-    function Skin.StartTimerBar(frame)
-        Base.SetTexture(frame.bar:GetStatusBarTexture(), "gradientUp")
-        local bg, border = frame.bar:GetRegions()
+    function Skin.StartTimerBar(Frame)
+        Base.SetTexture(Frame.bar:GetStatusBarTexture(), "gradientUp")
+        local bg, border = Frame.bar:GetRegions()
         bg:Hide()
         border:Hide()
 
-        local backdrop = _G.CreateFrame("Frame", nil, frame.bar)
+        local backdrop = _G.CreateFrame("Frame", nil, Frame.bar)
         backdrop:SetPoint("TOPLEFT", -1, 1)
         backdrop:SetPoint("BOTTOMRIGHT", 1, -1)
-        backdrop:SetFrameLevel(frame.bar:GetFrameLevel() - 1)
+        backdrop:SetFrameLevel(Frame.bar:GetFrameLevel() - 1)
         Base.SetBackdrop(backdrop)
 
         --[[ Scale ]]--
-        frame:SetSize(206, 26)
-        frame.GoTexture:SetSize(256, 256)
-        frame.bar:SetSize(195, 13)
-        frame.bar:SetPoint("TOP", 0 -2)
+        Frame:SetSize(206, 26)
+        Frame.GoTexture:SetSize(256, 256)
+        Frame.bar:SetSize(195, 13)
+        Frame.bar:SetPoint("TOP", 0 -2)
     end
 end
 

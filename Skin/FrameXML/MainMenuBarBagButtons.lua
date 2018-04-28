@@ -11,11 +11,11 @@ local Skin = Aurora.Skin
 end ]]
 
 do --[[ FrameXML\MainMenuBarBagButtons.xml ]]
-    function Skin.BagSlotButtonTemplate(checkbutton)
-        Skin.ItemButtonTemplate(checkbutton)
+    function Skin.BagSlotButtonTemplate(CheckButton)
+        Skin.ItemButtonTemplate(CheckButton)
 
         --[[ Scale ]]--
-        checkbutton:SetSize(30, 30)
+        CheckButton:SetSize(30, 30)
     end
 end
 

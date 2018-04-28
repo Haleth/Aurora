@@ -13,8 +13,8 @@ local Color = Aurora.Color
 end ]]
 
 do --[[ AddOns\Blizzard_TrainerUI.xml ]]
-    function Skin.ClassTrainerSkillButtonTemplate(button)
-        Skin.UIServiceButtonTemplate(button)
+    function Skin.ClassTrainerSkillButtonTemplate(Button)
+        Skin.UIServiceButtonTemplate(Button)
     end
 end
 

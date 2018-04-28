@@ -217,45 +217,45 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ObjectiveTrackerShared --
     ----====####$$$$%%%%%$$$$####====----
-    function Skin.QuestObjectiveItemButtonTemplate(button)
-        Base.CropIcon(button.icon, button)
-        button:SetNormalTexture("")
-        Base.CropIcon(button:GetPushedTexture())
-        Base.CropIcon(button:GetHighlightTexture())
+    function Skin.QuestObjectiveItemButtonTemplate(Button)
+        Base.CropIcon(Button.icon, Button)
+        Button:SetNormalTexture("")
+        Base.CropIcon(Button:GetPushedTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
     end
-    function Skin.QuestObjectiveFindGroupButtonTemplate(button)
-        local bdFrame = _G.CreateFrame("Frame", nil, button)
+    function Skin.QuestObjectiveFindGroupButtonTemplate(Button)
+        local bdFrame = _G.CreateFrame("Frame", nil, Button)
         bdFrame:SetPoint("TOPLEFT", 4, -4)
         bdFrame:SetPoint("BOTTOMRIGHT", -4, 4)
-        bdFrame:SetFrameLevel(button:GetFrameLevel())
+        bdFrame:SetFrameLevel(Button:GetFrameLevel())
         Base.SetBackdrop(bdFrame, Color.button)
 
-        button._auroraBDFrame = bdFrame
-        Base.SetHighlight(button, "backdrop")
+        Button._auroraBDFrame = bdFrame
+        Base.SetHighlight(Button, "backdrop")
 
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetDisabledTexture("")
-        button:SetHighlightTexture("")
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetDisabledTexture("")
+        Button:SetHighlightTexture("")
 
         --[[ Scale ]]--
-        button:SetSize(30, 30)
-        button.Icon:SetSize(13, 13)
-        button.Icon:SetPoint("CENTER", 0, 0)
+        Button:SetSize(30, 30)
+        Button.Icon:SetSize(13, 13)
+        Button.Icon:SetPoint("CENTER", 0, 0)
     end
 
     ----====####$$$$$$$####====----
     -- Blizzard_ObjectiveTracker --
     ----====####$$$$$$$####====----
-    function Skin.ObjectiveTrackerBlockTemplate(frame)
+    function Skin.ObjectiveTrackerBlockTemplate(Frame)
         --[[ Scale ]]--
-        frame:SetSize(232, 10)
-        frame.HeaderText:SetSize(192, 0)
+        Frame:SetSize(232, 10)
+        Frame.HeaderText:SetSize(192, 0)
     end
-	function Skin.ObjectiveTrackerHeaderTemplate(frame)
-        frame.Background:Hide()
+	function Skin.ObjectiveTrackerHeaderTemplate(Frame)
+        Frame.Background:Hide()
 
-        local bg = frame:CreateTexture(nil, "ARTWORK")
+        local bg = Frame:CreateTexture(nil, "ARTWORK")
         bg:SetTexture([[Interface\LFGFrame\UI-LFG-SEPARATOR]])
         bg:SetTexCoord(0, 0.6640625, 0, 0.3125)
         bg:SetVertexColor(Color.highlight.r * 0.7, Color.highlight.g * 0.7, Color.highlight.b * 0.7)
@@ -263,44 +263,44 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bg:SetSize(210, 30)
 
         --[[ Scale ]]--
-        frame:SetSize(235, 25)
-        frame.Text:SetPoint("LEFT", 4, -1)
+        Frame:SetSize(235, 25)
+        Frame.Text:SetPoint("LEFT", 4, -1)
 	end
-    function Skin.ObjectiveTrackerLineTemplate(frame)
+    function Skin.ObjectiveTrackerLineTemplate(Frame)
         --[[ Scale ]]--
-        frame:SetSize(232, 16)
-        frame.Dash:SetPoint("TOPLEFT", 0, 1)
-        Scale.RawSetWidth(frame.Text, OBJECTIVE_TRACKER_TEXT_WIDTH)
+        Frame:SetSize(232, 16)
+        Frame.Dash:SetPoint("TOPLEFT", 0, 1)
+        Scale.RawSetWidth(Frame.Text, OBJECTIVE_TRACKER_TEXT_WIDTH)
     end
-    function Skin.ObjectiveTrackerCheckLineTemplate(frame)
+    function Skin.ObjectiveTrackerCheckLineTemplate(Frame)
         --[[ Scale ]]--
-        frame:SetSize(232, 16)
-        Scale.RawSetWidth(frame.Text, OBJECTIVE_TRACKER_TEXT_WIDTH)
-        frame.Text:SetPoint("TOPLEFT", 20, 0)
-        frame.IconAnchor:SetSize(16, 16)
-        frame.IconAnchor:SetPoint("TOPLEFT", 1, 2)
+        Frame:SetSize(232, 16)
+        Scale.RawSetWidth(Frame.Text, OBJECTIVE_TRACKER_TEXT_WIDTH)
+        Frame.Text:SetPoint("TOPLEFT", 20, 0)
+        Frame.IconAnchor:SetSize(16, 16)
+        Frame.IconAnchor:SetPoint("TOPLEFT", 1, 2)
     end
 
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
-    function Skin.QuestObjectiveAnimLineTemplate(frame)
-        Skin.ObjectiveTrackerLineTemplate(frame)
-        frame.Check:SetAtlas("worldquest-tracker-checkmark")
-        frame.Check:SetSize(18, 16)
+    function Skin.QuestObjectiveAnimLineTemplate(Frame)
+        Skin.ObjectiveTrackerLineTemplate(Frame)
+        Frame.Check:SetAtlas("worldquest-tracker-checkmark")
+        Frame.Check:SetSize(18, 16)
 
         --[[ Scale ]]--
-        frame.Check:SetPoint("TOPLEFT", -10, 2)
+        Frame.Check:SetPoint("TOPLEFT", -10, 2)
     end
 
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_AutoQuestPopUpTracker --
     ----====####$$$$%%%%$$$$####====----
-    function Skin.AutoQuestPopUpBlockTemplate(scrollframe)
+    function Skin.AutoQuestPopUpBlockTemplate(ScrollFrame)
         --[[ Scale ]]--
-        scrollframe:SetSize(232, 68)
+        ScrollFrame:SetSize(232, 68)
 
-        local ScrollChild = scrollframe.ScrollChild
+        local ScrollChild = ScrollFrame.ScrollChild
         ScrollChild:SetSize(227, 68)
         ScrollChild.Bg:SetPoint("TOPLEFT", 36, -4)
         ScrollChild.Bg:SetPoint("BOTTOMRIGHT", 0, 4)
@@ -340,28 +340,28 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_BonusObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
-    function Skin.BonusObjectiveTrackerLineTemplate(frame)
-        Skin.ObjectiveTrackerCheckLineTemplate(frame)
+    function Skin.BonusObjectiveTrackerLineTemplate(Frame)
+        Skin.ObjectiveTrackerCheckLineTemplate(Frame)
 
         --[[ Scale ]]--
-        frame.Dash:SetPoint("TOPLEFT", 20, 1)
+        Frame.Dash:SetPoint("TOPLEFT", 20, 1)
 
-        frame.Text:ClearAllPoints()
-        frame.Text:SetPoint("TOP")
-        frame.Text:SetPoint("LEFT", frame.Dash, "RIGHT")
+        Frame.Text:ClearAllPoints()
+        Frame.Text:SetPoint("TOP")
+        Frame.Text:SetPoint("LEFT", Frame.Dash, "RIGHT")
 
-        frame.Glow:SetPoint("LEFT", frame.Dash, -2, 0)
+        Frame.Glow:SetPoint("LEFT", Frame.Dash, -2, 0)
     end
-    function Skin.BonusObjectiveTrackerBlockTemplate(scrollframe)
+    function Skin.BonusObjectiveTrackerBlockTemplate(ScrollFrame)
         --[[ Scale ]]--
-        scrollframe:SetSize(240, 10)
-        scrollframe.TrackedQuest.Underlay:SetSize(34, 34)
+        ScrollFrame:SetSize(240, 10)
+        ScrollFrame.TrackedQuest.Underlay:SetSize(34, 34)
     end
-	function Skin.BonusObjectiveTrackerHeaderTemplate(frame)
-		Skin.ObjectiveTrackerHeaderTemplate(frame)
+	function Skin.BonusObjectiveTrackerHeaderTemplate(Frame)
+		Skin.ObjectiveTrackerHeaderTemplate(Frame)
 	end
-    function Skin.BonusTrackerProgressBarTemplate(frame)
-        local bar = frame.Bar
+    function Skin.BonusTrackerProgressBarTemplate(Frame)
+        local bar = Frame.Bar
         bar.BarFrame:Hide()
         bar.IconBG:SetAlpha(0)
         bar.Icon:SetMask(nil)
@@ -377,7 +377,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         Base.SetBackdrop(bd, Color.frame)
 
         --[[ Scale ]]--
-        frame:SetSize(192, 38)
+        Frame:SetSize(192, 38)
 
         bar:SetSize(191, 17)
         bar:SetPoint("LEFT", 10, 0)

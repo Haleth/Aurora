@@ -64,32 +64,32 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
 end
 
 do --[[ FrameXML\ItemButtonTemplate.xml ]]
-    function Skin.ItemButtonTemplate(button)
-        Base.CropIcon(button.icon)
+    function Skin.ItemButtonTemplate(Button)
+        Base.CropIcon(Button.icon)
 
-        local bg = _G.CreateFrame("Frame", nil, button)
-        bg:SetFrameLevel(button:GetFrameLevel() - 1)
+        local bg = _G.CreateFrame("Frame", nil, Button)
+        bg:SetFrameLevel(Button:GetFrameLevel() - 1)
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
         Base.SetBackdrop(bg)
-        button._auroraIconBorder = bg
+        Button._auroraIconBorder = bg
 
-        button:SetNormalTexture("")
-        Base.CropIcon(button:GetPushedTexture())
-        Base.CropIcon(button:GetHighlightTexture())
+        Button:SetNormalTexture("")
+        Base.CropIcon(Button:GetPushedTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
 
         --[[ Scale ]]--
-        button:SetSize(button:GetSize())
+        Button:SetSize(Button:GetSize())
     end
-    function Skin.SimplePopupButtonTemplate(checkbutton)
-        local name, bg = checkbutton:GetRegions()
+    function Skin.SimplePopupButtonTemplate(CheckButton)
+        local name, bg = CheckButton:GetRegions()
         name:ClearAllPoints()
         name:SetPoint("BOTTOMLEFT")
         name:SetPoint("BOTTOMRIGHT")
         bg:Hide()
 
-        local bd = _G.CreateFrame("Frame", nil, checkbutton)
-        bd:SetFrameLevel(checkbutton:GetFrameLevel() - 1)
+        local bd = _G.CreateFrame("Frame", nil, CheckButton)
+        bd:SetFrameLevel(CheckButton:GetFrameLevel() - 1)
         bd:SetPoint("TOPLEFT", -1, 1)
         bd:SetPoint("BOTTOMRIGHT", 1, -1)
 
@@ -103,55 +103,55 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         bd:SetBackdropBorderColor(Color.frame, 1)
 
         --[[ Scale ]]--
-        checkbutton:SetSize(checkbutton:GetSize())
+        CheckButton:SetSize(CheckButton:GetSize())
         name:SetHeight(10)
     end
-    function Skin.PopupButtonTemplate(checkbutton)
-        Skin.SimplePopupButtonTemplate(checkbutton)
+    function Skin.PopupButtonTemplate(CheckButton)
+        Skin.SimplePopupButtonTemplate(CheckButton)
 
-        local icon = _G[checkbutton:GetName().."Icon"]
+        local icon = _G[CheckButton:GetName().."Icon"]
         icon:SetAllPoints()
         Base.CropIcon(icon)
 
-        Base.CropIcon(checkbutton:GetHighlightTexture())
-        Base.CropIcon(checkbutton:GetCheckedTexture())
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
     end
-    function Skin.LargeItemButtonTemplate(button)
-        Base.CropIcon(button.Icon)
+    function Skin.LargeItemButtonTemplate(Button)
+        Base.CropIcon(Button.Icon)
 
-        local iconBG = _G.CreateFrame("Frame", nil, button)
-        iconBG:SetFrameLevel(button:GetFrameLevel() - 1)
-        iconBG:SetPoint("TOPLEFT", button.Icon, -1, 1)
-        iconBG:SetPoint("BOTTOMRIGHT", button.Icon, 1, -1)
+        local iconBG = _G.CreateFrame("Frame", nil, Button)
+        iconBG:SetFrameLevel(Button:GetFrameLevel() - 1)
+        iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
+        iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
         Base.SetBackdrop(iconBG)
-        button._auroraIconBorder = iconBG
+        Button._auroraIconBorder = iconBG
 
-        button.NameFrame:SetAlpha(0)
+        Button.NameFrame:SetAlpha(0)
 
-        local nameBG = _G.CreateFrame("Frame", nil, button)
+        local nameBG = _G.CreateFrame("Frame", nil, Button)
         nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
         nameBG:SetPoint("BOTTOMRIGHT", -3, 1)
         Base.SetBackdrop(nameBG, Color.frame)
-        button._auroraNameBG = nameBG
+        Button._auroraNameBG = nameBG
     end
-    function Skin.SmallItemButtonTemplate(button)
-        button.Icon:SetSize(29, 29)
-        Base.CropIcon(button.Icon)
+    function Skin.SmallItemButtonTemplate(Button)
+        Button.Icon:SetSize(29, 29)
+        Base.CropIcon(Button.Icon)
 
-        local iconBG = _G.CreateFrame("Frame", nil, button)
-        iconBG:SetFrameLevel(button:GetFrameLevel() - 1)
-        iconBG:SetPoint("TOPLEFT", button.Icon, -1, 1)
-        iconBG:SetPoint("BOTTOMRIGHT", button.Icon, 1, -1)
+        local iconBG = _G.CreateFrame("Frame", nil, Button)
+        iconBG:SetFrameLevel(Button:GetFrameLevel() - 1)
+        iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
+        iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
         Base.SetBackdrop(iconBG)
-        button._auroraIconBorder = iconBG
+        Button._auroraIconBorder = iconBG
 
-        button.NameFrame:SetAlpha(0)
+        Button.NameFrame:SetAlpha(0)
 
-        local nameBG = _G.CreateFrame("Frame", nil, button)
+        local nameBG = _G.CreateFrame("Frame", nil, Button)
         nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
-        nameBG:SetPoint("BOTTOMRIGHT", button.NameFrame, 0, -1)
+        nameBG:SetPoint("BOTTOMRIGHT", Button.NameFrame, 0, -1)
         Base.SetBackdrop(nameBG, Color.frame)
-        button._auroraNameBG = nameBG
+        Button._auroraNameBG = nameBG
     end
 end
 

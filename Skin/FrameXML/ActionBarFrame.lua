@@ -13,20 +13,20 @@ local Color = Aurora.Color
 end ]]
 
 do --[[ FrameXML\ActionBarFrame.xml ]]
-    function Skin.ActionBarButtonTemplate(checkbutton)
-        Skin.ActionButtonTemplate(checkbutton)
+    function Skin.ActionBarButtonTemplate(CheckButton)
+        Skin.ActionButtonTemplate(CheckButton)
 
-        Base.CreateBackdrop(checkbutton, {
+        Base.CreateBackdrop(CheckButton, {
             edgeSize = 1,
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             insets = {left = 1, right = 1, top = 1, bottom = 1}
         })
-        checkbutton:SetBackdropColor(1, 1, 1, 0.75)
-        checkbutton:SetBackdropBorderColor(Color.frame:GetRGB())
-        Base.CropIcon(checkbutton:GetBackdropTexture("bg"))
+        CheckButton:SetBackdropColor(1, 1, 1, 0.75)
+        CheckButton:SetBackdropBorderColor(Color.frame:GetRGB())
+        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
 
-        checkbutton.icon:SetPoint("TOPLEFT", 1, -1)
-        checkbutton.icon:SetPoint("BOTTOMRIGHT", -1, 1)
+        CheckButton.icon:SetPoint("TOPLEFT", 1, -1)
+        CheckButton.icon:SetPoint("BOTTOMRIGHT", -1, 1)
     end
 end
 

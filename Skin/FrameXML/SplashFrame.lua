@@ -8,13 +8,13 @@ local Skin = Aurora.Skin
 end ]]
 
 do --[[ FrameXML\SplashFrame.xml ]]
-    function Skin.SplashFeatureFrameTemplate(frame)
+    function Skin.SplashFeatureFrameTemplate(Frame)
         --[[ Scale ]]--
-        frame:SetSize(286, 177)
-        frame.Description:SetSize(250, 0)
-        frame.Description:SetPoint("BOTTOM", 0, 20)
-        frame.Title:SetSize(250, 0)
-        frame.Title:SetPoint("BOTTOM", frame.Description, "TOP", 0, 6)
+        Frame:SetSize(286, 177)
+        Frame.Description:SetSize(250, 0)
+        Frame.Description:SetPoint("BOTTOM", 0, 20)
+        Frame.Title:SetSize(250, 0)
+        Frame.Title:SetPoint("BOTTOM", Frame.Description, "TOP", 0, 6)
     end
 end
 

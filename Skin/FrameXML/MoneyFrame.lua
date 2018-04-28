@@ -171,15 +171,15 @@ do --[[ FrameXML\MoneyFrame.lua ]]
 end
 
 do --[[ FrameXML\MoneyFrame.xml ]]
-    function Skin.SmallMoneyFrameTemplate(frame)
-        local name = frame:GetName()
+    function Skin.SmallMoneyFrameTemplate(Frame)
+        local name = Frame:GetName()
 
         local copper = _G[name.."CopperButton"]
         local silver = _G[name.."SilverButton"]
         local gold = _G[name.."GoldButton"]
 
         --[[ Scale ]]--
-        frame:SetSize(128, 13)
+        Frame:SetSize(128, 13)
 
         copper:SetSize(32, 13)
         copper:SetPoint("RIGHT", -13, 0)
@@ -193,12 +193,12 @@ do --[[ FrameXML\MoneyFrame.xml ]]
         gold:SetPoint("RIGHT", silver, "LEFT", -4, 0)
         gold:GetNormalTexture():SetSize(13, 13)
     end
-    function Skin.SmallDenominationTemplate(button)
-        local name = button:GetName()
-        Base.CropIcon(_G[name.."Texture"], button)
+    function Skin.SmallDenominationTemplate(Button)
+        local name = Button:GetName()
+        Base.CropIcon(_G[name.."Texture"], Button)
     end
-    function Skin.SmallAlternateCurrencyFrameTemplate(frame)
-        local name = frame:GetName()
+    function Skin.SmallAlternateCurrencyFrameTemplate(Frame)
+        local name = Frame:GetName()
         Skin.SmallDenominationTemplate(_G[name.."Item1"])
         Skin.SmallDenominationTemplate(_G[name.."Item2"])
         Skin.SmallDenominationTemplate(_G[name.."Item3"])

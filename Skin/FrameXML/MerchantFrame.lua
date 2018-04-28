@@ -22,21 +22,21 @@ do --[[ FrameXML\MoneyFrame.lua ]]
 end
 
 do --[[ FrameXML\MerchantFrame.xml ]]
-    function Skin.MerchantItemTemplate(frame)
-        local name = frame:GetName()
+    function Skin.MerchantItemTemplate(Frame)
+        local name = Frame:GetName()
         _G[name.."SlotTexture"]:Hide()
         _G[name.."NameFrame"]:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, frame)
-        bg:SetPoint("TOPLEFT", frame.ItemButton.icon, "TOPRIGHT", 2, 1)
+        local bg = _G.CreateFrame("Frame", nil, Frame)
+        bg:SetPoint("TOPLEFT", Frame.ItemButton.icon, "TOPRIGHT", 2, 1)
         bg:SetPoint("BOTTOMRIGHT", 0, -4)
         Base.SetBackdrop(bg, Color.frame)
 
-        frame.Name:ClearAllPoints()
-        frame.Name:SetPoint("TOPLEFT", bg, 2, -1)
-        frame.Name:SetPoint("BOTTOMRIGHT", bg, 0, 14)
+        Frame.Name:ClearAllPoints()
+        Frame.Name:SetPoint("TOPLEFT", bg, 2, -1)
+        Frame.Name:SetPoint("BOTTOMRIGHT", bg, 0, 14)
 
-        Skin.ItemButtonTemplate(frame.ItemButton)
+        Skin.ItemButtonTemplate(Frame.ItemButton)
         Skin.SmallAlternateCurrencyFrameTemplate(_G[name.."AltCurrencyFrame"])
     end
 end

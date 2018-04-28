@@ -30,51 +30,51 @@ do --[[ FrameXML\WorldStateFrame.lua ]]
 end
 
 do --[[ FrameXML\WorldStateFrame.xml ]]
-    function Skin.WorldStateScoreTemplate(frame)
-        frame.factionLeft:ClearAllPoints()
-        frame.factionLeft:SetPoint("TOPLEFT", 20, -1)
-        frame.factionLeft:SetPoint("BOTTOMRIGHT", frame, "BOTTOM", 0, 1)
-        frame.factionLeft:SetTexture([[Interface\Buttons\WHITE8x8]])
-        frame.factionLeft:SetBlendMode("ADD")
-        frame.factionLeft:SetAlpha(0.8)
+    function Skin.WorldStateScoreTemplate(Frame)
+        Frame.factionLeft:ClearAllPoints()
+        Frame.factionLeft:SetPoint("TOPLEFT", 20, -1)
+        Frame.factionLeft:SetPoint("BOTTOMRIGHT", Frame, "BOTTOM", 0, 1)
+        Frame.factionLeft:SetTexture([[Interface\Buttons\WHITE8x8]])
+        Frame.factionLeft:SetBlendMode("ADD")
+        Frame.factionLeft:SetAlpha(0.8)
 
-        frame.factionRight:ClearAllPoints()
-        frame.factionRight:SetPoint("TOPLEFT", frame.factionLeft, "TOPRIGHT", 0, 0)
-        frame.factionRight:SetPoint("BOTTOMRIGHT", 0, 1)
-        frame.factionRight:SetTexture([[Interface\Buttons\WHITE8x8]])
-        frame.factionRight:SetBlendMode("ADD")
-        frame.factionRight:SetAlpha(0.8)
+        Frame.factionRight:ClearAllPoints()
+        Frame.factionRight:SetPoint("TOPLEFT", Frame.factionLeft, "TOPRIGHT", 0, 0)
+        Frame.factionRight:SetPoint("BOTTOMRIGHT", 0, 1)
+        Frame.factionRight:SetTexture([[Interface\Buttons\WHITE8x8]])
+        Frame.factionRight:SetBlendMode("ADD")
+        Frame.factionRight:SetAlpha(0.8)
     end
-    function Skin.WorldStateCaptureBarTemplate(frame)
-        frame.BarBackground:Hide()
+    function Skin.WorldStateCaptureBarTemplate(Frame)
+        Frame.BarBackground:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, frame)
-        bg:SetFrameLevel(frame:GetFrameLevel())
+        local bg = _G.CreateFrame("Frame", nil, Frame)
+        bg:SetFrameLevel(Frame:GetFrameLevel())
         bg:SetPoint("TOPLEFT", 25, -7)
         bg:SetPoint("BOTTOMRIGHT", -25, 8)
         Base.SetBackdrop(bg)
 
-        local leftFaction = frame:CreateTexture()
+        local leftFaction = Frame:CreateTexture()
         leftFaction:SetTexture([[Interface\WorldStateFrame\AllianceFlag]])
         leftFaction:SetPoint("LEFT", -5, 0)
         leftFaction:SetSize(32, 32)
-        frame._auroraLeftFaction = leftFaction
+        Frame._auroraLeftFaction = leftFaction
 
-        local rightFaction = frame:CreateTexture()
+        local rightFaction = Frame:CreateTexture()
         rightFaction:SetTexture([[Interface\WorldStateFrame\HordeFlag]])
         rightFaction:SetPoint("RIGHT", 5, 0)
         rightFaction:SetSize(32, 32)
-        frame._auroraRightFaction = rightFaction
+        Frame._auroraRightFaction = rightFaction
 
-        frame.RightLine:SetColorTexture(0, 0, 0)
-        frame.RightLine:SetSize(2, 9)
-        frame.LeftLine:SetColorTexture(0, 0, 0)
-        frame.LeftLine:SetSize(2, 9)
+        Frame.RightLine:SetColorTexture(0, 0, 0)
+        Frame.RightLine:SetSize(2, 9)
+        Frame.LeftLine:SetColorTexture(0, 0, 0)
+        Frame.LeftLine:SetSize(2, 9)
 
-        frame.LeftIconHighlight:SetTexture([[Interface\WorldStateFrame\HordeFlagFlash]])
-        frame.LeftIconHighlight:SetAllPoints(leftFaction)
-        frame.RightIconHighlight:SetTexture([[Interface\WorldStateFrame\HordeFlagFlash]])
-        frame.RightIconHighlight:SetAllPoints(rightFaction)
+        Frame.LeftIconHighlight:SetTexture([[Interface\WorldStateFrame\HordeFlagFlash]])
+        Frame.LeftIconHighlight:SetAllPoints(leftFaction)
+        Frame.RightIconHighlight:SetTexture([[Interface\WorldStateFrame\HordeFlagFlash]])
+        Frame.RightIconHighlight:SetAllPoints(rightFaction)
     end
 end
 

@@ -21,31 +21,31 @@ do --[[ FrameXML\GarrisonBaseUtils.xml ]]
         border:SetPoint("TOPLEFT", icon, -8, 8)
         border:SetPoint("BOTTOMRIGHT", icon, 8, -8)
     end
-    function Skin.GarrisonFollowerPortraitTemplate(frame)
-        _G.hooksecurefunc(frame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
+    function Skin.GarrisonFollowerPortraitTemplate(Frame)
+        _G.hooksecurefunc(Frame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
 
-        local size = frame.Portrait:GetSize() + 2
-        frame:SetSize(size, size)
-        Base.SetBackdrop(frame, Color.frame, 1)
+        local size = Frame.Portrait:GetSize() + 2
+        Frame:SetSize(size, size)
+        Base.SetBackdrop(Frame, Color.frame, 1)
 
-        frame.PortraitRing:Hide()
+        Frame.PortraitRing:Hide()
 
-        frame.Portrait:ClearAllPoints()
-        frame.Portrait:SetPoint("TOPLEFT", 1, -1)
+        Frame.Portrait:ClearAllPoints()
+        Frame.Portrait:SetPoint("TOPLEFT", 1, -1)
 
-        frame.PortraitRingQuality:SetTexture("")
-        frame.LevelBorder:SetAlpha(0)
+        Frame.PortraitRingQuality:SetTexture("")
+        Frame.LevelBorder:SetAlpha(0)
 
-        local lvlBG = frame:CreateTexture(nil, "BORDER")
+        local lvlBG = Frame:CreateTexture(nil, "BORDER")
         lvlBG:SetColorTexture(0, 0, 0, 0.5)
-        lvlBG:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 1, 12)
-        lvlBG:SetPoint("BOTTOMRIGHT", frame, -1, 1)
+        lvlBG:SetPoint("TOPLEFT", Frame, "BOTTOMLEFT", 1, 12)
+        lvlBG:SetPoint("BOTTOMRIGHT", Frame, -1, 1)
 
-        local level = frame.Level
+        local level = Frame.Level
         level:ClearAllPoints()
         level:SetPoint("CENTER", lvlBG)
 
-        frame.PortraitRingCover:SetTexture("")
+        Frame.PortraitRingCover:SetTexture("")
     end
 end
 

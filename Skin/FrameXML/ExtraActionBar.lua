@@ -12,21 +12,21 @@ end ]]
 
 do --[[ FrameXML\ExtraActionBar.xml ]]
     -- /run ActionButton_StartFlash(ExtraActionButton1)
-    function Skin.ExtraActionButtonTemplate(checkbutton)
-        Base.CropIcon(checkbutton.icon, checkbutton)
+    function Skin.ExtraActionButtonTemplate(CheckButton)
+        Base.CropIcon(CheckButton.icon, CheckButton)
 
-        checkbutton.HotKey:SetPoint("TOPLEFT", 5, -5)
-        checkbutton.Count:SetPoint("TOPLEFT", -5, 5)
+        CheckButton.HotKey:SetPoint("TOPLEFT", 5, -5)
+        CheckButton.Count:SetPoint("TOPLEFT", -5, 5)
 
-        checkbutton.Flash:SetColorTexture(1, 0, 0, 0.5)
-        checkbutton.style:Hide()
+        CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
+        CheckButton.style:Hide()
 
-        checkbutton.cooldown:SetPoint("TOPLEFT")
-        checkbutton.cooldown:SetPoint("BOTTOMRIGHT")
+        CheckButton.cooldown:SetPoint("TOPLEFT")
+        CheckButton.cooldown:SetPoint("BOTTOMRIGHT")
 
-        checkbutton:SetNormalTexture("")
-        Base.CropIcon(checkbutton:GetHighlightTexture())
-        Base.CropIcon(checkbutton:GetCheckedTexture())
+        CheckButton:SetNormalTexture("")
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
     end
 end
 

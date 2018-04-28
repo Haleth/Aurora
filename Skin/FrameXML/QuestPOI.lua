@@ -30,20 +30,20 @@ do --[[ FrameXML\QuestPOI.lua ]]
 end
 
 do --[[ FrameXML\QuestPOI.xml ]]
-    function Skin.QuestPOINumericTemplate(button)
+    function Skin.QuestPOINumericTemplate(Button)
         --[[ Scale ]]--
-        button:SetSize(20, 20)
-        button.Number:SetSize(32, 32)
-        button.NormalTexture:SetSize(32, 32)
-        button.HighlightTexture:SetSize(32, 32)
-        button.PushedTexture:SetSize(32, 32)
+        Button:SetSize(20, 20)
+        Button.Number:SetSize(32, 32)
+        Button.NormalTexture:SetSize(32, 32)
+        Button.HighlightTexture:SetSize(32, 32)
+        Button.PushedTexture:SetSize(32, 32)
     end
-    function Skin.QuestPOICompletedTemplate(button)
+    function Skin.QuestPOICompletedTemplate(Button)
         --[[ Scale ]]--
-        button:SetSize(20, 20)
-        button.FullHighlightTexture:SetSize(32, 32)
-        button.NormalTexture:SetSize(32, 32)
-        button.PushedTexture:SetSize(32, 32)
+        Button:SetSize(20, 20)
+        Button.FullHighlightTexture:SetSize(32, 32)
+        Button.NormalTexture:SetSize(32, 32)
+        Button.PushedTexture:SetSize(32, 32)
     end
 end
 

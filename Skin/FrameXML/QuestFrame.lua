@@ -34,15 +34,15 @@ do --[[ FrameXML\QuestFrame.lua ]]
 end
 
 do --[[ FrameXML\QuestFrameTemplates.xml ]]
-    function Skin.QuestFramePanelTemplate(frame)
+    function Skin.QuestFramePanelTemplate(Frame)
     end
-    function Skin.QuestItemTemplate(button)
+    function Skin.QuestItemTemplate(Button)
     end
-    function Skin.QuestSpellTemplate(button)
+    function Skin.QuestSpellTemplate(Button)
     end
-    function Skin.QuestTitleButtonTemplate(button)
+    function Skin.QuestTitleButtonTemplate(Button)
     end
-    function Skin.QuestScrollFrameTemplate(scrollframe)
+    function Skin.QuestScrollFrameTemplate(ScrollFrame)
     end
 end
 

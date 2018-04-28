@@ -395,7 +395,11 @@ F.ReskinPortraitFrame = function(f, isButtonFrame)
         f.CloseButton:SetDisabledTexture(C.media.backdrop) -- some frames that use this don't have a disabled texture
         Skin.ButtonFrameTemplate(f)
     else
-        Skin.PortraitFrameTemplate(f, not f.CloseButton)
+        if f.CloseButton then
+            Skin.PortraitFrameTemplate(f)
+        else
+            Skin.PortraitFrameTemplateNoCloseButton(f)
+        end
     end
 end
 

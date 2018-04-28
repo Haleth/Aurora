@@ -146,23 +146,23 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
-    function Skin.AchievementSearchPreviewButton(button)
-        SkinSearchPreview(button)
+    function Skin.AchievementSearchPreviewButton(Button)
+        SkinSearchPreview(Button)
 
-        button.iconFrame:SetAlpha(0)
-        Base.CropIcon(button.icon, button)
+        Button.iconFrame:SetAlpha(0)
+        Base.CropIcon(Button.icon, Button)
     end
-    function Skin.AchievementFullSearchResultsButton(button)
-        button.iconFrame:SetAlpha(0)
-        Base.CropIcon(button.icon, button)
+    function Skin.AchievementFullSearchResultsButton(Button)
+        Button.iconFrame:SetAlpha(0)
+        Base.CropIcon(Button.icon, Button)
 
         local r, g, b = Color.highlight:GetRGB()
-        button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
+        Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
     end
-    function Skin.AchievementFrameSummaryCategoryTemplate(statusbar)
-        local name = statusbar:GetName()
-        statusbar.label:SetPoint("LEFT", 6, 0)
-        statusbar.text:SetPoint("RIGHT", -6, 0)
+    function Skin.AchievementFrameSummaryCategoryTemplate(StatusBar)
+        local name = StatusBar:GetName()
+        StatusBar.label:SetPoint("LEFT", 6, 0)
+        StatusBar.text:SetPoint("RIGHT", -6, 0)
 
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
@@ -178,28 +178,28 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Base.SetTexture(_G[name.."Bar"], "gradientUp")
     end
-    function Skin.AchievementCheckButtonTemplate(checkbutton)
-        checkbutton:SetSize(11, 11)
+    function Skin.AchievementCheckButtonTemplate(CheckButton)
+        CheckButton:SetSize(11, 11)
 
-        checkbutton:SetNormalTexture("")
-        checkbutton:SetPushedTexture("")
-        checkbutton:SetHighlightTexture("")
+        CheckButton:SetNormalTexture("")
+        CheckButton:SetPushedTexture("")
+        CheckButton:SetHighlightTexture("")
 
-        _G[checkbutton:GetName().."Text"]:SetPoint("LEFT", checkbutton, "RIGHT", 2, 0)
+        _G[CheckButton:GetName().."Text"]:SetPoint("LEFT", CheckButton, "RIGHT", 2, 0)
 
-        local check = checkbutton:GetCheckedTexture()
+        local check = CheckButton:GetCheckedTexture()
         check:SetSize(21, 21)
         check:ClearAllPoints()
         check:SetPoint("CENTER")
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
 
-        Base.SetBackdrop(checkbutton, Color.button, 0.3)
-        Base.SetHighlight(checkbutton, "backdrop")
+        Base.SetBackdrop(CheckButton, Color.button, 0.3)
+        Base.SetHighlight(CheckButton, "backdrop")
     end
-    function Skin.AchievementFrameTabButtonTemplate(button)
-        local name = button:GetName()
-        button:SetHeight(28)
+    function Skin.AchievementFrameTabButtonTemplate(Button)
+        local name = Button:GetName()
+        Button:SetHeight(28)
 
         _G[name.."LeftDisabled"]:SetTexture("")
         _G[name.."MiddleDisabled"]:SetTexture("")
@@ -211,67 +211,67 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."MiddleHighlight"]:SetTexture("")
         _G[name.."RightHighlight"]:SetTexture("")
 
-        button.text:ClearAllPoints()
-        button.text:SetPoint("TOPLEFT")
-        button.text:SetPoint("BOTTOMRIGHT")
-        --button.text:SetPoint("CENTER")
+        Button.text:ClearAllPoints()
+        Button.text:SetPoint("TOPLEFT")
+        Button.text:SetPoint("BOTTOMRIGHT")
+        --Button.text:SetPoint("CENTER")
 
-        Base.SetBackdrop(button)
-        Base.SetHighlight(button, "backdrop")
-        button._auroraTabResize = true
+        Base.SetBackdrop(Button)
+        Base.SetHighlight(Button, "backdrop")
+        Button._auroraTabResize = true
     end
-    function Skin.MiniAchievementTemplate(frame)
-        Base.CropIcon(frame.icon, frame)
-        frame.border:Hide()
+    function Skin.MiniAchievementTemplate(Frame)
+        Base.CropIcon(Frame.icon, Frame)
+        Frame.border:Hide()
     end
-    function Skin.MetaCriteriaTemplate(button)
-        Base.CropIcon(button.icon, button)
-        button.border:Hide()
+    function Skin.MetaCriteriaTemplate(Button)
+        Base.CropIcon(Button.icon, Button)
+        Button.border:Hide()
     end
-    function Skin.AchievementProgressBarTemplate(statusbar)
-        local name = statusbar:GetName()
+    function Skin.AchievementProgressBarTemplate(StatusBar)
+        local name = StatusBar:GetName()
 
         _G[name.."BorderLeft"]:Hide()
         _G[name.."BorderRight"]:Hide()
         _G[name.."BorderCenter"]:Hide()
 
-        Base.SetTexture(statusbar:GetStatusBarTexture(), "gradientUp")
+        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
     end
-    function Skin.AchievementHeaderStatusBarTemplate(statusbar)
-        local name = statusbar:GetName()
+    function Skin.AchievementHeaderStatusBarTemplate(StatusBar)
+        local name = StatusBar:GetName()
 
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
         _G[name.."Middle"]:Hide()
 
-        Base.SetTexture(statusbar:GetStatusBarTexture(), "gradientUp")
+        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
     end
-    function Skin.AchievementCategoryTemplate(button)
-        Base.SetBackdrop(button, Color.button)
-        button.background:Hide()
+    function Skin.AchievementCategoryTemplate(Button)
+        Base.SetBackdrop(Button, Color.button)
+        Button.background:Hide()
 
-        button.label:SetPoint("BOTTOMLEFT", 6, 0)
-        button.label:SetPoint("TOPRIGHT")
-        button.label:SetJustifyV("MIDDLE")
+        Button.label:SetPoint("BOTTOMLEFT", 6, 0)
+        Button.label:SetPoint("TOPRIGHT")
+        Button.label:SetJustifyV("MIDDLE")
 
         local r, g, b = Color.highlight:GetRGB()
-        local highlight = button:GetHighlightTexture()
+        local highlight = Button:GetHighlightTexture()
         highlight:SetColorTexture(r, g, b, 0.5)
         highlight:SetPoint("BOTTOMRIGHT")
     end
-    function Skin.AchievementIconFrameTemplate(frame)
-        frame.bling:Hide()
-        Base.CropIcon(frame.texture, frame)
-        frame.frame:Hide()
+    function Skin.AchievementIconFrameTemplate(Frame)
+        Frame.bling:Hide()
+        Base.CropIcon(Frame.texture, Frame)
+        Frame.frame:Hide()
     end
-    function Skin.AchievementTemplate(button)
-        hooksecurefunc(button, "Saturate", Hook.AchievementButton_Saturate)
-        hooksecurefunc(button, "Desaturate", Hook.AchievementButton_Desaturate)
+    function Skin.AchievementTemplate(Button)
+        hooksecurefunc(Button, "Saturate", Hook.AchievementButton_Saturate)
+        hooksecurefunc(Button, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(button, Color.frame)
-        button.background:Hide()
+        Base.SetBackdrop(Button, Color.frame)
+        Button.background:Hide()
 
-        local name = button:GetName()
+        local name = Button:GetName()
 
         _G[name.."BottomLeftTsunami"]:Hide()
         _G[name.."BottomRightTsunami"]:Hide()
@@ -280,16 +280,16 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."BottomTsunami1"]:Hide()
         _G[name.."TopTsunami1"]:Hide()
 
-        button.titleBar:Hide()
-        button.glow:Hide()
-        button.rewardBackground:SetAlpha(0)
-        button.guildCornerL:Hide()
-        button.guildCornerR:Hide()
-        button.plusMinus:SetAlpha(0)
+        Button.titleBar:Hide()
+        Button.glow:Hide()
+        Button.rewardBackground:SetAlpha(0)
+        Button.guildCornerL:Hide()
+        Button.guildCornerR:Hide()
+        Button.plusMinus:SetAlpha(0)
 
-        local plusMinus = _G.CreateFrame("Frame", nil, button)
+        local plusMinus = _G.CreateFrame("Frame", nil, Button)
         Base.SetBackdrop(plusMinus, Color.button)
-        plusMinus:SetAllPoints(button.plusMinus)
+        plusMinus:SetAllPoints(Button.plusMinus)
 
         plusMinus.plus = plusMinus:CreateTexture(nil, "ARTWORK")
         plusMinus.plus:SetSize(1, 7)
@@ -300,70 +300,70 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         plusMinus.minus:SetSize(7, 1)
         plusMinus.minus:SetPoint("CENTER")
         plusMinus.minus:SetColorTexture(1, 1, 1)
-        button._auroraPlusMinus = plusMinus
+        Button._auroraPlusMinus = plusMinus
 
-        Base.SetBackdrop(button.highlight, Color.white, 0)
-        button.highlight:DisableDrawLayer("OVERLAY")
-        button.highlight:ClearAllPoints()
-        button.highlight:SetPoint("TOPLEFT", 1, -1)
-        button.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+        Base.SetBackdrop(Button.highlight, Color.white, 0)
+        Button.highlight:DisableDrawLayer("OVERLAY")
+        Button.highlight:ClearAllPoints()
+        Button.highlight:SetPoint("TOPLEFT", 1, -1)
+        Button.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        Skin.AchievementIconFrameTemplate(button.icon)
-        Skin.AchievementCheckButtonTemplate(button.tracked)
+        Skin.AchievementIconFrameTemplate(Button.icon)
+        Skin.AchievementCheckButtonTemplate(Button.tracked)
     end
-    function Skin.ComparisonPlayerTemplate(frame)
-        hooksecurefunc(frame, "Saturate", Hook.AchievementButton_Saturate)
-        hooksecurefunc(frame, "Desaturate", Hook.AchievementButton_Desaturate)
+    function Skin.ComparisonPlayerTemplate(Frame)
+        hooksecurefunc(Frame, "Saturate", Hook.AchievementButton_Saturate)
+        hooksecurefunc(Frame, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(frame, Color.frame)
-        frame.background:Hide()
-        frame.titleBar:Hide()
-        frame.glow:Hide()
+        Base.SetBackdrop(Frame, Color.frame)
+        Frame.background:Hide()
+        Frame.titleBar:Hide()
+        Frame.glow:Hide()
 
-        Skin.AchievementIconFrameTemplate(frame.icon)
+        Skin.AchievementIconFrameTemplate(Frame.icon)
     end
-    function Skin.SummaryAchievementTemplate(frame)
-        frame:SetHeight(44)
-        frame.icon:SetPoint("TOPLEFT", -1, -1)
-        frame.shield:SetPoint("TOPRIGHT", -5, -2)
+    function Skin.SummaryAchievementTemplate(Frame)
+        Frame:SetHeight(44)
+        Frame.icon:SetPoint("TOPLEFT", -1, -1)
+        Frame.shield:SetPoint("TOPRIGHT", -5, -2)
 
-        Skin.ComparisonPlayerTemplate(frame)
+        Skin.ComparisonPlayerTemplate(Frame)
 
-        Base.SetBackdrop(frame.highlight, Color.white, 0)
-        frame.highlight:DisableDrawLayer("OVERLAY")
-        frame.highlight:ClearAllPoints()
-        frame.highlight:SetPoint("TOPLEFT", 1, -1)
-        frame.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+        Base.SetBackdrop(Frame.highlight, Color.white, 0)
+        Frame.highlight:DisableDrawLayer("OVERLAY")
+        Frame.highlight:ClearAllPoints()
+        Frame.highlight:SetPoint("TOPLEFT", 1, -1)
+        Frame.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
     end
-    function Skin.ComparisonTemplate(frame)
-        Skin.ComparisonPlayerTemplate(frame.player)
+    function Skin.ComparisonTemplate(Frame)
+        Skin.ComparisonPlayerTemplate(Frame.player)
 
-        hooksecurefunc(frame.friend, "Saturate", Hook.AchievementButton_Saturate)
-        hooksecurefunc(frame.friend, "Desaturate", Hook.AchievementButton_Desaturate)
+        hooksecurefunc(Frame.friend, "Saturate", Hook.AchievementButton_Saturate)
+        hooksecurefunc(Frame.friend, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(frame.friend, Color.frame)
-        frame.friend.background:Hide()
-        frame.friend.titleBar:Hide()
-        frame.friend.glow:Hide()
+        Base.SetBackdrop(Frame.friend, Color.frame)
+        Frame.friend.background:Hide()
+        Frame.friend.titleBar:Hide()
+        Frame.friend.glow:Hide()
 
-        Skin.AchievementIconFrameTemplate(frame.friend.icon)
+        Skin.AchievementIconFrameTemplate(Frame.friend.icon)
     end
-    function Skin.StatTemplate(button)
-        button.left:SetAlpha(0)
-        button.middle:SetAlpha(0)
-        button.right:SetAlpha(0)
+    function Skin.StatTemplate(Button)
+        Button.left:SetAlpha(0)
+        Button.middle:SetAlpha(0)
+        Button.right:SetAlpha(0)
 
         local r, g, b = Color.highlight:GetRGB()
-        button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
+        Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
     end
-    function Skin.ComparisonStatTemplate(frame)
-        frame.left:SetAlpha(0)
-        frame.middle:SetAlpha(0)
-        frame.right:SetAlpha(0)
+    function Skin.ComparisonStatTemplate(Frame)
+        Frame.left:SetAlpha(0)
+        Frame.middle:SetAlpha(0)
+        Frame.right:SetAlpha(0)
 
-        frame.left2:SetAlpha(0)
-        frame.middle2:SetAlpha(0)
-        frame.right2:SetAlpha(0)
+        Frame.left2:SetAlpha(0)
+        Frame.middle2:SetAlpha(0)
+        Frame.right2:SetAlpha(0)
     end
 end
 

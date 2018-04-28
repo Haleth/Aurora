@@ -9,37 +9,37 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 do --[[ FrameXML\ActionButtonTemplate.xml ]]
-    function Skin.ActionButtonTemplate(checkbutton)
-        Base.CropIcon(checkbutton.icon)
+    function Skin.ActionButtonTemplate(CheckButton)
+        Base.CropIcon(CheckButton.icon)
 
-        checkbutton.Flash:SetColorTexture(1, 0, 0, 0.5)
-        checkbutton.NewActionTexture:SetAllPoints()
-        checkbutton.NewActionTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
-        checkbutton.SpellHighlightTexture:SetAllPoints()
-        checkbutton.SpellHighlightTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
-        checkbutton.AutoCastable:SetAllPoints()
-        checkbutton.AutoCastable:SetTexCoord(0.21875, 0.765625, 0.21875, 0.765625)
-        checkbutton.AutoCastShine:ClearAllPoints()
-        checkbutton.AutoCastShine:SetPoint("TOPLEFT", 2, -2)
-        checkbutton.AutoCastShine:SetPoint("BOTTOMRIGHT", -2, 2)
+        CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
+        CheckButton.NewActionTexture:SetAllPoints()
+        CheckButton.NewActionTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+        CheckButton.SpellHighlightTexture:SetAllPoints()
+        CheckButton.SpellHighlightTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+        CheckButton.AutoCastable:SetAllPoints()
+        CheckButton.AutoCastable:SetTexCoord(0.21875, 0.765625, 0.21875, 0.765625)
+        CheckButton.AutoCastShine:ClearAllPoints()
+        CheckButton.AutoCastShine:SetPoint("TOPLEFT", 2, -2)
+        CheckButton.AutoCastShine:SetPoint("BOTTOMRIGHT", -2, 2)
 
-        checkbutton:SetNormalTexture("")
-        Base.CropIcon(checkbutton:GetPushedTexture())
-        Base.CropIcon(checkbutton:GetHighlightTexture())
-        Base.CropIcon(checkbutton:GetCheckedTexture())
+        CheckButton:SetNormalTexture("")
+        Base.CropIcon(CheckButton:GetPushedTexture())
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
 
         --[[ Scale ]]--
-        checkbutton:SetSize(36, 36)
-        checkbutton.HotKey:SetPoint("TOPLEFT", 1, -3)
-        checkbutton.HotKey:SetPoint("BOTTOMRIGHT", checkbutton, "TOPRIGHT", -1, -13)
-        checkbutton.Count:SetPoint("BOTTOMRIGHT", -2, 2)
+        CheckButton:SetSize(36, 36)
+        CheckButton.HotKey:SetPoint("TOPLEFT", 1, -3)
+        CheckButton.HotKey:SetPoint("BOTTOMRIGHT", CheckButton, "TOPRIGHT", -1, -13)
+        CheckButton.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
-        checkbutton.Name:ClearAllPoints()
-        checkbutton.Name:SetPoint("TOPLEFT", checkbutton, "BOTTOMLEFT", 0, 12)
-        checkbutton.Name:SetPoint("BOTTOMRIGHT", 0, 2)
+        CheckButton.Name:ClearAllPoints()
+        CheckButton.Name:SetPoint("TOPLEFT", CheckButton, "BOTTOMLEFT", 0, 12)
+        CheckButton.Name:SetPoint("BOTTOMRIGHT", 0, 2)
 
-        checkbutton.cooldown:SetPoint("TOPLEFT")
-        checkbutton.cooldown:SetPoint("BOTTOMRIGHT")
+        CheckButton.cooldown:SetPoint("TOPLEFT")
+        CheckButton.cooldown:SetPoint("BOTTOMRIGHT")
     end
 end
 

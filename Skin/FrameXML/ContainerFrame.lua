@@ -57,20 +57,20 @@ do --[[ FrameXML\ContainerFrame.lua ]]
 end
 
 do --[[ FrameXML\ContainerFrame.xml ]]
-    function Skin.ContainerFrameItemButtonTemplate(button)
-        local name = button:GetName()
+    function Skin.ContainerFrameItemButtonTemplate(Button)
+        local name = Button:GetName()
 
-        Skin.ItemButtonTemplate(button)
+        Skin.ItemButtonTemplate(Button)
         Base.CropIcon(_G[name.."IconQuestTexture"])
     end
 
-    function Skin.ContainerFrameTemplate(frame)
-        _G.hooksecurefunc(frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
+    function Skin.ContainerFrameTemplate(Frame)
+        _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
         _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
 
-        local name = frame:GetName()
+        local name = Frame:GetName()
 
-        frame.Portrait:Hide()
+        Frame.Portrait:Hide()
         _G[name.."BackgroundTop"]:SetAlpha(0)
         _G[name.."BackgroundMiddle1"]:SetAlpha(0)
         _G[name.."BackgroundMiddle2"]:SetAlpha(0)
@@ -79,15 +79,15 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
         local nameText = _G[name.."Name"]
         nameText:ClearAllPoints()
-        nameText:SetPoint("TOPLEFT", frame.ClickableTitleFrame, 19, 0)
-        nameText:SetPoint("BOTTOMRIGHT", frame.ClickableTitleFrame, -19, 0)
+        nameText:SetPoint("TOPLEFT", Frame.ClickableTitleFrame, 19, 0)
+        nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
 
-        local bdFrame = _G.CreateFrame("Frame", nil, frame)
+        local bdFrame = _G.CreateFrame("Frame", nil, Frame)
         bdFrame:SetPoint("TOPLEFT", 11, -4)
         bdFrame:SetPoint("BOTTOMRIGHT", -6, 3)
-        bdFrame:SetFrameLevel(frame:GetFrameLevel())
+        bdFrame:SetFrameLevel(Frame:GetFrameLevel())
         Base.SetBackdrop(bdFrame)
-        frame._auroraBDFrame = bdFrame
+        Frame._auroraBDFrame = bdFrame
 
         local moneyFrame = _G[name.."MoneyFrame"]
         local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
@@ -98,20 +98,20 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         moneyBG:SetPoint("LEFT", bdFrame, 3, 0)
         moneyBG:SetPoint("RIGHT", bdFrame, -3, 0)
 
-        frame.PortraitButton:Hide()
-        frame.FilterIcon:ClearAllPoints()
-        frame.FilterIcon:SetPoint("TOPLEFT", bdFrame, 3, -3)
-        frame.FilterIcon:SetSize(17, 17)
-        frame.FilterIcon.Icon:SetAllPoints()
+        Frame.PortraitButton:Hide()
+        Frame.FilterIcon:ClearAllPoints()
+        Frame.FilterIcon:SetPoint("TOPLEFT", bdFrame, 3, -3)
+        Frame.FilterIcon:SetSize(17, 17)
+        Frame.FilterIcon.Icon:SetAllPoints()
 
-        Base.CropIcon(frame.FilterIcon.Icon, frame.FilterIcon)
+        Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
 
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])
         _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bdFrame, -3, -3)
 
-        frame.ClickableTitleFrame:ClearAllPoints()
-        frame.ClickableTitleFrame:SetPoint("TOPLEFT", bdFrame)
-        frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bdFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        Frame.ClickableTitleFrame:ClearAllPoints()
+        Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bdFrame)
+        Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bdFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
 end
 

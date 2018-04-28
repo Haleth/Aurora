@@ -22,8 +22,8 @@ do --[[ FrameXML\MainMenuBar.lua ]]
 end
 
 do --[[ FrameXML\MainMenuBar.xml ]]
-    function Skin.MainMenuBarWatchBarTemplate(frame)
-        local StatusBar = frame.StatusBar
+    function Skin.MainMenuBarWatchBarTemplate(Frame)
+        local StatusBar = Frame.StatusBar
         Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
         Base.SetTexture(StatusBar.Underlay, "gradientUp")
 
@@ -51,7 +51,7 @@ do --[[ FrameXML\MainMenuBar.xml ]]
         end
 
         --[[ Scale ]]--
-        frame:SetSize(1024, 11)
+        Frame:SetSize(1024, 11)
         StatusBar:SetSize(1024, 11)
     end
 end

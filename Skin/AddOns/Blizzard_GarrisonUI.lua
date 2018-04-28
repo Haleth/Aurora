@@ -12,11 +12,11 @@ local Base, Skin = Aurora.Base, Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
 
 do --[[ AddOns\Blizzard_GarrisonUI\Blizzard_GarrisonShipyardUI.xml ]]
-    function Skin.GarrisonBonusEffectFrameTemplate(frame)
-        Base.CropIcon(frame.Icon, frame)
+    function Skin.GarrisonBonusEffectFrameTemplate(Frame)
+        Base.CropIcon(Frame.Icon, Frame)
     end
-    function Skin.GarrisonBonusAreaTooltipFrameTemplate(frame)
-        Skin.GarrisonBonusEffectFrameTemplate(frame.BonusEffectFrame)
+    function Skin.GarrisonBonusAreaTooltipFrameTemplate(Frame)
+        Skin.GarrisonBonusEffectFrameTemplate(Frame.BonusEffectFrame)
     end
 end
 

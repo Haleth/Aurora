@@ -32,40 +32,40 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
-    function Skin.TokenButtonTemplate(button)
-        local stripe = button.stripe
+    function Skin.TokenButtonTemplate(Button)
+        local stripe = Button.stripe
         stripe:SetPoint("TOPLEFT", 1, 1)
         stripe:SetPoint("BOTTOMRIGHT", -1, -1)
 
-        Base.CropIcon(button.icon, button)
+        Base.CropIcon(Button.icon, Button)
 
-        button.categoryMiddle:SetAlpha(0)
-        button.categoryLeft:SetAlpha(0)
-        button.categoryRight:SetAlpha(0)
+        Button.categoryMiddle:SetAlpha(0)
+        Button.categoryLeft:SetAlpha(0)
+        Button.categoryRight:SetAlpha(0)
 
-        local layer, subLevel = button.categoryMiddle:GetDrawLayer()
-        local bg = button:CreateTexture(nil, layer, subLevel + 3)
+        local layer, subLevel = Button.categoryMiddle:GetDrawLayer()
+        local bg = Button:CreateTexture(nil, layer, subLevel + 3)
         bg:SetColorTexture(Color.button:GetRGB())
         bg:SetAllPoints()
-        button._auroraBG = bg
+        Button._auroraBG = bg
 
-        button.expandIcon:SetTexture("")
-        local minus = button:CreateTexture(nil, "ARTWORK")
+        Button.expandIcon:SetTexture("")
+        local minus = Button:CreateTexture(nil, "ARTWORK")
         minus:SetSize(7, 1)
         minus:SetPoint("LEFT", 8, 0)
         minus:SetColorTexture(1, 1, 1)
         minus:Hide()
-        button._auroraMinus = minus
+        Button._auroraMinus = minus
 
-        local plus = button:CreateTexture(nil, "ARTWORK")
+        local plus = Button:CreateTexture(nil, "ARTWORK")
         plus:SetSize(1, 7)
         plus:SetPoint("LEFT", 11, 0)
         plus:SetColorTexture(1, 1, 1)
         plus:Hide()
-        button._auroraPlus = plus
+        Button._auroraPlus = plus
     end
-    function Skin.BackpackTokenTemplate(button)
-        Base.CropIcon(button.icon, button)
+    function Skin.BackpackTokenTemplate(Button)
+        Base.CropIcon(Button.icon, Button)
     end
 end
 

@@ -79,41 +79,41 @@ do --[[ FrameXML\StaticPopup.lua ]]
 end
 
 do --[[ FrameXML\StaticPopup.xml ]]
-    function Skin.StaticPopupButtonTemplate(button)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetDisabledTexture("")
-        button:SetHighlightTexture("")
+    function Skin.StaticPopupButtonTemplate(Button)
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetDisabledTexture("")
+        Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Color.button)
-        Base.SetHighlight(button, "backdrop")
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button, "backdrop")
 
         --[[ Scale ]]--
-        button:SetSize(button:GetSize())
+        Button:SetSize(Button:GetSize())
     end
 
-    local function CloseButton_SetNormalTexture(button, texture)
-        if button._setNormal then return end
-        button._setNormal = true
-        button:SetNormalTexture("")
+    local function CloseButton_SetNormalTexture(Button, texture)
+        if Button._setNormal then return end
+        Button._setNormal = true
+        Button:SetNormalTexture("")
         if texture:find("Hide") then
-            button._auroraHighlight[1]:Hide()
-            button._auroraHighlight[2]:Show()
+            Button._auroraHighlight[1]:Hide()
+            Button._auroraHighlight[2]:Show()
         else
-            button._auroraHighlight[1]:Show()
-            button._auroraHighlight[2]:Hide()
+            Button._auroraHighlight[1]:Show()
+            Button._auroraHighlight[2]:Hide()
         end
-        button._setNormal = nil
+        Button._setNormal = nil
     end
-    local function CloseButton_SetPushedTexture(button, texture)
-        if button._setPushed then return end
-        button._setPushed = true
-        button:SetPushedTexture("")
-        button._setPushed = nil
+    local function CloseButton_SetPushedTexture(Button, texture)
+        if Button._setPushed then return end
+        Button._setPushed = true
+        Button:SetPushedTexture("")
+        Button._setPushed = nil
     end
-    function Skin.StaticPopupTemplate(frame)
-        local name = frame:GetName()
-        Base.SetBackdrop(frame)
+    function Skin.StaticPopupTemplate(Frame)
+        local name = Frame:GetName()
+        Base.SetBackdrop(Frame)
 
         local close = _G[name .. "CloseButton"]
         Skin.UIPanelCloseButton(close)
@@ -127,31 +127,31 @@ do --[[ FrameXML\StaticPopup.xml ]]
         _G.hooksecurefunc(close, "SetNormalTexture", CloseButton_SetNormalTexture)
         _G.hooksecurefunc(close, "SetPushedTexture", CloseButton_SetPushedTexture)
 
-        Skin.StaticPopupButtonTemplate(frame.button1)
-        Skin.StaticPopupButtonTemplate(frame.button2)
-        Skin.StaticPopupButtonTemplate(frame.button3)
-        Skin.StaticPopupButtonTemplate(frame.button4)
+        Skin.StaticPopupButtonTemplate(Frame.button1)
+        Skin.StaticPopupButtonTemplate(Frame.button2)
+        Skin.StaticPopupButtonTemplate(Frame.button3)
+        Skin.StaticPopupButtonTemplate(Frame.button4)
 
         _G[name .. "EditBoxLeft"]:Hide()
         _G[name .. "EditBoxRight"]:Hide()
         _G[name .. "EditBoxMid"]:Hide()
 
-        local editboxBG = _G.CreateFrame("Frame", nil, frame.editBox)
+        local editboxBG = _G.CreateFrame("Frame", nil, Frame.editBox)
         editboxBG:SetPoint("TOPLEFT", -2, -6)
         editboxBG:SetPoint("BOTTOMRIGHT", 2, 6)
-        editboxBG:SetFrameLevel(frame.editBox:GetFrameLevel() - 1)
+        editboxBG:SetFrameLevel(Frame.editBox:GetFrameLevel() - 1)
         Base.SetBackdrop(editboxBG, Color.frame)
 
-        Skin.SmallMoneyFrameTemplate(frame.moneyFrame)
-        Skin.MoneyInputFrameTemplate(frame.moneyInputFrame)
-        Skin.ItemButtonTemplate(frame.ItemFrame)
+        Skin.SmallMoneyFrameTemplate(Frame.moneyFrame)
+        Skin.MoneyInputFrameTemplate(Frame.moneyInputFrame)
+        Skin.ItemButtonTemplate(Frame.ItemFrame)
 
-        local nameFrame = _G[frame.ItemFrame:GetName().."NameFrame"]
+        local nameFrame = _G[Frame.ItemFrame:GetName().."NameFrame"]
         nameFrame:Hide()
 
-        local nameBG = _G.CreateFrame("Frame", nil, frame.ItemFrame)
-        nameBG:SetPoint("TOPLEFT", frame.ItemFrame.icon, "TOPRIGHT", 2, 1)
-        nameBG:SetPoint("BOTTOMLEFT", frame.ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
+        local nameBG = _G.CreateFrame("Frame", nil, Frame.ItemFrame)
+        nameBG:SetPoint("TOPLEFT", Frame.ItemFrame.icon, "TOPRIGHT", 2, 1)
+        nameBG:SetPoint("BOTTOMLEFT", Frame.ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
         nameBG:SetPoint("RIGHT", 120, 0)
         Base.SetBackdrop(nameBG, Color.frame)
 
@@ -160,15 +160,15 @@ do --[[ FrameXML\StaticPopup.xml ]]
         _G[name .. "Text"]:SetPoint("TOP", 0, -16)
         _G[name .. "AlertIcon"]:SetSize(36, 36)
         _G[name .. "AlertIcon"]:SetPoint("LEFT", 24, 0)
-        frame.editBox:SetSize(130, 32)
-        frame.editBox:SetPoint("BOTTOM", 0, 45)
-        frame.moneyFrame:SetPoint("TOP", frame.text, "BOTTOM", 0, -5)
-        frame.moneyInputFrame:SetPoint("TOP", frame.text, "BOTTOM", 0, -5)
-        frame.ItemFrame:SetSize(37, 37)
-        frame.ItemFrame:SetPoint("BOTTOM", frame.button1, "TOP", 0, 8)
-        frame.ItemFrame:SetPoint("LEFT", 82, 0)
+        Frame.editBox:SetSize(130, 32)
+        Frame.editBox:SetPoint("BOTTOM", 0, 45)
+        Frame.moneyFrame:SetPoint("TOP", Frame.text, "BOTTOM", 0, -5)
+        Frame.moneyInputFrame:SetPoint("TOP", Frame.text, "BOTTOM", 0, -5)
+        Frame.ItemFrame:SetSize(37, 37)
+        Frame.ItemFrame:SetPoint("BOTTOM", Frame.button1, "TOP", 0, 8)
+        Frame.ItemFrame:SetPoint("LEFT", 82, 0)
 
-        local itemText = _G[frame.ItemFrame:GetName().."Text"]
+        local itemText = _G[Frame.ItemFrame:GetName().."Text"]
         itemText:ClearAllPoints()
         itemText:SetPoint("TOPLEFT", nameBG, 4, -4)
         itemText:SetPoint("BOTTOMRIGHT", nameBG, -4, 4)

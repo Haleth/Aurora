@@ -35,28 +35,28 @@ do --[[ FrameXML\BankFrame.lua ]]
 end
 
 do --[[ FrameXML\BankFrame.xml ]]
-    function Skin.BankItemButtonGenericTemplate(button)
-        Skin.ItemButtonTemplate(button)
-        Base.CropIcon(button.IconQuestTexture)
+    function Skin.BankItemButtonGenericTemplate(Button)
+        Skin.ItemButtonTemplate(Button)
+        Base.CropIcon(Button.IconQuestTexture)
     end
-    function Skin.BankItemButtonBagTemplate(button)
-        Skin.ItemButtonTemplate(button)
-        Base.CropIcon(button.HighlightFrame.HighlightTexture)
+    function Skin.BankItemButtonBagTemplate(Button)
+        Skin.ItemButtonTemplate(Button)
+        Base.CropIcon(Button.HighlightFrame.HighlightTexture)
     end
     Skin.ReagentBankItemButtonGenericTemplate = Skin.BankItemButtonGenericTemplate
 
     -- BlizzWTF: Why is this not shared with ContainerFrame?
-    function Skin.BankAutoSortButtonTemplate(button)
-        button:SetSize(26, 26)
-        button:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
-        button:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
+    function Skin.BankAutoSortButtonTemplate(Button)
+        Button:SetSize(26, 26)
+        Button:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
+        Button:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
 
-        button:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
-        button:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
+        Button:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
+        Button:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
 
-        local iconBorder = button:CreateTexture(nil, "BACKGROUND")
-        iconBorder:SetPoint("TOPLEFT", button, -1, 1)
-        iconBorder:SetPoint("BOTTOMRIGHT", button, 1, -1)
+        local iconBorder = Button:CreateTexture(nil, "BACKGROUND")
+        iconBorder:SetPoint("TOPLEFT", Button, -1, 1)
+        iconBorder:SetPoint("BOTTOMRIGHT", Button, 1, -1)
         iconBorder:SetColorTexture(0, 0, 0)
     end
 end

@@ -13,94 +13,94 @@ local Color = Aurora.Color
 end ]]
 
 do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
-    function Skin.InputBoxTemplate(editbox)
-        editbox.Left:Hide()
-        editbox.Right:Hide()
-        editbox.Middle:Hide()
+    function Skin.InputBoxTemplate(EditBox)
+        EditBox.Left:Hide()
+        EditBox.Right:Hide()
+        EditBox.Middle:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, editbox)
-        bg:SetPoint("TOPLEFT", editbox.Left)
-        bg:SetPoint("BOTTOMRIGHT", editbox.Right)
-        bg:SetFrameLevel(editbox:GetFrameLevel() - 1)
+        local bg = _G.CreateFrame("Frame", nil, EditBox)
+        bg:SetPoint("TOPLEFT", EditBox.Left)
+        bg:SetPoint("BOTTOMRIGHT", EditBox.Right)
+        bg:SetFrameLevel(EditBox:GetFrameLevel() - 1)
         Base.SetBackdrop(bg, Color.frame)
     end
 
-    function Skin.UIPanelScrollBarButton(button)
-        button:SetSize(17, 17)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
+    function Skin.UIPanelScrollBarButton(Button)
+        Button:SetSize(17, 17)
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetHighlightTexture("")
 
-        local disabled = button:GetDisabledTexture()
+        local disabled = Button:GetDisabledTexture()
         disabled:SetVertexColor(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
         disabled:SetAllPoints()
 
-        Base.SetBackdrop(button, Color.button)
+        Base.SetBackdrop(Button, Color.button)
     end
-    function Skin.UIPanelScrollUpButtonTemplate(button)
-        Skin.UIPanelScrollBarButton(button)
+    function Skin.UIPanelScrollUpButtonTemplate(Button)
+        Skin.UIPanelScrollBarButton(Button)
 
-        local arrow = button:CreateTexture(nil, "ARTWORK")
+        local arrow = Button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 4, -6)
         arrow:SetPoint("BOTTOMRIGHT", -5, 7)
         Base.SetTexture(arrow, "arrowUp")
 
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
+        Button._auroraHighlight = {arrow}
+        Base.SetHighlight(Button, "texture")
     end
-    function Skin.UIPanelScrollDownButtonTemplate(button)
-        Skin.UIPanelScrollBarButton(button)
+    function Skin.UIPanelScrollDownButtonTemplate(Button)
+        Skin.UIPanelScrollBarButton(Button)
 
-        local arrow = button:CreateTexture(nil, "ARTWORK")
+        local arrow = Button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 4, -7)
         arrow:SetPoint("BOTTOMRIGHT", -5, 6)
         Base.SetTexture(arrow, "arrowDown")
 
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
+        Button._auroraHighlight = {arrow}
+        Base.SetHighlight(Button, "texture")
     end
-    function Skin.UIPanelScrollBarTemplate(slider)
-        Skin.UIPanelScrollUpButtonTemplate(slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(slider.ScrollDownButton)
+    function Skin.UIPanelScrollBarTemplate(Slider)
+        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
 
-        slider.ThumbTexture:SetAlpha(0)
-        slider.ThumbTexture:SetSize(17, 24)
+        Slider.ThumbTexture:SetAlpha(0)
+        Slider.ThumbTexture:SetSize(17, 24)
 
-        local thumb = _G.CreateFrame("Frame", nil, slider)
-        thumb:SetPoint("TOPLEFT", slider.ThumbTexture, 0, -2)
-        thumb:SetPoint("BOTTOMRIGHT", slider.ThumbTexture, 0, 2)
+        local thumb = _G.CreateFrame("Frame", nil, Slider)
+        thumb:SetPoint("TOPLEFT", Slider.ThumbTexture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", Slider.ThumbTexture, 0, 2)
         Base.SetBackdrop(thumb, Color.button)
-        slider._auroraThumb = thumb
+        Slider._auroraThumb = thumb
 
         --[[ Scale ]]--
-        slider:SetWidth(slider:GetWidth())
+        Slider:SetWidth(Slider:GetWidth())
     end
 
-    function Skin.UIPanelScrollFrameTemplate(scrollframe)
-        Skin.UIPanelScrollBarTemplate(scrollframe.ScrollBar)
-        scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", 2, -17)
-        scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", 2, 17)
+    function Skin.UIPanelScrollFrameTemplate(ScrollFrame)
+        Skin.UIPanelScrollBarTemplate(ScrollFrame.ScrollBar)
+        ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
+        ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end
-    function Skin.FauxScrollFrameTemplate(scrollframe)
-        Skin.UIPanelScrollFrameTemplate(scrollframe)
+    function Skin.FauxScrollFrameTemplate(ScrollFrame)
+        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
     end
-    function Skin.ListScrollFrameTemplate(scrollframe)
-        Skin.FauxScrollFrameTemplate(scrollframe)
-        local name = scrollframe:GetName()
+    function Skin.ListScrollFrameTemplate(ScrollFrame)
+        Skin.FauxScrollFrameTemplate(ScrollFrame)
+        local name = ScrollFrame:GetName()
         _G[name.."Top"]:Hide()
         _G[name.."Bottom"]:Hide()
         _G[name.."Middle"]:Hide()
     end
-    function Skin.SelectionFrameTemplate(frame)
-        frame.TopLeft:ClearAllPoints()
-        frame.TopRight:ClearAllPoints()
-        frame.BottomLeft:ClearAllPoints()
-        frame.BottomRight:ClearAllPoints()
+    function Skin.SelectionFrameTemplate(Frame)
+        Frame.TopLeft:ClearAllPoints()
+        Frame.TopRight:ClearAllPoints()
+        Frame.BottomLeft:ClearAllPoints()
+        Frame.BottomRight:ClearAllPoints()
 
-        Skin.UIPanelButtonTemplate(frame.CancelButton)
-        frame.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
-        Skin.UIPanelButtonTemplate(frame.OkayButton)
+        Skin.UIPanelButtonTemplate(Frame.CancelButton)
+        Frame.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
+        Skin.UIPanelButtonTemplate(Frame.OkayButton)
     end
 end
 

@@ -136,14 +136,14 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
             Skin.UIDropDownMenuButtonTemplate(listFrameName, listFrameName.."Button"..i)
         end
     end
-    function Skin.UIDropDownMenuTemplate(frame)
-        local name = frame:GetName()
+    function Skin.UIDropDownMenuTemplate(Frame)
+        local name = Frame:GetName()
 
         local left, middle, right
         if private.isPatch then
-            left = frame.Left
-            middle = frame.Middle
-            right = frame.Right
+            left = Frame.Left
+            middle = Frame.Middle
+            right = Frame.Right
         else
             left = _G[name.."Left"]
             middle = _G[name.."Middle"]
@@ -153,7 +153,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         middle:SetAlpha(0)
         right:SetAlpha(0)
 
-        local button = frame.Button
+        local button = Frame.Button
         button:SetSize(20, 20)
         button:ClearAllPoints()
         button:SetPoint("TOPRIGHT", right, -19, -21)
@@ -187,27 +187,27 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         button._auroraHighlight = {arrow}
         Base.SetHighlight(button, "texture")
 
-        local bg = _G.CreateFrame("Frame", nil, frame)
+        local bg = _G.CreateFrame("Frame", nil, Frame)
         bg:SetPoint("TOPLEFT", left, 20, -21)
         bg:SetPoint("BOTTOMRIGHT", right, -19, 23)
-        bg:SetFrameLevel(frame:GetFrameLevel())
+        bg:SetFrameLevel(Frame:GetFrameLevel())
         Base.SetBackdrop(bg, Color.button)
 
 
         --[[Scale]]
-        if not frame.noResize then
-            frame:SetWidth(40)
+        if not Frame.noResize then
+            Frame:SetWidth(40)
             middle:SetWidth(115)
         end
-        frame:SetHeight(32)
+        Frame:SetHeight(32)
 
         left:SetSize(25, 64)
         left:SetPoint("TOPLEFT", 0, 17)
         middle:SetHeight(64)
         right:SetSize(25, 64)
 
-        frame.Text:SetSize(0, 10)
-        frame.Text:SetPoint("RIGHT", right, -43, 2)
+        Frame.Text:SetSize(0, 10)
+        Frame.Text:SetPoint("RIGHT", right, -43, 2)
     end
 end
 

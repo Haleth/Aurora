@@ -28,67 +28,67 @@ do -- BlizzWTF: These are not templates, but they should be
         end
         self.settingTexture = nil
     end
-    function Skin.ExpandOrCollapse(button)
-        button:SetHighlightTexture("")
-        button:SetPushedTexture("")
+    function Skin.ExpandOrCollapse(Button)
+        Button:SetHighlightTexture("")
+        Button:SetPushedTexture("")
 
-        local bg = _G.CreateFrame("Frame", nil, button)
+        local bg = _G.CreateFrame("Frame", nil, Button)
         bg:SetSize(13, 13)
-        bg:SetPoint("TOPLEFT", button:GetNormalTexture(), 0, -2)
+        bg:SetPoint("TOPLEFT", Button:GetNormalTexture(), 0, -2)
         Base.SetBackdrop(bg, Color.button)
-        button._auroraBG = bg
+        Button._auroraBG = bg
 
-        button._auroraHighlight = {}
+        Button._auroraHighlight = {}
         bg.minus = bg:CreateTexture(nil, "OVERLAY")
         bg.minus:SetPoint("TOPLEFT", 2, -6)
         bg.minus:SetPoint("BOTTOMRIGHT", -2, 6)
         bg.minus:SetColorTexture(1, 1, 1)
-        _G.tinsert(button._auroraHighlight, bg.minus)
+        _G.tinsert(Button._auroraHighlight, bg.minus)
 
         bg.plus = bg:CreateTexture(nil, "OVERLAY")
         bg.plus:SetPoint("TOPLEFT", 6, -2)
         bg.plus:SetPoint("BOTTOMRIGHT", -6, 2)
         bg.plus:SetColorTexture(1, 1, 1)
-        _G.tinsert(button._auroraHighlight, bg.plus)
+        _G.tinsert(Button._auroraHighlight, bg.plus)
 
-        Base.SetHighlight(button, "color")
-        _G.hooksecurefunc(button, "SetNormalTexture", Hook_SetNormalTexture)
+        Base.SetHighlight(Button, "color")
+        _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
     end
 
     -- Nav buttons
-    local function NavButton(button)
-        button:SetSize(18, 18)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
+    local function NavButton(Button)
+        Button:SetSize(18, 18)
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetHighlightTexture("")
 
-        local disabled = button:GetDisabledTexture()
+        local disabled = Button:GetDisabledTexture()
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
 
-        Base.SetBackdrop(button, Color.button)
+        Base.SetBackdrop(Button, Color.button)
     end
-    function Skin.NavButtonPrevious(button)
-        NavButton(button)
+    function Skin.NavButtonPrevious(Button)
+        NavButton(Button)
 
-        local arrow = button:CreateTexture(nil, "ARTWORK")
+        local arrow = Button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 6, -4)
         arrow:SetPoint("BOTTOMRIGHT", -7, 5)
         Base.SetTexture(arrow, "arrowLeft")
 
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
+        Button._auroraHighlight = {arrow}
+        Base.SetHighlight(Button, "texture")
     end
-    function Skin.NavButtonNext(button)
-        NavButton(button)
+    function Skin.NavButtonNext(Button)
+        NavButton(Button)
 
-        local arrow = button:CreateTexture(nil, "ARTWORK")
+        local arrow = Button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 7, -5)
         arrow:SetPoint("BOTTOMRIGHT", -6, 4)
         Base.SetTexture(arrow, "arrowRight")
 
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
+        Button._auroraHighlight = {arrow}
+        Base.SetHighlight(Button, "texture")
     end
 end
 
@@ -153,231 +153,232 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
-    function Skin.UIPanelCloseButton(button)
-        button:SetSize(17, 17)
-        button:SetNormalTexture("")
-        button:SetHighlightTexture("")
-        button:SetPushedTexture("")
+    function Skin.UIPanelCloseButton(Button)
+        Button:SetSize(17, 17)
+        Button:SetNormalTexture("")
+        Button:SetHighlightTexture("")
+        Button:SetPushedTexture("")
 
-        local dis = button:GetDisabledTexture()
+        local dis = Button:GetDisabledTexture()
         if dis then
             dis:SetColorTexture(0, 0, 0, .4)
             dis:SetDrawLayer("OVERLAY")
             dis:SetAllPoints()
         end
 
-        Base.SetBackdrop(button, Color.button)
+        Base.SetBackdrop(Button, Color.button)
 
-        local cross = button:CreateTexture(nil, "ARTWORK")
+        local cross = Button:CreateTexture(nil, "ARTWORK")
         cross:SetPoint("TOPLEFT", 4, -4)
         cross:SetPoint("BOTTOMRIGHT", -4, 4)
         Base.SetTexture(cross, "lineCross")
 
-        button._auroraHighlight = {cross}
-        Base.SetHighlight(button, "texture")
+        Button._auroraHighlight = {cross}
+        Base.SetHighlight(Button, "texture")
     end
-    function Skin.UIPanelButtonTemplate(button)
-        button.Left:SetAlpha(0)
-        button.Right:SetAlpha(0)
-        button.Middle:SetAlpha(0)
-        button:SetHighlightTexture("")
+    function Skin.UIPanelButtonTemplate(Button)
+        Button.Left:SetAlpha(0)
+        Button.Right:SetAlpha(0)
+        Button.Middle:SetAlpha(0)
+        Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Color.button)
-        Base.SetHighlight(button, "backdrop")
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button, "backdrop")
 
         --[[ Scale ]]--
-        button:SetSize(button:GetSize())
+        Button:SetSize(Button:GetSize())
     end
 
-    function Skin.UIRadioButtonTemplate(checkbutton)
-        local bd = _G.CreateFrame("Frame", nil, checkbutton)
+    function Skin.UIRadioButtonTemplate(CheckButton)
+        local bd = _G.CreateFrame("Frame", nil, CheckButton)
         bd:SetPoint("TOPLEFT", 4, -4)
         bd:SetPoint("BOTTOMRIGHT", -4, 4)
-        bd:SetFrameLevel(checkbutton:GetFrameLevel())
+        bd:SetFrameLevel(CheckButton:GetFrameLevel())
         Base.SetBackdrop(bd, Color.button, 0.3)
 
-        checkbutton:SetNormalTexture("")
-        checkbutton:SetPushedTexture("")
-        checkbutton:SetHighlightTexture("")
+        CheckButton:SetNormalTexture("")
+        CheckButton:SetPushedTexture("")
+        CheckButton:SetHighlightTexture("")
 
-        local check = checkbutton:GetCheckedTexture()
+        local check = CheckButton:GetCheckedTexture()
         check:SetColorTexture(Color.highlight:GetRGB())
         check:ClearAllPoints()
         check:SetPoint("TOPLEFT", bd, 1, -1)
         check:SetPoint("BOTTOMRIGHT", bd, -1, 1)
 
-        checkbutton._auroraBDFrame = bd
-        Base.SetHighlight(checkbutton, "backdrop")
+        CheckButton._auroraBDFrame = bd
+        Base.SetHighlight(CheckButton, "backdrop")
 
         --[[ Scale ]]--
-        checkbutton:SetSize(checkbutton:GetSize())
+        CheckButton:SetSize(CheckButton:GetSize())
     end
-    function Skin.UICheckButtonTemplate(checkbutton)
-        local bd = _G.CreateFrame("Frame", nil, checkbutton)
+    function Skin.UICheckButtonTemplate(CheckButton)
+        local bd = _G.CreateFrame("Frame", nil, CheckButton)
         bd:SetPoint("TOPLEFT", 6, -6)
         bd:SetPoint("BOTTOMRIGHT", -6, 6)
-        bd:SetFrameLevel(checkbutton:GetFrameLevel())
+        bd:SetFrameLevel(CheckButton:GetFrameLevel())
         Base.SetBackdrop(bd, Color.button, 0.3)
 
-        checkbutton:SetNormalTexture("")
-        checkbutton:SetPushedTexture("")
-        checkbutton:SetHighlightTexture("")
+        CheckButton:SetNormalTexture("")
+        CheckButton:SetPushedTexture("")
+        CheckButton:SetHighlightTexture("")
 
-        local check = checkbutton:GetCheckedTexture()
+        local check = CheckButton:GetCheckedTexture()
         check:ClearAllPoints()
         check:SetPoint("TOPLEFT", bd, -7, 7)
         check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
 
-        local disabled = checkbutton:GetDisabledCheckedTexture()
+        local disabled = CheckButton:GetDisabledCheckedTexture()
         disabled:ClearAllPoints()
         disabled:SetPoint("TOPLEFT", -7, 7)
         disabled:SetPoint("BOTTOMRIGHT", 7, -7)
 
-        checkbutton._auroraBDFrame = bd
-        Base.SetHighlight(checkbutton, "backdrop")
+        CheckButton._auroraBDFrame = bd
+        Base.SetHighlight(CheckButton, "backdrop")
 
         --[[ Scale ]]--
-        checkbutton:SetSize(checkbutton:GetSize())
+        CheckButton:SetSize(CheckButton:GetSize())
     end
 
-    function Skin.PortraitFrameTemplate(frame, noCloseButton)
-        local name = frame:GetName()
+    function Skin.PortraitFrameTemplateNoCloseButton(Frame)
+        local name = Frame:GetName()
 
-        frame.Bg:Hide()
+        Frame.Bg:Hide()
         _G[name.."TitleBg"]:Hide()
-        frame.portrait:SetAlpha(0)
+        Frame.portrait:SetAlpha(0)
         if private.isPatch then
-            frame.PortraitFrame:SetTexture("")
-            frame.TopRightCorner:Hide()
-            frame.TopLeftCorner:Hide()
-            frame.TopBorder:SetTexture("")
+            Frame.PortraitFrame:SetTexture("")
+            Frame.TopRightCorner:Hide()
+            Frame.TopLeftCorner:Hide()
+            Frame.TopBorder:SetTexture("")
         else
-            frame.portraitFrame:SetTexture("")
+            Frame.portraitFrame:SetTexture("")
             _G[name.."TopRightCorner"]:Hide()
-            frame.topLeftCorner:Hide()
-            frame.topBorderBar:SetTexture("")
+            Frame.topLeftCorner:Hide()
+            Frame.topBorderBar:SetTexture("")
         end
 
-        local titleText = frame.TitleText
+        local titleText = Frame.TitleText
         titleText:ClearAllPoints()
         titleText:SetPoint("TOPLEFT")
-        titleText:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-        frame.TopTileStreaks:SetTexture("")
+        Frame.TopTileStreaks:SetTexture("")
         if private.isPatch then
-            frame.BotLeftCorner:Hide()
-            frame.BotRightCorner:Hide()
-            frame.BottomBorder:Hide()
-            frame.LeftBorder:Hide()
-            frame.RightBorder:Hide()
+            Frame.BotLeftCorner:Hide()
+            Frame.BotRightCorner:Hide()
+            Frame.BottomBorder:Hide()
+            Frame.LeftBorder:Hide()
+            Frame.RightBorder:Hide()
         else
             _G[name.."BotLeftCorner"]:Hide()
             _G[name.."BotRightCorner"]:Hide()
             _G[name.."BottomBorder"]:Hide()
-            frame.leftBorderBar:Hide()
+            Frame.leftBorderBar:Hide()
             _G[name.."RightBorder"]:Hide()
         end
 
-        Base.SetBackdrop(frame)
-        if not noCloseButton then
-            Skin.UIPanelCloseButton(frame.CloseButton)
-            frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
-        end
+        Base.SetBackdrop(Frame)
 
         --[[ Scale ]]--
-        frame:SetSize(frame:GetSize())
+        Frame:SetSize(Frame:GetSize())
     end
-    function Skin.InsetFrameTemplate(frame)
-        frame.Bg:Hide()
-
-        frame.InsetBorderTopLeft:Hide()
-        frame.InsetBorderTopRight:Hide()
-
-        frame.InsetBorderBottomLeft:Hide()
-        frame.InsetBorderBottomRight:Hide()
-
-        frame.InsetBorderTop:Hide()
-        frame.InsetBorderBottom:Hide()
-        frame.InsetBorderLeft:Hide()
-        frame.InsetBorderRight:Hide()
+    function Skin.PortraitFrameTemplate(Frame)
+        Skin.PortraitFrameTemplateNoCloseButton(Frame)
+        Skin.UIPanelCloseButton(Frame.CloseButton)
+        Frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
     end
-    function Skin.ButtonFrameTemplate(frame)
-        Skin.PortraitFrameTemplate(frame)
-        local name = frame:GetName()
+    function Skin.InsetFrameTemplate(Frame)
+        Frame.Bg:Hide()
+
+        Frame.InsetBorderTopLeft:Hide()
+        Frame.InsetBorderTopRight:Hide()
+
+        Frame.InsetBorderBottomLeft:Hide()
+        Frame.InsetBorderBottomRight:Hide()
+
+        Frame.InsetBorderTop:Hide()
+        Frame.InsetBorderBottom:Hide()
+        Frame.InsetBorderLeft:Hide()
+        Frame.InsetBorderRight:Hide()
+    end
+    function Skin.ButtonFrameTemplate(Frame)
+        Skin.PortraitFrameTemplate(Frame)
+        local name = Frame:GetName()
 
         _G[name.."BtnCornerLeft"]:SetTexture("")
         _G[name.."BtnCornerRight"]:SetTexture("")
         _G[name.."ButtonBottomBorder"]:SetTexture("")
-        Skin.InsetFrameTemplate(frame.Inset)
+        Skin.InsetFrameTemplate(Frame.Inset)
 
         --[[ Scale ]]--
-        frame.Inset:SetPoint("TOPLEFT", 4, -60)
-        frame.Inset:SetPoint("BOTTOMRIGHT", -6, 26)
+        Frame.Inset:SetPoint("TOPLEFT", 4, -60)
+        Frame.Inset:SetPoint("BOTTOMRIGHT", -6, 26)
     end
 
-    function Skin.MagicButtonTemplate(button)
-        Skin.UIPanelButtonTemplate(button)
+    function Skin.MagicButtonTemplate(Button)
+        Skin.UIPanelButtonTemplate(Button)
 
-        if button.LeftSeparator then
-            button.LeftSeparator:Hide()
+        if Button.LeftSeparator then
+            Button.LeftSeparator:Hide()
         end
-        if button.RightSeparator then
-            button.RightSeparator:Hide()
+        if Button.RightSeparator then
+            Button.RightSeparator:Hide()
         end
     end
 
-    function Skin.TooltipBorderedFrameTemplate(frame)
-        frame.BorderTopLeft:Hide()
-        frame.BorderTopRight:Hide()
+    function Skin.TooltipBorderedFrameTemplate(Frame)
+        Frame.BorderTopLeft:Hide()
+        Frame.BorderTopRight:Hide()
 
-        frame.BorderBottomLeft:Hide()
-        frame.BorderBottomRight:Hide()
+        Frame.BorderBottomLeft:Hide()
+        Frame.BorderBottomRight:Hide()
 
-        frame.BorderTop:Hide()
-        frame.BorderBottom:Hide()
-        frame.BorderLeft:Hide()
-        frame.BorderRight:Hide()
+        Frame.BorderTop:Hide()
+        Frame.BorderBottom:Hide()
+        Frame.BorderLeft:Hide()
+        Frame.BorderRight:Hide()
 
-        frame.Background:Hide()
-        Base.SetBackdrop(frame)
+        Frame.Background:Hide()
+        Base.SetBackdrop(Frame)
     end
 
-    function Skin.UIMenuButtonStretchTemplate(button)
-        button:SetSize(button:GetSize())
+    function Skin.UIMenuButtonStretchTemplate(Button)
+        Button:SetSize(Button:GetSize())
 
-        button.TopLeft:Hide()
-        button.TopRight:Hide()
-        button.BottomLeft:Hide()
-        button.BottomRight:Hide()
-        button.TopMiddle:Hide()
-        button.MiddleLeft:Hide()
-        button.MiddleRight:Hide()
-        button.BottomMiddle:Hide()
-        button.MiddleMiddle:Hide()
-        button:SetHighlightTexture("")
+        Button.TopLeft:Hide()
+        Button.TopRight:Hide()
+        Button.BottomLeft:Hide()
+        Button.BottomRight:Hide()
+        Button.TopMiddle:Hide()
+        Button.MiddleLeft:Hide()
+        Button.MiddleRight:Hide()
+        Button.BottomMiddle:Hide()
+        Button.MiddleMiddle:Hide()
+        Button:SetHighlightTexture("")
 
-        local bd = _G.CreateFrame("Frame", nil, button)
+        local bd = _G.CreateFrame("Frame", nil, Button)
         bd:SetPoint("TOPLEFT", 1, -1)
         bd:SetPoint("BOTTOMRIGHT", -1, 1)
-        bd:SetFrameLevel(button:GetFrameLevel())
+        bd:SetFrameLevel(Button:GetFrameLevel())
         Base.SetBackdrop(bd, Color.button, 0.3)
 
-        button._auroraBDFrame = bd
-        Base.SetHighlight(button, "backdrop")
+        Button._auroraBDFrame = bd
+        Base.SetHighlight(Button, "backdrop")
     end
 
-    function Skin.HorizontalSliderTemplate(slider)
-        slider:SetBackdrop(nil)
+    function Skin.HorizontalSliderTemplate(Slider)
+        Slider:SetBackdrop(nil)
 
-        local bg = _G.CreateFrame("Frame", nil, slider)
-        bg:SetPoint("TOPLEFT", slider, 5, -5)
-        bg:SetPoint("BOTTOMRIGHT", slider, -5, 5)
-        bg:SetFrameLevel(slider:GetFrameLevel())
+        local bg = _G.CreateFrame("Frame", nil, Slider)
+        bg:SetPoint("TOPLEFT", Slider, 5, -5)
+        bg:SetPoint("BOTTOMRIGHT", Slider, -5, 5)
+        bg:SetFrameLevel(Slider:GetFrameLevel())
         Base.SetBackdrop(bg, Color.button, 0.3)
 
-        local thumbTexture = slider:GetThumbTexture()
+        local thumbTexture = Slider:GetThumbTexture()
         thumbTexture:SetAlpha(0)
         thumbTexture:SetSize(8, 16)
 
@@ -385,20 +386,20 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
         Base.SetBackdrop(thumb, Color.button)
-        slider._auroraThumb = thumb
+        Slider._auroraThumb = thumb
     end
 
-    function Skin.UIPanelStretchableArtScrollBarTemplate(slider)
-        Skin.UIPanelScrollBarTemplate(slider)
+    function Skin.UIPanelStretchableArtScrollBarTemplate(Slider)
+        Skin.UIPanelScrollBarTemplate(Slider)
 
-        slider.Top:Hide()
-        slider.Bottom:Hide()
-        slider.Middle:Hide()
+        Slider.Top:Hide()
+        Slider.Bottom:Hide()
+        Slider.Middle:Hide()
 
-        slider.Background:Hide()
+        Slider.Background:Hide()
     end
-    function Skin.InputBoxInstructionsTemplate(editbox)
-        Skin.InputBoxTemplate(editbox)
+    function Skin.InputBoxInstructionsTemplate(EditBox)
+        Skin.InputBoxTemplate(EditBox)
     end
     function Skin.TabButtonTemplate(Button)
         Button.LeftDisabled:SetAlpha(0)
@@ -412,39 +413,39 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Button._auroraTabResize = true
     end
 
-    function Skin.MaximizeMinimizeButtonFrameTemplate(frame)
-        frame:SetSize(17, 17)
+    function Skin.MaximizeMinimizeButtonFrameTemplate(Frame)
+        Frame:SetSize(17, 17)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
-            local button = frame[name]
-            button:SetSize(17, 17)
-            button:SetNormalTexture("")
-            button:SetPushedTexture("")
-            button:SetHighlightTexture("")
+            local Button = Frame[name]
+            Button:SetSize(17, 17)
+            Button:SetNormalTexture("")
+            Button:SetPushedTexture("")
+            Button:SetHighlightTexture("")
 
-            Base.SetBackdrop(button, Color.button)
+            Base.SetBackdrop(Button, Color.button)
 
-            button:ClearAllPoints()
-            button:SetPoint("CENTER")
+            Button:ClearAllPoints()
+            Button:SetPoint("CENTER")
 
-            button._auroraHighlight = {}
+            Button._auroraHighlight = {}
 
             local lineOfs = 4
-            local line = button:CreateLine()
+            local line = Button:CreateLine()
             line:SetColorTexture(1, 1, 1)
             line:SetThickness(0.5)
             line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
             line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-            tinsert(button._auroraHighlight, line)
+            tinsert(Button._auroraHighlight, line)
 
-            local hline = button:CreateTexture()
+            local hline = Button:CreateTexture()
             hline:SetColorTexture(1, 1, 1)
             hline:SetSize(7, 1)
-            tinsert(button._auroraHighlight, hline)
+            tinsert(Button._auroraHighlight, hline)
 
-            local vline = button:CreateTexture()
+            local vline = Button:CreateTexture()
             vline:SetColorTexture(1, 1, 1)
             vline:SetSize(1, 7)
-            tinsert(button._auroraHighlight, vline)
+            tinsert(Button._auroraHighlight, vline)
 
             if name == "MaximizeButton" then
                 hline:SetPoint("TOP", 1, -4)
@@ -454,7 +455,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
                 vline:SetPoint("LEFT", 4, -1)
             end
 
-            Base.SetHighlight(button, "color")
+            Base.SetHighlight(Button, "color")
         end
     end
 end

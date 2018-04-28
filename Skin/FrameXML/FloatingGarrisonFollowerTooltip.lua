@@ -33,59 +33,59 @@ do --[[ FrameXML\FloatingGarrisonFollowerTooltip.lua ]]
 end
 
 do --[[ FrameXML\FloatingGarrisonFollowerTooltip.xml ]]
-    function Skin.GarrisonFollowerTooltipTemplate(frame)
-        Skin.TooltipBorderedFrameTemplate(frame)
+    function Skin.GarrisonFollowerTooltipTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
 
-        frame.Class:SetPoint("TOPRIGHT", -2, -2)
-        frame.XPBarBackground:SetPoint("TOPLEFT", frame.PortraitFrame, "BOTTOMRIGHT", 0, -2)
+        Frame.Class:SetPoint("TOPRIGHT", -2, -2)
+        Frame.XPBarBackground:SetPoint("TOPLEFT", Frame.PortraitFrame, "BOTTOMRIGHT", 0, -2)
 
-        frame.Name:SetPoint("TOPLEFT", frame.PortraitFrame, "TOPRIGHT", 4, -4)
-        frame.ClassSpecName:SetPoint("TOPLEFT", frame.Name, "BOTTOMLEFT", 0, -15)
-        frame.ILevel:SetPoint("TOPLEFT", frame.ClassSpecName, "BOTTOMLEFT", 0, -15)
-        frame.Quality:ClearAllPoints()
-        frame.Quality:SetPoint("TOP", frame.PortraitFrame, "BOTTOM", 0, -2)
-        frame.Quality:SetJustifyH("CENTER")
+        Frame.Name:SetPoint("TOPLEFT", Frame.PortraitFrame, "TOPRIGHT", 4, -4)
+        Frame.ClassSpecName:SetPoint("TOPLEFT", Frame.Name, "BOTTOMLEFT", 0, -15)
+        Frame.ILevel:SetPoint("TOPLEFT", Frame.ClassSpecName, "BOTTOMLEFT", 0, -15)
+        Frame.Quality:ClearAllPoints()
+        Frame.Quality:SetPoint("TOP", Frame.PortraitFrame, "BOTTOM", 0, -2)
+        Frame.Quality:SetJustifyH("CENTER")
 
-        frame.XPBar:SetPoint("TOPLEFT", frame.XPBarBackground)
+        Frame.XPBar:SetPoint("TOPLEFT", Frame.XPBarBackground)
 
-        Skin.GarrisonFollowerPortraitTemplate(frame.PortraitFrame)
-        frame.PortraitFrame:SetPoint("TOPLEFT", 4, -4)
+        Skin.GarrisonFollowerPortraitTemplate(Frame.PortraitFrame)
+        Frame.PortraitFrame:SetPoint("TOPLEFT", 4, -4)
     end
-    function Skin.GarrisonShipyardFollowerTooltipTemplate(frame)
-        Skin.TooltipBorderedFrameTemplate(frame)
+    function Skin.GarrisonShipyardFollowerTooltipTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
 
-        frame.XPBarBackground:SetPoint("TOPLEFT", frame, "BOTTOMRIGHT", 0, -2)
+        Frame.XPBarBackground:SetPoint("TOPLEFT", Frame, "BOTTOMRIGHT", 0, -2)
 
-        frame.Name:SetPoint("TOPLEFT", frame, "TOPRIGHT", 4, -4)
-        frame.ClassSpecName:SetPoint("TOPLEFT", frame.Name, "BOTTOMLEFT", 0, -15)
-        frame.Quality:ClearAllPoints()
-        frame.Quality:SetPoint("TOP", frame, "BOTTOM", 0, -2)
-        frame.Quality:SetJustifyH("CENTER")
+        Frame.Name:SetPoint("TOPLEFT", Frame, "TOPRIGHT", 4, -4)
+        Frame.ClassSpecName:SetPoint("TOPLEFT", Frame.Name, "BOTTOMLEFT", 0, -15)
+        Frame.Quality:ClearAllPoints()
+        Frame.Quality:SetPoint("TOP", Frame, "BOTTOM", 0, -2)
+        Frame.Quality:SetJustifyH("CENTER")
 
-        frame.XPBar:SetPoint("TOPLEFT", frame.XPBarBackground)
+        Frame.XPBar:SetPoint("TOPLEFT", Frame.XPBarBackground)
     end
-    function Skin.GarrisonFollowerAbilityTemplate(frame)
-        Base.CropIcon(frame.Icon, frame)
-        Skin.PositionGarrisonAbiltyBorder(frame.Border, frame.Icon)
+    function Skin.GarrisonFollowerAbilityTemplate(Frame)
+        Base.CropIcon(Frame.Icon, Frame)
+        Skin.PositionGarrisonAbiltyBorder(Frame.Border, Frame.Icon)
     end
-    function Skin.GarrisonFollowerAbilityTooltipTemplate(frame)
-        Skin.TooltipBorderedFrameTemplate(frame)
+    function Skin.GarrisonFollowerAbilityTooltipTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
 
-        Base.CropIcon(frame.Icon, frame)
-        frame._auroraCounterIconBG = Base.CropIcon(frame.CounterIcon, frame)
-        Skin.PositionGarrisonAbiltyBorder(frame.CounterIconBorder, frame.CounterIcon)
+        Base.CropIcon(Frame.Icon, Frame)
+        Frame._auroraCounterIconBG = Base.CropIcon(Frame.CounterIcon, Frame)
+        Skin.PositionGarrisonAbiltyBorder(Frame.CounterIconBorder, Frame.CounterIcon)
     end
-    function Skin.GarrisonFollowerAbilityWithoutCountersTooltipTemplate(frame)
-        Skin.TooltipBorderedFrameTemplate(frame)
+    function Skin.GarrisonFollowerAbilityWithoutCountersTooltipTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
 
-        Base.CropIcon(frame.Icon, frame)
-        Skin.PositionGarrisonAbiltyBorder(frame.AbilityBorder, frame.Icon)
+        Base.CropIcon(Frame.Icon, Frame)
+        Skin.PositionGarrisonAbiltyBorder(Frame.AbilityBorder, Frame.Icon)
     end
-    function Skin.GarrisonFollowerMissionAbilityWithoutCountersTooltipTemplate(frame)
-        Skin.TooltipBorderedFrameTemplate(frame)
+    function Skin.GarrisonFollowerMissionAbilityWithoutCountersTooltipTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
 
-        Base.CropIcon(frame.Icon, frame)
-        Skin.PositionGarrisonAbiltyBorder(frame.AbilityBorder, frame.Icon)
+        Base.CropIcon(Frame.Icon, Frame)
+        Skin.PositionGarrisonAbiltyBorder(Frame.AbilityBorder, Frame.Icon)
     end
 end
 

@@ -23,8 +23,8 @@ do --[[ FrameXML\LevelUpDisplay.lua ]]
 end
 
 do --[[ FrameXML\LevelUpDisplay.xml ]]
-    function Skin.LevelUpSkillTemplate(frame)
-        Base.CropIcon(frame.icon, frame)
+    function Skin.LevelUpSkillTemplate(Frame)
+        Base.CropIcon(Frame.icon, Frame)
     end
 end
 

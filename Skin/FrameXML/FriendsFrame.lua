@@ -10,9 +10,9 @@ local Skin = Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
 
 do --[[ FrameXML\FriendsFrame.xml ]]
-    function Skin.FriendsFrameTabTemplate(button)
-        Skin.CharacterFrameTabButtonTemplate(button)
-        button._auroraTabResize = true
+    function Skin.FriendsFrameTabTemplate(Button)
+        Skin.CharacterFrameTabButtonTemplate(Button)
+        Button._auroraTabResize = true
     end
 end
 

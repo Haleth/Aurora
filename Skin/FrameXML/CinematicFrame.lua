@@ -12,14 +12,14 @@ do --[[ FrameXML\CinematicFrame.lua ]]
 end
 
 do --[[ FrameXML\CinematicFrame.xml ]]
-    function Skin.CinematicDialogButtonTemplate(button)
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetDisabledTexture("")
-        button:SetHighlightTexture("")
+    function Skin.CinematicDialogButtonTemplate(Button)
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetDisabledTexture("")
+        Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(button, Color.button)
-        Base.SetHighlight(button, "backdrop")
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button, "backdrop")
     end
 end
 

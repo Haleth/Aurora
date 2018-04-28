@@ -28,13 +28,13 @@ do --[[ FrameXML\PVPHonorSystem.lua ]]
 end
 
 do --[[ FrameXML\PVPHonorSystem.xml ]]
-    function Skin.PVPHonorSystemLargeXPBar(frame)
-        frame:HookScript("OnEvent", Hook.PVPHonorXPBar_Update)
-        frame:HookScript("OnShow", Hook.PVPHonorXPBar_Update)
+    function Skin.PVPHonorSystemLargeXPBar(Frame)
+        Frame:HookScript("OnEvent", Hook.PVPHonorXPBar_Update)
+        Frame:HookScript("OnShow", Hook.PVPHonorXPBar_Update)
 
-        frame.Frame:Hide()
+        Frame.Frame:Hide()
 
-        local bar = frame.Bar
+        local bar = Frame.Bar
         bar.Background:Hide()
         Base.SetBackdrop(bar, Color.frame)
 
@@ -42,14 +42,14 @@ do --[[ FrameXML\PVPHonorSystem.xml ]]
         bar:SetBackdropBorderLayer(layer, sublevel + 1)
 
         for i = 1, 4 do
-            local tick = frame:CreateTexture()
+            local tick = Frame:CreateTexture()
             tick:SetPoint("TOPLEFT", bar, 93 * i + 2, 0)
             tick:SetColorTexture(0, 0, 0)
             tick:SetSize(1, 17)
         end
 
-        frame.NextAvailable.Frame:SetAlpha(0)
-        Base.CropIcon(frame.NextAvailable.Icon, frame.NextAvailable)
+        Frame.NextAvailable.Frame:SetAlpha(0)
+        Base.CropIcon(Frame.NextAvailable.Icon, Frame.NextAvailable)
     end
 end
 

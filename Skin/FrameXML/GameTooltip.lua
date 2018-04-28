@@ -15,14 +15,14 @@ do --[[ FrameXML\GameTooltip.lua ]]
 end
 
 do --[[ SharedXML\GameTooltipTemplate.xml ]]
-    function Skin.GameTooltipTemplate(gametooltip)
-        Base.SetBackdrop(gametooltip)
+    function Skin.GameTooltipTemplate(GameTooltip)
+        Base.SetBackdrop(GameTooltip)
 
         -- BlizzWTF: the global name for this frame conflicts with ReputationParagonTooltipStatusBar
-        local status = gametooltip:GetChildren()
+        local status = GameTooltip:GetChildren()
         status:SetHeight(4)
-        status:SetPoint("TOPLEFT", gametooltip, "BOTTOMLEFT", 1, 0)
-        status:SetPoint("TOPRIGHT", gametooltip, "BOTTOMRIGHT", -1, 0)
+        status:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
+        status:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
         Base.SetTexture(status:GetStatusBarTexture(), "gradientUp")
 
         local statusBG = status:CreateTexture(nil, "BACKGROUND")
@@ -30,13 +30,13 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
         statusBG:SetPoint("TOPLEFT", -1, 1)
         statusBG:SetPoint("BOTTOMRIGHT", 1, -1)
     end
-    function Skin.ShoppingTooltipTemplate(gametooltip)
-        Base.SetBackdrop(gametooltip)
+    function Skin.ShoppingTooltipTemplate(GameTooltip)
+        Base.SetBackdrop(GameTooltip)
     end
-    function Skin.TooltipStatusBarTemplate(statusbar)
+    function Skin.TooltipStatusBarTemplate(StatusBar)
     end
-    function Skin.TooltipProgressBarTemplate(frame)
-        local bar = frame.Bar
+    function Skin.TooltipProgressBarTemplate(Frame)
+        local bar = Frame.Bar
         Base.SetBackdrop(bar, Color.frame)
         bar:SetBackdropBorderColor(Color.button)
 
@@ -63,13 +63,13 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
 end
 
 do --[[ FrameXML\GameTooltip.xml ]]
-    function Skin.EmbeddedItemTooltip(frame)
-        Base.CropIcon(frame.Icon)
-        local bg = _G.CreateFrame("Frame", nil, frame)
-        bg:SetPoint("TOPLEFT", frame.Icon, -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", frame.Icon, 1, -1)
+    function Skin.EmbeddedItemTooltip(Frame)
+        Base.CropIcon(Frame.Icon)
+        local bg = _G.CreateFrame("Frame", nil, Frame)
+        bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
         Base.SetBackdrop(bg, Color.black, 0)
-        frame._auroraIconBorder = bg
+        Frame._auroraIconBorder = bg
     end
 end
 

@@ -203,11 +203,11 @@ do --[[ SharedXML\LayoutFrame.lua ]]
 end
 
 do --[[ SharedXML\LayoutFrame.xml ]]
-    function Skin.VerticalLayoutFrame(frame)
-        _G.Mixin(frame, Hook.LayoutMixin, Hook.VerticalLayoutMixin)
+    function Skin.VerticalLayoutFrame(Frame)
+        _G.Mixin(Frame, Hook.LayoutMixin, Hook.VerticalLayoutMixin)
     end
-    function Skin.HorizontalLayoutFrame(frame)
-        _G.Mixin(frame, Hook.LayoutMixin, Hook.HorizontalLayoutMixin)
+    function Skin.HorizontalLayoutFrame(Frame)
+        _G.Mixin(Frame, Hook.LayoutMixin, Hook.HorizontalLayoutMixin)
     end
 end
 

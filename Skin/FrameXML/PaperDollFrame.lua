@@ -49,68 +49,68 @@ do --[[ FrameXML\PaperDollFrame.lua ]]
 end
 
 do --[[ FrameXML\PaperDollFrame.xml ]]
-    function Skin.PaperDollItemSlotButtonTemplate(button)
-        Skin.ItemButtonTemplate(button)
+    function Skin.PaperDollItemSlotButtonTemplate(Button)
+        Skin.ItemButtonTemplate(Button)
         if private.isPatch then
-            Skin.PaperDollAzeriteItemOverlayTemplate(button)
+            Skin.PaperDollAzeriteItemOverlayTemplate(Button)
         end
-        _G[button:GetName().."Frame"]:Hide()
+        _G[Button:GetName().."Frame"]:Hide()
 
-        Skin.EquipmentFlyoutPopoutButtonTemplate(button.popoutButton)
-        if button.verticalFlyout then
-            button.popoutButton:SetPoint("TOP", button, "BOTTOM")
-            button.popoutButton:SetSize(38, 8)
-            Base.SetTexture(button.popoutButton._auroraArrow, "arrowDown")
+        Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
+        if Button.verticalFlyout then
+            Button.popoutButton:SetPoint("TOP", Button, "BOTTOM")
+            Button.popoutButton:SetSize(38, 8)
+            Base.SetTexture(Button.popoutButton._auroraArrow, "arrowDown")
         else
-            button.popoutButton:SetPoint("LEFT", button, "RIGHT")
-            button.popoutButton:SetSize(8, 38)
+            Button.popoutButton:SetPoint("LEFT", Button, "RIGHT")
+            Button.popoutButton:SetSize(8, 38)
         end
     end
-    function Skin.PaperDollItemSlotButtonLeftTemplate(button)
-        Skin.PaperDollItemSlotButtonTemplate(button)
+    function Skin.PaperDollItemSlotButtonLeftTemplate(Button)
+        Skin.PaperDollItemSlotButtonTemplate(Button)
     end
-    function Skin.PaperDollItemSlotButtonRightTemplate(button)
-        Skin.PaperDollItemSlotButtonTemplate(button)
+    function Skin.PaperDollItemSlotButtonRightTemplate(Button)
+        Skin.PaperDollItemSlotButtonTemplate(Button)
     end
-    function Skin.PaperDollItemSlotButtonBottomTemplate(button)
-        Skin.PaperDollItemSlotButtonTemplate(button)
+    function Skin.PaperDollItemSlotButtonBottomTemplate(Button)
+        Skin.PaperDollItemSlotButtonTemplate(Button)
     end
-    function Skin.PlayerTitleButtonTemplate(button)
-        button.BgTop:SetTexture("")
-        button.BgBottom:SetTexture("")
-        button.BgMiddle:SetTexture("")
+    function Skin.PlayerTitleButtonTemplate(Button)
+        Button.BgTop:SetTexture("")
+        Button.BgBottom:SetTexture("")
+        Button.BgMiddle:SetTexture("")
 
-        button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
-        button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2)
+        Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+        Button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2)
     end
-    function Skin.GearSetButtonTemplate(button)
-        button.BgTop:SetTexture("")
-        button.BgBottom:SetTexture("")
-        button.BgMiddle:SetTexture("")
+    function Skin.GearSetButtonTemplate(Button)
+        Button.BgTop:SetTexture("")
+        Button.BgBottom:SetTexture("")
+        Button.BgMiddle:SetTexture("")
 
-        button.HighlightBar:SetColorTexture(0, 0, 1, 0.3)
-        button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+        Button.HighlightBar:SetColorTexture(0, 0, 1, 0.3)
+        Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
 
-        Base.CropIcon(button.icon, button)
+        Base.CropIcon(Button.icon, Button)
     end
-    function Skin.GearSetPopupButtonTemplate(checkbutton)
-        Skin.SimplePopupButtonTemplate(checkbutton)
-        Base.CropIcon(_G[checkbutton:GetName().."Icon"])
-        Base.CropIcon(checkbutton:GetHighlightTexture())
-        Base.CropIcon(checkbutton:GetCheckedTexture())
+    function Skin.GearSetPopupButtonTemplate(CheckButton)
+        Skin.SimplePopupButtonTemplate(CheckButton)
+        Base.CropIcon(_G[CheckButton:GetName().."Icon"])
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
     end
-    function Skin.PaperDollSidebarTabTemplate(button)
-        button.TabBg:SetAlpha(0)
-        button.Hider:SetTexture("")
+    function Skin.PaperDollSidebarTabTemplate(Button)
+        Button.TabBg:SetAlpha(0)
+        Button.Hider:SetTexture("")
 
-        button.Icon:ClearAllPoints()
-        button.Icon:SetPoint("TOPLEFT", 1, -1)
-        button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
+        Button.Icon:ClearAllPoints()
+        Button.Icon:SetPoint("TOPLEFT", 1, -1)
+        Button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        button.Highlight:SetTexture("")
+        Button.Highlight:SetTexture("")
 
-        Base.SetBackdrop(button, Color.button)
-        Base.SetHighlight(button, "backdrop")
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button, "backdrop")
     end
 end
 

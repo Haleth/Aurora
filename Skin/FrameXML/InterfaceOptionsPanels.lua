@@ -11,16 +11,16 @@ local Skin = Aurora.Skin
 end ]]
 
 do --[[ FrameXML\InterfaceOptionsPanels.xml ]]
-    function Skin.InterfaceOptionsBaseCheckButtonTemplate(checkbutton)
-        Skin.OptionsBaseCheckButtonTemplate(checkbutton)
+    function Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)
+        Skin.OptionsBaseCheckButtonTemplate(CheckButton)
     end
-    function Skin.InterfaceOptionsCheckButtonTemplate(checkbutton)
-        Skin.InterfaceOptionsBaseCheckButtonTemplate(checkbutton)
-        checkbutton.Text:SetPoint(checkbutton.Text:GetPoint())
+    function Skin.InterfaceOptionsCheckButtonTemplate(CheckButton)
+        Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)
+        CheckButton.Text:SetPoint(CheckButton.Text:GetPoint())
     end
-    function Skin.InterfaceOptionsSmallCheckButtonTemplate(checkbutton)
-        Skin.OptionsBaseCheckButtonTemplate(checkbutton)
-        local name = checkbutton:GetName()
+    function Skin.InterfaceOptionsSmallCheckButtonTemplate(CheckButton)
+        Skin.OptionsBaseCheckButtonTemplate(CheckButton)
+        local name = CheckButton:GetName()
         _G[name.."Text"]:SetPoint(_G[name.."Text"]:GetPoint())
     end
 end

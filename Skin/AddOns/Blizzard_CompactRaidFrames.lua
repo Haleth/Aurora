@@ -23,19 +23,19 @@ do --[[ AddOns\Blizzard_CompactRaidFrameManager.lua ]]
 end
 
 do --[[ AddOns\Blizzard_CompactRaidFrameManager.xml ]]
-    function Skin.CRFManagerFilterButtonTemplate(button)
-        Skin.UIMenuButtonStretchTemplate(button)
-        button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
-        button.selectedHighlight:SetPoint("TOPLEFT", button._auroraBDFrame, 1, -1)
-        button.selectedHighlight:SetPoint("BOTTOMRIGHT", button._auroraBDFrame, -1, 1)
+    function Skin.CRFManagerFilterButtonTemplate(Button)
+        Skin.UIMenuButtonStretchTemplate(Button)
+        Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
+        Button.selectedHighlight:SetPoint("TOPLEFT", Button._auroraBDFrame, 1, -1)
+        Button.selectedHighlight:SetPoint("BOTTOMRIGHT", Button._auroraBDFrame, -1, 1)
     end
     Skin.CRFManagerFilterRoleButtonTemplate = Skin.CRFManagerFilterButtonTemplate
     Skin.CRFManagerFilterGroupButtonTemplate = Skin.CRFManagerFilterButtonTemplate
-    function Skin.CRFManagerRaidIconButtonTemplate(button)
-        button:SetSize(24, 24)
-        button:SetPoint(button:GetPoint())
+    function Skin.CRFManagerRaidIconButtonTemplate(Button)
+        Button:SetSize(24, 24)
+        Button:SetPoint(Button:GetPoint())
 
-        button:GetNormalTexture():SetSize(24, 24)
+        Button:GetNormalTexture():SetSize(24, 24)
     end
 end
 

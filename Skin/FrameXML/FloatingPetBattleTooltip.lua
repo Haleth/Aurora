@@ -11,8 +11,8 @@ local Skin = Aurora.Skin
 end ]]
 
 do --[[ FrameXML\FloatingPetBattleTooltip.xml ]]
-    function Skin.BattlePetTooltipTemplate(frame)
-        Skin.TooltipBorderedFrameTemplate(frame)
+    function Skin.BattlePetTooltipTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
     end
 end
 

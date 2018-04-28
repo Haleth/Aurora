@@ -11,60 +11,60 @@ local Skin = Aurora.Skin
 local F = _G.unpack(Aurora)
 
 do --[[ AddOns\Blizzard_QuestChoice.xml ]]
-    function Skin.QuestChoiceItemTemplate(button)
-        button._auroraIconBorder = F.ReskinIcon(button.Icon)
-        button.Name:SetTextColor(1, 1, 1)
+    function Skin.QuestChoiceItemTemplate(Button)
+        Button._auroraIconBorder = F.ReskinIcon(Button.Icon)
+        Button.Name:SetTextColor(1, 1, 1)
 
         --[[ Scale ]]--
-        button:SetSize(167, 41)
-        button.Icon:SetSize(37, 37)
-        button.Name:ClearAllPoints()
-        button.Name:SetPoint("TOPLEFT", button.Icon, "TOPRIGHT", 5, 0)
-        button.Name:SetPoint("BOTTOM", button.Icon, 0, 0)
-        button.Name:SetPoint("RIGHT", -5, 0)
+        Button:SetSize(167, 41)
+        Button.Icon:SetSize(37, 37)
+        Button.Name:ClearAllPoints()
+        Button.Name:SetPoint("TOPLEFT", Button.Icon, "TOPRIGHT", 5, 0)
+        Button.Name:SetPoint("BOTTOM", Button.Icon, 0, 0)
+        Button.Name:SetPoint("RIGHT", -5, 0)
     end
-    function Skin.QuestChoiceCurrencyTemplate(frame)
-        Base.CropIcon(frame.Icon, frame)
+    function Skin.QuestChoiceCurrencyTemplate(Frame)
+        Base.CropIcon(Frame.Icon, Frame)
     end
-    function Skin.QuestChoiceRewardsTemplate(frame)
-        Skin.QuestChoiceItemTemplate(frame.Item)
+    function Skin.QuestChoiceRewardsTemplate(Frame)
+        Skin.QuestChoiceItemTemplate(Frame.Item)
 
-        Skin.QuestChoiceCurrencyTemplate(frame.Currencies.Currency1)
-        Skin.QuestChoiceCurrencyTemplate(frame.Currencies.Currency2)
-        Skin.QuestChoiceCurrencyTemplate(frame.Currencies.Currency3)
+        Skin.QuestChoiceCurrencyTemplate(Frame.Currencies.Currency1)
+        Skin.QuestChoiceCurrencyTemplate(Frame.Currencies.Currency2)
+        Skin.QuestChoiceCurrencyTemplate(Frame.Currencies.Currency3)
 
         --[[ Scale ]]--
-        frame:SetSize(210, 10)
-        frame.Item:SetPoint("TOPLEFT", 30, -5)
-        frame._auroraNoSetHeight = true
+        Frame:SetSize(210, 10)
+        Frame.Item:SetPoint("TOPLEFT", 30, -5)
+        Frame._auroraNoSetHeight = true
     end
 
-    function Skin.QuestChoiceOptionTemplate(button)
-        button.Artwork:SetTexCoord(0.140625, 0.84375, 0.2265625, 0.78125)
-        button.Artwork:ClearAllPoints()
-        button.Artwork:SetPoint("TOPLEFT", 13, -29)
-        button.Artwork:SetPoint("BOTTOMRIGHT", button, "TOPRIGHT", -17, -100)
+    function Skin.QuestChoiceOptionTemplate(Button)
+        Button.Artwork:SetTexCoord(0.140625, 0.84375, 0.2265625, 0.78125)
+        Button.Artwork:ClearAllPoints()
+        Button.Artwork:SetPoint("TOPLEFT", 13, -29)
+        Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -17, -100)
 
-        Skin.UIPanelButtonTemplate(button.OptionButton)
-        Skin.QuestChoiceRewardsTemplate(button.Rewards)
+        Skin.UIPanelButtonTemplate(Button.OptionButton)
+        Skin.QuestChoiceRewardsTemplate(Button.Rewards)
 
-        button.Header.Background:Hide()
-        button.Header.Text:SetTextColor(.9, .9, .9)
-        button.OptionText:SetTextColor(.9, .9, .9)
+        Button.Header.Background:Hide()
+        Button.Header.Text:SetTextColor(.9, .9, .9)
+        Button.OptionText:SetTextColor(.9, .9, .9)
 
         --[[ Scale ]]--
-        button:SetSize(210, 268)
-        button.OptionButton:SetSize(175, 22)
-        button.Rewards:SetPoint("BOTTOM", button.OptionButton, "TOP", 0, 5)
-        button.Header:SetSize(256, 32)
-        button.Header:SetPoint("TOP", 10)
-        button.Header.Text:SetWidth(180)
-        button.Header.Text:SetPoint("TOPLEFT", 28, 2)
-        button.Header.Text:SetPoint("BOTTOMRIGHT", -28, 2)
-        button.OptionText:SetWidth(200)
-        button.OptionText:SetPoint("TOP", button.Artwork, "BOTTOM", 0, -8)
-        button.OptionText:SetPoint("BOTTOM", button.Rewards, "TOP", 0, 35)
-        button.OptionText:SetText("Text")
+        Button:SetSize(210, 268)
+        Button.OptionButton:SetSize(175, 22)
+        Button.Rewards:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 5)
+        Button.Header:SetSize(256, 32)
+        Button.Header:SetPoint("TOP", 10)
+        Button.Header.Text:SetWidth(180)
+        Button.Header.Text:SetPoint("TOPLEFT", 28, 2)
+        Button.Header.Text:SetPoint("BOTTOMRIGHT", -28, 2)
+        Button.OptionText:SetWidth(200)
+        Button.OptionText:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -8)
+        Button.OptionText:SetPoint("BOTTOM", Button.Rewards, "TOP", 0, 35)
+        Button.OptionText:SetText("Text")
     end
 end
 

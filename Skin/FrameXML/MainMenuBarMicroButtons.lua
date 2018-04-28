@@ -92,53 +92,53 @@ do --[[ FrameXML\MainMenuBarMicroButtons.lua ]]
 end
 
 do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
-    function Skin.MainMenuBarMicroButton(button)
+    function Skin.MainMenuBarMicroButton(Button)
         if private.isPatch then
-            button:SetSize(24, 34)
+            Button:SetSize(24, 34)
         else
-            button:SetSize(28, 58)
+            Button:SetSize(28, 58)
         end
 
         -- 24 x 34
         local bd
         if private.isPatch then
-            bd = button
+            bd = Button
             Base.SetBackdrop(bd, Color.button)
-            button._auroraBDFrame = bd
+            Button._auroraBDFrame = bd
 
-            button:SetHighlightTexture("")
-            button.Flash:SetPoint("TOPLEFT", bd, 1, -1)
-            button.Flash:SetPoint("BOTTOMRIGHT", bd, -1, 1)
-            button.Flash:SetTexCoord(.18, .82, .18, .82)
+            Button:SetHighlightTexture("")
+            Button.Flash:SetPoint("TOPLEFT", bd, 1, -1)
+            Button.Flash:SetPoint("BOTTOMRIGHT", bd, -1, 1)
+            Button.Flash:SetTexCoord(.18, .82, .18, .82)
         else
-            bd = _G.CreateFrame("Frame", nil, button)
+            bd = _G.CreateFrame("Frame", nil, Button)
             bd:SetPoint("TOPLEFT", 2, -22)
             bd:SetPoint("BOTTOMRIGHT", -2, 2)
-            bd:SetFrameLevel(button:GetFrameLevel())
+            bd:SetFrameLevel(Button:GetFrameLevel())
             Base.SetBackdrop(bd, Color.button)
-            button._auroraBDFrame = bd
+            Button._auroraBDFrame = bd
 
-            button:SetHighlightTexture("")
-            button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)
-            button.Flash:SetPoint("TOPLEFT", bd)
-            button.Flash:SetPoint("BOTTOMRIGHT", bd)
+            Button:SetHighlightTexture("")
+            Button.Flash:SetTexCoord(0.0938, 0.4375, 0.1094, 0.5625)
+            Button.Flash:SetPoint("TOPLEFT", bd)
+            Button.Flash:SetPoint("BOTTOMRIGHT", bd)
         end
 
-        Base.SetHighlight(button, "backdrop")
+        Base.SetHighlight(Button, "backdrop")
     end
-    function Skin.MicroButtonAlertTemplate(frame)
-        Skin.GlowBoxTemplate(frame)
+    function Skin.MicroButtonAlertTemplate(Frame)
+        Skin.GlowBoxTemplate(Frame)
 
-        Skin.UIPanelCloseButton(frame.CloseButton)
-        frame.CloseButton:SetPoint("TOPRIGHT", -4, -4)
+        Skin.UIPanelCloseButton(Frame.CloseButton)
+        Frame.CloseButton:SetPoint("TOPRIGHT", -4, -4)
 
-        Skin.GlowBoxArrowTemplate(frame.Arrow)
-        frame.Arrow:SetPoint("TOP", frame, "BOTTOM")
+        Skin.GlowBoxArrowTemplate(Frame.Arrow)
+        Frame.Arrow:SetPoint("TOP", Frame, "BOTTOM")
 
         --[[ Scale ]]--
-        frame:SetSize(220, 100)
-        frame.Text:SetSize(188, 0)
-        frame.Text:SetPoint("TOPLEFT", 16, -24)
+        Frame:SetSize(220, 100)
+        Frame.Text:SetSize(188, 0)
+        Frame.Text:SetPoint("TOPLEFT", 16, -24)
     end
 end
 
