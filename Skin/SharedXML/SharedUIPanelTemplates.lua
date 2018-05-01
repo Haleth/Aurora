@@ -243,7 +243,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        local name = Frame:GetName()
+        local name = Frame:GetName() or Frame:GetParent():GetName()
 
         Frame.Bg:Hide()
         _G[name.."TitleBg"]:Hide()
@@ -251,7 +251,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if private.isPatch then
             Frame.PortraitFrame:SetTexture("")
             Frame.TopRightCorner:Hide()
-            Frame.TopLeftCorner:Hide()
+            Frame.TopLeftCorner:SetTexture("")
             Frame.TopBorder:SetTexture("")
         else
             Frame.portraitFrame:SetTexture("")
@@ -421,6 +421,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             Button:SetNormalTexture("")
             Button:SetPushedTexture("")
             Button:SetHighlightTexture("")
+            Button:SetHitRectInsets(0, 0, 0, 0)
 
             Base.SetBackdrop(Button, Color.button)
 

@@ -655,8 +655,12 @@ do -- Scale API
 
     function Scale.Atlas(self, atlas, useAtlasSize)
         if useAtlasSize then
-            local _, x, y = _G.GetAtlasInfo(atlas or self:GetAtlas())
-            self:SetSize(x, y)
+            private.debug("SetAtlas", self:GetDebugName(), atlas, self:GetAtlas())
+            atlas = atlas or self:GetAtlas()
+            if atlas then
+                local _, x, y = _G.GetAtlasInfo(atlas)
+                self:SetSize(x, y)
+            end
         end
     end
 

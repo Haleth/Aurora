@@ -7,6 +7,13 @@ local _, private = ...
 local F = _G.unpack(private.Aurora)
 local Skin = private.Aurora.Skin
 
+do --[[ FrameXML\WorldMapFrameTemplates.xml ]]
+    function Skin.WorldMapBountyBoardTemplate(Frame)
+    end
+    function Skin.WorldMapActionButtonTemplate(Frame)
+    end
+end
+
 function private.FrameXML.WorldMapFrame()
     if not private.disabled.tooltips then
         Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
