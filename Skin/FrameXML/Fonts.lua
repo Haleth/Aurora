@@ -92,6 +92,7 @@ function private.FrameXML.Fonts()
 
     Base.SetFont("NumberFont_GameNormal",            NORMAL, 10, nil, nil, black, 1, -1)
     Base.SetFont("NumberFont_OutlineThick_Mono_Small", CHAT, 12, "THICKOUTLINE, MONOCHROME")
+    Base.SetFont("NumberFont_Small",                   CHAT, 12)
     Base.SetFont("NumberFont_Normal_Med",              CHAT, 14)
     Base.SetFont("NumberFont_Outline_Med",             CHAT, 14, "OUTLINE")
     Base.SetFont("NumberFont_Outline_Large",           CHAT, 16, "OUTLINE")

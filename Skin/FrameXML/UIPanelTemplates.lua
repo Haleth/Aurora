@@ -152,6 +152,13 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.yellow)
     end
+    function Skin.MainHelpPlateButton(Frame)
+        Frame.Ring:Hide()
+
+        local highlight = Frame:GetHighlightTexture()
+        highlight:SetPoint("CENTER")
+        highlight:SetSize(38, 38)
+    end
 end
 
 function private.FrameXML.UIPanelTemplates()
