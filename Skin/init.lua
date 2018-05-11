@@ -81,7 +81,11 @@ do -- private.CreateAPI
                     end
                     local ret = value(...)
                     if table.Post[key] then
-                        table.Post[key](ret, ...)
+                        if ret ~= nil then
+                            return table.Post[key](ret, ...)
+                        else
+                            table.Post[key](...)
+                        end
                     end
                     return ret
                 end)
