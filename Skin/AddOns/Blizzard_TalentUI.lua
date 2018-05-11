@@ -115,14 +115,22 @@ function private.AddOns.Blizzard_TalentUI()
 
         local index = 1
         local bonuses
+        local bonusesIncrement = 1
         if self.isPet then
             bonuses = {_G.GetSpecializationSpells(shownSpec, nil, self.isPet, true)}
+            -- GetSpecializationSpells adds a spell level after each spell ID, but we only care about the spell ID 
+            bonusesIncrement = 2
         else
-            bonuses = _G.SPEC_SPELLS_DISPLAY[id]
+            if private.isPatch then
+                bonuses = _G.C_SpecializationInfo.GetSpellsDisplay(id)
+            else
+                bonuses = _G.SPEC_SPELLS_DISPLAY[id]
+                bonusesIncrement = 2
+            end
         end
 
         if bonuses then
-            for i = 1, #bonuses, 2 do
+            for i = 1, #bonuses, bonusesIncrement do
                 local frame = scrollChild["abilityButton"..index]
                 local _, spellIcon = _G.GetSpellTexture(bonuses[i])
 

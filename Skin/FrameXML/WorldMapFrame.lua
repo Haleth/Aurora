@@ -15,13 +15,6 @@ do --[[ FrameXML\WorldMapFrameTemplates.xml ]]
 end
 
 function private.FrameXML.WorldMapFrame()
-    if not private.disabled.tooltips then
-        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
-        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
-        Skin.GameTooltipTemplate(_G.WorldMapTooltip)
-        Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
-    end
-
     if private.isPatch then return end
 
     local WorldMapFrame = _G.WorldMapFrame

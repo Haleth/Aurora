@@ -245,6 +245,7 @@ local FrameXML = {
     "ArtifactToasts",
     "AzeriteItemToasts",
     "AzeriteIslandsToast",
+    "IslandsQueueFrame",
     "SharedXML.ModelPreviewFrame",
     "SplashFrame",
     "QuestChoiceFrameMixin",

@@ -102,7 +102,7 @@ function private.AddOns.Blizzard_WorldMap()
     ----====####$$$$%%%%%$$$$####====----
     --        Blizzard_WorldMap        --
     ----====####$$$$%%%%%$$$$####====----
-    local WorldMapFrame = _G.TestWorldMapFrame
+    local WorldMapFrame = _G.WorldMapFrame
     _G.hooksecurefunc(WorldMapFrame, "Minimize", Hook.WorldMapMixin_Minimize)
     _G.hooksecurefunc(WorldMapFrame, "Maximize", Hook.WorldMapMixin_Maximize)
     _G.hooksecurefunc(WorldMapFrame, "AddOverlayFrame", Hook.WorldMapMixin_AddOverlayFrame)
@@ -134,5 +134,16 @@ function private.AddOns.Blizzard_WorldMap()
     -------------
 
     --[[ Scale ]]--
+
+
+    ----====####$$$$%%%%$$$$####====----
+    --    Blizzard_WorldMapTooltip    --
+    ----====####$$$$%%%%$$$$####====----
+    if not private.disabled.tooltips then
+        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
+        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
+        Skin.GameTooltipTemplate(_G.WorldMapTooltip)
+        Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
+    end
 end
 
