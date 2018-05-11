@@ -118,7 +118,7 @@ function private.AddOns.Blizzard_TalentUI()
         local bonusesIncrement = 1
         if self.isPet then
             bonuses = {_G.GetSpecializationSpells(shownSpec, nil, self.isPet, true)}
-            -- GetSpecializationSpells adds a spell level after each spell ID, but we only care about the spell ID 
+            -- GetSpecializationSpells adds a spell level after each spell ID, but we only care about the spell ID
             bonusesIncrement = 2
         else
             if private.isPatch then

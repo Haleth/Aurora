@@ -890,7 +890,7 @@ do -- Color API
 
     Color.red = Color.Create(0.8, 0.2, 0.2)
     Color.yellow = Color.Create(1, 0.82, 0)
-    Color.blue = Color.Create(0.2, 0.6, 0.8)
+    Color.blue = Color.Create(0.2, 0.2, 0.8)
     Color.black = Color.Create(0, 0, 0)
     Color.gray = Color.Create(0.5, 0.5, 0.5)
     Color.white = Color.Create(1, 1, 1)

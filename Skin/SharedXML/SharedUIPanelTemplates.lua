@@ -288,7 +288,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
+        Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
     end
     function Skin.InsetFrameTemplate(Frame)
         Frame.Bg:Hide()
