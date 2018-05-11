@@ -109,7 +109,7 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
             Button:SetHighlightTexture("")
             Button.Flash:SetPoint("TOPLEFT", bd, 1, -1)
             Button.Flash:SetPoint("BOTTOMRIGHT", bd, -1, 1)
-            Button.Flash:SetTexCoord(.18, .82, .18, .82)
+            Button.Flash:SetTexCoord(.1818, .7879, .175, .875)
         else
             bd = _G.CreateFrame("Frame", nil, Button)
             bd:SetPoint("TOPLEFT", 2, -22)

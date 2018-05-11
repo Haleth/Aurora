@@ -5,6 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --[[ do FrameXML\MainMenuBarBagButtons.lua
@@ -13,6 +14,7 @@ end ]]
 do --[[ FrameXML\MainMenuBarBagButtons.xml ]]
     function Skin.BagSlotButtonTemplate(CheckButton)
         Skin.ItemButtonTemplate(CheckButton)
+        Base.CropIcon(CheckButton:GetCheckedTexture())
 
         --[[ Scale ]]--
         CheckButton:SetSize(30, 30)
@@ -23,6 +25,7 @@ function private.FrameXML.MainMenuBarBagButtons()
     if private.disabled.mainmenubar then return end
 
     Skin.ItemButtonTemplate(_G.MainMenuBarBackpackButton)
+    Base.CropIcon(_G.MainMenuBarBackpackButton:GetCheckedTexture())
 
     Skin.BagSlotButtonTemplate(_G.CharacterBag0Slot)
     Skin.BagSlotButtonTemplate(_G.CharacterBag1Slot)
