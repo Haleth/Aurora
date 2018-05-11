@@ -5,10 +5,59 @@ local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F = _G.unpack(Aurora)
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\QuestFrame.lua ]]
+    function Hook.QuestFrameProgressItems_Update()
+        local numRequiredItems = _G.GetNumQuestItems()
+        local numRequiredCurrencies = _G.GetNumQuestCurrencies()
+        local moneyToGet = _G.GetQuestMoneyToGet()
+        if numRequiredItems > 0 or moneyToGet > 0 or numRequiredCurrencies > 0 then
+            -- If there's money required then anchor and display it
+            if moneyToGet > 0 then
+                if moneyToGet > _G.GetMoney() then
+                    -- Not enough money
+                    _G.QuestProgressRequiredMoneyText:SetTextColor(Color.grayLight:GetRGB())
+                else
+                    _G.QuestProgressRequiredMoneyText:SetTextColor(Color.white:GetRGB())
+                end
+            end
+        end
+    end
+    function Hook.QuestFrameGreetingPanel_OnShow()
+        local numActiveQuests = _G.GetNumActiveQuests()
+        if numActiveQuests > 0 then
+            for i = 1, numActiveQuests do
+                local questTitleButton = _G["QuestTitleButton"..i]
+                local title = _G.GetActiveTitle(i)
+                if _G.IsActiveQuestTrivial(i) then
+                    questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
+                else
+                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
+                end
+            end
+
+        end
+
+        local numAvailableQuests = _G.GetNumAvailableQuests()
+        if numAvailableQuests > 0 then
+            if numActiveQuests > 0 then
+                _G.QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "QuestTitleButton"..numActiveQuests, "BOTTOMLEFT",22,-10)
+                _G.AvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10)
+            end
+
+            for i = numActiveQuests + 1, numActiveQuests + numAvailableQuests do
+                local questTitleButton = _G["QuestTitleButton"..i]
+                local title = _G.GetAvailableTitle(i - numActiveQuests)
+                if _G.GetAvailableQuestInfo(i - numActiveQuests) then
+                    questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
+                else
+                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
+                end
+            end
+        end
+    end
     function Hook.QuestFrame_UpdatePortraitText(text)
         if text and text ~= "" then
             _G.QuestNPCModelText:SetWidth(191)
@@ -22,7 +71,10 @@ do --[[ FrameXML\QuestFrame.lua ]]
             end
         end
     end
-    function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portrait, text, name, x, y)
+    function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portraitDisplayID, mountPortraitDisplayID, text, name, x, y)
+        if not private.isPatch then
+            parentFrame, x, y = parentFrame, name, x
+        end
         if parentFrame == _G.WorldMapFrame then
             x = x + 2
         else
@@ -31,69 +83,12 @@ do --[[ FrameXML\QuestFrame.lua ]]
 
         _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
     end
-end
-
-do --[[ FrameXML\QuestFrameTemplates.xml ]]
-    function Skin.QuestFramePanelTemplate(Frame)
+    function Hook.QuestFrame_SetTitleTextColor(fontString, material)
+        fontString:SetTextColor(Color.white:GetRGB())
     end
-    function Skin.QuestItemTemplate(Button)
+    function Hook.QuestFrame_SetTextColor(fontString, material)
+        fontString:SetTextColor(Color.white:GetRGB())
     end
-    function Skin.QuestSpellTemplate(Button)
-    end
-    function Skin.QuestTitleButtonTemplate(Button)
-    end
-    function Skin.QuestScrollFrameTemplate(ScrollFrame)
-    end
-end
-
-function private.FrameXML.QuestFrame()
-    hooksecurefunc("QuestFrame_UpdatePortraitText", Hook.QuestFrame_UpdatePortraitText)
-    hooksecurefunc("QuestFrame_ShowQuestPortrait", Hook.QuestFrame_ShowQuestPortrait)
-
-    F.ReskinPortraitFrame(_G.QuestFrame, true)
-    --[[ QuestFrame ]]
-
-    hooksecurefunc("QuestFrame_SetMaterial", function(frame, material)
-        private.debug("QuestFrame_SetMaterial", material)
-        if material ~= "Parchment" then
-            local name = frame:GetName()
-            _G[name.."MaterialTopLeft"]:Hide()
-            _G[name.."MaterialTopRight"]:Hide()
-            _G[name.."MaterialBotLeft"]:Hide()
-            _G[name.."MaterialBotRight"]:Hide()
-        end
-    end)
-
-    --[[ Reward Panel ]]
-    _G.QuestFrameRewardPanel:DisableDrawLayer("BACKGROUND")
-    _G.QuestFrameRewardPanel:DisableDrawLayer("BORDER")
-    F.Reskin(_G.QuestFrameCompleteQuestButton)
-
-    _G.QuestRewardScrollFrameTop:Hide()
-    _G.QuestRewardScrollFrameBottom:Hide()
-    _G.QuestRewardScrollFrameMiddle:Hide()
-    F.ReskinScroll(_G.QuestRewardScrollFrame.ScrollBar)
-
-
-    --[[ Progress Panel ]]
-    _G.QuestFrameProgressPanel:DisableDrawLayer("BACKGROUND")
-    _G.QuestFrameProgressPanel:DisableDrawLayer("BORDER")
-
-    F.Reskin(_G.QuestFrameGoodbyeButton)
-    F.Reskin(_G.QuestFrameCompleteButton)
-
-    _G.QuestProgressScrollFrameTop:Hide()
-    _G.QuestProgressScrollFrameBottom:Hide()
-    _G.QuestProgressScrollFrameMiddle:Hide()
-    F.ReskinScroll(_G.QuestProgressScrollFrame.ScrollBar)
-
-    _G.QuestProgressTitleText:SetTextColor(1, 1, 1)
-    _G.QuestProgressTitleText:SetShadowColor(0, 0, 0)
-    _G.QuestProgressTitleText.SetTextColor = F.dummy
-    _G.QuestProgressText:SetTextColor(1, 1, 1)
-    _G.QuestProgressText.SetTextColor = F.dummy
-    _G.QuestProgressRequiredItemsText:SetTextColor(1, 1, 1)
-    _G.QuestProgressRequiredItemsText:SetShadowColor(0, 0, 0)
     hooksecurefunc(_G.QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
         if r == 0 then
             self:SetTextColor(.8, .8, .8)
@@ -101,91 +96,95 @@ function private.FrameXML.QuestFrame()
             self:SetTextColor(1, 1, 1)
         end
     end)
+end
 
+do --[[ FrameXML\QuestFrameTemplates.xml ]]
+    function Skin.QuestFramePanelTemplate(Frame)
+        Frame:SetAllPoints()
+        local name = Frame:GetName()
+        _G[name.."Bg"]:Hide()
+
+        _G[name.."MaterialTopLeft"]:SetAlpha(0)
+        _G[name.."MaterialTopRight"]:SetAlpha(0)
+        _G[name.."MaterialBotLeft"]:SetAlpha(0)
+        _G[name.."MaterialBotRight"]:SetAlpha(0)
+    end
+    function Skin.QuestItemTemplate(Button)
+        Skin.LargeItemButtonTemplate(Button)
+    end
+    function Skin.QuestSpellTemplate(Button)
+    end
+    function Skin.QuestTitleButtonTemplate(Button)
+    end
+    function Skin.QuestScrollFrameTemplate(ScrollFrame)
+        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
+        ScrollFrame:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 2))
+        ScrollFrame:SetPoint("BOTTOMRIGHT", -23, 32)
+
+        local name = ScrollFrame:GetName()
+        _G[name.."Top"]:Hide()
+        _G[name.."Bottom"]:Hide()
+        _G[name.."Middle"]:Hide()
+    end
+end
+
+function private.FrameXML.QuestFrame()
+    hooksecurefunc("QuestFrameProgressItems_Update", Hook.QuestFrameProgressItems_Update)
+    hooksecurefunc("QuestFrameGreetingPanel_OnShow", Hook.QuestFrameGreetingPanel_OnShow)
+    _G.QuestFrameGreetingPanel:HookScript("OnShow", Hook.QuestFrameGreetingPanel_OnShow)
+    hooksecurefunc("QuestFrame_UpdatePortraitText", Hook.QuestFrame_UpdatePortraitText)
+    hooksecurefunc("QuestFrame_ShowQuestPortrait", Hook.QuestFrame_ShowQuestPortrait)
+    hooksecurefunc("QuestFrame_SetTitleTextColor", Hook.QuestFrame_SetTitleTextColor)
+    hooksecurefunc("QuestFrame_SetTextColor", Hook.QuestFrame_SetTextColor)
+
+    ----------------
+    -- QuestFrame --
+    ----------------
+    Skin.ButtonFrameTemplate(_G.QuestFrame)
+    -- BlizzWTF: This should use the title text included in the template
+    _G.QuestFrameNpcNameText:SetAllPoints(_G.QuestFrame.TitleText)
+
+
+    Skin.QuestFramePanelTemplate(_G.QuestFrameRewardPanel)
+    Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteQuestButton)
+    Skin.QuestScrollFrameTemplate(_G.QuestRewardScrollFrame)
+
+
+    Skin.QuestFramePanelTemplate(_G.QuestFrameProgressPanel)
+    Skin.UIPanelButtonTemplate(_G.QuestFrameGoodbyeButton)
+    _G.QuestFrameGoodbyeButton:SetPoint("BOTTOMRIGHT", -5, 5)
+    Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteButton)
+    _G.QuestFrameCompleteButton:SetPoint("BOTTOMLEFT", 5, 5)
+    Skin.QuestScrollFrameTemplate(_G.QuestProgressScrollFrame)
     for i = 1, _G.MAX_REQUIRED_ITEMS do
-        local bu = _G["QuestProgressItem"..i]
-        F.CreateBD(bu, .25)
-
-        bu.Icon:SetPoint("TOPLEFT", 1, -1)
-        bu.Icon:SetDrawLayer("OVERLAY")
-        F.ReskinIcon(bu.Icon)
-
-        bu.NameFrame:Hide()
-        bu.Count:SetDrawLayer("OVERLAY")
+        Skin.QuestItemTemplate(_G["QuestProgressItem"..i])
     end
 
 
-    --[[ Detail Panel ]]
-    _G.QuestFrameDetailPanel:DisableDrawLayer("BACKGROUND")
-    _G.QuestFrameDetailPanel:DisableDrawLayer("BORDER")
-
-    F.Reskin(_G.QuestFrameDeclineButton)
-    F.Reskin(_G.QuestFrameAcceptButton)
-
-    _G.QuestDetailScrollFrame:SetWidth(302) -- else these buttons get cut off
-    _G.QuestDetailScrollFrameTop:Hide()
-    _G.QuestDetailScrollFrameBottom:Hide()
-    _G.QuestDetailScrollFrameMiddle:Hide()
-    F.ReskinScroll(_G.QuestDetailScrollFrame.ScrollBar)
+    Skin.QuestFramePanelTemplate(_G.QuestFrameDetailPanel)
+    Skin.UIPanelButtonTemplate(_G.QuestFrameDeclineButton)
+    _G.QuestFrameDeclineButton:SetPoint("BOTTOMRIGHT", -5, 5)
+    Skin.UIPanelButtonTemplate(_G.QuestFrameAcceptButton)
+    _G.QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
+    Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
 
 
-    --[[ Greeting Panel ]]
-    _G.QuestFrameGreetingPanel:DisableDrawLayer("BACKGROUND")
-    F.Reskin(_G.QuestFrameGreetingGoodbyeButton)
+    Skin.QuestFramePanelTemplate(_G.QuestFrameGreetingPanel)
+    Skin.UIPanelButtonTemplate(_G.QuestFrameGreetingGoodbyeButton)
+    Skin.QuestScrollFrameTemplate(_G.QuestGreetingScrollFrame)
+    _G.QuestGreetingFrameHorizontalBreak:SetColorTexture(1, 1, 1, .2)
+    _G.QuestGreetingFrameHorizontalBreak:SetSize(256, 1)
 
-    _G.QuestGreetingScrollFrameTop:Hide()
-    _G.QuestGreetingScrollFrameBottom:Hide()
-    _G.QuestGreetingScrollFrameMiddle:Hide()
-    F.ReskinScroll(_G.QuestGreetingScrollFrame.ScrollBar)
+    --[[ Scale ]]--
+    _G.QuestProgressScrollChildFrame:SetSize(300, 403)
+    _G.QuestProgressTitleText:SetSize(300, 0)
+    _G.QuestProgressTitleText:SetPoint("TOPLEFT", 5, -10)
+    _G.QuestProgressText:SetSize(300, 0)
+    _G.QuestProgressText:SetPoint("TOPLEFT", _G.QuestProgressTitleText, "BOTTOMLEFT", 0, -5)
 
-    _G.GreetingText:SetTextColor(1, 1, 1)
-    _G.GreetingText.SetTextColor = F.dummy
-    _G.CurrentQuestsText:SetTextColor(1, 1, 1)
-    _G.CurrentQuestsText.SetTextColor = F.dummy
-    _G.CurrentQuestsText:SetShadowColor(0, 0, 0)
-    _G.AvailableQuestsText:SetTextColor(1, 1, 1)
-    _G.AvailableQuestsText.SetTextColor = F.dummy
-    _G.AvailableQuestsText:SetShadowColor(0, 0, 0)
-
-    local hRule = _G.QuestFrameGreetingPanel:CreateTexture()
-    hRule:SetColorTexture(1, 1, 1, .2)
-    hRule:SetSize(256, 1)
-    hRule:SetPoint("CENTER", _G.QuestGreetingFrameHorizontalBreak)
-
-    _G.QuestGreetingFrameHorizontalBreak:SetTexture("")
-
-    local function UpdateGreetingPanel()
-        hRule:SetShown(_G.QuestGreetingFrameHorizontalBreak:IsShown())
-        local numActiveQuests = _G.GetNumActiveQuests()
-        if numActiveQuests > 0 then
-            for i = 1, numActiveQuests do
-                local questTitleButton = _G["QuestTitleButton"..i]
-                local title = _G.GetActiveTitle(i)
-                if ( _G.IsActiveQuestTrivial(i) ) then
-                    questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
-                else
-                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                end
-            end
-        end
-
-        local numAvailableQuests = _G.GetNumAvailableQuests()
-        if numAvailableQuests > 0 then
-            for i = numActiveQuests + 1, numActiveQuests + numAvailableQuests do
-                local questTitleButton = _G["QuestTitleButton"..i]
-                local title = _G.GetAvailableTitle(i - numActiveQuests)
-                if _G.GetAvailableQuestInfo(i - numActiveQuests) then
-                    questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
-                else
-                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                end
-            end
-        end
-    end
-    _G.QuestFrameGreetingPanel:HookScript("OnShow", UpdateGreetingPanel)
-    hooksecurefunc("QuestFrameGreetingPanel_OnShow", UpdateGreetingPanel)
-
-    -- [[ QuestNPCModel ]]--
+    -------------------
+    -- QuestNPCModel --
+    -------------------
     local QuestNPCModel = _G.QuestNPCModel
 
     local modelBackground = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)

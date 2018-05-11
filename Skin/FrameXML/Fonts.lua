@@ -168,11 +168,6 @@ function private.FrameXML.Fonts()
     Base.SetFont("SystemFont_LargeNamePlate",      NORMAL, 12)
     Base.SetFont("SystemFont_NamePlateCastBar",    NORMAL, 10)
 
-    -- This uses GameFontNormal, which inherits from SystemFont_Shadow_Med1,
-    -- but for some reason the above changes do not propagate to it.
-    Base.SetFont(_G.WorldMapFrame.NavBar.home.text, NORMAL, 12, nil, yellow, black, 1, -1)
-
-
     ----====####$$$$%%%%$$$$####====----
     --        SharedFontStyles        --
     ----====####$$$$%%%%$$$$####====----

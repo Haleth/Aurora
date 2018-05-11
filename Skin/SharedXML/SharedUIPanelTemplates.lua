@@ -398,6 +398,21 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Slider.Background:Hide()
     end
+    function Skin.MinimalScrollBarTemplate(Slider)
+        Slider.trackBG:Hide()
+        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
+
+        local thumbTexture = Slider:GetThumbTexture()
+        thumbTexture:SetAlpha(0)
+        thumbTexture:SetSize(17, 24)
+
+        local thumb = _G.CreateFrame("Frame", nil, Slider)
+        thumb:SetPoint("TOPLEFT", thumbTexture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 2)
+        Base.SetBackdrop(thumb, Color.button)
+        Slider._auroraThumb = thumb
+    end
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)
     end
