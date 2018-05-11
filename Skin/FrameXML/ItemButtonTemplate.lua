@@ -71,7 +71,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         bg:SetFrameLevel(Button:GetFrameLevel() - 1)
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
-        Base.SetBackdrop(bg)
+        Base.SetBackdrop(bg, Color.black, 0.3)
         Button._auroraIconBorder = bg
 
         Button:SetNormalTexture("")

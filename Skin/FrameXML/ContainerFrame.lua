@@ -23,7 +23,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
             color = Color.frame
         end
 
-        frame._auroraBDFrame:SetBackdropColor(color.r, color.g, color.b)
+        frame._auroraBDFrame:SetBackdropColor(color)
     end
     function Hook.ContainerFrame_Update(frame)
         local id = frame:GetID()
@@ -61,6 +61,10 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         local name = Button:GetName()
 
         Skin.ItemButtonTemplate(Button)
+        local bd = Button._auroraIconBorder:GetBackdropTexture("bg")
+        bd:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
+        bd:SetAlpha(0.75)
+        Base.CropIcon(bd)
         Base.CropIcon(_G[name.."IconQuestTexture"])
     end
 

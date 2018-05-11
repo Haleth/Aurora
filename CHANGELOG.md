@@ -14,6 +14,7 @@
   * Raid frame manager taint
   * The text layout for the Artifact history lore was off.
   * Icon border in the BMAH were not properly skinned.
+  * Bags now have the proper opacity.
 
 
 
