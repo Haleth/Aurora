@@ -93,9 +93,12 @@ do -- BlizzWTF: These are not templates, but they should be
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
+    function Hook.PanelTemplates_GetTabWidth(tab)
+        return tab:GetTextWidth() + Scale.Value(20)
+    end
     function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
         if not tab._auroraTabResize then return end
-        local sideWidths = Scale.Value(14)
+        local sideWidths = Scale.Value(20)
         local tabText = tab.Text or _G[tab:GetName().."Text"]
 
         local width, tabWidth
@@ -115,7 +118,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
                 width = absoluteSize - sideWidths
                 tabWidth = absoluteSize
             end
-            tabText:SetWidth(width)
+            Scale.RawSetWidth(tabText, width)
         else
             -- Otherwise try to use padding
             if padding then
@@ -400,8 +403,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.MinimalScrollBarTemplate(Slider)
         Slider.trackBG:Hide()
-        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
+        if private.isPatch then
+            Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+            Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
+        else
+            Skin.UIPanelScrollUpButtonTemplate(_G[Slider:GetName().."ScrollUpButton"])
+            Skin.UIPanelScrollDownButtonTemplate(_G[Slider:GetName().."ScrollDownButton"])
+        end
 
         local thumbTexture = Slider:GetThumbTexture()
         thumbTexture:SetAlpha(0)

@@ -180,7 +180,7 @@ do -- LFG Icons
         {name = "COVER", 1, 3},
         {name = "CROSS", 2, 3},
     }
-    local size = 76
+    local size = 90
     for i = 1, #map do
         local info = map[i]
         Base.RegisterTexture("role"..info.name, function(frame, texture)

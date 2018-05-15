@@ -620,6 +620,10 @@ do -- Scale API
     end
     private.UpdateUIScale()
 
+    function Scale.GetUIScale()
+        return uiMod or 1
+    end
+
     function Scale.Value(value, getFloat)
         local mult = getFloat and 100 or 1
         return floor((value * uiMod) * mult + 0.5) / mult

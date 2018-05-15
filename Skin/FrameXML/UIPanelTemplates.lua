@@ -158,6 +158,13 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         local highlight = Frame:GetHighlightTexture()
         highlight:SetPoint("CENTER")
         highlight:SetSize(38, 38)
+
+        --[[ Scale ]]--
+        Frame:SetSize(Frame:GetSize())
+        Frame.I:SetSize(Frame.I:GetSize())
+    end
+    function Skin.UIExpandingButtonTemplate(Button)
+        Skin.UIPanelSquareButton(Button)
     end
 end
 
