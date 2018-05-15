@@ -226,10 +226,10 @@ function private.FrameXML.QuestInfo()
 
     --[=[ QuestInfoSealFrame ]=]
     local mask = _G.QuestInfoSealFrame:CreateMaskTexture(nil, "BACKGROUND")
-    mask:SetTexture([[Interface/QuestionFrame/answer-ChromieScenario-Chromie]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    mask:SetTexture([[Interface/SpellBook/UI-SpellbookPanel-Tab-Highlight]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
     mask:SetTexCoord(0, 0.5, 0, 0.5)
-    mask:SetPoint("TOPLEFT", _G.QuestInfoSealFrame.Text, -28, 6)
-    mask:SetPoint("BOTTOMRIGHT", _G.QuestInfoSealFrame.Text, 24, -5)
+    mask:SetPoint("TOPLEFT", _G.QuestInfoSealFrame.Text, -44, 46)
+    mask:SetPoint("BOTTOMRIGHT", _G.QuestInfoSealFrame.Text, 30, -50)
 
     local bg = _G.QuestInfoSealFrame:CreateTexture(nil, "BACKGROUND")
     bg:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.25)
