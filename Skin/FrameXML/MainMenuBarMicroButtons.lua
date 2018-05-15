@@ -175,9 +175,15 @@ function private.FrameXML.MainMenuBarMicroButtons()
                 button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
 
                 --[[ Scale ]]--
-                _G.GuildMicroButtonTabard:SetSize(28, 58)
-                _G.GuildMicroButtonTabard.emblem:SetSize(16, 16)
-                _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, -9)
+                if private.isPatch then
+                    _G.GuildMicroButtonTabard:SetAllPoints()
+                    _G.GuildMicroButtonTabard.emblem:SetSize(16, 16)
+                    _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, 0)
+                else
+                    _G.GuildMicroButtonTabard:SetSize(28, 58)
+                    _G.GuildMicroButtonTabard.emblem:SetSize(16, 16)
+                    _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, -9)
+                end
             elseif name == "LFDMicroButton" then
                 iconTexture = ""
                 button:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 2, 0)
