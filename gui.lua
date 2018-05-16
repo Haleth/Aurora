@@ -258,30 +258,30 @@ tooltipsBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 105, 0)
 local appearance = addSubCategory(gui, "Appearance")
 appearance:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -110)
 
-local fontBox = createToggleBox(gui, "enableFont", "Replace default game fonts")
+local fontBox = createToggleBox(gui, "fonts", "Replace default game fonts")
 fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 10, -20)
 
-local colourBox = createToggleBox(gui, "useCustomColour", "Custom highlight colour")
-colourBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
+local highlightBox = createToggleBox(gui, "customHighlight.enabled", "Custom highlight color")
+highlightBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
 
-local colourButton = createColorSwatch(gui, "customColour")
-colourButton:SetPoint("LEFT", colourBox.Text, "RIGHT", 10, 0)
+local highlightButton = createColorSwatch(gui, "customHighlight")
+highlightButton:SetPoint("LEFT", highlightBox.Text, "RIGHT", 10, 0)
 
-colourBox:SetScript("OnClick", function(self)
+highlightBox:SetScript("OnClick", function(self)
     if self:GetChecked() then
-        _G.AuroraConfig.useCustomColour = true
-        colourButton:Enable()
-        colourButton:SetAlpha(1)
+        _G.AuroraConfig.customHighlight.enabled = true
+        highlightButton:Enable()
+        highlightButton:SetAlpha(1)
     else
-        _G.AuroraConfig.useCustomColour = false
-        colourButton:Disable()
-        colourButton:SetAlpha(.7)
+        _G.AuroraConfig.customHighlight.enabled = false
+        highlightButton:Disable()
+        highlightButton:SetAlpha(.7)
     end
     private.updateHighlightColor()
 end)
 
 local buttonsHaveGradientBox = createToggleBox(gui, "buttonsHaveGradient", "Gradient button style")
-buttonsHaveGradientBox:SetPoint("TOPLEFT", colourBox, "BOTTOMLEFT", 0, -15)
+buttonsHaveGradientBox:SetPoint("TOPLEFT", highlightBox, "BOTTOMLEFT", 0, -15)
 
 local alphaSlider = createSlider(gui, "alpha", "Backdrop opacity *")
 alphaSlider:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -40)
@@ -334,11 +334,11 @@ gui.refresh = function()
         checkboxes[i]:SetChecked(_G.AuroraConfig[checkboxes[i].value] == true)
     end
 
-    local customColour = _G.AuroraConfig.customColour
-    colourButton:SetBackdropColor(customColour.r, customColour.g, customColour.b)
-    if not colourBox:GetChecked() then
-        colourButton:Disable()
-        colourButton:SetAlpha(.7)
+    local customHighlight = _G.AuroraConfig.customHighlight
+    highlightButton:SetBackdropColor(customHighlight.r, customHighlight.g, customHighlight.b)
+    if not highlightBox:GetChecked() then
+        highlightButton:Disable()
+        highlightButton:SetAlpha(.7)
     end
 
     for i, classColor in ipairs(classColors) do

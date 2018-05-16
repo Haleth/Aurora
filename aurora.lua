@@ -17,17 +17,19 @@ C.defaults = {
     bags = true,
     loot = true,
     mainmenubar = false,
-
+    fonts = true,
+    tooltips = true,
     chatBubbles = true,
         chatBubbleNames = true,
-    tooltips = true,
 
-    enableFont = true,
-    useCustomColour = false,
-        customColour = {r = 1, g = 1, b = 1},
     buttonsHaveGradient = true,
-
+    customHighlight = {enabled = false, r = 1, g = 1, b = 1},
     alpha = 0.5,
+
+    --[[
+        TODO: colorize - generate a monochrome color palette using the highlight
+            color which overrides the default frame, button, and font colors
+    ]]
 
     customClassColors = {},
 }
@@ -39,6 +41,15 @@ function private.OnLoad()
 
     if AuroraConfig.useButtonGradientColour ~= nil then
         AuroraConfig.buttonsHaveGradient = AuroraConfig.useButtonGradientColour
+    end
+    if AuroraConfig.enableFont ~= nil then
+        AuroraConfig.fonts = AuroraConfig.enableFont
+    end
+    if AuroraConfig.customColour ~= nil then
+        AuroraConfig.customHighlight = AuroraConfig.customColour
+        if AuroraConfig.useCustomColour ~= nil then
+            AuroraConfig.customHighlight.enabled = AuroraConfig.useCustomColour
+        end
     end
 
     -- Remove deprecated or corrupt variables
@@ -71,8 +82,8 @@ function private.OnLoad()
 
     function private.updateHighlightColor()
         local r, g, b
-        if AuroraConfig.useCustomColour then
-            r, g, b = AuroraConfig.customColour.r, AuroraConfig.customColour.g, AuroraConfig.customColour.b
+        if AuroraConfig.customHighlight.enabled then
+            r, g, b = AuroraConfig.customHighlight.r, AuroraConfig.customHighlight.g, AuroraConfig.customHighlight.b
         else
             r, g, b = _G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB()
         end
@@ -156,7 +167,7 @@ function private.OnLoad()
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags
-    private.disabled.fonts = not AuroraConfig.enableFont
+    private.disabled.fonts = not AuroraConfig.fonts
     private.disabled.tooltips = not AuroraConfig.tooltips
     private.disabled.mainmenubar = not AuroraConfig.mainmenubar
     if not AuroraConfig.chatBubbles then
