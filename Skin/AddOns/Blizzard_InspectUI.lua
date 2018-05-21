@@ -1,12 +1,43 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
--- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+--[[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
+local F, C = _G.unpack(Aurora)
+
+
+do --[[ FrameXML\TalentFrameBase.lua ]]
+    function Hook.InspectPvpTalentSlotMixin_Update(self)
+        if not self._auroraBG then return end
+
+        local selectedTalentID = _G.C_SpecializationInfo.GetInspectSelectedPvpTalent(_G.INSPECTED_UNIT, self.slotIndex)
+        if selectedTalentID then
+            local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
+            self.Texture:SetTexture(texture)
+            self._auroraBG:SetColorTexture(Color.black:GetRGB())
+            self.Texture:SetDesaturated(false)
+        else
+            self.Texture:Show()
+            self._auroraBG:SetColorTexture(Color.gray:GetRGB())
+            self.Texture:SetDesaturated(true)
+        end
+    end
+end
+
+do --[[ AddOns\Blizzard_InspectUI\InspectPVPFrame.xml ]]
+    function Skin.InspectPvpTalentSlotTemplate(Button)
+        Skin.PvpTalentSlotTemplate(Button)
+        _G.hooksecurefunc(Button, "Update", Hook.InspectPvpTalentSlotMixin_Update)
+    end
+end
 
 function private.AddOns.Blizzard_InspectUI()
+    -- TODO: properly update this
     _G.InspectModelFrame:DisableDrawLayer("OVERLAY")
 
     _G.InspectTalentFrame:GetRegions():Hide()
@@ -48,21 +79,29 @@ function private.AddOns.Blizzard_InspectUI()
         button.icon:SetShown(button.hasItem)
     end)
 
-    -- PvP
+    ----====####$$$$%%%%%$$$$####====----
+    --         InspectPVPFrame         --
+    ----====####$$$$%%%%%$$$$####====----
+    if private.isPatch then
+        _G.InspectPVPFrame.BG:Hide()
+        for i = 1, #_G.InspectPVPFrame.Slots do
+            Skin.InspectPvpTalentSlotTemplate(_G.InspectPVPFrame.Slots[i])
+        end
+    else
+        _G.InspectPVPFrame.BG:Hide()
 
-    _G.InspectPVPFrame.BG:Hide()
+        for tier = 1, _G.MAX_PVP_TALENT_TIERS do
+            for column = 1, _G.MAX_PVP_TALENT_COLUMNS do
+                local bu = _G.InspectPVPFrame.Talents["Tier"..tier]["Talent"..column]
 
-    for tier = 1, _G.MAX_PVP_TALENT_TIERS do
-        for column = 1, _G.MAX_PVP_TALENT_COLUMNS do
-            local bu = _G.InspectPVPFrame.Talents["Tier"..tier]["Talent"..column]
+                bu.Slot:Hide()
+                bu.border:SetTexture("")
 
-            bu.Slot:Hide()
-            bu.border:SetTexture("")
+                bu.Icon:SetDrawLayer("ARTWORK")
+                bu.Icon:SetTexCoord(.08, .92, .08, .92)
 
-            bu.Icon:SetDrawLayer("ARTWORK")
-            bu.Icon:SetTexCoord(.08, .92, .08, .92)
-
-            F.CreateBG(bu.Icon)
+                F.CreateBG(bu.Icon)
+            end
         end
     end
 
@@ -81,9 +120,7 @@ function private.AddOns.Blizzard_InspectUI()
             bu.border:SetTexture("")
 
             bu.icon:SetDrawLayer("ARTWORK")
-            bu.icon:SetTexCoord(.08, .92, .08, .92)
-
-            F.CreateBG(bu.icon)
+            bu._auroraIconBG = Base.CropIcon(bu.icon, bu)
         end
     end
 

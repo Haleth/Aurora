@@ -24,6 +24,19 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
                         button.knownSelection:SetColorTexture(Color.highlight:GetRGB())
                     end
                 end
+
+                if TalentFrame.inspect then
+                    if grantedByAura then
+                        local color = _G.ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_LEGENDARY]
+                        button._auroraIconBG:SetColorTexture(color.r, color.g, color.b)
+                    elseif selected then
+                        local _, class = _G.UnitClass(talentUnit)
+                        local color = _G.CUSTOM_CLASS_COLORS[class]
+                        button._auroraIconBG:SetColorTexture(color:GetRGB())
+                    else
+                        button._auroraIconBG:SetColorTexture(Color.black:GetRGB())
+                    end
+                end
             end
         end
     end
@@ -31,15 +44,17 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
         if not self._auroraBG then return end
         local slotInfo = _G.C_SpecializationInfo.GetPvpTalentSlotInfo(self.slotIndex)
 
+        local isEnabled = slotInfo.enabled
         local selectedTalentID = self.predictedSetting:Get()
         if selectedTalentID then
             local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
             self.Texture:SetTexture(texture)
         else
             self.Texture:Show()
+            isEnabled = false
         end
 
-        if slotInfo.enabled then
+        if isEnabled then
             self._auroraBG:SetColorTexture(Color.black:GetRGB())
             self.Texture:SetDesaturated(false)
         else
