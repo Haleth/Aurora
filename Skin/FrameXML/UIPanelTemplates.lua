@@ -45,11 +45,14 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         highlight:SetSize(16, 16)
     end
     function Skin.UIPanelSquareButton(Button)
-        Button:SetSize(19.5, 19.5)
+        Button:SetSize(20, 20)
         Button:SetNormalTexture("")
         Button:SetHighlightTexture("")
         Button:SetPushedTexture("")
         Base.SetBackdrop(Button, Color.button)
+
+        --[[ Scale ]]--
+        Button.icon:SetSize(12, 12)
     end
     function Skin.UIPanelLargeSilverButton(Button)
         local buttonName = Button:GetName()

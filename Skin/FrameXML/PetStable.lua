@@ -1,7 +1,7 @@
 local _, private = ...
 
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\PetStable.lua ]]
@@ -15,21 +15,26 @@ do --[[ FrameXML\PetStable.lua ]]
 end
 
 do --[[ FrameXML\PetStable.xml ]]
-    function Skin.PetStableSlotTemplate(slot)
-        local slotName = slot:GetName()
+    function Skin.PetStableSlotTemplate(Button)
+        local name = Button:GetName()
 
-        _G[slotName.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
-        slot.Background:SetColorTexture(0, 0, 0, 1)
-        slot.Background:SetPoint("TOPLEFT", slot, -1, 1)
-        slot.Background:SetPoint("BOTTOMRIGHT", slot, 1, -1)
-        slot.Checked:SetTexture(C.media.checked)
+        Base.CropIcon(_G[name.."IconTexture"])
+        Button.Background:SetColorTexture(0, 0, 0, 1)
+        Button.Background:SetPoint("TOPLEFT", Button, -1, 1)
+        Button.Background:SetPoint("BOTTOMRIGHT", Button, 1, -1)
+        Base.CropIcon(Button.Checked)
+        Base.CropIcon(Button:GetPushedTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
+
+        --[[ Scale ]]--
+        Button:SetSize(37, 37)
     end
-    function Skin.PetStableActiveSlotTemplate(slot)
-        Skin.PetStableSlotTemplate(slot)
+    function Skin.PetStableActiveSlotTemplate(Button)
+        Skin.PetStableSlotTemplate(Button)
 
-        slot.Border:Hide()
-        slot.PetName:SetPoint("BOTTOMLEFT", slot, "TOPLEFT", -16, 5)
-        slot.PetName:SetPoint("BOTTOMRIGHT", slot, "TOPRIGHT", 16, 5)
+        Button.Border:Hide()
+        Button.PetName:SetPoint("BOTTOMLEFT", Button, "TOPLEFT", -16, 5)
+        Button.PetName:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", 16, 5)
     end
 end
 
@@ -38,7 +43,8 @@ function private.FrameXML.PetStable()
 
     local PetStableFrame = _G.PetStableFrame
     Skin.ButtonFrameTemplate(PetStableFrame)
-    F.CreateBD(PetStableFrame.Inset, 0.2)
+    PetStableFrame.Inset:SetPoint("TOPLEFT", PetStableFrame.LeftInset, "TOPRIGHT", 5)
+    PetStableFrame.Inset:SetPoint("BOTTOMRIGHT", -5, 126)
 
     _G.PetStableFrameModelBg:SetAtlas("GarrFollower-Shadow")
     _G.PetStableFrameModelBg:SetPoint("TOPLEFT", PetStableFrame.Inset, 0, -160)
@@ -62,9 +68,7 @@ function private.FrameXML.PetStable()
     _G.PetStablePetInfo:SetPoint("TOPLEFT", PetStableFrame.Inset)
     _G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)
 
-    _G.PetStableSelectedPetIcon:SetPoint("TOPLEFT", 6, -6)
-    _G.PetStableSelectedPetIcon:SetTexCoord(.08, .92, .08, .92)
-    F.CreateBG(_G.PetStableSelectedPetIcon)
+    Base.CropIcon(_G.PetStableSelectedPetIcon)
 
     _G.PetStableNameText:SetFontObject("GameFontNormalHuge2")
     _G.PetStableNameText:SetPoint("TOPLEFT", _G.PetStableSelectedPetIcon, "TOPRIGHT", 2, 0)
@@ -75,10 +79,8 @@ function private.FrameXML.PetStable()
     _G.PetStableDiet:SetPoint("TOPRIGHT", -6, -6)
 
     _G.PetStableDietTexture:SetTexture([[Interface\Icons\Ability_Hunter_BeastTraining]])
-    _G.PetStableDietTexture:SetDrawLayer("ARTWORK")
     _G.PetStableDietTexture:SetAllPoints()
-    _G.PetStableDietTexture:SetTexCoord(.08, .92, .08, .92)
-    F.CreateBG(_G.PetStableDietTexture)
+    Base.CropIcon(_G.PetStableDietTexture)
 
     for i = 1, _G.NUM_PET_ACTIVE_SLOTS do
         local slot = _G["PetStableActivePet"..i]
@@ -94,4 +96,20 @@ function private.FrameXML.PetStable()
 
     Skin.UIPanelSquareButton(_G.PetStableNextPageButton)
     Skin.UIPanelSquareButton(_G.PetStablePrevPageButton)
+
+    --[[ Scale ]]--
+    _G.PetStableSelectedPetIcon:SetSize(40, 40)
+    _G.PetStableSelectedPetIcon:SetPoint("TOPLEFT", 2, -1)
+
+    _G.PetStableActivePet1:SetPoint("TOPLEFT", PetStableFrame.LeftInset, 25, -50)
+    _G.PetStableStabledPet1:SetPoint("TOPLEFT", PetStableFrame.BottomInset, 50, -9)
+    _G.PetStableStabledPet6:SetPoint("TOPLEFT", _G.PetStableStabledPet1, "BOTTOMLEFT", 0, -5)
+    for i = 1, _G.NUM_PET_STABLE_SLOTS do
+        if (i % 5) > 1 then
+            _G["PetStableStabledPet"..i]:SetPoint("LEFT", _G["PetStableStabledPet"..(i - 1)], "RIGHT", 7, 0)
+        end
+    end
+
+    _G.PetStableNextPageButton:SetPoint("BOTTOMLEFT", PetStableFrame.BottomInset, "BOTTOM", 40, 5)
+    _G.PetStablePrevPageButton:SetPoint("BOTTOMRIGHT", PetStableFrame.BottomInset, "BOTTOM", -40, 5)
 end
