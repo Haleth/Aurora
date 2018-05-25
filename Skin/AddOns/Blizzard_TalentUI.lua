@@ -285,6 +285,9 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         Skin.MainHelpPlateButton(Frame.MainHelpButton)
         Frame.MainHelpButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -15, 15)
         Skin.MagicButtonTemplate(Frame.learnButton)
+        Frame.learnButton.Flash:SetAtlas("GarrMission_FollowerListButton-Select")
+        Frame.learnButton.Flash:SetAllPoints()
+        Frame.learnButton.Flash:SetTexCoord(0, 0.99568965517241, 0.01785714285714, 0.96428571428571)
         select(7, Frame:GetChildren()):Hide() -- more border textures are regions on this frame
 
         local scrollChild = Frame.spellsScroll.child
@@ -302,9 +305,6 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         Hook.PlayerTalentFrameSpec_OnLoad(Frame)
 
         --[[ Scale ]]--
-        Frame.learnButton:SetPoint("BOTTOM", 0, -22)
-        Frame.learnButton.Flash:SetSize(150, 60)
-        Frame.learnButton.Flash:SetPoint("TOPLEFT", -7, 7)
         Frame.specButton2:SetPoint("TOP", Frame.specButton1, "BOTTOM", 0, -30)
         Frame.specButton3:SetPoint("TOP", Frame.specButton2, "BOTTOM", 0, -30)
         Frame.specButton4:SetPoint("TOP", Frame.specButton3, "BOTTOM", 0, -30)
