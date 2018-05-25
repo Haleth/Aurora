@@ -22,22 +22,24 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
             self.choiceID = choiceID
             self.QuestionText:SetText(questionText)
 
-            for i=1, numOptions do
-                local optID, buttonText, description, header, artFile, confirmationText = _G.GetQuestChoiceOptionInfo(i)
-                local option = self.Options[i]
-                option.optID = optID
-                option.OptionButton:SetText(buttonText)
-                Scale.RawSetWidth(option.OptionText, option.OptionText:GetWidth())
-                option.OptionText:SetText(description)
-                if header and #header > 0 then
-                    option.Header:Show()
-                    option.Header.Text:SetHeight(0)
-                    option.Header.Text:SetText(header)
-                else
-                    option.Header:Hide()
+            if not private.isPatch then
+                for i = 1, numOptions do
+                    local optID, buttonText, description, header, artFile, confirmationText = _G.GetQuestChoiceOptionInfo(i)
+                    local option = self.Options[i]
+                    option.optID = optID
+                    option.OptionButton:SetText(buttonText)
+                    Scale.RawSetWidth(option.OptionText, option.OptionText:GetWidth())
+                    option.OptionText:SetText(description)
+                    if header and #header > 0 then
+                        option.Header:Show()
+                        option.Header.Text:SetHeight(0)
+                        option.Header.Text:SetText(header)
+                    else
+                        option.Header:Hide()
+                    end
+                    option.Artwork:SetTexture(artFile)
+                    option.confirmationText = confirmationText
                 end
-                option.Artwork:SetTexture(artFile)
-                option.confirmationText = confirmationText
             end
 
             self:ShowRewards(numOptions)

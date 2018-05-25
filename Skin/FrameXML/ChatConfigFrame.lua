@@ -26,10 +26,14 @@ function private.FrameXML.ChatConfigFrame()
     _G.ChatConfigBackgroundFrame:SetBackdrop(nil)
 
     --[[ Chat Settings ]]
-    F.CreateBD(_G.ChatConfigChatSettingsClassColorLegend, .25)
+    if not private.isPatch then
+        F.CreateBD(_G.ChatConfigChatSettingsClassColorLegend, .25)
+    end
 
     --[[ Channel Settings ]]
-    F.CreateBD(_G.ChatConfigChannelSettingsClassColorLegend, .25)
+    if not private.isPatch then
+        F.CreateBD(_G.ChatConfigChannelSettingsClassColorLegend, .25)
+    end
 
     --[[ Combat Settings ]]
     _G.ChatConfigCombatSettingsFilters:SetBackdrop(nil)

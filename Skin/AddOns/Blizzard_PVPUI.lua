@@ -63,7 +63,7 @@ function private.AddOns.Blizzard_PVPUI()
 
     -- Category buttons
 
-    for i = 1, 4 do
+    for i = 1, (private.isPatch and 3 or 4) do
         local bu = PVPQueueFrame["CategoryButton"..i]
         local icon = bu.Icon
         local cu = bu.CurrencyDisplay
@@ -101,7 +101,7 @@ function private.AddOns.Blizzard_PVPUI()
 
     hooksecurefunc("PVPQueueFrame_SelectButton", function(index)
         local self = PVPQueueFrame
-        for i = 1, 4 do
+        for i = 1, (private.isPatch and 3 or 4) do
             local bu = self["CategoryButton"..i]
             if i == index then
                 bu.Background:Show()
@@ -124,7 +124,9 @@ function private.AddOns.Blizzard_PVPUI()
     BonusFrame.WorldBattlesTexture:Hide()
     BonusFrame.ShadowOverlay:Hide()
 
-    F.Reskin(BonusFrame.DiceButton)
+    if not private.isPatch then
+        F.Reskin(BonusFrame.DiceButton)
+    end
 
     for _, bonusButton in pairs({"RandomBGButton", "Arena1Button", (private.isPatch and "LargeBattlegroundButton" or "AshranButton"), "BrawlButton"}) do
         local bu = BonusFrame[bonusButton]
@@ -142,8 +144,10 @@ function private.AddOns.Blizzard_PVPUI()
         end
     end
 
-    _G.IncludedBattlegroundsDropDown:SetPoint("TOPRIGHT", BonusFrame.DiceButton, 40, 26)
-    SkinRoleInset(HonorFrame.RoleInset)
+    if not private.isPatch then
+        _G.IncludedBattlegroundsDropDown:SetPoint("TOPRIGHT", BonusFrame.DiceButton, 40, 26)
+        SkinRoleInset(HonorFrame.RoleInset)
+    end
 
     -- Honor frame specific
 
@@ -182,14 +186,18 @@ function private.AddOns.Blizzard_PVPUI()
     for i = 1, 9 do
         select(i, Inset:GetRegions()):Hide()
     end
-    ConquestFrame.ArenaTexture:Hide()
     ConquestFrame.RatedBGTexture:Hide()
-    ConquestFrame.ArenaHeader:Hide()
-    ConquestFrame.RatedBGHeader:Hide()
+    if not private.isPatch then
+        ConquestFrame.ArenaTexture:Hide()
+        ConquestFrame.ArenaHeader:Hide()
+        ConquestFrame.RatedBGHeader:Hide()
+    end
     ConquestFrame.ShadowOverlay:Hide()
 
     F.CreateBD(_G.ConquestTooltip)
-    SkinRoleInset(ConquestFrame.RoleInset)
+    if not private.isPatch then
+        SkinRoleInset(ConquestFrame.RoleInset)
+    end
 
     local ConquestFrameButton_OnEnter = function(self)
         _G.ConquestTooltip:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, 0)
@@ -216,63 +224,64 @@ function private.AddOns.Blizzard_PVPUI()
     ConquestFrame.Arena3v3:SetPoint("TOP", ConquestFrame.Arena2v2, "BOTTOM", 0, -1)
 
     -- War Games
+    if not private.isPatch then
+        Inset = WarGamesFrame.RightInset
 
-    Inset = WarGamesFrame.RightInset
+        for i = 1, 9 do
+            select(i, Inset:GetRegions()):Hide()
+        end
+        WarGamesFrame.InfoBG:Hide()
+        WarGamesFrame.HorizontalBar:Hide()
+        _G.WarGamesFrameInfoScrollFrame.scrollBarBackground:Hide()
+        _G.WarGamesFrameInfoScrollFrame.scrollBarArtTop:Hide()
+        _G.WarGamesFrameInfoScrollFrame.scrollBarArtBottom:Hide()
 
-    for i = 1, 9 do
-        select(i, Inset:GetRegions()):Hide()
+        _G.WarGamesFrameDescription:SetTextColor(.9, .9, .9)
+
+        for _, button in pairs(WarGamesFrame.scrollFrame.buttons) do
+            local bu = button.Entry
+            local SelectedTexture = bu.SelectedTexture
+
+            bu.Bg:Hide()
+            bu.Border:Hide()
+
+            bu:SetNormalTexture("")
+            bu:SetHighlightTexture("")
+
+            local bg = CreateFrame("Frame", nil, bu)
+            bg:SetPoint("TOPLEFT", 2, 0)
+            bg:SetPoint("BOTTOMRIGHT", -1, 2)
+            F.CreateBD(bg, 0)
+            bg:SetFrameLevel(bu:GetFrameLevel()-1)
+
+            local tex = F.CreateGradient(bu)
+            tex:SetDrawLayer("BACKGROUND")
+            tex:SetPoint("TOPLEFT", 3, -1)
+            tex:SetPoint("BOTTOMRIGHT", -2, 3)
+
+            SelectedTexture:SetDrawLayer("BACKGROUND")
+            SelectedTexture:SetColorTexture(r, g, b, .2)
+            SelectedTexture:SetPoint("TOPLEFT", 2, 0)
+            SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 2)
+
+            bu.Icon:SetTexCoord(.08, .92, .08, .92)
+            bu.Icon.bg = F.CreateBG(bu.Icon)
+            bu.Icon.bg:SetDrawLayer("BACKGROUND", 1)
+            bu.Icon:SetPoint("TOPLEFT", 5, -3)
+
+            F.ReskinExpandOrCollapse(button.Header)
+        end
+
+        F.Reskin(_G.WarGameStartButton)
+        F.ReskinCheck(_G.WarGameTournamentModeCheckButton)
+        F.ReskinScroll(_G.WarGamesFrameScrollFrameScrollBar)
+        F.ReskinScroll(_G.WarGamesFrameInfoScrollFrameScrollBar)
     end
-    WarGamesFrame.InfoBG:Hide()
-    WarGamesFrame.HorizontalBar:Hide()
-    _G.WarGamesFrameInfoScrollFrame.scrollBarBackground:Hide()
-    _G.WarGamesFrameInfoScrollFrame.scrollBarArtTop:Hide()
-    _G.WarGamesFrameInfoScrollFrame.scrollBarArtBottom:Hide()
-
-    _G.WarGamesFrameDescription:SetTextColor(.9, .9, .9)
-
-    for _, button in pairs(WarGamesFrame.scrollFrame.buttons) do
-        local bu = button.Entry
-        local SelectedTexture = bu.SelectedTexture
-
-        bu.Bg:Hide()
-        bu.Border:Hide()
-
-        bu:SetNormalTexture("")
-        bu:SetHighlightTexture("")
-
-        local bg = CreateFrame("Frame", nil, bu)
-        bg:SetPoint("TOPLEFT", 2, 0)
-        bg:SetPoint("BOTTOMRIGHT", -1, 2)
-        F.CreateBD(bg, 0)
-        bg:SetFrameLevel(bu:GetFrameLevel()-1)
-
-        local tex = F.CreateGradient(bu)
-        tex:SetDrawLayer("BACKGROUND")
-        tex:SetPoint("TOPLEFT", 3, -1)
-        tex:SetPoint("BOTTOMRIGHT", -2, 3)
-
-        SelectedTexture:SetDrawLayer("BACKGROUND")
-        SelectedTexture:SetColorTexture(r, g, b, .2)
-        SelectedTexture:SetPoint("TOPLEFT", 2, 0)
-        SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 2)
-
-        bu.Icon:SetTexCoord(.08, .92, .08, .92)
-        bu.Icon.bg = F.CreateBG(bu.Icon)
-        bu.Icon.bg:SetDrawLayer("BACKGROUND", 1)
-        bu.Icon:SetPoint("TOPLEFT", 5, -3)
-
-        F.ReskinExpandOrCollapse(button.Header)
-    end
-
-    F.ReskinCheck(_G.WarGameTournamentModeCheckButton)
 
     -- Main style
 
     F.Reskin(HonorFrame.QueueButton)
     F.Reskin(ConquestFrame.JoinButton)
-    F.Reskin(_G.WarGameStartButton)
     F.ReskinDropDown(_G.HonorFrameTypeDropDown)
     F.ReskinScroll(_G.HonorFrameSpecificFrameScrollBar)
-    F.ReskinScroll(_G.WarGamesFrameScrollFrameScrollBar)
-    F.ReskinScroll(_G.WarGamesFrameInfoScrollFrameScrollBar)
 end

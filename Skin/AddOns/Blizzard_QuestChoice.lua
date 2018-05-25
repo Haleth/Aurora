@@ -45,7 +45,12 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         Button.Artwork:SetPoint("TOPLEFT", 13, -29)
         Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -17, -100)
 
-        Skin.UIPanelButtonTemplate(Button.OptionButton)
+        if private.isPatch then
+            Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
+            Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
+        else
+            Skin.UIPanelButtonTemplate(Button.OptionButton)
+        end
         Skin.QuestChoiceRewardsTemplate(Button.Rewards)
 
         Button.Header.Background:Hide()
@@ -54,7 +59,6 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
 
         --[[ Scale ]]--
         Button:SetSize(210, 268)
-        Button.OptionButton:SetSize(175, 22)
         Button.Rewards:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 5)
         Button.Header:SetSize(256, 32)
         Button.Header:SetPoint("TOP", 10)

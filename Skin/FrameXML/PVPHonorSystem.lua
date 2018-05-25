@@ -11,12 +11,17 @@ local Color = Aurora.Color
 do --[[ FrameXML\PVPHonorSystem.lua ]]
     function Hook.PVPHonorXPBar_Update(self)
         self.Bar:SetStatusBarAtlas("")
-        if _G.GetHonorRestState() == 1 then
-            Base.SetTexture(self.Bar:GetStatusBarTexture(), "gradientDown")
-            self.Bar:SetStatusBarColor(1.0, 0.71, 0)
-        else
+        if private.isPatch then
             Base.SetTexture(self.Bar:GetStatusBarTexture(), "gradientUp")
             self.Bar:SetStatusBarColor(1.0, 0.24, 0)
+        else
+            if _G.GetHonorRestState() == 1 then
+                Base.SetTexture(self.Bar:GetStatusBarTexture(), "gradientDown")
+                self.Bar:SetStatusBarColor(1.0, 0.71, 0)
+            else
+                Base.SetTexture(self.Bar:GetStatusBarTexture(), "gradientUp")
+                self.Bar:SetStatusBarColor(1.0, 0.24, 0)
+            end
         end
 
         self.Bar.Spark:Hide()
