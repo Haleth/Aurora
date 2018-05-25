@@ -12,7 +12,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 do --[[ SharedXML\LayoutFrame.lua ]]
     local LayoutMixin do
         LayoutMixin = {}
-        function LayoutMixin:GetPadding(frame)
+        function LayoutMixin.GetPadding(self, frame)
             private.debug("LayoutMixin:GetPadding")
             if frame then
                 return Scale.Value(frame.leftPadding or 0),
@@ -22,19 +22,10 @@ do --[[ SharedXML\LayoutFrame.lua ]]
             end
         end
 
-        function LayoutMixin:AddLayoutChildren(layoutChildren, ...)
-            for i = 1, select("#", ...) do
-                local region = select(i, ...)
-                if region.layoutIndex and region:IsVisible() then
-                    layoutChildren[#layoutChildren + 1] = region
-                end
-            end
-        end
-
-        function LayoutMixin:CalculateFrameSize(childrenWidth, childrenHeight)
+        function LayoutMixin.CalculateFrameSize(self, childrenWidth, childrenHeight)
             private.debug("LayoutMixin:CalculateFrameSize", childrenWidth, childrenHeight)
             local frameWidth, frameHeight
-            local leftPadding, rightPadding, topPadding, bottomPadding = self:GetPadding(self)
+            local leftPadding, rightPadding, topPadding, bottomPadding = LayoutMixin.GetPadding(self, self)
 
             childrenWidth = childrenWidth + leftPadding + rightPadding
             childrenHeight = childrenHeight + topPadding + bottomPadding
@@ -61,7 +52,7 @@ do --[[ SharedXML\LayoutFrame.lua ]]
             return left.layoutIndex < right.layoutIndex
         end
 
-        function LayoutMixin:Layout()
+        function LayoutMixin.Layout(self)
             private.debug("LayoutMixin:Layout")
             self.dirty = false
 
@@ -70,42 +61,26 @@ do --[[ SharedXML\LayoutFrame.lua ]]
             self:AddLayoutChildren(children, self:GetRegions())
             table.sort(children, LayoutIndexComparator)
 
-            local childrenWidth, childrenHeight, hasExpandableChild = self:LayoutChildren(children)
+            local childrenWidth, childrenHeight, hasExpandableChild = self:_LayoutChildren(children)
 
-            local frameWidth, frameHeight = self:CalculateFrameSize(childrenWidth, childrenHeight)
+            local frameWidth, frameHeight = LayoutMixin.CalculateFrameSize(self, childrenWidth, childrenHeight)
 
             -- If at least one child had "expand" set and we did not already expand them, call LayoutChildren() again to expand them
             if (hasExpandableChild) then
-                childrenWidth, childrenHeight = self:LayoutChildren(children, frameWidth, frameHeight)
-                frameWidth, frameHeight = self:CalculateFrameSize(childrenWidth, childrenHeight)
+                childrenWidth, childrenHeight = self:_LayoutChildren(children, frameWidth, frameHeight)
+                frameWidth, frameHeight = LayoutMixin.CalculateFrameSize(self, childrenWidth, childrenHeight)
             end
 
             Scale.RawSetSize(self, frameWidth, frameHeight)
-        end
-
-        function LayoutMixin:OnUpdate()
-            private.debug("LayoutMixin:OnUpdate")
-            if self:IsDirty() then
-                self:Layout()
-            end
-        end
-
-        function LayoutMixin:MarkDirty()
-            self.dirty = true
-        end
-
-        function LayoutMixin:IsDirty()
-            private.debug("LayoutMixin:IsDirty")
-            return self.dirty
         end
     end
     Hook.LayoutMixin = LayoutMixin
 
     local VerticalLayoutMixin do
         VerticalLayoutMixin = {}
-        function VerticalLayoutMixin:LayoutChildren(children, expandToWidth)
+        function VerticalLayoutMixin.LayoutChildren(self, children, expandToWidth)
             private.debug("VerticalLayoutMixin:LayoutChildren", children, expandToWidth)
-            local frameLeftPadding, frameRightPadding, topOffset = self:GetPadding(self)
+            local frameLeftPadding, frameRightPadding, topOffset = Hook.LayoutMixin.GetPadding(self, self)
             local spacing = Scale.Value(self.spacing or 0)
             local childrenWidth, childrenHeight = 0, 0
             local hasExpandableChild = false
@@ -113,7 +88,7 @@ do --[[ SharedXML\LayoutFrame.lua ]]
             -- Calculate width and height based on children
             for i, child in ipairs(children) do
                 local childWidth, childHeight = child:GetSize()
-                local leftPadding, rightPadding, topPadding, bottomPadding = self:GetPadding(child)
+                local leftPadding, rightPadding, topPadding, bottomPadding = Hook.LayoutMixin.GetPadding(self, child)
                 if (child.expand) then
                     hasExpandableChild = true
                 end
@@ -153,9 +128,9 @@ do --[[ SharedXML\LayoutFrame.lua ]]
 
     local HorizontalLayoutMixin do
         HorizontalLayoutMixin = {}
-        function HorizontalLayoutMixin:LayoutChildren(children, ignored, expandToHeight)
+        function HorizontalLayoutMixin.LayoutChildren(self, children, ignored, expandToHeight)
             private.debug("HorizontalLayoutMixin:LayoutChildren", children, ignored, expandToHeight)
-            local leftOffset, _, frameTopPadding, frameBottomPadding = self:GetPadding(self)
+            local leftOffset, _, frameTopPadding, frameBottomPadding = Hook.LayoutMixin.GetPadding(self, self)
             local spacing = Scale.Value(self.spacing or 0)
             local childrenWidth, childrenHeight = 0, 0
             local hasExpandableChild = false
@@ -163,7 +138,7 @@ do --[[ SharedXML\LayoutFrame.lua ]]
             -- Calculate width and height based on children
             for i, child in ipairs(children) do
                 local childWidth, childHeight = child:GetSize()
-                local leftPadding, rightPadding, topPadding, bottomPadding = self:GetPadding(child)
+                local leftPadding, rightPadding, topPadding, bottomPadding = Hook.LayoutMixin.GetPadding(self, child)
                 if (child.expand) then
                     hasExpandableChild = true
                 end
@@ -204,10 +179,12 @@ end
 
 do --[[ SharedXML\LayoutFrame.xml ]]
     function Skin.VerticalLayoutFrame(Frame)
-        _G.Mixin(Frame, Hook.LayoutMixin, Hook.VerticalLayoutMixin)
+        Frame._LayoutChildren = Hook.VerticalLayoutMixin.LayoutChildren
+        _G.hooksecurefunc(Frame, "Layout", Hook.LayoutMixin.Layout)
     end
     function Skin.HorizontalLayoutFrame(Frame)
-        _G.Mixin(Frame, Hook.LayoutMixin, Hook.HorizontalLayoutMixin)
+        Frame._LayoutChildren = Hook.HorizontalLayoutMixin.LayoutChildren
+        _G.hooksecurefunc(Frame, "Layout", Hook.LayoutMixin.Layout)
     end
 end
 

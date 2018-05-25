@@ -88,14 +88,25 @@ do -- Base API
             br = {coords = {0.875, 1, 0, 1}, point = "BOTTOMRIGHT"},
         }
         local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
-        local function SetBackdrop(frame, options)
+        local function SetBackdrop(frame, options, bgTextures)
             if frame.settingBD then return end
             frame.settingBD = true
             old_SetBackdrop(frame, nil)
             if options then
                 if not frame._auroraBackdrop then
+                    if bgTextures then
+                        bgTextures.bg:ClearAllPoints()
+                        bgTextures.l:ClearAllPoints()
+                        bgTextures.r:ClearAllPoints()
+                        bgTextures.t:ClearAllPoints()
+                        bgTextures.b:ClearAllPoints()
+                        bgTextures.tl:ClearAllPoints()
+                        bgTextures.tr:ClearAllPoints()
+                        bgTextures.bl:ClearAllPoints()
+                        bgTextures.br:ClearAllPoints()
+                    end
 
-                    frame._auroraBackdrop = {
+                    frame._auroraBackdrop = bgTextures or {
                         bg = frame:CreateTexture(nil, "BACKGROUND", nil, -8),
 
                         l = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
@@ -306,7 +317,7 @@ do -- Base API
             end
         end
 
-        function Base.CreateBackdrop(frame, options)
+        function Base.CreateBackdrop(frame, options, bgTextures)
             frame.SetBackdrop = SetBackdrop
             frame.GetBackdrop = GetBackdrop
             frame.SetBackdropColor = SetBackdropColor
@@ -317,7 +328,7 @@ do -- Base API
             frame.GetBackdropBorderLayer = GetBackdropBorderLayer
             frame.GetBackdropTexture = GetBackdropTexture
 
-            frame:SetBackdrop(options)
+            frame:SetBackdrop(options, bgTextures)
         end
 
         function Base.SetBackdrop(frame, color, alpha)

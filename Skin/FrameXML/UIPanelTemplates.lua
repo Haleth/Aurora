@@ -115,7 +115,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame)
 
         Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
+        Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
     end
     function Skin.BasicFrameTemplate(Frame)
         Skin.BaseBasicFrameTemplate(Frame)
