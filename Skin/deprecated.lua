@@ -1,8 +1,33 @@
 local ADDON_NAME, private = ...
 
+--[[ Lua Globals ]]
+-- luacheck: globals type
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
+
+--[[ ALPHA 0.2 ]]--
+local newSetBackdrop = Base.SetBackdrop
+Base.SetBackdrop = nil
+function Base.SetBackdrop(frame, red, green, blue, alpha)
+    if red == nil or type(red) == "table" then
+        return newSetBackdrop(frame, red, green)
+    else
+        newSetBackdrop(frame, Color.Create(red, green, blue), alpha)
+    end
+end
+
+local newSetBackdropColor = Base.SetBackdropColor
+Base.SetBackdropColor = nil
+function Base.SetBackdropColor(frame, red, green, blue, alpha)
+    if red == nil or type(red) == "table" then
+        return newSetBackdropColor(frame, red, green)
+    else
+        newSetBackdropColor(frame, Color.Create(red, green, blue), alpha)
+    end
+end
 
 --[[ ALPHA 0.1 ]]--
 Base.CreateColor = Color.Create
