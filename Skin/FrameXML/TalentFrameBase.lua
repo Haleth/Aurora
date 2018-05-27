@@ -19,9 +19,9 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
                 if button.knownSelection then
                     if grantedByAura then
                         local color = _G.ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_LEGENDARY]
-                        button.knownSelection:SetColorTexture(color.r, color.g, color.b)
+                        button.knownSelection:SetColorTexture(color.r, color.g, color.b, 0.5)
                     elseif selected then
-                        button.knownSelection:SetColorTexture(Color.highlight:GetRGB())
+                        button.knownSelection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.5)
                     end
                 end
 

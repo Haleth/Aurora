@@ -186,7 +186,7 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         --[[ Scale ]]--
         Button:SetSize(70, 70)
         Button.icon:SetSize(56, 56)
-        Button.name:SetSize(115, 56)
+        Button.name:SetSize(115, 0)
         Button.name:SetPoint("LEFT", Button.icon, "RIGHT", 7, 0)
     end
     function Skin.TalentRowGlowFrameTemplate(Frame)
@@ -198,9 +198,8 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         Button.Slot:Hide()
         Button.Cover:SetColorTexture(Color.white:GetRGB())
         Button.knownSelection:SetAllPoints()
-        Button.knownSelection:SetColorTexture(Color.highlight:GetRGB())
         Button.knownSelection:SetDrawLayer("BACKGROUND", -2)
-        Button.highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.5)
+        Button.highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.25)
         Button.highlight:SetAllPoints(Button.knownSelection)
         Skin.TalentRowGlowFrameTemplate(Button.GlowFrame)
 
@@ -353,6 +352,9 @@ function private.AddOns.Blizzard_TalentUI()
     Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab1)
     Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab2)
     Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab3)
+    if not private.isPatch then
+        Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab4)
+    end
 
     Skin.SpecializationFrameTemplate(_G.PlayerTalentFrameSpecialization)
     Skin.SpecializationFrameTemplate(_G.PlayerTalentFramePetSpecialization)
