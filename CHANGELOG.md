@@ -1,20 +1,31 @@
-## [Unreleased] ##
+## [v8.0.1.0] - 2017-10-16 ##
 ### Added ###
 
   * Zone Ability skin
   * PvP Timer skin
   * Objective tracker skin
+  * OrderhallUI skin - still WIP
+  * Compatibility with BfA beta
 
 ### Changed ###
 
   * Updated StaticPopup skin.
+  * Updated TrainerUI skin.
+  * Updated MacroUI skin.
+  * Updated quest log skins.
+  * Updated TalentUI skin.
 
 ### Fixed ###
 
   * Raid frame manager taint
   * The text layout for the Artifact history lore was off.
-  * Icon border in the BMAH were not properly skinned.
+  * Icon borders in the BMAH were not properly skinned.
   * Bags now have the proper opacity.
+
+### API ###
+  * API is now alpha 0.3
+  * The use of explicit RGB values for Base.SetBackdrop and Base.SetBackdropColor has been deprecated. Use a color object instead.
+  * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 
 
@@ -148,5 +159,8 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[v8.0.1.0]: https://github.com/Haleth/Aurora/compare/v7.3.5.1...v8.0.1.0
+[v7.3.5.1]: https://github.com/Haleth/Aurora/compare/v7.3.5.0...v7.3.5.1
+[v7.3.5.0]: https://github.com/Haleth/Aurora/compare/v7.3.0.5...v7.3.5.0
 [v7.3.0.5]: https://github.com/Haleth/Aurora/compare/v7.3.0.4...v7.3.0.5
 [v7.3.0.4]: https://github.com/Haleth/Aurora/compare/v7.3.0.3...v7.3.0.4
