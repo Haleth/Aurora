@@ -140,7 +140,9 @@ function private.OnLoad()
         Base.SetBackdropColor(gametooltip, color, AuroraConfig.alpha)
     end
 
-    function Base.Post.SetBackdrop(frame, color, alpha)
+    local oldSetBackdrop = Base.SetBackdrop
+    function Base.SetBackdrop(frame, color, alpha, ...)
+        oldSetBackdrop(frame, color, alpha, ...)
         if not alpha then
             if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
                 Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
@@ -152,7 +154,9 @@ function private.OnLoad()
         end
     end
 
-    function private.FrameXML.Post.CharacterFrame()
+    local oldCharacterFrame = private.FrameXML.CharacterFrame
+    function private.FrameXML.CharacterFrame()
+        oldCharacterFrame()
         _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
         _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
         _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")

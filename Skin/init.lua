@@ -71,35 +71,6 @@ local debug do
     private.debug = debug
 end
 
-do -- private.CreateAPI
-    local apiMeta = {
-        __newindex = function(table, key, value)
-            if _G.type(value) == "function" then
-                _G.rawset(table, key, function(...)
-                    if table.Pre[key] then
-                        table.Pre[key](...)
-                    end
-                    local ret = value(...)
-                    if table.Post[key] then
-                        if ret ~= nil then
-                            return table.Post[key](ret, ...)
-                        else
-                            table.Post[key](...)
-                        end
-                    end
-                    return ret
-                end)
-            else
-                _G.rawset(table, key, value)
-            end
-        end
-    }
-    function private.CreateAPI(api)
-        api.Pre = {}
-        api.Post = {}
-        return _G.setmetatable(api, apiMeta)
-    end
-end
 do -- private.FindUsage
     function private.FindUsage(table, func)
         _G.hooksecurefunc(table, func, function()
@@ -116,11 +87,11 @@ do -- private.TestHook
 end
 
 local Aurora = {
-    Base = private.CreateAPI({}),
-    Scale = private.CreateAPI({}),
-    Hook = private.CreateAPI({}),
-    Skin = private.CreateAPI({}),
-    Color = private.CreateAPI({}),
+    Base = {},
+    Scale = {},
+    Hook = {},
+    Skin = {},
+    Color = {},
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora

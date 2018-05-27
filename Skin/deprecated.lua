@@ -9,6 +9,20 @@ local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
 --[[ ALPHA 0.2 ]]--
+do -- private.CreateAPI
+    local function CreateAPI(api)
+        api.Pre = {}
+        api.Post = {}
+        return api
+    end
+    private.CreateAPI = CreateAPI
+    Aurora.Base = CreateAPI(Aurora.Base)
+    Aurora.Scale = CreateAPI(Aurora.Scale)
+    Aurora.Hook = CreateAPI(Aurora.Hook)
+    Aurora.Skin = CreateAPI(Aurora.Skin)
+    Aurora.Color = CreateAPI(Aurora.Color)
+end
+
 local newSetBackdrop = Base.SetBackdrop
 Base.SetBackdrop = nil
 function Base.SetBackdrop(frame, red, green, blue, alpha)
