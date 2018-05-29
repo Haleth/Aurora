@@ -132,6 +132,7 @@ local FrameXML = {
     "CombatFeedback",
     "UnitPowerBarAlt",
     "CastingBarFrame",
+    "VoiceChatHeadsetButton",
     "VoiceToggleButton",
     "UnitPopupSlider",
     "UnitPopupCustomControls",

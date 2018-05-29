@@ -139,18 +139,10 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame)
     end
     function Skin.ThinGoldEdgeTemplate(Frame)
-        local name = Frame:GetName()
-        if not name then
-            -- BlizzWTF: the BMAH Frame does not provide this template with a name
-            local left, right, mid = Frame:GetRegions()
-            left:Hide()
-            right:Hide()
-            mid:Hide()
-        else
-            _G[name.."Left"]:Hide()
-            _G[name.."Right"]:Hide()
-            _G[name.."Middle"]:Hide()
-        end
+        local name = private.GetName(Frame)
+        _G[name.."Left"]:Hide()
+        _G[name.."Right"]:Hide()
+        _G[name.."Middle"]:Hide()
 
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.yellow)

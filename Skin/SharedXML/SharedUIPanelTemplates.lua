@@ -246,7 +246,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        local name = Frame:GetName() or Frame:GetParent():GetName()
+        local name = private.GetName(Frame)
 
         Frame.Bg:Hide()
         _G[name.."TitleBg"]:Hide()
