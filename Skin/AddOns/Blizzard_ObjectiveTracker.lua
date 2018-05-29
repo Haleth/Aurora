@@ -143,8 +143,23 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
-    function Hook.QUEST_TRACKER_MODULE_SetBlockHeader(self, block, text)
+    local QUEST_ICONS_FILE = "Interface\\QuestFrame\\QuestTypeIcons" -- not isPatch
+    local QUEST_ICONS_FILE_WIDTH = 128 -- not isPatch
+    local QUEST_ICONS_FILE_HEIGHT = 64 -- not isPatch
+
+    local coords = _G.QUEST_TAG_TCOORDS[_G.UnitFactionGroup("player"):upper()]
+    local factionIcon  = _G.CreateTextureMarkup(QUEST_ICONS_FILE, QUEST_ICONS_FILE_WIDTH, QUEST_ICONS_FILE_HEIGHT, 16, 16
+            , coords[1]
+            , coords[2] - 0.02 -- Offset to stop bleeding from next image
+            , coords[3]
+            , coords[4], 0, 2)
+    function Hook.QUEST_TRACKER_MODULE_SetBlockHeader(self, block, text, questLogIndex, isQuestComplete, questID)
         Scale.RawSetWidth(block.HeaderText, block.lineWidth or OBJECTIVE_TRACKER_TEXT_WIDTH)
+
+        if private.isPatch and _G.C_CampaignInfo.IsCampaignQuest(questID) then
+            text = text..factionIcon
+        end
+
         block._auroraHeight = SetStringText(block.HeaderText, text, nil, _G.OBJECTIVE_TRACKER_COLOR["Header"], block.isHighlighted)
     end
     function Hook.QUEST_TRACKER_MODULE_Update(self)
