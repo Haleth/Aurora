@@ -140,9 +140,7 @@ function private.OnLoad()
         Base.SetBackdropColor(gametooltip, color, AuroraConfig.alpha)
     end
 
-    local oldSetBackdrop = Base.SetBackdrop
-    function Base.SetBackdrop(frame, color, alpha, ...)
-        oldSetBackdrop(frame, color, alpha, ...)
+    _G.hooksecurefunc(Base, "SetBackdrop", function(frame, color, alpha, ...)
         if not alpha then
             if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
                 Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
@@ -152,11 +150,8 @@ function private.OnLoad()
                 _G.tinsert(C.frames, frame)
             end
         end
-    end
-
-    local oldCharacterFrame = private.FrameXML.CharacterFrame
-    function private.FrameXML.CharacterFrame()
-        oldCharacterFrame()
+    end)
+    _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
         _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
         _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
         _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
@@ -167,7 +162,7 @@ function private.OnLoad()
                 _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
             end
         end)
-    end
+    end)
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags
