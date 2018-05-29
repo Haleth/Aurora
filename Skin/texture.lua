@@ -18,7 +18,7 @@ do -- lines
         for i = 1, 2 do
             local line = frame:CreateLine(nil, "BACKGROUND")
             line:SetColorTexture(1, 1, 1)
-            line:SetThickness(texture and 1 or 10)
+            line:SetThickness(texture and 1 or 30)
             line:Show()
             if i == 1 then
                 line:SetStartPoint("TOPLEFT", anchor)
