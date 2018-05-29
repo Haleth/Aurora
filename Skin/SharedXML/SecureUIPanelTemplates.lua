@@ -19,10 +19,13 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         EditBox.Middle:Hide()
 
         local bg = _G.CreateFrame("Frame", nil, EditBox)
-        bg:SetPoint("TOPLEFT", EditBox.Left)
-        bg:SetPoint("BOTTOMRIGHT", EditBox.Right)
+        bg:SetPoint("TOPLEFT", -5, 2)
+        bg:SetPoint("BOTTOMRIGHT", 0, -2)
         bg:SetFrameLevel(EditBox:GetFrameLevel() - 1)
         Base.SetBackdrop(bg, Color.frame)
+
+        --[[ Scale ]]--
+        EditBox:SetSize(EditBox:GetSize())
     end
 
     function Skin.UIPanelScrollBarButton(Button)

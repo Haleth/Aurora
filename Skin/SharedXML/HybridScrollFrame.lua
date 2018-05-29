@@ -22,8 +22,6 @@ end
 
 do --[[ SharedXML\HybridScrollFrame.xml ]]
     function Skin.HybridScrollBarTemplate(Slider)
-        local name = Slider:GetName()
-
         local parent = Slider:GetParent()
         Slider:SetPoint("TOPLEFT", parent, "TOPRIGHT", 0, -17)
         Slider:SetPoint("BOTTOMLEFT", parent, "BOTTOMRIGHT", 0, 17)
@@ -34,13 +32,11 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Slider.ScrollBarMiddle:Hide()
         Slider.ScrollBarBottom:Hide()
 
-        local upButton = _G[name.."ScrollUpButton"]
-        upButton:SetPoint("BOTTOM", Slider, "TOP")
-        Skin.UIPanelScrollUpButtonTemplate(upButton)
+        parent.scrollUp:SetPoint("BOTTOM", Slider, "TOP")
+        Skin.UIPanelScrollUpButtonTemplate(parent.scrollUp)
 
-        local downButton = _G[name.."ScrollDownButton"]
-        downButton:SetPoint("TOP", Slider, "BOTTOM")
-        Skin.UIPanelScrollDownButtonTemplate(downButton)
+        parent.scrollDown:SetPoint("TOP", Slider, "BOTTOM")
+        Skin.UIPanelScrollDownButtonTemplate(parent.scrollDown)
 
         Slider.thumbTexture:SetAlpha(0)
         Slider.thumbTexture:SetSize(17, 24)
