@@ -136,8 +136,7 @@ function private.OnLoad()
     -- Create API hooks
     local Base, Hook = Aurora.Base, Aurora.Hook
     function Hook.GameTooltip_OnHide(gametooltip)
-        local color = Color.frame
-        Base.SetBackdropColor(gametooltip, color, AuroraConfig.alpha)
+        Base.SetBackdropColor(gametooltip, Color.frame, AuroraConfig.alpha)
     end
 
     _G.hooksecurefunc(Base, "SetBackdrop", function(frame, color, alpha, ...)

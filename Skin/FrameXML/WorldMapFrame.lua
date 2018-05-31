@@ -81,4 +81,11 @@ function private.FrameXML.WorldMapFrame()
     TrackingOptions.Background:Hide()
     TrackingOptions.IconOverlay:SetTexture("")
     TrackingOptions.Button.Border:Hide()
+
+    if not private.disabled.tooltips then
+        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
+        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
+        Skin.GameTooltipTemplate(_G.WorldMapTooltip)
+        Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
+    end
 end
