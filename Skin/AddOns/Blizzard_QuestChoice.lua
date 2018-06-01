@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 local F = _G.unpack(Aurora)
 
@@ -54,19 +55,23 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         Skin.QuestChoiceRewardsTemplate(Button.Rewards)
 
         Button.Header.Background:Hide()
-        Button.Header.Text:SetTextColor(.9, .9, .9)
-        Button.OptionText:SetTextColor(.9, .9, .9)
+        Button.Header.Text:SetTextColor(Color.grayLight:GetRGB())
+        Button.OptionText:SetTextColor(Color.grayLight:GetRGB())
+        Button.OptionText:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -30)
 
         --[[ Scale ]]--
         Button:SetSize(210, 268)
-        Button.Rewards:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 5)
+        if private.isPatch then
+            Button.Rewards:SetPoint("BOTTOM", Button.OptionButtonsContainer, "TOP", 0, 5)
+        else
+            Button.Rewards:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 5)
+        end
         Button.Header:SetSize(256, 32)
         Button.Header:SetPoint("TOP", 10)
         Button.Header.Text:SetWidth(180)
         Button.Header.Text:SetPoint("TOPLEFT", 28, 2)
         Button.Header.Text:SetPoint("BOTTOMRIGHT", -28, 2)
         Button.OptionText:SetWidth(200)
-        Button.OptionText:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -8)
         Button.OptionText:SetPoint("BOTTOM", Button.Rewards, "TOP", 0, 35)
         Button.OptionText:SetText("Text")
     end
@@ -75,6 +80,7 @@ end
 --/dump QuestChoiceFrame.Option1.OptionText:GetContentHeight()
 function private.AddOns.Blizzard_QuestChoice()
     local QuestChoiceFrame = _G.QuestChoiceFrame
+    QuestChoiceFrame.topPadding = 100
     Skin.HorizontalLayoutFrame(QuestChoiceFrame)
 
     QuestChoiceFrame.BottomLeftCorner:Hide()
@@ -99,6 +105,10 @@ function private.AddOns.Blizzard_QuestChoice()
     QuestChoiceFrame.QuestionFrameRight:Hide()
     QuestChoiceFrame.QuestionFrameLeft:Hide()
     QuestChoiceFrame.QuestionFrameMiddle:Hide()
+
+    QuestChoiceFrame.QuestionText:ClearAllPoints()
+    QuestChoiceFrame.QuestionText:SetPoint("TOPLEFT", 20, -20)
+    QuestChoiceFrame.QuestionText:SetPoint("BOTTOMRIGHT", QuestChoiceFrame, "TOPRIGHT", -20, -80)
 
     Base.SetBackdrop(QuestChoiceFrame)
 
