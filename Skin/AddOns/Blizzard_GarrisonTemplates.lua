@@ -227,6 +227,12 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         Skin.GarrisonEquipmentTemplate(Button)
         Button.BG:Hide()
         Button.Border:Hide()
+
+        local bg = _G.CreateFrame("Frame", nil, Button)
+        bg:SetFrameLevel(Button:GetFrameLevel())
+        bg:SetPoint("TOPLEFT", Button.Icon, -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
+        Base.SetBackdrop(bg, Color.button, 0.3)
     end
     function Skin.GarrisonAbilityCounterTemplate(Frame)
         Base.CropIcon(Frame.Icon, Frame)
@@ -264,7 +270,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         Frame:SetBackdropBorderColor(Color.yellow)
     end
     function Skin.GarrisonEquipmentTemplate(Button)
-        Base.CropIcon(Button.Icon, Button)
+        Base.CropIcon(Button.Icon)
     end
 
     ----====####$$$$%%%%%%%$$$$####====----
