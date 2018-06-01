@@ -135,6 +135,11 @@ function private.AddOns.Blizzard_EncounterJournal()
 
 
     --[[ NavBar ]]
+    EncounterJournal.navBar.InsetBorderBottomLeft:Hide()
+    EncounterJournal.navBar.InsetBorderBottomRight:Hide()
+    EncounterJournal.navBar.InsetBorderBottom:Hide()
+    EncounterJournal.navBar.InsetBorderLeft:Hide()
+    EncounterJournal.navBar.InsetBorderRight:Hide()
     EncounterJournal.navBar:SetWidth(550)
     EncounterJournal.navBar:SetPoint("TOPLEFT", 20, -22)
 
