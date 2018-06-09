@@ -216,27 +216,26 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         CheckButton:SetSize(CheckButton:GetSize())
     end
     function Skin.UICheckButtonTemplate(CheckButton)
-        local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetPoint("TOPLEFT", 6, -6)
-        bd:SetPoint("BOTTOMRIGHT", -6, 6)
-        bd:SetFrameLevel(CheckButton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.button, 0.3)
-
         CheckButton:SetNormalTexture("")
         CheckButton:SetPushedTexture("")
         CheckButton:SetHighlightTexture("")
 
+        local bd = _G.CreateFrame("Frame", nil, CheckButton)
+        bd:SetPoint("TOPLEFT", 6, -6)
+        bd:SetPoint("BOTTOMRIGHT", -6, 6)
+        bd:SetFrameLevel(CheckButton:GetFrameLevel())
+        Base.SetBackdrop(bd, Color.frame)
+        bd:SetBackdropBorderColor(Color.button)
+
         local check = CheckButton:GetCheckedTexture()
         check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", bd, -7, 7)
-        check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
+        check:SetPoint("TOPLEFT", -1, 1)
+        check:SetPoint("BOTTOMRIGHT", 1, -1)
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
 
         local disabled = CheckButton:GetDisabledCheckedTexture()
-        disabled:ClearAllPoints()
-        disabled:SetPoint("TOPLEFT", -7, 7)
-        disabled:SetPoint("BOTTOMRIGHT", 7, -7)
+        disabled:SetAllPoints(check)
 
         CheckButton._auroraBDFrame = bd
         Base.SetHighlight(CheckButton, "backdrop")
@@ -401,6 +400,23 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Slider.Background:Hide()
     end
+    function Skin.UIPanelScrollBarTemplateLightBorder(Slider)
+        local name = Slider:GetName()
+
+        Skin.UIPanelScrollUpButtonTemplate(_G[name.."ScrollUpButton"])
+        Skin.UIPanelScrollDownButtonTemplate(_G[name.."ScrollDownButton"])
+        _G[name.."Border"]:SetBackdrop(nil)
+
+        local thumbTexture = Slider:GetThumbTexture()
+        thumbTexture:SetAlpha(0)
+        thumbTexture:SetSize(17, 24)
+
+        local thumb = _G.CreateFrame("Frame", nil, Slider)
+        thumb:SetPoint("TOPLEFT", thumbTexture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 2)
+        Base.SetBackdrop(thumb, Color.button)
+        Slider._auroraThumb = thumb
+    end
     function Skin.MinimalScrollBarTemplate(Slider)
         Slider.trackBG:Hide()
         if private.isPatch then
@@ -420,6 +436,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 2)
         Base.SetBackdrop(thumb, Color.button)
         Slider._auroraThumb = thumb
+    end
+    function Skin.FauxScrollFrameTemplateLight(ScrollFrame)
+        local name = ScrollFrame:GetName()
+        Skin.UIPanelScrollBarTemplateLightBorder(_G[name.."ScrollBar"])
     end
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)

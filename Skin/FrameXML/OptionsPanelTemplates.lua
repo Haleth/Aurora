@@ -15,26 +15,26 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         CheckButton:SetHighlightTexture("")
 
         local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetPoint("TOPLEFT", 4, -4)
-        bd:SetPoint("BOTTOMRIGHT", -4, 4)
+        bd:SetPoint("TOPLEFT", 6, -6)
+        bd:SetPoint("BOTTOMRIGHT", -6, 6)
         bd:SetFrameLevel(CheckButton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.button, 0.3)
+        Base.SetBackdrop(bd, Color.frame)
+        bd:SetBackdropBorderColor(Color.button)
 
         local check = CheckButton:GetCheckedTexture()
         check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", bd, -7, 7)
-        check:SetPoint("BOTTOMRIGHT", bd, 7, -7)
+        check:SetPoint("TOPLEFT", -1, 1)
+        check:SetPoint("BOTTOMRIGHT", 1, -1)
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
 
         local disabled = CheckButton:GetDisabledCheckedTexture()
-        disabled:ClearAllPoints()
-        disabled:SetPoint("TOPLEFT", -7, 7)
-        disabled:SetPoint("BOTTOMRIGHT", 7, -7)
+        disabled:SetAllPoints(check)
 
         CheckButton._auroraBDFrame = bd
         Base.SetHighlight(CheckButton, "backdrop")
 
+        --[[ Scale ]]--
         CheckButton:SetSize(CheckButton:GetSize())
     end
 
