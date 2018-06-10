@@ -9,6 +9,13 @@ local Scale = Aurora.Scale
 local Hook = Aurora.Hook
 
 do --[[ FrameXML\FlowContainer.lua ]]
+    function Hook.FlowContainer_GetUsedBounds(container) --Return x, y
+        if container.flowOrientation == "horizontal" then
+            return container._auroraFlowMaxSecondaryUsed, container._auroraFlowMaxPrimaryUsed;
+        else
+            return container._auroraFlowMaxPrimaryUsed, container._auroraFlowMaxSecondaryUsed;
+        end
+    end
     function Hook.FlowContainer_DoLayout(container)
         if container.flowPauseUpdates then
             return
@@ -101,8 +108,8 @@ do --[[ FrameXML\FlowContainer.lua ]]
         end
 
         --Save off how much we actually used.
-        container.flowMaxPrimaryUsed = currentPrimaryOffset + lineMaxSize
-        container.flowMaxSecondaryUsed = maxSecondaryOffset
+        container._auroraFlowMaxPrimaryUsed = currentPrimaryOffset + lineMaxSize
+        container._auroraFlowMaxSecondaryUsed = maxSecondaryOffset
     end
 end
 

@@ -71,8 +71,10 @@ do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
         end
     end
     function Hook.PetBattleFrame_UpdateActionBarLayout(self)
-        local usedX = _G.FlowContainer_GetUsedBounds(self.BottomFrame.FlowFrame)
-        Scale.RawSetWidth(self.BottomFrame.FlowFrame, usedX)
+        local flowFrame = self.BottomFrame.FlowFrame
+
+        local usedX = Hook.FlowContainer_GetUsedBounds(flowFrame)
+        Scale.RawSetWidth(flowFrame, usedX)
         Scale.RawSetWidth(self.BottomFrame, usedX + Scale.Value(200))
 
         _G.C_Timer.After(0, function()

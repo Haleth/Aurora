@@ -8,21 +8,33 @@ local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
-do --[[ AddOns\Blizzard_CompactRaidFrameManager.lua ]]
-    function Hook.CompactRaidFrameManager_Toggle(self)
-        if self.collapsed then
-            Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowRight")
-        else
-            Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowLeft")
+do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
+    do --[[ Blizzard_CompactRaidFrameContainer ]]
+        function Hook.CompactRaidFrameContainer_UpdateBorder(self)
+            local usedX, usedY = Hook.FlowContainer_GetUsedBounds(self)
+            if self.showBorder and self.groupMode ~= "discrete" and usedX > 0 and usedY > 0 then
+                Scale.RawSetSize(self.borderFrame, usedX + 11, usedY + 13)
+            end
         end
-     end
-    function Hook.CompactRaidFrameManager_UpdateOptionsFlowContainer(self)
-        local height = self:GetHeight() - 40
-        self:SetHeight(height + Scale.Value(40))
+    end
+    do --[[ Blizzard_CompactRaidFrameManager ]]
+        function Hook.CompactRaidFrameManager_Toggle(self)
+            if self.collapsed then
+                Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowRight")
+            else
+                Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowLeft")
+            end
+         end
+        function Hook.CompactRaidFrameManager_UpdateOptionsFlowContainer(self)
+            local container = self.displayFrame.optionsFlowContainer;
+
+            local _, usedY = Hook.FlowContainer_GetUsedBounds(container);
+            Scale.RawSetHeight(self, usedY + Scale.Value(40));
+        end
     end
 end
 
-do --[[ AddOns\Blizzard_CompactRaidFrameManager.xml ]]
+do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
     function Skin.CRFManagerFilterButtonTemplate(Button)
         Skin.UIMenuButtonStretchTemplate(Button)
         Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
@@ -47,6 +59,7 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameContainer --
     ----====####$$$$%%%%%%%%$$$$####====----
+    _G.hooksecurefunc("CompactRaidFrameManager_Toggle", Hook.CompactRaidFrameManager_Toggle)
 
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameManager --
