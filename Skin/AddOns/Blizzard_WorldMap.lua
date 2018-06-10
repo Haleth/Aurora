@@ -143,7 +143,7 @@ function private.AddOns.Blizzard_WorldMap()
         Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
         Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
         Skin.GameTooltipTemplate(_G.WorldMapTooltip)
-        Skin.EmbeddedItemTooltip(_G.WorldMapTooltip.ItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(_G.WorldMapTooltip.ItemTooltip)
     end
 end
 

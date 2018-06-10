@@ -6,6 +6,7 @@ local FrameXML = {
 
     -- add snippets independent of modules here
     "SharedXML.Util",
+    "SharedXML.EasingUtil",
     "SharedXML.BindingUtil",
     "SharedXML.FrameUtil",
     "SharedXML.Pools",

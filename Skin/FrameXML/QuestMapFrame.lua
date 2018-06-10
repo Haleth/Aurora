@@ -64,7 +64,7 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
     function Skin.WarCampaignTooltipTemplate(Frame)
         Base.SetBackdrop(Frame)
         Skin.VerticalLayoutFrame(Frame)
-        Skin.EmbeddedItemTooltip(Frame.ItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(Frame.ItemTooltip)
     end
     function Skin.QuestLogHeaderTemplate(Button)
         Skin.ExpandOrCollapse(Button)

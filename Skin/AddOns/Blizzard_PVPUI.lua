@@ -21,7 +21,7 @@ function private.AddOns.Blizzard_PVPUI()
 
     if not private.disabled.tooltips then
         Base.SetBackdrop(_G.PVPRewardTooltip)
-        Skin.EmbeddedItemTooltip(_G.PVPRewardTooltip.ItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(_G.PVPRewardTooltip.ItemTooltip)
     end
 
     local function SkinRoleInset(roleInset)

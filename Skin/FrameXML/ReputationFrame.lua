@@ -142,12 +142,6 @@ function private.FrameXML.ReputationFrame()
     _G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
     _G.hooksecurefunc("ReputationFrame_Update", Hook.ReputationFrame_Update)
 
-    ---------------------------------------
-    -- ReputationParagonTooltipStatusBar --
-    ---------------------------------------
-    Skin.TooltipProgressBarTemplate(_G.ReputationParagonTooltipStatusBar)
-
-
     ---------------------
     -- ReputationFrame --
     ---------------------
@@ -205,8 +199,9 @@ function private.FrameXML.ReputationFrame()
         Skin.MainMenuBarWatchBarTemplate(_G.ReputationWatchBar)
     end
 
-    if not private.disabled.tooltips then
+    if not private.isPatch and not private.disabled.tooltips then
+        Skin.TooltipProgressBarTemplate(_G.ReputationParagonTooltipStatusBar)
         Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
-        Skin.EmbeddedItemTooltip(_G.ReputationParagonTooltip.ItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(_G.ReputationParagonTooltip.ItemTooltip)
     end
 end

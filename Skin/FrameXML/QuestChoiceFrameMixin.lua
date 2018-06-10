@@ -45,18 +45,20 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
                 for i = 1, #self.Options do
                     self.Options[i]:SetShown(i <= self.numActiveOptionFrames)
                 end
-                if self.numActiveOptionFrames == 1 then
-                    self.leftPadding = (self.fixedWidth - self.Option1:GetWidth()) / 2
-                    self.rightPadding = 0
-                    self.spacing = 0
-                elseif self.numActiveOptionFrames == 4 then
-                    self.leftPadding = 50
-                    self.rightPadding = 50
-                    self.spacing = 20
-                else
-                    self.leftPadding = self.defaultLeftPadding
-                    self.rightPadding = self.defaultRightPadding
-                    self.spacing = self.defaultSpacing
+                if not self.fixedPaddingAndSpacing then
+                    if self.numActiveOptionFrames == 1 then
+                        self.leftPadding = (self.fixedWidth - self.Option1:GetWidth()) / 2
+                        self.rightPadding = 0
+                        self.spacing = 0
+                    elseif self.numActiveOptionFrames == 4 then
+                        self.leftPadding = 50
+                        self.rightPadding = 50
+                        self.spacing = 20
+                    else
+                        self.leftPadding = self.defaultLeftPadding
+                        self.rightPadding = self.defaultRightPadding
+                        self.spacing = self.defaultSpacing
+                    end
                 end
 
                 self:Layout()
@@ -71,21 +73,21 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
                     return
                 end
                 for i, option in ipairs(self.Options) do
-                    option.groupID = nil;
+                    option.groupID = nil
                 end
                 self.choiceID = choiceID
                 self.QuestionText:SetText(questionText)
 
                 self.numActiveOptionFrames = 0
                 for i = 1, numOptions do
-                    local optID, buttonText, description, header, artFile, confirmationText, widgetSetID, disabled, groupID = _G.GetQuestChoiceOptionInfo(i);
+                    local optID, buttonText, description, header, artFile, confirmationText, widgetSetID, disabled, groupID = _G.GetQuestChoiceOptionInfo(i)
 
-                    local existingOption = self:GetExistingOptionForGroup(groupID);
-                    local button;
+                    local existingOption = self:GetExistingOptionForGroup(groupID)
+                    local button
                     if existingOption then
                         -- only supporting two grouped options
-                        existingOption.hasMultipleButtons = true;
-                        button = existingOption.OptionButtonsContainer.OptionButton2;
+                        existingOption.hasMultipleButtons = true
+                        button = existingOption.OptionButtonsContainer.OptionButton2
                     else
                         self.numActiveOptionFrames = self.numActiveOptionFrames + 1
                         local option = self.Options[self.numActiveOptionFrames]
@@ -95,21 +97,15 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
                         button = option.OptionButtonsContainer.OptionButton1
                         Scale.RawSetWidth(option.OptionText, option.OptionText:GetWidth())
                         option.OptionText:SetText(description)
-                        if header and #header > 0 then
-                            option.Header:Show()
-                            option.Header.Text:SetHeight(0)
-                            option.Header.Text:SetText(header)
-                        else
-                            option.Header:Hide()
-                        end
+                        option:ConfigureHeader(header)
                         option.Artwork:SetTexture(artFile)
-                        option.confirmationText = confirmationText
 
                         self:UpdateOptionWidgetRegistration(option, widgetSetID)
                     end
-                    button:SetText(buttonText);
-                    button.optID = optID;
-                    button:SetEnabled(not disabled);
+                    button.confirmationText = confirmationText
+                    button:SetText(buttonText)
+                    button.optID = optID
+                    button:SetEnabled(not disabled)
                 end
 
                 self:ShowRewards(numOptions)

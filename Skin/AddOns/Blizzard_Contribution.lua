@@ -16,7 +16,7 @@ end ]]
 function private.AddOns.Blizzard_Contribution()
     if not private.disabled.tooltips then
         Skin.GameTooltipTemplate(_G.ContributionTooltip)
-        Skin.EmbeddedItemTooltip(_G.ContributionTooltip.ItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(_G.ContributionTooltip.ItemTooltip)
 
         Skin.TooltipBorderedFrameTemplate(_G.ContributionBuffTooltip)
         Base.CropIcon(_G.ContributionBuffTooltip.Icon, _G.ContributionBuffTooltip)

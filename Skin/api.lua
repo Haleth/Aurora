@@ -76,16 +76,16 @@ do -- Base API
         end
 
         local sides = {
-            l = {coords = {0, 0.125, 0, 1}, tileV = true},
-            r = {coords = {0.125, 0.25, 0, 1}, tileV = true},
-            t = {coords = {0.25, 0.375, 0, 1}, tileH = true},
-            b = {coords = {0.375, 0.5, 0, 1}, tileH = true},
+            l = {l=0, r=0.125, t=0, b=1, tileV = true},
+            r = {l=0.125, r=0.25, t=0, b=1, tileV = true},
+            t = {l=0.25, r=0.375, t=0, b=1, tileH = true},
+            b = {l=0.375, r=0.5, t=0, b=1, tileH = true},
         }
         local corners = {
-            tl = {coords = {0.5, 0.625, 0, 1}, point = "TOPLEFT"},
-            tr = {coords = {0.625, 0.75, 0, 1}, point = "TOPRIGHT"},
-            bl = {coords = {0.75, 0.875, 0, 1}, point = "BOTTOMLEFT"},
-            br = {coords = {0.875, 1, 0, 1}, point = "BOTTOMRIGHT"},
+            tl = {l=0.5, r=0.625, t=0, b=1, point = "TOPLEFT"},
+            tr = {l=0.625, r=0.75, t=0, b=1, point = "TOPRIGHT"},
+            bl = {l=0.75, r=0.875, t=0, b=1, point = "BOTTOMLEFT"},
+            br = {l=0.875, r=1, t=0, b=1, point = "BOTTOMRIGHT"},
         }
         local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
         local function SetBackdrop(frame, options, bgTextures)
@@ -154,19 +154,17 @@ do -- Base API
 
                 if options.edgeFile then
                     for side, info in next, sides do
-                        bd[side]:SetTexture(options.edgeFile, "REPEAT", "REPEAT")
-                        bd[side]:SetHorizTile(info.tileH)
-                        bd[side]:SetVertTile(info.tileV)
+                        bd[side]:SetTexture(options.edgeFile)
                         if info.tileH then
-                            bd[side]:SetTexCoord(info.coords[1], info.coords[4], info.coords[2], info.coords[4], info.coords[1], info.coords[3], info.coords[2], info.coords[3])
+                            bd[side]:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
                         else
-                            bd[side]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
+                            bd[side]:SetTexCoord(info.l, info.r, info.t, info.b)
                         end
                     end
 
                     for corner, info in next, corners do
                         bd[corner]:SetTexture(options.edgeFile)
-                        bd[corner]:SetTexCoord(info.coords[1], info.coords[2], info.coords[3], info.coords[4])
+                        bd[corner]:SetTexCoord(info.l, info.r, info.t, info.b)
                     end
                 else
                     for side, info in next, sides do

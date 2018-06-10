@@ -416,6 +416,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 2)
         Base.SetBackdrop(thumb, Color.button)
         Slider._auroraThumb = thumb
+
+        --[[ Scale ]]--
+        Slider:SetWidth(Slider:GetWidth())
     end
     function Skin.MinimalScrollBarTemplate(Slider)
         Slider.trackBG:Hide()
@@ -439,7 +442,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.FauxScrollFrameTemplateLight(ScrollFrame)
         local name = ScrollFrame:GetName()
-        Skin.UIPanelScrollBarTemplateLightBorder(_G[name.."ScrollBar"])
+
+        local scrollBar = _G[name.."ScrollBar"]
+        Skin.UIPanelScrollBarTemplateLightBorder(scrollBar)
+        scrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
+        scrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)

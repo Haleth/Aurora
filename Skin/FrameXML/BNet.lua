@@ -41,33 +41,35 @@ function private.FrameXML.BNet()
     ---------------------
     -- BNetReportFrame --
     ---------------------
-    Base.SetBackdrop(_G.BNetReportFrame)
+    if not private.isPatch then
+        Base.SetBackdrop(_G.BNetReportFrame)
 
-    _G.BNetReportFrameCommentTopLeft:Hide()
-    _G.BNetReportFrameCommentTopRight:Hide()
-    _G.BNetReportFrameCommentTop:Hide()
-    _G.BNetReportFrameCommentBottomLeft:Hide()
-    _G.BNetReportFrameCommentBottomRight:Hide()
-    _G.BNetReportFrameCommentBottom:Hide()
-    _G.BNetReportFrameCommentLeft:Hide()
-    _G.BNetReportFrameCommentRight:Hide()
-    _G.BNetReportFrameCommentMiddle:Hide()
+        _G.BNetReportFrameCommentTopLeft:Hide()
+        _G.BNetReportFrameCommentTopRight:Hide()
+        _G.BNetReportFrameCommentTop:Hide()
+        _G.BNetReportFrameCommentBottomLeft:Hide()
+        _G.BNetReportFrameCommentBottomRight:Hide()
+        _G.BNetReportFrameCommentBottom:Hide()
+        _G.BNetReportFrameCommentLeft:Hide()
+        _G.BNetReportFrameCommentRight:Hide()
+        _G.BNetReportFrameCommentMiddle:Hide()
 
-    local commentBorder = _G.CreateFrame("Frame", nil, _G.BNetReportFrame)
-    commentBorder:SetPoint("TOPLEFT", _G.BNetReportFrameCommentTopLeft)
-    commentBorder:SetPoint("BOTTOMRIGHT", _G.BNetReportFrameCommentBottomRight)
-    Base.SetBackdrop(commentBorder)
+        local commentBorder = _G.CreateFrame("Frame", nil, _G.BNetReportFrame)
+        commentBorder:SetPoint("TOPLEFT", _G.BNetReportFrameCommentTopLeft)
+        commentBorder:SetPoint("BOTTOMRIGHT", _G.BNetReportFrameCommentBottomRight)
+        Base.SetBackdrop(commentBorder)
 
-    local scrollframe = _G.BNetReportFrameCommentScrollFrame
-    Skin.UIPanelScrollFrameTemplate(scrollframe)
+        local scrollframe = _G.BNetReportFrameCommentScrollFrame
+        Skin.UIPanelScrollFrameTemplate(scrollframe)
 
-    scrollframe.ScrollBar:ClearAllPoints()
-    scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", -18, -13)
-    scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", -18, 13)
+        scrollframe.ScrollBar:ClearAllPoints()
+        scrollframe.ScrollBar:SetPoint("TOPLEFT", scrollframe, "TOPRIGHT", -18, -13)
+        scrollframe.ScrollBar:SetPoint("BOTTOMLEFT", scrollframe, "BOTTOMRIGHT", -18, 13)
 
-    scrollframe.ScrollBar.ScrollUpButton:SetPoint("BOTTOM", scrollframe.ScrollBar, "TOP")
-    scrollframe.ScrollBar.ScrollDownButton:SetPoint("TOP", scrollframe.ScrollBar, "BOTTOM")
+        scrollframe.ScrollBar.ScrollUpButton:SetPoint("BOTTOM", scrollframe.ScrollBar, "TOP")
+        scrollframe.ScrollBar.ScrollDownButton:SetPoint("TOP", scrollframe.ScrollBar, "BOTTOM")
 
-    Skin.UIPanelButtonTemplate(_G.BNetReportFrameReportButton)
-    Skin.UIPanelButtonTemplate(_G.BNetReportFrameCancelButton)
+        Skin.UIPanelButtonTemplate(_G.BNetReportFrameReportButton)
+        Skin.UIPanelButtonTemplate(_G.BNetReportFrameCancelButton)
+    end
 end

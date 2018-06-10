@@ -204,7 +204,7 @@ function private.AddOns.Blizzard_GarrisonUI()
         Skin.GarrisonBonusAreaTooltipFrameTemplate(_G.GarrisonBonusAreaTooltip.BonusArea)
 
         Base.SetBackdrop(_G.GarrisonShipyardMapMissionTooltip)
-        Skin.EmbeddedItemTooltip(_G.GarrisonShipyardMapMissionTooltip.ItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(_G.GarrisonShipyardMapMissionTooltip.ItemTooltip)
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusEffect)
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusReward)
     end

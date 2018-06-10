@@ -12,14 +12,22 @@ do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_OnHide(gametooltip)
         Base.SetBackdropColor(gametooltip)
     end
+    function Hook.GameTooltip_SetBackdropStyle(self, style)
+        Base.SetBackdrop(self, Color.black)
+    end
 end
 
 do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.GameTooltipTemplate(GameTooltip)
         Base.SetBackdrop(GameTooltip)
 
-        -- BlizzWTF: the global name for this frame conflicts with ReputationParagonTooltipStatusBar
-        local status = GameTooltip:GetChildren()
+        local status-- = _G[GameTooltip:GetName().."StatusBar"]
+        if private.isPatch then
+            status = _G[GameTooltip:GetName().."StatusBar"]
+        else
+            -- BlizzWTF: the global name for this frame conflicts with ReputationParagonTooltipStatusBar
+            status = GameTooltip:GetChildren()
+        end
         status:SetHeight(4)
         status:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
         status:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
@@ -63,7 +71,7 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
 end
 
 do --[[ FrameXML\GameTooltip.xml ]]
-    function Skin.EmbeddedItemTooltip(Frame)
+    function Skin.InternalEmbeddedItemTooltipTemplate(Frame)
         Base.CropIcon(Frame.Icon)
         local bg = _G.CreateFrame("Frame", nil, Frame)
         bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
@@ -76,9 +84,17 @@ end
 function private.FrameXML.GameTooltip()
     if private.disabled.tooltips then return end
 
-    _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
+    if private.isPatch then
+        _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
+    else
+        _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
+    end
 
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
     Skin.GameTooltipTemplate(_G.GameTooltip)
+    if private.isPatch then
+        Skin.GameTooltipTemplate(_G.EmbeddedItemTooltip)
+        Skin.InternalEmbeddedItemTooltipTemplate(_G.EmbeddedItemTooltip.ItemTooltip)
+    end
 end
