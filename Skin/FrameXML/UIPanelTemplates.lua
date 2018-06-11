@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.SearchBoxTemplate(EditBox)
@@ -139,7 +139,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame)
     end
     function Skin.ThinGoldEdgeTemplate(Frame)
-        local name = private.GetName(Frame)
+        local name = Util.GetName(Frame)
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
         _G[name.."Middle"]:Hide()

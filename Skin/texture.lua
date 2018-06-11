@@ -4,8 +4,6 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 
---local FindUsage = private.FindUsage
-
 do -- lines
     Base.RegisterTexture("lineCross", function(frame, texture)
         local anchor = frame
@@ -114,7 +112,6 @@ do -- gradients
                 texture:SetGradient("VERTICAL", r * min, g * min, b * min, r * max, g * max, b * max)
             end)
         else
-            --FindUsage(texture, "SetVertexColor")
             texture:SetGradient("VERTICAL", min, min, min, max, max, max)
         end
     end

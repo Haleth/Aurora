@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do -- BlizzWTF: These are not templates, but they should be
     -- ExpandOrCollapse
@@ -245,7 +245,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        local name = private.GetName(Frame)
+        local name = Util.GetName(Frame)
 
         Frame.Bg:Hide()
         _G[name.."TitleBg"]:Hide()

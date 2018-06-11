@@ -5,7 +5,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 Aurora.classIcons = { -- adjusted for borderless icons
     ["WARRIOR"]     = {0.01953125, 0.234375, 0.01953125, 0.234375},
@@ -904,12 +904,12 @@ do -- Color API
     Color.red = Color.Create(0.8, 0.2, 0.2)
     Color.yellow = Color.Create(1, 0.82, 0)
     Color.blue = Color.Create(0.2, 0.2, 0.8)
-    Color.black = Color.Create(0, 0, 0)
-    Color.gray = Color.Create(0.5, 0.5, 0.5)
-    Color.white = Color.Create(1, 1, 1)
 
-    Color.grayDark = Color.gray:Lightness(-.5)
-    Color.grayLight = Color.gray:Lightness(.5)
+    Color.black = Color.Create(0, 0, 0)
+    Color.grayDark = Color.Create(0.25, 0.25, 0.25)
+    Color.gray = Color.Create(0.5, 0.5, 0.5)
+    Color.grayLight = Color.Create(0.75, 0.75, 0.75)
+    Color.white = Color.Create(1, 1, 1)
 
     do -- CUSTOM_CLASS_COLORS
         local classColors = {}
@@ -1020,4 +1020,29 @@ do -- Color API
     Color.highlight = Color.Create(color.r, color.g, color.b)
     Color.button = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b)
     Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
+end
+
+do -- Util API
+    --[[ This is to fish for names because some templates require a name, but
+        some frames that inherit those templates don't have one. ]]
+    function Util.GetName(widget)
+        local name = widget:GetName()
+
+        while not name do
+            widget = widget:GetParent()
+            name = widget:GetName()
+        end
+
+        return name
+    end
+    function Util.FindUsage(table, func)
+        _G.hooksecurefunc(table, func, function()
+            _G.error("Found usage")
+        end)
+    end
+    function Util.TestHook(table, func, name)
+        _G.hooksecurefunc(table, func, function(...)
+            _G.print("Test", name, ...)
+        end)
+    end
 end

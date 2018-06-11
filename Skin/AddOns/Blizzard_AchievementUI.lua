@@ -543,7 +543,6 @@ function private.AddOns.Blizzard_AchievementUI()
 
     _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 4)
     _G.AchievementFrameFilterDropDown:SetHeight(16)
-    --private.FindUsage(_G.AchievementFrameFilterDropDown, "SetHeight")
 
     local filterBG = _G.CreateFrame("Frame", nil, _G.AchievementFrameFilterDropDown)
     filterBG:SetPoint("TOPLEFT", 0, -6)

@@ -71,39 +71,13 @@ local debug do
     private.debug = debug
 end
 
-do -- Util functions
-    --[[ This is to fish for names because some templates require a name, but
-        some frames that inherit those templates don't have one. ]]
-    function private.GetName(widget)
-        local name = widget:GetName()
-
-        while not name do
-            widget = widget:GetParent()
-            name = widget:GetName()
-        end
-
-        return name
-    end
-
-
-    function private.FindUsage(table, func)
-        _G.hooksecurefunc(table, func, function()
-            _G.error("Found usage")
-        end)
-    end
-    function private.TestHook(table, func, name)
-        _G.hooksecurefunc(table, func, function(...)
-            _G.print("Test", name, ...)
-        end)
-    end
-end
-
 local Aurora = {
     Base = {},
     Scale = {},
     Hook = {},
     Skin = {},
     Color = {},
+    Util = {},
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
