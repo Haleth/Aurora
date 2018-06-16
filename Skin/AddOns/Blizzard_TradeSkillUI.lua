@@ -4,7 +4,9 @@ local _, private = ...
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_TradeSkillUI()
     local TradeSkillFrame = _G.TradeSkillFrame
@@ -66,10 +68,7 @@ function private.AddOns.Blizzard_TradeSkillUI()
     F.Reskin(detailsFrame.ViewGuildCraftersButton)
     F.Reskin(detailsFrame.ExitButton)
     F.Reskin(detailsFrame.CreateButton)
-    F.ReskinInput(detailsFrame.CreateMultipleInputBox)
-    detailsFrame.CreateMultipleInputBox:DisableDrawLayer("BACKGROUND")
-    F.ReskinArrow(detailsFrame.CreateMultipleInputBox.IncrementButton, "Right")
-    F.ReskinArrow(detailsFrame.CreateMultipleInputBox.DecrementButton, "Left")
+    Skin.NumericInputSpinnerTemplate(detailsFrame.CreateMultipleInputBox)
 
     local contents = detailsFrame.Contents
     contents.ResultIcon.ResultBorder:Hide()

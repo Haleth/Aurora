@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
-end
+--[[ do AddOns\Blizzard_GarrisonUI.lua
+end ]]
 
 do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
     do --[[ Blizzard_GarrisonShipyardUI.xml ]]
