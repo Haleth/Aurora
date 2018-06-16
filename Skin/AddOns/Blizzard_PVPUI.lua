@@ -128,7 +128,7 @@ function private.AddOns.Blizzard_PVPUI()
         F.Reskin(BonusFrame.DiceButton)
     end
 
-    for _, bonusButton in pairs({"RandomBGButton", "Arena1Button", (private.isPatch and "LargeBattlegroundButton" or "AshranButton"), "BrawlButton"}) do
+    for _, bonusButton in pairs({"RandomBGButton", (private.isPatch and "RandomEpicBGButton" or "AshranButton"), "Arena1Button", "BrawlButton"}) do
         local bu = BonusFrame[bonusButton]
         local reward = bu.Reward
 

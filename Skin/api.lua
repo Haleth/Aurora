@@ -190,9 +190,11 @@ do -- Base API
                 bd.b:SetPoint("TOPLEFT", bd.bl, "TOPRIGHT")
                 bd.b:SetPoint("BOTTOMRIGHT", bd.br, "BOTTOMLEFT")
 
-                for corner, info in next, corners do
-                    bd[corner]:SetSize(options.edgeSize, options.edgeSize)
-                    bd[corner]:SetPoint(info.point)
+                if options.edgeSize then
+                    for corner, info in next, corners do
+                        bd[corner]:SetSize(options.edgeSize, options.edgeSize)
+                        bd[corner]:SetPoint(info.point)
+                    end
                 end
             else
                 if frame._auroraBackdrop then

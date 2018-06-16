@@ -541,32 +541,32 @@ function private.AddOns.Blizzard_EncounterJournal()
     local LootJournal = EncounterJournal.LootJournal
     LootJournal:DisableDrawLayer("BACKGROUND")
 
-    F.ReskinDropDown(LootJournal.ViewDropDown)
+    if not private.isPatch then
+        F.ReskinDropDown(LootJournal.ViewDropDown)
 
-    local LegendariesFrame = LootJournal.LegendariesFrame
-    SkinLootBtn(LegendariesFrame.ClassButton)
-    SkinLootBtn(LegendariesFrame.SlotButton)
+        local LegendariesFrame = LootJournal.LegendariesFrame
+        SkinLootBtn(LegendariesFrame.ClassButton)
+        SkinLootBtn(LegendariesFrame.SlotButton)
 
-    local itemsLeftSide = LootJournal.LegendariesFrame.buttons
-    local itemsRightSide = LootJournal.LegendariesFrame.rightSideButtons
-    for _, items in ipairs({itemsLeftSide, itemsRightSide}) do
-        for i = 1, #items do
-            local item = items[i]
+        for _, items in ipairs({LegendariesFrame.buttons, LegendariesFrame.rightSideButtons}) do
+            for i = 1, #items do
+                local item = items[i]
 
-            item.ItemType:SetTextColor(1, 1, 1)
-            item.Background:Hide()
+                item.ItemType:SetTextColor(1, 1, 1)
+                item.Background:Hide()
 
-            item.Icon:SetPoint("TOPLEFT", 1, -1)
+                item.Icon:SetPoint("TOPLEFT", 1, -1)
 
-            item.Icon:SetTexCoord(.08, .92, .08, .92)
-            item.Icon:SetDrawLayer("OVERLAY")
-            F.CreateBG(item.Icon)
+                item.Icon:SetTexCoord(.08, .92, .08, .92)
+                item.Icon:SetDrawLayer("OVERLAY")
+                F.CreateBG(item.Icon)
 
-            local bg = CreateFrame("Frame", nil, item)
-            bg:SetPoint("TOPLEFT")
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
-            bg:SetFrameLevel(item:GetFrameLevel() - 1)
-            F.CreateBD(bg, .25)
+                local bg = CreateFrame("Frame", nil, item)
+                bg:SetPoint("TOPLEFT")
+                bg:SetPoint("BOTTOMRIGHT", 0, 1)
+                bg:SetFrameLevel(item:GetFrameLevel() - 1)
+                F.CreateBD(bg, .25)
+            end
         end
     end
 

@@ -9,12 +9,12 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ AddOns\Blizzard_AzeriteUI.lua ]]
     function Hook.AzeriteEmpoweredItemUIMixin_AdjustSizeForTiers(self, numTiers)
-        self.ClipFrame.BackgroundFrame:SetPoint("TOPLEFT", 4, 0)
         if numTiers == 3 then
-            self:SetSize(474, 468)
+            self:SetSize(474, 460)
         else
             self:SetSize(615, 612)
         end
+        self.transformTree:GetRoot():SetLocalPosition(_G.CreateVector2D(self.ClipFrame.BackgroundFrame:GetWidth() * .5, self.ClipFrame.BackgroundFrame:GetHeight() * .5));
     end
 end
 
@@ -27,10 +27,14 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
             Skin.PortraitFrameTemplate(Frame.BorderFrame)
             Frame.BorderFrame:GetBackdropTexture("bg"):SetParent(Frame)
 
-            --Frame.ClipFrame.BackgroundFrame:SetPoint("BOTTOMRIGHT")
-            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:ClearAllPoints()
-            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetPoint("TOPLEFT", -5, 0)
-            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetPoint("BOTTOMRIGHT", Frame.ClipFrame.BackgroundFrame.KeyOverlay, "TOPRIGHT", 5, -40)
+            Frame.ClipFrame:SetPoint("TOPLEFT")
+            Frame.ClipFrame:SetPoint("BOTTOMRIGHT")
+
+            local holder = _G.CreateFrame("Frame", nil, Frame.ClipFrame.BackgroundFrame.KeyOverlay)
+            holder:SetFrameLevel(holder:GetFrameLevel() + 1)
+            holder:SetAllPoints(Frame.BorderFrame.TitleText)
+            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetParent(holder)
+            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetAllPoints(holder)
         end
     end
 end

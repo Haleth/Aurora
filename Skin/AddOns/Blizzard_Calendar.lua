@@ -5,7 +5,6 @@ local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
 
 -- [[ WoW API ]]
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-local IsAddOnLoaded = _G.IsAddOnLoaded
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -85,7 +84,9 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarFilterFrameLeft:Hide()
     _G.CalendarFilterFrameMiddle:Hide()
     _G.CalendarFilterFrameRight:Hide()
+    if not private.isPatch then
         _G.CalendarMassInviteFrameDivider:Hide()
+    end
 
     F.SetBD(_G.CalendarFrame, 12, 0, -9, 4)
     F.CreateBD(_G.CalendarViewEventFrame)
@@ -156,17 +157,14 @@ function private.AddOns.Blizzard_Calendar()
         F.CreateBD(hline)
     end
 
-    if not(IsAddOnLoaded("CowTip") or IsAddOnLoaded("TipTac") or IsAddOnLoaded("FreebTip") or IsAddOnLoaded("lolTip") or IsAddOnLoaded("StarTip") or IsAddOnLoaded("TipTop")) then
-        local tooltips = {_G.CalendarContextMenu, _G.CalendarInviteStatusContextMenu}
-
-        for _, tooltip in pairs(tooltips) do
-            tooltip:SetBackdrop(nil)
-            local bg = CreateFrame("Frame", nil, tooltip)
-            bg:SetPoint("TOPLEFT", 2, -2)
-            bg:SetPoint("BOTTOMRIGHT", -1, 2)
-            bg:SetFrameLevel(tooltip:GetFrameLevel()-1)
-            F.CreateBD(bg)
-        end
+    local contextMenus = {_G.CalendarContextMenu, _G.CalendarInviteStatusContextMenu}
+    for _, contextMenu in pairs(contextMenus) do
+        contextMenu:SetBackdrop(nil)
+        local bg = CreateFrame("Frame", nil, contextMenu)
+        bg:SetPoint("TOPLEFT", 2, -2)
+        bg:SetPoint("BOTTOMRIGHT", -1, 2)
+        bg:SetFrameLevel(contextMenu:GetFrameLevel()-1)
+        F.CreateBD(bg)
     end
 
     _G.CalendarViewEventFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", -8, -24)
@@ -192,7 +190,7 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarTexturePickerFrame:ClearAllPoints()
     _G.CalendarTexturePickerFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", 311, -24)
 
-    local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton", "CalendarMassInviteGuildAcceptButton"}
+    local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton", (private.isPatch and "CalendarMassInviteAcceptButton" or "CalendarMassInviteGuildAcceptButton")}
     for i = 1, #cbuttons do
         local cbutton = _G[cbuttons[i]]
         F.Reskin(cbutton)
@@ -218,11 +216,20 @@ function private.AddOns.Blizzard_Calendar()
     F.ReskinDropDown(_G.CalendarCreateEventMinuteDropDown)
     F.ReskinDropDown(_G.CalendarCreateEventAMPMDropDown)
     F.ReskinDropDown(_G.CalendarCreateEventDifficultyOptionDropDown)
-    F.ReskinDropDown(_G.CalendarMassInviteGuildRankMenu)
+    if private.isPatch then
+        F.ReskinDropDown(_G.CalendarMassInviteRankMenu)
+    else
+        F.ReskinDropDown(_G.CalendarMassInviteGuildRankMenu)
+    end
     F.ReskinInput(_G.CalendarCreateEventTitleEdit)
     F.ReskinInput(_G.CalendarCreateEventInviteEdit)
-    F.ReskinInput(_G.CalendarMassInviteGuildMinLevelEdit)
-    F.ReskinInput(_G.CalendarMassInviteGuildMaxLevelEdit)
+    if private.isPatch then
+        F.ReskinInput(_G.CalendarMassInviteMinLevelEdit)
+        F.ReskinInput(_G.CalendarMassInviteMaxLevelEdit)
+    else
+        F.ReskinInput(_G.CalendarMassInviteGuildMinLevelEdit)
+        F.ReskinInput(_G.CalendarMassInviteGuildMaxLevelEdit)
+    end
     F.ReskinArrow(_G.CalendarPrevMonthButton, "Left")
     F.ReskinArrow(_G.CalendarNextMonthButton, "Right")
     _G.CalendarPrevMonthButton:SetSize(19, 19)

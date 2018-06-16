@@ -131,16 +131,13 @@ do --[[ FrameXML\StaticPopup.xml ]]
         Skin.StaticPopupButtonTemplate(Frame.button2)
         Skin.StaticPopupButtonTemplate(Frame.button3)
         Skin.StaticPopupButtonTemplate(Frame.button4)
+        Skin.StaticPopupButtonTemplate(Frame.extraButton)
 
-        _G[name .. "EditBoxLeft"]:Hide()
-        _G[name .. "EditBoxRight"]:Hide()
-        _G[name .. "EditBoxMid"]:Hide()
-
-        local editboxBG = _G.CreateFrame("Frame", nil, Frame.editBox)
-        editboxBG:SetPoint("TOPLEFT", -2, -6)
-        editboxBG:SetPoint("BOTTOMRIGHT", 2, 6)
-        editboxBG:SetFrameLevel(Frame.editBox:GetFrameLevel() - 1)
-        Base.SetBackdrop(editboxBG, Color.frame)
+        local EditBox = _G[name .. "EditBox"]
+        EditBox.Left = _G[name .. "EditBoxLeft"]
+        EditBox.Right = _G[name .. "EditBoxRight"]
+        EditBox.Middle = _G[name .. "EditBoxMid"]
+        Skin.InputBoxTemplate(EditBox) -- BlizzWTF: this should use InputBoxTemplate
 
         Skin.SmallMoneyFrameTemplate(Frame.moneyFrame)
         Skin.MoneyInputFrameTemplate(Frame.moneyInputFrame)

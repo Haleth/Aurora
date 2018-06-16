@@ -6,6 +6,7 @@ local FrameXML = {
 
     -- add snippets independent of modules here
     "SharedXML.Util",
+    "SharedXML.AnchorUtil",
     "SharedXML.EasingUtil",
     "SharedXML.BindingUtil",
     "SharedXML.FrameUtil",
@@ -89,7 +90,6 @@ local FrameXML = {
     "DressUpFrames",
     "ItemButtonTemplate",
     "NavigationBar",
-    "SparkleFrame",
     "SharedXML.HybridScrollFrame",
     "GameMenuFrame",
     "CharacterFrameTemplates",
