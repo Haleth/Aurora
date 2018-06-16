@@ -23,6 +23,7 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         bg:SetPoint("BOTTOMRIGHT", 0, -2)
         bg:SetFrameLevel(EditBox:GetFrameLevel() - 1)
         Base.SetBackdrop(bg, Color.frame)
+        EditBox._auroraBG = bg
 
         --[[ Scale ]]--
         EditBox:SetSize(EditBox:GetSize())

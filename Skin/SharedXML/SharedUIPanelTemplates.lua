@@ -57,23 +57,31 @@ do -- BlizzWTF: These are not templates, but they should be
 
     -- Nav buttons
     local function NavButton(Button)
-        Button:SetSize(18, 18)
         Button:SetNormalTexture("")
         Button:SetPushedTexture("")
         Button:SetHighlightTexture("")
 
+        local bg = _G.CreateFrame("Frame", nil, Button)
+        bg:SetPoint("TOPLEFT", 4, -5)
+        bg:SetPoint("BOTTOMRIGHT", -5, 5)
+        bg:SetFrameLevel(Button:GetFrameLevel())
+        Base.SetBackdrop(bg, Color.button)
+        Button._auroraBG = bg
+
         local disabled = Button:GetDisabledTexture()
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
+        disabled:SetAllPoints(bg)
 
-        Base.SetBackdrop(Button, Color.button)
+        --[[ Scale ]]--
+        Button:SetSize(Button:GetSize())
     end
     function Skin.NavButtonPrevious(Button)
         NavButton(Button)
 
         local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 6, -4)
-        arrow:SetPoint("BOTTOMRIGHT", -7, 5)
+        arrow:SetPoint("TOPLEFT", Button._auroraBG, 7, -5)
+        arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -9, 4)
         Base.SetTexture(arrow, "arrowLeft")
 
         Button._auroraHighlight = {arrow}
@@ -83,8 +91,8 @@ do -- BlizzWTF: These are not templates, but they should be
         NavButton(Button)
 
         local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 7, -5)
-        arrow:SetPoint("BOTTOMRIGHT", -6, 4)
+        arrow:SetPoint("TOPLEFT", Button._auroraBG, 8, -5)
+        arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -8, 4)
         Base.SetTexture(arrow, "arrowRight")
 
         Button._auroraHighlight = {arrow}
@@ -447,6 +455,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.UIPanelScrollBarTemplateLightBorder(scrollBar)
         scrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
         scrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
+    end
+    function Skin.NumericInputSpinnerTemplate(EditBox)
+        Skin.InputBoxTemplate(EditBox)
+        EditBox:DisableDrawLayer("BACKGROUND")
+        -- BlizzWTF: You use the template, but still create three new textures for the input border?
+
+        Skin.NavButtonNext(EditBox.IncrementButton)
+        EditBox.IncrementButton:SetPoint("LEFT", EditBox._auroraBG, "RIGHT", 3, 0)
+
+        Skin.NavButtonPrevious(EditBox.DecrementButton)
+        EditBox.DecrementButton:SetPoint("RIGHT", EditBox._auroraBG, "LEFT", -3, 0)
     end
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)

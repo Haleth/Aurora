@@ -77,7 +77,33 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", Slider.thumbTexture, 0, 2)
         Base.SetBackdrop(thumb, Color.button)
         Slider._auroraThumb = thumb
+
+        --[[ Scale ]]--
+        Slider:SetSize(Slider:GetSize())
     end
+    function Skin.MinimalHybridScrollBarTemplate(Slider)
+        local parent = Slider:GetParent()
+        Slider.trackBG:SetAlpha(0)
+
+        --Slider.scrollUp:SetPoint("BOTTOM", Slider, "TOP")
+        Skin.UIPanelScrollUpButtonTemplate(parent.scrollUp)
+
+        --Slider.scrollDown:SetPoint("TOP", Slider, "BOTTOM")
+        Skin.UIPanelScrollDownButtonTemplate(parent.scrollDown)
+
+        Slider.thumbTexture:SetAlpha(0)
+        Slider.thumbTexture:SetWidth(17)
+
+        local thumb = _G.CreateFrame("Frame", nil, Slider)
+        thumb:SetPoint("TOPLEFT", Slider.thumbTexture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", Slider.thumbTexture, 0, 2)
+        Base.SetBackdrop(thumb, Color.button)
+        Slider._auroraThumb = thumb
+
+        --[[ Scale ]]--
+        Slider:SetSize(Slider:GetSize())
+    end
+    -- HybridScrollFrameTemplate -- Has no visible parts
     function Skin.BasicHybridScrollFrameTemplate(ScrollFrame)
         local name = ScrollFrame:GetName()
         Skin.HybridScrollBarTemplate(_G[name.."ScrollBar"])

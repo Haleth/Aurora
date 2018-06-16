@@ -137,11 +137,19 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
     function Hook.GarrisonFollowerList_CollapseButton(self, button)
         button:SetHeight(46)
     end
+    function Hook.GarrisonFollowerTabMixin_OnLoad(self)
+        _G.hooksecurefunc(self.abilitiesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+        _G.hooksecurefunc(self.equipmentPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+        _G.hooksecurefunc(self.countersPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    end
 
 
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_GarrisonMissionTemplates --
     ----====####$$$$%%%%%%%$$$$####====----
+    function Hook.GarrisonMission_RemoveFollowerFromMission(self, frame, updateValues)
+        Hook.GarrisonFollowerPortraitMixin_SetQuality(frame.PortraitFrame, 1)
+    end
     function Hook.GarrisonMissionFrame_SetItemRewardDetails(frame)
         local _, _, quality = _G.GetItemInfo(frame.itemID)
         Hook.SetItemButtonQuality(frame, quality, frame.itemID)
@@ -234,6 +242,8 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         bg:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
         Base.SetBackdrop(bg, Color.button, 0.3)
     end
+    function Skin.GarrisonMissionFollowerDurabilityFrameTemplate(Frame)
+    end
     function Skin.GarrisonAbilityCounterTemplate(Frame)
         Base.CropIcon(Frame.Icon, Frame)
         Frame.Icon:SetSize(20, 20)
@@ -276,14 +286,76 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_GarrisonMissionTemplates --
     ----====####$$$$%%%%%%%$$$$####====----
-    function Skin.GarrisonMissionCompleteDialogTemplate(Frame)
+    function Skin.GarrisonMissionRewardEffectsTemplate(Frame)
+        Base.CropIcon(Frame.Icon)
+
+        Frame.IconBorder:Hide()
+        local iconBG = _G.CreateFrame("Frame", nil, Frame)
+        iconBG:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+        iconBG:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+        Base.SetBackdrop(iconBG, Color.black, 0)
+        Frame._auroraIconBorder = iconBG
+
+        Frame.BG:SetAlpha(0)
+        local nameBG = _G.CreateFrame("Frame", nil, Frame)
+        nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
+        nameBG:SetPoint("BOTTOMRIGHT", -3, -1)
+        Base.SetBackdrop(nameBG, Color.frame)
+        Frame._auroraNameBG = nameBG
+
+        --[[ Scale ]]--
+        Frame:SetSize(Frame:GetSize())
     end
-    function Skin.GarrisonMissionCompleteTemplate(Frame)
+    function Skin.GarrisonMissionPageOvermaxRewardTemplate(Frame)
+        Base.CropIcon(Frame.Icon)
+
+        Frame.IconBorder:Hide()
+        local iconBG = _G.CreateFrame("Frame", nil, Frame)
+        iconBG:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+        iconBG:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+        Base.SetBackdrop(iconBG, Color.black, 0)
+        Frame._auroraIconBorder = iconBG
+
+        --[[ Scale ]]--
+        Frame:SetSize(Frame:GetSize())
     end
-    function Skin.GarrisonFollowerXPBarTemplate(StatusBar)
-        StatusBar.XPLeft:ClearAllPoints()
-        StatusBar.XPRight:ClearAllPoints()
-        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+    function Skin.GarrisonMissionPageRewardTemplate(Frame)
+        Skin.GarrisonMissionPageOvermaxRewardTemplate(Frame.OvermaxItem)
+        Skin.GarrisonMissionRewardEffectsTemplate(Frame.Reward1)
+        Skin.GarrisonMissionRewardEffectsTemplate(Frame.Reward2)
+    end
+    function Skin.GarrisonAbilityLargeCounterTemplate(Frame)
+        Base.CropIcon(Frame.Icon, Frame)
+    end
+    function Skin.GarrisonMissionLargeMechanicTemplate(Frame)
+        Skin.GarrisonAbilityLargeCounterTemplate(Frame)
+    end
+    function Skin.GarrisonMissionCheckTemplate(Frame)
+    end
+    function Skin.GarrisonMissionMechanicTemplate(Frame)
+        Skin.GarrisonAbilityCounterTemplate(Frame)
+    end
+    function Skin.GarrisonMissionEnemyMechanicTemplate(Frame)
+        Skin.GarrisonMissionMechanicTemplate(Frame)
+        Skin.GarrisonMissionCheckTemplate(Frame)
+    end
+    function Skin.GarrisonMissionEnemyLargeMechanicTemplate(Frame)
+        Skin.GarrisonMissionLargeMechanicTemplate(Frame)
+        Skin.GarrisonMissionCheckTemplate(Frame)
+    end
+    function Skin.GarrisonMissionStageTemplate(Frame)
+        Frame.LocBack:SetPoint("TOPLEFT")
+        Frame.LocBack:SetPoint("BOTTOMRIGHT")
+        Frame.LocBack:SetVertexColor(Color.gray:GetRGB())
+        select(4, Frame:GetRegions()):Hide()
+
+        local mask1 = Frame:CreateMaskTexture(nil, "ARTWORK")
+        mask1:SetTexture([[Interface\Common\icon-shadow]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask1:SetPoint("TOPLEFT", Frame.LocBack, -150, 100)
+        mask1:SetPoint("BOTTOMRIGHT", Frame.LocBack, 150, -20)
+        Frame.LocBack:AddMaskTexture(mask1)
+        Frame.LocMid:AddMaskTexture(mask1)
+        Frame.LocFore:AddMaskTexture(mask1)
     end
     function Skin.StartMissionButtonTemplate(Button)
         Skin.UIPanelButtonTemplate(Button)
@@ -294,6 +366,10 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     function Skin.GarrisonMissionPageCostFrameTemplate(Button)
         Base.CropIcon(Button.CostIcon, Button)
     end
+    function Skin.GarrisonMissionPageStageTemplate(Frame)
+        Skin.GarrisonMissionStageTemplate(Frame)
+        Skin.VerticalLayoutFrame(Frame.MissionInfo)
+    end
     function Skin.GarrisonMissionPageCloseButtonTemplate(Button)
         Skin.UIPanelCloseButton(Button)
         Button:SetSize(22, 22)
@@ -301,6 +377,50 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     function Skin.GarrisonMissionFrameTemplate(Frame)
         --[[ Scale ]]--
         Frame:SetSize(Frame:GetSize())
+    end
+    function Skin.GarrisonMissionCompleteDialogTemplate(Frame)
+        Skin.GarrisonMissionStageTemplate(Frame.Stage)
+        local left, right = select(5, Frame.Stage:GetRegions())
+        left:Hide()
+        right:Hide()
+
+        Skin.UIPanelButtonTemplate(Frame.ViewButton)
+    end
+    function Skin.GarrisonMissionBonusRewardsTemplate(Frame)
+        local bg, tl, tr, bl, br, l, r, t, b = Frame.Saturated:GetRegions()
+        Base.CreateBackdrop(Frame, private.backdrop, {
+            bg = bg,
+
+            l = l,
+            r = r,
+            t = t,
+            b = b,
+
+            tl = tl,
+            tr = tr,
+            bl = bl,
+            br = br,
+
+            borderLayer = "BACKGROUND",
+            borderSublevel = -7,
+        })
+        Base.SetBackdrop(Frame, Color.frame)
+    end
+    function Skin.GarrisonMissionCompleteStageTemplate(Frame)
+    end
+    function Skin.GarrisonMissionCompleteTemplate(Frame)
+        Frame.ButtonFrameLeft:Hide()
+        Frame.ButtonFrameRight:Hide()
+        Skin.UIPanelButtonTemplate(Frame.NextMissionButton)
+    end
+    function Skin.GarrisonFollowerXPBarTemplate(StatusBar)
+        StatusBar.XPLeft:ClearAllPoints()
+        StatusBar.XPRight:ClearAllPoints()
+        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+    end
+    function Skin.GarrisonFollowerXPGainTemplate(Frame)
+    end
+    function Skin.GarrisonFollowerLevelUpTemplate(Frame)
     end
 end
 
@@ -314,6 +434,8 @@ function private.AddOns.Blizzard_GarrisonTemplates()
     _G.hooksecurefunc("GarrisonFollowerButton_AddAbility", Hook.GarrisonFollowerButton_AddAbility)
     --_G.hooksecurefunc(_G.GarrisonFollowerList, "CollapseButton", Hook.GarrisonFollowerList_CollapseButton)
 
+    _G.hooksecurefunc(_G.GarrisonFollowerTabMixin, "OnLoad", Hook.GarrisonFollowerTabMixin_OnLoad)
+
     -------------
     -- Section --
     -------------
@@ -324,6 +446,7 @@ function private.AddOns.Blizzard_GarrisonTemplates()
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_GarrisonMissionTemplates --
     ----====####$$$$%%%%%%%$$$$####====----
+    _G.hooksecurefunc(_G.GarrisonMission, "RemoveFollowerFromMission", Hook.GarrisonMission_RemoveFollowerFromMission)
     _G.hooksecurefunc("GarrisonMissionFrame_SetItemRewardDetails", Hook.GarrisonMissionFrame_SetItemRewardDetails)
 
     if not private.disabled.tooltips then

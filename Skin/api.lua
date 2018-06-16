@@ -1035,6 +1035,16 @@ do -- Util API
 
         return name
     end
+    function Util.PositionRelative(point, anchor, relPoint, x, y, gap, widgets)
+        widgets[1]:ClearAllPoints()
+        widgets[1]:SetPoint(point, anchor, relPoint, x, y)
+
+        for i = 2, #widgets do
+            widgets[i]:ClearAllPoints()
+            widgets[i]:SetPoint("TOPLEFT", widgets[i - 1], "TOPRIGHT", gap, 0)
+        end
+    end
+
     function Util.FindUsage(table, func)
         _G.hooksecurefunc(table, func, function()
             _G.error("Found usage")

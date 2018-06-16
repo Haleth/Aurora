@@ -123,7 +123,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         iconBG:SetFrameLevel(Button:GetFrameLevel() - 1)
         iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
         iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
-        Base.SetBackdrop(iconBG)
+        Base.SetBackdrop(iconBG, Color.frame)
         Button._auroraIconBorder = iconBG
 
         Button.NameFrame:SetAlpha(0)
@@ -142,7 +142,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         iconBG:SetFrameLevel(Button:GetFrameLevel() - 1)
         iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
         iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
-        Base.SetBackdrop(iconBG)
+        Base.SetBackdrop(iconBG, Color.frame)
         Button._auroraIconBorder = iconBG
 
         Button.NameFrame:SetAlpha(0)
