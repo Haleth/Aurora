@@ -17,7 +17,7 @@ do --[[ FrameXML\FlowContainer.lua ]]
         end
     end
     function Hook.FlowContainer_DoLayout(container)
-        if container.flowPauseUpdates then
+        if container.flowPauseUpdates or _G.InCombatLockdown() then
             return
         end
 
