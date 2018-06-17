@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next
+-- luacheck: globals next select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -111,6 +111,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         _G.hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", Hook.BONUS_OBJECTIVE_TRACKER_MODULE_AddProgressBar)
         _G.hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", Hook.BONUS_OBJECTIVE_TRACKER_MODULE_AddProgressBar)
         _G.hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "GetBlock", Hook.SCENARIO_TRACKER_MODULE_GetBlock)
+        _G.hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", Hook.SCENARIO_TRACKER_MODULE_AddProgressBar)
 
         _G.hooksecurefunc(_G.QUEST_TRACKER_MODULE, "Update", Hook.QUEST_TRACKER_MODULE_Update)
         _G.hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "Update", Hook.ACHIEVEMENT_TRACKER_MODULE_Update)
@@ -212,6 +213,14 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     function Hook.SCENARIO_TRACKER_MODULE_GetBlock(self)
         _G.ScenarioObjectiveBlock._auroraHeight = 0
     end
+    function Hook.SCENARIO_TRACKER_MODULE_AddProgressBar(self, block, line, criteriaIndex)
+        local progressBar = line.ProgressBar
+        if not progressBar._auroraSkinned then
+            Skin.ScenarioTrackerProgressBarTemplate(progressBar)
+            progressBar._auroraSkinned = true
+        end
+        block._auroraHeight = block._auroraHeight + progressBar:GetHeight() + Scale.Value(block.module.lineSpacing)
+    end
     function Hook.SCENARIO_CONTENT_TRACKER_MODULE_Update(self)
         local _, _, _, _, _, _, _, _, _, scenarioType = _G.C_Scenario.GetInfo()
         local stageBlock
@@ -224,7 +233,10 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
         Scale.RawSetHeight(_G.ScenarioObjectiveBlock, _G.ScenarioObjectiveBlock._auroraHeight)
 
-        Scale.RawSetHeight(_G.ScenarioBlocksFrame, (_G.ScenarioObjectiveBlock._auroraHeight + stageBlock:GetHeight()) + Scale.Value(1))
+        if stageBlock:IsShown() then
+            _G.ScenarioObjectiveBlock._auroraHeight = _G.ScenarioObjectiveBlock._auroraHeight + stageBlock:GetHeight()
+        end
+        Scale.RawSetHeight(_G.ScenarioBlocksFrame, _G.ScenarioObjectiveBlock._auroraHeight + Scale.Value(1))
     end
 end
 
@@ -389,7 +401,35 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         local bd = _G.CreateFrame("Frame", nil, bar)
         bd:SetPoint("TOPLEFT", -1, 1)
         bd:SetPoint("BOTTOMRIGHT", 1, -1)
-        Base.SetBackdrop(bd, Color.frame)
+        Base.SetBackdrop(bd, Color.button, 0.3)
+
+        --[[ Scale ]]--
+        Frame:SetSize(192, 38)
+
+        bar:SetSize(191, 17)
+        bar:SetPoint("LEFT", 10, 0)
+    end
+
+    ----====####$$$$%%%%%%%$$$$####====----
+    -- Blizzard_ScenarioObjectiveTracker --
+    ----====####$$$$%%%%%%%$$$$####====----
+    function Skin.ScenarioTrackerProgressBarTemplate(Frame)
+        local bar = Frame.Bar
+        bar.BarFrame:Hide()
+        bar.IconBG:SetColorTexture(0, 0, 0)
+
+        bar.BarBG:Hide()
+        bar.Icon:SetMask(nil)
+        bar.Icon:SetSize(26, 26)
+        bar.Icon:SetPoint("RIGHT", 33, 0)
+        Base.CropIcon(bar.Icon)
+
+        local bd = _G.CreateFrame("Frame", nil, bar)
+        bd:SetPoint("TOPLEFT", -1, 1)
+        bd:SetPoint("BOTTOMRIGHT", 1, -1)
+        Base.SetBackdrop(bd, Color.button, 0.3)
+
+        Base.SetTexture(bar:GetStatusBarTexture(), "gradientUp")
 
         --[[ Scale ]]--
         Frame:SetSize(192, 38)
@@ -480,6 +520,23 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     -- Blizzard_ScenarioObjectiveTracker --
     ----====####$$$$%%%%%%%$$$$####====----
     _G.ScenarioObjectiveBlock._auroraHeight = 0
+
+    local ScenarioChallengeModeBlock = _G.ScenarioChallengeModeBlock
+    local bg = select(3, ScenarioChallengeModeBlock:GetRegions())
+    bg:Hide()
+    Base.SetBackdrop(ScenarioChallengeModeBlock)
+
+    ScenarioChallengeModeBlock.TimerBGBack:Hide()
+    ScenarioChallengeModeBlock.TimerBG:Hide()
+
+    local bd = _G.CreateFrame("Frame", nil, ScenarioChallengeModeBlock.StatusBar)
+    bd:SetPoint("TOPLEFT", -1, 1)
+    bd:SetPoint("BOTTOMRIGHT", 1, -1)
+    Base.SetBackdrop(bd, Color.button, 0.3)
+
+    -- /dump Aurora.Color.blue:Hue(-0.1):GetRGB()
+    Base.SetTexture(ScenarioChallengeModeBlock.StatusBar:GetStatusBarTexture(), "gradientUp")
+    ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.blue:Hue(-0.15):GetRGB())
 
     --[[ Scale ]]--
     _G.ScenarioStageBlock:SetSize(201, 83)

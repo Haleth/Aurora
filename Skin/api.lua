@@ -897,13 +897,13 @@ do -- Color API
         end
 
         function colorMeta:Hue(delta)
-            Color.Hue(self, delta)
+            return Color.Hue(self, delta)
         end
         function colorMeta:Saturation(delta)
-            Color.Saturation(self, delta)
+            return Color.Saturation(self, delta)
         end
         function colorMeta:Lightness(delta)
-            Color.Lightness(self, delta)
+            return Color.Lightness(self, delta)
         end
     end
 
