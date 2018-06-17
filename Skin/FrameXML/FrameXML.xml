@@ -101,6 +101,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="UIPanelTemplates.lua"/>
     <Script file="UIParent.lua"/>
     <Script file="VideoOptionsFrame.lua"/>
+    <Script file="WardrobeOutfits.lua"/>
     <Script file="WorldMapFrame.lua"/>
     <Script file="WorldStateFrame.lua"/>
     <Script file="ZoneAbility.lua"/>

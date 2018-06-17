@@ -339,7 +339,7 @@ do -- Base API
             if not color then color = Color.frame end
             if type(color) ~= "table" then error("`color` must be a Color object. See Color.Create") end
 
-            frame:SetBackdropColor(color:Lightness(-0.3), alpha or color.a)
+            frame:SetBackdropColor(Color.Lightness(color, -0.3), alpha or color.a)
             frame:SetBackdropBorderColor(color, 1)
         end
     end
@@ -883,17 +883,27 @@ do -- Color API
         end
 
         local Clamp = _G.Clamp
-        function colorMeta:Hue(delta)
-            local h, s, l = RGBToHSL(self.r, self.g, self.b)
+        function Color.Hue(color, delta)
+            local h, s, l = RGBToHSL(color.r, color.g, color.b)
             return Color.Create(HSLToRGB(h + delta, s, l))
         end
-        function colorMeta:Saturation(delta)
-            local h, s, l = RGBToHSL(self.r, self.g, self.b)
+        function Color.Saturation(color, delta)
+            local h, s, l = RGBToHSL(color.r, color.g, color.b)
             return Color.Create(HSLToRGB(h, Clamp(s + s * delta, 0, 1), l))
         end
-        function colorMeta:Lightness(delta)
-            local h, s, l = RGBToHSL(self.r, self.g, self.b)
+        function Color.Lightness(color, delta)
+            local h, s, l = RGBToHSL(color.r, color.g, color.b)
             return Color.Create(HSLToRGB(h, s, Clamp(l + l * delta, 0, 1)))
+        end
+
+        function colorMeta:Hue(delta)
+            Color.Hue(self, delta)
+        end
+        function colorMeta:Saturation(delta)
+            Color.Saturation(self, delta)
+        end
+        function colorMeta:Lightness(delta)
+            Color.Lightness(self, delta)
         end
     end
 

@@ -1,15 +1,241 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals select next
 
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 local F, C = _G.unpack(private.Aurora)
+
+do --[[ AddOns\Blizzard_Collections.lua ]]
+    do --[[ Blizzard_Wardrobe ]]
+        local lightValues = {
+            enabled=true, omni=false,
+            dirX=-1, dirY=1, dirZ=-1,
+            ambIntensity=1.05, ambR=1, ambG=1, ambB=1,
+            dirIntensity=0, dirR=1, dirG=1, dirB=1
+        }
+        local notCollected = {
+            ambIntensity=1, ambR=0.4, ambG=0.4, ambB=0.4,
+            dirIntensity=0.5, dirR=0.5, dirG=0.5, dirB=0.5
+        }
+        local notUsable = {
+            ambIntensity=1, ambR=0.8, ambG=0.4, ambB=0.4,
+            dirIntensity=0.5, dirR=1, dirG=0, dirB=0
+        }
+        function Hook.WardrobeItemsCollectionMixin_UpdateItems(self)
+            for i = 1, self.PAGE_SIZE do
+                local model = self.Models[i]
+                local visualInfo = model.visualInfo
+                if visualInfo then
+                    local borderColor
+                    if model.TransmogStateTexture:IsShown() then
+                        local xmogState = model.TransmogStateTexture:GetAtlas()
+                        if xmogState:find("transmogged") then
+                            borderColor = _G.TRANSMOGRIFY_FONT_COLOR
+                        elseif xmogState:find("current") then
+                            borderColor = _G.YELLOW_FONT_COLOR
+                        elseif xmogState:find("selected") then
+                            borderColor = _G.TRANSMOGRIFY_FONT_COLOR
+                        end
+                        model.TransmogStateTexture:Hide()
+
+                        self.PendingTransmogFrame:SetPoint("TOPLEFT", model, 2, -3)
+                        self.PendingTransmogFrame:SetPoint("BOTTOMRIGHT", model, -1, 2)
+                        self.PendingTransmogFrame.TransmogSelectedAnim2:Stop()
+                    end
+
+                    if not visualInfo.isCollected then
+                        Base.SetBackdropColor(model._auroraBD, Color.frame, 0.3)
+                        model:SetLight(lightValues.enabled, lightValues.omni,
+                            lightValues.dirX, lightValues.dirY, lightValues.dirZ,
+                            notCollected.ambIntensity, notCollected.ambR, notCollected.ambG, notCollected.ambB,
+                            notCollected.dirIntensity, notCollected.dirR, notCollected.dirG, notCollected.dirB)
+                    elseif not visualInfo.isUsable then
+                        Base.SetBackdropColor(model._auroraBD, Color.red, 0.3)
+                        model:SetLight(lightValues.enabled, lightValues.omni,
+                            lightValues.dirX, lightValues.dirY, lightValues.dirZ,
+                            notUsable.ambIntensity, notUsable.ambR, notUsable.ambG, notUsable.ambB,
+                            notUsable.dirIntensity, notUsable.dirR, notUsable.dirG, notUsable.dirB)
+                    else
+                        Base.SetBackdropColor(model._auroraBD, Color.button, 0.3)
+                        model:SetLight(lightValues.enabled, lightValues.omni,
+                            lightValues.dirX, lightValues.dirY, lightValues.dirZ,
+                            lightValues.ambIntensity, lightValues.ambR, lightValues.ambG, lightValues.ambB,
+                            lightValues.dirIntensity, lightValues.dirR, lightValues.dirG, lightValues.dirB)
+                    end
+
+                    if borderColor then
+                        model._auroraBD:SetBackdropBorderColor(borderColor)
+                    end
+                end
+            end
+        end
+        function Hook.WardrobeSetsCollectionMixin_SetItemFrameQuality(self, itemFrame)
+            local quality
+            if itemFrame.collected then
+                quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
+            end
+            Hook.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
+        end
+        function Hook.WardrobeSetsTransmogMixin_UpdateSets(self)
+            for i = 1, self.PAGE_SIZE do
+                local model = self.Models[i]
+                if model.setID then
+                    local borderColor
+                    if model.TransmogStateTexture:IsShown() then
+                        borderColor = _G.TRANSMOGRIFY_FONT_COLOR
+                        model.TransmogStateTexture:Hide()
+
+                        self.PendingTransmogFrame:SetPoint("TOPLEFT", model, 2, -3)
+                        self.PendingTransmogFrame:SetPoint("BOTTOMRIGHT", model, -1, 2)
+                        self.PendingTransmogFrame.TransmogSelectedAnim2:Stop()
+                    end
+
+                    if borderColor then
+                        model._auroraBD:SetBackdropBorderColor(borderColor)
+                    else
+                        model._auroraBD:SetBackdropBorderColor(Color.button)
+                    end
+                end
+            end
+        end
+    end
+end
+
+do --[[ AddOns\Blizzard_Collections.xml ]]
+    do --[[ Blizzard_CollectionTemplates ]]
+        function Skin.CollectionsProgressBarTemplate(StatusBar)
+            StatusBar.border:Hide()
+            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+
+            local bg = select(3, StatusBar:GetRegions())
+            bg:SetPoint("TOPLEFT", -1, 1)
+            bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        end
+        function Skin.CollectionsBackgroundTemplate(Frame)
+            Skin.InsetFrameTemplate(Frame)
+
+            Frame.BackgroundTile:Hide()
+
+            Frame.ShadowCornerTopLeft:Hide()
+            Frame.ShadowCornerTopRight:Hide()
+            Frame.ShadowCornerBottomLeft:Hide()
+            Frame.ShadowCornerBottomRight:Hide()
+            Frame.ShadowCornerTop:Hide()
+            Frame.ShadowCornerLeft:Hide()
+            Frame.ShadowCornerRight:Hide()
+            Frame.ShadowCornerBottom:Hide()
+
+            Frame.OverlayShadowTopLeft:Hide()
+            Frame.OverlayShadowTopRight:Hide()
+            Frame.OverlayShadowBottomLeft:Hide()
+            Frame.OverlayShadowBottomRight:Hide()
+            Frame.OverlayShadowTop:Hide()
+            Frame.OverlayShadowLeft:Hide()
+            Frame.OverlayShadowRight:Hide()
+            Frame.OverlayShadowBottom:Hide()
+
+            Frame.BGCornerFilagreeBottomLeft:Hide()
+            Frame.BGCornerFilagreeBottomRight:Hide()
+            Frame.BGCornerTopLeft:SetAlpha(0)
+            Frame.BGCornerTopRight:SetAlpha(0)
+            Frame.BGCornerBottomLeft:Hide()
+            Frame.BGCornerBottomRight:Hide()
+            Frame.ShadowLineTop:Hide()
+            Frame.ShadowLineBottom:Hide()
+        end
+        function Skin.CollectionsPrevPageButton(Button)
+            Skin.NavButtonPrevious(Button)
+        end
+        function Skin.CollectionsNextPageButton(Button)
+            Skin.NavButtonNext(Button)
+        end
+        function Skin.CollectionsPagingFrameTemplate(Frame)
+            Skin.CollectionsPrevPageButton(Frame.PrevPageButton)
+            Skin.CollectionsNextPageButton(Frame.NextPageButton)
+        end
+    end
+    do --[[ Blizzard_Wardrobe ]]
+        function Skin.WardrobeItemsModelTemplate(DressUpModel)
+            local bg, _, _, _, _, highlight = DressUpModel:GetRegions()
+            bg:Hide()
+            DressUpModel.Border:Hide()
+
+            local bd = _G.CreateFrame("Frame", nil, DressUpModel)
+            bd:SetPoint("TOPLEFT")
+            bd:SetPoint("BOTTOMRIGHT", 2, -2)
+            Base.SetBackdrop(bd, Color.button, 0.3)
+            DressUpModel._auroraBD = bd
+
+            highlight:SetTexCoord(.03, .97, .03, .97)
+            highlight:SetPoint("TOPLEFT", 0, 0)
+            highlight:SetPoint("BOTTOMRIGHT", 1, -1)
+        end
+        function Skin.WardrobeSetsTransmogModelTemplate(DressUpModel)
+            local bg, _, _, highlight = DressUpModel:GetRegions()
+            bg:Hide()
+            DressUpModel.Border:Hide()
+
+            local bd = _G.CreateFrame("Frame", nil, DressUpModel)
+            bd:SetPoint("TOPLEFT")
+            bd:SetPoint("BOTTOMRIGHT", 2, -2)
+            Base.SetBackdrop(bd, Color.button, 0.3)
+            DressUpModel._auroraBD = bd
+
+            highlight:SetTexCoord(0.02272727272727, 0.97727272727273, 0.01595744680851, 0.98404255319149)
+            highlight:SetPoint("TOPLEFT", 0, 0)
+            highlight:SetPoint("BOTTOMRIGHT", 1, -1)
+        end
+        function Skin.WardrobeSetsScrollFrameButtonTemplate(Frame)
+            Frame.Background:Hide()
+
+            local bg = _G.CreateFrame("Frame", nil, Frame)
+            bg:SetPoint("TOPLEFT", 0, -1)
+            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+            bg:SetFrameLevel(Frame:GetFrameLevel()-1)
+            Base.SetBackdrop(bg, Color.frame)
+            Frame.bg = bg
+
+            Base.CropIcon(Frame.Icon, Frame)
+
+            Frame.SelectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            Frame.HighlightTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+        end
+        function Skin.WardrobeSetsDetailsItemFrameTemplate(Frame)
+            Base.CropIcon(Frame.Icon)
+
+            local bg = _G.CreateFrame("Frame", nil, Frame)
+            bg:SetFrameLevel(Frame:GetFrameLevel() - 1)
+            bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+            bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+            Base.SetBackdrop(bg, Color.black, 0.3)
+            Frame._auroraIconBorder = bg
+
+            --[[ Scale ]]--
+            Frame:SetSize(Frame:GetSize())
+        end
+        function Skin.WardrobeTransmogButtonTemplate(Button)
+            Base.CropIcon(Button.Icon, Button)
+            Button.Border:Hide()
+
+            local highlight = Button:GetHighlightTexture()
+            Base.CropIcon(highlight)
+            highlight:SetAllPoints(Button.Icon)
+        end
+        function Skin.WardrobeTransmogEnchantButtonTemplate(Button)
+            Base.CropIcon(Button.Icon, Button)
+            Button.Border:Hide()
+
+            local highlight = Button:GetHighlightTexture()
+            Base.CropIcon(highlight)
+            highlight:SetAllPoints(Button.Icon)
+        end
+    end
+end
 
 function private.AddOns.Blizzard_Collections()
     local r, g, b = C.r, C.g, C.b
@@ -84,12 +310,12 @@ function private.AddOns.Blizzard_Collections()
     _G.PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
 
     local scrollFrames = {MountJournal.ListScrollFrame.buttons, PetJournal.listScroll.buttons}
-    for _, scrollFrame in pairs(scrollFrames) do
+    for _, scrollFrame in next, scrollFrames do
         for i = 1, #scrollFrame do
             local button = scrollFrame[i]
 
             button:GetRegions():Hide()
-            local bg = CreateFrame("Frame", nil, button)
+            local bg = _G.CreateFrame("Frame", nil, button)
             bg:SetPoint("TOPLEFT", 0, -1)
             bg:SetPoint("BOTTOMRIGHT", 0, 1)
             bg:SetFrameLevel(button:GetFrameLevel()-1)
@@ -136,8 +362,8 @@ function private.AddOns.Blizzard_Collections()
         end
     end
 
-    hooksecurefunc("MountJournal_UpdateMountList", updateMountScroll)
-    hooksecurefunc(_G.MountJournalListScrollFrame, "update", updateMountScroll)
+    _G.hooksecurefunc("MountJournal_UpdateMountList", updateMountScroll)
+    _G.hooksecurefunc(_G.MountJournalListScrollFrame, "update", updateMountScroll)
 
     local function updatePetScroll()
         local petButtons = PetJournal.listScroll.buttons
@@ -172,8 +398,8 @@ function private.AddOns.Blizzard_Collections()
         end
     end
 
-    hooksecurefunc("PetJournal_UpdatePetList", updatePetScroll)
-    hooksecurefunc(_G.PetJournalListScrollFrame, "update", updatePetScroll)
+    _G.hooksecurefunc("PetJournal_UpdatePetList", updatePetScroll)
+    _G.hooksecurefunc(_G.PetJournalListScrollFrame, "update", updatePetScroll)
 
     _G.PetJournalHealPetButtonBorder:Hide()
     _G.PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
@@ -237,7 +463,7 @@ function private.AddOns.Blizzard_Collections()
         F.CreateBG(bu.icon)
     end
 
-    hooksecurefunc("PetJournal_UpdatePetCard", function(self)
+    _G.hooksecurefunc("PetJournal_UpdatePetCard", function(self)
         local petInfo = self.PetInfo
         local red, green, blue
 
@@ -306,7 +532,7 @@ function private.AddOns.Blizzard_Collections()
         end
     end
 
-    hooksecurefunc("PetJournal_UpdatePetLoadOut", function()
+    _G.hooksecurefunc("PetJournal_UpdatePetLoadOut", function()
         for i = 1, 3 do
             local bu = PetJournal.Loadout["Pet"..i]
 
@@ -403,7 +629,7 @@ function private.AddOns.Blizzard_Collections()
 
         --button.cooldown:SetAllPoints(icon)
 
-        hooksecurefunc(button.name, "SetTextColor", changeTextColor)
+        _G.hooksecurefunc(button.name, "SetTextColor", changeTextColor)
     end
 
     -- [[ Heirlooms ]]
@@ -437,7 +663,7 @@ function private.AddOns.Blizzard_Collections()
     -- Buttons
 
     local heirloomColor = _G.BAG_ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_HEIRLOOM]
-    hooksecurefunc(HeirloomsJournal, "UpdateButton", function(self, button)
+    _G.hooksecurefunc(HeirloomsJournal, "UpdateButton", function(self, button)
         if not button.styled then
             button:SetPushedTexture("")
             button:SetHighlightTexture("")
@@ -486,7 +712,7 @@ function private.AddOns.Blizzard_Collections()
         end
     end)
 
-    hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function(self)
+    _G.hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function(self)
         for i = 1, #self.heirloomHeaderFrames do
             local header = self.heirloomHeaderFrames[i]
             if not header.styled then
@@ -498,227 +724,86 @@ function private.AddOns.Blizzard_Collections()
         end
     end)
 
-    -- [[ WardrobeCollection ]]
+    ----====####$$$$%%%%%$$$$####====----
+    --        Blizzard_Wardrobe        --
+    ----====####$$$$%%%%%$$$$####====----
 
+    -----------------------------
+    -- WardrobeCollectionFrame --
+    -----------------------------
     local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
-    F.ReskinTab("WardrobeCollectionFrameTab", 2)
+    Skin.TabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
+    Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
+    Skin.GlowBoxTemplate(WardrobeCollectionFrame.SetsTabHelpBox)
+    Skin.UIPanelCloseButton(WardrobeCollectionFrame.SetsTabHelpBox.CloseButton)
+    Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
 
-    _G.WardrobeCollectionFrameBg:Hide()
-    F.ReskinInput(WardrobeCollectionFrame.searchBox)
-    F.ReskinFilterButton(WardrobeCollectionFrame.FilterButton)
-
-    -- Progress bar
-    local progressBar = WardrobeCollectionFrame.progressBar
-    progressBar.border:Hide()
-    progressBar:DisableDrawLayer("BACKGROUND")
-
-    progressBar.text:SetPoint("CENTER", 0, 1)
-    progressBar:SetStatusBarTexture(C.media.backdrop)
-
-    F.CreateBDFrame(progressBar, .25)
+    Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
+    Skin.UIMenuButtonStretchTemplate(WardrobeCollectionFrame.FilterButton)
 
     -- Items
     local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
-    ItemsCollectionFrame:DisableDrawLayer("BACKGROUND")
-    ItemsCollectionFrame:DisableDrawLayer("BORDER")
-    ItemsCollectionFrame:DisableDrawLayer("ARTWORK")
-    ItemsCollectionFrame:DisableDrawLayer("OVERLAY")
+    _G.hooksecurefunc(ItemsCollectionFrame, "UpdateItems", Hook.WardrobeItemsCollectionMixin_UpdateItems)
 
-    F.ReskinDropDown(ItemsCollectionFrame.WeaponDropDown)
-    F.ReskinArrow(ItemsCollectionFrame.PagingFrame.PrevPageButton, "Left")
-    F.ReskinArrow(ItemsCollectionFrame.PagingFrame.NextPageButton, "Right")
+    Skin.CollectionsBackgroundTemplate(ItemsCollectionFrame)
+    Skin.CollectionsPagingFrameTemplate(ItemsCollectionFrame.PagingFrame)
+    Skin.UIDropDownMenuTemplate(ItemsCollectionFrame.WeaponDropDown)
 
     local Models = ItemsCollectionFrame.Models
     for i = 1, #Models do
-        local model = Models[i]
-        local bg, _, _, _, _, highlight = model:GetRegions()
-        bg:Hide()
-        model.Border:Hide()
-        model.bg = F.CreateBDFrame(model)
-        model.bg:SetPoint("BOTTOMRIGHT", 2, -2)
-        highlight:SetTexCoord(.03, .97, .03, .97)
-        highlight:SetPoint("TOPLEFT", 0, 0)
-        highlight:SetPoint("BOTTOMRIGHT", 1, -1)
+        Skin.WardrobeItemsModelTemplate(Models[i])
     end
 
-    local lightValues = {
-        enabled=true, omni=false,
-        dirX=-1, dirY=1, dirZ=-1,
-        ambIntensity=1.05, ambR=1, ambG=1, ambB=1,
-        dirIntensity=0, dirR=1, dirG=1, dirB=1
-    }
-    local notCollected = {
-        ambIntensity=1, ambR=0.4, ambG=0.4, ambB=0.4,
-        dirIntensity=0.5, dirR=0.5, dirG=0.5, dirB=0.5
-    }
-    local notUsable = {
-        ambIntensity=1, ambR=0.8, ambG=0.4, ambB=0.4,
-        dirIntensity=0.5, dirR=1, dirG=0, dirB=0
-    }
-    local function UpdateItems(self)
-        for i = 1, self.PAGE_SIZE do
-            local model = self.Models[i]
-            local visualInfo = model.visualInfo
-            if visualInfo then
-                local borderColor
-                if model.TransmogStateTexture:IsShown() then
-                    local xmogState = model.TransmogStateTexture:GetAtlas()
-                    if xmogState:find("transmogged") then
-                        borderColor = {1, 0.5, 1}
-                    elseif xmogState:find("current") then
-                        borderColor = {1, 1, 0}
-                    elseif xmogState:find("selected") then
-                        borderColor = {1, 0.5, 1}
-                    end
-                    model.TransmogStateTexture:Hide()
-
-                    self.PendingTransmogFrame:SetPoint("TOPLEFT", model, 2, -3)
-                    self.PendingTransmogFrame:SetPoint("BOTTOMRIGHT", model, -1, 2)
-                    self.PendingTransmogFrame.TransmogSelectedAnim2:Stop()
-                end
-
-                if borderColor then
-                    model.bg:SetBackdropBorderColor(borderColor[1], borderColor[2], borderColor[3])
-                else
-                    model.bg:SetBackdropBorderColor(0, 0, 0)
-                end
-
-                if ( not visualInfo.isCollected ) then
-                    model:SetLight(lightValues.enabled, lightValues.omni,
-                        lightValues.dirX, lightValues.dirY, lightValues.dirZ,
-                        notCollected.ambIntensity, notCollected.ambR, notCollected.ambG, notCollected.ambB,
-                        notCollected.dirIntensity, notCollected.dirR, notCollected.dirG, notCollected.dirB)
-                elseif ( not visualInfo.isUsable ) then
-                    model:SetLight(lightValues.enabled, lightValues.omni,
-                        lightValues.dirX, lightValues.dirY, lightValues.dirZ,
-                        notUsable.ambIntensity, notUsable.ambR, notUsable.ambG, notUsable.ambB,
-                        notUsable.dirIntensity, notUsable.dirR, notUsable.dirG, notUsable.dirB)
-                else
-                    model:SetLight(lightValues.enabled, lightValues.omni,
-                        lightValues.dirX, lightValues.dirY, lightValues.dirZ,
-                        lightValues.ambIntensity, lightValues.ambR, lightValues.ambG, lightValues.ambB,
-                        lightValues.dirIntensity, lightValues.dirR, lightValues.dirG, lightValues.dirB)
-                end
-            end
-        end
-    end
-    hooksecurefunc(ItemsCollectionFrame, "UpdateItems", UpdateItems)
 
     -- Sets
     local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
-    SetsCollectionFrame.LeftInset:DisableDrawLayer("BACKGROUND")
-    SetsCollectionFrame.LeftInset:DisableDrawLayer("BORDER")
-    SetsCollectionFrame.RightInset:DisableDrawLayer("BACKGROUND")
-    SetsCollectionFrame.RightInset:DisableDrawLayer("BORDER")
-    SetsCollectionFrame.RightInset:DisableDrawLayer("ARTWORK")
-    SetsCollectionFrame.RightInset:DisableDrawLayer("OVERLAY")
-
-    local ScrollFrame = SetsCollectionFrame.ScrollFrame
-    F.ReskinScroll(ScrollFrame.scrollBar)
-    for i = 1, #ScrollFrame.buttons do
-        local button = ScrollFrame.buttons[i]
-
-        button.Background:Hide()
-        local bg = CreateFrame("Frame", nil, button)
-        bg:SetPoint("TOPLEFT", 0, -1)
-        bg:SetPoint("BOTTOMRIGHT", 0, 1)
-        bg:SetFrameLevel(button:GetFrameLevel()-1)
-        F.CreateBD(bg, .25)
-        button.bg = bg
-
-        button.Icon.bg = F.ReskinIcon(button.Icon)
-
-        button.SelectedTexture:SetTexture("")
-        button.HighlightTexture:SetTexture(C.media.backdrop)
-        button.HighlightTexture:SetVertexColor(r, g, b, .25)
-    end
-
-    hooksecurefunc(ScrollFrame, "Update", function(self)
-        local buttons = self.buttons
-
-        for i = 1, #buttons do
-            local button = buttons[i]
-            if button.SelectedTexture:IsShown() then
-                button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
-            else
-                button.bg:SetBackdropBorderColor(0, 0, 0)
-            end
-
-            if button.IconCover:IsShown() then
-                button.Icon.bg:SetBackdropBorderColor(0, 0, 0, 0.7)
-            else
-                button.Icon.bg:SetBackdropBorderColor(1, 1, 1)
-            end
-        end
-    end)
+    _G.hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", Hook.WardrobeSetsCollectionMixin_SetItemFrameQuality)
+    Skin.InsetFrameTemplate(SetsCollectionFrame.LeftInset)
+    Skin.CollectionsBackgroundTemplate(SetsCollectionFrame.RightInset)
+    Skin.HybridScrollBarTrimTemplate(SetsCollectionFrame.ScrollFrame.scrollBar)
 
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
+    _G.hooksecurefunc(DetailsFrame.itemFramesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     DetailsFrame.ModelFadeTexture:Hide()
-    DetailsFrame.IconRowBackground:Hide()
-    F.ReskinFilterButton(DetailsFrame.VariantSetsButton, "Down")
+    Skin.UIMenuButtonStretchTemplate(DetailsFrame.VariantSetsButton)
 
-    hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", function(self, itemFrame)
-        if not itemFrame.skinned then
-            itemFrame._auroraIconBorder = F.ReskinIcon(itemFrame.Icon)
-            itemFrame.skinned = true
-        end
+    local SetsTransmogFrame = WardrobeCollectionFrame.SetsTransmogFrame
+    _G.hooksecurefunc(SetsTransmogFrame, "UpdateSets", Hook.WardrobeSetsTransmogMixin_UpdateSets)
+    Skin.CollectionsBackgroundTemplate(SetsTransmogFrame)
+    Skin.CollectionsPagingFrameTemplate(SetsTransmogFrame.PagingFrame)
+    for i = 1, #SetsTransmogFrame.Models do
+        Skin.WardrobeSetsTransmogModelTemplate(SetsTransmogFrame.Models[i])
+    end
 
-        local quality
-        if itemFrame.collected then
-            quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
-        end
-        Hook.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
-    end)
-
-    -- [[ Wardrobe ]]
-
+    -------------------
+    -- WardrobeFrame --
+    -------------------
     local WardrobeFrame = _G.WardrobeFrame
-    local WardrobeTransmogFrame = _G.WardrobeTransmogFrame
+    Skin.PortraitFrameTemplate(WardrobeFrame)
 
-    _G.WardrobeTransmogFrameBg:Hide()
-    WardrobeTransmogFrame.Inset.BG:Hide()
-    WardrobeTransmogFrame.Inset:DisableDrawLayer("BORDER")
+    local WardrobeTransmogFrame = _G.WardrobeTransmogFrame
     WardrobeTransmogFrame.MoneyLeft:Hide()
     WardrobeTransmogFrame.MoneyMiddle:Hide()
     WardrobeTransmogFrame.MoneyRight:Hide()
-    WardrobeTransmogFrame.SpecButton.Icon:Hide()
 
-    for i = 1, 9 do
-        select(i, WardrobeTransmogFrame.SpecButton:GetRegions()):Hide()
-    end
+    Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
+    WardrobeTransmogFrame.Inset.BG:Hide()
+    Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
+    Skin.GlowBoxTemplate(WardrobeTransmogFrame.OutfitHelpBox)
+    Skin.UIPanelCloseButton(WardrobeTransmogFrame.OutfitHelpBox.CloseButton)
 
-    F.ReskinPortraitFrame(WardrobeFrame)
-    F.Reskin(WardrobeTransmogFrame.ApplyButton)
-    F.Reskin(_G.WardrobeOutfitDropDown.SaveButton)
-    F.ReskinArrow(_G.WardrobeTransmogFrame.SpecButton, "Down")
-    F.ReskinDropDown(_G.WardrobeOutfitDropDown)
-
-    _G.WardrobeOutfitDropDown:SetHeight(32)
-    _G.WardrobeOutfitDropDown.SaveButton:SetPoint("LEFT", _G.WardrobeOutfitDropDown, "RIGHT", -13, 2)
-    WardrobeTransmogFrame.SpecButton:SetPoint("RIGHT", WardrobeTransmogFrame.ApplyButton, "LEFT", -3, 0)
-
-    local slots = {
-        "Head",
-        "Shoulder",
-        "Chest",
-        "Waist",
-        "Legs",
-        "Feet",
-        "Wrist",
-        "Hands",
-        "Back",
-        "Shirt",
-        "Tabard",
-        "MainHand",
-        "SecondaryHand"
-    }
-
-    for i = 1, #slots do
-        local slot = WardrobeTransmogFrame.Model[slots[i].."Button"]
-        if slot then
-            slot.Border:Hide()
-            slot.Icon:SetDrawLayer("BACKGROUND", 1)
-            F.ReskinIcon(slot.Icon)
+    Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.Model.ClearAllPendingButton)
+    for i = 1, #WardrobeTransmogFrame.Model.SlotButtons do
+        if i > 13 then
+            Skin.WardrobeTransmogEnchantButtonTemplate(WardrobeTransmogFrame.Model.SlotButtons[i])
+        else
+            Skin.WardrobeTransmogButtonTemplate(WardrobeTransmogFrame.Model.SlotButtons[i])
         end
     end
+
+    Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
+    Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
+    Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
+    Skin.GlowBoxTemplate(WardrobeTransmogFrame.SpecHelpBox)
+    Skin.UIPanelCloseButton(WardrobeTransmogFrame.SpecHelpBox.CloseButton)
 end
