@@ -9,31 +9,32 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ AddOns\Blizzard_ChallengesUI.lua ]]
-    local skinnedIndex = 1
     function Hook.ChallengesFrame_Update(self)
         for i, icon in ipairs(self.DungeonIcons) do
-            if i > skinnedIndex then
+            if i > (self._skinnedIcons or 0) then
                 Skin.ChallengesDungeonIconFrameTemplate(icon)
-                skinnedIndex = i
+                self._skinnedIcons = i
             end
         end
     end
     function Hook.ChallengesKeystoneFrameMixin_Reset(self)
+        self:GetRegions():Hide()
         self.InstructionBackground:Hide()
-        --self.InstructionBackground:SetAlpha(0.5)
     end
-    function Hook.ChallengesKeystoneFrameAffixMixin_SetUp(self, affixInfo)
-        if not self._auroraSkinned then
-            Skin.ChallengesKeystoneFrameAffixTemplate(self)
-            self._auroraSkinned = true
-        end
+    function Hook.ChallengesKeystoneFrameMixin_OnKeystoneSlotted(self, affixInfo)
+        for i, affix in ipairs(self.Affixes) do
+            if i > (self._skinnedAffixes or 0) then
+                Skin.ChallengesKeystoneFrameAffixTemplate(affix)
+                self._skinnedAffixes = i
+            end
 
-        self.Portrait:SetTexture(nil)
-        if self.info then
-            self.Portrait:SetTexture(_G.CHALLENGE_MODE_EXTRA_AFFIX_INFO[self.info.key].texture)
-        elseif self.affixID then
-            local _, _, filedataid = _G.C_ChallengeMode.GetAffixInfo(self.affixID)
-            self.Portrait:SetTexture(filedataid)
+            affix.Portrait:SetTexture(nil)
+            if affix.info then
+                affix.Portrait:SetTexture(_G.CHALLENGE_MODE_EXTRA_AFFIX_INFO[affix.info.key].texture)
+            elseif affix.affixID then
+                local _, _, filedataid = _G.C_ChallengeMode.GetAffixInfo(affix.affixID)
+                affix.Portrait:SetTexture(filedataid)
+            end
         end
     end
 end
@@ -58,12 +59,12 @@ function private.AddOns.Blizzard_ChallengesUI()
     -- /run ChallengesKeystoneFrame:Show()
     local ChallengesKeystoneFrame = _G.ChallengesKeystoneFrame
     _G.hooksecurefunc(ChallengesKeystoneFrame, "Reset", Hook.ChallengesKeystoneFrameMixin_Reset)
+    _G.hooksecurefunc(ChallengesKeystoneFrame, "OnKeystoneSlotted", Hook.ChallengesKeystoneFrameMixin_OnKeystoneSlotted)
 
     ChallengesKeystoneFrame:GetRegions():Hide()
     Base.SetBackdrop(ChallengesKeystoneFrame)
     Skin.UIPanelCloseButton(ChallengesKeystoneFrame.CloseButton)
     Skin.UIPanelButtonTemplate(ChallengesKeystoneFrame.StartButton)
-    Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesKeystoneFrame.Affixes[1])
 
     --[[ Scale ]]--
 
@@ -87,8 +88,6 @@ function private.AddOns.Blizzard_ChallengesUI()
         ChallengesFrame.GuildBest.Line:SetPoint("TOP", 0, -24)
         ChallengesFrame.GuildBest.Line:SetHeight(1)
     end
-
-    Skin.ChallengesDungeonIconFrameTemplate(ChallengesFrame.DungeonIcons[1])
 
     local bg, inset = ChallengesFrame:GetRegions()
     bg:Hide()
