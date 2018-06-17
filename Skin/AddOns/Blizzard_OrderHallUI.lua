@@ -6,7 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 --[[ do AddOns\Blizzard_OrderHallUI.lua
@@ -21,11 +21,12 @@ function private.AddOns.Blizzard_OrderHallUI()
     ----====####$$$$%%%%%$$$$####====----
     if not private.isPatch then
         local OrderHallMissionFrame = _G.OrderHallMissionFrame
+        _G.hooksecurefunc(OrderHallMissionFrame, "SetupTabs", Hook.OrderHallMission_SetupTabs)
         Skin.GarrisonMissionFrameTemplate(OrderHallMissionFrame)
         Skin.GarrisonUITemplate(OrderHallMissionFrame)
 
         OrderHallMissionFrame.ClassHallIcon:SetClipsChildren(true)
-        OrderHallMissionFrame.ClassHallIcon:SetFrameLevel(OrderHallMissionFrame:GetFrameLevel())
+        OrderHallMissionFrame.ClassHallIcon:SetFrameLevel(OrderHallMissionFrame:GetFrameLevel() + 1)
         OrderHallMissionFrame.ClassHallIcon:SetFrameStrata(OrderHallMissionFrame:GetFrameStrata())
         OrderHallMissionFrame.ClassHallIcon:SetPoint("TOPLEFT")
         OrderHallMissionFrame.ClassHallIcon:SetSize(200, 200)
@@ -34,13 +35,11 @@ function private.AddOns.Blizzard_OrderHallUI()
         OrderHallMissionFrame.ClassHallIcon.Icon:SetPoint("CENTER", OrderHallMissionFrame.ClassHallIcon, "TOPLEFT", 50, -50)
         OrderHallMissionFrame.ClassHallIcon.Icon:SetAtlas("legionmission-landingpage-background-"..className, true)
         OrderHallMissionFrame.ClassHallIcon.Icon:SetDesaturated(true)
+        OrderHallMissionFrame.ClassHallIcon.Icon:SetAlpha(0.8)
 
         Skin.OrderHallFrameTabButtonTemplate(OrderHallMissionFrame.Tab1)
-        OrderHallMissionFrame.Tab1:SetPoint("TOPLEFT", OrderHallMissionFrame, "BOTTOMLEFT", 20, -1)
         Skin.OrderHallFrameTabButtonTemplate(OrderHallMissionFrame.Tab2)
-        OrderHallMissionFrame.Tab2:SetPoint("TOPLEFT", OrderHallMissionFrame.Tab1, "TOPRIGHT", 1, 0)
         Skin.OrderHallFrameTabButtonTemplate(OrderHallMissionFrame.Tab3)
-        OrderHallMissionFrame.Tab3:SetPoint("TOPLEFT", OrderHallMissionFrame.Tab2, "TOPRIGHT", 1, 0)
 
         ------------------
         -- FollowerList --
@@ -119,9 +118,12 @@ function private.AddOns.Blizzard_OrderHallUI()
         ---------------------
         -- MissionComplete --
         ---------------------
+        OrderHallMissionFrame.MissionCompleteBackground:SetAllPoints(OrderHallMissionFrame)
         local OrderHallMissionComplete = OrderHallMissionFrame.MissionComplete
         Skin.GarrisonMissionPageBaseTemplate(OrderHallMissionComplete)
         Skin.GarrisonMissionCompleteTemplate(OrderHallMissionComplete)
+        Skin.GarrisonFollowerMissionCompleteStageTemplate(OrderHallMissionComplete.Stage)
+        Skin.GarrisonFollowerMissionRewardsFrameTemplate(OrderHallMissionComplete.BonusRewards)
 
         --[[ Scale ]]--
     end

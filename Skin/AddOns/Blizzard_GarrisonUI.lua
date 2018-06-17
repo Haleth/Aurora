@@ -9,8 +9,17 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
---[[ do AddOns\Blizzard_GarrisonUI.lua
-end ]]
+do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
+    do --[[ Blizzard_OrderHallMissionUI ]]
+        function Hook.OrderHallMission_SetupTabs(self)
+            Util.PositionRelative("TOPLEFT", self, "BOTTOMLEFT", 20, -1, 1, {
+                self.Tab1,
+                self.Tab2,
+                self.Tab3,
+            })
+        end
+    end
+end
 
 do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
     do --[[ Blizzard_GarrisonShipyardUI.xml ]]
@@ -533,6 +542,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     --   Blizzard_OrderHallMissionUI   --
     ----====####$$$$%%%%%$$$$####====----
     local OrderHallMissionFrame = _G.OrderHallMissionFrame
+    _G.hooksecurefunc(OrderHallMissionFrame, "SetupTabs", Hook.OrderHallMission_SetupTabs)
     Skin.GarrisonMissionFrameTemplate(OrderHallMissionFrame)
     Skin.GarrisonUITemplate(OrderHallMissionFrame)
 
@@ -549,11 +559,8 @@ function private.AddOns.Blizzard_GarrisonUI()
     OrderHallMissionFrame.ClassHallIcon.Icon:SetAlpha(0.8)
 
     Skin.OrderHallFrameTabButtonTemplate(OrderHallMissionFrame.Tab1)
-    OrderHallMissionFrame.Tab1:SetPoint("TOPLEFT", OrderHallMissionFrame, "BOTTOMLEFT", 20, -1)
     Skin.OrderHallFrameTabButtonTemplate(OrderHallMissionFrame.Tab2)
-    OrderHallMissionFrame.Tab2:SetPoint("TOPLEFT", OrderHallMissionFrame.Tab1, "TOPRIGHT", 1, 0)
     Skin.OrderHallFrameTabButtonTemplate(OrderHallMissionFrame.Tab3)
-    OrderHallMissionFrame.Tab3:SetPoint("TOPLEFT", OrderHallMissionFrame.Tab2, "TOPRIGHT", 1, 0)
 
     ------------------
     -- FollowerList --
