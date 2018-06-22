@@ -15,6 +15,16 @@ do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_SetBackdropStyle(self, style)
         Base.SetBackdrop(self, Color.black)
     end
+    function Hook.EmbeddedItemTooltip_Clear(self)
+        self._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
+        self._auroraIconBorder:Hide()
+    end
+    function Hook.EmbeddedItemTooltip_PrepareForItem(self)
+        self._auroraIconBorder:Show()
+    end
+    function Hook.EmbeddedItemTooltip_PrepareForSpell(self)
+        self._auroraIconBorder:Show()
+    end
 end
 
 do --[[ SharedXML\GameTooltipTemplate.xml ]]
@@ -78,6 +88,12 @@ do --[[ FrameXML\GameTooltip.xml ]]
         bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
         Base.SetBackdrop(bg, Color.black, 0)
         Frame._auroraIconBorder = bg
+
+        Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
     end
 end
 
@@ -86,6 +102,9 @@ function private.FrameXML.GameTooltip()
 
     if private.isPatch then
         _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
+        _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
+        _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
+        _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)
     else
         _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
     end

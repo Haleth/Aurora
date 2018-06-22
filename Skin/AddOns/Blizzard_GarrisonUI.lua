@@ -196,6 +196,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             t2:Hide()
             b2:Hide()
 
+            Button.RareOverlay:SetTexture("")
             Button.HighlightT:SetTexture("")
             Button.HighlightB:SetTexture("")
             Button.HighlightTL:SetTexture("")

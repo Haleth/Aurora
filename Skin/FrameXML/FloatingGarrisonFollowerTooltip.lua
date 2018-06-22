@@ -33,9 +33,7 @@ do --[[ FrameXML\FloatingGarrisonFollowerTooltip.lua ]]
 end
 
 do --[[ FrameXML\FloatingGarrisonFollowerTooltip.xml ]]
-    function Skin.GarrisonFollowerTooltipTemplate(Frame)
-        Skin.TooltipBorderedFrameTemplate(Frame)
-
+    function Skin.GarrisonFollowerTooltipContentsTemplate(Frame)
         Frame.Class:SetPoint("TOPRIGHT", -2, -2)
         Frame.XPBarBackground:SetPoint("TOPLEFT", Frame.PortraitFrame, "BOTTOMRIGHT", 0, -2)
 
@@ -50,6 +48,10 @@ do --[[ FrameXML\FloatingGarrisonFollowerTooltip.xml ]]
 
         Skin.GarrisonFollowerPortraitTemplate(Frame.PortraitFrame)
         Frame.PortraitFrame:SetPoint("TOPLEFT", 4, -4)
+    end
+    function Skin.GarrisonFollowerTooltipTemplate(Frame)
+        Skin.GarrisonFollowerTooltipContentsTemplate(Frame)
+        Skin.TooltipBorderedFrameTemplate(Frame)
     end
     function Skin.GarrisonShipyardFollowerTooltipTemplate(Frame)
         Skin.TooltipBorderedFrameTemplate(Frame)
