@@ -221,6 +221,35 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
         block._auroraHeight = block._auroraHeight + progressBar:GetHeight() + Scale.Value(block.module.lineSpacing)
     end
+
+    -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
+    local uiTextureKits = {
+        [0] = {color = Color.button, overlay = ""},
+        [261] = {color = Color.blue:Lightness(-0.3), overlay = [[Interface\Timer\Alliance-Logo]]},
+        [5117] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
+        ["legion"] = {color = Color.green:Lightness(-0.3), overlay = ""},
+    }
+    function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKitID)
+        -- /dump GetUITextureKitInfo(5117)
+
+        if widgetSetID then
+            stageBlock._auroraOverlay:Hide()
+        else
+            stageBlock._auroraOverlay:Show()
+
+            local kit
+            if textureKitID then
+                kit = uiTextureKits[textureKitID] or uiTextureKits[0]
+            elseif scenarioType == _G.LE_SCENARIO_TYPE_LEGION_INVASION then
+                kit = uiTextureKits["legion"]
+            else
+                kit = uiTextureKits[0]
+            end
+
+            Base.SetBackdropColor(stageBlock._auroraBG, kit.color, 0.75)
+            stageBlock._auroraOverlay:SetTexture(kit.overlay)
+        end
+    end
     function Hook.SCENARIO_CONTENT_TRACKER_MODULE_Update(self)
         local _, _, _, _, _, _, _, _, _, scenarioType = _G.C_Scenario.GetInfo()
         local stageBlock
@@ -519,8 +548,31 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_ScenarioObjectiveTracker --
     ----====####$$$$%%%%%%%$$$$####====----
+    _G.hooksecurefunc("ScenarioStage_CustomizeBlock", Hook.ScenarioStage_CustomizeBlock)
     _G.ScenarioObjectiveBlock._auroraHeight = 0
 
+
+    -- ScenarioObjectiveBlock
+    -- ScenarioStageBlock
+    local ScenarioStageBlock = _G.ScenarioStageBlock
+    ScenarioStageBlock.NormalBG:Hide()
+    local ssbBD = _G.CreateFrame("Frame", nil, ScenarioStageBlock)
+    ssbBD:SetFrameLevel(ScenarioStageBlock:GetFrameLevel())
+    ssbBD:SetAllPoints(ScenarioStageBlock.NormalBG)
+    ssbBD:SetClipsChildren(true)
+    ssbBD:SetPoint("TOPLEFT", ScenarioStageBlock.NormalBG, 3, -3)
+    ssbBD:SetPoint("BOTTOMRIGHT", ScenarioStageBlock.NormalBG, -3, 3)
+    Base.SetBackdrop(ssbBD, Color.button, 0.75)
+    ScenarioStageBlock._auroraBG = ssbBD
+
+    local overlay = ssbBD:CreateTexture(nil, "OVERLAY")
+    overlay:SetSize(120, 120)
+    overlay:SetPoint("TOPRIGHT", 23, 20)
+    overlay:SetAlpha(0.2)
+    overlay:SetDesaturated(true)
+    ScenarioStageBlock._auroraOverlay = overlay
+
+    -- ScenarioChallengeModeBlock
     local ScenarioChallengeModeBlock = _G.ScenarioChallengeModeBlock
     local bg = select(3, ScenarioChallengeModeBlock:GetRegions())
     bg:Hide()
@@ -533,10 +585,10 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     bd:SetPoint("TOPLEFT", -1, 1)
     bd:SetPoint("BOTTOMRIGHT", 1, -1)
     Base.SetBackdrop(bd, Color.button, 0.3)
-
-    -- /dump Aurora.Color.blue:Hue(-0.1):GetRGB()
     Base.SetTexture(ScenarioChallengeModeBlock.StatusBar:GetStatusBarTexture(), "gradientUp")
-    ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.blue:Hue(-0.15):GetRGB())
+    ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.cyan:GetRGB())
+
+    -- ScenarioProvingGroundsBlock
 
     if private.isPatch then
         -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
