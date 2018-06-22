@@ -538,6 +538,19 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     Base.SetTexture(ScenarioChallengeModeBlock.StatusBar:GetStatusBarTexture(), "gradientUp")
     ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.blue:Hue(-0.15):GetRGB())
 
+    if private.isPatch then
+        -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+        local WarfrontHelpBox = _G.ScenarioBlocksFrame.WarfrontHelpBox
+        local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
+        Arrow.Arrow = WarfrontHelpBox.ArrowRight
+        Arrow.Arrow:SetParent(Arrow)
+        Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
+        Arrow.Glow:SetParent(Arrow)
+        WarfrontHelpBox.Arrow = Arrow
+        WarfrontHelpBox.Text = WarfrontHelpBox.BigText
+        Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
+    end
+
     --[[ Scale ]]--
     _G.ScenarioStageBlock:SetSize(201, 83)
 end

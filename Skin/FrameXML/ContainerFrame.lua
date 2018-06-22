@@ -117,19 +117,19 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bdFrame)
         Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bdFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
+    function Skin.ContainerFrameHelpBoxTemplate(Frame)
+        Skin.GlowBoxFrame(Frame, "Right")
+    end
 end
 
 function private.FrameXML.ContainerFrame()
     if private.disabled.bags then return end
     _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
 
-
-    Skin.GlowBoxTemplate(_G.ArtifactRelicHelpBox)
-    Skin.UIPanelCloseButton(_G.ArtifactRelicHelpBox.CloseButton)
-    _G.ArtifactRelicHelpBox.CloseButton:SetPoint("TOPRIGHT", -4, -4)
-
-    Skin.GlowBoxArrowTemplate(_G.ArtifactRelicHelpBox.Arrow, "Right")
-    _G.ArtifactRelicHelpBox.Arrow:SetPoint("LEFT", _G.ArtifactRelicHelpBox, "RIGHT")
+    Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
+    if private.isPatch then
+        Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
+    end
 
     for i = 1, 12 do
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])

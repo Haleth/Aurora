@@ -734,10 +734,18 @@ function private.AddOns.Blizzard_Collections()
     local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
     Skin.TabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
     Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
-    Skin.GlowBoxTemplate(WardrobeCollectionFrame.SetsTabHelpBox)
-    Skin.UIPanelCloseButton(WardrobeCollectionFrame.SetsTabHelpBox.CloseButton)
-    Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
 
+    local SetsTabHelpBox = WardrobeCollectionFrame.SetsTabHelpBox
+    local Arrow = _G.CreateFrame("Frame", nil, SetsTabHelpBox)
+    Arrow.Arrow = SetsTabHelpBox.ArrowUp
+    Arrow.Arrow:SetParent(Arrow)
+    Arrow.Glow = SetsTabHelpBox.ArrowGlowUp
+    Arrow.Glow:SetParent(Arrow)
+    SetsTabHelpBox.Arrow = Arrow
+    SetsTabHelpBox.Text = SetsTabHelpBox.BigText
+    Skin.GlowBoxFrame(SetsTabHelpBox, "Up")
+
+    Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
     Skin.UIMenuButtonStretchTemplate(WardrobeCollectionFrame.FilterButton)
 
@@ -753,6 +761,8 @@ function private.AddOns.Blizzard_Collections()
     for i = 1, #Models do
         Skin.WardrobeItemsModelTemplate(Models[i])
     end
+
+    Skin.GlowBoxFrame(ItemsCollectionFrame.HelpBox, "Up")
 
 
     -- Sets
@@ -789,8 +799,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
     WardrobeTransmogFrame.Inset.BG:Hide()
     Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
-    Skin.GlowBoxTemplate(WardrobeTransmogFrame.OutfitHelpBox)
-    Skin.UIPanelCloseButton(WardrobeTransmogFrame.OutfitHelpBox.CloseButton)
+    Skin.GlowBoxFrame(WardrobeTransmogFrame.OutfitHelpBox, "Left")
 
     Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.Model.ClearAllPendingButton)
     for i = 1, #WardrobeTransmogFrame.Model.SlotButtons do
@@ -804,6 +813,5 @@ function private.AddOns.Blizzard_Collections()
     Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
     Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
     Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
-    Skin.GlowBoxTemplate(WardrobeTransmogFrame.SpecHelpBox)
-    Skin.UIPanelCloseButton(WardrobeTransmogFrame.SpecHelpBox.CloseButton)
+    Skin.GlowBoxFrame(WardrobeTransmogFrame.SpecHelpBox, "Up")
 end

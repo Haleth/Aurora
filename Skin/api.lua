@@ -1067,4 +1067,11 @@ do -- Util API
             _G.print("Test", name, ...)
         end)
     end
+
+    Util.OpposingSide = {
+        LEFT = "RIGHT",
+        RIGHT = "LEFT",
+        TOP = "BOTTOM",
+        BOTTOM = "TOP"
+    }
 end

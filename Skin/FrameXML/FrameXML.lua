@@ -251,6 +251,7 @@ local FrameXML = {
     "SharedXML.ModelPreviewFrame",
     "SplashFrame",
     "QuestChoiceFrameMixin",
+    "AzeriteEmpoweredItemDataSource",
 
     -- Save off whatever we need available unmodified.
     "SecureCapsule",

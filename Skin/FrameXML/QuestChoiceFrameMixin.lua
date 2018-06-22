@@ -68,7 +68,7 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
                 self.hasPendingUpdate = false
 
                 local choiceID, questionText, numOptions = _G.GetQuestChoiceInfo()
-                if (not choiceID or choiceID == 0) then
+                if (not choiceID or choiceID == 0 or numOptions == 0) then
                     self:Hide()
                     return
                 end

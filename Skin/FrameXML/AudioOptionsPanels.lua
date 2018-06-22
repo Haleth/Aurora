@@ -57,7 +57,9 @@ function private.FrameXML.AudioOptionsPanels()
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelSoundInBG)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelReverb)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelHRTF)
-    Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelEnableDSPs)
+    if not private.isPatch then
+        Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelEnableDSPs)
+    end
 
     -- Hardware
     Skin.OptionsBoxTemplate(_G.AudioOptionsSoundPanelHardware)

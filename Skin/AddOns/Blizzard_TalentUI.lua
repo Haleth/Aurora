@@ -403,20 +403,26 @@ function private.AddOns.Blizzard_TalentUI()
     --------------------
     if private.isPatch then
         local PvpTalentFrame = PlayerTalentFrameTalents.PvpTalentFrame
-        PvpTalentFrame:GetRegions():Hide() -- bg
+        local bg, vertbar = PvpTalentFrame:GetRegions()
+        bg:Hide()
+        vertbar:Hide()
         _G.PlayerTalentFrameTalentsPvpTalentFrameTLCorner:Hide()
         _G.PlayerTalentFrameTalentsPvpTalentFrameTRCorner:Hide()
         _G.PlayerTalentFrameTalentsPvpTalentFrameBLCorner:Hide()
         _G.PlayerTalentFrameTalentsPvpTalentFrameBRCorner:Hide()
-        topTile, bottomTile = select(6, PvpTalentFrame:GetRegions())
+        topTile, bottomTile = select(7, PvpTalentFrame:GetRegions())
         topTile:Hide()
         bottomTile:Hide()
 
         PvpTalentFrame.Swords:SetSize(72, 67)
         PvpTalentFrame.Orb:Hide()
         PvpTalentFrame.Ring:Hide()
+        select(13, PvpTalentFrame:GetRegions()):Hide() -- firecover
 
+        Skin.GlowBoxFrame(PvpTalentFrame.WarmodeTutorialBox, "Left")
         Skin.PvpTalentTrinketSlotTemplate(PvpTalentFrame.TrinketSlot)
+        Skin.GlowBoxFrame(PvpTalentFrame.TrinketSlot.HelpBox, "Left")
+
         Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot1)
         Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot2)
         Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot3)

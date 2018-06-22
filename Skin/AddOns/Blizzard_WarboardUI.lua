@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next max floor
+-- luacheck: globals next max floor select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -10,48 +10,110 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ AddOns\Blizzard_WarboardUI.lua ]]
     local WarboardQuestChoiceFrameMixin do
+        local SOLO_OPTION_WIDTH = 500
+
+        local HEADERS_SHOWN_TOP_PADDING = 123
+        local HEADERS_HIDDEN_TOP_PADDING = 150
+
+        local contentHeaderTextureKitRegions = {
+            ["Ribbon"] = "UI-Frame-%s-Ribbon",
+        }
         WarboardQuestChoiceFrameMixin = {}
-        function WarboardQuestChoiceFrameMixin:OnHeightChanged(heightDiff)
-            private.debug("WarboardQuestChoiceFrameMixin:OnHeightChanged", heightDiff)
-            local initOptionHeaderTextHeight = Scale.Value(self.initOptionHeaderTextHeight)
-            local maxHeaderTextHeight = initOptionHeaderTextHeight
-            private.debug("initOptionHeaderTextHeight", initOptionHeaderTextHeight)
-
-            for _, option in next, self.Options do
-                maxHeaderTextHeight = max(maxHeaderTextHeight, option.Header.Text:GetHeight())
+        if private.isPatch then
+            function WarboardQuestChoiceFrameMixin:OnHeightChanged(heightDiff)
+                private.debug("WarboardQuestChoiceFrameMixin:OnHeightChanged", heightDiff)
+                for _, option in next, self.Options do
+                    Scale.RawSetHeight(option.Background, Scale.Value(self.initOptionBackgroundHeight) + heightDiff)
+                end
             end
-            private.debug("maxHeaderTextHeight", maxHeaderTextHeight)
+            function WarboardQuestChoiceFrameMixin:Update()
+                private.debug("WarboardQuestChoiceFrameMixin:Update")
+                Hook.QuestChoiceFrameMixin.Update(self)
 
-            local headerTextDifference = floor(maxHeaderTextHeight) - initOptionHeaderTextHeight
-            private.debug("headerTextDifference", headerTextDifference)
+                local hasHeaders = false
+                local numOptions = self:GetNumOptions()
+                for i = 1, numOptions do
+                    local option = self.Options[i]
+                    option.Artwork:SetDesaturated(not option.hasActiveButton)
+                    option.ArtworkBorder:SetShown(option.hasActiveButton)
+                    option.ArtworkBorderDisabled:SetShown(not option.hasActiveButton)
+                    if not hasHeaders then
+                        hasHeaders = option.Header:IsShown()
+                    end
+                    option:SetupTextureKits(option.Header, contentHeaderTextureKitRegions)
+                end
 
-            for _, option in next, self.Options do
-                Scale.RawSetHeight(option.Header.Text, maxHeaderTextHeight)
-                Scale.RawSetHeight(option, option:GetHeight() + headerTextDifference)
-                Scale.RawSetHeight(option.Header.Background, Scale.Value(self.initOptionBackgroundHeight) + heightDiff + headerTextDifference)
+                -- resize solo options of standard size
+                local lastOption = self.Options[numOptions]
+                if numOptions == 1 and not lastOption.isWide then
+                    lastOption:SetWidth(SOLO_OPTION_WIDTH)
+                end
+                -- title needs to reach across
+                self.Title:SetPoint("RIGHT", lastOption, "RIGHT", 3, 0)
+
+                if hasHeaders then
+                    self.topPadding = HEADERS_HIDDEN_TOP_PADDING
+                else
+                    self.topPadding = HEADERS_SHOWN_TOP_PADDING
+                end
+
+                self:Layout()
+
+                local showWarfrontHelpbox = false
+                if _G.C_Scenario.IsInScenario() and not _G.GetCVarBitfield("closedInfoFrames", _G.LE_FRAME_TUTORIAL_WARFRONT_CONSTRUCTION) then
+                    local scenarioType = select(10, _G.C_Scenario.GetInfo())
+                    showWarfrontHelpbox = scenarioType == _G.LE_SCENARIO_TYPE_WARFRONT
+                end
+                if showWarfrontHelpbox then
+                    self.WarfrontHelpBox:SetHeight(25 + self.WarfrontHelpBox.BigText:GetHeight())
+                    self.WarfrontHelpBox:Show()
+                else
+                    self.WarfrontHelpBox:Hide()
+                end
             end
-        end
-        function WarboardQuestChoiceFrameMixin:Update()
-            private.debug("WarboardQuestChoiceFrameMixin:Update")
-            Hook.QuestChoiceFrameMixin.Update(self)
+        else
+            function WarboardQuestChoiceFrameMixin:OnHeightChanged(heightDiff)
+                private.debug("WarboardQuestChoiceFrameMixin:OnHeightChanged", heightDiff)
+                local initOptionHeaderTextHeight = Scale.Value(self.initOptionHeaderTextHeight)
+                local maxHeaderTextHeight = initOptionHeaderTextHeight
+                private.debug("initOptionHeaderTextHeight", initOptionHeaderTextHeight)
 
-            local _, _, numOptions = _G.GetQuestChoiceInfo()
+                for _, option in next, self.Options do
+                    maxHeaderTextHeight = max(maxHeaderTextHeight, option.Header.Text:GetHeight())
+                end
+                private.debug("maxHeaderTextHeight", maxHeaderTextHeight)
 
-            if (numOptions == 1) then
-                local textWidth = self.Title.Text:GetWidth()
-                local neededWidth = max(120, (textWidth/2) - 40)
+                local headerTextDifference = floor(maxHeaderTextHeight) - initOptionHeaderTextHeight
+                private.debug("headerTextDifference", headerTextDifference)
 
-                local newWidth = (neededWidth*2)+430
-                self.fixedWidth = max(600, newWidth)
-                self.leftPadding = ((self.fixedWidth - self.Option1:GetWidth()) / 2) - 4
-                self.Title:SetPoint("LEFT", self.Option1, "LEFT", -neededWidth, 0)
-                self.Title:SetPoint("RIGHT", self.Option1, "RIGHT", neededWidth, 0)
-            else
-                self.fixedWidth = 600
-                self.Title:SetPoint("LEFT", self.Option1, "LEFT", -3, 0)
-                self.Title:SetPoint("RIGHT", self.Options[numOptions], "RIGHT", 3, 0)
+                for _, option in next, self.Options do
+                    Scale.RawSetHeight(option.Header.Text, maxHeaderTextHeight)
+                    Scale.RawSetHeight(option, option:GetHeight() + headerTextDifference)
+                    Scale.RawSetHeight(option.Header.Ribbon, Scale.Value(self.initOptionBackgroundHeight) + heightDiff + headerTextDifference)
+                end
             end
-            self:Layout()
+            function WarboardQuestChoiceFrameMixin:Update()
+                private.debug("WarboardQuestChoiceFrameMixin:Update")
+                Hook.QuestChoiceFrameMixin.Update(self)
+
+                local _, _, numOptions = _G.GetQuestChoiceInfo()
+
+                if (numOptions == 1) then
+                    local textWidth = self.Title.Text:GetWidth()
+                    local neededWidth = max(120, (textWidth/2) - 40)
+
+                    local newWidth = (neededWidth*2)+430
+                    self.fixedWidth = max(600, newWidth)
+                    self.leftPadding = ((self.fixedWidth - self.Option1:GetWidth()) / 2) - 4
+                    self.Title:SetPoint("LEFT", self.Option1, "LEFT", -neededWidth, 0)
+                    self.Title:SetPoint("RIGHT", self.Option1, "RIGHT", neededWidth, 0)
+                else
+                    self.fixedWidth = 600
+                    self.Title:SetPoint("LEFT", self.Option1, "LEFT", -3, 0)
+                    self.Title:SetPoint("RIGHT", self.Options[numOptions], "RIGHT", 3, 0)
+                end
+                self:Layout()
+            end
         end
     end
     Hook.WarboardQuestChoiceFrameMixin = WarboardQuestChoiceFrameMixin
@@ -59,27 +121,28 @@ end
 
 do --[[ AddOns\Blizzard_WarboardUI.xml ]]
     function Skin.WarboardQuestChoiceOptionTemplate(Button)
-        Button.Nail:Hide()
+        Button.Background:Hide()
+        Button.ArtworkBorder:SetAlpha(0)
+        Button.ArtworkBorderDisabled:SetColorTexture(1, 0, 0, 0.3)
+        Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
         Button.Artwork:ClearAllPoints()
         Button.Artwork:SetPoint("TOPLEFT", 31, -31)
         Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -31, -112)
-        Button.Border:Hide()
 
-        Skin.UIPanelButtonTemplate(Button.OptionButton)
+        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton1)
+        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton2)
 
-        Button.Header.Background:Hide()
+        Button.Header.Ribbon:Hide()
         Button.Header.Text:SetTextColor(.9, .9, .9)
         Button.OptionText:SetTextColor(.9, .9, .9)
 
         --[[ Scale ]]--
         Button:SetSize(240, 332)
-        Button.OptionButton:SetSize(175, 22)
-        Button.OptionButton:SetPoint("BOTTOM", 0, 46)
         Button.Header.Text:SetWidth(180)
         Button.Header.Text:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -21)
         Button.OptionText:SetWidth(180)
         Button.OptionText:SetPoint("TOP", Button.Header.Text, "BOTTOM", 0, -12)
-        Button.OptionText:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 39)
+        Button.OptionText:SetPoint("BOTTOM", Button.OptionButtonsContainer, "TOP", 0, 39)
         Button.OptionText:SetText("Text")
     end
 end
@@ -89,12 +152,6 @@ function private.AddOns.Blizzard_WarboardUI()
     Skin.HorizontalLayoutFrame(WarboardQuestChoiceFrame)
     _G.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
 
-    WarboardQuestChoiceFrame.Top:Hide()
-    WarboardQuestChoiceFrame.Bottom:Hide()
-    WarboardQuestChoiceFrame.Left:Hide()
-    WarboardQuestChoiceFrame.Right:Hide()
-
-    WarboardQuestChoiceFrame.Header:SetAlpha(0)
 
     _G.WarboardQuestChoiceFrameTopRightCorner:Hide()
     WarboardQuestChoiceFrame.topLeftCorner:Hide()
@@ -107,7 +164,7 @@ function private.AddOns.Blizzard_WarboardUI()
 
     Base.SetBackdrop(WarboardQuestChoiceFrame)
 
-    WarboardQuestChoiceFrame.GarrCorners:Hide()
+    WarboardQuestChoiceFrame.BorderFrame:Hide()
 
     for _, option in next, WarboardQuestChoiceFrame.Options do
         Skin.WarboardQuestChoiceOptionTemplate(option)
@@ -121,8 +178,17 @@ function private.AddOns.Blizzard_WarboardUI()
     Skin.UIPanelCloseButton(WarboardQuestChoiceFrame.CloseButton)
     WarboardQuestChoiceFrame.CloseButton:SetPoint("TOPRIGHT", -10, -10)
 
+    -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+    local WarfrontHelpBox = WarboardQuestChoiceFrame.WarfrontHelpBox
+    local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
+    Arrow.Arrow = WarfrontHelpBox.ArrowRight
+    Arrow.Arrow:SetParent(Arrow)
+    Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
+    Arrow.Glow:SetParent(Arrow)
+    WarfrontHelpBox.Arrow = Arrow
+    WarfrontHelpBox.Text = WarfrontHelpBox.BigText
+    Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
+
     --[[ Scale ]]--
-    WarboardQuestChoiceFrame.Header:SetSize(354, 105)
-    WarboardQuestChoiceFrame.Header:SetPoint("TOP", 0, 72)
     WarboardQuestChoiceFrame.Title:SetSize(500, 85)
 end

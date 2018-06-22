@@ -35,6 +35,8 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
             holder:SetAllPoints(Frame.BorderFrame.TitleText)
             Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetParent(holder)
             Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetAllPoints(holder)
+
+            Skin.GlowBoxFrame(Frame.FirstPowerLockedInHelpBox, "Left")
         end
     end
 end

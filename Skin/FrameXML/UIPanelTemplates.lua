@@ -90,13 +90,48 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame, Color.yellow, 0.75)
     end
     function Skin.GlowBoxArrowTemplate(Frame, direction)
-        if direction and direction == "Left" or direction == "Right" then
+        direction = direction or "Down"
+        if direction == "Left" or direction == "Right" then
             Frame:SetSize(21, 53)
+        else
+            Frame:SetSize(53, 21)
         end
-        Base.SetTexture(Frame.Arrow, direction and "arrow"..direction or "arrowDown")
+
+        Base.SetTexture(Frame.Arrow, "arrow"..direction)
         Frame.Arrow:SetVertexColor(1, 1, 0)
         Frame.Glow:Hide()
     end
+
+    --[[
+        SetClampedTextureRotation(self.Arrow.Arrow, 90) -- Left
+        SetClampedTextureRotation(self.Arrow.Arrow, 180) -- Up
+        SetClampedTextureRotation(self.Arrow.Arrow, 270) -- Right
+    ]]
+    -- BlizzWTF: This should be a template
+    function Skin.GlowBoxFrame(Frame, direction)
+        Skin.GlowBoxTemplate(Frame)
+        Skin.UIPanelCloseButton(Frame.CloseButton)
+        Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
+
+        direction = direction or "Down"
+        local point = direction:upper()
+        if point == "UP" then
+            point = "TOP"
+        elseif point == "DOWN" then
+            point = "BOTTOM"
+        end
+
+        Skin.GlowBoxArrowTemplate(Frame.Arrow, direction)
+        Frame.Arrow:ClearAllPoints()
+        Frame.Arrow:SetPoint(Util.OpposingSide[point], Frame, point)
+
+        --[[ Scale ]]--
+        Frame:SetSize(Frame:GetSize())
+        Frame.Text:SetSize(Frame.Text:GetSize())
+        Frame.Text:SetPoint(Frame.Text:GetPoint())
+    end
+
+
     function Skin.BaseBasicFrameTemplate(Frame)
         Frame.TopLeftCorner:Hide()
         Frame.TopRightCorner:Hide()
@@ -123,6 +158,9 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.Bg:Hide()
         Frame.TitleBg:Hide()
         Frame.TopTileStreaks:SetTexture("")
+    end
+    function Skin.TranslucentFrameTemplate(Frame)
+        Skin.PortraitFrameTemplate(Frame)
     end
     function Skin.TranslucentFrameTemplate(Frame)
         Frame.Bg:Hide()

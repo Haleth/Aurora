@@ -41,7 +41,6 @@ function private.AddOns.Blizzard_AdventureMap()
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
     _G.hooksecurefunc(AdventureMapQuestChoiceDialog.rewardPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 
-    AdventureMapQuestChoiceDialog.PortraitBg:Hide()
     AdventureMapQuestChoiceDialog.Rewards:SetAlpha(0)
     AdventureMapQuestChoiceDialog.Background:Hide()
 

@@ -127,18 +127,7 @@ do --[[ FrameXML\MainMenuBarMicroButtons.xml ]]
         Base.SetHighlight(Button, "backdrop")
     end
     function Skin.MicroButtonAlertTemplate(Frame)
-        Skin.GlowBoxTemplate(Frame)
-
-        Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", -4, -4)
-
-        Skin.GlowBoxArrowTemplate(Frame.Arrow)
-        Frame.Arrow:SetPoint("TOP", Frame, "BOTTOM")
-
-        --[[ Scale ]]--
-        Frame:SetSize(220, 100)
-        Frame.Text:SetSize(188, 0)
-        Frame.Text:SetPoint("TOPLEFT", 16, -24)
+        Skin.GlowBoxFrame(Frame)
     end
 end
 

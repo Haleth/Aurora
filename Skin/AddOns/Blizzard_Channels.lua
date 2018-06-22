@@ -216,6 +216,8 @@ function private.AddOns.Blizzard_Channels()
     ChannelFrame.ChannelRoster:SetPoint("BOTTOMRIGHT", -20, 28)
     Skin.InsetFrameTemplate(ChannelFrame.RightInset)
 
+    Skin.GlowBoxFrame(ChannelFrame.Tutorial, "Left")
+
     --[[ Scale ]]--
     ChannelFrame.ChannelList:SetWidth(178)
 

@@ -32,14 +32,15 @@ function private.FrameXML.SplashFrame()
     SplashFrame:SetSize(882, 584)
     SplashFrame:SetPoint("CENTER", 0, 60)
 
-    local _, width, height = _G.GetAtlasInfo(SplashFrame.LeftTexture:GetAtlas())
+    local splashInfo = _G.SPLASH_SCREENS[_G.BASE_SPLASH_TAG]
+    local _, width, height = _G.GetAtlasInfo(splashInfo.leftTex)
     SplashFrame.LeftTexture:SetSize(width, height)
 
-    _, width, height = _G.GetAtlasInfo(SplashFrame.RightTexture:GetAtlas())
+    _, width, height = _G.GetAtlasInfo(splashInfo.rightTex)
     SplashFrame.RightTexture:SetSize(width, height)
     SplashFrame.RightTexture:SetPoint("TOPLEFT", SplashFrame.LeftTexture, "TOPRIGHT", 0, -1)
 
-    _, width, height = _G.GetAtlasInfo(SplashFrame.BottomTexture:GetAtlas())
+    _, width, height = _G.GetAtlasInfo(splashInfo.bottomTex)
     SplashFrame.BottomTexture:SetSize(height, width)
 
     _, width, height = _G.GetAtlasInfo(SplashFrame.BottomLine:GetAtlas())

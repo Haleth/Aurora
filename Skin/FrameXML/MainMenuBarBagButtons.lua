@@ -40,6 +40,10 @@ function private.FrameXML.MainMenuBarBagButtons()
     _G.CharacterBag2Slot:SetPoint("RIGHT", _G.CharacterBag1Slot, "LEFT", -4, 0)
     _G.CharacterBag3Slot:SetPoint("RIGHT", _G.CharacterBag2Slot, "LEFT", -4, 0)
 
+    if private.isPatch then
+        Skin.GlowBoxFrame(_G.AzeriteInBagsHelpBox)
+    end
+
     --[[ Scale ]]--
     if private.isPatch then
         _G.MainMenuBarBackpackButton:SetSize(40, 40)

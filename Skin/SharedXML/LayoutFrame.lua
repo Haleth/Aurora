@@ -10,6 +10,24 @@ local Scale = Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ SharedXML\LayoutFrame.lua ]]
+    local BaseLayoutMixin do
+        BaseLayoutMixin = {}
+        local function LayoutIndexComparator(left, right)
+            return left.layoutIndex < right.layoutIndex
+        end
+
+        function BaseLayoutMixin.GetLayoutChildren(self)
+            private.debug("BaseLayoutMixin:GetLayoutChildren")
+            local children = {}
+            self:AddLayoutChildren(children, self:GetChildren())
+            self:AddLayoutChildren(children, self:GetRegions())
+            table.sort(children, LayoutIndexComparator)
+
+            return children
+        end
+    end
+    Hook.BaseLayoutMixin = BaseLayoutMixin
+
     local LayoutMixin do
         LayoutMixin = {}
         function LayoutMixin.GetPadding(self, frame)
@@ -48,19 +66,10 @@ do --[[ SharedXML\LayoutFrame.lua ]]
             return frameWidth, frameHeight
         end
 
-        local function LayoutIndexComparator(left, right)
-            return left.layoutIndex < right.layoutIndex
-        end
-
         function LayoutMixin.Layout(self)
             private.debug("LayoutMixin:Layout")
-            self.dirty = false
 
-            local children = {}
-            self:AddLayoutChildren(children, self:GetChildren())
-            self:AddLayoutChildren(children, self:GetRegions())
-            table.sort(children, LayoutIndexComparator)
-
+            local children = Hook.BaseLayoutMixin.GetLayoutChildren(self)
             local childrenWidth, childrenHeight, hasExpandableChild = self:_LayoutChildren(children)
 
             local frameWidth, frameHeight = LayoutMixin.CalculateFrameSize(self, childrenWidth, childrenHeight)

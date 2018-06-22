@@ -44,22 +44,20 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
         if not self._auroraBG then return end
         local slotInfo = _G.C_SpecializationInfo.GetPvpTalentSlotInfo(self.slotIndex)
 
-        local isEnabled = slotInfo.enabled
         local selectedTalentID = self.predictedSetting:Get()
         if selectedTalentID then
             local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
             self.Texture:SetTexture(texture)
+            self.Texture:SetTexCoord(.08, .92, .08, .92)
         else
-            self.Texture:Show()
-            isEnabled = false
+            self.Texture:SetTexCoord(.18, .85, .18, .85)
         end
 
-        if isEnabled then
+        if slotInfo.enabled then
             self._auroraBG:SetColorTexture(Color.black:GetRGB())
             self.Texture:SetDesaturated(false)
         else
             self._auroraBG:SetColorTexture(Color.gray:GetRGB())
-            self.Texture:SetDesaturated(true)
         end
     end
 end
