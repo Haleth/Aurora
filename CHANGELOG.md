@@ -1,4 +1,21 @@
-## [Unreleased] ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Channels UI skin
+
+### Changed ###
+
+  * More Garrison updates.
+  * Wardrobe skin updated.
+
+### Fixed ###
+
+  * Scenario progress bar would not show.
+  * Wardrobe sets selection was not static.
+  * OrderHall tabs were overlapping.
+
+
+
 ## [v8.0.1.0] - 2017-10-16 ##
 ### Added ###
 
