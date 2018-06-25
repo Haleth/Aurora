@@ -89,11 +89,13 @@ do --[[ FrameXML\GameTooltip.xml ]]
         Base.SetBackdrop(bg, Color.black, 0)
         Frame._auroraIconBorder = bg
 
-        Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
-        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
-        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
-        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
-        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
+        if private.isPatch then
+            Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
+            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
+            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
+            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
+            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
+        end
     end
 end
 
