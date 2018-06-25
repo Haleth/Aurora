@@ -51,8 +51,13 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         local line = block.lines[objectiveKey]
         if not line._auroraSkinned then
             local template = lineType and lineType.template or self.lineTemplate
-            Skin[template](line)
-            line._auroraSkinned = true
+            if Skin[template] then
+                Skin[template](line)
+                line._auroraSkinned = true
+            else
+                private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_AddObjective:", template, "does not exist.")
+                line._auroraSkinned = template
+            end
         end
         -- width
         if ( block.lineWidth ~= line.width ) then
