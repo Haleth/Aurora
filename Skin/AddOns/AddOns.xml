@@ -7,6 +7,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_AdventureMap.lua"/>
     <Script file="Blizzard_ArchaeologyUI.lua"/>
     <Script file="Blizzard_AuctionUI.lua"/>
+    <Script file="Blizzard_AzeriteRespecUI.lua"/>
     <Script file="Blizzard_AzeriteUI.lua"/>
     <Script file="Blizzard_BarbershopUI.lua"/>
     <Script file="Blizzard_BattlefieldMinimap.lua"/>

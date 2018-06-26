@@ -1,5 +1,8 @@
 local _, private = ...
 
+-- [[ Lua Globals ]]
+-- luacheck: globals select
+
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
@@ -159,8 +162,28 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.TitleBg:Hide()
         Frame.TopTileStreaks:SetTexture("")
     end
-    function Skin.TranslucentFrameTemplate(Frame)
+    function Skin.EtherealFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
+
+        Frame.CornerTL:Hide()
+        Frame.CornerTR:Hide()
+        Frame.CornerBL:Hide()
+        Frame.CornerBR:Hide()
+
+        local name = Frame:GetName()
+        _G[name.."LeftEdge"]:Hide()
+        _G[name.."RightEdge"]:Hide()
+        _G[name.."TopEdge"]:Hide()
+        _G[name.."BottomEdge"]:Hide()
+
+        local bg = select(23, Frame:GetRegions())
+        bg:ClearAllPoints()
+        bg:SetPoint("TOPLEFT", -50, 25)
+        bg:SetPoint("BOTTOMRIGHT")
+        bg:SetTexture([[Interface\Transmogrify\EtherealLines]], true, true)
+        bg:SetHorizTile(true)
+        bg:SetVertTile(true)
+        bg:SetAlpha(0.5)
     end
     function Skin.TranslucentFrameTemplate(Frame)
         Frame.Bg:Hide()
