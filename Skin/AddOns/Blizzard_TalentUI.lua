@@ -240,7 +240,7 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         local bd = _G.CreateFrame("Frame", nil, Button)
         Base.SetBackdrop(bd, Color.button)
         bd:SetBackdropBorderColor(Color.frame, 1)
-        bd:SetFrameLevel(Button:GetFrameLevel() - 1)
+        bd:SetFrameLevel(Button:GetFrameLevel())
         bd:SetPoint("TOPLEFT", Button.specIcon, "TOPRIGHT", 0, 1)
         bd:SetPoint("BOTTOM", Button.specIcon, 0, -1)
         bd:SetPoint("RIGHT")
