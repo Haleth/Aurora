@@ -48,9 +48,24 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
         local checkBox = menuButton._auroraCheckBox
         if not info.notCheckable then
             local check = checkBox.check
+            local hasCustomIcon = false
 
             checkBox:Show()
-            if info.isNotRadio then
+            check:SetDesaturated(true)
+            check:SetVertexColor(Color.highlight:GetRGB())
+            if info.customCheckIconAtlas or info.customCheckIconTexture then
+                checkBox:Hide()
+                check:SetDesaturated(false)
+                check:SetVertexColor(Color.white:GetRGB())
+                check:SetSize(16, 16)
+                hasCustomIcon = true
+
+                if info.customCheckIconAtlas then
+                    check:SetAtlas(info.customCheckIconAtlas);
+                else
+                    check:SetTexture(info.customCheckIconTexture);
+                end
+            elseif info.isNotRadio then
                 checkBox:SetSize(12, 12)
                 checkBox:SetPoint("LEFT")
                 check:SetTexture([[Interface\Buttons\UI-CheckBox-Check]])
@@ -69,13 +84,12 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                 checked = checked(menuButton)
             end
 
-            if checked then
+            if checked or hasCustomIcon then
                 check:Show()
             else
                 check:Hide()
             end
 
-            _G[menuButtonName.."Check"]:Hide()
             _G[menuButtonName.."UnCheck"]:Hide()
         else
             checkBox:Hide()
@@ -94,7 +108,6 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             self._auroraCheckBox.check:Hide()
         end
 
-        _G[self:GetName().."Check"]:Hide()
         _G[self:GetName().."UnCheck"]:Hide()
     end
 end
@@ -113,13 +126,15 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
 
         local checkBox = _G.CreateFrame("Frame", nil, menuButton)
+        checkBox:SetFrameLevel(menuButton:GetFrameLevel())
         Base.SetBackdrop(checkBox, Color.button)
         menuButton._auroraCheckBox = checkBox
 
-        local check = checkBox:CreateTexture(nil, "ARTWORK")
+        local check = _G[menuButtonName.."Check"]
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
-        check:SetPoint("CENTER")
+        check:ClearAllPoints()
+        check:SetPoint("CENTER", checkBox)
         checkBox.check = check
 
         local arrow = _G[menuButtonName.."ExpandArrow"]
