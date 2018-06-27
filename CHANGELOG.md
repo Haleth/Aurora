@@ -1,4 +1,20 @@
-﻿## [8.0.1.1] - 2018-06-23 ##
+﻿## [8.0.1.2] - 2018-06-27 ##
+### Added ###
+
+  * Azerite reforge skin
+
+### Changed ###
+
+  * Updated dropdowns for BfA.
+
+### Fixed ###
+
+  * A minor incompaibitlty with Kaliel's Tracker.
+  * Missed a patch check for garrison tooltips.
+
+
+
+## [8.0.1.1] - 2018-06-23 ##
 ### Added ###
 
   * Channels UI skin
@@ -177,6 +193,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.0.1.2]: https://github.com/Haleth/Aurora/compare/8.0.1.1...8.0.1.2
 [8.0.1.1]: https://github.com/Haleth/Aurora/compare/v8.0.1.0...8.0.1.1
 [v8.0.1.0]: https://github.com/Haleth/Aurora/compare/v7.3.5.1...v8.0.1.0
 [v7.3.5.1]: https://github.com/Haleth/Aurora/compare/v7.3.5.0...v7.3.5.1
