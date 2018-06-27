@@ -397,6 +397,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
         Base.SetBackdrop(thumb, Color.button)
         Slider._auroraThumb = thumb
+
+        --[[ Scale ]]--
+        Slider:SetSize(Slider:GetSize())
     end
 
     function Skin.UIPanelStretchableArtScrollBarTemplate(Slider)

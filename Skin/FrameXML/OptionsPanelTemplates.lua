@@ -50,9 +50,6 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
     end
     function Skin.OptionsSliderTemplate(Slider)
         Skin.HorizontalSliderTemplate(Slider)
-
-        --[[ Scale ]]--
-        Slider:SetSize(Slider:GetSize())
     end
     function Skin.OptionsDropdownTemplate(Frame)
         Skin.UIDropDownMenuTemplate(Frame)
