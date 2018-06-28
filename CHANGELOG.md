@@ -2,6 +2,7 @@
 ### Fixed ###
 
   * Bags were not using the proper alpha value.
+  * The custom highlight setting would not persist.
 
 
 

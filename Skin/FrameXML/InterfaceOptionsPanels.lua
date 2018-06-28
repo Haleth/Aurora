@@ -19,7 +19,7 @@ do --[[ FrameXML\InterfaceOptionsPanels.xml ]]
         CheckButton.Text:SetPoint(CheckButton.Text:GetPoint())
     end
     function Skin.InterfaceOptionsSmallCheckButtonTemplate(CheckButton)
-        Skin.OptionsBaseCheckButtonTemplate(CheckButton)
+        Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)
         local name = CheckButton:GetName()
         _G[name.."Text"]:SetPoint(_G[name.."Text"]:GetPoint())
     end

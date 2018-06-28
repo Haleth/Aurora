@@ -239,7 +239,8 @@ local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
 chatBubbleBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -15)
 
 local chatBubbleNamesBox = createToggleBox(gui, "chatBubbleNames", "Show names")
-chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -5, -5)
+chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -3, 3)
+chatBubbleNamesBox:SetSize(20, 20)
 
 chatBubbleBox:SetScript("OnClick", function(self)
     if self:GetChecked() then
@@ -261,7 +262,7 @@ appearance:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -110)
 local fontBox = createToggleBox(gui, "fonts", "Replace default game fonts")
 fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 10, -20)
 
-local highlightBox = createToggleBox(gui, "customHighlight.enabled", "Custom highlight color")
+local highlightBox = createToggleBox(gui, "customHighlight", "Custom highlight color")
 highlightBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
 
 local highlightButton = createColorSwatch(gui, "customHighlight")
@@ -335,6 +336,7 @@ gui.refresh = function()
     end
 
     local customHighlight = _G.AuroraConfig.customHighlight
+    highlightBox:SetChecked(_G.AuroraConfig.customHighlight.enabled == true)
     highlightButton:SetBackdropColor(customHighlight.r, customHighlight.g, customHighlight.b)
     if not highlightBox:GetChecked() then
         highlightButton:Disable()
@@ -379,10 +381,8 @@ function private.SetupGUI()
     for i = 1, #checkboxes do
         Skin.InterfaceOptionsCheckButtonTemplate(checkboxes[i])
     end
-    chatBubbleNamesBox:SetSize(14, 14)
 
     Skin.OptionsButtonTemplate(reloadButton)
-
     Skin.OptionsButtonTemplate(resetButton)
 end
 

@@ -107,7 +107,7 @@ function private.OnLoad()
         return hasChanged
     end
     function private.classColorsInit()
-        if private.classColorsHaveChanged() then
+        if private.classColorsHaveChanged() or AuroraConfig.customHighlight.enabled then
             private.updateHighlightColor()
         end
     end
