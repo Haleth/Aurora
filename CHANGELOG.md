@@ -1,4 +1,12 @@
-﻿## [8.0.1.2] - 2018-06-27 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * Bags were not using the proper alpha value.
+
+
+
+
+## [8.0.1.2] - 2018-06-27 ##
 ### Added ###
 
   * Azerite reforge skin

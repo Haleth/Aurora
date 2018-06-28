@@ -68,7 +68,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Base.CropIcon(Button.icon)
 
         local bg = _G.CreateFrame("Frame", nil, Button)
-        bg:SetFrameLevel(Button:GetFrameLevel() - 1)
+        bg:SetFrameLevel(Button:GetFrameLevel())
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
         Base.SetBackdrop(bg, Color.black, 0.3)
@@ -89,7 +89,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         bg:Hide()
 
         local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetFrameLevel(CheckButton:GetFrameLevel() - 1)
+        bd:SetFrameLevel(CheckButton:GetFrameLevel())
         bd:SetPoint("TOPLEFT", -1, 1)
         bd:SetPoint("BOTTOMRIGHT", 1, -1)
 
@@ -120,7 +120,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Base.CropIcon(Button.Icon)
 
         local iconBG = _G.CreateFrame("Frame", nil, Button)
-        iconBG:SetFrameLevel(Button:GetFrameLevel() - 1)
+        iconBG:SetFrameLevel(Button:GetFrameLevel())
         iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
         iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
         Base.SetBackdrop(iconBG, Color.frame)
@@ -139,7 +139,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Base.CropIcon(Button.Icon)
 
         local iconBG = _G.CreateFrame("Frame", nil, Button)
-        iconBG:SetFrameLevel(Button:GetFrameLevel() - 1)
+        iconBG:SetFrameLevel(Button:GetFrameLevel())
         iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
         iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
         Base.SetBackdrop(iconBG, Color.frame)

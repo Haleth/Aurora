@@ -15,15 +15,11 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         self:SetTexture(BAG_FILTER_ICONS[atlas])
     end
     function Hook.ContainerFrame_GenerateFrame(frame, size, id)
-        local color
         if id > _G.NUM_BAG_FRAMES then
             -- bank bags
-            color = Color.button
-        else
-            color = Color.frame
+            local _, _, _, a = frame._auroraBDFrame:GetBackdropColor()
+            Base.SetBackdropColor(frame._auroraBDFrame, Color.button, a)
         end
-
-        frame._auroraBDFrame:SetBackdropColor(color)
     end
     function Hook.ContainerFrame_Update(frame)
         local id = frame:GetID()
@@ -70,7 +66,6 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
     function Skin.ContainerFrameTemplate(Frame)
         _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
-        _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
 
         local name = Frame:GetName()
 
@@ -87,7 +82,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
 
         local bdFrame = _G.CreateFrame("Frame", nil, Frame)
-        bdFrame:SetPoint("TOPLEFT", 11, -4)
+        bdFrame:SetPoint("TOPLEFT", 11, 0)
         bdFrame:SetPoint("BOTTOMRIGHT", -6, 3)
         bdFrame:SetFrameLevel(Frame:GetFrameLevel())
         Base.SetBackdrop(bdFrame)
@@ -104,14 +99,14 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
         Frame.PortraitButton:Hide()
         Frame.FilterIcon:ClearAllPoints()
-        Frame.FilterIcon:SetPoint("TOPLEFT", bdFrame, 3, -3)
+        Frame.FilterIcon:SetPoint("TOPLEFT", bdFrame, 5, -5)
         Frame.FilterIcon:SetSize(17, 17)
         Frame.FilterIcon.Icon:SetAllPoints()
 
         Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
 
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])
-        _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bdFrame, -3, -3)
+        _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bdFrame, -5, -5)
 
         Frame.ClickableTitleFrame:ClearAllPoints()
         Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bdFrame)
@@ -124,6 +119,7 @@ end
 
 function private.FrameXML.ContainerFrame()
     if private.disabled.bags then return end
+    _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
     _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
 
     Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
