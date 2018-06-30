@@ -26,6 +26,7 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
             end
          end
         function Hook.CompactRaidFrameManager_UpdateOptionsFlowContainer(self)
+            if _G.InCombatLockdown() then return end
             local container = self.displayFrame.optionsFlowContainer;
 
             local _, usedY = Hook.FlowContainer_GetUsedBounds(container);
