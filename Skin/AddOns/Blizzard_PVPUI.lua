@@ -19,7 +19,7 @@ function private.AddOns.Blizzard_PVPUI()
     local ConquestFrame = _G.ConquestFrame
     local WarGamesFrame = _G.WarGamesFrame
 
-    if not private.disabled.tooltips then
+    if not private.isPatch and not private.disabled.tooltips then
         Base.SetBackdrop(_G.PVPRewardTooltip)
         Skin.InternalEmbeddedItemTooltipTemplate(_G.PVPRewardTooltip.ItemTooltip)
     end

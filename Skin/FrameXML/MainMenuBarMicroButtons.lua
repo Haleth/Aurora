@@ -198,6 +198,9 @@ function private.FrameXML.MainMenuBarMicroButtons()
         end
     end
 
+    if private.isPatch then
+        Skin.MicroButtonAlertTemplate(_G.CharacterMicroButtonAlert)
+    end
     Skin.MicroButtonAlertTemplate(_G.TalentMicroButtonAlert)
     Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)
     Skin.MicroButtonAlertTemplate(_G.LFDMicroButtonAlert)

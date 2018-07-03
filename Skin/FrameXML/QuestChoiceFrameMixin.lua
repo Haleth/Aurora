@@ -80,7 +80,7 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
 
                 self.numActiveOptionFrames = 0
                 for i = 1, numOptions do
-                    local optID, buttonText, description, header, artFile, confirmationText, widgetSetID, disabled, groupID = _G.GetQuestChoiceOptionInfo(i)
+                    local optID, buttonText, description, header, artFile, confirmationText, widgetSetID, disabledButton, desaturatedArt, groupID = _G.GetQuestChoiceOptionInfo(i)
 
                     local existingOption = self:GetExistingOptionForGroup(groupID)
                     local button
@@ -88,9 +88,19 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
                         -- only supporting two grouped options
                         existingOption.hasMultipleButtons = true
                         button = existingOption.OptionButtonsContainer.OptionButton2
+                        if not disabledButton then
+                            existingOption.hasActiveButton = true
+                        end
+                        -- for grouped options the art is only desaturated if all of them are
+                        if not desaturatedArt then
+                            existingOption.hasDesaturatedArt = false
+                        end
                     else
                         self.numActiveOptionFrames = self.numActiveOptionFrames + 1
                         local option = self.Options[self.numActiveOptionFrames]
+                        option.hasMultipleButtons = false
+                        option.hasActiveButton = not disabledButton
+                        option.hasDesaturatedArt = desaturatedArt
                         option.groupID = groupID
                         option.optID = optID
 
@@ -105,7 +115,20 @@ do --[[ FrameXML\QuestChoiceFrameMixin.lua ]]
                     button.confirmationText = confirmationText
                     button:SetText(buttonText)
                     button.optID = optID
-                    button:SetEnabled(not disabled)
+                    button:SetEnabled(not disabledButton)
+                end
+
+                -- buttons
+                for i = 1, self.numActiveOptionFrames do
+                    local option = self.Options[i]
+                    option:ConfigureButtons()
+                end
+
+                if self.numActiveOptionFrames < #self.Options then
+                    for i = self.numActiveOptionFrames + 1, #self.Options do
+                        local option = self.Options[i]
+                        self:UpdateOptionWidgetRegistration(option, nil)
+                    end
                 end
 
                 self:ShowRewards(numOptions)

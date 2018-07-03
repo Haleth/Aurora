@@ -256,7 +256,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local name = Util.GetName(Frame)
 
         Frame.Bg:Hide()
-        _G[name.."TitleBg"]:Hide()
+        if private.isPatch then
+            Frame.TitleBg:Hide()
+        else
+            _G[name.."TitleBg"]:Hide()
+        end
         Frame.portrait:SetAlpha(0)
         if private.isPatch then
             Frame.PortraitFrame:SetTexture("")
