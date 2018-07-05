@@ -16,6 +16,9 @@ do --[[ FrameXML\GameTooltip.lua ]]
         Base.SetBackdrop(self, Color.black)
     end
     function Hook.EmbeddedItemTooltip_Clear(self)
+        if not self._auroraIconBorder then
+            Skin.InternalEmbeddedItemTooltipTemplate(self)
+        end
         self._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
         self._auroraIconBorder:Hide()
     end
