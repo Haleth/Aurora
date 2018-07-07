@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.0.1.3] - 2018-07-07 ##
 ### Fixed ###
 
   * Bags were not using the proper alpha value.
@@ -202,6 +202,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.0.1.3]: https://github.com/Haleth/Aurora/compare/8.0.1.2...8.0.1.3
 [8.0.1.2]: https://github.com/Haleth/Aurora/compare/8.0.1.1...8.0.1.2
 [8.0.1.1]: https://github.com/Haleth/Aurora/compare/v8.0.1.0...8.0.1.1
 [v8.0.1.0]: https://github.com/Haleth/Aurora/compare/v7.3.5.1...v8.0.1.0
