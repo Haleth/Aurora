@@ -89,7 +89,7 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
                 for _, option in next, self.Options do
                     Scale.RawSetHeight(option.Header.Text, maxHeaderTextHeight)
                     Scale.RawSetHeight(option, option:GetHeight() + headerTextDifference)
-                    Scale.RawSetHeight(option.Header.Ribbon, Scale.Value(self.initOptionBackgroundHeight) + heightDiff + headerTextDifference)
+                    Scale.RawSetHeight(option.Header.Background, Scale.Value(self.initOptionBackgroundHeight) + heightDiff + headerTextDifference)
                 end
             end
             function WarboardQuestChoiceFrameMixin:Update()
@@ -121,18 +121,30 @@ end
 
 do --[[ AddOns\Blizzard_WarboardUI.xml ]]
     function Skin.WarboardQuestChoiceOptionTemplate(Button)
-        Button.Background:Hide()
-        Button.ArtworkBorder:SetAlpha(0)
-        Button.ArtworkBorderDisabled:SetColorTexture(1, 0, 0, 0.3)
-        Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
+        if private.isPatch then
+            Button.Background:Hide()
+            Button.ArtworkBorder:SetAlpha(0)
+            Button.ArtworkBorderDisabled:SetColorTexture(1, 0, 0, 0.3)
+            Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
+        else
+            Button.Nail:Hide()
+        end
         Button.Artwork:ClearAllPoints()
         Button.Artwork:SetPoint("TOPLEFT", 31, -31)
         Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -31, -112)
 
-        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton1)
-        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton2)
+        if private.isPatch then
+            Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton1)
+            Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton2)
 
-        Button.Header.Ribbon:Hide()
+            Button.Header.Ribbon:Hide()
+        else
+            Button.Border:Hide()
+            Skin.UIPanelButtonTemplate(Button.OptionButton)
+
+            Button.Header.Background:Hide()
+        end
+
         Button.Header.Text:SetTextColor(.9, .9, .9)
         Button.OptionText:SetTextColor(.9, .9, .9)
 
@@ -142,7 +154,11 @@ do --[[ AddOns\Blizzard_WarboardUI.xml ]]
         Button.Header.Text:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -21)
         Button.OptionText:SetWidth(180)
         Button.OptionText:SetPoint("TOP", Button.Header.Text, "BOTTOM", 0, -12)
-        Button.OptionText:SetPoint("BOTTOM", Button.OptionButtonsContainer, "TOP", 0, 39)
+        if private.isPatch then
+            Button.OptionText:SetPoint("BOTTOM", Button.OptionButtonsContainer, "TOP", 0, 39)
+        else
+            Button.OptionText:SetPoint("BOTTOM", Button.OptionButton, "TOP", 0, 39)
+        end
         Button.OptionText:SetText("Text")
     end
 end
@@ -152,6 +168,14 @@ function private.AddOns.Blizzard_WarboardUI()
     Skin.HorizontalLayoutFrame(WarboardQuestChoiceFrame)
     _G.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
 
+    if not private.isPatch then
+        WarboardQuestChoiceFrame.Top:Hide()
+        WarboardQuestChoiceFrame.Bottom:Hide()
+        WarboardQuestChoiceFrame.Left:Hide()
+        WarboardQuestChoiceFrame.Right:Hide()
+
+        WarboardQuestChoiceFrame.Header:SetAlpha(0)
+    end
 
     _G.WarboardQuestChoiceFrameTopRightCorner:Hide()
     WarboardQuestChoiceFrame.topLeftCorner:Hide()
@@ -164,7 +188,11 @@ function private.AddOns.Blizzard_WarboardUI()
 
     Base.SetBackdrop(WarboardQuestChoiceFrame)
 
-    WarboardQuestChoiceFrame.BorderFrame:Hide()
+    if private.isPatch then
+        WarboardQuestChoiceFrame.BorderFrame:Hide()
+    else
+        WarboardQuestChoiceFrame.GarrCorners:Hide()
+    end
 
     for _, option in next, WarboardQuestChoiceFrame.Options do
         Skin.WarboardQuestChoiceOptionTemplate(option)
@@ -178,16 +206,18 @@ function private.AddOns.Blizzard_WarboardUI()
     Skin.UIPanelCloseButton(WarboardQuestChoiceFrame.CloseButton)
     WarboardQuestChoiceFrame.CloseButton:SetPoint("TOPRIGHT", -10, -10)
 
-    -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-    local WarfrontHelpBox = WarboardQuestChoiceFrame.WarfrontHelpBox
-    local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
-    Arrow.Arrow = WarfrontHelpBox.ArrowRight
-    Arrow.Arrow:SetParent(Arrow)
-    Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
-    Arrow.Glow:SetParent(Arrow)
-    WarfrontHelpBox.Arrow = Arrow
-    WarfrontHelpBox.Text = WarfrontHelpBox.BigText
-    Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
+    if private.isPatch then
+        -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+        local WarfrontHelpBox = WarboardQuestChoiceFrame.WarfrontHelpBox
+        local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
+        Arrow.Arrow = WarfrontHelpBox.ArrowRight
+        Arrow.Arrow:SetParent(Arrow)
+        Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
+        Arrow.Glow:SetParent(Arrow)
+        WarfrontHelpBox.Arrow = Arrow
+        WarfrontHelpBox.Text = WarfrontHelpBox.BigText
+        Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
+    end
 
     --[[ Scale ]]--
     WarboardQuestChoiceFrame.Title:SetSize(500, 85)
