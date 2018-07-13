@@ -136,7 +136,6 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroPopupFrame:SetSize(490, 471)
     _G.MacroPopupFrame:SetPoint("TOPLEFT", _G.MacroFrame, "TOPRIGHT", 5, 0)
     _G.MacroPopupFrame.BG:Hide()
-    Base.SetBackdrop(_G.MacroPopupFrame)
 
     if private.isPatch then
         Skin.SelectionFrameTemplate(_G.MacroPopupFrame.BorderBox)
@@ -145,6 +144,7 @@ function private.AddOns.Blizzard_MacroUI()
         chooseIconLabel:ClearAllPoints()
         chooseIconLabel:SetPoint("BOTTOMLEFT", _G.MacroPopupScrollFrame, "TOPLEFT", 0, 1)
     else
+        Base.SetBackdrop(_G.MacroPopupFrame)
         for i = 1, 8 do
             select(i, _G.MacroPopupFrame.BorderBox:GetRegions()):Hide()
         end

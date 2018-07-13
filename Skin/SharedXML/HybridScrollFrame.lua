@@ -91,6 +91,10 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         local name = ScrollFrame:GetName()
         Skin.HybridScrollBarTemplate(_G[name.."ScrollBar"])
     end
+    function Skin.MinimalHybridScrollFrameTemplate(ScrollFrame)
+        local name = ScrollFrame:GetName()
+        Skin.MinimalHybridScrollBarTemplate(_G[name.."ScrollBar"])
+    end
 end
 
 function private.SharedXML.HybridScrollFrame()

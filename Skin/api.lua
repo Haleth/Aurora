@@ -144,11 +144,11 @@ do -- Base API
 
                 local insets = options.insets
                 if insets then
-                    bd.bg:SetPoint("TOPLEFT", insets.left, -insets.top)
-                    bd.bg:SetPoint("BOTTOMRIGHT", -insets.right, insets.bottom)
+                    bd.bg:SetPoint("TOPLEFT", frame, insets.left, -insets.top)
+                    bd.bg:SetPoint("BOTTOMRIGHT", frame, -insets.right, insets.bottom)
                 else
-                    bd.bg:SetPoint("TOPLEFT")
-                    bd.bg:SetPoint("BOTTOMRIGHT")
+                    bd.bg:SetPoint("TOPLEFT", frame)
+                    bd.bg:SetPoint("BOTTOMRIGHT", frame)
                 end
 
 
@@ -193,7 +193,7 @@ do -- Base API
                 if options.edgeSize then
                     for corner, info in next, corners do
                         bd[corner]:SetSize(options.edgeSize, options.edgeSize)
-                        bd[corner]:SetPoint(info.point)
+                        bd[corner]:SetPoint(info.point, frame)
                     end
                 end
             else
@@ -548,6 +548,9 @@ do -- Base API
 
         local useSnapshots = true
         function Base.SetTexture(texture, textureName, useTextureSize)
+            _G.assert(type(texture) == "table" and texture.GetObjectType, "texture widget expected, got "..type(texture))
+            _G.assert(texture:GetObjectType() == "Texture", "texture widget expected, got "..texture:GetObjectType())
+
             local snapshot = snapshots[textureName]
             _G.assert(snapshot, textureName .. " is not a registered texture.")
 

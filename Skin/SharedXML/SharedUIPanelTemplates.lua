@@ -220,6 +220,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         --[[ Scale ]]--
         Button:SetSize(Button:GetSize())
     end
+    function Skin.UIPanelDynamicResizeButtonTemplate(Button)
+        Skin.UIPanelButtonTemplate(Button)
+    end
 
     function Skin.UIRadioButtonTemplate(CheckButton)
         local bd = _G.CreateFrame("Frame", nil, CheckButton)
@@ -460,6 +463,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Skin.ScrollBarThumb(Slider:GetThumbTexture())
     end
+    function Skin.MinimalScrollFrameTemplate(ScrollFrame)
+        Skin.MinimalScrollBarTemplate(ScrollFrame.ScrollBar)
+    end
     function Skin.FauxScrollFrameTemplateLight(ScrollFrame)
         local name = ScrollFrame:GetName()
 
@@ -539,6 +545,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
             Base.SetHighlight(Button, "color")
         end
+    end
+    function Skin.ColumnDisplayTemplate(Frame)
+        _G.hooksecurefunc(Frame.columnHeaders, "Acquire", Hook.ObjectPoolMixin_Acquire)
+
+        Frame.Background:Hide()
+        Frame.TopTileStreaks:Hide()
+    end
+    function Skin.ColumnDisplayButtonTemplate(Button)
+        Button.Left:Hide()
+        Button.Right:Hide()
+        Button.Middle:Hide()
     end
 end
 

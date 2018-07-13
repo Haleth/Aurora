@@ -19,9 +19,10 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         EditBox.Middle:Hide()
 
         local bg = _G.CreateFrame("Frame", nil, EditBox)
-        bg:SetPoint("TOPLEFT", -5, 2)
-        bg:SetPoint("BOTTOMRIGHT", 0, -2)
-        bg:SetFrameLevel(EditBox:GetFrameLevel() - 1)
+        bg:SetHeight(20)
+        bg:SetPoint("LEFT", -5, 0)
+        bg:SetPoint("RIGHT", 0, 0)
+        bg:SetFrameLevel(EditBox:GetFrameLevel())
         Base.SetBackdrop(bg, Color.frame)
         EditBox._auroraBG = bg
 
@@ -78,6 +79,31 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
         ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end
+    function Skin.InputScrollFrameTemplate(ScrollFrame)
+        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
+
+        local bg = _G.CreateFrame("Frame", nil, ScrollFrame)
+        bg:SetPoint("TOPLEFT", -4, 3)
+        bg:SetPoint("BOTTOMRIGHT", 4, -3)
+        bg:SetFrameLevel(ScrollFrame:GetFrameLevel())
+        Base.CreateBackdrop(bg, private.backdrop, {
+            bg = ScrollFrame.MiddleTex,
+
+            l = ScrollFrame.LeftTex,
+            r = ScrollFrame.RightTex,
+            t = ScrollFrame.TopTex,
+            b = ScrollFrame.BottomTex,
+
+            tl = ScrollFrame.TopLeftTex,
+            tr = ScrollFrame.TopRightTex,
+            bl = ScrollFrame.BottomLeftTex,
+            br = ScrollFrame.BottomRightTex,
+
+            borderLayer = "BACKGROUND",
+            borderSublevel = -7,
+        })
+        Base.SetBackdrop(bg, Color.frame)
+    end
     function Skin.FauxScrollFrameTemplate(ScrollFrame)
         Skin.UIPanelScrollFrameTemplate(ScrollFrame)
     end
@@ -89,6 +115,7 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         _G[name.."Middle"]:Hide()
     end
     function Skin.SelectionFrameTemplate(Frame)
+        Base.SetBackdrop(Frame)
         Frame.TopLeft:ClearAllPoints()
         Frame.TopRight:ClearAllPoints()
         Frame.BottomLeft:ClearAllPoints()
