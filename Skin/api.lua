@@ -1050,13 +1050,31 @@ do -- Util API
 
         return name
     end
-    function Util.PositionRelative(point, anchor, relPoint, x, y, gap, widgets)
+    function Util.PositionRelative(point, anchor, relPoint, x, y, gap, direction, widgets)
         widgets[1]:ClearAllPoints()
         widgets[1]:SetPoint(point, anchor, relPoint, x, y)
 
+        if direction == "Left" then
+            point = "TOPRIGHT"
+            relPoint = "TOPLEFT"
+            x, y = -gap, 0
+        elseif direction == "Right" then
+            point = "TOPLEFT"
+            relPoint = "TOPRIGHT"
+            x, y = gap, 0
+        elseif direction == "Up" then
+            point = "BOTTOMLEFT"
+            relPoint = "TOPLEFT"
+            x, y = 0, gap
+        elseif direction == "Down" then
+            point = "TOPLEFT"
+            relPoint = "BOTTOMLEFT"
+            x, y = 0, -gap
+        end
+
         for i = 2, #widgets do
             widgets[i]:ClearAllPoints()
-            widgets[i]:SetPoint("TOPLEFT", widgets[i - 1], "TOPRIGHT", gap, 0)
+            widgets[i]:SetPoint(point, widgets[i - 1], relPoint, x, y)
         end
     end
 

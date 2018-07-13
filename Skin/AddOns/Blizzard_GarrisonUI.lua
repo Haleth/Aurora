@@ -12,7 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
     do --[[ Blizzard_OrderHallMissionUI ]]
         function Hook.OrderHallMission_SetupTabs(self)
-            Util.PositionRelative("TOPLEFT", self, "BOTTOMLEFT", 20, -1, 1, {
+            Util.PositionRelative("TOPLEFT", self, "BOTTOMLEFT", 20, -1, 1, "Right", {
                 self.Tab1,
                 self.Tab2,
                 self.Tab3,
@@ -451,7 +451,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonLandingPageTabTemplate(GarrisonLandingPage.ReportTab)
     Skin.GarrisonLandingPageTabTemplate(GarrisonLandingPage.FollowerTabButton)
     Skin.GarrisonLandingPageTabTemplate(GarrisonLandingPage.FleetTab)
-    Util.PositionRelative("TOPLEFT", GarrisonLandingPage, "BOTTOMLEFT", 20, -1, 1, {
+    Util.PositionRelative("TOPLEFT", GarrisonLandingPage, "BOTTOMLEFT", 20, -1, 1, "Right", {
         GarrisonLandingPage.ReportTab,
         GarrisonLandingPage.FollowerTabButton,
         GarrisonLandingPage.FleetTab,
@@ -668,7 +668,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab1)
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab2)
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab3)
-    Util.PositionRelative("TOPLEFT", BFAMissionFrame, "BOTTOMLEFT", 20, -1, 1, {
+    Util.PositionRelative("TOPLEFT", BFAMissionFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         BFAMissionFrame.Tab1,
         BFAMissionFrame.Tab2,
         BFAMissionFrame.Tab3,
