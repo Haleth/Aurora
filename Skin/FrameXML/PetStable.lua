@@ -95,7 +95,9 @@ function private.FrameXML.PetStable()
     end
 
     Skin.UIPanelSquareButton(_G.PetStableNextPageButton)
+    Hook.SquareButton_SetIcon(_G.PetStableNextPageButton, "RIGHT")
     Skin.UIPanelSquareButton(_G.PetStablePrevPageButton)
+    Hook.SquareButton_SetIcon(_G.PetStablePrevPageButton, "LEFT")
 
     --[[ Scale ]]--
     _G.PetStableSelectedPetIcon:SetSize(40, 40)
