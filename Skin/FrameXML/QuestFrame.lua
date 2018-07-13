@@ -236,7 +236,8 @@ function private.FrameXML.QuestFrame()
     npcModelScroll:SetPoint("TOPLEFT", 4, -4)
     npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)
 
-    npcModelScroll.ScrollBar._auroraThumb:Hide()
+    -- BlizzWTF: Why doesn't this use the self.noScrollThumb option?
+    npcModelScroll.ScrollBar.ThumbTexture._auroraThumb:Hide()
     npcModelScroll.ScrollBar:SetPoint("TOPLEFT", npcModelScroll, "TOPRIGHT", -14, -15)
     npcModelScroll.ScrollBar:SetPoint("BOTTOMLEFT", npcModelScroll, "BOTTOMRIGHT", -14, 15)
 end

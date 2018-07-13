@@ -67,15 +67,7 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     function Skin.UIPanelScrollBarTemplate(Slider)
         Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
         Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-
-        Slider.ThumbTexture:SetAlpha(0)
-        Slider.ThumbTexture:SetSize(17, 24)
-
-        local thumb = _G.CreateFrame("Frame", nil, Slider)
-        thumb:SetPoint("TOPLEFT", Slider.ThumbTexture, 0, -2)
-        thumb:SetPoint("BOTTOMRIGHT", Slider.ThumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Color.button)
-        Slider._auroraThumb = thumb
+        Skin.ScrollBarThumb(Slider.ThumbTexture)
 
         --[[ Scale ]]--
         Slider:SetWidth(Slider:GetWidth())

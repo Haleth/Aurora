@@ -98,6 +98,27 @@ do -- BlizzWTF: These are not templates, but they should be
         Button._auroraHighlight = {arrow}
         Base.SetHighlight(Button, "texture")
     end
+
+    -- Scroll thumb
+    local function Hook_Hide(self)
+        self._auroraThumb:Hide()
+    end
+    local function Hook_Show(self)
+        self._auroraThumb:Show()
+    end
+    function Skin.ScrollBarThumb(Texture)
+        Texture:SetAlpha(0)
+        Texture:SetSize(17, 24)
+        _G.hooksecurefunc(Texture, "Hide", Hook_Hide)
+        _G.hooksecurefunc(Texture, "Show", Hook_Show)
+
+        local thumb = _G.CreateFrame("Frame", nil, Texture:GetParent())
+        thumb:SetPoint("TOPLEFT", Texture, 0, -2)
+        thumb:SetPoint("BOTTOMRIGHT", Texture, 0, 2)
+        thumb:SetShown(Texture:IsShown())
+        Base.SetBackdrop(thumb, Color.button)
+        Texture._auroraThumb = thumb
+    end
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
@@ -422,15 +443,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.UIPanelScrollDownButtonTemplate(_G[name.."ScrollDownButton"])
         _G[name.."Border"]:SetBackdrop(nil)
 
-        local thumbTexture = Slider:GetThumbTexture()
-        thumbTexture:SetAlpha(0)
-        thumbTexture:SetSize(17, 24)
-
-        local thumb = _G.CreateFrame("Frame", nil, Slider)
-        thumb:SetPoint("TOPLEFT", thumbTexture, 0, -2)
-        thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Color.button)
-        Slider._auroraThumb = thumb
+        Skin.ScrollBarThumb(Slider:GetThumbTexture())
 
         --[[ Scale ]]--
         Slider:SetWidth(Slider:GetWidth())
@@ -445,15 +458,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             Skin.UIPanelScrollDownButtonTemplate(_G[Slider:GetName().."ScrollDownButton"])
         end
 
-        local thumbTexture = Slider:GetThumbTexture()
-        thumbTexture:SetAlpha(0)
-        thumbTexture:SetSize(17, 24)
-
-        local thumb = _G.CreateFrame("Frame", nil, Slider)
-        thumb:SetPoint("TOPLEFT", thumbTexture, 0, -2)
-        thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 2)
-        Base.SetBackdrop(thumb, Color.button)
-        Slider._auroraThumb = thumb
+        Skin.ScrollBarThumb(Slider:GetThumbTexture())
     end
     function Skin.FauxScrollFrameTemplateLight(ScrollFrame)
         local name = ScrollFrame:GetName()
