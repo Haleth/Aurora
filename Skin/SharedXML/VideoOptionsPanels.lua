@@ -151,8 +151,8 @@ function private.SharedXML.VideoOptionsPanels()
         Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)
     else
         Skin.VideoOptionsSliderTemplate(_G.Advanced_RenderScaleSlider)
+        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_ShowHDModels)
     end
-    Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_ShowHDModels)
 
     -- Stereo 3D
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_StereoEnabled)
