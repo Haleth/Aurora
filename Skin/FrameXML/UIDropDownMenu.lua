@@ -51,6 +51,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             local hasCustomIcon = false
 
             checkBox:Show()
+            check:SetTexCoord(0, 1, 0, 1)
             check:SetDesaturated(true)
             check:SetVertexColor(Color.highlight:GetRGB())
             if info.customCheckIconAtlas or info.customCheckIconTexture then
