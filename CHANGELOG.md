@@ -1,4 +1,15 @@
-﻿## [8.0.1.3] - 2018-07-07 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Communities UI skin
+
+### Fixed ###
+
+  * Dropdown checkboxes had misaligned textures
+
+
+
+## [8.0.1.3] - 2018-07-07 ##
 ### Fixed ###
 
   * Bags were not using the proper alpha value.
