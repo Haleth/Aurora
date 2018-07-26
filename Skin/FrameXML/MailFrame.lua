@@ -159,24 +159,6 @@ do --[[ FrameXML\MailFrame.xml ]]
         _G[name.."ExpireTime"]:SetSize(100, 16)
         _G[name.."ExpireTime"]:SetPoint("TOPRIGHT", -4, -4)
     end
-    function Skin.SendMailInputBox(EditBox)
-        EditBox:SetHeight(22)
-
-        local name = EditBox:GetName()
-        _G[name.."Left"]:Hide()
-        _G[name.."Middle"]:Hide()
-        _G[name.."Right"]:Hide()
-
-        local bg = _G.CreateFrame("Frame", nil, EditBox)
-        bg:SetPoint("TOPLEFT", -8, -1)
-        bg:SetPoint("BOTTOMRIGHT", 8, 1)
-        bg:SetFrameLevel(EditBox:GetFrameLevel() - 1)
-        Base.SetBackdrop(bg, Color.frame)
-
-        --[[ Scale ]]--
-        EditBox:SetWidth(EditBox:GetWidth())
-        EditBox:GetRegions():SetPoint("RIGHT", EditBox, "LEFT", -12, 0)
-    end
     function Skin.SendMailAttachment(Button)
         Button:GetRegions():Hide()
 
@@ -202,6 +184,27 @@ do --[[ FrameXML\MailFrame.xml ]]
     end
     function Skin.OpenMailAttachment(Button)
         Skin.ItemButtonTemplate(Button)
+    end
+
+    --[[ Fake template ]]--
+    function Skin.SendMailInputBox(EditBox)
+        EditBox:SetHeight(22)
+
+        local name = EditBox:GetName()
+        _G[name.."Left"]:Hide()
+        _G[name.."Middle"]:Hide()
+        _G[name.."Right"]:Hide()
+
+        local bg = _G.CreateFrame("Frame", nil, EditBox)
+        bg:SetPoint("TOPLEFT", -8, -1)
+        bg:SetPoint("BOTTOMRIGHT", 8, 1)
+        bg:SetFrameLevel(EditBox:GetFrameLevel())
+        Base.SetBackdrop(bg, Color.frame)
+
+        --[[ Scale ]]--
+        EditBox:SetWidth(EditBox:GetWidth())
+        local _, _, label = EditBox:GetRegions()
+        label:SetPoint("RIGHT", EditBox, "LEFT", -12, 0)
     end
 end
 
