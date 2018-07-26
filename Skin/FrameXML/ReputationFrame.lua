@@ -193,15 +193,4 @@ function private.FrameXML.ReputationFrame()
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailLFGBonusReputationCheckBox)
-
-
-    if not private.disabled.mainmenubar and not private.isPatch then
-        Skin.MainMenuBarWatchBarTemplate(_G.ReputationWatchBar)
-    end
-
-    if not private.isPatch and not private.disabled.tooltips then
-        Skin.TooltipProgressBarTemplate(_G.ReputationParagonTooltipStatusBar)
-        Skin.GameTooltipTemplate(_G.ReputationParagonTooltip)
-        Skin.InternalEmbeddedItemTooltipTemplate(_G.ReputationParagonTooltip.ItemTooltip)
-    end
 end

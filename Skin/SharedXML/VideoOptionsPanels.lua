@@ -46,11 +46,7 @@ function private.SharedXML.VideoOptionsPanels()
     -- Column A
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_DisplayModeDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_ResolutionDropDown)
-    if private.isPatch then
-        Skin.VideoOptionsSliderTemplate(_G.Display_RenderScaleSlider)
-    else
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Display_RefreshDropDown)
-    end
+    Skin.VideoOptionsSliderTemplate(_G.Display_RenderScaleSlider)
 
     -- Column B
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_PrimaryMonitorDropDown)
@@ -124,18 +120,13 @@ function private.SharedXML.VideoOptionsPanels()
     -- Column A
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_BufferingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
-    if not private.isPatch then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_HardwareCursorDropDown)
-    end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_ResampleQualityDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PhysicsInteractionDropDown)
-    if private.isPatch then
-        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
-    end
+    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
 
     Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_UseUIScale)
@@ -145,14 +136,9 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_MaxFPSCheckBox)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_MaxFPSBKSlider)
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_MaxFPSBKCheckBox)
-    if private.isPatch then
-        Skin.VideoOptionsSliderTemplate(_G.Advanced_ContrastSlider)
-        Skin.VideoOptionsSliderTemplate(_G.Advanced_BrightnessSlider)
-        Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)
-    else
-        Skin.VideoOptionsSliderTemplate(_G.Advanced_RenderScaleSlider)
-        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_ShowHDModels)
-    end
+    Skin.VideoOptionsSliderTemplate(_G.Advanced_ContrastSlider)
+    Skin.VideoOptionsSliderTemplate(_G.Advanced_BrightnessSlider)
+    Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)
 
     -- Stereo 3D
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_StereoEnabled)

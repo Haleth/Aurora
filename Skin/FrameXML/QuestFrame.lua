@@ -72,9 +72,6 @@ do --[[ FrameXML\QuestFrame.lua ]]
         end
     end
     function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portraitDisplayID, mountPortraitDisplayID, text, name, x, y)
-        if not private.isPatch then
-            parentFrame, x, y = parentFrame, name, x
-        end
         if parentFrame == _G.WorldMapFrame then
             x = x + 2
         else

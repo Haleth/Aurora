@@ -79,11 +79,6 @@ do --[[ FrameXML\WorldStateFrame.xml ]]
 end
 
 function private.FrameXML.WorldStateFrame()
-    if not private.isPatch then
-        _G.hooksecurefunc(_G.ExtendedUI["CAPTUREPOINT"], "create", Hook.CaptureBar_Create)
-        _G.hooksecurefunc(_G.ExtendedUI["CAPTUREPOINT"], "update", Hook.CaptureBar_Update)
-    end
-
     local MAX_SCORE_BUTTONS = 20
 
     Skin.ButtonFrameTemplate(_G.WorldStateScoreFrame)

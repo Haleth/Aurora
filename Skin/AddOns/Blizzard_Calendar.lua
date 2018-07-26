@@ -84,9 +84,6 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarFilterFrameLeft:Hide()
     _G.CalendarFilterFrameMiddle:Hide()
     _G.CalendarFilterFrameRight:Hide()
-    if not private.isPatch then
-        _G.CalendarMassInviteFrameDivider:Hide()
-    end
 
     F.SetBD(_G.CalendarFrame, 12, 0, -9, 4)
     F.CreateBD(_G.CalendarViewEventFrame)
@@ -190,7 +187,7 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarTexturePickerFrame:ClearAllPoints()
     _G.CalendarTexturePickerFrame:SetPoint("TOPLEFT", _G.CalendarFrame, "TOPRIGHT", 311, -24)
 
-    local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton", (private.isPatch and "CalendarMassInviteAcceptButton" or "CalendarMassInviteGuildAcceptButton")}
+    local cbuttons = {"CalendarViewEventAcceptButton", "CalendarViewEventTentativeButton", "CalendarViewEventDeclineButton", "CalendarViewEventRemoveButton", "CalendarCreateEventMassInviteButton", "CalendarCreateEventCreateButton", "CalendarCreateEventInviteButton", "CalendarEventPickerCloseButton", "CalendarCreateEventRaidInviteButton", "CalendarTexturePickerAcceptButton", "CalendarTexturePickerCancelButton", "CalendarFilterButton", "CalendarMassInviteAcceptButton"}
     for i = 1, #cbuttons do
         local cbutton = _G[cbuttons[i]]
         F.Reskin(cbutton)
@@ -216,20 +213,11 @@ function private.AddOns.Blizzard_Calendar()
     F.ReskinDropDown(_G.CalendarCreateEventMinuteDropDown)
     F.ReskinDropDown(_G.CalendarCreateEventAMPMDropDown)
     F.ReskinDropDown(_G.CalendarCreateEventDifficultyOptionDropDown)
-    if private.isPatch then
-        F.ReskinDropDown(_G.CalendarMassInviteRankMenu)
-    else
-        F.ReskinDropDown(_G.CalendarMassInviteGuildRankMenu)
-    end
+    F.ReskinDropDown(_G.CalendarMassInviteRankMenu)
     F.ReskinInput(_G.CalendarCreateEventTitleEdit)
     F.ReskinInput(_G.CalendarCreateEventInviteEdit)
-    if private.isPatch then
-        F.ReskinInput(_G.CalendarMassInviteMinLevelEdit)
-        F.ReskinInput(_G.CalendarMassInviteMaxLevelEdit)
-    else
-        F.ReskinInput(_G.CalendarMassInviteGuildMinLevelEdit)
-        F.ReskinInput(_G.CalendarMassInviteGuildMaxLevelEdit)
-    end
+    F.ReskinInput(_G.CalendarMassInviteMinLevelEdit)
+    F.ReskinInput(_G.CalendarMassInviteMaxLevelEdit)
     F.ReskinArrow(_G.CalendarPrevMonthButton, "Left")
     F.ReskinArrow(_G.CalendarNextMonthButton, "Right")
     _G.CalendarPrevMonthButton:SetSize(19, 19)

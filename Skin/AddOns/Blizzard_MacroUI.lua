@@ -137,27 +137,11 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroPopupFrame:SetPoint("TOPLEFT", _G.MacroFrame, "TOPRIGHT", 5, 0)
     _G.MacroPopupFrame.BG:Hide()
 
-    if private.isPatch then
-        Skin.SelectionFrameTemplate(_G.MacroPopupFrame.BorderBox)
+    Skin.SelectionFrameTemplate(_G.MacroPopupFrame.BorderBox)
 
-        local chooseIconLabel = select(9, _G.MacroPopupFrame.BorderBox:GetRegions())
-        chooseIconLabel:ClearAllPoints()
-        chooseIconLabel:SetPoint("BOTTOMLEFT", _G.MacroPopupScrollFrame, "TOPLEFT", 0, 1)
-    else
-        Base.SetBackdrop(_G.MacroPopupFrame)
-        for i = 1, 8 do
-            select(i, _G.MacroPopupFrame.BorderBox:GetRegions()):Hide()
-        end
-        Skin.UIPanelButtonTemplate(_G.MacroPopupCancelButton)
-        _G.MacroPopupCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
-        Skin.UIPanelButtonTemplate(_G.MacroPopupOkayButton)
-
-
-        local enterNameLabel, chooseIconLabel = select(9, _G.MacroPopupFrame.BorderBox:GetRegions())
-        enterNameLabel:Hide()
-        chooseIconLabel:ClearAllPoints()
-        chooseIconLabel:SetPoint("BOTTOMLEFT", _G.MacroPopupScrollFrame, "TOPLEFT", 0, 1)
-    end
+    local chooseIconLabel = select(9, _G.MacroPopupFrame.BorderBox:GetRegions())
+    chooseIconLabel:ClearAllPoints()
+    chooseIconLabel:SetPoint("BOTTOMLEFT", _G.MacroPopupScrollFrame, "TOPLEFT", 0, 1)
 
     _G.MacroPopupEditBox:SetPoint("TOPLEFT", 10, -10)
     Base.SetBackdrop(_G.MacroPopupEditBox, Color.frame)

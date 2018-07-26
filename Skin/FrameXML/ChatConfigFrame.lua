@@ -140,21 +140,13 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
     function Skin.ChatConfigCheckBoxTemplate(Frame)
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.button)
-        if private.isPatch then
-            Skin.ChatConfigCheckButtonTemplate(Frame.CheckButton)
-        else
-            Skin.ChatConfigCheckButtonTemplate(_G[Frame:GetName().."Check"])
-        end
+        Skin.ChatConfigCheckButtonTemplate(Frame.CheckButton)
 
         --[[ Scale ]]--
         Frame:SetSize(Frame:GetSize())
     end
     function Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
         Skin.ChatConfigCheckBoxTemplate(Frame)
-        if not private.isPatch then
-            Frame.ColorSwatch = _G[Frame:GetName().."ColorSwatch"]
-        end
-
         Skin.ColorSwatch(Frame.ColorSwatch)
 
         --[[ Scale ]]--
@@ -165,10 +157,6 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
 
         --[[ Scale ]]--
         Frame.ColorSwatch:SetPoint("LEFT", 350, 0)
-    end
-    function Skin.ChatConfigCheckBoxWithSwatchAndClassColorTemplate(Frame) -- not isPatch
-        Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
-        Skin.ChatConfigBaseCheckButtonTemplate(_G[Frame:GetName().."ColorClasses"])
     end
     function Skin.MovableChatConfigWideCheckBoxWithSwatchTemplate(Frame)
         Skin.ChatConfigWideCheckBoxWithSwatchTemplate(Frame)
@@ -273,9 +261,7 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton2)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton3)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton4)
-    if private.isPatch then
-        _G.hooksecurefunc(ChatConfigFrame.ChatTabManager.tabPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    end
+    _G.hooksecurefunc(ChatConfigFrame.ChatTabManager.tabPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     Skin.ChatConfigBoxTemplate(_G.ChatConfigBackgroundFrame)
 
     local divider = _G.ChatConfigFrame:CreateTexture()
@@ -284,13 +270,7 @@ function private.FrameXML.ChatConfigFrame()
     divider:SetColorTexture(1, 1, 1, .2)
 
     Skin.WideChatConfigBoxWithHeaderAndClassColorsTemplate(_G.ChatConfigChatSettingsLeft)
-    if not private.isPatch then
-        Skin.ChatConfigBoxTemplate(_G.ChatConfigChatSettingsClassColorLegend)
-    end
     Skin.WideChatConfigBoxWithHeaderAndClassColorsTemplate(_G.ChatConfigChannelSettingsLeft)
-    if not private.isPatch then
-        Skin.ChatConfigBoxTemplate(_G.ChatConfigChannelSettingsClassColorLegend)
-    end
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsCombat)
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsPVP)
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsSystem)

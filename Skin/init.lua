@@ -117,10 +117,6 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
 
-            if not private.isPatch then
-                private.FrameXML.ChannelFrame()
-            end
-
             -- Skin prior loaded AddOns
             for addon, func in _G.next, private.AddOns do
                 local loaded = _G.IsAddOnLoaded(addon)

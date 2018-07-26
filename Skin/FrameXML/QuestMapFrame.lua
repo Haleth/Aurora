@@ -17,44 +17,35 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         [262] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
     }
     function Hook.QuestLogQuests_Update(poiTable)
-        if private.isPatch then
-            local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
-            local warCampaignShown = false
+        local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
+        local warCampaignShown = false
 
-            if warCampaignID then
-                local warCampaignInfo = _G.C_CampaignInfo.GetCampaignInfo(warCampaignID)
-                if warCampaignInfo and warCampaignInfo.visibilityConditionMatched then
-                    local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits[0]
-                    _G.QuestScrollFrame.Contents.WarCampaignHeader.Background:SetColorTexture(kit.color:GetRGB())
-                    _G.QuestScrollFrame.Contents.WarCampaignHeader._auroraOverlay:SetTexture(kit.overlay)
-                    warCampaignShown = true
-                end
+        if warCampaignID then
+            local warCampaignInfo = _G.C_CampaignInfo.GetCampaignInfo(warCampaignID)
+            if warCampaignInfo and warCampaignInfo.visibilityConditionMatched then
+                local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits[0]
+                _G.QuestScrollFrame.Contents.WarCampaignHeader.Background:SetColorTexture(kit.color:GetRGB())
+                _G.QuestScrollFrame.Contents.WarCampaignHeader._auroraOverlay:SetTexture(kit.overlay)
+                warCampaignShown = true
             end
+        end
 
-            if warCampaignShown then
-                _G.QuestScrollFrame.Contents.Separator.Divider:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.5)
-                _G.QuestScrollFrame.Contents.Separator.Divider:SetSize(200, 1)
-            end
+        if warCampaignShown then
+            _G.QuestScrollFrame.Contents.Separator.Divider:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.5)
+            _G.QuestScrollFrame.Contents.Separator.Divider:SetSize(200, 1)
+        end
 
-            for i = 6, _G.QuestMapFrame.QuestsFrame.Contents:GetNumChildren() do
-                local child = select(i, _G.QuestMapFrame.QuestsFrame.Contents:GetChildren())
-                if not child._auroraSkinned then
-                    if child.TaskIcon then
-                        Skin.QuestLogTitleTemplate(child)
-                    elseif child.ButtonText then
-                        Skin.QuestLogHeaderTemplate(child)
-                    else
-                        Skin.QuestLogObjectiveTemplate(child)
-                    end
-                    child._auroraSkinned = true
+        for i = 6, _G.QuestMapFrame.QuestsFrame.Contents:GetNumChildren() do
+            local child = select(i, _G.QuestMapFrame.QuestsFrame.Contents:GetChildren())
+            if not child._auroraSkinned then
+                if child.TaskIcon then
+                    Skin.QuestLogTitleTemplate(child)
+                elseif child.ButtonText then
+                    Skin.QuestLogHeaderTemplate(child)
+                else
+                    Skin.QuestLogObjectiveTemplate(child)
                 end
-            end
-        else
-            for i, questLogHeader in next, _G.QuestMapFrame.QuestsFrame.Contents.Headers do
-                if not questLogHeader._auroraSkinned then
-                    Skin.ExpandOrCollapse(questLogHeader)
-                    questLogHeader._auroraSkinned = true
-                end
+                child._auroraSkinned = true
             end
         end
     end
@@ -158,20 +149,14 @@ function private.FrameXML.QuestMapFrame()
     local QuestsFrame = QuestMapFrame.QuestsFrame
     QuestsFrame.Background:Hide()
 
-    if private.isPatch then
-        Skin.VerticalLayoutFrame(QuestsFrame.Contents)
-        QuestsFrame.Contents.Separator:SetSize(260, 10)
-    end
+    Skin.VerticalLayoutFrame(QuestsFrame.Contents)
+    QuestsFrame.Contents.Separator:SetSize(260, 10)
 
-    if private.isPatch then
-        Skin.QuestMapHeader(QuestsFrame.Contents.WarCampaignHeader)
-    end
+    Skin.QuestMapHeader(QuestsFrame.Contents.WarCampaignHeader)
     Skin.QuestMapHeader(QuestsFrame.Contents.StoryHeader)
 
-    if private.isPatch then
-        QuestsFrame.DetailFrame.BottomDetail:Hide()
-        QuestsFrame.DetailFrame.TopDetail:Hide()
-    end
+    QuestsFrame.DetailFrame.BottomDetail:Hide()
+    QuestsFrame.DetailFrame.TopDetail:Hide()
 
     Skin.UIPanelScrollBarTemplate(QuestsFrame.ScrollBar)
     scrollName = QuestsFrame.ScrollBar:GetName()
@@ -182,9 +167,7 @@ function private.FrameXML.QuestMapFrame()
     QuestsFrame.ScrollBar:SetPoint("BOTTOMLEFT", QuestsFrame, "BOTTOMRIGHT", 2, 17)
 
     Base.SetBackdrop(QuestsFrame.StoryTooltip)
-    if private.isPatch then
-        Skin.WarCampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
-    end
+    Skin.WarCampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
 
 
     local DetailsFrame = QuestMapFrame.DetailsFrame

@@ -149,12 +149,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
-    local QUEST_ICONS_FILE = "Interface\\QuestFrame\\QuestTypeIcons" -- not isPatch
-    local QUEST_ICONS_FILE_WIDTH = 128 -- not isPatch
-    local QUEST_ICONS_FILE_HEIGHT = 64 -- not isPatch
-
     local coords = _G.QUEST_TAG_TCOORDS[_G.UnitFactionGroup("player"):upper()]
-    local factionIcon  = _G.CreateTextureMarkup(QUEST_ICONS_FILE, QUEST_ICONS_FILE_WIDTH, QUEST_ICONS_FILE_HEIGHT, 16, 16
+    local factionIcon  = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16
             , coords[1]
             , coords[2] - 0.02 -- Offset to stop bleeding from next image
             , coords[3]
@@ -162,7 +158,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     function Hook.QUEST_TRACKER_MODULE_SetBlockHeader(self, block, text, questLogIndex, isQuestComplete, questID)
         Scale.RawSetWidth(block.HeaderText, block.lineWidth or OBJECTIVE_TRACKER_TEXT_WIDTH)
 
-        if private.isPatch and _G.C_CampaignInfo.IsCampaignQuest(questID) then
+        if _G.C_CampaignInfo.IsCampaignQuest(questID) then
             text = text..factionIcon
         end
 
@@ -595,18 +591,16 @@ function private.AddOns.Blizzard_ObjectiveTracker()
 
     -- ScenarioProvingGroundsBlock
 
-    if private.isPatch then
-        -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-        local WarfrontHelpBox = _G.ScenarioBlocksFrame.WarfrontHelpBox
-        local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
-        Arrow.Arrow = WarfrontHelpBox.ArrowRight
-        Arrow.Arrow:SetParent(Arrow)
-        Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
-        Arrow.Glow:SetParent(Arrow)
-        WarfrontHelpBox.Arrow = Arrow
-        WarfrontHelpBox.Text = WarfrontHelpBox.BigText
-        Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
-    end
+    -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+    local WarfrontHelpBox = _G.ScenarioBlocksFrame.WarfrontHelpBox
+    local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
+    Arrow.Arrow = WarfrontHelpBox.ArrowRight
+    Arrow.Arrow:SetParent(Arrow)
+    Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
+    Arrow.Glow:SetParent(Arrow)
+    WarfrontHelpBox.Arrow = Arrow
+    WarfrontHelpBox.Text = WarfrontHelpBox.BigText
+    Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
 
     --[[ Scale ]]--
     _G.ScenarioStageBlock:SetSize(201, 83)

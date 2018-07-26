@@ -51,9 +51,7 @@ end
 do --[[ FrameXML\PaperDollFrame.xml ]]
     function Skin.PaperDollItemSlotButtonTemplate(Button)
         Skin.ItemButtonTemplate(Button)
-        if private.isPatch then
-            Skin.PaperDollAzeriteItemOverlayTemplate(Button)
-        end
+        Skin.PaperDollAzeriteItemOverlayTemplate(Button)
         _G[Button:GetName().."Frame"]:Hide()
 
         Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
@@ -189,10 +187,6 @@ function private.FrameXML.PaperDollFrame()
     for i = 1, #EquipmentSlots do
         local button = _G[EquipmentSlots[i]]
 
-        if not private.isPatch then
-            button.IsLeftSide = i <= 8
-        end
-
         if i % 8 == 1 then
             if button.IsLeftSide then
                 button:SetPoint("TOPLEFT", _G.CharacterFrameInset, 4, -11)
@@ -221,11 +215,7 @@ function private.FrameXML.PaperDollFrame()
         end
 
         Skin.PaperDollItemSlotButtonBottomTemplate(button)
-        if private.isPatch then
-            _G.select(13, button:GetRegions()):Hide()
-        else
-            _G.select(11, button:GetRegions()):Hide()
-        end
+        _G.select(13, button:GetRegions()):Hide()
     end
 
 

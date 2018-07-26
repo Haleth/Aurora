@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Color = Aurora.Color
 
 do -- BlizzWTF: These are not templates, but they should be
     -- ExpandOrCollapse
@@ -277,26 +277,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        local name = Util.GetName(Frame)
-
         Frame.Bg:Hide()
-        if private.isPatch then
-            Frame.TitleBg:Hide()
-        else
-            _G[name.."TitleBg"]:Hide()
-        end
+        Frame.TitleBg:Hide()
         Frame.portrait:SetAlpha(0)
-        if private.isPatch then
-            Frame.PortraitFrame:SetTexture("")
-            Frame.TopRightCorner:Hide()
-            Frame.TopLeftCorner:SetTexture("")
-            Frame.TopBorder:SetTexture("")
-        else
-            Frame.portraitFrame:SetTexture("")
-            _G[name.."TopRightCorner"]:Hide()
-            Frame.topLeftCorner:Hide()
-            Frame.topBorderBar:SetTexture("")
-        end
+        Frame.PortraitFrame:SetTexture("")
+        Frame.TopRightCorner:Hide()
+        Frame.TopLeftCorner:SetTexture("")
+        Frame.TopBorder:SetTexture("")
 
         local titleText = Frame.TitleText
         titleText:ClearAllPoints()
@@ -304,19 +291,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
         Frame.TopTileStreaks:SetTexture("")
-        if private.isPatch then
-            Frame.BotLeftCorner:Hide()
-            Frame.BotRightCorner:Hide()
-            Frame.BottomBorder:Hide()
-            Frame.LeftBorder:Hide()
-            Frame.RightBorder:Hide()
-        else
-            _G[name.."BotLeftCorner"]:Hide()
-            _G[name.."BotRightCorner"]:Hide()
-            _G[name.."BottomBorder"]:Hide()
-            Frame.leftBorderBar:Hide()
-            _G[name.."RightBorder"]:Hide()
-        end
+        Frame.BotLeftCorner:Hide()
+        Frame.BotRightCorner:Hide()
+        Frame.BottomBorder:Hide()
+        Frame.LeftBorder:Hide()
+        Frame.RightBorder:Hide()
 
         Base.SetBackdrop(Frame)
 
@@ -453,13 +432,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.MinimalScrollBarTemplate(Slider)
         Slider.trackBG:Hide()
-        if private.isPatch then
-            Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-            Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-        else
-            Skin.UIPanelScrollUpButtonTemplate(_G[Slider:GetName().."ScrollUpButton"])
-            Skin.UIPanelScrollDownButtonTemplate(_G[Slider:GetName().."ScrollDownButton"])
-        end
+        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
 
         Skin.ScrollBarThumb(Slider:GetThumbTexture())
     end

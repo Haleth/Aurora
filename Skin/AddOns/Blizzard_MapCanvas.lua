@@ -37,9 +37,7 @@ function private.AddOns.Blizzard_MapCanvas()
     ----====####$$$$%%%%%$$$$####====----
     --  Blizzard_MapCanvasDetailLayer  --
     ----====####$$$$%%%%%$$$$####====----
-    if private.isPatch then
-        _G.hooksecurefunc(_G.MapCanvasDetailLayerMixin, "RefreshDetailTiles", Hook.MapCanvasDetailLayerMixin_RefreshDetailTiles)
-    end
+    _G.hooksecurefunc(_G.MapCanvasDetailLayerMixin, "RefreshDetailTiles", Hook.MapCanvasDetailLayerMixin_RefreshDetailTiles)
 
     -------------
     -- Section --

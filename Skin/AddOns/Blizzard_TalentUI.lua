@@ -57,21 +57,6 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
             end
         end
 
-        if not private.isPatch then
-            talentTabWidthCache[_G.PVP_TALENTS_TAB] = 0
-            tab = _G["PlayerTalentFrameTab".._G.PVP_TALENTS_TAB]
-            if tab then
-                if playerLevel >= _G.SHOW_PVP_TALENT_LEVEL then
-                    tab:Show()
-                    Hook.PanelTemplates_TabResize(tab, 0)
-                    talentTabWidthCache[_G.PVP_TALENTS_TAB] = Hook.PanelTemplates_GetTabWidth(tab)
-                    totalTabWidth = totalTabWidth + talentTabWidthCache[_G.PVP_TALENTS_TAB]
-                else
-                    tab:Hide()
-                end
-            end
-        end
-
         if _G.PET_SPECIALIZATION_TAB then
             -- setup pet specialization tab
             talentTabWidthCache[_G.PET_SPECIALIZATION_TAB] = 0
@@ -149,12 +134,7 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
             -- GetSpecializationSpells adds a spell level after each spell ID, but we only care about the spell ID
             bonusesIncrement = 2
         else
-            if private.isPatch then
-                bonuses = _G.C_SpecializationInfo.GetSpellsDisplay(specID)
-            else
-                bonuses = _G.SPEC_SPELLS_DISPLAY[specID]
-                bonusesIncrement = 2
-            end
+            bonuses = _G.C_SpecializationInfo.GetSpellsDisplay(specID)
         end
 
         if bonuses then
@@ -352,9 +332,6 @@ function private.AddOns.Blizzard_TalentUI()
     Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab1)
     Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab2)
     Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab3)
-    if not private.isPatch then
-        Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab4)
-    end
 
     Skin.SpecializationFrameTemplate(_G.PlayerTalentFrameSpecialization)
     Skin.SpecializationFrameTemplate(_G.PlayerTalentFramePetSpecialization)
@@ -389,11 +366,9 @@ function private.AddOns.Blizzard_TalentUI()
         end
     end
 
-    if private.isPatch then
-        Skin.UIExpandingButtonTemplate(PlayerTalentFrameTalents.PvpTalentButton)
-        PlayerTalentFrameTalents.PvpTalentButton:ClearAllPoints()
-        PlayerTalentFrameTalents.PvpTalentButton:SetPoint("TOPRIGHT", _G.PlayerTalentFrame.CloseButton, "BOTTOMRIGHT", 0, -5)
-    end
+    Skin.UIExpandingButtonTemplate(PlayerTalentFrameTalents.PvpTalentButton)
+    PlayerTalentFrameTalents.PvpTalentButton:ClearAllPoints()
+    PlayerTalentFrameTalents.PvpTalentButton:SetPoint("TOPRIGHT", _G.PlayerTalentFrame.CloseButton, "BOTTOMRIGHT", 0, -5)
 
     --[[ Scale ]]--
     PlayerTalentFrameTalents.unspentText:SetPoint("BOTTOM", PlayerTalentFrameTalents.tier1, "TOP", 0, 10)
@@ -401,84 +376,56 @@ function private.AddOns.Blizzard_TalentUI()
     --------------------
     -- PvpTalentFrame --
     --------------------
-    if private.isPatch then
-        local PvpTalentFrame = PlayerTalentFrameTalents.PvpTalentFrame
-        local bg, vertbar = PvpTalentFrame:GetRegions()
-        bg:Hide()
-        vertbar:Hide()
-        _G.PlayerTalentFrameTalentsPvpTalentFrameTLCorner:Hide()
-        _G.PlayerTalentFrameTalentsPvpTalentFrameTRCorner:Hide()
-        _G.PlayerTalentFrameTalentsPvpTalentFrameBLCorner:Hide()
-        _G.PlayerTalentFrameTalentsPvpTalentFrameBRCorner:Hide()
-        topTile, bottomTile = select(7, PvpTalentFrame:GetRegions())
-        topTile:Hide()
-        bottomTile:Hide()
+    local PvpTalentFrame = PlayerTalentFrameTalents.PvpTalentFrame
+    local bg, vertbar = PvpTalentFrame:GetRegions()
+    bg:Hide()
+    vertbar:Hide()
+    _G.PlayerTalentFrameTalentsPvpTalentFrameTLCorner:Hide()
+    _G.PlayerTalentFrameTalentsPvpTalentFrameTRCorner:Hide()
+    _G.PlayerTalentFrameTalentsPvpTalentFrameBLCorner:Hide()
+    _G.PlayerTalentFrameTalentsPvpTalentFrameBRCorner:Hide()
+    topTile, bottomTile = select(7, PvpTalentFrame:GetRegions())
+    topTile:Hide()
+    bottomTile:Hide()
 
-        PvpTalentFrame.Swords:SetSize(72, 67)
-        PvpTalentFrame.Orb:Hide()
-        PvpTalentFrame.Ring:Hide()
-        select(13, PvpTalentFrame:GetRegions()):Hide() -- firecover
+    PvpTalentFrame.Swords:SetSize(72, 67)
+    PvpTalentFrame.Orb:Hide()
+    PvpTalentFrame.Ring:Hide()
+    select(13, PvpTalentFrame:GetRegions()):Hide() -- firecover
 
-        Skin.GlowBoxFrame(PvpTalentFrame.WarmodeTutorialBox, "Left")
-        Skin.PvpTalentTrinketSlotTemplate(PvpTalentFrame.TrinketSlot)
-        Skin.GlowBoxFrame(PvpTalentFrame.TrinketSlot.HelpBox, "Left")
+    Skin.GlowBoxFrame(PvpTalentFrame.WarmodeTutorialBox, "Left")
+    Skin.PvpTalentTrinketSlotTemplate(PvpTalentFrame.TrinketSlot)
+    Skin.GlowBoxFrame(PvpTalentFrame.TrinketSlot.HelpBox, "Left")
 
-        Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot1)
-        Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot2)
-        Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot3)
+    Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot1)
+    Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot2)
+    Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot3)
 
-        PvpTalentFrame.TalentList:SetPoint("BOTTOMLEFT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 5, 26)
-        Skin.ButtonFrameTemplate(PvpTalentFrame.TalentList)
-        PvpTalentFrame.TalentList.MyTopLeftCorner:Hide()
-        PvpTalentFrame.TalentList.MyTopRightCorner:Hide()
-        PvpTalentFrame.TalentList.MyTopBorder:Hide()
+    PvpTalentFrame.TalentList:SetPoint("BOTTOMLEFT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 5, 26)
+    Skin.ButtonFrameTemplate(PvpTalentFrame.TalentList)
+    PvpTalentFrame.TalentList.MyTopLeftCorner:Hide()
+    PvpTalentFrame.TalentList.MyTopRightCorner:Hide()
+    PvpTalentFrame.TalentList.MyTopBorder:Hide()
 
-        PvpTalentFrame.TalentList.ScrollFrame:SetPoint("TOPLEFT", 5, -5)
-        PvpTalentFrame.TalentList.ScrollFrame:SetPoint("BOTTOMRIGHT", -21, 32)
-        Skin.HybridScrollBarTemplate(PvpTalentFrame.TalentList.ScrollFrame.ScrollBar)
-        Skin.MagicButtonTemplate(select(4, PvpTalentFrame.TalentList:GetChildren()))
+    PvpTalentFrame.TalentList.ScrollFrame:SetPoint("TOPLEFT", 5, -5)
+    PvpTalentFrame.TalentList.ScrollFrame:SetPoint("BOTTOMRIGHT", -21, 32)
+    Skin.HybridScrollBarTemplate(PvpTalentFrame.TalentList.ScrollFrame.ScrollBar)
+    Skin.MagicButtonTemplate(select(4, PvpTalentFrame.TalentList:GetChildren()))
 
-        PvpTalentFrame.OrbModelScene:SetAlpha(0)
+    PvpTalentFrame.OrbModelScene:SetAlpha(0)
 
-        --[[ Scale ]]--
-        PvpTalentFrame:SetSize(131, 379)
-        PvpTalentFrame:SetPoint("LEFT", PlayerTalentFrameTalents, "RIGHT", -135, 0)
-        PvpTalentFrame.Swords:SetPoint("BOTTOM", 0, 30)
-        PvpTalentFrame.Label:SetPoint("BOTTOM", 0, 104)
-        PvpTalentFrame.InvisibleWarmodeButton:SetAllPoints(PvpTalentFrame.Swords)
+    --[[ Scale ]]--
+    PvpTalentFrame:SetSize(131, 379)
+    PvpTalentFrame:SetPoint("LEFT", PlayerTalentFrameTalents, "RIGHT", -135, 0)
+    PvpTalentFrame.Swords:SetPoint("BOTTOM", 0, 30)
+    PvpTalentFrame.Label:SetPoint("BOTTOM", 0, 104)
+    PvpTalentFrame.InvisibleWarmodeButton:SetAllPoints(PvpTalentFrame.Swords)
 
-        PvpTalentFrame.TrinketSlot:SetPoint("TOP", 0, -16)
-        PvpTalentFrame.TalentSlot1:SetPoint("TOP", PvpTalentFrame.TrinketSlot, "BOTTOM", 0, -16)
-        PvpTalentFrame.TalentSlot2:SetPoint("TOP", PvpTalentFrame.TalentSlot1, "BOTTOM", 0, -10)
-        PvpTalentFrame.TalentSlot3:SetPoint("TOP", PvpTalentFrame.TalentSlot2, "BOTTOM", 0, -10)
-        PvpTalentFrame.FireModelScene:SetScale(Scale.GetUIScale())
-    else
-        local PlayerTalentFramePVPTalents = _G.PlayerTalentFramePVPTalents
-        PlayerTalentFramePVPTalents:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 25))
-        PlayerTalentFramePVPTalents:SetPoint("BOTTOMRIGHT", -5, 5)
-        Skin.PVPHonorSystemLargeXPBar(PlayerTalentFramePVPTalents.XPBar)
-
-        local Talents = PlayerTalentFramePVPTalents.Talents
-        Talents:SetPoint("TOPLEFT", 0, -50)
-        _G.PlayerTalentFramePVPTalentsBg:Hide()
-        _G.PlayerTalentFramePVPTalentsTLCorner:Hide()
-        _G.PlayerTalentFramePVPTalentsTRCorner:Hide()
-        _G.PlayerTalentFramePVPTalentsBLCorner:Hide()
-        _G.PlayerTalentFramePVPTalentsBRCorner:Hide()
-        topTile, bottomTile = select(6, Talents:GetRegions())
-        topTile:Hide()
-        bottomTile:Hide()
-
-        for tier = 1, _G.MAX_PVP_TALENT_TIERS do
-            local talentRow = Talents["Tier"..tier]
-            --Skin.PlayerTalentRowTemplate(talentRow)
-            if tier == 1 then
-                talentRow:SetPoint("TOPLEFT")
-            else
-                talentRow:SetPoint("TOPLEFT", Talents["Tier"..tier - 1], "BOTTOMLEFT", 0, -18)
-            end
-        end
-    end
+    PvpTalentFrame.TrinketSlot:SetPoint("TOP", 0, -16)
+    PvpTalentFrame.TalentSlot1:SetPoint("TOP", PvpTalentFrame.TrinketSlot, "BOTTOM", 0, -16)
+    PvpTalentFrame.TalentSlot2:SetPoint("TOP", PvpTalentFrame.TalentSlot1, "BOTTOM", 0, -10)
+    PvpTalentFrame.TalentSlot3:SetPoint("TOP", PvpTalentFrame.TalentSlot2, "BOTTOM", 0, -10)
+    PvpTalentFrame.FireModelScene:SetScale(Scale.GetUIScale())
 
     -------------------------------
     -- PlayerTalentFrameLockInfo --

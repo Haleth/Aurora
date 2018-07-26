@@ -34,9 +34,7 @@ do --[[ FrameXML\AudioOptionsPanels.xml ]]
 end
 
 function private.FrameXML.AudioOptionsPanels()
-    if private.isPatch then
-        _G.hooksecurefunc("AudioOptionsVoicePanel_InitializeCommunicationModeUI", Hook.AudioOptionsVoicePanel_InitializeCommunicationModeUI)
-    end
+    _G.hooksecurefunc("AudioOptionsVoicePanel_InitializeCommunicationModeUI", Hook.AudioOptionsVoicePanel_InitializeCommunicationModeUI)
 
     -----------------
     -- Sound Panel --
@@ -57,9 +55,6 @@ function private.FrameXML.AudioOptionsPanels()
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelSoundInBG)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelReverb)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelHRTF)
-    if not private.isPatch then
-        Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelEnableDSPs)
-    end
 
     -- Hardware
     Skin.OptionsBoxTemplate(_G.AudioOptionsSoundPanelHardware)
@@ -78,22 +73,20 @@ function private.FrameXML.AudioOptionsPanels()
     -----------------
     -- Voice Panel --
     -----------------
-    if private.isPatch then
-        local AudioOptionsVoicePanel = _G.AudioOptionsVoicePanel
-        Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.OutputDeviceDropdown)
-        Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatVolume)
-        Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.MicDeviceDropdown)
-        Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicVolume)
-        Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicSensitivity)
+    local AudioOptionsVoicePanel = _G.AudioOptionsVoicePanel
+    Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.OutputDeviceDropdown)
+    Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatVolume)
+    Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.MicDeviceDropdown)
+    Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicVolume)
+    Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicSensitivity)
 
-        local TestInputDevice = AudioOptionsVoicePanel.TestInputDevice
-        Skin.OptionsButtonTemplate(TestInputDevice.ToggleTest)
-        Skin.OptionsBoxTemplate(TestInputDevice.VUMeter)
-        TestInputDevice.VUMeter:SetBackdropBorderColor(Color.button)
-        TestInputDevice.VUMeter.Status:SetPoint("TOPLEFT", 1, -1)
-        TestInputDevice.VUMeter.Status:SetPoint("BOTTOMRIGHT", -1, 1)
-        Base.SetTexture(TestInputDevice.VUMeter.Status:GetStatusBarTexture(), "gradientUp")
+    local TestInputDevice = AudioOptionsVoicePanel.TestInputDevice
+    Skin.OptionsButtonTemplate(TestInputDevice.ToggleTest)
+    Skin.OptionsBoxTemplate(TestInputDevice.VUMeter)
+    TestInputDevice.VUMeter:SetBackdropBorderColor(Color.button)
+    TestInputDevice.VUMeter.Status:SetPoint("TOPLEFT", 1, -1)
+    TestInputDevice.VUMeter.Status:SetPoint("BOTTOMRIGHT", -1, 1)
+    Base.SetTexture(TestInputDevice.VUMeter.Status:GetStatusBarTexture(), "gradientUp")
 
-        Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.ChatModeDropdown)
-    end
+    Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.ChatModeDropdown)
 end

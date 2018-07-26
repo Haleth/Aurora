@@ -123,9 +123,7 @@ function private.FrameXML.ContainerFrame()
     _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
 
     Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
-    if private.isPatch then
-        Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
-    end
+    Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
 
     for i = 1, 12 do
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])

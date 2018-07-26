@@ -131,9 +131,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         Skin.StaticPopupButtonTemplate(Frame.button2)
         Skin.StaticPopupButtonTemplate(Frame.button3)
         Skin.StaticPopupButtonTemplate(Frame.button4)
-        if private.isPatch then
-            Skin.StaticPopupButtonTemplate(Frame.extraButton)
-        end
+        Skin.StaticPopupButtonTemplate(Frame.extraButton)
 
         local EditBox = _G[name .. "EditBox"]
         EditBox.Left = _G[name .. "EditBoxLeft"]

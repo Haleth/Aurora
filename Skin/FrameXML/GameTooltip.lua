@@ -34,13 +34,7 @@ do --[[ SharedXML\GameTooltipTemplate.xml ]]
     function Skin.GameTooltipTemplate(GameTooltip)
         Base.SetBackdrop(GameTooltip)
 
-        local status-- = _G[GameTooltip:GetName().."StatusBar"]
-        if private.isPatch then
-            status = _G[GameTooltip:GetName().."StatusBar"]
-        else
-            -- BlizzWTF: the global name for this frame conflicts with ReputationParagonTooltipStatusBar
-            status = GameTooltip:GetChildren()
-        end
+        local status = _G[GameTooltip:GetName().."StatusBar"]
         status:SetHeight(4)
         status:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
         status:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
@@ -92,33 +86,25 @@ do --[[ FrameXML\GameTooltip.xml ]]
         Base.SetBackdrop(bg, Color.black, 0)
         Frame._auroraIconBorder = bg
 
-        if private.isPatch then
-            Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
-        end
+        Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
+        _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
     end
 end
 
 function private.FrameXML.GameTooltip()
     if private.disabled.tooltips then return end
 
-    if private.isPatch then
-        _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
-        _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
-        _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
-        _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)
-    else
-        _G.hooksecurefunc("GameTooltip_OnHide", Hook.GameTooltip_OnHide)
-    end
+    _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
+    _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
+    _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
+    _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)
 
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
     Skin.GameTooltipTemplate(_G.GameTooltip)
-    if private.isPatch then
-        Skin.GameTooltipTemplate(_G.EmbeddedItemTooltip)
-        Skin.InternalEmbeddedItemTooltipTemplate(_G.EmbeddedItemTooltip.ItemTooltip)
-    end
+    Skin.GameTooltipTemplate(_G.EmbeddedItemTooltip)
+    Skin.InternalEmbeddedItemTooltipTemplate(_G.EmbeddedItemTooltip.ItemTooltip)
 end

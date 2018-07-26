@@ -75,19 +75,9 @@ function private.AddOns.Blizzard_ChallengesUI()
     local ChallengesFrame = _G.ChallengesFrame
     Skin.InsetFrameTemplate(_G.ChallengesFrameInset)
 
-    if private.isPatch then
-        ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")
-        ChallengesFrame.WeeklyInfo:SetPoint("BOTTOMRIGHT")
-        Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
-    else
-        ChallengesFrame.WeeklyBest:SetPoint("TOPLEFT")
-        ChallengesFrame.WeeklyBest:SetPoint("BOTTOMRIGHT")
-        ChallengesFrame.WeeklyBest.Child.Star:SetPoint("TOPLEFT", 54, -41)
-
-        ChallengesFrame.GuildBest.Line:SetColorTexture(0.7, 0.7, 0.7)
-        ChallengesFrame.GuildBest.Line:SetPoint("TOP", 0, -24)
-        ChallengesFrame.GuildBest.Line:SetHeight(1)
-    end
+    ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")
+    ChallengesFrame.WeeklyInfo:SetPoint("BOTTOMRIGHT")
+    Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
 
     local bg, inset = ChallengesFrame:GetRegions()
     bg:Hide()

@@ -74,13 +74,8 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Button._auroraTabResize = true
         end
         function Skin.BaseLandingPageFollowerListTemplate(Frame)
-            if private.isPatch then
-                Frame.FollowerHeaderBar:Hide()
-                Frame.FollowerScrollFrame:Hide()
-            else
-                Frame:GetRegions():Hide()
-                Frame.FollowerHeaderBar:Hide()
-            end
+            Frame.FollowerHeaderBar:Hide()
+            Frame.FollowerScrollFrame:Hide()
             Skin.SearchBoxTemplate(Frame.SearchBox)
             Skin.MinimalHybridScrollBarTemplate(Frame.listScroll.scrollBar)
         end
@@ -542,7 +537,6 @@ function private.AddOns.Blizzard_GarrisonUI()
 
 
 
-    if not private.isPatch then return end
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_OrderHallMissionUI   --
     ----====####$$$$%%%%%$$$$####====----

@@ -1,7 +1,7 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local select, next, ipairs = _G.select, _G.next, _G.ipairs
+local select, next = _G.select, _G.next
 
 -- [[ WoW API ]]
 local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
@@ -540,35 +540,6 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     local LootJournal = EncounterJournal.LootJournal
     LootJournal:DisableDrawLayer("BACKGROUND")
-
-    if not private.isPatch then
-        F.ReskinDropDown(LootJournal.ViewDropDown)
-
-        local LegendariesFrame = LootJournal.LegendariesFrame
-        SkinLootBtn(LegendariesFrame.ClassButton)
-        SkinLootBtn(LegendariesFrame.SlotButton)
-
-        for _, items in ipairs({LegendariesFrame.buttons, LegendariesFrame.rightSideButtons}) do
-            for i = 1, #items do
-                local item = items[i]
-
-                item.ItemType:SetTextColor(1, 1, 1)
-                item.Background:Hide()
-
-                item.Icon:SetPoint("TOPLEFT", 1, -1)
-
-                item.Icon:SetTexCoord(.08, .92, .08, .92)
-                item.Icon:SetDrawLayer("OVERLAY")
-                F.CreateBG(item.Icon)
-
-                local bg = CreateFrame("Frame", nil, item)
-                bg:SetPoint("TOPLEFT")
-                bg:SetPoint("BOTTOMRIGHT", 0, 1)
-                bg:SetFrameLevel(item:GetFrameLevel() - 1)
-                F.CreateBD(bg, .25)
-            end
-        end
-    end
 
     local ItemSetsFrame = LootJournal.ItemSetsFrame
     SkinLootBtn(ItemSetsFrame.ClassButton)

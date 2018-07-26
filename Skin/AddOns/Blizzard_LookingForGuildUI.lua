@@ -121,9 +121,5 @@ do --[[ AddOns\Blizzard_LookingForGuildUI.lua ]]
 end
 
 function private.AddOns.Blizzard_LookingForGuildUI()
-    if private.isPatch then
-        _G.hooksecurefunc("LookingForGuildFrame_CreateUIElements", Hook.LookingForGuildFrame_CreateUIElements)
-    else
-        Hook.LookingForGuildFrame_CreateUIElements()
-    end
+    _G.hooksecurefunc("LookingForGuildFrame_CreateUIElements", Hook.LookingForGuildFrame_CreateUIElements)
 end

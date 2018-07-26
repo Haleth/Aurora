@@ -64,7 +64,5 @@ end
 
 function private.FrameXML.TalentFrameBase()
     _G.hooksecurefunc("TalentFrame_Update", Hook.TalentFrame_Update)
-    if private.isPatch then
-        _G.hooksecurefunc(_G.PvpTalentSlotMixin, "Update", Hook.PvpTalentSlotMixin_Update)
-    end
+    _G.hooksecurefunc(_G.PvpTalentSlotMixin, "Update", Hook.PvpTalentSlotMixin_Update)
 end

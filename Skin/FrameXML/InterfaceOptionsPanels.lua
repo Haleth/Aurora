@@ -91,9 +91,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelBottomRight)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelRight)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelRightTwo)
-    if private.isPatch then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelStackRightBars)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelStackRightBars)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelLockActionBars)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsActionBarsPanelPickupActionKeyDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsActionBarsPanelAlwaysShowActionBars)
@@ -141,9 +139,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.OptionsSliderTemplate(_G.InterfaceOptionsMousePanelMouseLookSpeedSlider)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsMousePanelEnableMouseSpeed)
     Skin.OptionsSliderTemplate(_G.InterfaceOptionsMousePanelMouseSensitivitySlider)
-    if private.isPatch then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsMousePanelLockCursorToScreen)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsMousePanelLockCursorToScreen)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsMousePanelClickToMove)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsMousePanelClickMoveStyleDropDown)
 

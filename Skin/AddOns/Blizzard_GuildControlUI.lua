@@ -22,12 +22,7 @@ function private.AddOns.Blizzard_GuildControlUI()
         select(i, _G.GuildControlUIRankBankFrameInset:GetRegions()):Hide()
     end
 
-    if private.isPatch then
-        _G.GuildControlUIRankSettingsFrameOfficerBg:SetAlpha(0)
-    else
-        _G.GuildControlUIRankSettingsFrameChatBg:SetAlpha(0)
-        _G.GuildControlUIRankSettingsFrameInfoBg:SetAlpha(0)
-    end
+    _G.GuildControlUIRankSettingsFrameOfficerBg:SetAlpha(0)
     _G.GuildControlUIRankSettingsFrameRosterBg:SetAlpha(0)
     _G.GuildControlUIRankSettingsFrameBankBg:SetAlpha(0)
     _G.GuildControlUITopBg:Hide()
@@ -126,23 +121,15 @@ function private.AddOns.Blizzard_GuildControlUI()
         end
     end)
 
-    if private.isPatch then
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameOfficerCheckbox)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox5)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox7)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox6)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox8)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox15)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox19)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox16)
-        F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox18)
-    else
-        for i = 1, 20 do
-            if i ~= 14 then
-                F.ReskinCheck(_G["GuildControlUIRankSettingsFrameCheckbox"..i])
-            end
-        end
-    end
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameOfficerCheckbox)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox5)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox7)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox6)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox8)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox15)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox19)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox16)
+    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox18)
 
     F.Reskin(_G.GuildControlUIRankOrderFrameNewButton)
     F.ReskinClose(_G.GuildControlUICloseButton)

@@ -38,24 +38,13 @@ function private.FrameXML.ActionBarFrame()
     end
 
     --[[ Scale ]]--
-    if private.isPatch then
-        _G.ActionButton1:SetPoint("BOTTOMLEFT", _G.MainMenuBarArtFrameBackground, 8, 4)
-    else
-        _G.ActionButton1:SetPoint("BOTTOMLEFT", 8, 4)
-    end
+    _G.ActionButton1:SetPoint("BOTTOMLEFT", _G.MainMenuBarArtFrameBackground, 8, 4)
     for i = 2, 12 do
         _G["ActionButton"..i]:SetPoint("LEFT", _G["ActionButton"..i - 1], "RIGHT", 6, 0)
     end
 
-    if private.isPatch then
-        _G.ActionBarUpButton:SetSize(21, 19)
-        _G.ActionBarUpButton:SetPoint("RIGHT", _G.ActionButton12, 25, 9)
-        _G.ActionBarDownButton:SetSize(21, 19)
-        _G.ActionBarDownButton:SetPoint("CENTER", _G.ActionBarUpButton, "BOTTOMLEFT", 10, -10)
-    else
-        _G.ActionBarUpButton:SetSize(32, 32)
-        _G.ActionBarUpButton:SetPoint("CENTER", _G.MainMenuBarArtFrame, "TOPLEFT", 522, -22)
-        _G.ActionBarDownButton:SetSize(32, 32)
-        _G.ActionBarDownButton:SetPoint("CENTER", _G.MainMenuBarArtFrame, "TOPLEFT", 522, -42)
-    end
+    _G.ActionBarUpButton:SetSize(21, 19)
+    _G.ActionBarUpButton:SetPoint("RIGHT", _G.ActionButton12, 25, 9)
+    _G.ActionBarDownButton:SetSize(21, 19)
+    _G.ActionBarDownButton:SetPoint("CENTER", _G.ActionBarUpButton, "BOTTOMLEFT", 10, -10)
 end

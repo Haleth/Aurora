@@ -20,7 +20,6 @@ do --[[ FrameXML\UnitPopupCustomControls.xml ]]
 end
 
 function private.FrameXML.UnitPopupCustomControls()
-    if not private.isPatch then return end
     Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceSpeakerVolume.Slider)
     Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceSpeakerVolume.Toggle)
 
