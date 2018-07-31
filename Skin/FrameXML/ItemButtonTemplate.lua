@@ -67,6 +67,8 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.ItemButtonTemplate(Button)
         Base.CropIcon(Button.icon)
 
+        Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
+
         local bg = _G.CreateFrame("Frame", nil, Button)
         bg:SetFrameLevel(Button:GetFrameLevel())
         bg:SetPoint("TOPLEFT", -1, 1)
