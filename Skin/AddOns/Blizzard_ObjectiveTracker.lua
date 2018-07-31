@@ -149,17 +149,21 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
-    local coords = _G.QUEST_TAG_TCOORDS[_G.UnitFactionGroup("player"):upper()]
-    local factionIcon  = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16
-            , coords[1]
-            , coords[2] - 0.02 -- Offset to stop bleeding from next image
-            , coords[3]
-            , coords[4], 0, 2)
+    local factionIcon
+    local function GetInlineFactionIcon()
+        local faction = _G.UnitFactionGroup("player")
+        local coords = faction == "Horde" and _G.QUEST_TAG_TCOORDS.HORDE or _G.QUEST_TAG_TCOORDS.ALLIANCE
+        factionIcon = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16
+        , coords[1]
+        , coords[2] - 0.02 -- Offset to stop bleeding from next image
+        , coords[3]
+        , coords[4], 0, 2)
+    end
     function Hook.QUEST_TRACKER_MODULE_SetBlockHeader(self, block, text, questLogIndex, isQuestComplete, questID)
         Scale.RawSetWidth(block.HeaderText, block.lineWidth or OBJECTIVE_TRACKER_TEXT_WIDTH)
 
         if _G.C_CampaignInfo.IsCampaignQuest(questID) then
-            text = text..factionIcon
+            text = text..(factionIcon or GetInlineFactionIcon())
         end
 
         block._auroraHeight = SetStringText(block.HeaderText, text, nil, _G.OBJECTIVE_TRACKER_COLOR["Header"], block.isHighlighted)
