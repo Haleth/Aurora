@@ -193,7 +193,19 @@ do -- Base API
                 if options.edgeSize then
                     for corner, info in next, corners do
                         bd[corner]:SetSize(options.edgeSize, options.edgeSize)
-                        bd[corner]:SetPoint(info.point, frame)
+                        if insets then
+                            if info.point == "TOPLEFT" then
+                                bd[corner]:SetPoint(info.point, bd.bg, -insets.left, insets.top)
+                            elseif info.point == "TOPRIGHT" then
+                                bd[corner]:SetPoint(info.point, bd.bg, insets.right, insets.top)
+                            elseif info.point == "BOTTOMLEFT" then
+                                bd[corner]:SetPoint(info.point, bd.bg, -insets.left, -insets.bottom)
+                            elseif info.point == "BOTTOMRIGHT" then
+                                bd[corner]:SetPoint(info.point, bd.bg, insets.left, -insets.bottom)
+                            end
+                        else
+                            bd[corner]:SetPoint(info.point, bd.bg)
+                        end
                     end
                 end
             else
