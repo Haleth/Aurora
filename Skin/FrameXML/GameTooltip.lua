@@ -9,11 +9,8 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\GameTooltip.lua ]]
-    function Hook.GameTooltip_OnHide(gametooltip)
-        Base.SetBackdropColor(gametooltip)
-    end
     function Hook.GameTooltip_SetBackdropStyle(self, style)
-        Base.SetBackdrop(self, Color.black)
+        Base.SetBackdrop(self, Color.frame)
     end
     function Hook.EmbeddedItemTooltip_Clear(self)
         if not self._auroraIconBorder then
