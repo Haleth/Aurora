@@ -16,6 +16,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="CharacterFrameTemplates.lua"/>
     <Script file="ChatBubbles.lua"/> <!-- Not a Blizzard file, run from UIParent -->
     <Script file="ChatConfigFrame.lua"/>
+    <Script file="ChatFrame.lua"/>
     <Script file="CinematicFrame.lua"/>
     <Script file="ColorPickerFrame.lua"/>
     <Script file="Constants.lua"/>

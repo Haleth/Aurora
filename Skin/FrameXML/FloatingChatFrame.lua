@@ -101,6 +101,8 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
 
         Hook.FCF_SetButtonSide(ScrollingMessageFrame, _G.FCF_GetButtonSide(ScrollingMessageFrame))
         _G.FloatingChatFrame_UpdateBackgroundAnchors(ScrollingMessageFrame)
+
+        Skin.ChatFrameEditBoxTemplate(ScrollingMessageFrame.editBox)
     end
     function Skin.FloatingChatFrameMinimizedTemplate(Button)
         Button:SetSize(172, 23)
