@@ -10,6 +10,7 @@ private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 0 and tonumber(min
 private.uiScale = 1
 private.disabled = {
     bags = false,
+    chat = false,
     fonts = false,
     tooltips = false,
     mainmenubar = false,

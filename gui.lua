@@ -252,8 +252,11 @@ chatBubbleBox:SetScript("OnClick", function(self)
     end
 end)
 
+local chatBox = createToggleBox(gui, "chat", "Chat Frames")
+chatBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 105, 0)
+
 local tooltipsBox = createToggleBox(gui, "tooltips", "Tooltips")
-tooltipsBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 105, 0)
+tooltipsBox:SetPoint("LEFT", chatBox, "RIGHT", 105, 0)
 
 --[[ Appearance ]]--
 local appearance = addSubCategory(gui, "Appearance")

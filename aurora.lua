@@ -15,6 +15,7 @@ C.defaults = {
     acknowledgedSplashScreen = false,
 
     bags = true,
+    chat = true,
     loot = true,
     mainmenubar = false,
     fonts = true,
@@ -165,6 +166,7 @@ function private.OnLoad()
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags
+    private.disabled.chat = not AuroraConfig.chat
     private.disabled.fonts = not AuroraConfig.fonts
     private.disabled.tooltips = not AuroraConfig.tooltips
     private.disabled.mainmenubar = not AuroraConfig.mainmenubar
