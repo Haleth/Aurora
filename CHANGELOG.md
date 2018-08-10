@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.0.1.5] - 2018-08-10 ##
 ### Added ###
 
   * Chat frames skin
@@ -227,6 +227,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.0.1.5]: https://github.com/Haleth/Aurora/compare/8.0.1.4...8.0.1.5
 [8.0.1.4]: https://github.com/Haleth/Aurora/compare/8.0.1.3...8.0.1.4
 [8.0.1.3]: https://github.com/Haleth/Aurora/compare/8.0.1.2...8.0.1.3
 [8.0.1.2]: https://github.com/Haleth/Aurora/compare/8.0.1.1...8.0.1.2
