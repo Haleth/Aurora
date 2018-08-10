@@ -654,6 +654,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     --      Blizzard_BFAMissionUI      --
     ----====####$$$$%%%%%$$$$####====----
     local BFAMissionFrame = _G.BFAMissionFrame
+    _G.hooksecurefunc(BFAMissionFrame, "SetupTabs", Hook.OrderHallMission_SetupTabs)
     Skin.GarrisonMissionFrameTemplate(BFAMissionFrame)
     Skin.GarrisonUITemplate(BFAMissionFrame)
     BFAMissionFrame.CloseButtonBorder:Hide()
@@ -662,11 +663,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab1)
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab2)
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab3)
-    Util.PositionRelative("TOPLEFT", BFAMissionFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        BFAMissionFrame.Tab1,
-        BFAMissionFrame.Tab2,
-        BFAMissionFrame.Tab3,
-    })
 
     ------------------
     -- FollowerList --
