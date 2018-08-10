@@ -1,4 +1,18 @@
-﻿## [8.0.1.4] - 2018-07-15 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Chat frames skin
+  * Scrapping Machine skin
+
+### Fixed ###
+
+  * Tooltips would sometimes be opaque
+  * The editbox carat would not be visible when sending mail
+  * An error would occur when playing a new pandaren
+
+
+
+## [8.0.1.4] - 2018-07-15 ##
 ### Added ###
 
   * Communities UI skin
