@@ -1,4 +1,12 @@
-﻿## [8.0.1.5] - 2018-08-10 ##
+﻿## [8.0.1.6] - 2018-08-13 ##
+### Fixed ###
+
+  * The chat editbox was too small when using some chat addons
+  * Opening an AceGUI based config that uses a tree widget would cause an error
+
+
+
+## [8.0.1.5] - 2018-08-10 ##
 ### Added ###
 
   * Chat frames skin
@@ -227,6 +235,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.0.1.6]: https://github.com/Haleth/Aurora/compare/8.0.1.5...8.0.1.6
 [8.0.1.5]: https://github.com/Haleth/Aurora/compare/8.0.1.4...8.0.1.5
 [8.0.1.4]: https://github.com/Haleth/Aurora/compare/8.0.1.3...8.0.1.4
 [8.0.1.3]: https://github.com/Haleth/Aurora/compare/8.0.1.2...8.0.1.3
