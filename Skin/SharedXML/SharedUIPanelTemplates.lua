@@ -16,6 +16,12 @@ do -- BlizzWTF: These are not templates, but they should be
         self.settingTexture = true
         self:SetNormalTexture("")
 
+        if texture == 130838 then
+            texture = "Plus"
+        elseif texture == 130821 then
+            texture = "Minus"
+        end
+
         if texture and texture ~= "" then
             if texture:find("Plus") then
                 self._auroraBG.plus:Show()
