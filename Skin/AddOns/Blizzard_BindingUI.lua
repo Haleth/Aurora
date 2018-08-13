@@ -1,67 +1,61 @@
 local _, private = ...
 
--- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
+
+--[[ do AddOns\Blizzard_BindingUI.lua
+end ]]
+
+do --[[ AddOns\Blizzard_BindingUI.xml ]]
+    function Skin.KeyBindingFrameBindingButtonTemplate(Button)
+        Skin.UIMenuButtonStretchTemplate(Button)
+    end
+    function Skin.KeyBindingFrameBindingTemplate(Frame)
+        Skin.KeyBindingFrameBindingButtonTemplate(Frame.key1Button)
+        Skin.KeyBindingFrameBindingButtonTemplate(Frame.key2Button)
+    end
+end
 
 function private.AddOns.Blizzard_BindingUI()
-    local r, g, b = C.r, C.g, C.b
-
     local KeyBindingFrame = _G.KeyBindingFrame
+    Base.SetBackdrop(KeyBindingFrame)
 
     KeyBindingFrame.header:DisableDrawLayer("BACKGROUND")
     KeyBindingFrame.header:DisableDrawLayer("BORDER")
-    KeyBindingFrame.scrollFrame.scrollBorderTop:SetTexture("")
-    KeyBindingFrame.scrollFrame.scrollBorderBottom:SetTexture("")
-    KeyBindingFrame.scrollFrame.scrollBorderMiddle:SetTexture("")
-    KeyBindingFrame.scrollFrame.scrollFrameScrollBarBackground:SetTexture("")
-    KeyBindingFrame.categoryList:DisableDrawLayer("BACKGROUND")
-    KeyBindingFrame.bindingsContainer:SetBackdrop(nil)
-
-    F.CreateBD(KeyBindingFrame)
-    F.Reskin(KeyBindingFrame.defaultsButton)
-    F.Reskin(KeyBindingFrame.unbindButton)
-    F.Reskin(KeyBindingFrame.okayButton)
-    F.Reskin(KeyBindingFrame.cancelButton)
-    F.ReskinCheck(KeyBindingFrame.characterSpecificButton)
-    F.ReskinScroll(_G.KeyBindingFrameScrollFrameScrollBar)
-
-    local function styleBindingButton(bu)
-        local selected = bu.selectedHighlight
-
-        for i = 1, 9 do
-            _G.select(i, bu:GetRegions()):Hide()
-        end
-
-        selected:SetTexture(C.media.backdrop)
-        selected:SetPoint("TOPLEFT", 1, -1)
-        selected:SetPoint("BOTTOMRIGHT", -1, 1)
-        selected:SetColorTexture(r, g, b, .2)
-
-        F.Reskin(bu)
-    end
-
-    for i = 1, _G.KEY_BINDINGS_DISPLAYED do
-        local button1 = _G["KeyBindingFrameKeyBinding"..i.."Key1Button"]
-        local button2 = _G["KeyBindingFrameKeyBinding"..i.."Key2Button"]
-
-        button2:SetPoint("LEFT", button1, "RIGHT", 1, 0)
-
-        styleBindingButton(button1)
-        styleBindingButton(button2)
-    end
-
     KeyBindingFrame.header.text:ClearAllPoints()
     KeyBindingFrame.header.text:SetPoint("TOP", KeyBindingFrame, "TOP", 0, -8)
 
-    KeyBindingFrame.unbindButton:ClearAllPoints()
-    KeyBindingFrame.unbindButton:SetPoint("BOTTOMRIGHT", -207, 16)
-    KeyBindingFrame.okayButton:ClearAllPoints()
-    KeyBindingFrame.okayButton:SetPoint("BOTTOMLEFT", KeyBindingFrame.unbindButton, "BOTTOMRIGHT", 1, 0)
-    KeyBindingFrame.cancelButton:ClearAllPoints()
-    KeyBindingFrame.cancelButton:SetPoint("BOTTOMLEFT", KeyBindingFrame.okayButton, "BOTTOMRIGHT", 1, 0)
+    Skin.UICheckButtonTemplate(KeyBindingFrame.characterSpecificButton)
+    Skin.UIPanelButtonTemplate(KeyBindingFrame.unbindButton)
+    Skin.UIPanelButtonTemplate(KeyBindingFrame.okayButton)
+    Skin.UIPanelButtonTemplate(KeyBindingFrame.cancelButton)
+    Util.PositionRelative("BOTTOMRIGHT", KeyBindingFrame, "BOTTOMRIGHT", -10, 10, 5, "Left", {
+        KeyBindingFrame.cancelButton,
+        KeyBindingFrame.okayButton,
+        KeyBindingFrame.unbindButton
+    })
 
-    local line = KeyBindingFrame:CreateTexture(nil, "ARTWORK")
-    line:SetSize(1, 546)
-    line:SetPoint("LEFT", 205, 10)
-    line:SetColorTexture(1, 1, 1, .2)
+    Skin.UIPanelButtonTemplate(KeyBindingFrame.defaultsButton)
+    KeyBindingFrame.defaultsButton:SetPoint("BOTTOMLEFT", 10, 10)
+
+    Base.SetBackdrop(KeyBindingFrame.bindingsContainer, Color.frame)
+    Skin.OptionsFrameListTemplate(KeyBindingFrame.categoryList)
+    Skin.FauxScrollFrameTemplate(KeyBindingFrame.scrollFrame)
+    KeyBindingFrame.scrollFrame.scrollBorderTop:Hide()
+    KeyBindingFrame.scrollFrame.scrollBorderBottom:Hide()
+    KeyBindingFrame.scrollFrame.scrollBorderMiddle:Hide()
+    KeyBindingFrame.scrollFrame.scrollFrameScrollBarBackground:Hide()
+
+
+    for i = 1, _G.KEY_BINDINGS_DISPLAYED do
+        Skin.KeyBindingFrameBindingTemplate(KeyBindingFrame.keyBindingRows[i])
+    end
+
+    --[[ Scale ]]--
 end
