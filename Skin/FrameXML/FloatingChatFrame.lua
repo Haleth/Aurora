@@ -103,6 +103,8 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         _G.FloatingChatFrame_UpdateBackgroundAnchors(ScrollingMessageFrame)
 
         Skin.ChatFrameEditBoxTemplate(ScrollingMessageFrame.editBox)
+        ScrollingMessageFrame.editBox:SetPoint("TOPLEFT", ScrollingMessageFrame, "BOTTOMLEFT", 0, -5)
+        ScrollingMessageFrame.editBox:SetPoint("RIGHT", ScrollingMessageFrame.ScrollBar)
     end
     function Skin.FloatingChatFrameMinimizedTemplate(Button)
         Button:SetSize(172, 23)

@@ -33,9 +33,6 @@ do --[[ FrameXML\ChatFrame.xml ]]
     function Skin.ChatFrameEditBoxTemplate(EditBox)
         local name = EditBox:GetName()
         Base.SetBackdrop(EditBox, Color.frame, 0.3)
-        local bg = EditBox:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 3, -5)
-        bg:SetPoint("BOTTOMRIGHT", -3, 5)
 
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
