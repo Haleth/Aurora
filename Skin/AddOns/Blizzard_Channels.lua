@@ -30,17 +30,17 @@ do --[[ AddOns\Blizzard_Channels.lua ]]
     do --[[ ChannelRoster.lua ]]
         Hook.ChannelRosterMixin = {}
         function Hook.ChannelRosterMixin:UpdateRosterWidth()
-            local rosterLeftEdge = self:GetChannelFrame().LeftInset:GetRight();
-            local rosterRightEdge = self.ScrollFrame.scrollBar:GetLeft();
+            local rosterLeftEdge = self:GetChannelFrame().LeftInset:GetRight()
+            local rosterRightEdge = self.ScrollFrame.scrollBar:GetLeft()
 
             if self:GetChannelFrame():GetList().ScrollBar:IsShown() then
-                rosterLeftEdge = self:GetChannelFrame():GetList().ScrollBar:GetRight();
+                rosterLeftEdge = self:GetChannelFrame():GetList().ScrollBar:GetRight()
             end
 
             -- Add some padding for the inset and scrollbar textures.
-            local rosterWidth = rosterRightEdge - rosterLeftEdge;
-            Scale.RawSetWidth(self, rosterWidth);
-            Scale.RawSetWidth(self.ScrollFrame.scrollChild, rosterWidth - Scale.Value(9)); -- Sizing hack, pull the edge of the scroll child inside the right scrollbar.
+            local rosterWidth = rosterRightEdge - rosterLeftEdge
+            Scale.RawSetWidth(self, rosterWidth)
+            Scale.RawSetWidth(self.ScrollFrame.scrollChild, rosterWidth - Scale.Value(9)) -- Sizing hack, pull the edge of the scroll child inside the right scrollbar.
         end
     end
 end

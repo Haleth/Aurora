@@ -11,9 +11,9 @@ local Hook = Aurora.Hook
 do --[[ FrameXML\FlowContainer.lua ]]
     function Hook.FlowContainer_GetUsedBounds(container) --Return x, y
         if container.flowOrientation == "horizontal" then
-            return container._auroraFlowMaxSecondaryUsed, container._auroraFlowMaxPrimaryUsed;
+            return container._auroraFlowMaxSecondaryUsed, container._auroraFlowMaxPrimaryUsed
         else
-            return container._auroraFlowMaxPrimaryUsed, container._auroraFlowMaxSecondaryUsed;
+            return container._auroraFlowMaxPrimaryUsed, container._auroraFlowMaxSecondaryUsed
         end
     end
     function Hook.FlowContainer_DoLayout(container)

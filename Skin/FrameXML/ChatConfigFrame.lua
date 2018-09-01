@@ -380,9 +380,9 @@ function private.FrameXML.ChatConfigFrame()
     for index, value in ipairs(_G.COMBAT_CONFIG_TABS) do
         local tab = _G[_G.CHAT_CONFIG_COMBAT_TAB_NAME..index]
         if index > 1 then
-            tab:SetPoint("BOTTOMLEFT", _G[_G.CHAT_CONFIG_COMBAT_TAB_NAME..(index - 1)], "BOTTOMRIGHT", -1, 0);
+            tab:SetPoint("BOTTOMLEFT", _G[_G.CHAT_CONFIG_COMBAT_TAB_NAME..(index - 1)], "BOTTOMRIGHT", -1, 0)
         else
-            tab:SetPoint("BOTTOMLEFT", _G.ChatConfigBackgroundFrame, "TOPLEFT", 2, -1);
+            tab:SetPoint("BOTTOMLEFT", _G.ChatConfigBackgroundFrame, "TOPLEFT", 2, -1)
         end
     end
 

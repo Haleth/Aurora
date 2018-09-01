@@ -62,9 +62,9 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                 hasCustomIcon = true
 
                 if info.customCheckIconAtlas then
-                    check:SetAtlas(info.customCheckIconAtlas);
+                    check:SetAtlas(info.customCheckIconAtlas)
                 else
-                    check:SetTexture(info.customCheckIconTexture);
+                    check:SetTexture(info.customCheckIconTexture)
                 end
             elseif info.isNotRadio then
                 checkBox:SetSize(12, 12)

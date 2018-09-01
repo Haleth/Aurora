@@ -144,9 +144,9 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
                 -- First ability already has anchor set
                 if index > 1 then
                     if (index % 2) == 0 then
-                        frame:SetPoint("LEFT", scrollChild["abilityButton"..(index - 1)], "RIGHT", 110, 0);
+                        frame:SetPoint("LEFT", scrollChild["abilityButton"..(index - 1)], "RIGHT", 110, 0)
                     else
-                        frame:SetPoint("TOP", scrollChild["abilityButton"..(index - 2)], "BOTTOM", 0, 0);
+                        frame:SetPoint("TOP", scrollChild["abilityButton"..(index - 2)], "BOTTOM", 0, 0)
                     end
                 end
 

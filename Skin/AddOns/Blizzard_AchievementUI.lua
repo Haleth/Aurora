@@ -132,9 +132,9 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
             local button = _G["AchievementFrameSummaryAchievement"..i]
             if button then
                 if i > 1 then
-                    local anchorTo = _G["AchievementFrameSummaryAchievement"..i-1];
-                    button:SetPoint("TOPLEFT", anchorTo, "BOTTOMLEFT", 0, -1 );
-                    button:SetPoint("TOPRIGHT", anchorTo, "BOTTOMRIGHT", 0, -1 );
+                    local anchorTo = _G["AchievementFrameSummaryAchievement"..i-1]
+                    button:SetPoint("TOPLEFT", anchorTo, "BOTTOMLEFT", 0, -1 )
+                    button:SetPoint("TOPRIGHT", anchorTo, "BOTTOMRIGHT", 0, -1 )
                 end
                 numAchievements = numAchievements + 1
             end

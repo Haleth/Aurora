@@ -21,7 +21,7 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
                 title = Color.Create(0.36, 0.36, 1), -- 5E5EFF
                 description = Color.Create(0.53, 0.53, 1), -- 8888FF
             },
-        };
+        }
 
         WarboardQuestChoiceFrameMixin = {}
         function WarboardQuestChoiceFrameMixin:OnHeightChanged(heightDiff)
@@ -31,12 +31,12 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
             end
         end
         function WarboardQuestChoiceFrameMixin:TryShow()
-            local textureKit = _G.GetUITextureKitInfo(self.uiTextureKitID);
-            local textureKitColor = textureKitColors[textureKit];
+            local textureKit = _G.GetUITextureKitInfo(self.uiTextureKitID)
+            local textureKitColor = textureKitColors[textureKit]
             if textureKitColor then
                 for _, option in next, self.Options do
-                    option.Header.Text:SetTextColor(textureKitColor.title:GetRGBA());
-                    option.OptionText:SetTextColor(textureKitColor.description:GetRGBA());
+                    option.Header.Text:SetTextColor(textureKitColor.title:GetRGBA())
+                    option.OptionText:SetTextColor(textureKitColor.description:GetRGBA())
                 end
             end
         end

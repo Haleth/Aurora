@@ -14,7 +14,7 @@ do --[[ AddOns\Blizzard_AzeriteUI.lua ]]
         else
             self:SetSize(615, 612)
         end
-        self.transformTree:GetRoot():SetLocalPosition(_G.CreateVector2D(self.ClipFrame.BackgroundFrame:GetWidth() * .5, self.ClipFrame.BackgroundFrame:GetHeight() * .5));
+        self.transformTree:GetRoot():SetLocalPosition(_G.CreateVector2D(self.ClipFrame.BackgroundFrame:GetWidth() * .5, self.ClipFrame.BackgroundFrame:GetHeight() * .5))
     end
 end
 
