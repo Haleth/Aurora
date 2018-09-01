@@ -7,17 +7,21 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_WarboardUI.lua ]]
     local WarboardQuestChoiceFrameMixin do
         local SOLO_OPTION_WIDTH = 500
-
-        local HEADERS_SHOWN_TOP_PADDING = 123
-        local HEADERS_HIDDEN_TOP_PADDING = 150
-
-        local contentHeaderTextureKitRegions = {
-            ["Ribbon"] = "UI-Frame-%s-Ribbon",
-        }
+        local textureKitColors = {
+            ["alliance"] = {
+                title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
+                description = Color.Create(0.86, 0.47, 0.47), -- DD7878
+            },
+            ["horde"] = {
+                title = Color.Create(0.36, 0.36, 1), -- 5E5EFF
+                description = Color.Create(0.53, 0.53, 1), -- 8888FF
+            },
+        };
 
         WarboardQuestChoiceFrameMixin = {}
         function WarboardQuestChoiceFrameMixin:OnHeightChanged(heightDiff)
@@ -26,49 +30,30 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
                 Scale.RawSetHeight(option.Background, Scale.Value(self.initOptionBackgroundHeight) + heightDiff)
             end
         end
+        function WarboardQuestChoiceFrameMixin:TryShow()
+            local textureKit = _G.GetUITextureKitInfo(self.uiTextureKitID);
+            local textureKitColor = textureKitColors[textureKit];
+            if textureKitColor then
+                for _, option in next, self.Options do
+                    option.Header.Text:SetTextColor(textureKitColor.title:GetRGBA());
+                    option.OptionText:SetTextColor(textureKitColor.description:GetRGBA());
+                end
+            end
+        end
         function WarboardQuestChoiceFrameMixin:Update()
             private.debug("WarboardQuestChoiceFrameMixin:Update")
-            Hook.QuestChoiceFrameMixin.Update(self)
-
-            local hasHeaders = false
             local numOptions = self:GetNumOptions()
-            for i = 1, numOptions do
-                local option = self.Options[i]
-                option.Artwork:SetDesaturated(not option.hasActiveButton)
-                option.ArtworkBorder:SetShown(option.hasActiveButton)
-                option.ArtworkBorderDisabled:SetShown(not option.hasActiveButton)
-                if not hasHeaders then
-                    hasHeaders = option.Header:IsShown()
-                end
-                option:SetupTextureKits(option.Header, contentHeaderTextureKitRegions)
-            end
 
             -- resize solo options of standard size
             local lastOption = self.Options[numOptions]
             if numOptions == 1 and not lastOption.isWide then
                 lastOption:SetWidth(SOLO_OPTION_WIDTH)
             end
+
             -- title needs to reach across
             self.Title:SetPoint("RIGHT", lastOption, "RIGHT", 3, 0)
-
-            if hasHeaders then
-                self.topPadding = HEADERS_HIDDEN_TOP_PADDING
-            else
-                self.topPadding = HEADERS_SHOWN_TOP_PADDING
-            end
-
-            self:Layout()
-
-            local showWarfrontHelpbox = false
-            if _G.C_Scenario.IsInScenario() and not _G.GetCVarBitfield("closedInfoFrames", _G.LE_FRAME_TUTORIAL_WARFRONT_CONSTRUCTION) then
-                local scenarioType = select(10, _G.C_Scenario.GetInfo())
-                showWarfrontHelpbox = scenarioType == _G.LE_SCENARIO_TYPE_WARFRONT
-            end
-            if showWarfrontHelpbox then
-                self.WarfrontHelpBox:SetHeight(25 + self.WarfrontHelpBox.BigText:GetHeight())
-                self.WarfrontHelpBox:Show()
-            else
-                self.WarfrontHelpBox:Hide()
+            if self.WarfrontHelpBox:IsShown() then
+                Scale.RawSetHeight(self.WarfrontHelpBox, Scale.Value(25) + self.WarfrontHelpBox.BigText:GetHeight())
             end
         end
     end
@@ -106,7 +91,7 @@ end
 function private.AddOns.Blizzard_WarboardUI()
     local WarboardQuestChoiceFrame = _G.WarboardQuestChoiceFrame
     Skin.HorizontalLayoutFrame(WarboardQuestChoiceFrame)
-    _G.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
+    Util.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
 
     _G.WarboardQuestChoiceFrameTopRightCorner:Hide()
     WarboardQuestChoiceFrame.topLeftCorner:Hide()

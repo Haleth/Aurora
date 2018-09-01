@@ -1098,6 +1098,11 @@ do -- Util API
             _G.error("Found usage")
         end)
     end
+    function Util.Mixin(table, hook)
+        for name, func in next, hook do
+            _G.hooksecurefunc(table, name, func)
+        end
+    end
     function Util.TestHook(table, func, name)
         _G.hooksecurefunc(table, func, function(...)
             _G.print("Test", name, ...)
