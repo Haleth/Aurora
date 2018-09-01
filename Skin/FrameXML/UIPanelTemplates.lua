@@ -187,6 +187,20 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.TitleBg:Hide()
         Frame.TopTileStreaks:SetTexture("")
     end
+    function Skin.InsetFrameTemplate3(Frame)
+        Frame.BorderTopRight:Hide()
+        Frame.BorderBottomRight:Hide()
+        Frame.BorderRightMiddle:Hide()
+
+        Frame.BorderTopLeft:Hide()
+        Frame.BorderBottomLeft:Hide()
+        Frame.BorderLeftMiddle:Hide()
+
+        Frame.BorderTopMiddle:Hide()
+        Frame.BorderBottomMiddle:Hide()
+
+        Frame.Bg:Hide()
+    end
     function Skin.EtherealFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
 

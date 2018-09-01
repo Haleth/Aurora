@@ -7,10 +7,28 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 local F, C = _G.unpack(private.Aurora)
 
 do --[[ AddOns\Blizzard_Collections.lua ]]
+    do --[[ Blizzard_MountCollection ]]
+        function Hook.MountJournal_UpdateMountList()
+            local scrollFrame = _G.MountJournal.ListScrollFrame
+            local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
+            local buttons = scrollFrame.buttons
+
+            local showMounts = _G.C_MountJournal.GetNumMounts() > 0
+
+            local numDisplayedMounts = _G.C_MountJournal.GetNumDisplayedMounts()
+            for i=1, #buttons do
+                local button = buttons[i]
+                local displayIndex = i + offset
+                if not (displayIndex <= numDisplayedMounts and showMounts) then
+                    button.icon:SetTexture([[Interface\Icons\MountJournalPortrait]])
+                end
+            end
+        end
+    end
     do --[[ Blizzard_Wardrobe ]]
         local lightValues = {
             enabled=true, omni=false,
@@ -159,6 +177,35 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Skin.CollectionsNextPageButton(Frame.NextPageButton)
         end
     end
+    do --[[ Blizzard_Collections ]]
+        function Skin.CollectionsJournalTab(Button)
+            Skin.CharacterFrameTabButtonTemplate(Button)
+        end
+    end
+    do --[[ Blizzard_MountCollection ]]
+        function Skin.MountListButtonTemplate(Button)
+            Button.background:Hide()
+            Base.SetBackdrop(Button, Color.frame)
+            local bg = Button:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 0, -1)
+            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+
+            Base.CropIcon(Button.icon, Button)
+            Button.iconBorder:Hide()
+
+            Button.selectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            Button.selectedTexture:SetPoint("TOPLEFT", bg, 1, -1)
+            Button.selectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
+            Base.CropIcon(Button.DragButton.ActiveTexture)
+            Base.CropIcon(_G[Util.GetName(Button.DragButton).."Highlight"])
+
+            local highlight = Button:GetHighlightTexture()
+            highlight:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            highlight:SetPoint("TOPLEFT", bg, 1, -1)
+            highlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        end
+    end
     do --[[ Blizzard_Wardrobe ]]
         function Skin.WardrobeItemsModelTemplate(DressUpModel)
             local bg, _, _, _, _, highlight = DressUpModel:GetRegions()
@@ -192,18 +239,20 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
         end
         function Skin.WardrobeSetsScrollFrameButtonTemplate(Frame)
             Frame.Background:Hide()
-
-            local bg = _G.CreateFrame("Frame", nil, Frame)
+            Base.SetBackdrop(Frame, Color.frame)
+            local bg = Frame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", 0, -1)
             bg:SetPoint("BOTTOMRIGHT", 0, 1)
-            bg:SetFrameLevel(Frame:GetFrameLevel()-1)
-            Base.SetBackdrop(bg, Color.frame)
-            Frame.bg = bg
 
             Base.CropIcon(Frame.Icon, Frame)
 
             Frame.SelectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            Frame.SelectedTexture:SetPoint("TOPLEFT", bg, 1, -1)
+            Frame.SelectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
             Frame.HighlightTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            Frame.HighlightTexture:SetPoint("TOPLEFT", bg, 1, -1)
+            Frame.HighlightTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
         end
         function Skin.WardrobeSetsDetailsItemFrameTemplate(Frame)
             Base.CropIcon(Frame.Icon)
@@ -238,327 +287,80 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
 end
 
 function private.AddOns.Blizzard_Collections()
-    local r, g, b = C.r, C.g, C.b
+    --local r, g, b = C.r, C.g, C.b
 
-    --[[ AddOns\Blizzard_Collections\Blizzard_PetCollection ]]
+    ----====####$$$$%%%%$$$$####====----
+    --  Blizzard_CollectionTemplates  --
+    ----====####$$$$%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%$$$$####====----
+    --      Blizzard_Collections      --
+    ----====####$$$$%%%%$$$$####====----
+    local CollectionsJournal = _G.CollectionsJournal
+    Skin.PortraitFrameTemplate(CollectionsJournal)
+
+    Skin.CollectionsJournalTab(_G.CollectionsJournalTab1)
+    Skin.CollectionsJournalTab(_G.CollectionsJournalTab2)
+    Skin.CollectionsJournalTab(_G.CollectionsJournalTab3)
+    Skin.CollectionsJournalTab(_G.CollectionsJournalTab4)
+    Skin.CollectionsJournalTab(_G.CollectionsJournalTab5)
+    Util.PositionRelative("TOPLEFT", CollectionsJournal, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.CollectionsJournalTab1,
+        _G.CollectionsJournalTab2,
+        _G.CollectionsJournalTab3,
+        _G.CollectionsJournalTab4,
+        _G.CollectionsJournalTab5,
+    })
+
+    Skin.GlowBoxFrame(CollectionsJournal.HeirloomTabHelpBox)
+    Skin.GlowBoxFrame(CollectionsJournal.WardrobeTabHelpBox)
+
+
+    ----====####$$$$%%%%$$$$####====----
+    --    Blizzard_MountCollection    --
+    ----====####$$$$%%%%$$$$####====----
+    local MountJournal = _G.MountJournal
+    _G.hooksecurefunc("MountJournal_UpdateMountList", Hook.MountJournal_UpdateMountList)
+
+    Base.CropIcon(MountJournal.SummonRandomFavoriteButton.texture, MountJournal.SummonRandomFavoriteButton)
+    Base.CropIcon(MountJournal.SummonRandomFavoriteButton:GetPushedTexture())
+    Base.CropIcon(MountJournal.SummonRandomFavoriteButton:GetHighlightTexture())
+    _G.MountJournalSummonRandomFavoriteButtonBorder:Hide()
+
+    Skin.InsetFrameTemplate(MountJournal.LeftInset)
+    Skin.InsetFrameTemplate(MountJournal.RightInset)
+    Skin.SearchBoxTemplate(MountJournal.searchBox)
+    Skin.UIMenuButtonStretchTemplate(_G.MountJournalFilterButton)
+    --Skin.UIDropDownMenuTemplate(_G.MountJournalFilterDropDown)
+    Skin.InsetFrameTemplate3(MountJournal.MountCount)
+
+    local MountDisplay = MountJournal.MountDisplay
+    MountDisplay.YesMountsTex:SetAlpha(0)
+    MountDisplay.NoMountsTex:SetAlpha(0)
+    MountDisplay.ShadowOverlay:Hide()
+    Base.CropIcon(MountDisplay.InfoButton.Icon, MountDisplay.InfoButton)
+    Skin.RotateOrbitCameraLeftButtonTemplate(MountDisplay.ModelScene.RotateLeftButton)
+    Skin.RotateOrbitCameraRightButtonTemplate(MountDisplay.ModelScene.RotateRightButton)
+
+    Skin.HybridScrollBarTrimTemplate(MountJournal.ListScrollFrame.scrollBar)
+    Skin.MagicButtonTemplate(MountJournal.MountButton)
+
+
+    ----====####$$$$%%%%$$$$####====----
+    --     Blizzard_PetCollection     --
+    ----====####$$$$%%%%$$$$####====----
+    --local PetJournal = _G.PetJournal
+
     if not private.disabled.tooltips then
         Skin.SharedPetBattleAbilityTooltipTemplate(_G.PetJournalPrimaryAbilityTooltip)
         Skin.SharedPetBattleAbilityTooltipTemplate(_G.PetJournalSecondaryAbilityTooltip)
     end
 
-    -- [[ General ]]
 
-    for i = 1, 14 do
-        if i ~= 8 then
-            select(i, _G.CollectionsJournal:GetRegions()):Hide()
-        end
-    end
-
-    F.CreateBD(_G.CollectionsJournal)
-    F.ReskinTab(_G.CollectionsJournalTab1)
-    F.ReskinTab(_G.CollectionsJournalTab2)
-    F.ReskinTab(_G.CollectionsJournalTab3)
-    F.ReskinTab(_G.CollectionsJournalTab4)
-    F.ReskinTab(_G.CollectionsJournalTab5)
-    F.ReskinClose(_G.CollectionsJournalCloseButton)
-
-    _G.CollectionsJournalTab2:SetPoint("LEFT", _G.CollectionsJournalTab1, "RIGHT", -15, 0)
-    _G.CollectionsJournalTab3:SetPoint("LEFT", _G.CollectionsJournalTab2, "RIGHT", -15, 0)
-    _G.CollectionsJournalTab4:SetPoint("LEFT", _G.CollectionsJournalTab3, "RIGHT", -15, 0)
-    _G.CollectionsJournalTab5:SetPoint("LEFT", _G.CollectionsJournalTab4, "RIGHT", -15, 0)
-
-    -- [[ Mounts and pets ]]
-
-    local PetJournal = _G.PetJournal
-    local MountJournal = _G.MountJournal
-
-    for i = 1, 9 do
-        select(i, MountJournal.MountCount:GetRegions()):Hide()
-        select(i, PetJournal.PetCount:GetRegions()):Hide()
-    end
-
-    MountJournal.LeftInset:Hide()
-    MountJournal.RightInset:Hide()
-    PetJournal.LeftInset:Hide()
-    PetJournal.RightInset:Hide()
-    PetJournal.PetCardInset:Hide()
-    PetJournal.loadoutBorder:Hide()
-    MountJournal.MountDisplay.YesMountsTex:SetAlpha(0)
-    MountJournal.MountDisplay.NoMountsTex:SetAlpha(0)
-    MountJournal.MountDisplay.ShadowOverlay:Hide()
-    _G.PetJournalTutorialButton.Ring:Hide()
-
-    F.CreateBD(MountJournal.MountCount, .25)
-    F.CreateBD(PetJournal.PetCount, .25)
-    F.CreateBD(MountJournal.MountDisplay.ModelScene, .25)
-
-    F.Reskin(_G.MountJournalMountButton)
-    F.Reskin(_G.PetJournalSummonButton)
-    F.Reskin(_G.PetJournalFindBattle)
-    F.ReskinScroll(_G.MountJournalListScrollFrameScrollBar)
-    F.ReskinScroll(_G.PetJournalListScrollFrameScrollBar)
-    F.ReskinInput(_G.MountJournalSearchBox)
-    F.ReskinInput(_G.PetJournalSearchBox)
-    F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateLeftButton, "Left")
-    F.ReskinArrow(MountJournal.MountDisplay.ModelScene.RotateRightButton, "Right")
-    F.ReskinFilterButton(_G.PetJournalFilterButton)
-    F.ReskinFilterButton(_G.MountJournalFilterButton)
-
-    _G.MountJournalFilterButton:SetPoint("TOPRIGHT", MountJournal.LeftInset, -5, -8)
-    _G.PetJournalFilterButton:SetPoint("TOPRIGHT", _G.PetJournalLeftInset, -5, -8)
-
-    _G.PetJournalTutorialButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -14, 14)
-
-    local scrollFrames = {MountJournal.ListScrollFrame.buttons, PetJournal.listScroll.buttons}
-    for _, scrollFrame in next, scrollFrames do
-        for i = 1, #scrollFrame do
-            local button = scrollFrame[i]
-
-            button:GetRegions():Hide()
-            local bg = _G.CreateFrame("Frame", nil, button)
-            bg:SetPoint("TOPLEFT", 0, -1)
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
-            bg:SetFrameLevel(button:GetFrameLevel()-1)
-            F.CreateBD(bg, .25)
-            button.bg = bg
-
-            button.icon.bg = F.ReskinIcon(button.icon)
-
-            button.iconBorder:SetTexture("")
-            button.selectedTexture:SetTexture("")
-            button:SetHighlightTexture(C.media.backdrop)
-            button:GetHighlightTexture():SetVertexColor(r, g, b, .25)
-
-            if button.DragButton then
-                button.DragButton.ActiveTexture:SetTexture(C.media.checked)
-            else
-                button.dragButton.ActiveTexture:SetTexture(C.media.checked)
-                button.dragButton.levelBG:SetAlpha(0)
-                button.dragButton.level:SetFontObject(_G.GameFontNormal)
-                button.dragButton.level:SetTextColor(1, 1, 1)
-            end
-        end
-    end
-
-    local function updateMountScroll()
-        local buttons = MountJournal.ListScrollFrame.buttons
-        for i = 1, #buttons do
-            local button = buttons[i]
-            if button.index ~= nil then
-                button.bg:Show()
-                button.icon:Show()
-                button.icon.bg:Show()
-
-                if button.selectedTexture:IsShown() then
-                    button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
-                else
-                    button.bg:SetBackdropBorderColor(0, 0, 0)
-                end
-            else
-                button.bg:Hide()
-                button.icon:Hide()
-                button.icon.bg:Hide()
-            end
-        end
-    end
-
-    _G.hooksecurefunc("MountJournal_UpdateMountList", updateMountScroll)
-    _G.hooksecurefunc(_G.MountJournalListScrollFrame, "update", updateMountScroll)
-
-    local function updatePetScroll()
-        local petButtons = PetJournal.listScroll.buttons
-        if petButtons then
-            for i = 1, #petButtons do
-                local button = petButtons[i]
-
-                local index = button.index
-                if index then
-                    local petID, _, isOwned = _G.C_PetJournal.GetPetInfoByIndex(index)
-
-                    if petID and isOwned then
-                        local _, _, _, _, rarity = _G.C_PetJournal.GetPetStats(petID)
-
-                        if rarity then
-                            local color = _G.ITEM_QUALITY_COLORS[rarity-1]
-                            button.name:SetTextColor(color.r, color.g, color.b)
-                        else
-                            button.name:SetTextColor(1, 1, 1)
-                        end
-                    else
-                        button.name:SetTextColor(.5, .5, .5)
-                    end
-
-                    if button.selectedTexture:IsShown() then
-                        button.bg:SetBackdropBorderColor(1, 1, 1, 0.7)
-                    else
-                        button.bg:SetBackdropBorderColor(0, 0, 0)
-                    end
-                end
-            end
-        end
-    end
-
-    _G.hooksecurefunc("PetJournal_UpdatePetList", updatePetScroll)
-    _G.hooksecurefunc(_G.PetJournalListScrollFrame, "update", updatePetScroll)
-
-    _G.PetJournalHealPetButtonBorder:Hide()
-    _G.PetJournalHealPetButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
-    PetJournal.HealPetButton:SetPushedTexture("")
-    F.CreateBG(PetJournal.HealPetButton)
-
-    do
-        local ic = MountJournal.MountDisplay.InfoButton.Icon
-        ic:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBG(ic)
-    end
-
-    _G.PetJournalLoadoutBorderSlotHeaderText:SetParent(PetJournal)
-    _G.PetJournalLoadoutBorderSlotHeaderText:SetPoint("CENTER", _G.PetJournalLoadoutBorderTop, "TOP", 0, 4)
-
-    -- Favourite mount button
-
-    _G.MountJournalSummonRandomFavoriteButtonBorder:Hide()
-    _G.MountJournalSummonRandomFavoriteButtonIconTexture:SetTexCoord(.08, .92, .08, .92)
-    _G.MountJournalSummonRandomFavoriteButton:SetPushedTexture("")
-    F.CreateBG(_G.MountJournalSummonRandomFavoriteButton)
-
-    -- Pet card
-
-    local card = _G.PetJournalPetCard
-
-    _G.PetJournalPetCardBG:Hide()
-    card.PetInfo.levelBG:SetAlpha(0)
-    card.PetInfo.qualityBorder:SetAlpha(0)
-    card.AbilitiesBG1:SetAlpha(0)
-    card.AbilitiesBG2:SetAlpha(0)
-    card.AbilitiesBG3:SetAlpha(0)
-
-    card.PetInfo.level:SetFontObject(_G.GameFontNormal)
-    card.PetInfo.level:SetTextColor(1, 1, 1)
-
-    card.PetInfo.icon:SetTexCoord(.08, .92, .08, .92)
-    card.PetInfo.icon.bg = F.CreateBG(card.PetInfo.icon)
-
-    F.CreateBD(card, .25)
-
-    for i = 2, 12 do
-        select(i, card.xpBar:GetRegions()):Hide()
-    end
-
-    card.xpBar:SetStatusBarTexture(C.media.backdrop)
-    F.CreateBDFrame(card.xpBar, .25)
-
-    _G.PetJournalPetCardHealthFramehealthStatusBarLeft:Hide()
-    _G.PetJournalPetCardHealthFramehealthStatusBarRight:Hide()
-    _G.PetJournalPetCardHealthFramehealthStatusBarMiddle:Hide()
-    _G.PetJournalPetCardHealthFramehealthStatusBarBGMiddle:Hide()
-
-    card.HealthFrame.healthBar:SetStatusBarTexture(C.media.backdrop)
-    F.CreateBDFrame(card.HealthFrame.healthBar, .25)
-
-    for i = 1, 6 do
-        local bu = card["spell"..i]
-
-        bu.icon:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBG(bu.icon)
-    end
-
-    _G.hooksecurefunc("PetJournal_UpdatePetCard", function(self)
-        local petInfo = self.PetInfo
-        local red, green, blue
-
-        if petInfo.qualityBorder:IsShown() then
-            red, green, blue = petInfo.qualityBorder:GetVertexColor()
-        else
-            red, green, blue = 0, 0, 0
-        end
-
-        petInfo.icon.bg:SetVertexColor(red, green, blue)
-    end)
-
-    -- Pet loadout
-
-    for i = 1, 3 do
-        local bu = PetJournal.Loadout["Pet"..i]
-
-        _G["PetJournalLoadoutPet"..i.."BG"]:Hide()
-
-        bu.iconBorder:SetAlpha(0)
-        bu.qualityBorder:SetTexture("")
-        bu.levelBG:SetAlpha(0)
-        bu.helpFrame:GetRegions():Hide()
-
-        bu.level:SetFontObject(_G.GameFontNormal)
-        bu.level:SetTextColor(1, 1, 1)
-
-        bu.icon:SetTexCoord(.08, .92, .08, .92)
-        bu.icon.bg = F.CreateBDFrame(bu.icon, .25)
-
-        bu.setButton:GetRegions():SetPoint("TOPLEFT", bu.icon, -5, 5)
-        bu.setButton:GetRegions():SetPoint("BOTTOMRIGHT", bu.icon, 5, -5)
-
-        F.CreateBD(bu, .25)
-
-        for j = 2, 12 do
-            select(j, bu.xpBar:GetRegions()):Hide()
-        end
-
-        bu.xpBar:SetStatusBarTexture(C.media.backdrop)
-        F.CreateBDFrame(bu.xpBar, .25)
-
-        _G["PetJournalLoadoutPet"..i.."HealthFramehealthStatusBarLeft"]:Hide()
-        _G["PetJournalLoadoutPet"..i.."HealthFramehealthStatusBarRight"]:Hide()
-        _G["PetJournalLoadoutPet"..i.."HealthFramehealthStatusBarMiddle"]:Hide()
-        _G["PetJournalLoadoutPet"..i.."HealthFramehealthStatusBarBGMiddle"]:Hide()
-
-        bu.healthFrame.healthBar:SetStatusBarTexture(C.media.backdrop)
-        F.CreateBDFrame(bu.healthFrame.healthBar, .25)
-
-        for j = 1, 3 do
-            local spell = bu["spell"..j]
-
-            spell:SetPushedTexture("")
-
-            spell.selected:SetTexture(C.media.checked)
-
-            spell:GetRegions():Hide()
-
-            spell.FlyoutArrow:SetTexture(C.media.arrowDown)
-            spell.FlyoutArrow:SetSize(8, 8)
-            spell.FlyoutArrow:SetTexCoord(0, 1, 0, 1)
-
-            spell.icon:SetTexCoord(.08, .92, .08, .92)
-            F.CreateBG(spell.icon)
-        end
-    end
-
-    _G.hooksecurefunc("PetJournal_UpdatePetLoadOut", function()
-        for i = 1, 3 do
-            local bu = PetJournal.Loadout["Pet"..i]
-
-            bu.icon.bg:SetShown(not bu.helpFrame:IsShown())
-            bu.icon.bg:SetBackdropBorderColor(bu.qualityBorder:GetVertexColor())
-
-            bu.dragButton:SetEnabled(not bu.helpFrame:IsShown())
-        end
-    end)
-
-    PetJournal.SpellSelect.BgEnd:Hide()
-    PetJournal.SpellSelect.BgTiled:Hide()
-
-    for i = 1, 2 do
-        local bu = PetJournal.SpellSelect["Spell"..i]
-
-        bu:SetCheckedTexture(C.media.checked)
-        bu:SetPushedTexture("")
-
-        bu.icon:SetDrawLayer("ARTWORK")
-        bu.icon:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBG(bu.icon)
-    end
-
-    -- [[ Toy box ]]
-
+    ----====####$$$$%%%%%$$$$####====----
+    --         Blizzard_ToyBox         --
+    ----====####$$$$%%%%%$$$$####====----
     local ToyBox = _G.ToyBox
 
     local toyIcons = ToyBox.iconsFrame
@@ -632,8 +434,10 @@ function private.AddOns.Blizzard_Collections()
         _G.hooksecurefunc(button.name, "SetTextColor", changeTextColor)
     end
 
-    -- [[ Heirlooms ]]
 
+    ----====####$$$$%%%%%$$$$####====----
+    --   Blizzard_HeirloomCollection   --
+    ----====####$$$$%%%%%$$$$####====----
     local HeirloomsJournal = _G.HeirloomsJournal
 
     local heirloomIcons = HeirloomsJournal.iconsFrame
@@ -723,6 +527,7 @@ function private.AddOns.Blizzard_Collections()
             end
         end
     end)
+
 
     ----====####$$$$%%%%%$$$$####====----
     --        Blizzard_Wardrobe        --

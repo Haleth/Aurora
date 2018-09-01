@@ -117,6 +117,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="..\SharedXML\HybridScrollFrame.lua"/>
     <Script file="..\SharedXML\LayoutFrame.lua"/>
     <Script file="..\SharedXML\ModelPreviewFrame.lua"/>
+    <Script file="..\SharedXML\ModelSceneTemplates.lua"/>
     <Script file="..\SharedXML\Pools.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
