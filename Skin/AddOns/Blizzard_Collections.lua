@@ -189,11 +189,39 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
     do --[[ Blizzard_CollectionTemplates ]]
         function Skin.CollectionsProgressBarTemplate(StatusBar)
             StatusBar.border:Hide()
-            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+            select(3, StatusBar:GetRegions()):Hide()
 
-            local bg = select(3, StatusBar:GetRegions())
-            bg:SetPoint("TOPLEFT", -1, 1)
-            bg:SetPoint("BOTTOMRIGHT", 1, -1)
+            Base.SetBackdrop(StatusBar, Color.button, 0.3)
+            local healthBarBG = StatusBar:GetBackdropTexture("bg")
+            healthBarBG:SetPoint("TOPLEFT", -1, 1)
+            healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
+
+            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+        end
+        function Skin.CollectionsSpellButtonTemplate(CheckButton)
+            Base.CropIcon(CheckButton.iconTexture, CheckButton)
+            CheckButton.iconTexture:ClearAllPoints()
+            CheckButton.iconTexture:SetPoint("TOPLEFT", 4, -4)
+            CheckButton.iconTexture:SetPoint("BOTTOMRIGHT", -4, 4)
+
+            Base.CropIcon(CheckButton.iconTextureUncollected)
+            CheckButton.iconTextureUncollected:SetAllPoints(CheckButton.iconTexture)
+            CheckButton.slotFrameUncollectedInnerGlow:SetTexture("")
+
+            CheckButton.slotFrameCollected:SetTexture("")
+            CheckButton.slotFrameUncollected:SetTexture("")
+
+            CheckButton.cooldown:SetAllPoints(CheckButton.iconTexture)
+            CheckButton.cooldownWrapper.slotFavorite:SetPoint("TOPLEFT", -10, 8)
+
+            CheckButton:GetPushedTexture():SetAllPoints(CheckButton.iconTexture)
+            Base.CropIcon(CheckButton:GetPushedTexture())
+
+            CheckButton:GetHighlightTexture():SetAllPoints(CheckButton.iconTexture)
+            Base.CropIcon(CheckButton:GetHighlightTexture())
+
+            CheckButton:GetCheckedTexture():SetAllPoints(CheckButton.iconTexture)
+            Base.CropIcon(CheckButton:GetCheckedTexture())
         end
         function Skin.CollectionsBackgroundTemplate(Frame)
             Skin.InsetFrameTemplate(Frame)
@@ -368,6 +396,11 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Base.CropIcon(CheckButton:GetPushedTexture())
             Base.CropIcon(CheckButton:GetHighlightTexture())
             Base.CropIcon(CheckButton:GetCheckedTexture())
+        end
+    end
+    do --[[ Blizzard_ToyBox ]]
+        function Skin.ToySpellButtonTemplate(CheckButton)
+            Skin.CollectionsSpellButtonTemplate(CheckButton)
         end
     end
     do --[[ Blizzard_Wardrobe ]]
@@ -627,76 +660,34 @@ function private.AddOns.Blizzard_Collections()
     ----====####$$$$%%%%%$$$$####====----
     local ToyBox = _G.ToyBox
 
-    local toyIcons = ToyBox.iconsFrame
-    toyIcons.Bg:Hide()
-    toyIcons.BackgroundTile:Hide()
-    toyIcons:DisableDrawLayer("BORDER")
-    toyIcons:DisableDrawLayer("ARTWORK")
-    toyIcons:DisableDrawLayer("OVERLAY")
+    Skin.CollectionsProgressBarTemplate(ToyBox.progressBar)
+    Skin.SearchBoxTemplate(ToyBox.searchBox)
+    Skin.UIMenuButtonStretchTemplate(_G.ToyBoxFilterButton)
 
-    F.ReskinInput(ToyBox.searchBox)
-    F.ReskinFilterButton(_G.ToyBoxFilterButton)
-    F.ReskinArrow(ToyBox.PagingFrame.PrevPageButton, "Left")
-    F.ReskinArrow(ToyBox.PagingFrame.NextPageButton, "Right")
+    local favoriteHelpBox = ToyBox.favoriteHelpBox
+    local toysArrow = _G.CreateFrame("Frame", nil, favoriteHelpBox)
+    toysArrow.Arrow = favoriteHelpBox.ArrowUp
+    toysArrow.Arrow:SetParent(toysArrow)
+    toysArrow.Glow = favoriteHelpBox.ArrowGlowUp
+    toysArrow.Glow:SetParent(toysArrow)
+    favoriteHelpBox.Arrow = toysArrow
+    favoriteHelpBox.Text = favoriteHelpBox.BigText
+    Skin.GlowBoxFrame(favoriteHelpBox, "Up")
 
-    -- Progress bar
-
-    local toyProgress = ToyBox.progressBar
-    toyProgress.border:Hide()
-    toyProgress:DisableDrawLayer("BACKGROUND")
-
-    toyProgress.text:SetPoint("CENTER", 0, 1)
-    toyProgress:SetStatusBarTexture(C.media.backdrop)
-
-    F.CreateBDFrame(toyProgress, .25)
-
-    -- Toys!
-
-    local shouldChangeTextColor = true
-    local function changeTextColor(toyString)
-        if shouldChangeTextColor then
-            shouldChangeTextColor = false
-
-            local self = toyString:GetParent()
-
-            if _G.PlayerHasToy(self.itemID) then
-                local _, _, quality = _G.GetItemInfo(self.itemID)
-                if quality then
-                    toyString:SetTextColor(_G.GetItemQualityColor(quality))
-                else
-                    toyString:SetTextColor(1, 1, 1)
-                end
-            else
-                toyString:SetTextColor(.5, .5, .5)
-            end
-
-            shouldChangeTextColor = true
-        end
-    end
+    Skin.GlowBoxTemplate(ToyBox.mousewheelPagingHelpBox)
+    Skin.UIPanelCloseButton(ToyBox.mousewheelPagingHelpBox.CloseButton)
+    ToyBox.mousewheelPagingHelpBox.CloseButton:SetPoint("TOPRIGHT", -5, -5)
 
     local iconsFrame = ToyBox.iconsFrame
+    Skin.CollectionsBackgroundTemplate(iconsFrame)
+    iconsFrame.watermark:SetDesaturated(true)
+    iconsFrame.watermark:SetAlpha(0.5)
+
     for i = 1, 18 do
-        local button = iconsFrame["spellButton"..i]
-        button:SetPushedTexture("")
-        button:SetHighlightTexture("")
-
-        button.bg = F.CreateBG(button)
-        button.bg:SetPoint("TOPLEFT", button, 3, -2)
-        button.bg:SetPoint("BOTTOMRIGHT", button, -3, 4)
-
-        button.iconTexture:SetTexCoord(.08, .92, .08, .92)
-
-        button.iconTextureUncollected:SetTexCoord(.08, .92, .08, .92)
-        button.iconTextureUncollected:SetPoint("CENTER", 0, 1)
-        button.iconTextureUncollected:SetHeight(42)
-
-        button.slotFrameCollected:SetTexture("")
-        button.slotFrameUncollected:SetTexture("")
-
-        --button.cooldown:SetAllPoints(icon)
-
-        _G.hooksecurefunc(button.name, "SetTextColor", changeTextColor)
+        Skin.ToySpellButtonTemplate(iconsFrame["spellButton"..i])
     end
+
+    Skin.CollectionsPagingFrameTemplate(ToyBox.PagingFrame)
 
 
     ----====####$$$$%%%%%$$$$####====----
@@ -805,12 +796,12 @@ function private.AddOns.Blizzard_Collections()
     Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
 
     local SetsTabHelpBox = WardrobeCollectionFrame.SetsTabHelpBox
-    local Arrow = _G.CreateFrame("Frame", nil, SetsTabHelpBox)
-    Arrow.Arrow = SetsTabHelpBox.ArrowUp
-    Arrow.Arrow:SetParent(Arrow)
-    Arrow.Glow = SetsTabHelpBox.ArrowGlowUp
-    Arrow.Glow:SetParent(Arrow)
-    SetsTabHelpBox.Arrow = Arrow
+    local setsArrow = _G.CreateFrame("Frame", nil, SetsTabHelpBox)
+    setsArrow.Arrow = SetsTabHelpBox.ArrowUp
+    setsArrow.Arrow:SetParent(setsArrow)
+    setsArrow.Glow = SetsTabHelpBox.ArrowGlowUp
+    setsArrow.Glow:SetParent(setsArrow)
+    SetsTabHelpBox.Arrow = setsArrow
     SetsTabHelpBox.Text = SetsTabHelpBox.BigText
     Skin.GlowBoxFrame(SetsTabHelpBox, "Up")
 
