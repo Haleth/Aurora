@@ -29,6 +29,67 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
             end
         end
     end
+    do --[[ Blizzard_PetCollection ]]
+        local MAX_ACTIVE_PETS = 3
+
+        function Hook.PetJournal_UpdatePetLoadOut()
+            for i = 1, MAX_ACTIVE_PETS do
+                local loadoutPlate = _G.PetJournal.Loadout["Pet"..i]
+                local petID = _G.C_PetJournal.GetPetLoadOutInfo(i)
+
+                if loadoutPlate.iconBorder:IsShown() then
+                    local _, _, _, _, rarity = _G.C_PetJournal.GetPetStats(petID)
+                    local color = _G.ITEM_QUALITY_COLORS[rarity-1]
+                    loadoutPlate._auroraIconBorder:SetColorTexture(color.r, color.g, color.b)
+                else
+                    loadoutPlate._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
+                end
+            end
+        end
+        function Hook.PetJournal_UpdatePetList()
+            local scrollFrame = _G.PetJournal.listScroll
+            local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
+            local petButtons = scrollFrame.buttons
+
+            local numPets = _G.C_PetJournal.GetNumPets()
+            for i = 1, #petButtons do
+                local pet = petButtons[i]
+                local index = i + offset
+                if index <= numPets then
+                    if pet.iconBorder:IsShown() then
+                        local _, _, _, _, rarity = _G.C_PetJournal.GetPetStats(pet.petID)
+                        local color = _G.ITEM_QUALITY_COLORS[rarity-1]
+                        pet._auroraIconBorder:SetColorTexture(color.r, color.g, color.b)
+                    else
+                        pet._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
+                    end
+                end
+            end
+        end
+        function Hook.PetJournal_UpdatePetCard(self, forceSceneChange)
+            if not self.petID and not self.speciesID then
+                self.PetInfo._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
+                return
+            end
+
+            local _, petType
+            if self.petID then
+                _, _, _, _, _, _, _, _, _, petType = _G.C_PetJournal.GetPetInfoByPetID(self.petID)
+            else
+                _, _, petType = _G.C_PetJournal.GetPetInfoBySpeciesID(self.speciesID)
+            end
+
+            if self.PetInfo.qualityBorder:IsShown() then
+                local _, _, _, _, rarity = _G.C_PetJournal.GetPetStats(self.petID)
+                local color = _G.ITEM_QUALITY_COLORS[rarity-1]
+                self.PetInfo._auroraIconBorder:SetColorTexture(color.r, color.g, color.b)
+            else
+                self.PetInfo._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
+            end
+
+            self.TypeInfo.typeIcon:SetTexture([[Interface\Icons\Icon_PetFamily_]].._G.PET_TYPE_SUFFIX[petType])
+        end
+    end
     do --[[ Blizzard_Wardrobe ]]
         local lightValues = {
             enabled=true, omni=false,
@@ -198,12 +259,115 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Button.selectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
             Base.CropIcon(Button.DragButton.ActiveTexture)
-            Base.CropIcon(_G[Util.GetName(Button.DragButton).."Highlight"])
+            Base.CropIcon(Button.DragButton:GetHighlightTexture())
 
             local highlight = Button:GetHighlightTexture()
             highlight:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
             highlight:SetPoint("TOPLEFT", bg, 1, -1)
             highlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        end
+    end
+    do --[[ Blizzard_PetCollection ]]
+        Skin["ExpBar-Divider"] = function(Texture)
+            Texture:SetColorTexture(Color.button:GetRGB())
+            Texture:SetSize(1, 11)
+        end
+        function Skin.CompanionListButtonTemplate(Button)
+            Button:GetRegions():Hide()
+            Base.SetBackdrop(Button, Color.frame)
+            local bg = Button:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 0, -1)
+            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+
+            Button._auroraIconBorder = Base.CropIcon(Button.icon, Button)
+            Button.iconBorder:SetAlpha(0)
+
+            Button.selectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            Button.selectedTexture:SetPoint("TOPLEFT", bg, 1, -1)
+            Button.selectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
+            local dragButton = Button.dragButton
+            Base.CropIcon(dragButton.ActiveTexture)
+            dragButton.levelBG:SetColorTexture(0, 0, 0, 0.5)
+            dragButton.levelBG:SetPoint("TOPLEFT", dragButton, "BOTTOMLEFT", 1, 13)
+            dragButton.levelBG:SetPoint("BOTTOMRIGHT", -1, 1)
+            dragButton.level:SetPoint("CENTER", dragButton.levelBG)
+            Base.CropIcon(dragButton:GetHighlightTexture())
+
+            local highlight = Button:GetHighlightTexture()
+            highlight:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
+            highlight:SetPoint("TOPLEFT", bg, 1, -1)
+            highlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        end
+        function Skin.CompanionLoadOutSpellTemplate(CheckButton)
+            CheckButton:GetRegions():Hide()
+            Base.CropIcon(CheckButton.icon, CheckButton)
+            Base.CropIcon(CheckButton.selected)
+            Base.CropIcon(CheckButton:GetPushedTexture())
+            Base.CropIcon(CheckButton:GetHighlightTexture())
+            Base.CropIcon(CheckButton:GetCheckedTexture())
+        end
+        function Skin.CompanionLoadOutTemplate(Button)
+            Button:GetRegions():Hide()
+
+            Button._auroraIconBorder = Base.CropIcon(Button.icon, Button)
+            Button.iconBorder:SetAlpha(0)
+            Button.qualityBorder:SetAlpha(0)
+
+            Button.levelBG:SetColorTexture(0, 0, 0, 0.5)
+            Button.levelBG:SetPoint("TOPLEFT", Button.icon, "BOTTOMLEFT", 0, 12)
+            Button.levelBG:SetPoint("BOTTOMRIGHT", Button.icon)
+            Button.level:SetPoint("CENTER", Button.levelBG)
+
+            local healthFrame = Button.healthFrame
+            local left, right, mid, bg = healthFrame.healthBar:GetRegions()
+            left:Hide()
+            right:Hide()
+            mid:Hide()
+            bg:Hide()
+            Base.SetTexture(healthFrame.healthBar:GetStatusBarTexture(), "gradientUp")
+
+            Base.SetBackdrop(healthFrame.healthBar, Color.button, 0.3)
+            local healthBarBG = healthFrame.healthBar:GetBackdropTexture("bg")
+            healthBarBG:SetPoint("TOPLEFT", -1, 1)
+            healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
+
+            Skin.CompanionLoadOutSpellTemplate(Button.spell1)
+            Skin.CompanionLoadOutSpellTemplate(Button.spell2)
+            Skin.CompanionLoadOutSpellTemplate(Button.spell3)
+
+            local xpBar = Button.xpBar
+            local regions = {xpBar:GetRegions()}
+            regions[2]:Hide() -- Left
+            regions[3]:Hide() -- Right
+            regions[4]:Hide() -- Middle
+
+            for i = 5, 11 do
+                Skin["ExpBar-Divider"](regions[i])
+            end
+
+            regions[12]:Hide() -- BGMiddle
+            Base.SetTexture(xpBar:GetStatusBarTexture(), "gradientUp")
+
+            Base.SetBackdrop(xpBar, Color.button, 0.3)
+            local xpBarBG = xpBar:GetBackdropTexture("bg")
+            xpBarBG:SetPoint("TOPLEFT", -1, 1)
+            xpBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
+
+            local setHighlight = Button.setButton:GetRegions()
+            Base.CropIcon(setHighlight)
+            setHighlight:SetAllPoints(Button.icon)
+
+            Base.CropIcon(Button.dragButton:GetHighlightTexture())
+        end
+        function Skin.PetCardSpellButtonTemplate(Button)
+            Base.CropIcon(Button.icon, Button)
+        end
+        function Skin.PetSpellSelectButtonTemplate(CheckButton)
+            Base.CropIcon(CheckButton.icon, CheckButton)
+            Base.CropIcon(CheckButton:GetPushedTexture())
+            Base.CropIcon(CheckButton:GetHighlightTexture())
+            Base.CropIcon(CheckButton:GetCheckedTexture())
         end
     end
     do --[[ Blizzard_Wardrobe ]]
@@ -350,7 +514,107 @@ function private.AddOns.Blizzard_Collections()
     ----====####$$$$%%%%$$$$####====----
     --     Blizzard_PetCollection     --
     ----====####$$$$%%%%$$$$####====----
-    --local PetJournal = _G.PetJournal
+    local PetJournal = _G.PetJournal
+    _G.hooksecurefunc("PetJournal_UpdatePetLoadOut", Hook.PetJournal_UpdatePetLoadOut)
+    _G.hooksecurefunc("PetJournal_UpdatePetList", Hook.PetJournal_UpdatePetList)
+    _G.hooksecurefunc(PetJournal.listScroll, "update", Hook.PetJournal_UpdatePetList)
+    _G.hooksecurefunc("PetJournal_UpdatePetCard", Hook.PetJournal_UpdatePetCard)
+
+    Skin.InsetFrameTemplate3(PetJournal.PetCount)
+    Skin.MainHelpPlateButton(PetJournal.MainHelpButton)
+    PetJournal.MainHelpButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -15, 15)
+
+    Base.CropIcon(PetJournal.HealPetButton.texture, PetJournal.HealPetButton)
+    Base.CropIcon(PetJournal.HealPetButton:GetPushedTexture())
+    Base.CropIcon(PetJournal.HealPetButton:GetHighlightTexture())
+    _G.PetJournalHealPetButtonBorder:Hide()
+
+    Base.CropIcon(PetJournal.SummonRandomFavoritePetButton.texture, PetJournal.SummonRandomFavoritePetButton)
+    Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetPushedTexture())
+    Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetHighlightTexture())
+    _G.PetJournalSummonRandomFavoritePetButtonBorder:Hide()
+
+    Skin.InsetFrameTemplate(PetJournal.LeftInset)
+    Skin.InsetFrameTemplate(PetJournal.PetCardInset)
+    Skin.InsetFrameTemplate(PetJournal.RightInset)
+    Skin.SearchBoxTemplate(PetJournal.searchBox)
+    Skin.UIMenuButtonStretchTemplate(_G.PetJournalFilterButton)
+    Skin.HybridScrollBarTrimTemplate(PetJournal.listScroll.scrollBar)
+
+    PetJournal.loadoutBorder:DisableDrawLayer("ARTWORK")
+    _G.PetJournalLoadoutBorderSlotHeaderBG:Hide()
+    _G.PetJournalLoadoutBorderSlotHeaderF:Hide()
+    _G.PetJournalLoadoutBorderSlotHeaderLeft:Hide()
+    _G.PetJournalLoadoutBorderSlotHeaderRight:Hide()
+
+    Skin.CompanionLoadOutTemplate(PetJournal.Loadout.Pet1)
+    Skin.CompanionLoadOutTemplate(PetJournal.Loadout.Pet2)
+    Skin.CompanionLoadOutTemplate(PetJournal.Loadout.Pet3)
+
+    local PetCard = PetJournal.PetCard
+    _G.PetJournalPetCardBG:Hide()
+    PetCard.AbilitiesBG1:SetAlpha(0)
+    PetCard.AbilitiesBG2:SetAlpha(0)
+    PetCard.AbilitiesBG3:SetAlpha(0)
+
+    local PetInfo = PetCard.PetInfo
+    PetInfo._auroraIconBorder = Base.CropIcon(PetInfo.icon, PetInfo)
+    PetInfo.qualityBorder:SetAlpha(0)
+
+    PetInfo.levelBG:SetColorTexture(0, 0, 0, 0.5)
+    PetInfo.levelBG:SetPoint("TOPLEFT", PetInfo.icon, "BOTTOMLEFT", 0, 12)
+    PetInfo.levelBG:SetPoint("BOTTOMRIGHT", PetInfo.icon)
+
+    Base.CropIcon(PetCard.TypeInfo.typeIcon, PetCard.TypeInfo)
+
+    local healthBar = PetCard.HealthFrame.healthBar
+    local left, right, mid, bg = healthBar:GetRegions()
+    left:Hide()
+    right:Hide()
+    mid:Hide()
+    bg:Hide()
+    Base.SetTexture(healthBar:GetStatusBarTexture(), "gradientUp")
+
+    Base.SetBackdrop(healthBar, Color.button, 0.3)
+    local healthBarBG = healthBar:GetBackdropTexture("bg")
+    healthBarBG:SetPoint("TOPLEFT", -1, 1)
+    healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
+
+    for i = 1, 6 do
+        Skin.PetCardSpellButtonTemplate(PetCard["spell"..i])
+    end
+
+    local xpBar = PetCard.xpBar
+    local regions = {xpBar:GetRegions()}
+    regions[2]:Hide() -- Left
+    regions[3]:Hide() -- Right
+    regions[4]:Hide() -- Middle
+
+    for i = 5, 11 do
+        Skin["ExpBar-Divider"](regions[i])
+    end
+
+    regions[12]:Hide() -- BGMiddle
+    Base.SetTexture(xpBar:GetStatusBarTexture(), "gradientUp")
+
+    Base.SetBackdrop(xpBar, Color.button, 0.3)
+    local xpBarBG = xpBar:GetBackdropTexture("bg")
+    xpBarBG:SetPoint("TOPLEFT", -1, 1)
+    xpBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
+
+
+    Skin.MagicButtonTemplate(PetJournal.FindBattleButton)
+    Skin.MagicButtonTemplate(PetJournal.SummonButton)
+
+    local spellSelect = PetJournal.SpellSelect
+    spellSelect.BgEnd:Hide()
+    spellSelect.BgTiled:Hide()
+    Base.SetBackdrop(spellSelect)
+    local spellSelectBG = spellSelect:GetBackdropTexture("bg")
+    spellSelectBG:SetPoint("TOPLEFT", -3, -1)
+    spellSelectBG:SetPoint("BOTTOMRIGHT", 3, 1)
+    Skin.PetSpellSelectButtonTemplate(spellSelect.Spell1)
+    Skin.PetSpellSelectButtonTemplate(spellSelect.Spell2)
 
     if not private.disabled.tooltips then
         Skin.SharedPetBattleAbilityTooltipTemplate(_G.PetJournalPrimaryAbilityTooltip)
