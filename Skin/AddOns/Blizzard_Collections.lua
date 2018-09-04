@@ -8,7 +8,6 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
-local F, C = _G.unpack(private.Aurora)
 
 do --[[ AddOns\Blizzard_Collections.lua ]]
     do --[[ Blizzard_MountCollection ]]
@@ -88,6 +87,21 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
             end
 
             self.TypeInfo.typeIcon:SetTexture([[Interface\Icons\Icon_PetFamily_]].._G.PET_TYPE_SUFFIX[petType])
+        end
+    end
+    do --[[ Blizzard_HeirloomCollection ]]
+        function Hook.HeirloomsMixin_UpdateButton(self, button)
+            if not button._auroraSkinned then
+                Skin.HeirloomSpellButtonTemplate(button)
+                button._auroraSkinned = true
+            end
+
+            local _, _, _, _, upgradeLevel = _G.C_Heirloom.GetHeirloomInfo(button.itemID)
+            if upgradeLevel == _G.C_Heirloom.GetHeirloomMaxUpgradeLevel(button.itemID) then
+                button.levelBackground:SetColorTexture(1, 1, 1, .5)
+            else
+                button.levelBackground:SetColorTexture(0, 0, 0, .5)
+            end
         end
     end
     do --[[ Blizzard_Wardrobe ]]
@@ -403,6 +417,18 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Skin.CollectionsSpellButtonTemplate(CheckButton)
         end
     end
+    do --[[ Blizzard_HeirloomCollection ]]
+        function Skin.HeirloomSpellButtonTemplate(CheckButton)
+            Skin.CollectionsSpellButtonTemplate(CheckButton)
+
+            CheckButton.levelBackground:ClearAllPoints()
+            CheckButton.levelBackground:SetPoint("TOPLEFT", CheckButton.iconTexture, "BOTTOMLEFT", 0, 12)
+            CheckButton.levelBackground:SetPoint("BOTTOMRIGHT", CheckButton.iconTexture)
+            CheckButton.levelBackground:SetColorTexture(0, 0, 0, 0.5)
+            CheckButton.level:ClearAllPoints()
+            CheckButton.level:SetPoint("CENTER", CheckButton.levelBackground)
+        end
+    end
     do --[[ Blizzard_Wardrobe ]]
         function Skin.WardrobeItemsModelTemplate(DressUpModel)
             local bg, _, _, _, _, highlight = DressUpModel:GetRegions()
@@ -694,94 +720,19 @@ function private.AddOns.Blizzard_Collections()
     --   Blizzard_HeirloomCollection   --
     ----====####$$$$%%%%%$$$$####====----
     local HeirloomsJournal = _G.HeirloomsJournal
+    _G.hooksecurefunc(HeirloomsJournal, "UpdateButton", Hook.HeirloomsMixin_UpdateButton)
 
-    local heirloomIcons = HeirloomsJournal.iconsFrame
-    heirloomIcons.Bg:Hide()
-    heirloomIcons.BackgroundTile:Hide()
-    heirloomIcons:DisableDrawLayer("BORDER")
-    heirloomIcons:DisableDrawLayer("ARTWORK")
-    heirloomIcons:DisableDrawLayer("OVERLAY")
+    Skin.CollectionsProgressBarTemplate(HeirloomsJournal.progressBar)
+    Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
+    Skin.UIMenuButtonStretchTemplate(_G.HeirloomsJournalFilterButton)
+    Skin.UIDropDownMenuTemplate(HeirloomsJournal.classDropDown)
 
-    F.ReskinInput(_G.HeirloomsJournalSearchBox)
-    F.ReskinDropDown(_G.HeirloomsJournalClassDropDown)
-    F.ReskinFilterButton(_G.HeirloomsJournalFilterButton)
-    F.ReskinArrow(HeirloomsJournal.PagingFrame.PrevPageButton, "Left")
-    F.ReskinArrow(HeirloomsJournal.PagingFrame.NextPageButton, "Right")
+    Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
+    HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true)
+    HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
 
-    -- Progress bar
-
-    local heirloomProgress = HeirloomsJournal.progressBar
-    heirloomProgress.border:Hide()
-    heirloomProgress:DisableDrawLayer("BACKGROUND")
-
-    heirloomProgress.text:SetPoint("CENTER", 0, 1)
-    heirloomProgress:SetStatusBarTexture(C.media.backdrop)
-
-    F.CreateBDFrame(heirloomProgress, .25)
-
-    -- Buttons
-
-    local heirloomColor = _G.BAG_ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_HEIRLOOM]
-    _G.hooksecurefunc(HeirloomsJournal, "UpdateButton", function(self, button)
-        if not button.styled then
-            button:SetPushedTexture("")
-            button:SetHighlightTexture("")
-
-            button.bg = F.CreateBG(button)
-            button.bg:SetPoint("TOPLEFT", button, 3, -2)
-            button.bg:SetPoint("BOTTOMRIGHT", button, -3, 4)
-
-            button.iconTexture:SetTexCoord(.08, .92, .08, .92)
-
-            button.iconTextureUncollected:SetTexCoord(.08, .92, .08, .92)
-            button.iconTextureUncollected:SetPoint("CENTER", 0, 1)
-            button.iconTextureUncollected:SetHeight(42)
-
-            button.slotFrameCollected:SetTexture("")
-            button.slotFrameUncollected:SetTexture("")
-
-            button.levelBackground:SetAlpha(0)
-
-            button.level:ClearAllPoints()
-            button.level:SetPoint("BOTTOM", 0, 1)
-
-            local auroraLevelBG = button:CreateTexture(nil, "OVERLAY")
-            auroraLevelBG:SetColorTexture(0, 0, 0, .5)
-            auroraLevelBG:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT", 4, 5)
-            auroraLevelBG:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -4, 5)
-            auroraLevelBG:SetHeight(11)
-            button.auroraLevelBG = auroraLevelBG
-
-            button.styled = true
-        end
-
-        if button.iconTexture:IsShown() then
-            button.name:SetTextColor(1, 1, 1)
-            button.bg:SetVertexColor(heirloomColor.r, heirloomColor.g, heirloomColor.b)
-            button.auroraLevelBG:Show()
-            if button.levelBackground:GetAtlas() == "collections-levelplate-gold" then
-                button.auroraLevelBG:SetColorTexture(1, 1, 1, .5)
-            else
-                button.auroraLevelBG:SetColorTexture(0, 0, 0, .5)
-            end
-        else
-            button.name:SetTextColor(.5, .5, .5)
-            button.bg:SetVertexColor(0, 0, 0)
-            button.auroraLevelBG:Hide()
-        end
-    end)
-
-    _G.hooksecurefunc(HeirloomsJournal, "LayoutCurrentPage", function(self)
-        for i = 1, #self.heirloomHeaderFrames do
-            local header = self.heirloomHeaderFrames[i]
-            if not header.styled then
-                header.text:SetTextColor(1, 1, 1)
-                header.text:SetFont(C.media.font, 16)
-
-                header.styled = true
-            end
-        end
-    end)
+    Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
+    Skin.GlowBoxFrame(HeirloomsJournal.UpgradeLevelHelpBox)
 
 
     ----====####$$$$%%%%%$$$$####====----
