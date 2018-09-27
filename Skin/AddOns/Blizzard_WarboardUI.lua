@@ -14,12 +14,12 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
         local SOLO_OPTION_WIDTH = 500
         local textureKitColors = {
             ["alliance"] = {
-                title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
-                description = Color.Create(0.86, 0.47, 0.47), -- DD7878
-            },
-            ["horde"] = {
                 title = Color.Create(0.36, 0.36, 1), -- 5E5EFF
                 description = Color.Create(0.53, 0.53, 1), -- 8888FF
+            },
+            ["horde"] = {
+                title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
+                description = Color.Create(0.86, 0.47, 0.47), -- DD7878
             },
         }
 
