@@ -124,22 +124,18 @@ do -- Base API
                     }
                 end
                 local bd = frame._auroraBackdrop
-                bd.options = options
 
-                if options.bgFile then
-                    --[[ The tile size is fixed at the original texture size, so this option is DOA.
-                    if options.tileSize then
-                        bd.bg:SetSize(options.tileSize, options.tileSize)
-                    end]]
-                    if Base.IsTextureRegistered(options.bgFile) then
-                        Base.SetTexture(bd.bg, options.bgFile)
-                    else
-                        bd.bg:SetTexture(options.bgFile, "REPEAT", "REPEAT")
-                        bd.bg:SetHorizTile(options.tile)
-                        bd.bg:SetVertTile(options.tile)
-                    end
+                --[[ The tile size is fixed at the original texture size, so this option is DOA.
+                if options.tileSize then
+                    bd.bg:SetSize(options.tileSize, options.tileSize)
+                end]]
+                options.bgFile = options.bgFile or [[Interface\Buttons\WHITE8x8]]
+                if Base.IsTextureRegistered(options.bgFile) then
+                    Base.SetTexture(bd.bg, options.bgFile)
                 else
-                    bd.bg:SetColorTexture(0, 0, 1)
+                    bd.bg:SetTexture(options.bgFile, "REPEAT", "REPEAT")
+                    bd.bg:SetHorizTile(options.tile)
+                    bd.bg:SetVertTile(options.tile)
                 end
 
                 local insets = options.insets
@@ -152,30 +148,19 @@ do -- Base API
                 end
 
 
-                if options.edgeFile then
-                    for side, info in next, sides do
-                        bd[side]:SetTexture(options.edgeFile)
-                        if info.tileH then
-                            bd[side]:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
-                        else
-                            bd[side]:SetTexCoord(info.l, info.r, info.t, info.b)
-                        end
+                options.edgeFile = options.edgeFile or [[Interface\Buttons\WHITE8x8]]
+                for side, info in next, sides do
+                    bd[side]:SetTexture(options.edgeFile)
+                    if info.tileH then
+                        bd[side]:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
+                    else
+                        bd[side]:SetTexCoord(info.l, info.r, info.t, info.b)
                     end
+                end
 
-                    for corner, info in next, corners do
-                        bd[corner]:SetTexture(options.edgeFile)
-                        bd[corner]:SetTexCoord(info.l, info.r, info.t, info.b)
-                    end
-                else
-                    for side, info in next, sides do
-                        bd[side]:SetColorTexture(1, 0, 0)
-                        bd[side]:SetTexCoord(0, 1, 0, 1)
-                    end
-
-                    for corner, info in next, corners do
-                        bd[corner]:SetColorTexture(0, 1, 0)
-                        bd[corner]:SetTexCoord(0, 1, 0, 1)
-                    end
+                for corner, info in next, corners do
+                    bd[corner]:SetTexture(options.edgeFile)
+                    bd[corner]:SetTexCoord(info.l, info.r, info.t, info.b)
                 end
 
                 bd.l:SetPoint("TOPLEFT", bd.tl, "BOTTOMLEFT")
@@ -208,6 +193,8 @@ do -- Base API
                         end
                     end
                 end
+
+                bd.options = options
             else
                 if frame._auroraBackdrop then
                     local bd = frame._auroraBackdrop
@@ -227,10 +214,10 @@ do -- Base API
             if frame._auroraBackdrop then
                 local options = frame._auroraBackdrop.options
                 return {
-                    bgFile = options.bgFile or [[Interface\Buttons\WHITE8x8]],
+                    bgFile = options.bgFile,
                     tile = options.tile,
                     insets = options.insets,
-                    edgeFile = options.edgeFile or [[Interface\Buttons\WHITE8x8]],
+                    edgeFile = options.edgeFile,
                     edgeSize = options.edgeSize,
                 }
             end
@@ -247,11 +234,7 @@ do -- Base API
 
                 local tex = bd.bg:GetTexture()
                 if tex then
-                    if tex:find("Color%-") then
-                        bd.bg:SetColorTexture(red, green, blue, alpha)
-                    else
-                        bd.bg:SetVertexColor(red, green, blue, alpha)
-                    end
+                    bd.bg:SetVertexColor(red, green, blue, alpha)
                 else
                     private.debug("SetBackdropColor no texture", frame:GetName(), tex)
                 end
@@ -275,22 +258,12 @@ do -- Base API
 
                 local tex = bd.t:GetTexture()
                 if tex then
-                    if tex:find("Color%-") then
-                        for side, info in next, sides do
-                            bd[side]:SetColorTexture(red, green, blue, alpha)
-                        end
+                    for side, info in next, sides do
+                        bd[side]:SetVertexColor(red, green, blue, alpha)
+                    end
 
-                        for corner, info in next, corners do
-                            bd[corner]:SetColorTexture(red, green, blue, alpha)
-                        end
-                    else
-                        for side, info in next, sides do
-                            bd[side]:SetVertexColor(red, green, blue, alpha)
-                        end
-
-                        for corner, info in next, corners do
-                            bd[corner]:SetVertexColor(red, green, blue, alpha)
-                        end
+                    for corner, info in next, corners do
+                        bd[corner]:SetVertexColor(red, green, blue, alpha)
                     end
                 else
                     private.debug("SetBackdropBorderColor no texture", frame:GetName(), tex)
