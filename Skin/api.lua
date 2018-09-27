@@ -923,7 +923,7 @@ do -- Color API
     end
 
     function Color.Create(r, g, b, a)
-        local color = _G.Mixin({}, _G.ColorMixin, colorMeta)
+        local color = _G.CreateFromMixins(_G.ColorMixin, colorMeta)
         color:OnLoad(r, g, b, a)
         return color
     end
@@ -941,11 +941,11 @@ do -- Color API
     Color.grayLight = Color.Create(0.75, 0.75, 0.75)
     Color.white = Color.Create(1, 1, 1)
 
-    do -- CUSTOM_CLASS_COLORS
-        local classColors = {}
+    if not _G.CUSTOM_CLASS_COLORS then
+        local meta = {}
 
         local callbacks, numCallbacks = {}, 0
-        function classColors:RegisterCallback(method, handler)
+        function meta:RegisterCallback(method, handler)
             --print("CUSTOM_CLASS_COLORS:RegisterCallback", method, handler)
             assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :RegisterCallback (string or function expected)")
             if type(method) == "string" then
@@ -957,7 +957,7 @@ do -- Color API
             callbacks[method] = handler or true
             numCallbacks = numCallbacks + 1
         end
-        function classColors:UnregisterCallback(method, handler)
+        function meta:UnregisterCallback(method, handler)
             --print("CUSTOM_CLASS_COLORS:UnregisterCallback", method, handler)
             assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :UnregisterCallback (string or function expected)")
             if type(method) == "string" then
@@ -980,7 +980,7 @@ do -- Color API
             end
         end
 
-        function classColors:NotifyChanges()
+        function meta:NotifyChanges()
             --print("CUSTOM_CLASS_COLORS:NotifyChanges", private.classColorsHaveChanged)
             if not private.classColorsHaveChanged then
                 -- We can't determine if the colors have changed, dispatch just in case.
@@ -997,40 +997,39 @@ do -- Color API
         for token, class in next, _G.LOCALIZED_CLASS_NAMES_FEMALE do
             classTokens[class] = token
         end
-        function classColors:GetClassToken(className)
+        function meta:GetClassToken(className)
             return className and classTokens[className]
         end
 
         function private.classColorsReset(colors, noMeta)
             local colorTable = colors or _G.CUSTOM_CLASS_COLORS
             for class, color in next, _G.RAID_CLASS_COLORS do
-                if noMeta then
-                    if colorTable[class] then
+                if colorTable[class] then
+                    if noMeta then
                         colorTable[class].r = color.r
                         colorTable[class].g = color.g
                         colorTable[class].b = color.b
                         colorTable[class].colorStr = color.colorStr
                     else
-                        colorTable[class] = {
-                            r = color.r,
-                            g = color.g,
-                            b = color.b,
-                            colorStr = color.colorStr
-                        }
+                        colorTable[class]:SetRGB(color.r, color.g, color.b)
                     end
                 else
-                    if colorTable[class] and colorTable[class].SetRGB then
-                        colorTable[class]:SetRGB(color.r, color.g, color.b)
-                    else
-                        colorTable[class] = _G.setmetatable({}, {
-                            __index = Color.Create(color.r, color.g, color.b)
+                    colorTable[class] = {
+                        r = color.r,
+                        g = color.g,
+                        b = color.b,
+                        colorStr = color.colorStr
+                    }
+                    if not noMeta then
+                        colorTable[class] = _G.setmetatable(colorTable[class], {
+                            __index = _G.CreateFromMixins(_G.ColorMixin, colorMeta)
                         })
                     end
                 end
             end
 
             if colors then
-                classColors:NotifyChanges()
+                meta:NotifyChanges()
             else
                 DispatchCallbacks()
             end
@@ -1042,7 +1041,7 @@ do -- Color API
         _G.CUSTOM_CLASS_COLORS = {}
         private.classColorsReset()
 
-        _G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = classColors})
+        _G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = meta})
     end
 
 
