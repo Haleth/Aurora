@@ -915,6 +915,7 @@ do -- Color API
     Color.white = Color.Create(1, 1, 1)
 
     if not _G.CUSTOM_CLASS_COLORS then
+        -- https://github.com/phanx-wow/ClassColors/wiki
         local meta = {}
 
         local callbacks, numCallbacks = {}, 0
