@@ -46,6 +46,8 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
         local menuButton = _G[menuButtonName]
 
         local checkBox = menuButton._auroraCheckBox
+        if not checkBox then return end
+
         if not info.notCheckable then
             local check = checkBox.check
             local hasCustomIcon = false
