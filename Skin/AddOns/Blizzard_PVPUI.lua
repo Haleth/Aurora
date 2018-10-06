@@ -137,7 +137,11 @@ function private.AddOns.Blizzard_PVPUI()
 
     F.CreateBD(_G.ConquestTooltip)
     local ConquestFrameButton_OnEnter = function(self)
-        _G.ConquestTooltip:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, 0)
+        if private.isPatch then
+            _G.ConquestTooltip:SetPoint("BOTTOMLEFT", self, "TOPRIGHT", 1, 0)
+        else
+            _G.ConquestTooltip:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, 0)
+        end
     end
 
     ConquestFrame.Arena2v2:HookScript("OnEnter", ConquestFrameButton_OnEnter)

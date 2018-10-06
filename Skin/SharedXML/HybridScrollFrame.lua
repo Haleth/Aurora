@@ -88,8 +88,12 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
     end
     -- HybridScrollFrameTemplate -- Has no visible parts
     function Skin.BasicHybridScrollFrameTemplate(ScrollFrame)
-        local name = ScrollFrame:GetName()
-        Skin.HybridScrollBarTemplate(_G[name.."ScrollBar"])
+        if private.isPatch then
+            Skin.HybridScrollBarTemplate(ScrollFrame.ScrollBar)
+        else
+            local name = ScrollFrame:GetName()
+            Skin.HybridScrollBarTemplate(_G[name.."ScrollBar"])
+        end
     end
     function Skin.MinimalHybridScrollFrameTemplate(ScrollFrame)
         local name = ScrollFrame:GetName()

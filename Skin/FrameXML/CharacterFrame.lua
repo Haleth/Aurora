@@ -27,25 +27,36 @@ do --[[ FrameXML\CharacterFrame.xml ]]
 end
 
 function private.FrameXML.CharacterFrame()
-    _G.hooksecurefunc(_G.CharacterStatsPane.statsFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    local CharacterFrame = _G.CharacterFrame
+    Skin.ButtonFrameTemplate(CharacterFrame)
 
-    Skin.ButtonFrameTemplate(_G.CharacterFrame)
-
-    _G.CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, "TOPRIGHT", 0, 0)
-    _G.CharacterFrameInset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
-    _G.CharacterFrameInset:SetPoint("BOTTOMRIGHT", _G.CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
+    if private.isPatch then
+        CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
+        CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
+        CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
+    else
+        CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, "TOPRIGHT", 0, 0)
+        _G.CharacterFrameInset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
+        _G.CharacterFrameInset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
+    end
 
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab1)
-    _G.CharacterFrameTab1:SetPoint("TOPLEFT", _G.CharacterFrame, "BOTTOMLEFT", 20, -1)
+    _G.CharacterFrameTab1:SetPoint("TOPLEFT", CharacterFrame, "BOTTOMLEFT", 20, -1)
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab2)
     _G.CharacterFrameTab2:SetPoint("TOPLEFT", _G.CharacterFrameTab1, "TOPRIGHT", 1, 0)
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab3)
     _G.CharacterFrameTab3:SetPoint("TOPLEFT", _G.CharacterFrameTab2, "TOPRIGHT", 1, 0)
 
-    Skin.InsetFrameTemplate(_G.CharacterFrameInsetRight)
-    _G.CharacterFrameInsetRight:SetPoint("TOPLEFT", _G.CharacterFrameInset, "TOPRIGHT", 1, -20)
+    if private.isPatch then
+        Skin.InsetFrameTemplate(CharacterFrame.InsetRight)
+        CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)
+    else
+        Skin.InsetFrameTemplate(_G.CharacterFrameInsetRight)
+        _G.CharacterFrameInsetRight:SetPoint("TOPLEFT", _G.CharacterFrameInset, "TOPRIGHT", 1, -20)
+    end
 
     local CharacterStatsPane = _G.CharacterStatsPane
+    _G.hooksecurefunc(_G.CharacterStatsPane.statsFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 
     local ClassBackground = CharacterStatsPane.ClassBackground
     local atlas = "legionmission-landingpage-background-"..private.charClass.token

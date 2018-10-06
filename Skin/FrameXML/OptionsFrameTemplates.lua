@@ -26,17 +26,20 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
     end
     function Skin.OptionsFrameListTemplate(Frame)
         local name = Frame:GetName()
-        _G[name.."TopLeft"]:Hide()
-        _G[name.."BottomLeft"]:Hide()
-        _G[name.."BottomRight"]:Hide()
-        _G[name.."TopRight"]:Hide()
-        _G[name.."Left"]:Hide()
-        _G[name.."Right"]:Hide()
-        _G[name.."Bottom"]:Hide()
-        _G[name.."Top"]:Hide()
-
         Base.SetBackdrop(Frame, Color.frame)
-        Base.SetBackdrop(_G[name.."List"], Color.frame)
+
+        if not private.isPatch then
+            _G[name.."TopLeft"]:Hide()
+            _G[name.."BottomLeft"]:Hide()
+            _G[name.."BottomRight"]:Hide()
+            _G[name.."TopRight"]:Hide()
+            _G[name.."Left"]:Hide()
+            _G[name.."Right"]:Hide()
+            _G[name.."Bottom"]:Hide()
+            _G[name.."Top"]:Hide()
+            Base.SetBackdrop(_G[name.."List"], Color.frame)
+        end
+
         Skin.UIPanelScrollBarTemplate(_G[name.."ListScrollBar"])
     end
     function Skin.OptionsListButtonTemplate(Button)

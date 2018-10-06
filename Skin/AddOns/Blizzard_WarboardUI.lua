@@ -93,16 +93,20 @@ function private.AddOns.Blizzard_WarboardUI()
     Skin.HorizontalLayoutFrame(WarboardQuestChoiceFrame)
     Util.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
 
-    _G.WarboardQuestChoiceFrameTopRightCorner:Hide()
-    WarboardQuestChoiceFrame.topLeftCorner:Hide()
-    WarboardQuestChoiceFrame.topBorderBar:Hide()
-    _G.WarboardQuestChoiceFrameBotRightCorner:Hide()
-    _G.WarboardQuestChoiceFrameBotLeftCorner:Hide()
-    _G.WarboardQuestChoiceFrameBottomBorder:Hide()
-    WarboardQuestChoiceFrame.leftBorderBar:Hide()
-    _G.WarboardQuestChoiceFrameRightBorder:Hide()
+    if private.isPatch then
+        Skin.NineSlicePanelTemplate(WarboardQuestChoiceFrame.NineSlice)
+    else
+        _G.WarboardQuestChoiceFrameTopRightCorner:Hide()
+        WarboardQuestChoiceFrame.topLeftCorner:Hide()
+        WarboardQuestChoiceFrame.topBorderBar:Hide()
+        _G.WarboardQuestChoiceFrameBotRightCorner:Hide()
+        _G.WarboardQuestChoiceFrameBotLeftCorner:Hide()
+        _G.WarboardQuestChoiceFrameBottomBorder:Hide()
+        WarboardQuestChoiceFrame.leftBorderBar:Hide()
+        _G.WarboardQuestChoiceFrameRightBorder:Hide()
+        Base.SetBackdrop(WarboardQuestChoiceFrame)
+    end
 
-    Base.SetBackdrop(WarboardQuestChoiceFrame)
     WarboardQuestChoiceFrame.BorderFrame:Hide()
     for _, option in next, WarboardQuestChoiceFrame.Options do
         Skin.WarboardQuestChoiceOptionTemplate(option)

@@ -5,9 +5,11 @@ local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.ScenarioFinder()
     _G.ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
-    _G.ScenarioFinderFrame.TopTileStreaks:Hide()
-    _G.ScenarioFinderFrameBtnCornerRight:Hide()
-    _G.ScenarioFinderFrameButtonBottomBorder:Hide()
+    if not private.isPatch then
+        _G.ScenarioFinderFrame.TopTileStreaks:Hide()
+        _G.ScenarioFinderFrameBtnCornerRight:Hide()
+        _G.ScenarioFinderFrameButtonBottomBorder:Hide()
+    end
     _G.ScenarioQueueFrameRandomScrollFrameScrollBackground:Hide()
     _G.ScenarioQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
     _G.ScenarioQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()

@@ -23,6 +23,7 @@ local FrameXML = {
     "SharedXML.TransformTree_TransformTree",
     "SharedXML.KeyCommand",
     "SharedXML.CustomBindingButtonMixin",
+    "SharedXML.PixelUtil",
     "MixinUtil",
 
     -- intrinsics
@@ -37,7 +38,6 @@ local FrameXML = {
     "FlowContainer",
     "FrameLocks",
     "PlayerMovementFrameFader",
-
 
     "SharedXML.SoundKitConstants",
     "Constants",
@@ -61,14 +61,19 @@ local FrameXML = {
     "WorldFrame",
     "UIParent",
     "QuestUtils",
+    "AchievementUtil",
     "MapUtil",
     "AzeriteUtil",
     "VehicleUtil",
+    "AuraUtil",
+    "CalendarUtil",
+    "CommunitiesUtil",
     "CurrencyContainer",
     -- IME needs to be loaded after UIParent
     "SharedXML.IME",
     "MoneyFrame",
     "MoneyInputFrame",
+    "SharedXML.PanelThemes",
     "SharedXML.SecureUIPanelTemplates",
     "SharedXML.SharedUIPanelTemplates",
     "SharedXML.SharedBasicControls",
@@ -247,7 +252,6 @@ local FrameXML = {
     "ArtifactToasts",
     "AzeriteItemToasts",
     "AzeriteIslandsToast",
-    "IslandsQueueFrame",
     "SharedXML.ModelPreviewFrame",
     "SplashFrame",
     "QuestChoiceFrameMixin",

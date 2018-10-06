@@ -402,14 +402,22 @@ function private.AddOns.Blizzard_TalentUI()
     Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot3)
 
     PvpTalentFrame.TalentList:SetPoint("BOTTOMLEFT", _G.PlayerTalentFrame, "BOTTOMRIGHT", 5, 26)
-    Skin.ButtonFrameTemplate(PvpTalentFrame.TalentList)
-    PvpTalentFrame.TalentList.MyTopLeftCorner:Hide()
-    PvpTalentFrame.TalentList.MyTopRightCorner:Hide()
-    PvpTalentFrame.TalentList.MyTopBorder:Hide()
+    if private.isPatch then
+        Skin.SimplePanelTemplate(PvpTalentFrame.TalentList)
+    else
+        Skin.ButtonFrameTemplate(PvpTalentFrame.TalentList)
+        PvpTalentFrame.TalentList.MyTopLeftCorner:Hide()
+        PvpTalentFrame.TalentList.MyTopRightCorner:Hide()
+        PvpTalentFrame.TalentList.MyTopBorder:Hide()
+    end
 
-    PvpTalentFrame.TalentList.ScrollFrame:SetPoint("TOPLEFT", 5, -5)
-    PvpTalentFrame.TalentList.ScrollFrame:SetPoint("BOTTOMRIGHT", -21, 32)
-    Skin.HybridScrollBarTemplate(PvpTalentFrame.TalentList.ScrollFrame.ScrollBar)
+    if private.isPatch then
+        Skin.BasicHybridScrollFrameTemplate(PvpTalentFrame.TalentList.ScrollFrame)
+    else
+        PvpTalentFrame.TalentList.ScrollFrame:SetPoint("TOPLEFT", 5, -5)
+        PvpTalentFrame.TalentList.ScrollFrame:SetPoint("BOTTOMRIGHT", -21, 32)
+        Skin.HybridScrollBarTemplate(PvpTalentFrame.TalentList.ScrollFrame.ScrollBar)
+    end
     Skin.MagicButtonTemplate(select(4, PvpTalentFrame.TalentList:GetChildren()))
 
     PvpTalentFrame.OrbModelScene:SetAlpha(0)

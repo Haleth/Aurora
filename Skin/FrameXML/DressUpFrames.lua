@@ -39,7 +39,9 @@ function private.FrameXML.DressUpFrames()
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
     DressUpFrame.MaxMinButtonFrame:ClearAllPoints()
     DressUpFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", DressUpFrame.CloseButton, "TOPLEFT", -1, 0)
-    DressUpFrame.MaxMinButtonFrame:GetRegions():Hide()
+    if not private.isPatch then
+        DressUpFrame.MaxMinButtonFrame:GetRegions():Hide()
+    end
 
     F.Reskin(_G.DressUpFrameCancelButton)
     F.Reskin(_G.DressUpFrameResetButton)

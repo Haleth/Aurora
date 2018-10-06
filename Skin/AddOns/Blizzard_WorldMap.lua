@@ -111,7 +111,9 @@ function private.AddOns.Blizzard_WorldMap()
     Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
     WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
 
-    WorldMapFrame.BorderFrame.ButtonFrameEdge:Hide()
+    if not private.isPatch then
+        WorldMapFrame.BorderFrame.ButtonFrameEdge:Hide()
+    end
     WorldMapFrame.BorderFrame.InsetBorderTop:Hide()
     Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
     WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)

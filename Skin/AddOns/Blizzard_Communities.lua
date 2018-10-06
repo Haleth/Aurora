@@ -223,6 +223,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Base.CropIcon(CheckButton.Icon, CheckButton)
             Base.CropIcon(CheckButton:GetHighlightTexture())
             Base.CropIcon(CheckButton:GetCheckedTexture())
+            if private.isPatch then
+                CheckButton.IconOverlay:Hide()
+            end
         end
     end
     do --[[ CommunitiesSettings ]]
@@ -520,6 +523,10 @@ function private.AddOns.Blizzard_Communities()
     Skin.CommunitiesTicketManagerScrollFrameTemplate(CommunitiesTicketManagerDialog.InviteManager)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.Close)
 
+    ----====####$$$$%%%%%$$$$####====----
+    --       CommunitiesCalendar       --
+    ----====####$$$$%%%%%$$$$####====----
+
     ----====####$$$$%%%%$$$$####====----
     --          GuildRewards          --
     ----====####$$$$%%%%$$$$####====----
@@ -540,6 +547,10 @@ function private.AddOns.Blizzard_Communities()
     --           GuildRoster           --
     ----====####$$$$%%%%%$$$$####====----
 
+    ----====####$$$$%%%%%$$$$####====----
+    --         GuildNameChange         --
+    ----====####$$$$%%%%%$$$$####====----
+
     ----====####$$$$%%%%$$$$####====----
     --        CommunitiesFrame        --
     ----====####$$$$%%%%$$$$####====----
@@ -548,7 +559,9 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesFrame.PortraitOverlay:SetAlpha(0)
 
     Skin.MaximizeMinimizeButtonFrameTemplate(CommunitiesFrame.MaximizeMinimizeFrame)
-    CommunitiesFrame.MaximizeMinimizeFrame:GetRegions():Hide()
+    if not private.isPatch then
+        CommunitiesFrame.MaximizeMinimizeFrame:GetRegions():Hide()
+    end
     CommunitiesFrame.MaximizeMinimizeFrame:SetPoint("RIGHT", CommunitiesFrame.CloseButton, "LEFT", -5, 0)
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
 
@@ -566,6 +579,9 @@ function private.AddOns.Blizzard_Communities()
     Skin.StreamDropDownMenuTemplate(CommunitiesFrame.StreamDropDownMenu)
     Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropDownMenu)
     Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropDownMenu)
+    if private.isPatch then
+        Skin.CommunitiesCalendarButtonTemplate(CommunitiesFrame.CommunitiesCalendarButton)
+    end
     Skin.CommunitiesMemberListFrameTemplate(CommunitiesFrame.MemberList)
     Skin.CommunitiesChatTemplate(CommunitiesFrame.Chat)
     Skin.CommunitiesChatEditBoxTemplate(CommunitiesFrame.ChatEditBox)

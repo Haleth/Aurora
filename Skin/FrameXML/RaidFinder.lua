@@ -5,8 +5,10 @@ local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.RaidFinder()
     _G.RaidFinderFrameRoleBackground:Hide()
-    _G.RaidFinderFrameBtnCornerRight:Hide()
-    _G.RaidFinderFrameButtonBottomBorder:Hide()
+    if not private.isPatch then
+        _G.RaidFinderFrameBtnCornerRight:Hide()
+        _G.RaidFinderFrameButtonBottomBorder:Hide()
+    end
 
     _G.RaidFinderFrameRoleInset:DisableDrawLayer("BORDER")
     _G.RaidFinderFrameRoleInsetBg:Hide()

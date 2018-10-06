@@ -14,7 +14,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
         Scale.RawSetWidth(self, self.maxWidth + Scale.Value(25))
     end
 
-    local skinnedLevels, skinnedButtons = 2, 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
+    local skinnedLevels, skinnedButtons = 2, private.isPatch and 1 or 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
     function Hook.UIDropDownMenu_CreateFrames(level, index)
         while level > skinnedLevels do
             -- New list frames have been created, skin them!
@@ -23,7 +23,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             Skin.UIDropDownListTemplate(listFrameName)
             for i = _G.UIDROPDOWNMENU_MINBUTTONS + 1, skinnedButtons do
                 -- If skinnedButtons is more than the default, we need to skin those too for the new list
-                Skin.UIDropDownMenuButtonTemplate(listFrameName, listFrameName.."Button"..i)
+                Skin.UIDropDownMenuButtonTemplate(_G[listFrameName.."Button"..i])
             end
         end
 
@@ -31,7 +31,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             skinnedButtons = skinnedButtons + 1
             for i = 1, skinnedLevels do
                 local listFrameName = "DropDownList"..i
-                Skin.UIDropDownMenuButtonTemplate(listFrameName, listFrameName.."Button"..skinnedButtons)
+                Skin.UIDropDownMenuButtonTemplate(_G[listFrameName.."Button"..skinnedButtons])
             end
         end
     end
@@ -116,42 +116,46 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
 end
 
 do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
-    function Skin.UIDropDownMenuButtonTemplate(listFrameName, menuButtonName)
-        local listFrame = _G[listFrameName]
-        local menuButton = _G[menuButtonName]
+    function Skin.UIDropDownMenuButtonTemplate(Button)
+        local name = Button:GetName()
 
-        local highlight = _G[menuButtonName.."Highlight"]
+        local highlight = _G[name.."Highlight"]
         highlight:ClearAllPoints()
-        highlight:SetPoint("LEFT", listFrame, 1, 0)
-        highlight:SetPoint("RIGHT", listFrame, -1, 0)
+        highlight:SetPoint("LEFT", 1, 0)
+        highlight:SetPoint("RIGHT", -1, 0)
         highlight:SetPoint("TOP", 0, 0)
         highlight:SetPoint("BOTTOM", 0, 0)
         highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
 
-        local checkBox = _G.CreateFrame("Frame", nil, menuButton)
-        checkBox:SetFrameLevel(menuButton:GetFrameLevel())
+        local checkBox = _G.CreateFrame("Frame", nil, Button)
+        checkBox:SetFrameLevel(Button:GetFrameLevel())
         Base.SetBackdrop(checkBox, Color.button)
-        menuButton._auroraCheckBox = checkBox
+        Button._auroraCheckBox = checkBox
 
-        local check = _G[menuButtonName.."Check"]
+        local check = _G[name.."Check"]
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
         check:ClearAllPoints()
         check:SetPoint("CENTER", checkBox)
         checkBox.check = check
 
-        local arrow = _G[menuButtonName.."ExpandArrow"]
+        local arrow = _G[name.."ExpandArrow"]
         Base.SetTexture(arrow:GetNormalTexture(), "arrowRight")
         arrow:SetSize(7, 8)
         arrow:SetPoint("RIGHT", -2, 0)
 
-        menuButton:HookScript("OnClick", Hook.UIDropDownMenuButton_OnClick)
+        Button:HookScript("OnClick", Hook.UIDropDownMenuButton_OnClick)
     end
-    function Skin.UIDropDownListTemplate(listFrameName)
-        Base.SetBackdrop(_G[listFrameName.."Backdrop"])
-        Base.SetBackdrop(_G[listFrameName.."MenuBackdrop"])
-        for i = 1, _G.UIDROPDOWNMENU_MINBUTTONS do
-            Skin.UIDropDownMenuButtonTemplate(listFrameName, listFrameName.."Button"..i)
+    function Skin.UIDropDownListTemplate(Button)
+        local name = Button:GetName()
+        Base.SetBackdrop(_G[name.."Backdrop"])
+        Base.SetBackdrop(_G[name.."MenuBackdrop"])
+        if private.isPatch then
+            Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
+        else
+            for i = 1, _G.UIDROPDOWNMENU_MINBUTTONS do
+                Skin.UIDropDownMenuButtonTemplate(_G[name.."Button"..i])
+            end
         end
     end
     function Skin.UIDropDownMenuTemplate(Frame)
@@ -212,6 +216,6 @@ function private.FrameXML.UIDropDownMenu()
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)
 
-    Skin.UIDropDownListTemplate("DropDownList1")
-    Skin.UIDropDownListTemplate("DropDownList2")
+    Skin.UIDropDownListTemplate(_G.DropDownList1)
+    Skin.UIDropDownListTemplate(_G.DropDownList2)
 end

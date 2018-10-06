@@ -155,8 +155,8 @@ function private.FrameXML.ReputationFrame()
     _G.ReputationFrameStandingLabel:ClearAllPoints()
     _G.ReputationFrameStandingLabel:SetPoint("TOPRIGHT", -75, -32)
 
-    _G.ReputationListScrollFrame:SetPoint("TOPLEFT", _G.CharacterFrameInset, 4, -4)
-    _G.ReputationListScrollFrame:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, -23, 4)
+    _G.ReputationListScrollFrame:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -4)
+    _G.ReputationListScrollFrame:SetPoint("BOTTOMRIGHT", _G.CharacterFrame.Inset, -23, 4)
 
     Skin.FauxScrollFrameTemplate(_G.ReputationListScrollFrame)
     local top, bottom = _G.ReputationListScrollFrame:GetRegions()

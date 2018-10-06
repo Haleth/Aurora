@@ -74,7 +74,11 @@ function private.AddOns.Blizzard_TokenUI()
     _G.hooksecurefunc(_G.TokenFrameContainer, "update", Hook.TokenFrame_Update)
 
 
-    Skin.HybridScrollBarTemplate(_G.TokenFrameContainer.scrollBar)
+    if private.isPatch then
+        Skin.HybridScrollBarTemplate(_G.TokenFrame.Container.scrollBar)
+    else
+        Skin.HybridScrollBarTemplate(_G.TokenFrameContainer.scrollBar)
+    end
 
 
     Base.SetBackdrop(_G.TokenFramePopup)

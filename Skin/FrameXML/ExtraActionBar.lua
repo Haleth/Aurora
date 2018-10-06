@@ -18,7 +18,9 @@ do --[[ FrameXML\ExtraActionBar.xml ]]
         CheckButton.HotKey:SetPoint("TOPLEFT", 5, -5)
         CheckButton.Count:SetPoint("TOPLEFT", -5, 5)
 
-        CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
+        if not private.isPatch then
+            CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
+        end
         CheckButton.style:Hide()
 
         CheckButton.cooldown:SetPoint("TOPLEFT")
