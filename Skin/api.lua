@@ -531,7 +531,6 @@ do -- Base API
             return not not snapshots[textureName]
         end
 
-        local useSnapshots = true
         function Base.SetTexture(texture, textureName, useTextureSize)
             _G.assert(type(texture) == "table" and texture.GetObjectType, "texture widget expected, got "..type(texture))
             _G.assert(texture:GetObjectType() == "Texture", "texture widget expected, got "..texture:GetObjectType())
@@ -539,45 +538,43 @@ do -- Base API
             local snapshot = snapshots[textureName]
             _G.assert(snapshot, textureName .. " is not a registered texture.")
 
-            if useSnapshots then
-                if not snapshot.id or not SnapshotFrame:IsSnapshotValid(snapshot.id) then
-                    snapshot.create(textureFrame)
-                    local width, height = textureFrame:GetSize()
-
-                    SnapshotFrame:Show()
-                    local id = SnapshotFrame:TakeSnapshot()
-                    SnapshotFrame:Hide()
-                    textureFrame:ReleaseAll()
-
-                    local snapshotWidth, snapshotHeight = SnapshotFrame:GetSize()
-
-                    snapshot.id = id
-                    snapshot.width = width
-                    snapshot.height = height
-                    snapshot.x = width / snapshotWidth
-                    snapshot.y = height / snapshotHeight
-
-                    if not snapshot.id then
-                        private.debug("No snapshots")
-                        useSnapshots = false
-                        return snapshot.create(texture:GetParent(), texture)
-                    end
-                end
+            if snapshot.create then
+                snapshot.create(texture:GetParent(), texture)
+            else
                 if useTextureSize then
                     texture:SetSize(snapshot.width, snapshot.height)
                 end
                 SnapshotFrame:ApplySnapshot(texture, snapshot.id)
                 texture:SetTexCoord(0, snapshot.x, 0, snapshot.y)
-            else
-                snapshot.create(texture:GetParent(), texture)
             end
         end
 
         function Base.RegisterTexture(textureName, createFunc)
-            snapshots[textureName] = {
-                create = createFunc
-            }
+            _G.assert(not snapshots[textureName], textureName .. " is already registered.")
+            private.debug("RegisterTexture", textureName)
             SnapshotFrame:SetMaxSnapshots(SnapshotFrame:GetMaxSnapshots() + 1)
+
+            createFunc(textureFrame)
+            local width, height = textureFrame:GetSize()
+
+            SnapshotFrame:Show()
+            local id = SnapshotFrame:TakeSnapshot()
+            SnapshotFrame:Hide()
+            textureFrame:ReleaseAll()
+
+            local snapshotWidth, snapshotHeight = SnapshotFrame:GetSize()
+            snapshots[textureName] = {
+                id = id,
+                width = width,
+                height = height,
+                x = width / snapshotWidth,
+                y = height / snapshotHeight,
+            }
+
+            if not id then
+                private.debug(textureName, "failed")
+                snapshots[textureName].create = createFunc
+            end
         end
     end
 end

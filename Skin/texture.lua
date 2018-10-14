@@ -106,25 +106,25 @@ do -- gradients
     local function SetGradientMinMax(frame, texture, direction)
         if frame.SetStatusBarColor then
             local red, green, blue = frame:GetStatusBarColor()
-            texture:SetGradient("VERTICAL", red * min, green * min, blue * min, red * max, green * max, blue * max)
+            texture:SetGradient(direction, red * min, green * min, blue * min, red * max, green * max, blue * max)
 
             _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
-                texture:SetGradient("VERTICAL", r * min, g * min, b * min, r * max, g * max, b * max)
+                texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
             end)
         else
-            texture:SetGradient("VERTICAL", min, min, min, max, max, max)
+            texture:SetGradient(direction, min, min, min, max, max, max)
         end
     end
     local function SetGradientMaxMin(frame, texture, direction)
         if frame.SetStatusBarColor then
             local red, green, blue = frame:GetStatusBarColor()
-            texture:SetGradient("VERTICAL", red * max, green * max, blue * max, red * min, green * min, blue * min)
+            texture:SetGradient(direction, red * max, green * max, blue * max, red * min, green * min, blue * min)
 
             _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
-                texture:SetGradient("VERTICAL", r * max, g * max, b * max, r * min, g * min, b * min)
+                texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
             end)
         else
-            texture:SetGradient("VERTICAL", max, max, max, min, min, min)
+            texture:SetGradient(direction, max, max, max, min, min, min)
         end
     end
 
