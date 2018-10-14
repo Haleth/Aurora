@@ -46,30 +46,32 @@ end
 
 function private.nop() end
 local debug do
-    if _G.LibStub then
-        local debugger
-        local LTD = _G.LibStub("LibTextDump-1.0", true)
-        function debug(...)
-            if not debugger then
-                if LTD then
-                    debugger = LTD:New(ADDON_NAME .." Debug Output", 640, 480)
-                    private.debugger = debugger
-                else
-                    return
+    if not private.debug then
+        if _G.LibStub then
+            local debugger
+            local LTD = _G.LibStub("LibTextDump-1.0", true)
+            function debug(...)
+                if not debugger then
+                    if LTD then
+                        debugger = LTD:New(ADDON_NAME .." Debug Output", 640, 480)
+                        private.debugger = debugger
+                    else
+                        return
+                    end
                 end
+                local time = _G.date("%H:%M:%S")
+                local text = ("[%s]"):format(time)
+                for i = 1, select("#", ...) do
+                    local arg = select(i, ...)
+                    text = text .. "     " .. tostring(arg)
+                end
+                debugger:AddLine(text)
             end
-            local time = _G.date("%H:%M:%S")
-            local text = ("[%s]"):format(time)
-            for i = 1, select("#", ...) do
-                local arg = select(i, ...)
-                text = text .. "     " .. tostring(arg)
-            end
-            debugger:AddLine(text)
+        else
+            debug = private.nop
         end
-    else
-        debug = private.nop
+        private.debug = debug
     end
-    private.debug = debug
 end
 
 local Aurora = {
