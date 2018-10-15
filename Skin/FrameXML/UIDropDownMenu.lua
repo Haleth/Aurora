@@ -117,12 +117,13 @@ end
 
 do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
     function Skin.UIDropDownMenuButtonTemplate(Button)
+        local listFrame = Button:GetParent()
         local name = Button:GetName()
 
         local highlight = _G[name.."Highlight"]
         highlight:ClearAllPoints()
-        highlight:SetPoint("LEFT", 1, 0)
-        highlight:SetPoint("RIGHT", -1, 0)
+        highlight:SetPoint("LEFT", listFrame, 1, 0)
+        highlight:SetPoint("RIGHT", listFrame, -1, 0)
         highlight:SetPoint("TOP", 0, 0)
         highlight:SetPoint("BOTTOM", 0, 0)
         highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
