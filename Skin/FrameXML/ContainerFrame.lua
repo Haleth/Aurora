@@ -59,7 +59,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Skin.ItemButtonTemplate(Button)
         local bd = Button._auroraIconBorder:GetBackdropTexture("bg")
         bd:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
-        bd:SetAlpha(0.75)
+        bd:SetVertexColor(1, 1, 1, 0.75)
         Base.CropIcon(bd)
         Base.CropIcon(_G[name.."IconQuestTexture"])
         Base.CropIcon(Button.NewItemTexture)
