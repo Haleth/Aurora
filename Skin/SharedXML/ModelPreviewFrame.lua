@@ -1,25 +1,38 @@
 local _, private = ...
 
--- [[ Core ]]
-local F = _G.unpack(private.Aurora)
+--[[ Lua Globals ]]
+-- luacheck: globals select
+
+--[[ Core ]]
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+
+--[[ do FrameXML\ModelPreviewFrame.lua
+end ]]
+
+--[[ do FrameXML\ModelPreviewFrame.xml
+end ]]
 
 function private.SharedXML.ModelPreviewFrame()
     local ModelPreviewFrame = _G.ModelPreviewFrame
-    local Display = ModelPreviewFrame.Display
-    local ModelScene = Display.ModelScene
 
-    Display.YesMountsTex:Hide()
-    Display.ShadowOverlay:Hide()
+    --BlizzWTF: The close button added in this frame interferes with the one created in the template.
+    local closeButton = ModelPreviewFrame.CloseButton
+    if private.isPatch then
+        ModelPreviewFrame.CloseButton = select(2, ModelPreviewFrame:GetChildren())
+    else
+        ModelPreviewFrame.CloseButton = select(1, ModelPreviewFrame:GetChildren())
+    end
+    Skin.ButtonFrameTemplate(ModelPreviewFrame)
+    Skin.MagicButtonTemplate(closeButton)
+    closeButton:SetPoint("BOTTOMRIGHT", -5, 5)
 
-    F.ReskinPortraitFrame(ModelPreviewFrame, true)
-    F.Reskin(ModelPreviewFrame.CloseButton)
-    F.ReskinArrow(ModelScene.RotateLeftButton, "Left")
-    F.ReskinArrow(ModelScene.RotateRightButton, "Right")
+    ModelPreviewFrame.Display.YesMountsTex:Hide()
+    ModelPreviewFrame.Display.ShadowOverlay:Hide()
 
-    local bg = F.CreateBDFrame(ModelScene, .25)
-    bg:SetPoint("TOPLEFT", -1, 0)
-    bg:SetPoint("BOTTOMRIGHT", 2, -2)
-
-    ModelScene.RotateLeftButton:SetPoint("TOPRIGHT", ModelScene, "BOTTOM", -5, -10)
-    ModelScene.RotateRightButton:SetPoint("TOPLEFT", ModelScene, "BOTTOM", 5, -10)
+    local ModelScene = ModelPreviewFrame.Display.ModelScene
+    Skin.RotateOrbitCameraLeftButtonTemplate(ModelScene.RotateLeftButton)
+    Skin.RotateOrbitCameraRightButtonTemplate(ModelScene.RotateRightButton)
+    Skin.NavButtonPrevious(ModelScene.CarouselLeftButton)
+    Skin.NavButtonNext(ModelScene.CarouselRightButton)
 end
