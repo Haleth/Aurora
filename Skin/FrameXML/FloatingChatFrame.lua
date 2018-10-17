@@ -51,7 +51,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
             borderLayer = "BACKGROUND",
             borderSublevel = -7,
         })
-        Base.SetBackdrop(Frame)
+        Base.SetBackdrop(Frame, Color.frame, 0.3)
     end
     function Skin.ChatTabArtTemplate(Button)
         Button.leftTexture:SetAlpha(0)
