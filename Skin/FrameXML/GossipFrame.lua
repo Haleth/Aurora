@@ -77,7 +77,11 @@ function private.FrameXML.GossipFrame()
     Skin.ButtonFrameTemplate(_G.GossipFrame)
 
     -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-    _G.select(19, _G.GossipFrame:GetRegions()):Hide() -- GossipFrameBg
+    if private.isPatch then
+        _G.select(7, _G.GossipFrame:GetRegions()):Hide() -- GossipFrameBg
+    else
+        _G.select(19, _G.GossipFrame:GetRegions()):Hide() -- GossipFrameBg
+    end
 
     -- BlizzWTF: This should use the title text included in the template
     _G.GossipFrameNpcNameText:SetAllPoints(_G.GossipFrame.TitleText)

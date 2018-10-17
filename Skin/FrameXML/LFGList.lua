@@ -7,7 +7,9 @@ local select, pairs = _G.select, _G.pairs
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Skin = Aurora.Skin
 
 function private.FrameXML.LFGList()
     local r, g, b = C.r, C.g, C.b
@@ -18,9 +20,8 @@ function private.FrameXML.LFGList()
 
     local CategorySelection = LFGListFrame.CategorySelection
 
-    CategorySelection.Inset.Bg:Hide()
-    select(10, CategorySelection.Inset:GetRegions()):Hide()
-    CategorySelection.Inset:DisableDrawLayer("BORDER")
+    Skin.InsetFrameTemplate(CategorySelection.Inset)
+    CategorySelection.Inset.CustomBG:Hide()
 
     F.Reskin(CategorySelection.FindGroupButton)
     F.Reskin(CategorySelection.StartGroupButton)
@@ -171,9 +172,8 @@ function private.FrameXML.LFGList()
 
     local EntryCreation = LFGListFrame.EntryCreation
 
-    EntryCreation.Inset.Bg:Hide()
-    select(10, EntryCreation.Inset:GetRegions()):Hide()
-    EntryCreation.Inset:DisableDrawLayer("BORDER")
+    Skin.InsetFrameTemplate(EntryCreation.Inset)
+    EntryCreation.Inset.CustomBG:Hide()
 
     for i = 1, 9 do
         select(i, EntryCreation.Description:GetRegions()):Hide()

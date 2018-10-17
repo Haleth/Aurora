@@ -221,7 +221,11 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.MailFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    _G.select(18, _G.MailFrame:GetRegions()):Hide()
+    if private.isPatch then
+        _G.select(6, _G.MailFrame:GetRegions()):Hide()
+    else
+        _G.select(18, _G.MailFrame:GetRegions()):Hide()
+    end
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)
@@ -353,7 +357,11 @@ function private.FrameXML.MailFrame()
     _G.OpenMailTitleText:ClearAllPoints()
     _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
     _G.OpenMailHorizontalBarLeft:Hide()
-    select(25, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    if private.isPatch then
+        select(13, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    else
+        select(25, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    end
 
     Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 

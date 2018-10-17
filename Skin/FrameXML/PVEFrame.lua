@@ -4,14 +4,15 @@ local _, private = ...
 local hooksecurefunc = _G.hooksecurefunc
 
 -- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F, C = _G.unpack(Aurora)
+local Skin = Aurora.Skin
 
 function private.FrameXML.PVEFrame()
     local r, g, b = C.r, C.g, C.b
 
     _G.PVEFrame:DisableDrawLayer("ARTWORK")
-    _G.PVEFrameLeftInset:DisableDrawLayer("BORDER")
-    _G.PVEFrameLeftInsetBg:Hide()
+    Skin.InsetFrameTemplate(_G.PVEFrameLeftInset)
     _G.PVEFrameBlueBg:Hide()
     _G.PVEFrameBlueBg.Show = F.dummy
     _G.PVEFrameTopFiligree:Hide()

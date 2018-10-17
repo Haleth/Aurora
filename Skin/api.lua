@@ -95,15 +95,11 @@ do -- Base API
             if options then
                 if not frame._auroraBackdrop then
                     if bgTextures then
-                        bgTextures.bg:ClearAllPoints()
-                        bgTextures.l:ClearAllPoints()
-                        bgTextures.r:ClearAllPoints()
-                        bgTextures.t:ClearAllPoints()
-                        bgTextures.b:ClearAllPoints()
-                        bgTextures.tl:ClearAllPoints()
-                        bgTextures.tr:ClearAllPoints()
-                        bgTextures.bl:ClearAllPoints()
-                        bgTextures.br:ClearAllPoints()
+                        for _, tex in next, bgTextures do
+                            if type(tex) == "table" then
+                                tex:ClearAllPoints()
+                            end
+                        end
                     end
 
                     frame._auroraBackdrop = bgTextures or {

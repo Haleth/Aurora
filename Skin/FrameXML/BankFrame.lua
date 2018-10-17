@@ -74,7 +74,11 @@ function private.FrameXML.BankFrame()
     --[[ BankFrame ]]--
     Skin.PortraitFrameTemplate(_G.BankFrame)
     _G.BankPortraitTexture:Hide()
-    select(16, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
+    if private.isPatch then
+        select(4, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
+    else
+        select(16, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
+    end
 
     Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab1)
     _G.BankFrameTab1:SetPoint("TOPLEFT", _G.BankFrame, "BOTTOMLEFT", 20, -1)

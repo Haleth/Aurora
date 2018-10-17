@@ -12,6 +12,9 @@ local Color = Aurora.Color
 local F = _G.unpack(Aurora)
 
 do --[[ AddOns\Blizzard_QuestChoice.xml ]]
+    function Skin.QuestChoiceOptionButtonTemplate(Button)
+        Skin.UIPanelButtonTemplate(Button)
+    end
     function Skin.QuestChoiceItemTemplate(Button)
         Button._auroraIconBorder = F.ReskinIcon(Button.Icon)
         Button.Name:SetTextColor(1, 1, 1)
@@ -46,8 +49,8 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         Button.Artwork:SetPoint("TOPLEFT", 13, -29)
         Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -17, -100)
 
-        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
-        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
         Skin.QuestChoiceRewardsTemplate(Button.Rewards)
 
         Button.Header.Background:Hide()

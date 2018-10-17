@@ -11,8 +11,10 @@ do --[[ AddOns\Blizzard_AzeriteUI.lua ]]
     function Hook.AzeriteEmpoweredItemUIMixin_AdjustSizeForTiers(self, numTiers)
         if numTiers == 3 then
             self:SetSize(474, 460)
-        else
-            self:SetSize(615, 612)
+        elseif numTiers == 4 then
+            self:SetSize(615, 601)
+        elseif numTiers == 5 then
+            self:SetSize(756, 742)
         end
         self.transformTree:GetRoot():SetLocalPosition(_G.CreateVector2D(self.ClipFrame.BackgroundFrame:GetWidth() * .5, self.ClipFrame.BackgroundFrame:GetHeight() * .5))
     end
@@ -23,9 +25,10 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
         function Skin.AzeriteEmpoweredItemUITemplate(Frame)
             _G.hooksecurefunc(Frame, "AdjustSizeForTiers", Hook.AzeriteEmpoweredItemUIMixin_AdjustSizeForTiers)
 
-            Frame:SetClipsChildren(true)
             Skin.PortraitFrameTemplate(Frame.BorderFrame)
-            Frame.BorderFrame:GetBackdropTexture("bg"):SetParent(Frame)
+            if not private.isPatch then
+                Frame.BorderFrame:GetBackdropTexture("bg"):SetParent(Frame)
+            end
 
             Frame.ClipFrame:SetPoint("TOPLEFT")
             Frame.ClipFrame:SetPoint("BOTTOMRIGHT")

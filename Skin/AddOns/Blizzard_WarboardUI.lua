@@ -70,8 +70,8 @@ do --[[ AddOns\Blizzard_WarboardUI.xml ]]
         Button.Artwork:SetPoint("TOPLEFT", 31, -31)
         Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -31, -112)
 
-        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton1)
-        Skin.UIPanelButtonTemplate(Button.OptionButtonsContainer.OptionButton2)
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
 
         Button.Header.Ribbon:Hide()
         Button.Header.Text:SetTextColor(.9, .9, .9)

@@ -1,7 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F = _G.unpack(Aurora)
+local Skin = Aurora.Skin
 
 function private.FrameXML.RaidFinder()
     _G.RaidFinderFrameRoleBackground:Hide()
@@ -10,12 +12,8 @@ function private.FrameXML.RaidFinder()
         _G.RaidFinderFrameButtonBottomBorder:Hide()
     end
 
-    _G.RaidFinderFrameRoleInset:DisableDrawLayer("BORDER")
-    _G.RaidFinderFrameRoleInsetBg:Hide()
-
-
-    _G.RaidFinderFrameBottomInset:DisableDrawLayer("BORDER")
-    _G.RaidFinderFrameBottomInsetBg:Hide()
+    Skin.InsetFrameTemplate(_G.RaidFinderFrameRoleInset)
+    Skin.InsetFrameTemplate(_G.RaidFinderFrameBottomInset)
 
     _G.RaidFinderQueueFrameBackground:Hide()
 

@@ -55,7 +55,11 @@ function private.FrameXML.LootFrame()
     --[[ LootFrame ]]--
     _G.LootFramePortraitOverlay:Hide()
 
-    select(19, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
+    if private.isPatch then
+        select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
+    else
+        select(19, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
+    end
 
     for index = 1, 4 do
         local item = _G["LootButton"..index]

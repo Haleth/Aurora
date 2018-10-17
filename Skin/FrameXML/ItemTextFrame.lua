@@ -1,5 +1,8 @@
 local _, private = ...
 
+--[[ Lua Globals ]]
+-- luacheck: globals select
+
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Scale = Aurora.Base, Aurora.Scale
@@ -43,8 +46,12 @@ function private.FrameXML.ItemTextFrame()
 
     Skin.ButtonFrameTemplate(_G.ItemTextFrame)
 
-    -- BlizzWTF: The prtrait in the template is not being used.
-    _G.select(18, _G.ItemTextFrame:GetRegions()):Hide()
+    -- BlizzWTF: The portrait in the template is not being used.
+    if private.isPatch then
+        select(6, _G.ItemTextFrame:GetRegions()):Hide()
+    else
+        select(18, _G.ItemTextFrame:GetRegions()):Hide()
+    end
     _G.ItemTextFramePageBg:SetAlpha(0)
 
     _G.ItemTextMaterialTopLeft:SetAlpha(0)

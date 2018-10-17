@@ -1,7 +1,7 @@
 local _, private = ...
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -86,7 +86,7 @@ do --[[ FrameXML\QuestFrame.lua ]]
     function Hook.QuestFrame_SetTextColor(fontString, material)
         fontString:SetTextColor(Color.white:GetRGB())
     end
-    hooksecurefunc(_G.QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
+    _G.hooksecurefunc(_G.QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
         if r == 0 then
             self:SetTextColor(.8, .8, .8)
         elseif r == .2 then
@@ -99,7 +99,16 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
     function Skin.QuestFramePanelTemplate(Frame)
         Frame:SetAllPoints()
         local name = Frame:GetName()
-        _G[name.."Bg"]:Hide()
+        if Frame:GetNumRegions() > 6 then
+            --BlizzWTF: This region interferes with the ButtonFrameTemplate bg in QuestLogPopupDetailFrame
+            if private.isPatch then
+                select(6, Frame:GetRegions()):Hide()
+            else
+                select(18, Frame:GetRegions()):Hide()
+            end
+        else
+            _G[name.."Bg"]:Hide()
+        end
 
         _G[name.."MaterialTopLeft"]:SetAlpha(0)
         _G[name.."MaterialTopRight"]:SetAlpha(0)
@@ -126,13 +135,13 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
 end
 
 function private.FrameXML.QuestFrame()
-    hooksecurefunc("QuestFrameProgressItems_Update", Hook.QuestFrameProgressItems_Update)
-    hooksecurefunc("QuestFrameGreetingPanel_OnShow", Hook.QuestFrameGreetingPanel_OnShow)
+    _G.hooksecurefunc("QuestFrameProgressItems_Update", Hook.QuestFrameProgressItems_Update)
+    _G.hooksecurefunc("QuestFrameGreetingPanel_OnShow", Hook.QuestFrameGreetingPanel_OnShow)
     _G.QuestFrameGreetingPanel:HookScript("OnShow", Hook.QuestFrameGreetingPanel_OnShow)
-    hooksecurefunc("QuestFrame_UpdatePortraitText", Hook.QuestFrame_UpdatePortraitText)
-    hooksecurefunc("QuestFrame_ShowQuestPortrait", Hook.QuestFrame_ShowQuestPortrait)
-    hooksecurefunc("QuestFrame_SetTitleTextColor", Hook.QuestFrame_SetTitleTextColor)
-    hooksecurefunc("QuestFrame_SetTextColor", Hook.QuestFrame_SetTextColor)
+    _G.hooksecurefunc("QuestFrame_UpdatePortraitText", Hook.QuestFrame_UpdatePortraitText)
+    _G.hooksecurefunc("QuestFrame_ShowQuestPortrait", Hook.QuestFrame_ShowQuestPortrait)
+    _G.hooksecurefunc("QuestFrame_SetTitleTextColor", Hook.QuestFrame_SetTitleTextColor)
+    _G.hooksecurefunc("QuestFrame_SetTextColor", Hook.QuestFrame_SetTextColor)
 
     ----------------
     -- QuestFrame --
