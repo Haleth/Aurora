@@ -1,4 +1,17 @@
-﻿## [8.0.1.6] - 2018-08-13 ##
+﻿## [8.0.1.7] - 2018-10-17 ##
+### Changed ###
+
+  * Updated Collections UI frames
+  * Updated AddOn List
+
+### Fixed ###
+
+  * Resoved a conflict with EventHorizon-Continued
+  * The Warboard/Hero's Call Board now has higher contrasting text.
+
+
+
+## [8.0.1.6] - 2018-08-13 ##
 ### Fixed ###
 
   * The chat editbox was too small when using some chat addons
@@ -235,6 +248,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.0.1.7]: https://github.com/Haleth/Aurora/compare/8.0.1.6...8.0.1.7
 [8.0.1.6]: https://github.com/Haleth/Aurora/compare/8.0.1.5...8.0.1.6
 [8.0.1.5]: https://github.com/Haleth/Aurora/compare/8.0.1.4...8.0.1.5
 [8.0.1.4]: https://github.com/Haleth/Aurora/compare/8.0.1.3...8.0.1.4
