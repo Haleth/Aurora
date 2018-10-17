@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 --[[ do FrameXML\InterfaceOptionsFrame.lua
 end ]]
@@ -24,7 +24,13 @@ function private.FrameXML.InterfaceOptionsFrame()
 
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameOkay)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameCancel)
+    Util.PositionRelative("BOTTOMRIGHT", _G.InterfaceOptionsFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
+        _G.InterfaceOptionsFrameCancel,
+        _G.InterfaceOptionsFrameOkay,
+    })
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameDefaults)
+    _G.InterfaceOptionsFrameDefaults:SetPoint("BOTTOMLEFT", 15, 15)
+
     Skin.OptionsFrameListTemplate(_G.InterfaceOptionsFrameCategories)
     Skin.OptionsFrameListTemplate(_G.InterfaceOptionsFrameAddOns)
     Base.SetBackdrop(_G[name.."PanelContainer"], Color.frame)

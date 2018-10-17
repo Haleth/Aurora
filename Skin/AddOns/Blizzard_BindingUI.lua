@@ -35,14 +35,14 @@ function private.AddOns.Blizzard_BindingUI()
     Skin.UIPanelButtonTemplate(KeyBindingFrame.unbindButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.okayButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.cancelButton)
-    Util.PositionRelative("BOTTOMRIGHT", KeyBindingFrame, "BOTTOMRIGHT", -10, 10, 5, "Left", {
+    Util.PositionRelative("BOTTOMRIGHT", KeyBindingFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
         KeyBindingFrame.cancelButton,
         KeyBindingFrame.okayButton,
         KeyBindingFrame.unbindButton
     })
 
     Skin.UIPanelButtonTemplate(KeyBindingFrame.defaultsButton)
-    KeyBindingFrame.defaultsButton:SetPoint("BOTTOMLEFT", 10, 10)
+    KeyBindingFrame.defaultsButton:SetPoint("BOTTOMLEFT", 15, 15)
 
     Base.SetBackdrop(KeyBindingFrame.bindingsContainer, Color.frame)
     Skin.OptionsFrameListTemplate(KeyBindingFrame.categoryList)
