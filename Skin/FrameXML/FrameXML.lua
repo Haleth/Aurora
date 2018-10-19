@@ -68,6 +68,7 @@ local FrameXML = {
     "AuraUtil",
     "CalendarUtil",
     "CommunitiesUtil",
+    "ItemUtil",
     "CurrencyContainer",
     -- IME needs to be loaded after UIParent
     "SharedXML.IME",

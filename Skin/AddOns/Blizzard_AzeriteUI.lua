@@ -14,7 +14,7 @@ do --[[ AddOns\Blizzard_AzeriteUI.lua ]]
         elseif numTiers == 4 then
             self:SetSize(615, 601)
         elseif numTiers == 5 then
-            self:SetSize(756, 742)
+            self:SetSize(754, 740)
         end
         self.transformTree:GetRoot():SetLocalPosition(_G.CreateVector2D(self.ClipFrame.BackgroundFrame:GetWidth() * .5, self.ClipFrame.BackgroundFrame:GetHeight() * .5))
     end

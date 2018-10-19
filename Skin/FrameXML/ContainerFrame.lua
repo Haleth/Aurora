@@ -21,18 +21,18 @@ do --[[ FrameXML\ContainerFrame.lua ]]
             Base.SetBackdropColor(frame._auroraBDFrame, Color.button, a)
         end
     end
-    function Hook.ContainerFrame_Update(frame)
-        local id = frame:GetID()
-        local name = frame:GetName()
+    function Hook.ContainerFrame_Update(self)
+        local id = self:GetID()
+        local name = self:GetName()
 
         if id == 0 then
             _G.BagItemSearchBox:ClearAllPoints()
-            _G.BagItemSearchBox:SetPoint("TOPLEFT", frame, 20, -35)
+            _G.BagItemSearchBox:SetPoint("TOPLEFT", self, 20, -35)
             _G.BagItemAutoSortButton:ClearAllPoints()
-            _G.BagItemAutoSortButton:SetPoint("TOPRIGHT", frame, -16, -31)
+            _G.BagItemAutoSortButton:SetPoint("TOPRIGHT", self, -16, -31)
         end
 
-        for i = 1, frame.size do
+        for i = 1, self.size do
             local itemButton = _G[name.."Item"..i]
             if not itemButton._auroraIconBorder then
                 local container = itemButton:GetParent():GetID()
