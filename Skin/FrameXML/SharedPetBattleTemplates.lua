@@ -60,7 +60,7 @@ do --[[ FrameXML\SharedPetBattleTemplates.xml ]]
 end
 
 function private.FrameXML.SharedPetBattleTemplates()
+    if private.disabled.tooltips then return end
+
     _G.hooksecurefunc("SharedPetBattleAbilityTooltip_SetAbility", Hook.SharedPetBattleAbilityTooltip_SetAbility)
-    --[[
-    ]]
 end
