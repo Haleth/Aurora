@@ -1,4 +1,22 @@
-﻿## [8.0.1.7] - 2018-10-17 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * New alert frame skins
+
+### Changed ###
+
+  * Updates for 8.1
+
+### Fixed ###
+
+  * A visual bug with the shop preview frame
+  * The chat frame's alpha would be reset when viewing Aurora's options
+  * Container buttons now have the proper background
+  * Certain parts of battle pet ability tooltips were still skinned even when the option was disabled
+
+
+
+## [8.0.1.7] - 2018-10-17 ##
 ### Changed ###
 
   * Updated Collections UI frames
@@ -6,7 +24,7 @@
 
 ### Fixed ###
 
-  * Resoved a conflict with EventHorizon-Continued
+  * Resolved a conflict with EventHorizon-Continued
   * The Warboard/Hero's Call Board now has higher contrasting text.
 
 
@@ -29,7 +47,7 @@
 
   * Tooltips would sometimes be opaque
   * The editbox carat would not be visible when sending mail
-  * An error would occur when playing a new pandaren
+  * An error would occur when playing a new Pandaren
 
 
 
@@ -64,7 +82,7 @@
 
 ### Fixed ###
 
-  * A minor incompaibitlty with Kaliel's Tracker.
+  * A minor incompatibility with Kaliel's Tracker.
   * Missed a patch check for garrison tooltips.
 
 
