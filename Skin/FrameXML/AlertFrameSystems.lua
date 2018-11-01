@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
---local Color, Util = Aurora.Color, Aurora.Util
+local Color = Aurora.Color
 
 do --[[ FrameXML\AlertFrameSystems.lua ]]
     function Hook.DungeonCompletionAlertFrameReward_SetRewardMoney(frame, optionalMoney)
@@ -29,6 +29,17 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.TemplateAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             -- Called when created: the main skin
+            Base.SetBackdrop(ContainedAlertFrame)
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.icon, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", 0, 0)
+            ContainedAlertFrame._auroraBG = bg
+
+            ContainedAlertFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
+            ContainedAlertFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
+            ContainedAlertFrame.glow:SetAtlas("Toast-Flash")
+            ContainedAlertFrame.glow:SetTexCoord(0, 1, 0, 1)
+
             ContainedAlertFrame._auroraTemplate = "TemplateAlertFrameTemplate"
         else
             -- Called OnShow: adjustments based on changes made in <AlertFrameSystem>.setUpFunction
@@ -96,6 +107,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             Base.SetBackdrop(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon.Texture, -5, 5)
             bg:SetPoint("BOTTOMRIGHT", -7, 15)
             ContainedAlertFrame._auroraBG = bg
 
@@ -157,17 +169,17 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             Base.SetBackdrop(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", -12, 3)
-            bg:SetPoint("BOTTOMRIGHT", 16, 3)
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon.Texture, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", 16, 4)
             ContainedAlertFrame._auroraBG = bg
 
             ContainedAlertFrame.Background:Hide()
-            ContainedAlertFrame.Unlocked:SetPoint("TOP", bg, 0, -15)
+            ContainedAlertFrame.Unlocked:SetPoint("TOP", bg, 0, -13)
             ContainedAlertFrame.Unlocked:SetPoint("LEFT", ContainedAlertFrame.Icon.Texture, "RIGHT", 5, 0)
             ContainedAlertFrame.Unlocked:SetPoint("RIGHT", bg, -5, 0)
             ContainedAlertFrame.Unlocked:SetTextColor(1, 1, 1)
 
-            ContainedAlertFrame.Name:SetPoint("TOP", ContainedAlertFrame.Unlocked, "BOTTOM", -2, 0)
+            ContainedAlertFrame.Name:SetPoint("TOP", ContainedAlertFrame.Unlocked, "BOTTOM", 0, -2)
             ContainedAlertFrame.Name:SetPoint("LEFT", ContainedAlertFrame.Icon.Texture, "RIGHT", 5, 0)
             ContainedAlertFrame.Name:SetPoint("RIGHT", bg, -5, 0)
 
@@ -185,16 +197,173 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame._auroraTemplate = "CriteriaAlertFrameTemplate"
         end
     end
+    function Skin.GuildChallengeAlertFrameTemplate(ContainedAlertFrame)
+        if not ContainedAlertFrame._auroraTemplate then
+            Base.SetBackdrop(ContainedAlertFrame)
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.EmblemBackground, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", -10, 15)
+            ContainedAlertFrame._auroraBG = bg
+
+            local line = select(2, ContainedAlertFrame:GetRegions())
+            line:SetColorTexture(1, 1, 1, 0.5)
+            line:ClearAllPoints()
+            line:SetPoint("TOPLEFT", ContainedAlertFrame.EmblemBackground, "TOPRIGHT", 10, -20)
+            line:SetPoint("BOTTOMRIGHT", bg, -75, 20)
+
+            ContainedAlertFrame.EmblemBackground:SetPoint("TOPLEFT", 14, -19)
+            ContainedAlertFrame.EmblemBackground:SetTexCoord(0.060546875, 0.1328125, 0.00390625, 0.14453125)
+            ContainedAlertFrame.EmblemBorder:SetAllPoints(ContainedAlertFrame.EmblemBackground)
+            ContainedAlertFrame.EmblemBorder:SetTexCoord(0.060546875, 0.1328125, 0.15234375, 0.29296875)
+
+            ContainedAlertFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
+            ContainedAlertFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
+            ContainedAlertFrame.glow:SetAtlas("Toast-Flash")
+            ContainedAlertFrame.glow:SetTexCoord(0, 1, 0, 1)
+
+            ContainedAlertFrame._auroraTemplate = "GuildChallengeAlertFrameTemplate"
+        end
+    end
+    function Skin.ScenarioLegionInvasionAlertFrameTemplate(ContainedAlertFrame)
+        if not ContainedAlertFrame._auroraTemplate then
+            local toastFrame, icon, title = ContainedAlertFrame:GetRegions()
+            Base.SetBackdrop(ContainedAlertFrame)
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", icon, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", -8, 10)
+            ContainedAlertFrame._auroraBG = bg
+
+            toastFrame:Hide()
+            Base.CropIcon(icon, ContainedAlertFrame)
+
+            title:SetPoint("TOP", bg, 0, -15)
+            title:SetPoint("LEFT", icon, "RIGHT", 5, 0)
+            title:SetPoint("RIGHT", bg, -5, 0)
+            ContainedAlertFrame.ZoneName:ClearAllPoints()
+            ContainedAlertFrame.ZoneName:SetPoint("TOP", title, "BOTTOM", 0, -2)
+            ContainedAlertFrame.ZoneName:SetPoint("LEFT", icon, "RIGHT", 5, 0)
+            ContainedAlertFrame.ZoneName:SetPoint("RIGHT", bg, -5, 0)
+
+            ContainedAlertFrame._auroraTemplate = "ScenarioLegionInvasionAlertFrameTemplate"
+        else
+            for i, button in next, ContainedAlertFrame.RewardFrames do
+                if not button._auroraSkinned then
+                    Skin.InvasionAlertFrameRewardTemplate(button)
+                    button._auroraSkinned = true
+                end
+            end
+        end
+    end
+    function Skin.ScenarioAlertFrameTemplate(ContainedAlertFrame)
+        if not ContainedAlertFrame._auroraTemplate then
+            Base.SetBackdrop(ContainedAlertFrame)
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.dungeonTexture, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", -8, 12)
+            ContainedAlertFrame._auroraBG = bg
+
+            select(1, ContainedAlertFrame:GetRegions()):Hide() -- iconBG
+            Base.CropIcon(ContainedAlertFrame.dungeonTexture, ContainedAlertFrame)
+            select(3, ContainedAlertFrame:GetRegions()):Hide() -- toastFrame
+
+            local title = select(4, ContainedAlertFrame:GetRegions())
+            title:SetPoint("TOP", bg, 0, -15)
+            title:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
+            title:SetPoint("RIGHT", bg, -5, 0)
+            ContainedAlertFrame.dungeonName:SetPoint("TOP", title, "BOTTOM", 0, -2)
+            ContainedAlertFrame.dungeonName:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
+            ContainedAlertFrame.dungeonName:SetPoint("RIGHT", bg, -5, 0)
+
+            ContainedAlertFrame.glowFrame.glow:SetPoint("TOPLEFT", ContainedAlertFrame._auroraBG, -10, 10)
+            ContainedAlertFrame.glowFrame.glow:SetPoint("BOTTOMRIGHT", ContainedAlertFrame._auroraBG, 10, -10)
+            ContainedAlertFrame.glowFrame.glow:SetAtlas("Toast-Flash")
+            ContainedAlertFrame.glowFrame.glow:SetTexCoord(0, 1, 0, 1)
+
+            ContainedAlertFrame._auroraTemplate = "ScenarioAlertFrameTemplate"
+        else
+            for i, button in next, ContainedAlertFrame.RewardFrames do
+                if not button._auroraSkinned then
+                    Skin.DungeonCompletionAlertFrameRewardTemplate(button)
+                    button._auroraSkinned = true
+                end
+            end
+        end
+    end
+    function Skin.MoneyWonAlertFrameTemplate(ContainedAlertFrame)
+        if not ContainedAlertFrame._auroraTemplate then
+            -- Called when created: the main skin
+            Base.SetBackdrop(ContainedAlertFrame)
+            ContainedAlertFrame:SetBackdropBorderColor(Color.yellow)
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", -10, 12)
+            ContainedAlertFrame._auroraBG = bg
+
+            ContainedAlertFrame.Background:Hide()
+            Base.CropIcon(ContainedAlertFrame.Icon, ContainedAlertFrame)
+            ContainedAlertFrame.IconBorder:Hide()
+
+            ContainedAlertFrame.Label:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, "TOPRIGHT", 10, -2)
+            ContainedAlertFrame.Amount:SetPoint("BOTTOMLEFT", ContainedAlertFrame.Icon, "BOTTOMRIGHT", 10, 2)
+
+            ContainedAlertFrame._auroraTemplate = "MoneyWonAlertFrameTemplate"
+        end
+    end
+    function Skin.HonorAwardedAlertFrameTemplate(ContainedAlertFrame)
+        if not ContainedAlertFrame._auroraTemplate then
+            -- Called when created: the main skin
+            Base.SetBackdrop(ContainedAlertFrame)
+            ContainedAlertFrame:SetBackdropBorderColor(Color.yellow)
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, -5, 5)
+            bg:SetPoint("BOTTOMRIGHT", -10, 12)
+            ContainedAlertFrame._auroraBG = bg
+
+            ContainedAlertFrame.Background:Hide()
+            Base.CropIcon(ContainedAlertFrame.Icon, ContainedAlertFrame)
+            ContainedAlertFrame.IconBorder:Hide()
+
+            ContainedAlertFrame.Label:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, "TOPRIGHT", 10, -2)
+            ContainedAlertFrame.Amount:SetPoint("BOTTOMLEFT", ContainedAlertFrame.Icon, "BOTTOMRIGHT", 10, 2)
+
+            ContainedAlertFrame._auroraTemplate = "HonorAwardedAlertFrameTemplate"
+        end
+    end
 end
 
 function private.FrameXML.AlertFrameSystems()
+    -- Simple Alerts
+    _G.hooksecurefunc(_G.GuildChallengeAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.DungeonCompletionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.AchievementAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.CriteriaAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.ScenarioAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.InvasionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.DigsiteCompleteAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.StorePurchaseAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.GarrisonBuildingAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.GarrisonMissionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.GarrisonShipMissionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.GarrisonFollowerAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.GarrisonShipFollowerAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.GarrisonTalentAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.WorldQuestCompleteAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.LegendaryItemAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.NewPetAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.NewMountAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 
-
+    --[[
+    ]]
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardMoney", Hook.DungeonCompletionAlertFrameReward_SetRewardMoney)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardXP", Hook.DungeonCompletionAlertFrameReward_SetRewardXP)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardItem", Hook.DungeonCompletionAlertFrameReward_SetRewardItem)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetReward", Hook.DungeonCompletionAlertFrameReward_SetReward)
+
+
+    -- Queued Alerts
+    _G.hooksecurefunc(_G.AchievementAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.CriteriaAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.LootAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.LootUpgradeAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.MoneyWonAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.HonorAwardedAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.NewRecipeLearnedAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 end
