@@ -804,77 +804,38 @@ do -- Color API
     end
 
     do -- Color modification
-        local function HueToRBG(p, q, t)
-            if t < 0   then t = t + 1 end
-            if t > 1   then t = t - 1 end
-            if t < 1/6 then return p + (q - p) * 6 * t end
-            if t < 1/2 then return q end
-            if t < 2/3 then return p + (q - p) * (2/3 - t) * 6 end
-            return p
-        end
-        local function HSLToRGB(h, s, l)
-            local r, g, b
-
-            if s <= 0 then
-                return l, l, l -- achromatic
-            else
-                local q
-                if l <= 0.5 then
-                    q = l * (s + 1)
-                else
-                    q = l + s - l * s
-                end
-
-                local p = l * 2 - q
-
-                r = HueToRBG(p, q, h + 1/3)
-                g = HueToRBG(p, q, h)
-                b = HueToRBG(p, q, h - 1/3)
-            end
-
-            return r, g, b
-        end
-
-        local min, max = math.min, math.max
-        local function RGBToHSL(r, g, b)
-            local minVal, maxVal = min(r, g, b), max(r, g, b)
-            local delta = maxVal - minVal
-
-            local h, s, l = 0, 0, (maxVal + minVal) / 2
-
-            if l > 0 and l < 0.5 then s = delta / (maxVal + minVal) end
-            if l >= 0.5 and l < 1 then s = delta / (2 - maxVal - minVal) end
-
-            if delta > 0 then
-                if maxVal == r and maxVal ~= g then
-                    h = h + (g - b) / delta
-                end
-
-                if maxVal == g and maxVal ~= b then
-                    h = h + 2 + (b - r) / delta
-                end
-
-                if maxVal == b and maxVal ~= r then
-                    h = h + 4 + (r - g) / delta
-                end
-
-                h = h / 6
-            end
-            return h, s, l
-        end
-
+        local colorSelect = _G.CreateFrame("ColorSelect")
         local Clamp = _G.Clamp
         function Color.Hue(color, delta)
-            local h, s, l = RGBToHSL(color.r, color.g, color.b)
-            return Color.Create(HSLToRGB(h + delta, s, l))
+            -- /dump Aurora.Color.green:Hue(-2/3)
+            colorSelect:SetColorRGB(color.r, color.g, color.b)
+            local h, s, v = colorSelect:GetColorHSV()
+
+            delta = 360 * delta -- convert decimal to degrees
+            local hue = h + delta
+            if hue < 0 then
+                colorSelect:SetColorHSV((360 + hue) % 360, s, v)
+            else
+                colorSelect:SetColorHSV(hue % 360, s, v)
+            end
+
+            return Color.Create(colorSelect:GetColorRGB())
         end
         function Color.Saturation(color, delta)
-            local h, s, l = RGBToHSL(color.r, color.g, color.b)
-            return Color.Create(HSLToRGB(h, Clamp(s + s * delta, 0, 1), l))
+            -- /dump Aurora.Color.red:Saturation(1)
+            colorSelect:SetColorRGB(color.r, color.g, color.b)
+            local h, s, v = colorSelect:GetColorHSV()
+            colorSelect:SetColorHSV(h, Clamp(s + s * delta, 0, 1), v)
+
+            return Color.Create(colorSelect:GetColorRGB())
         end
         function Color.Lightness(color, delta)
-            local h, s, l = RGBToHSL(color.r, color.g, color.b)
-            return Color.Create(HSLToRGB(h, s, Clamp(l + l * delta, 0, 1)))
+            -- /dump Aurora.Color.red:Lightness(1)
+            colorSelect:SetColorRGB(color.r, color.g, color.b)
+            local h, s, v = colorSelect:GetColorHSV()
+            colorSelect:SetColorHSV(h, s, Clamp(v + v * delta, 0, 1))
+
+            return Color.Create(colorSelect:GetColorRGB())
         end
 
         function colorMeta:Hue(delta)
