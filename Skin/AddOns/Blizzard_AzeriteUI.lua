@@ -33,11 +33,13 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
             Frame.ClipFrame:SetPoint("TOPLEFT")
             Frame.ClipFrame:SetPoint("BOTTOMRIGHT")
 
-            local holder = _G.CreateFrame("Frame", nil, Frame.ClipFrame.BackgroundFrame.KeyOverlay)
-            holder:SetFrameLevel(holder:GetFrameLevel() + 1)
-            holder:SetAllPoints(Frame.BorderFrame.TitleText)
-            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetParent(holder)
-            Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetAllPoints(holder)
+            if not private.isPatch then
+                local holder = _G.CreateFrame("Frame", nil, Frame.ClipFrame.BackgroundFrame.KeyOverlay)
+                holder:SetFrameLevel(holder:GetFrameLevel() + 1)
+                holder:SetAllPoints(Frame.BorderFrame.TitleText)
+                Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetParent(holder)
+                Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetAllPoints(holder)
+            end
 
             Skin.GlowBoxFrame(Frame.FirstPowerLockedInHelpBox, "Left")
         end

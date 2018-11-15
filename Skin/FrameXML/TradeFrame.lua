@@ -83,7 +83,9 @@ function private.FrameXML.TradeFrame()
     F.Reskin(_G.TradeFrameCancelButton)
 
     --[[ PLayer ]]--
-    _G.TradeFramePlayerPortrait:Hide()
+    if not private.isPatch then
+        _G.TradeFramePlayerPortrait:Hide()
+    end
     _G.TradeFramePlayerNameText:SetPoint("TOPLEFT")
     _G.TradeFramePlayerNameText:SetPoint("BOTTOMRIGHT", _G.TradeFrame, "TOPLEFT", 172, -29)
 
@@ -95,8 +97,13 @@ function private.FrameXML.TradeFrame()
     SkinTradeItems("Player")
 
     --[[ Recipient ]]--
-    _G.TradeFrameRecipientPortrait:Hide()
-    _G.TradeRecipientPortraitFrame:Hide()
+    if private.isPatch then
+        _G.TradeFrame.RecipientOverlay.portrait:Hide()
+        _G.TradeFrame.RecipientOverlay.portraitFrame:Hide()
+    else
+        _G.TradeFrameRecipientPortrait:Hide()
+        _G.TradeRecipientPortraitFrame:Hide()
+    end
     _G.TradeRecipientBotLeftCorner:Hide()
     _G.TradeRecipientLeftBorder:Hide()
 

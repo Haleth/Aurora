@@ -40,13 +40,17 @@ do --[[ AddOns\Blizzard_ChallengesUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_ChallengesUI.xml ]]
-    function Skin.ChallengesDungeonIconFrameTemplate(Frame)
-        Frame:GetRegions():Hide()
-        Base.CropIcon(Frame.Icon, Frame)
+    function Skin.MythicPlusSeasonChangesNoticeTemplate(Frame)
+        Skin.ChallengesKeystoneFrameAffixTemplate(Frame.Affix)
+        Skin.UIPanelButtonTemplate(Frame.Leave)
     end
     function Skin.ChallengesKeystoneFrameAffixTemplate(Frame)
         Frame.Border:Hide()
         Base.CropIcon(Frame.Portrait)
+    end
+    function Skin.ChallengesDungeonIconFrameTemplate(Frame)
+        Frame:GetRegions():Hide()
+        Base.CropIcon(Frame.Icon, Frame)
     end
 end
 
@@ -78,6 +82,9 @@ function private.AddOns.Blizzard_ChallengesUI()
     ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")
     ChallengesFrame.WeeklyInfo:SetPoint("BOTTOMRIGHT")
     Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
+    if private.isPatch then
+        Skin.MythicPlusSeasonChangesNoticeTemplate(ChallengesFrame.DungeonIcons[1].SeasonChangeNoticeFrame)
+    end
 
     local bg, inset = ChallengesFrame:GetRegions()
     bg:Hide()
