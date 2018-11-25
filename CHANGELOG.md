@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.0.1.8] - 2018-11-25 ##
 ### Added ###
 
   * New alert frame skins
@@ -266,6 +266,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.0.1.8]: https://github.com/Haleth/Aurora/compare/8.0.1.7...8.0.1.8
 [8.0.1.7]: https://github.com/Haleth/Aurora/compare/8.0.1.6...8.0.1.7
 [8.0.1.6]: https://github.com/Haleth/Aurora/compare/8.0.1.5...8.0.1.6
 [8.0.1.5]: https://github.com/Haleth/Aurora/compare/8.0.1.4...8.0.1.5
