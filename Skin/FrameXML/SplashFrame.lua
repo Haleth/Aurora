@@ -32,7 +32,7 @@ function private.FrameXML.SplashFrame()
     SplashFrame:SetSize(882, 584)
     SplashFrame:SetPoint("CENTER", 0, 60)
 
-    local splashInfo = _G.SPLASH_SCREENS[_G.CURRENT_SPLASH_TAG]
+    local splashInfo = _G.SPLASH_SCREENS[private.isPatch and _G.CURRENT_SPLASH_TAG or _G.BASE_SPLASH_TAG]
     local _, width, height = _G.GetAtlasInfo(splashInfo.leftTex)
     SplashFrame.LeftTexture:SetSize(width, height)
 

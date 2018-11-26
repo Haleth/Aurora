@@ -1,4 +1,11 @@
-﻿## [8.0.1.8] - 2018-11-25 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * Minor Splash frame error
+
+
+
+## [8.0.1.8] - 2018-11-25 ##
 ### Added ###
 
   * New alert frame skins
