@@ -13,21 +13,21 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
     function Hook.SquareButton_SetIcon(self, name)
         name = name:upper()
         if name == "LEFT" then
+            self.icon:SetPoint("TOPLEFT", 7, -4)
+            self.icon:SetPoint("BOTTOMRIGHT", -7, 4)
             Base.SetTexture(self.icon, "arrowLeft")
-            self.icon:SetPoint("TOPLEFT", 7, -4)
-            self.icon:SetPoint("BOTTOMRIGHT", -7, 4)
         elseif name == "RIGHT" then
-            Base.SetTexture(self.icon, "arrowRight")
             self.icon:SetPoint("TOPLEFT", 7, -4)
             self.icon:SetPoint("BOTTOMRIGHT", -7, 4)
+            Base.SetTexture(self.icon, "arrowRight")
         elseif name == "UP" then
+            self.icon:SetPoint("TOPLEFT", 4, -7)
+            self.icon:SetPoint("BOTTOMRIGHT", -4, 7)
             Base.SetTexture(self.icon, "arrowUp")
-            self.icon:SetPoint("TOPLEFT", 4, -7)
-            self.icon:SetPoint("BOTTOMRIGHT", -4, 7)
         elseif name == "DOWN" then
-            Base.SetTexture(self.icon, "arrowDown")
             self.icon:SetPoint("TOPLEFT", 4, -7)
             self.icon:SetPoint("BOTTOMRIGHT", -4, 7)
+            Base.SetTexture(self.icon, "arrowDown")
         end
     end
 end
@@ -139,7 +139,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.GlowBoxFrame(Frame, direction)
         Skin.GlowBoxTemplate(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
 
         direction = direction or "Down"
         local point = direction:upper()
@@ -178,7 +177,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame)
 
         Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
     end
     function Skin.BasicFrameTemplate(Frame)
         Skin.BaseBasicFrameTemplate(Frame)

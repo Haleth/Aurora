@@ -37,8 +37,8 @@ do --[[ FrameXML\NavigationBar.xml ]]
         Base.SetHighlight(Button, "backdrop")
 
         local arrowButton = Button.MenuArrowButton
-        Base.SetTexture(arrowButton.Art, "arrowDown")
         arrowButton.Art:SetSize(13, 6)
+        Base.SetTexture(arrowButton.Art, "arrowDown")
         arrowButton.NormalTexture:SetTexture("")
         arrowButton.PushedTexture:SetTexture("")
         arrowButton:SetHighlightTexture("")
@@ -56,9 +56,9 @@ do --[[ FrameXML\NavigationBar.xml ]]
         Base.SetBackdrop(Frame.overflow, Color.grayLight)
 
         local tex = Frame.overflow:GetNormalTexture()
-        Base.SetTexture(tex, "arrowLeft")
         tex:SetPoint("TOPLEFT", 10, -5)
         tex:SetPoint("BOTTOMRIGHT", -10, 5)
+        Base.SetTexture(tex, "arrowLeft")
 
         Frame.home:GetRegions():Hide()
         Frame.home:SetNormalTexture("")

@@ -23,8 +23,6 @@ function private.FrameXML.SplashFrame()
     Skin.UIPanelButtonTemplate(SplashFrame.BottomCloseButton)
 
     Skin.UIPanelCloseButton(SplashFrame.TopCloseButton)
-    SplashFrame.TopCloseButton:SetPoint("TOPRIGHT", -22, -18)
-
     Skin.SplashFeatureFrameTemplate(SplashFrame.Feature1)
     Skin.SplashFeatureFrameTemplate(SplashFrame.Feature2)
 

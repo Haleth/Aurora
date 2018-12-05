@@ -110,7 +110,6 @@ function private.FrameXML.FloatingGarrisonFollowerTooltip()
     for template, frame in next, floatingTooltips do
         Skin[template](frame)
         Skin.UIPanelCloseButton(frame.CloseButton)
-        frame.CloseButton:SetPoint("TOPRIGHT", -3, -3)
     end
 
     ----====####$$$$%%%%%$$$$####====----

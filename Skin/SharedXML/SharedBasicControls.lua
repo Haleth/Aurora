@@ -36,7 +36,6 @@ do --[[ FrameXML\SharedBasicControls.xml ]]
         _G[name.."DialogBG"]:Hide()
 
         Skin.UIPanelCloseButton(_G[name.."Close"])
-        _G[name.."Close"]:SetPoint("TOPRIGHT", -5, -5)
 
         --[[ Scale ]]--
         Frame:SetSize(Frame:GetSize())

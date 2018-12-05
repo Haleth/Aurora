@@ -528,8 +528,6 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
     Skin.UIPanelCloseButton(_G.AchievementFrameCloseButton)
-    _G.AchievementFrameCloseButton:SetPoint("TOPRIGHT", -3, -3)
-
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab1)
     _G.AchievementFrameTab1:ClearAllPoints()
     _G.AchievementFrameTab1:SetPoint("TOPLEFT", _G.AchievementFrame, "BOTTOMLEFT", 20, -1)
@@ -561,7 +559,7 @@ function private.AddOns.Blizzard_AchievementUI()
 
     local filterArrow = _G.AchievementFrameFilterDropDownButton:CreateTexture(nil, "ARTWORK")
     filterArrow:SetPoint("TOPLEFT", 4, -6)
-    filterArrow:SetPoint("BOTTOMRIGHT", -5, 7)
+    filterArrow:SetPoint("BOTTOMRIGHT", -4, 6)
     Base.SetTexture(filterArrow, "arrowDown")
 
     _G.AchievementFrameFilterDropDownButton._auroraHighlight = {filterArrow}
@@ -606,6 +604,5 @@ function private.AddOns.Blizzard_AchievementUI()
     searchResults.topBorder2:Hide()
 
     Skin.UIPanelCloseButton(searchResults.closeButton)
-    searchResults.closeButton:SetPoint("TOPRIGHT", -3, -3)
     Skin.HybridScrollBarTrimTemplate(searchResults.scrollFrame.scrollBar)
 end

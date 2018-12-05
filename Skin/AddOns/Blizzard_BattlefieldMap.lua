@@ -49,7 +49,7 @@ function private.AddOns.Blizzard_BattlefieldMap()
     BorderFrame.Right:SetColorTexture(r, g, b)
 
     Skin.UIPanelCloseButton(BorderFrame.CloseButton)
-    BorderFrame.CloseButton:SetPoint("TOPRIGHT", -1, -1)
+    BorderFrame.CloseButton:SetPoint("TOPRIGHT", 10, 9)
 
     --[[ Scale ]]--
 end

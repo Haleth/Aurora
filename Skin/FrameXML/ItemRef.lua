@@ -21,5 +21,4 @@ function private.FrameXML.ItemRef()
 
     Skin.GameTooltipTemplate(_G.ItemRefTooltip)
     Skin.UIPanelCloseButton(_G.ItemRefCloseButton)
-    _G.ItemRefCloseButton:SetPoint("TOPRIGHT", -3, -3)
 end

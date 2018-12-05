@@ -12,10 +12,10 @@ local Color = Aurora.Color
 do --[[ FrameXML\TalentFrameTemplates.xml ]]
     function Skin.PvpTalentSlotTemplate(Button)
         Button._auroraBG = Base.CropIcon(Button.Texture, Button)
-        Base.SetTexture(Button.Arrow, "arrowRight")
-        Button.Arrow:SetPoint("LEFT", Button.Texture, "RIGHT", 5, 0)
         Button.Arrow:SetVertexColor(Color.yellow:GetRGB())
+        Button.Arrow:SetPoint("LEFT", Button.Texture, "RIGHT", 5, 0)
         Button.Arrow:SetSize(26, 13)
+        Base.SetTexture(Button.Arrow, "arrowRight")
         Button.Border:Hide()
 
         --[[ Scale ]]--
@@ -26,7 +26,6 @@ do --[[ FrameXML\TalentFrameTemplates.xml ]]
     function Skin.PvpTalentTrinketSlotTemplate(Button)
         Skin.PvpTalentSlotTemplate(Button)
         Button.Texture:SetSize(48, 48)
-        Button.Arrow:SetSize(26, 13)
     end
 end
 

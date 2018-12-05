@@ -70,10 +70,10 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
         Scale.Atlas(shadow, "MapCornerShadow-Right", true)
 
         local arrow = Button:CreateTexture(nil, "ARTWORK")
-        Base.SetTexture(arrow, "arrow"..arrowDir)
         arrow:SetPoint("TOPLEFT", 5, -9)
         arrow:SetPoint("BOTTOMRIGHT", -20, 9)
         arrow:SetVertexColor(Color.yellow:GetRGB())
+        Base.SetTexture(arrow, "arrow"..arrowDir)
 
         local quest = Button:CreateTexture(nil, "ARTWORK")
         quest:SetTexture([[Interface/QuestFrame/QuestMapLogAtlas]])

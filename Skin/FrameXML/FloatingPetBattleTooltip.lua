@@ -21,10 +21,8 @@ function private.FrameXML.FloatingPetBattleTooltip()
 
     Skin.SharedPetBattleAbilityTooltipTemplate(_G.FloatingPetBattleAbilityTooltip)
     Skin.UIPanelCloseButton(_G.FloatingPetBattleAbilityTooltip.CloseButton)
-    _G.FloatingPetBattleAbilityTooltip.CloseButton:SetPoint("TOPRIGHT", -3, -3)
 
     Skin.BattlePetTooltipTemplate(_G.FloatingBattlePetTooltip)
     _G.FloatingBattlePetTooltip.Delimiter:SetHeight(1)
     Skin.UIPanelCloseButton(_G.FloatingBattlePetTooltip.CloseButton)
-    _G.FloatingBattlePetTooltip.CloseButton:SetPoint("TOPRIGHT", -3, -3)
 end

@@ -141,9 +141,9 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         checkBox.check = check
 
         local arrow = _G[name.."ExpandArrow"]
-        Base.SetTexture(arrow:GetNormalTexture(), "arrowRight")
         arrow:SetSize(7, 8)
         arrow:SetPoint("RIGHT", -2, 0)
+        Base.SetTexture(arrow:GetNormalTexture(), "arrowRight")
 
         Button:HookScript("OnClick", Hook.UIDropDownMenuButton_OnClick)
     end

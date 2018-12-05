@@ -372,7 +372,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     end
     function Skin.GarrisonMissionPageCloseButtonTemplate(Button)
         Skin.UIPanelCloseButton(Button)
-        Button:SetSize(22, 22)
+        Button:SetSize(32, 32)
     end
     function Skin.GarrisonMissionFrameTemplate(Frame)
         --[[ Scale ]]--

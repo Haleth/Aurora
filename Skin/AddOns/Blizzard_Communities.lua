@@ -380,7 +380,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.Corner:Hide()
 
             Skin.UIPanelCloseButton(Frame.CloseButton)
-            Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
             Skin.UIPanelButtonTemplate(Frame.RemoveButton)
             Skin.UIPanelButtonTemplate(Frame.GroupInviteButton)
             Skin.UIDropDownMenuTemplate(Frame.RankDropdown)

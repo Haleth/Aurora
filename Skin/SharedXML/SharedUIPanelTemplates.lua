@@ -192,7 +192,11 @@ end
 
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.UIPanelCloseButton(Button)
-        Button:SetSize(17, 17)
+        Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 3, -10)
+        bg:SetPoint("BOTTOMRIGHT", -11, 4)
+
         Button:SetNormalTexture("")
         Button:SetHighlightTexture("")
         Button:SetPushedTexture("")
@@ -201,17 +205,26 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if dis then
             dis:SetColorTexture(0, 0, 0, .4)
             dis:SetDrawLayer("OVERLAY")
-            dis:SetAllPoints()
+            dis:SetAllPoints(bg)
         end
 
-        Base.SetBackdrop(Button, Color.button)
+        local cross = {}
+        for i = 1, 2 do
+            local line = Button:CreateLine(nil, "ARTWORK")
+            line:SetColorTexture(1, 1, 1)
+            line:SetThickness(1.2)
+            line:Show()
+            if i == 1 then
+                line:SetStartPoint("TOPLEFT", bg, 4.6, -4)
+                line:SetEndPoint("BOTTOMRIGHT", bg, -4, 4)
+            else
+                line:SetStartPoint("TOPRIGHT", bg, -4, -4)
+                line:SetEndPoint("BOTTOMLEFT", bg, 4.6, 4)
+            end
+            tinsert(cross, line)
+        end
 
-        local cross = Button:CreateTexture(nil, "ARTWORK")
-        cross:SetPoint("TOPLEFT", 4, -4)
-        cross:SetPoint("BOTTOMRIGHT", -4, 4)
-        Base.SetTexture(cross, "lineCross")
-
-        Button._auroraHighlight = {cross}
+        Button._auroraHighlight = cross
         Base.SetHighlight(Button, "texture")
     end
     function Skin.UIPanelButtonTemplate(Button)
@@ -372,7 +385,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", -5, -5)
     end
     function Skin.ButtonFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)

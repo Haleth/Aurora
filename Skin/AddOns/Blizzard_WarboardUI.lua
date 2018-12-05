@@ -118,7 +118,6 @@ function private.AddOns.Blizzard_WarboardUI()
     WarboardQuestChoiceFrame.Title.Middle:Hide()
 
     Skin.UIPanelCloseButton(WarboardQuestChoiceFrame.CloseButton)
-    WarboardQuestChoiceFrame.CloseButton:SetPoint("TOPRIGHT", -10, -10)
 
     -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
     local WarfrontHelpBox = WarboardQuestChoiceFrame.WarfrontHelpBox

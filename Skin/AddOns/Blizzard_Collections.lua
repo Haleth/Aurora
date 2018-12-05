@@ -702,7 +702,6 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.GlowBoxTemplate(ToyBox.mousewheelPagingHelpBox)
     Skin.UIPanelCloseButton(ToyBox.mousewheelPagingHelpBox.CloseButton)
-    ToyBox.mousewheelPagingHelpBox.CloseButton:SetPoint("TOPRIGHT", -5, -5)
 
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)

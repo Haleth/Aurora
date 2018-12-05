@@ -45,9 +45,11 @@ function private.AddOns.Blizzard_AdventureMap()
     AdventureMapQuestChoiceDialog.Background:Hide()
 
     Base.SetBackdrop(AdventureMapQuestChoiceDialog)
+    local bg = AdventureMapQuestChoiceDialog:GetBackdropTexture("bg")
+    bg:SetPoint("TOPLEFT", 3, -14)
+    bg:SetPoint("BOTTOMRIGHT", -3, -1)
 
     Skin.UIPanelCloseButton(AdventureMapQuestChoiceDialog.CloseButton)
-    AdventureMapQuestChoiceDialog.CloseButton:SetPoint("TOPRIGHT", -5, -5)
 
     local ScrollBar = AdventureMapQuestChoiceDialog.Details.ScrollBar
     Skin.UIPanelScrollUpButtonTemplate(ScrollBar.ScrollUpButton)
@@ -59,9 +61,7 @@ function private.AddOns.Blizzard_AdventureMap()
     ScrollBar.Background:Hide()
 
     Skin.UIPanelButtonTemplate(AdventureMapQuestChoiceDialog.DeclineButton)
-    AdventureMapQuestChoiceDialog.DeclineButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(AdventureMapQuestChoiceDialog.AcceptButton)
-    AdventureMapQuestChoiceDialog.AcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
 
     --[[ Scale ]]--
 

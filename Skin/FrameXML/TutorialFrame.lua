@@ -98,7 +98,6 @@ function private.FrameXML.TutorialFrame()
 
     Skin.UIPanelScrollFrameTemplate(_G.TutorialFrameTextScrollFrame)
     Skin.UIPanelCloseButton(_G.TutorialFrameCloseButton)
-    _G.TutorialFrameCloseButton:SetPoint("TOPRIGHT", -3, -3)
 
     -- BlizzWTF: This should use the UIPanelButtonTemplate
     _G.TutorialFrameOkayButton:SetNormalTexture("")

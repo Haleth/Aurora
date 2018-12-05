@@ -54,14 +54,15 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
         Skin.PaperDollAzeriteItemOverlayTemplate(Button)
         _G[Button:GetName().."Frame"]:Hide()
 
-        Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
         if Button.verticalFlyout then
             Button.popoutButton:SetPoint("TOP", Button, "BOTTOM")
             Button.popoutButton:SetSize(38, 8)
+            Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
             Base.SetTexture(Button.popoutButton._auroraArrow, "arrowDown")
         else
             Button.popoutButton:SetPoint("LEFT", Button, "RIGHT")
             Button.popoutButton:SetSize(8, 38)
+            Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
         end
     end
     function Skin.PaperDollItemSlotButtonLeftTemplate(Button)
