@@ -115,6 +115,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="ZoneAbility.lua"/>
 
     <Script file="..\SharedXML\AddonList.lua"/>
+    <Script file="..\SharedXML\AnchorUtil.lua"/>
     <Script file="..\SharedXML\HybridScrollFrame.lua"/>
     <Script file="..\SharedXML\LayoutFrame.lua"/>
     <Script file="..\SharedXML\ModelPreviewFrame.lua"/>

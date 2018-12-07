@@ -280,11 +280,11 @@ local Base, Scale = Aurora.Base, Aurora.Scale
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ FrameXML\File.lua ]]
-end
+--do --[[ FrameXML\File.lua ]]
+--end
 
-do --[[ FrameXML\File.xml ]]
-end
+--do --[[ FrameXML\File.xml ]]
+--end
 
 function private.FrameXML.File()
     ----====####$$$$%%%%$$$$####====----
