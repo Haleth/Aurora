@@ -14,7 +14,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesList ]]
         local CommunitiesListEntryMixin = {}
         function CommunitiesListEntryMixin.SetClubInfo(self, clubInfo, isInvitation, isTicket)
-            if clubInfo then
+            if clubInfo and self._iconBorder then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
                 if isGuild then
                     self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
@@ -23,6 +23,8 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 end
 
                 self.Name:SetPoint("LEFT", self._iconBorder, "RIGHT", 10, 0)
+                self.CircleMask:Hide()
+                Base.CropIcon(self.Icon)
                 self.Icon:ClearAllPoints()
                 self.Icon:SetPoint("CENTER", self._iconBorder)
 
@@ -40,10 +42,23 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
         end
         function CommunitiesListEntryMixin.SetAddCommunity(self)
             self.Name:SetPoint("LEFT", self._iconBorder, "RIGHT", 10, 0)
+            self.CircleMask:Hide()
+            Base.CropIcon(self.Icon)
             self.Icon:ClearAllPoints()
             self.Icon:SetPoint("CENTER", self._iconBorder)
             self._iconBorder:Show()
             self._iconBorder:SetColorTexture(Color.black:GetRGB())
+        end
+        function CommunitiesListEntryMixin.SetGuildFinder(self)
+            self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+            self.Selection:Show()
+
+            self.CircleMask:Hide()
+            self.Icon:SetTexCoord(0, 1, 0, 1)
+            self.Icon:ClearAllPoints()
+            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 3)
+
+            self._iconBorder:Hide()
         end
         Hook.CommunitiesListEntryMixin = CommunitiesListEntryMixin
     end
@@ -80,26 +95,28 @@ end
 do --[[ AddOns\Blizzard_Communities.xml ]]
     do --[[ CommunitiesList ]]
         function Skin.CommunitiesListEntryTemplate(Button)
-            local bd = _G.CreateFrame("Frame", nil, Button)
-            Base.SetBackdrop(bd, Color.button)
-            bd:SetBackdropBorderColor(Color.frame, 1)
-            bd:SetFrameLevel(Button:GetFrameLevel())
-            bd:SetPoint("TOPLEFT", 7, -16)
-            bd:SetPoint("BOTTOMRIGHT", -10, 12)
+            Base.SetBackdrop(Button, Color.button)
+            local bg = Button:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 7, -16)
+            bg:SetPoint("BOTTOMRIGHT", -10, 12)
 
             Button.Background:Hide()
             Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            Button.Selection:SetAllPoints(bd)
+            Button.Selection:SetAllPoints(bg)
 
-            Button.Icon:RemoveMaskTexture(Button.CircleMask)
+            Button.GuildTabardBackground:SetPoint("TOPLEFT", 6, -15)
+            Button.GuildTabardEmblem:SetPoint("TOPLEFT", 11, -15)
+            Button.GuildTabardBorder:SetPoint("TOPLEFT", 6, -15)
+
+            Button.CircleMask:Hide()
             Button._iconBorder = Base.CropIcon(Button.Icon, Button)
-            Button._iconBorder:SetPoint("TOPLEFT", bd)
-            Button._iconBorder:SetPoint("BOTTOMRIGHT", bd, "BOTTOMLEFT", 40, 0)
+            Button._iconBorder:SetPoint("TOPLEFT", bg)
+            Button._iconBorder:SetPoint("BOTTOMRIGHT", bg, "BOTTOMLEFT", 40, 0)
             Button.IconRing:SetAlpha(0)
 
             local highlight = Button:GetHighlightTexture()
             highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            highlight:SetAllPoints(bd)
+            highlight:SetAllPoints(bg)
         end
         function Skin.CommunitiesListFrameTemplate(Frame)
             Frame.Bg:Hide()
@@ -255,6 +272,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ColumnDisplay.InsetBorderTopLeft:ClearAllPoints()
             Frame.ColumnDisplay.InsetBorderTopRight:ClearAllPoints()
             Frame.ColumnDisplay.InsetBorderBottomLeft:ClearAllPoints()
+        end
+    end
+    do --[[ CommunitiesCalendar ]]
+        function Skin.CommunitiesCalendarButtonTemplate(Button)
         end
     end
     do --[[ GuildRewards ]]
@@ -432,8 +453,7 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --         CommunitiesList         --
     ----====####$$$$%%%%%$$$$####====----
-    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetClubInfo", Hook.CommunitiesListEntryMixin.SetClubInfo)
-    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetAddCommunity", Hook.CommunitiesListEntryMixin.SetAddCommunity)
+    Util.Mixin(_G.CommunitiesListEntryMixin, Hook.CommunitiesListEntryMixin)
 
     ----====####$$$$%%%%%$$$$####====----
     --      CommunitiesMemberList      --

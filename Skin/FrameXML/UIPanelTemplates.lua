@@ -185,6 +185,18 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.TitleBg:Hide()
         Frame.TopTileStreaks:SetTexture("")
     end
+    function Skin.InsetFrameTemplate2(Frame)
+        Frame.TopLeftCorner:Hide()
+        Frame.TopRightCorner:Hide()
+        Frame.BotLeftCorner:Hide()
+
+        Frame.BotRightCorner:Hide()
+        Frame.TopBorder:Hide()
+        Frame.BottomBorder:Hide()
+
+        Frame.LeftBorder:Hide()
+        Frame.RightBorder:Hide()
+    end
     function Skin.InsetFrameTemplate3(Frame)
         Frame.BorderTopRight:Hide()
         Frame.BorderBottomRight:Hide()
@@ -221,6 +233,18 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         bg:SetHorizTile(true)
         bg:SetVertTile(true)
         bg:SetAlpha(0.5)
+    end
+    function Skin.HorizontalBarTemplate(Frame)
+        Frame:SetHeight(1)
+        local name = Frame:GetName()
+        _G[name.."Bg"]:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+
+        _G[name.."TopLeftCorner"]:Hide()
+        _G[name.."TopRightCorner"]:Hide()
+        _G[name.."BotLeftCorner"]:Hide()
+        _G[name.."BotRightCorner"]:Hide()
+        _G[name.."TopBorder"]:Hide()
+        _G[name.."BottomBorder"]:Hide()
     end
     function Skin.TranslucentFrameTemplate(Frame)
         Frame.Bg:Hide()

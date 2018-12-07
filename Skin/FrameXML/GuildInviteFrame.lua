@@ -2,8 +2,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local F = _G.unpack(Aurora)
-local Skin = private.Aurora.Skin
+local Skin = Aurora.Skin
 
 function private.FrameXML.GuildInviteFrame()
     Skin.TranslucentFrameTemplate(_G.GuildInviteFrame)
@@ -16,6 +15,6 @@ function private.FrameXML.GuildInviteFrame()
 
     _G.GuildInviteFrameTabardRing:Hide()
 
-    F.Reskin(_G.GuildInviteFrameJoinButton)
-    F.Reskin(_G.GuildInviteFrameDeclineButton)
+    Skin.UIPanelButtonTemplate(_G.GuildInviteFrameJoinButton)
+    Skin.UIPanelButtonTemplate(_G.GuildInviteFrameDeclineButton)
 end

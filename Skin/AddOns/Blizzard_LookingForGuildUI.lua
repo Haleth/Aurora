@@ -1,122 +1,106 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+-- luacheck: globals select
 
 -- [[ Core ]]
-local Hook = private.Aurora.Hook
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_LookingForGuildUI.lua ]]
-    function Hook.LookingForGuildFrame_CreateUIElements(self)
-        local r, g, b = C.r, C.g, C.b
+    function Hook.LookingForGuildFrame_CreateUIElements()
+        Skin.ButtonFrameTemplate(_G.LookingForGuildFrame)
+        Skin.LookingForGuildFrameTemplate(_G.LookingForGuildFrame)
 
-        F.SetBD(_G.LookingForGuildFrame)
-        F.CreateBD(_G.LookingForGuildInterestFrame, .25)
-        _G.LookingForGuildInterestFrameBg:Hide()
-        F.CreateBD(_G.LookingForGuildAvailabilityFrame, .25)
-        _G.LookingForGuildAvailabilityFrameBg:Hide()
-        F.CreateBD(_G.LookingForGuildRolesFrame, .25)
-        _G.LookingForGuildRolesFrameBg:Hide()
-        F.CreateBD(_G.LookingForGuildCommentFrame, .25)
-        _G.LookingForGuildCommentFrameBg:Hide()
-        F.CreateBD(_G.LookingForGuildCommentInputFrame, .12)
-        _G.LookingForGuildFrame:DisableDrawLayer("BACKGROUND")
-        _G.LookingForGuildFrame:DisableDrawLayer("BORDER")
-        _G.LookingForGuildFrameInset:DisableDrawLayer("BACKGROUND")
-        _G.LookingForGuildFrameInset:DisableDrawLayer("BORDER")
-        F.CreateBD(_G.GuildFinderRequestMembershipFrame)
-        for i = 1, 9 do
-            select(i, _G.LookingForGuildCommentInputFrame:GetRegions()):Hide()
-        end
-        F.ReskinTab("LookingForGuildFrameTab", 3)
-        for i = 1, 6 do
-            select(i, _G.GuildFinderRequestMembershipFrameInputFrame:GetRegions()):Hide()
-        end
+        Skin.LookingForGuildStartFrameTemplate(_G.LookingForGuildStartFrame)
+        Skin.LookingForGuildBrowseFrameTemplate(_G.LookingForGuildBrowseFrame)
+        Skin.LookingForGuildAppsFrameTemplate(_G.LookingForGuildAppsFrame)
+    end
+end
+
+do --[[ FrameXML\Blizzard_LookingForGuildUI.xml ]]
+    Skin.LookingForGuildCheckButtonTemplate = Skin.UICheckButtonTemplate
+    function Skin.LookingForGuildSectionTemplate(Frame)
+    end
+    local paramToRole = {
+        [8] = "roleTANK",
+        [9] = "roleHEALER",
+        [10] = "roleDAMAGER",
+    }
+    function Skin.LookingForGuildRoleTemplate(Button)
+        Button.cover:SetColorTexture(0, 0, 0)
+        Base.SetTexture(Button:GetNormalTexture(), paramToRole[Button.param])
+        Skin.UICheckButtonTemplate(Button.checkButton)
+        Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
+    end
+    function Skin.LookingForGuildGuildTemplate(Button)
+        local name = Button:GetName()
+
+        Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 0, -1)
+        bg:SetPoint("BOTTOMRIGHT", 0, 1)
+
+        Button.selectedTex:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+        Button.border:SetSize(38, 38)
+        Button.border:SetPoint("TOPLEFT", Button.tabard)
+        _G[name.."Ring"]:Hide()
+
+        Button.pendingFrame.pendingTex:SetAllPoints()
+
+        _G[name.."Highlight"]:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+    end
+    function Skin.LookingForGuildAppTemplate(Button)
+        Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 0, -1)
+        bg:SetPoint("BOTTOMRIGHT", 0, 1)
+
+        Button:GetHighlightTexture():SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+    end
+
+    function Skin.LookingForGuildFrameTemplate(Frame)
         _G.LookingForGuildFrameTabardBackground:Hide()
         _G.LookingForGuildFrameTabardEmblem:Hide()
         _G.LookingForGuildFrameTabardBorder:Hide()
-        _G.LookingForGuildFramePortraitFrame:Hide()
-        _G.LookingForGuildFrameTopBorder:Hide()
-        _G.LookingForGuildFrameTopRightCorner:Hide()
 
-        F.Reskin(_G.LookingForGuildBrowseButton)
-        F.Reskin(_G.GuildFinderRequestMembershipFrameAcceptButton)
-        F.Reskin(_G.GuildFinderRequestMembershipFrameCancelButton)
-        F.ReskinClose(_G.LookingForGuildFrameCloseButton)
-        F.ReskinCheck(_G.LookingForGuildQuestButton)
-        F.ReskinCheck(_G.LookingForGuildDungeonButton)
-        F.ReskinCheck(_G.LookingForGuildRaidButton)
-        F.ReskinCheck(_G.LookingForGuildPvPButton)
-        F.ReskinCheck(_G.LookingForGuildRPButton)
-        F.ReskinCheck(_G.LookingForGuildWeekdaysButton)
-        F.ReskinCheck(_G.LookingForGuildWeekendsButton)
-        F.ReskinInput(_G.GuildFinderRequestMembershipFrameInputFrame)
+        Skin.TabButtonTemplate(_G.LookingForGuildFrameTab1)
+        Skin.TabButtonTemplate(_G.LookingForGuildFrameTab2)
+        Skin.TabButtonTemplate(_G.LookingForGuildFrameTab3)
+    end
+    function Skin.LookingForGuildStartFrameTemplate(Frame)
+        Skin.LookingForGuildSectionTemplate(_G.LookingForGuildInterestFrame)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildQuestButton)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildRaidButton)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildDungeonButton)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildPvPButton)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildRPButton)
 
-        -- [[ Browse frame ]]
+        Skin.LookingForGuildSectionTemplate(_G.LookingForGuildAvailabilityFrame)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildWeekdaysButton)
+        Skin.LookingForGuildCheckButtonTemplate(_G.LookingForGuildWeekendsButton)
 
-        F.Reskin(_G.LookingForGuildRequestButton)
-        F.ReskinScroll(_G.LookingForGuildBrowseFrameContainerScrollBar)
+        Skin.LookingForGuildSectionTemplate(_G.LookingForGuildRolesFrame)
+        Skin.LookingForGuildRoleTemplate(_G.LookingForGuildTankButton)
+        Skin.LookingForGuildRoleTemplate(_G.LookingForGuildHealerButton)
+        Skin.LookingForGuildRoleTemplate(_G.LookingForGuildDamagerButton)
 
-        for i = 1, 5 do
-            local bu = _G["LookingForGuildBrowseFrameContainerButton"..i]
-
-            bu:SetBackdrop(nil)
-            bu:SetHighlightTexture("")
-
-            -- my client crashes if I put this in a var? :x
-            bu:GetRegions():SetTexture(C.media.backdrop)
-            bu:GetRegions():SetVertexColor(r, g, b, .2)
-            bu:GetRegions():SetPoint("TOPLEFT", 1, -1)
-            bu:GetRegions():SetPoint("BOTTOMRIGHT", -1, 2)
-
-            local bg = F.CreateBDFrame(bu, .25)
-            bg:SetPoint("TOPLEFT")
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+        Skin.LookingForGuildSectionTemplate(_G.LookingForGuildCommentFrame)
+        Base.SetBackdrop(_G.LookingForGuildCommentInputFrame)
+        for i = 1, 9 do
+            select(i, _G.LookingForGuildCommentInputFrame:GetRegions()):Hide()
         end
 
-        -- [[ Role buttons ]]
-
-        for _, roleButton in pairs({_G.LookingForGuildTankButton, _G.LookingForGuildHealerButton, _G.LookingForGuildDamagerButton}) do
-            roleButton.cover:SetTexture(C.media.roleIcons)
-            roleButton:SetNormalTexture(C.media.roleIcons)
-
-            roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
-
-            local left = roleButton:CreateTexture()
-            left:SetDrawLayer("OVERLAY", 1)
-            left:SetWidth(1)
-            left:SetTexture(C.media.backdrop)
-            left:SetVertexColor(0, 0, 0)
-            left:SetPoint("TOPLEFT", 5, -4)
-            left:SetPoint("BOTTOMLEFT", 5, 6)
-
-            local right = roleButton:CreateTexture()
-            right:SetDrawLayer("OVERLAY", 1)
-            right:SetWidth(1)
-            right:SetTexture(C.media.backdrop)
-            right:SetVertexColor(0, 0, 0)
-            right:SetPoint("TOPRIGHT", -5, -4)
-            right:SetPoint("BOTTOMRIGHT", -5, 6)
-
-            local top = roleButton:CreateTexture()
-            top:SetDrawLayer("OVERLAY", 1)
-            top:SetHeight(1)
-            top:SetTexture(C.media.backdrop)
-            top:SetVertexColor(0, 0, 0)
-            top:SetPoint("TOPLEFT", 5, -4)
-            top:SetPoint("TOPRIGHT", -5, -4)
-
-            local bottom = roleButton:CreateTexture()
-            bottom:SetDrawLayer("OVERLAY", 1)
-            bottom:SetHeight(1)
-            bottom:SetTexture(C.media.backdrop)
-            bottom:SetVertexColor(0, 0, 0)
-            bottom:SetPoint("BOTTOMLEFT", 5, 6)
-            bottom:SetPoint("BOTTOMRIGHT", -5, 6)
-
-            F.ReskinCheck(roleButton.checkButton)
-        end
+        Skin.MagicButtonTemplate(_G.LookingForGuildBrowseButton)
+    end
+    function Skin.LookingForGuildBrowseFrameTemplate(Frame)
+        Skin.HybridScrollBarTemplate(_G.LookingForGuildBrowseFrameContainerScrollBar)
+        Skin.MagicButtonTemplate(_G.LookingForGuildRequestButton)
+    end
+    function Skin.LookingForGuildAppsFrameTemplate(Frame)
+        Skin.MagicButtonTemplate(_G.LookingForGuildBrowseButton)
     end
 end
 

@@ -1,141 +1,79 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
+--[[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
--- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+do --[[ AddOns\Blizzard_GuildControlUI.lua ]]
+    local skinnedRanks = 1
+    function Hook.GuildControlUI_RankOrder_Update(self)
+        local prefix = self:GetName().."Rank"
+        for i = skinnedRanks + 1, _G.GuildControlGetNumRanks() do
+            Skin.RankChangeTemplate(_G[prefix..i])
+            skinnedRanks = skinnedRanks + 1
+        end
+    end
+    local skinnedPerms = 0
+    function Hook.GuildControlUI_BankTabPermissions_Update(self)
+        for i = skinnedPerms + 1, _G.GuildControlGetNumRanks() do
+            Skin.BankTabPermissionTemplate(_G["GuildControlBankTab"..i])
+            skinnedPerms = skinnedPerms + 1
+        end
+    end
+end
+
+do --[[ AddOns\Blizzard_GuildControlUI.xml ]]
+    function Skin.RankChangeTemplate(Frame)
+        Skin.InputBoxTemplate(Frame.nameBox)
+        Skin.UIPanelSquareButton(Frame.deleteButton)
+        Skin.UIPanelSquareButton(Frame.downButton)
+        Skin.UIPanelSquareButton(Frame.upButton)
+    end
+    Skin.GuildPermissionCheckBoxTemplate = Skin.UICheckButtonTemplate
+    function Skin.BankTabPermissionTemplate(Frame)
+        Base.CropIcon(Frame.owned.tabIcon, Frame.owned)
+        Skin.GuildPermissionCheckBoxTemplate(Frame.owned.viewCB)
+        Skin.GuildPermissionCheckBoxTemplate(Frame.owned.depositCB)
+        Skin.GuildPermissionCheckBoxTemplate(Frame.owned.infoCB)
+        Skin.InputBoxTemplate(Frame.owned.editBox)
+
+        --Skin.SmallMoneyFrameTemplate(Frame.buy.money)
+        Skin.UIPanelButtonTemplate(Frame.buy.button)
+   end
+end
 
 function private.AddOns.Blizzard_GuildControlUI()
-    local r, g, b = C.r, C.g, C.b
+    _G.hooksecurefunc("GuildControlUI_RankOrder_Update", Hook.GuildControlUI_RankOrder_Update)
+    _G.hooksecurefunc("GuildControlUI_BankTabPermissions_Update", Hook.GuildControlUI_BankTabPermissions_Update)
 
-    F.CreateBD(_G.GuildControlUI)
-
-    for i = 1, 9 do
-        select(i, _G.GuildControlUI:GetRegions()):Hide()
-    end
-
-    for i = 1, 8 do
-        select(i, _G.GuildControlUIRankBankFrameInset:GetRegions()):Hide()
-    end
-
-    _G.GuildControlUIRankSettingsFrameOfficerBg:SetAlpha(0)
-    _G.GuildControlUIRankSettingsFrameRosterBg:SetAlpha(0)
-    _G.GuildControlUIRankSettingsFrameBankBg:SetAlpha(0)
+    Skin.TranslucentFrameTemplate(_G.GuildControlUI)
     _G.GuildControlUITopBg:Hide()
-    _G.GuildControlUIHbar:Hide()
-    _G.GuildControlUIRankBankFrameInsetScrollFrameTop:SetAlpha(0)
-    _G.GuildControlUIRankBankFrameInsetScrollFrameBottom:SetAlpha(0)
+    Skin.HorizontalBarTemplate(_G.GuildControlUIHbar)
+    Skin.UIPanelCloseButton(_G.GuildControlUICloseButton)
+    Skin.UIDropDownMenuTemplate(_G.GuildControlUI.dropdown)
 
-    do
-        local function updateGuildRanks()
-            for i = 1, _G.GuildControlGetNumRanks() do
-                local rank = _G["GuildControlUIRankOrderFrameRank"..i]
-                if not rank.styled then
-                    rank.upButton.icon:Hide()
-                    rank.downButton.icon:Hide()
-                    rank.deleteButton.icon:Hide()
+    Skin.RankChangeTemplate(_G.GuildControlUIRankOrderFrameRank1)
+    Skin.UIPanelButtonTemplate(_G.GuildControlUIRankOrderFrame.newButton)
+    Skin.UIPanelButtonTemplate(_G.GuildControlUIRankOrderFrame.dupButton)
 
-                    F.ReskinArrow(rank.upButton, "Up")
-                    F.ReskinArrow(rank.downButton, "Down")
-                    F.ReskinClose(rank.deleteButton)
+    Skin.UIDropDownMenuTemplate(_G.GuildControlUI.bankTabFrame.dropdown)
+    Skin.InsetFrameTemplate2(_G.GuildControlUI.bankTabFrame.inset)
+    Skin.UIPanelScrollFrameTemplate2(_G.GuildControlUI.bankTabFrame.inset.scrollFrame)
 
-                    F.ReskinInput(rank.nameBox, 20)
-
-                    rank.styled = true
-                end
-            end
-        end
-
-        local f = _G.CreateFrame("Frame")
-        f:RegisterEvent("GUILD_RANKS_UPDATE")
-        f:SetScript("OnEvent", updateGuildRanks)
-        hooksecurefunc("GuildControlUI_RankOrder_Update", updateGuildRanks)
-    end
-
-    hooksecurefunc("GuildControlUI_BankTabPermissions_Update", function()
-        for i = 1, _G.GetNumGuildBankTabs() + 1 do
-            local tab = "GuildControlBankTab"..i
-            local bu = _G[tab]
-            if bu and not bu.styled then
-                local ownedTab = bu.owned
-
-                _G[tab.."Bg"]:Hide()
-
-                ownedTab.tabIcon:SetTexCoord(.08, .92, .08, .92)
-                F.CreateBG(ownedTab.tabIcon)
-
-                F.CreateBD(bu, .25)
-                F.Reskin(bu.buy.button)
-                F.ReskinInput(ownedTab.editBox)
-
-                for _, ch in pairs({ownedTab.viewCB, ownedTab.depositCB, ownedTab.infoCB}) do
-                    -- can't get a backdrop frame to appear behind the checked texture for some reason
-                    ch:SetNormalTexture("")
-                    ch:SetPushedTexture("")
-                    ch:SetHighlightTexture(C.media.backdrop)
-
-                    local hl = ch:GetHighlightTexture()
-                    hl:SetPoint("TOPLEFT", 5, -5)
-                    hl:SetPoint("BOTTOMRIGHT", -5, 5)
-                    hl:SetVertexColor(r, g, b, .2)
-
-                    local check = ch:GetCheckedTexture()
-                    check:SetDesaturated(true)
-                    check:SetVertexColor(r, g, b)
-
-                    local tex = F.CreateGradient(ch)
-                    tex:SetPoint("TOPLEFT", 5, -5)
-                    tex:SetPoint("BOTTOMRIGHT", -5, 5)
-
-                    local left = ch:CreateTexture(nil, "BACKGROUND")
-                    left:SetWidth(1)
-                    left:SetColorTexture(0, 0, 0)
-                    left:SetPoint("TOPLEFT", tex, -1, 1)
-                    left:SetPoint("BOTTOMLEFT", tex, -1, -1)
-
-                    local right = ch:CreateTexture(nil, "BACKGROUND")
-                    right:SetWidth(1)
-                    right:SetColorTexture(0, 0, 0)
-                    right:SetPoint("TOPRIGHT", tex, 1, 1)
-                    right:SetPoint("BOTTOMRIGHT", tex, 1, -1)
-
-                    local top = ch:CreateTexture(nil, "BACKGROUND")
-                    top:SetHeight(1)
-                    top:SetColorTexture(0, 0, 0)
-                    top:SetPoint("TOPLEFT", tex, -1, 1)
-                    top:SetPoint("TOPRIGHT", tex, 1, 1)
-
-                    local bottom = ch:CreateTexture(nil, "BACKGROUND")
-                    bottom:SetHeight(1)
-                    bottom:SetColorTexture(0, 0, 0)
-                    bottom:SetPoint("BOTTOMLEFT", tex, -1, -1)
-                    bottom:SetPoint("BOTTOMRIGHT", tex, 1, -1)
-                end
-
-                bu.styled = true
-            end
-        end
-    end)
-
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameOfficerCheckbox)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox5)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox7)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox6)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox8)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox15)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox19)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox16)
-    F.ReskinCheck(_G.GuildControlUIRankSettingsFrameCheckbox18)
-
-    F.Reskin(_G.GuildControlUIRankOrderFrameNewButton)
-    F.ReskinClose(_G.GuildControlUICloseButton)
-    F.ReskinScroll(_G.GuildControlUIRankBankFrameInsetScrollFrameScrollBar)
-    F.ReskinDropDown(_G.GuildControlUINavigationDropDown)
-    F.ReskinDropDown(_G.GuildControlUIRankSettingsFrameRankDropDown)
-    F.ReskinDropDown(_G.GuildControlUIRankBankFrameRankDropDown)
-    F.ReskinInput(_G.GuildControlUIRankSettingsFrameGoldBox, 20)
+    Skin.UIDropDownMenuTemplate(_G.GuildControlUI.rankPermFrame.dropdown)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUI.rankPermFrame.OfficerCheckbox)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUI.rankPermFrame.InviteCheckbox)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox7)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox6)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox8)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox2)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox15)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox19)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox16)
+    Skin.InputBoxTemplate(_G.GuildControlUI.rankPermFrame.goldBox)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox18)
 end

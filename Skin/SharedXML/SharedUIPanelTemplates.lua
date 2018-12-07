@@ -271,12 +271,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         CheckButton:SetPushedTexture("")
         CheckButton:SetHighlightTexture("")
 
-        local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetPoint("TOPLEFT", 6, -6)
-        bd:SetPoint("BOTTOMRIGHT", -6, 6)
-        bd:SetFrameLevel(CheckButton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.frame)
-        bd:SetBackdropBorderColor(Color.button)
+        Base.SetBackdrop(CheckButton, Color.frame)
+        CheckButton:SetBackdropBorderColor(Color.button)
+        local bg = CheckButton:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 6, -6)
+        bg:SetPoint("BOTTOMRIGHT", -6, 6)
 
         local check = CheckButton:GetCheckedTexture()
         check:ClearAllPoints()
@@ -288,7 +287,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local disabled = CheckButton:GetDisabledCheckedTexture()
         disabled:SetAllPoints(check)
 
-        CheckButton._auroraBDFrame = bd
         Base.SetHighlight(CheckButton, "backdrop")
 
         --[[ Scale ]]--
@@ -498,6 +496,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         --[[ Scale ]]--
         Slider:SetWidth(Slider:GetWidth())
     end
+    function Skin.UIPanelScrollFrameTemplate2(Slider)
+        Skin.UIPanelScrollFrameTemplate(Slider)
+
+        local name = Slider:GetName()
+        _G[name.."Top"]:SetAlpha(0)
+        _G[name.."Bottom"]:SetAlpha(0)
+    end
     function Skin.MinimalScrollBarTemplate(Slider)
         Slider.trackBG:Hide()
         Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
@@ -543,28 +548,29 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.MaximizeMinimizeButtonFrameTemplate(Frame)
-        Frame:SetSize(17, 17)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
+            Base.SetBackdrop(Frame, Color.button)
+            local bg = Frame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 17, -10)
+            bg:SetPoint("BOTTOMRIGHT", 3, 4)
+
             local Button = Frame[name]
-            Button:SetSize(17, 17)
             Button:SetNormalTexture("")
             Button:SetPushedTexture("")
             Button:SetHighlightTexture("")
-            Button:SetHitRectInsets(0, 0, 0, 0)
 
-            Base.SetBackdrop(Button, Color.button)
-
-            Button:ClearAllPoints()
-            Button:SetPoint("CENTER")
+            local dis = Button:GetDisabledTexture()
+            dis:SetColorTexture(0, 0, 0, .4)
+            dis:SetDrawLayer("OVERLAY")
+            dis:SetAllPoints(bg)
 
             Button._auroraHighlight = {}
 
-            local lineOfs = 4
             local line = Button:CreateLine()
             line:SetColorTexture(1, 1, 1)
-            line:SetThickness(0.5)
-            line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-            line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
+            line:SetThickness(1.2)
+            line:SetStartPoint("TOPRIGHT", bg, -4, -4)
+            line:SetEndPoint("BOTTOMLEFT", bg, 4.6, 4)
             tinsert(Button._auroraHighlight, line)
 
             local hline = Button:CreateTexture()
@@ -578,11 +584,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             tinsert(Button._auroraHighlight, vline)
 
             if name == "MaximizeButton" then
-                hline:SetPoint("TOP", 1, -4)
-                vline:SetPoint("RIGHT", -4, 1)
+                hline:SetPoint("TOP", bg, 1, -4)
+                vline:SetPoint("RIGHT", bg, -4, 1)
             else
-                hline:SetPoint("BOTTOM", -1, 4)
-                vline:SetPoint("LEFT", 4, -1)
+                hline:SetPoint("BOTTOM", bg, -1, 4)
+                vline:SetPoint("LEFT", bg, 4, -1)
             end
 
             Base.SetHighlight(Button, "color")
