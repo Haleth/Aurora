@@ -137,7 +137,9 @@ function private.OnLoad()
     -- Create API hooks
     local Base, Hook = Aurora.Base, Aurora.Hook
     function Hook.GameTooltip_SetBackdropStyle(self, style)
-        Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
+        if not self.IsEmbedded then
+            Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
+        end
     end
 
     _G.hooksecurefunc(Base, "SetBackdrop", function(frame, color, alpha, ...)
