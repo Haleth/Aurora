@@ -137,6 +137,17 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     ]]
     -- BlizzWTF: This should be a template
     function Skin.GlowBoxFrame(Frame, direction)
+        if Frame.BigText then
+            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+            local Arrow = _G.CreateFrame("Frame", nil, Frame)
+            Arrow.Arrow = Frame["Arrow"..direction] or Frame["Arrow"..direction:upper()]
+            Arrow.Arrow:SetParent(Arrow)
+            Arrow.Glow = Frame["ArrowGlow"..direction] or Frame["ArrowGlow"..direction:upper()]
+            Arrow.Glow:SetParent(Arrow)
+
+            Frame.Arrow = Arrow
+            Frame.Text = Frame.BigText
+        end
         Skin.GlowBoxTemplate(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
 

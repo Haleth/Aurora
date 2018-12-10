@@ -1,13 +1,25 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local pairs = _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals pairs hooksecurefunc
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
+--[[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+local F, C = _G.unpack(Aurora)
 
--- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+--do --[[ FrameXML\LFGFrame.lua ]]
+--end
+
+do --[[ FrameXML\LFGFrame.xml ]]
+    function Skin.LFGRoleButtonTemplate(Button)
+        Button.cover:SetColorTexture(0, 0, 0, 0.5)
+        Base.SetTexture(Button:GetNormalTexture(), "role"..Button.role)
+        Skin.UICheckButtonTemplate(Button.checkButton)
+        Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
+    end
+end
 
 function private.FrameXML.LFGFrame()
     local function styleRewardButton(button)
