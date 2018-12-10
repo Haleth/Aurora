@@ -1,105 +1,51 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next = _G.next
+--[[ Lua Globals ]]
+-- luacheck: globals
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
+--[[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
--- [[ Core ]]
-local F, C = _G.unpack(private.Aurora)
-
-function private.FrameXML.SpellBookFrame()
-    local r, g, b = C.r, C.g, C.b
-
-    local SpellBookFrame = _G.SpellBookFrame
-    F.ReskinPortraitFrame(SpellBookFrame, true)
-    _G.SetUIPanelAttribute(SpellBookFrame, "width", 490)
-    _G.SetUIPanelAttribute(SpellBookFrame, "height", 492)
-    SpellBookFrame:SetSize(465, 472)
-    _G.SpellBookPage1:Hide()
-    _G.SpellBookPage2:Hide()
-
-    SpellBookFrame.MainHelpButton.Ring:Hide()
-    SpellBookFrame.MainHelpButton:SetPoint("TOPLEFT", -18, 18)
-
-    _G.SpellBookFrameTabButton1:SetPoint("TOPLEFT", _G.SpellBookFrame, "BOTTOMLEFT", 0, 2)
-    for i = 1, 5 do
-        F.ReskinTab(_G["SpellBookFrameTabButton"..i])
-    end
-
-    _G.SpellBookPageText:SetTextColor(.8, .8, .8)
-    _G.SpellBookPageText:SetPoint("BOTTOMRIGHT", -110, 28)
-    F.ReskinArrow(_G.SpellBookPrevPageButton, "Left")
-    F.ReskinArrow(_G.SpellBookNextPageButton, "Right")
-
-    _G.SpellButton1:SetPoint("TOPLEFT", 32, -40)
-    for i = 1, _G.SPELLS_PER_PAGE do
-        local name = "SpellButton"..i
-        local button = _G[name]
-
-        button.EmptySlot:Hide()
-
-        local icon = _G[name.."IconTexture"]
-        local iconBG = F.ReskinIcon(icon)
-        iconBG:SetPoint("TOPLEFT", button, -1, 1)
-        iconBG:SetPoint("BOTTOMRIGHT", button, 1, -1)
-        button._auroraIconBG = iconBG
-        button.SeeTrainerString:SetTextColor(.7, .7, .7)
-
-        _G[name.."SlotFrame"]:SetAlpha(0)
-        button.UnlearnedFrame:SetAlpha(0)
-
-        local autoCast = _G[name.."AutoCastable"]
-        autoCast:ClearAllPoints()
-        autoCast:SetPoint("TOPLEFT")
-        autoCast:SetPoint("BOTTOMRIGHT")
-        autoCast:SetTexCoord(0.2344, 0.75, 0.25, 0.75)
-
-        local spellHighlight = button.SpellHighlightTexture
-        spellHighlight:ClearAllPoints()
-        spellHighlight:SetPoint("TOPLEFT")
-        spellHighlight:SetPoint("BOTTOMRIGHT")
-        spellHighlight:SetTexCoord(0.125, 0.882, 0.135, 0.885)
-
-        button:SetPushedTexture("")
-        button:SetCheckedTexture(C.media.checked)
-    end
-    hooksecurefunc("SpellButton_UpdateButton", function(self)
+do --[[ FrameXML\SpellBookFrame.lua ]]
+    function Hook.SpellButton_UpdateButton(self)
         if _G.SpellBookFrame.bookType == _G.BOOKTYPE_PROFESSION then return end
 
         self.TextBackground:SetDesaturated(true)
+        self.TextBackground2:SetDesaturated(true)
         local isOffSpec = self.offSpecID ~= 0 and _G.SpellBookFrame.bookType == _G.BOOKTYPE_SPELL
         local slot, slotType = _G.SpellBook_GetSpellBookSlot(self)
         if slot then
             if slotType == "FUTURESPELL" then
                 local level = _G.GetSpellAvailableLevel(slot, _G.SpellBookFrame.bookType)
                 if _G.IsCharacterNewlyBoosted() or (level and level > _G.UnitLevel("player")) then
-                    self.SpellName:SetTextColor(.7, .7, .7)
-                    self.SpellSubName:SetTextColor(.5, .5, .5)
-                    self.RequiredLevelString:SetTextColor(.5, .5, .5)
-                    self._auroraIconBG:SetBackdropBorderColor(.5, .5, .5)
+                    self.SpellName:SetTextColor(Color.grayLight:GetRGB())
+                    self.SpellSubName:SetTextColor(Color.gray:GetRGB())
+                    self.RequiredLevelString:SetTextColor(Color.gray:GetRGB())
+                    self:SetBackdropBorderColor(Color.gray:GetRGB())
                 else
                     -- Can learn spell, but hasn't yet. eg. riding skill
                     self.TrainFrame:Hide()
                     self.TrainTextBackground:Hide()
 
-                    self.SpellSubName:SetTextColor(.7, .7, .7)
-                    self._auroraIconBG:SetBackdropBorderColor(1, 1, 0)
+                    self.SpellSubName:SetTextColor(Color.grayLight:GetRGB())
+                    self:SetBackdropBorderColor(Color.yellow:GetRGB())
                 end
             else
-                self.SpellSubName:SetTextColor(.5, .5, .5)
+                self.SpellSubName:SetTextColor(Color.gray:GetRGB())
 
                 if isOffSpec then
                     local level = _G.GetSpellAvailableLevel(slot, _G.SpellBookFrame.bookType)
                     if level and level > _G.UnitLevel("player") then
-                        self.RequiredLevelString:SetTextColor(.5, .5, .5)
+                        self.RequiredLevelString:SetTextColor(Color.gray:GetRGB())
                     end
-                    self._auroraIconBG:SetBackdropBorderColor(.5, .5, .5)
+                    self:SetBackdropBorderColor(Color.gray:GetRGB())
                 elseif self.SpellHighlightTexture and self.SpellHighlightTexture:IsShown() then
-                    self._auroraIconBG:SetBackdropBorderColor(1, 1, 0)
+                    self:SetBackdropBorderColor(Color.yellow:GetRGB())
                 else
-                    self._auroraIconBG:SetBackdropBorderColor(r, g, b)
+                    self:SetBackdropBorderColor(Color.highlight:GetRGB())
                 end
             end
 
@@ -110,99 +56,229 @@ function private.FrameXML.SpellBookFrame()
                 shine:SetPoint("BOTTOMRIGHT", -1, 1)
             end
         else
-            self._auroraIconBG:SetBackdropBorderColor(0, 0, 0)
-        end
-    end)
-
-    _G.SpellBookSkillLineTab1:SetPoint("TOPLEFT", _G.SpellBookSideTabsFrame, "TOPRIGHT", 2, -36)
-    for i = 1, _G.MAX_SKILLLINE_TABS do
-        local skillLineTab = _G["SpellBookSkillLineTab"..i]
-        skillLineTab:GetRegions():Hide()
-        skillLineTab:SetCheckedTexture(C.media.checked)
-
-        F.CreateBG(skillLineTab)
-
-        local icon = skillLineTab:GetNormalTexture()
-        if icon then
-            icon:SetTexCoord(.08, .92, .08, .92)
+            self:SetBackdropBorderColor(Color.black:GetRGB())
         end
     end
+    function Hook.SpellBookFrame_UpdateSkillLineTabs(self)
+        local numSkillLineTabs = _G.GetNumSpellTabs()
+        for i = 1, _G.MAX_SKILLLINE_TABS do
+            local skillLineTab = _G["SpellBookSkillLineTab"..i]
+            local prevTab = _G["SpellBookSkillLineTab"..i-1]
+            if i <= numSkillLineTabs and _G.SpellBookFrame.bookType == _G.BOOKTYPE_SPELL then
+                local _, _, _, _, isGuild, _, shouldHide = _G.GetSpellTabInfo(i)
 
-    _G.PrimaryProfession1:SetPoint("TOPLEFT", 12, -28)
-    _G.PrimaryProfession2:SetPoint("TOPLEFT", _G.PrimaryProfession1, "BOTTOMLEFT", 0, -8)
+                if not shouldHide then
+                    -- Guild tab gets additional space
+                    if prevTab then
+                        if isGuild then
+                            skillLineTab:SetPoint("TOPLEFT", prevTab, "BOTTOMLEFT", 0, -25)
+                        elseif skillLineTab.isOffSpec and not prevTab.isOffSpec then
+                            skillLineTab:SetPoint("TOPLEFT", prevTab, "BOTTOMLEFT", 0, -20)
+                        else
+                            skillLineTab:SetPoint("TOPLEFT", prevTab, "BOTTOMLEFT", 0, -5)
+                        end
+                    end
 
-    _G.SecondaryProfession1:SetPoint("TOPLEFT", _G.PrimaryProfession2, "BOTTOMLEFT", 0, -18)
-    _G.SecondaryProfession2:SetPoint("TOPLEFT", _G.SecondaryProfession1, "BOTTOMLEFT", 0, -8)
-    _G.SecondaryProfession3:SetPoint("TOPLEFT", _G.SecondaryProfession2, "BOTTOMLEFT", 0, -8)
-    local professions = {
-        PrimaryProfession1 = true,
-        PrimaryProfession2 = true,
-
-        SecondaryProfession1 = false,
-        SecondaryProfession2 = false,
-        SecondaryProfession3 = false,
-    }
-    for name, isPrimary in next, professions do
-        local prof = _G[name]
-        F.CreateBD(prof, .25)
-
-        prof.professionName:SetTextColor(1, 1, 1)
-        prof.missingHeader:SetTextColor(1, 1, 1)
-        prof.missingText:SetTextColor(1, 1, 1)
-
-        for i = 1, 2 do
-            local button = prof["button"..i]
-            button:SetSize(41, 41)
-            button.Icon = button.iconTexture
-            button.NameFrame = _G[button:GetName().."NameFrame"]
-            F.ReskinItemFrame(button)
-            button:SetPushedTexture("")
-            button:SetCheckedTexture(C.media.checked)
-        end
-
-        prof.statusBar:SetSize(115, 12)
-        prof.statusBar:ClearAllPoints()
-        prof.statusBar:SetStatusBarTexture(C.media.backdrop)
-        prof.statusBar:GetStatusBarTexture():SetGradient("VERTICAL", 0, .6, 0, 0, .8, 0)
-        prof.statusBar.rankText:SetPoint("CENTER")
-
-        _G[name.."StatusBarLeft"]:Hide()
-        prof.statusBar.capRight:SetAlpha(0)
-        _G[name.."StatusBarBGLeft"]:Hide()
-        _G[name.."StatusBarBGMiddle"]:Hide()
-        _G[name.."StatusBarBGRight"]:Hide()
-        F.CreateBDFrame(prof.statusBar, .25)
-
-        if isPrimary then
-            prof:SetSize(441, 93)
-            prof.professionName:SetPoint("TOPLEFT", prof.icon, "TOPRIGHT", 4, 0)
-            prof.rank:SetPoint("BOTTOMLEFT", prof.statusBar, "TOPLEFT", 0, 3)
-            _G[name.."IconBorder"]:Hide()
-
-            prof.icon:ClearAllPoints()
-            prof.icon:SetPoint("TOPLEFT", 6, -6)
-            prof.icon:SetSize(81, 81)
-            F.ReskinIcon(prof.icon)
-
-            prof.button2:SetPoint("TOPRIGHT", -108, -4)
-            prof.button1:SetPoint("TOPLEFT", prof.button2, "BOTTOMLEFT", 0, -3)
-            prof.statusBar:SetPoint("BOTTOMLEFT", prof.icon, "BOTTOMRIGHT", 4, 0)
-            prof.unlearn:ClearAllPoints()
-            prof.unlearn:SetPoint("BOTTOMRIGHT", prof.icon)
-        else
-            prof:SetSize(441, 49)
-            prof.professionName:SetPoint("TOPLEFT", 4, -3)
-            prof.button1:SetPoint("TOPRIGHT", -108, -4)
-            prof.button2:SetPoint("TOPRIGHT", prof.button1, "TOPLEFT", -107, 0)
-            prof.statusBar:SetPoint("TOPLEFT", prof.rank, "BOTTOMLEFT", 0, -3)
+                    -- Set the selected tab
+                    if _G.SpellBookFrame.selectedSkillLine == i then
+                        skillLineTab._auroraIconBG:SetColorTexture(Color.yellow:GetRGB())
+                    else
+                        skillLineTab._auroraIconBG:SetColorTexture(Color.black:GetRGB())
+                    end
+                end
+            else
+                _G["SpellBookSkillLineTab"..i.."Flash"]:Hide()
+                skillLineTab:Hide()
+            end
         end
     end
-    hooksecurefunc("FormatProfession", function(frame, index)
+    function Hook.FormatProfession(frame, index)
         if index then
             local _, texture = _G.GetProfessionInfo(index)
             if frame.icon and texture then
                 frame.icon:SetTexture(texture)
             end
         end
-    end)
+    end
+end
+
+do --[[ FrameXML\SpellBookFrame.xml ]]
+    function Skin.SpellBookSkillLineTabTemplate(CheckButton)
+        CheckButton:GetRegions():Hide()
+
+        CheckButton._auroraIconBG = Base.CropIcon(CheckButton:GetNormalTexture(), CheckButton)
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
+    end
+    function Skin.SpellBookFrameTabButtonTemplate(Button)
+        Skin.CharacterFrameTabButtonTemplate(Button)
+    end
+    function Skin.SpellButtonTemplate(CheckButton)
+        local name = CheckButton:GetName()
+
+        CheckButton.EmptySlot:Hide()
+        CheckButton.SeeTrainerString:SetTextColor(.7, .7, .7)
+
+        Base.CropIcon(_G[name.."IconTexture"])
+        Base.CreateBackdrop(CheckButton, {
+            edgeSize = 1,
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+        })
+        CheckButton:SetBackdropColor(1, 1, 1, 0.75)
+        CheckButton:SetBackdropBorderColor(Color.frame, 1)
+
+        local bg = CheckButton:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        bg:SetDesaturated(true)
+        Base.CropIcon(bg)
+
+        _G[name.."SlotFrame"]:SetAlpha(0)
+        CheckButton.UnlearnedFrame:SetAlpha(0)
+
+        local autoCast = _G[name.."AutoCastable"]
+        autoCast:ClearAllPoints()
+        autoCast:SetPoint("TOPLEFT")
+        autoCast:SetPoint("BOTTOMRIGHT")
+        autoCast:SetTexCoord(0.2344, 0.75, 0.25, 0.75)
+
+        local spellHighlight = CheckButton.SpellHighlightTexture
+        spellHighlight:ClearAllPoints()
+        spellHighlight:SetPoint("TOPLEFT")
+        spellHighlight:SetPoint("BOTTOMRIGHT")
+        spellHighlight:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+
+        CheckButton:SetNormalTexture("")
+        Base.CropIcon(CheckButton:GetPushedTexture())
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
+    end
+    function Skin.ProfessionButtonTemplate(CheckButton)
+        Base.CropIcon(CheckButton.iconTexture, CheckButton)
+
+        local nameFrame = _G[CheckButton:GetName().."NameFrame"]
+        nameFrame:SetTexture([[Interface\Spellbook\Spellbook-Parts]])
+        nameFrame:SetTexCoord(0.31250000, 0.96484375, 0.37109375, 0.52343750)
+        nameFrame:SetDesaturated(true)
+        nameFrame:SetAlpha(1)
+        nameFrame:SetSize(167, 39)
+        nameFrame:SetPoint("LEFT", CheckButton.iconTexture, "RIGHT", -2, 0)
+
+        Base.CropIcon(CheckButton:GetPushedTexture())
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
+    end
+    function Skin.ProfessionStatusBarTemplate(StatusBar)
+        local name = StatusBar:GetName()
+
+        StatusBar:SetSize(115, 12)
+        StatusBar.rankText:SetPoint("CENTER")
+
+        _G[name.."Left"]:Hide()
+        StatusBar.capRight:SetAlpha(0)
+
+        Base.SetBackdrop(StatusBar, Color.button, 0.3)
+        local healthBarBG = StatusBar:GetBackdropTexture("bg")
+        healthBarBG:SetPoint("TOPLEFT", -1, 1)
+        healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
+
+        _G[name.."BGLeft"]:Hide()
+        _G[name.."BGMiddle"]:Hide()
+        _G[name.."BGRight"]:Hide()
+
+        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+        StatusBar:SetStatusBarColor(Color.green:GetRGB())
+    end
+    function Skin.PrimaryProfessionTemplate(Button)
+        local name = Button:GetName()
+
+        Button.professionName:SetPoint("TOPLEFT", Button.icon, "TOPRIGHT", 12, 0)
+        Button.missingHeader:SetTextColor(Color.white:GetRGB())
+        Button.missingText:SetTextColor(Color.grayLight:GetRGB())
+        _G[name.."IconBorder"]:Hide()
+
+        Button.icon:ClearAllPoints()
+        Button.icon:SetPoint("TOPLEFT", 6, -6)
+        Button.icon:SetSize(81, 81)
+        Base.CropIcon(Button.icon, Button)
+
+        Skin.ProfessionButtonTemplate(Button.button2)
+        Button.button2:SetPoint("TOPRIGHT", -109, 0)
+        Skin.ProfessionButtonTemplate(Button.button1)
+        Button.button1:SetPoint("TOPLEFT", Button.button2, "BOTTOMLEFT", 0, -3)
+        Skin.ProfessionStatusBarTemplate(Button.statusBar)
+        Button.statusBar:ClearAllPoints()
+        Button.statusBar:SetPoint("BOTTOMLEFT", Button.icon, "BOTTOMRIGHT", 9, 5)
+
+        Button.unlearn:ClearAllPoints()
+        Button.unlearn:SetPoint("BOTTOMRIGHT", Button.icon)
+    end
+    function Skin.SecondaryProfessionTemplate(Button)
+        Skin.ProfessionButtonTemplate(Button.button2)
+        --Button.button2:SetPoint("TOPRIGHT", -109, 0)
+        Skin.ProfessionButtonTemplate(Button.button1)
+        --Button.button1:SetPoint("TOPLEFT", Button.button2, "BOTTOMLEFT", 0, -3)
+        Skin.ProfessionStatusBarTemplate(Button.statusBar)
+        Button.statusBar:SetPoint("BOTTOMLEFT", -10, 5)
+
+        Button.rank:SetPoint("BOTTOMLEFT", Button.statusBar, "TOPLEFT", 3, 4)
+        Button.missingHeader:SetTextColor(Color.white:GetRGB())
+        Button.missingText:SetTextColor(Color.grayLight:GetRGB())
+    end
+end
+
+function private.FrameXML.SpellBookFrame()
+    _G.hooksecurefunc("SpellButton_UpdateButton", Hook.SpellButton_UpdateButton)
+    _G.hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", Hook.SpellBookFrame_UpdateSkillLineTabs)
+    _G.hooksecurefunc("FormatProfession", Hook.FormatProfession)
+
+    local SpellBookFrame = _G.SpellBookFrame
+    Skin.ButtonFrameTemplate(SpellBookFrame)
+    _G.SpellBookPage1:Hide()
+    _G.SpellBookPage2:Hide()
+
+    Skin.MainHelpPlateButton(SpellBookFrame.MainHelpButton)
+    SpellBookFrame.MainHelpButton:SetPoint("TOPLEFT", SpellBookFrame, "TOPLEFT", -15, 15)
+
+    Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton1)
+    Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton2)
+    Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton3)
+    Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton4)
+    Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton5)
+    Util.PositionRelative("TOPLEFT", SpellBookFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.SpellBookFrameTabButton1,
+        _G.SpellBookFrameTabButton2,
+        _G.SpellBookFrameTabButton3,
+        _G.SpellBookFrameTabButton4,
+        _G.SpellBookFrameTabButton5,
+    })
+
+    _G.SpellBookPageText:SetTextColor(Color.gray:GetRGB())
+    Skin.NavButtonPrevious(_G.SpellBookPrevPageButton)
+    Skin.NavButtonNext(_G.SpellBookNextPageButton)
+
+    ----------------
+    -- SpellIcons --
+    ----------------
+    for i = 1, _G.SPELLS_PER_PAGE do
+        Skin.SpellButtonTemplate(_G["SpellButton"..i])
+    end
+
+    --------------
+    -- SideTabs --
+    --------------
+    _G.SpellBookSkillLineTab1:SetPoint("TOPLEFT", _G.SpellBookSideTabsFrame, "TOPRIGHT", 2, -40)
+    for i = 1, _G.MAX_SKILLLINE_TABS do
+        Skin.SpellBookSkillLineTabTemplate(_G["SpellBookSkillLineTab"..i])
+    end
+
+    ----------------
+    -- Profession --
+    ----------------
+    Skin.PrimaryProfessionTemplate(_G.PrimaryProfession1)
+    Skin.PrimaryProfessionTemplate(_G.PrimaryProfession2)
+
+    Skin.SecondaryProfessionTemplate(_G.SecondaryProfession1)
+    Skin.SecondaryProfessionTemplate(_G.SecondaryProfession2)
+    Skin.SecondaryProfessionTemplate(_G.SecondaryProfession3)
 end
