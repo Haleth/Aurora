@@ -588,17 +588,7 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.cyan:GetRGB())
 
     -- ScenarioProvingGroundsBlock
-
-    -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-    local WarfrontHelpBox = _G.ScenarioBlocksFrame.WarfrontHelpBox
-    local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
-    Arrow.Arrow = WarfrontHelpBox.ArrowRight
-    Arrow.Arrow:SetParent(Arrow)
-    Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
-    Arrow.Glow:SetParent(Arrow)
-    WarfrontHelpBox.Arrow = Arrow
-    WarfrontHelpBox.Text = WarfrontHelpBox.BigText
-    Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
+    Skin.GlowBoxFrame(_G.ScenarioBlocksFrame.WarfrontHelpBox, "Right")
 
     --[[ Scale ]]--
     _G.ScenarioStageBlock:SetSize(201, 83)

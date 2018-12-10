@@ -690,16 +690,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.SearchBoxTemplate(ToyBox.searchBox)
     Skin.UIMenuButtonStretchTemplate(_G.ToyBoxFilterButton)
 
-    local favoriteHelpBox = ToyBox.favoriteHelpBox
-    local toysArrow = _G.CreateFrame("Frame", nil, favoriteHelpBox)
-    toysArrow.Arrow = favoriteHelpBox.ArrowUp
-    toysArrow.Arrow:SetParent(toysArrow)
-    toysArrow.Glow = favoriteHelpBox.ArrowGlowUp
-    toysArrow.Glow:SetParent(toysArrow)
-    favoriteHelpBox.Arrow = toysArrow
-    favoriteHelpBox.Text = favoriteHelpBox.BigText
-    Skin.GlowBoxFrame(favoriteHelpBox, "Up")
-
+    Skin.GlowBoxFrame(ToyBox.favoriteHelpBox, "Up")
     Skin.GlowBoxTemplate(ToyBox.mousewheelPagingHelpBox)
     Skin.UIPanelCloseButton(ToyBox.mousewheelPagingHelpBox.CloseButton)
 
@@ -745,16 +736,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.TabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
     Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
 
-    local SetsTabHelpBox = WardrobeCollectionFrame.SetsTabHelpBox
-    local setsArrow = _G.CreateFrame("Frame", nil, SetsTabHelpBox)
-    setsArrow.Arrow = SetsTabHelpBox.ArrowUp
-    setsArrow.Arrow:SetParent(setsArrow)
-    setsArrow.Glow = SetsTabHelpBox.ArrowGlowUp
-    setsArrow.Glow:SetParent(setsArrow)
-    SetsTabHelpBox.Arrow = setsArrow
-    SetsTabHelpBox.Text = SetsTabHelpBox.BigText
-    Skin.GlowBoxFrame(SetsTabHelpBox, "Up")
-
+    Skin.GlowBoxFrame(WardrobeCollectionFrame.SetsTabHelpBox, "Up")
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
     Skin.UIMenuButtonStretchTemplate(WardrobeCollectionFrame.FilterButton)

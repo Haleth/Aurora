@@ -89,16 +89,7 @@ function private.FrameXML.BankFrame()
     Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab2)
     _G.BankFrameTab2:SetPoint("TOPLEFT", _G.BankFrameTab1, "TOPRIGHT", 1, 0)
 
-    local GlowBox = _G.BankFrame.GlowBox
-    local Arrow = _G.CreateFrame("Frame", nil, GlowBox)
-    Arrow.Arrow = GlowBox.ArrowLEFT
-    Arrow.Arrow:SetParent(Arrow)
-    Arrow.Glow = GlowBox.ArrowGlowLEFT
-    Arrow.Glow:SetParent(Arrow)
-    GlowBox.Arrow = Arrow
-    GlowBox.Text = GlowBox.BigText
-    Skin.GlowBoxFrame(GlowBox, "Left")
-
+    Skin.GlowBoxFrame(_G.BankFrame.GlowBox, "Left")
     Skin.BagSearchBoxTemplate(_G.BankItemSearchBox)
     Skin.BankAutoSortButtonTemplate(_G.BankItemAutoSortButton)
 

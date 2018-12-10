@@ -118,17 +118,7 @@ function private.AddOns.Blizzard_WarboardUI()
     WarboardQuestChoiceFrame.Title.Middle:Hide()
 
     Skin.UIPanelCloseButton(WarboardQuestChoiceFrame.CloseButton)
-
-    -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-    local WarfrontHelpBox = WarboardQuestChoiceFrame.WarfrontHelpBox
-    local Arrow = _G.CreateFrame("Frame", nil, WarfrontHelpBox)
-    Arrow.Arrow = WarfrontHelpBox.ArrowRight
-    Arrow.Arrow:SetParent(Arrow)
-    Arrow.Glow = WarfrontHelpBox.ArrowGlowRight
-    Arrow.Glow:SetParent(Arrow)
-    WarfrontHelpBox.Arrow = Arrow
-    WarfrontHelpBox.Text = WarfrontHelpBox.BigText
-    Skin.GlowBoxFrame(WarfrontHelpBox, "Right")
+    Skin.GlowBoxFrame(WarboardQuestChoiceFrame.WarfrontHelpBox, "Right")
 
     --[[ Scale ]]--
     WarboardQuestChoiceFrame.Title:SetSize(500, 85)
