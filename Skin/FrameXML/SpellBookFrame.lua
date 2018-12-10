@@ -215,10 +215,9 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
     end
     function Skin.SecondaryProfessionTemplate(Button)
         Skin.ProfessionButtonTemplate(Button.button2)
-        --Button.button2:SetPoint("TOPRIGHT", -109, 0)
         Skin.ProfessionButtonTemplate(Button.button1)
-        --Button.button1:SetPoint("TOPLEFT", Button.button2, "BOTTOMLEFT", 0, -3)
         Skin.ProfessionStatusBarTemplate(Button.statusBar)
+        Button.statusBar:ClearAllPoints() -- not isPatch
         Button.statusBar:SetPoint("BOTTOMLEFT", -10, 5)
 
         Button.rank:SetPoint("BOTTOMLEFT", Button.statusBar, "TOPLEFT", 3, 4)
