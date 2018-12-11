@@ -1,4 +1,18 @@
-﻿## [8.0.1.9] - 2018-11-26 ##
+﻿## [8.1.0.0] - 2018-12-11 ##
+### Changed ###
+
+  * Updates for 8.1
+  * Updated Spellbook UI
+  * Updated PvP group finder
+
+### Fixed ###
+
+  * Minor Splash frame error
+  * Various textures would flash for some users
+
+
+
+## [8.0.1.9] - 2018-11-26 ##
 ### Fixed ###
 
   * Minor Splash frame error
@@ -273,6 +287,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.0.0]: https://github.com/Haleth/Aurora/compare/8.0.1.9...8.1.0.0
 [8.0.1.9]: https://github.com/Haleth/Aurora/compare/8.0.1.8...8.0.1.9
 [8.0.1.8]: https://github.com/Haleth/Aurora/compare/8.0.1.7...8.0.1.8
 [8.0.1.7]: https://github.com/Haleth/Aurora/compare/8.0.1.6...8.0.1.7
