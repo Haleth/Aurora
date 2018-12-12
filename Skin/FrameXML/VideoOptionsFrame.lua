@@ -19,7 +19,7 @@ function private.FrameXML.VideoOptionsFrame()
 
     Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameOkay)
     Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameCancel)
-    Util.PositionRelative("BOTTOMRIGHT", _G.InterfaceOptionsFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
+    Util.PositionRelative("BOTTOMRIGHT", _G.VideoOptionsFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
         _G.VideoOptionsFrameCancel,
         _G.VideoOptionsFrameOkay,
     })
