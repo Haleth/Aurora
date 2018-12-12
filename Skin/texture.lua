@@ -95,6 +95,16 @@ do -- gradients
             _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
                 texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
             end)
+        elseif frame.SetBackdropColor and frame._auroraBackdrop then
+            local red, green, blue = frame:GetBackdropColor()
+            if red then
+                texture:SetGradient(direction, red * min, green * min, blue * min, red * max, green * max, blue * max)
+            end
+
+            _G.hooksecurefunc(frame, "SetBackdropColor", function(self)
+                local r, g, b = frame:GetBackdropColor()
+                texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
+            end)
         else
             texture:SetGradient(direction, min, min, min, max, max, max)
         end
@@ -105,6 +115,15 @@ do -- gradients
             texture:SetGradient(direction, red * max, green * max, blue * max, red * min, green * min, blue * min)
 
             _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
+                texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
+            end)
+        elseif frame.SetBackdropColor and frame._auroraBackdrop then
+            local red, green, blue = frame:GetBackdropColor()
+            if red then
+                texture:SetGradient(direction, red * max, green * max, blue * max, red * min, green * min, blue * min)
+            end
+
+            _G.hooksecurefunc(frame, "SetBackdropColor", function(self, r, g, b)
                 texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
             end)
         else

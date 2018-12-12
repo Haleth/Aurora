@@ -142,17 +142,24 @@ function private.OnLoad()
         end
     end
 
-    _G.hooksecurefunc(Base, "SetBackdrop", function(frame, color, alpha, ...)
+    local gradientBackdrop = {
+        edgeSize = 1,
+        bgFile = "gradientUp",
+    }
+    function Base.SetBackdrop(frame, color, alpha)
+        local backdrop = private.backdrop
         if not alpha then
             if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
-                Aurora.Base.SetTexture(frame:GetBackdropTexture("bg"), "gradientUp")
-                Aurora.Base.SetBackdropColor(frame, color)
+                backdrop = gradientBackdrop
             elseif not color then
-                frame:SetBackdropColor(Color.frame, AuroraConfig.alpha)
+                color, alpha = Color.frame, AuroraConfig.alpha
                 _G.tinsert(C.frames, frame)
             end
         end
-    end)
+
+        Base.CreateBackdrop(frame, backdrop)
+        Base.SetBackdropColor(frame, color, alpha)
+    end
     _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
         _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
         _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
