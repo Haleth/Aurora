@@ -1,4 +1,17 @@
-﻿## [8.1.0.0] - 2018-12-11 ##
+﻿## [8.1.0.1] - 2018-12-13 ##
+### Changed ###
+
+  * Skinned PvP season change notice
+
+### Fixed ###
+
+  * Button gradients did not work
+  * Some video options button were not positioned properly
+  * The LFD inset border was not skinned
+
+
+
+## [8.1.0.0] - 2018-12-11 ##
 ### Changed ###
 
   * Updates for 8.1
@@ -287,6 +300,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.0.1]: https://github.com/Haleth/Aurora/compare/8.1.0.0...8.1.0.1
 [8.1.0.0]: https://github.com/Haleth/Aurora/compare/8.0.1.9...8.1.0.0
 [8.0.1.9]: https://github.com/Haleth/Aurora/compare/8.0.1.8...8.0.1.9
 [8.0.1.8]: https://github.com/Haleth/Aurora/compare/8.0.1.7...8.0.1.8
