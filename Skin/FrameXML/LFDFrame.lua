@@ -1,7 +1,9 @@
 local _, private = ...
 
 -- [[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F = _G.unpack(Aurora)
 
 function private.FrameXML.LFDFrame()
     --[[ LFDRoleCheckPopup ]]--
@@ -25,8 +27,7 @@ function private.FrameXML.LFDFrame()
     LFDParentFrame:DisableDrawLayer("BORDER")
     LFDParentFrame:DisableDrawLayer("OVERLAY")
 
-    LFDParentFrame.Inset:DisableDrawLayer("BACKGROUND")
-    LFDParentFrame.Inset:DisableDrawLayer("BORDER")
+    Skin.InsetFrameTemplate(LFDParentFrame.Inset)
 
     _G.LFDQueueFrameBackground:Hide()
 
