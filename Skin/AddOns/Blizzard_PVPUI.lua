@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals ipairs
+-- luacheck: globals ipairs select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -57,6 +57,39 @@ do --[[ AddOns\Blizzard_PVPUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_PVPUI.xml ]]
+    function Skin.SeasonRewardFrameTemplate(Frame)
+    end
+    function Skin.PVPSeasonChangesNoticeTemplate(Frame)
+        Frame.BottomLeftCorner:Hide()
+        Frame.BottomRightCorner:Hide()
+        Frame.TopLeftCorner:Hide()
+        Frame.TopRightCorner:Hide()
+
+        Frame.BottomBorder:Hide()
+        Frame.TopBorder:Hide()
+        Frame.LeftBorder:Hide()
+        Frame.RightBorder:Hide()
+
+        Frame.LeftHide:Hide()
+        Frame.LeftHide2:Hide()
+        Frame.RightHide:Hide()
+        Frame.RightHide2:Hide()
+        Frame.BottomHide:Hide()
+        Frame.BottomHide2:Hide()
+
+        Frame.Background:SetColorTexture(0, 0, 0, 0.75)
+        Frame.Background:SetPoint("TOPLEFT", 15, -15)
+        Frame.Background:SetPoint("BOTTOMRIGHT", -15, 15)
+
+        Frame.TopLeftFiligree:Hide()
+        Frame.TopRightFiligree:Hide()
+
+        Frame.NewSeason:SetTextColor(Color.white:GetRGB())
+        Frame.SeasonDescription:SetTextColor(Color.grayLight:GetRGB())
+        Frame.SeasonDescription2:SetTextColor(Color.grayLight:GetRGB())
+
+        Skin.UIPanelButtonTemplate(Frame.Leave)
+    end
     function Skin.PVPRewardTemplate(Frame)
         Frame.Border:Hide()
         Base.CropIcon(Frame.Icon, Frame)
@@ -221,6 +254,10 @@ function private.AddOns.Blizzard_PVPUI()
     SeasonRewardFrame.Ring:Hide()
     Base.CropIcon(SeasonRewardFrame.Icon, SeasonRewardFrame)
     SeasonRewardFrame.CircleMask:Hide()
+
+    Skin.PVPSeasonChangesNoticeTemplate(PVPQueueFrame.NewSeasonPopup)
+    Skin.SeasonRewardFrameTemplate(SeasonRewardFrame)
+    select(3, SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
 
 
     -------------
