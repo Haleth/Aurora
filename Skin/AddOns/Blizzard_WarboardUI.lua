@@ -32,6 +32,14 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
                     option.OptionText:SetTextColor(textureKitColor.description:GetRGBA())
                 end
             end
+
+            if not self.NineSlice.Center then
+                self.NineSlice.Center = self.Background.BackgroundTile
+                Skin.NineSlicePanelTemplate(self.NineSlice)
+                Base.SetBackdrop(self.NineSlice)
+
+                self.CloseButton.Border:Hide()
+            end
         end
     end
     Hook.WarboardQuestChoiceFrameMixin = WarboardQuestChoiceFrameMixin
@@ -60,26 +68,11 @@ function private.AddOns.Blizzard_WarboardUI()
     local WarboardQuestChoiceFrame = _G.WarboardQuestChoiceFrame
     Util.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
 
-    if private.isPatch then
-        Skin.NineSlicePanelTemplate(WarboardQuestChoiceFrame.NineSlice)
-    else
-        _G.WarboardQuestChoiceFrameTopRightCorner:Hide()
-        WarboardQuestChoiceFrame.topLeftCorner:Hide()
-        WarboardQuestChoiceFrame.topBorderBar:Hide()
-        _G.WarboardQuestChoiceFrameBotRightCorner:Hide()
-        _G.WarboardQuestChoiceFrameBotLeftCorner:Hide()
-        _G.WarboardQuestChoiceFrameBottomBorder:Hide()
-        WarboardQuestChoiceFrame.leftBorderBar:Hide()
-        _G.WarboardQuestChoiceFrameRightBorder:Hide()
-        Base.SetBackdrop(WarboardQuestChoiceFrame)
-    end
-
     WarboardQuestChoiceFrame.BorderFrame:Hide()
     for _, option in next, WarboardQuestChoiceFrame.Options do
         Skin.WarboardQuestChoiceOptionTemplate(option)
     end
 
-    WarboardQuestChoiceFrame.Background:Hide()
     WarboardQuestChoiceFrame.Title.Left:Hide()
     WarboardQuestChoiceFrame.Title.Right:Hide()
     WarboardQuestChoiceFrame.Title.Middle:Hide()
