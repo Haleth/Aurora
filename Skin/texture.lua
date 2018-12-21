@@ -87,24 +87,31 @@ end
 
 do -- gradients
     local min, max = 0.3, 0.7
+    local hookedStatusBar, hookedBackdrop = {}, {}
     local function SetGradientMinMax(frame, texture, direction)
         if frame.SetStatusBarColor then
             local red, green, blue = frame:GetStatusBarColor()
             texture:SetGradient(direction, red * min, green * min, blue * min, red * max, green * max, blue * max)
 
-            _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
-                texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
-            end)
+            if not hookedStatusBar[frame] then
+                _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
+                    texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
+                end)
+                hookedStatusBar[frame] = true
+            end
         elseif frame.SetBackdropColor and frame._auroraBackdrop then
             local red, green, blue = frame:GetBackdropColor()
             if red then
                 texture:SetGradient(direction, red * min, green * min, blue * min, red * max, green * max, blue * max)
             end
 
-            _G.hooksecurefunc(frame, "SetBackdropColor", function(self)
-                local r, g, b = frame:GetBackdropColor()
-                texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
-            end)
+            if not hookedBackdrop[frame] then
+                _G.hooksecurefunc(frame, "SetBackdropColor", function(self)
+                    local r, g, b = frame:GetBackdropColor()
+                    texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
+                end)
+                hookedBackdrop[frame] = true
+            end
         else
             texture:SetGradient(direction, min, min, min, max, max, max)
         end
@@ -114,18 +121,24 @@ do -- gradients
             local red, green, blue = frame:GetStatusBarColor()
             texture:SetGradient(direction, red * max, green * max, blue * max, red * min, green * min, blue * min)
 
-            _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
-                texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
-            end)
+            if not hookedStatusBar[frame] then
+                _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
+                    texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
+                end)
+                hookedStatusBar[frame] = true
+            end
         elseif frame.SetBackdropColor and frame._auroraBackdrop then
             local red, green, blue = frame:GetBackdropColor()
             if red then
                 texture:SetGradient(direction, red * max, green * max, blue * max, red * min, green * min, blue * min)
             end
 
-            _G.hooksecurefunc(frame, "SetBackdropColor", function(self, r, g, b)
-                texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
-            end)
+            if not hookedBackdrop[frame] then
+                _G.hooksecurefunc(frame, "SetBackdropColor", function(self, r, g, b)
+                    texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
+                end)
+                hookedBackdrop[frame] = true
+            end
         else
             texture:SetGradient(direction, max, max, max, min, min, min)
         end
