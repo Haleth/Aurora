@@ -29,12 +29,6 @@ do --[[ FrameXML\Timer.xml ]]
         backdrop:SetPoint("BOTTOMRIGHT", 1, -1)
         backdrop:SetFrameLevel(Frame.bar:GetFrameLevel() - 1)
         Base.SetBackdrop(backdrop)
-
-        --[[ Scale ]]--
-        Frame:SetSize(206, 26)
-        Frame.GoTexture:SetSize(256, 256)
-        Frame.bar:SetSize(195, 13)
-        Frame.bar:SetPoint("TOP", 0 -2)
     end
 end
 

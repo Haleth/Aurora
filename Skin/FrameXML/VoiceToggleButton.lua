@@ -48,6 +48,4 @@ function private.FrameXML.VoiceToggleButton()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

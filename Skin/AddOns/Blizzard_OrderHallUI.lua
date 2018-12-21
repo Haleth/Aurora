@@ -31,6 +31,4 @@ function private.AddOns.Blizzard_OrderHallUI()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

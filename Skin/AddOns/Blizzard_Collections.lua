@@ -486,9 +486,6 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
             Base.SetBackdrop(bg, Color.black, 0.3)
             Frame._auroraIconBorder = bg
-
-            --[[ Scale ]]--
-            Frame:SetSize(Frame:GetSize())
         end
         function Skin.WardrobeTransmogButtonTemplate(Button)
             Base.CropIcon(Button.Icon, Button)

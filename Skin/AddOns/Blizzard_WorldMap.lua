@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -66,9 +66,6 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
     local function SkinQuestToggle(Button, arrowDir)
         Button:SetAllPoints()
 
-        local shadow = Button:GetRegions()
-        Scale.Atlas(shadow, "MapCornerShadow-Right", true)
-
         local arrow = Button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 5, -9)
         arrow:SetPoint("BOTTOMRIGHT", -20, 9)
@@ -90,9 +87,6 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
     function Skin.WorldMapSidePanelToggleTemplate(Frame)
         SkinQuestToggle(Frame.OpenButton, "Right")
         SkinQuestToggle(Frame.CloseButton, "Left")
-
-        --[[ Scale ]]--
-        Frame:SetSize(32, 32)
     end
     function Skin.WorldMapZoneTimerTemplate(Frame)
     end
@@ -134,9 +128,6 @@ function private.AddOns.Blizzard_WorldMap()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
 
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_WorldMapTooltip    --

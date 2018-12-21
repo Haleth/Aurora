@@ -57,6 +57,4 @@ function private.SharedXML.ModelSceneTemplates()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

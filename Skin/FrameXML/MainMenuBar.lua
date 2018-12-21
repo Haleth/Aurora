@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\MainMenuBar.lua ]]
@@ -38,21 +38,17 @@ do --[[ FrameXML\MainMenuBar.xml ]]
         StatusBar.XPBarTexture3:SetAlpha(0)
 
         do -- set xp divs
-            local divWidth = Scale.Value(1024) / 20
+            local divWidth = 1024 / 20
             local xpos = divWidth
             for i = 1, 19 do
                 local texture = StatusBar:CreateTexture(nil, "ARTWORK")
                 texture:SetColorTexture(0, 0, 0)
                 texture:SetSize(1, 11)
 
-                Scale.RawSetPoint(texture, "LEFT", floor(xpos), 0)
+                texture:SetPoint("LEFT", floor(xpos), 0)
                 xpos = xpos + divWidth
             end
         end
-
-        --[[ Scale ]]--
-        Frame:SetSize(1024, 11)
-        StatusBar:SetSize(1024, 11)
     end
 end
 
@@ -65,7 +61,4 @@ function private.FrameXML.MainMenuBar()
 
     _G.MainMenuBarArtFrame.LeftEndCap:Hide()
     _G.MainMenuBarArtFrame.RightEndCap:Hide()
-
-    --[[ Scale ]]--
-    _G.MainMenuBarArtFrame.PageNumber:SetPoint("LEFT", _G.MainMenuBarArtFrameBackground, "CENTER", 134, -3)
 end

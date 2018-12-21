@@ -79,9 +79,6 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button:SetNormalTexture("")
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())
-
-        --[[ Scale ]]--
-        Button:SetSize(Button:GetSize())
     end
     function Skin.SimplePopupButtonTemplate(CheckButton)
         local name, bg = CheckButton:GetRegions()
@@ -103,10 +100,6 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Base.CropIcon(bd:GetBackdropTexture("bg"))
         bd:SetBackdropColor(1, 1, 1, 0.75)
         bd:SetBackdropBorderColor(Color.frame, 1)
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(CheckButton:GetSize())
-        name:SetHeight(10)
     end
     function Skin.PopupButtonTemplate(CheckButton)
         Skin.SimplePopupButtonTemplate(CheckButton)

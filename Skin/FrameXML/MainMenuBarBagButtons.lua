@@ -15,9 +15,6 @@ do --[[ FrameXML\MainMenuBarBagButtons.xml ]]
     function Skin.BagSlotButtonTemplate(CheckButton)
         Skin.ItemButtonTemplate(CheckButton)
         Base.CropIcon(CheckButton:GetCheckedTexture())
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(30, 30)
     end
 end
 
@@ -37,8 +34,4 @@ function private.FrameXML.MainMenuBarBagButtons()
     _G.CharacterBag3Slot:SetPoint("RIGHT", _G.CharacterBag2Slot, "LEFT", -4, 0)
 
     Skin.GlowBoxFrame(_G.AzeriteInBagsHelpBox)
-
-    --[[ Scale ]]--
-    _G.MainMenuBarBackpackButton:SetSize(40, 40)
-    _G.MainMenuBarBackpackButton:SetPoint("TOPRIGHT", -4, -4)
 end

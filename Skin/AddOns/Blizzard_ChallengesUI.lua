@@ -70,8 +70,6 @@ function private.AddOns.Blizzard_ChallengesUI()
     Skin.UIPanelCloseButton(ChallengesKeystoneFrame.CloseButton)
     Skin.UIPanelButtonTemplate(ChallengesKeystoneFrame.StartButton)
 
-    --[[ Scale ]]--
-
 
     ---------------------
     -- ChallengesFrame --
@@ -89,6 +87,4 @@ function private.AddOns.Blizzard_ChallengesUI()
     local bg, inset = ChallengesFrame:GetRegions()
     bg:Hide()
     inset:Hide()
-
-    --[[ Scale ]]--
 end

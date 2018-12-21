@@ -2,7 +2,7 @@ local ADDON_NAME, private = ...
 
 -- luacheck: globals select tostring tonumber
 
-private.API_MAJOR, private.API_MINOR = 0, 3
+private.API_MAJOR, private.API_MINOR = 0, 4
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 1 and tonumber(minor) >= 0)
@@ -96,12 +96,6 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
             -- Setup function for the host addon
             private.OnLoad()
             private.UpdateUIScale()
-
-            if private.disabled.uiScale then
-                function Aurora.Scale.Value(value)
-                    return value
-                end
-            end
 
             if _G.AuroraConfig then
                 Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient

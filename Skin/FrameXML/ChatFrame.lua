@@ -47,6 +47,4 @@ end
 function private.FrameXML.ChatFrame()
     if private.disabled.chat then return end
     _G.hooksecurefunc("ChatEdit_UpdateHeader", Hook.ChatEdit_UpdateHeader)
-
-    --[[ Scale ]]--
 end

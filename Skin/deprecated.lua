@@ -8,6 +8,9 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
+--[[ ALPHA 0.3 ]]--
+Aurora.Scale = {}
+
 --[[ ALPHA 0.2 ]]--
 do -- private.CreateAPI
     local function CreateAPI(api)

@@ -35,14 +35,7 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
             else
                 editbox:SetSize(70, 20)
             end
-
-            --[[ Scale ]]--
-            editbox.texture:SetSize(13, 13)
-            editbox.texture:SetPoint("RIGHT", -4, 0)
         end
-
-        --[[ Scale ]]--
-        frame:SetSize(176, 18)
     end
 end
 

@@ -23,6 +23,4 @@ function private.FrameXML.PropertyButton()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

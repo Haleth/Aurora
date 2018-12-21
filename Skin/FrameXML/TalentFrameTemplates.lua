@@ -17,11 +17,6 @@ do --[[ FrameXML\TalentFrameTemplates.xml ]]
         Button.Arrow:SetSize(26, 13)
         Base.SetTexture(Button.Arrow, "arrowRight")
         Button.Border:Hide()
-
-        --[[ Scale ]]--
-        Button:SetSize(Button:GetSize())
-        Button.Texture:SetSize(32, 32)
-        Button.TalentName:SetPoint("TOP", Button, "BOTTOM", 0, 0)
     end
     function Skin.PvpTalentTrinketSlotTemplate(Button)
         Skin.PvpTalentSlotTemplate(Button)
@@ -37,6 +32,4 @@ function private.FrameXML.TalentFrameTemplates()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

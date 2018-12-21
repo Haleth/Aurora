@@ -276,7 +276,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
@@ -294,8 +294,6 @@ function private.FrameXML.File()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end
 function private.SharedXML.File()
     ----====####$$$$%%%%$$$$####====----
@@ -305,7 +303,5 @@ function private.SharedXML.File()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end
 ]==]

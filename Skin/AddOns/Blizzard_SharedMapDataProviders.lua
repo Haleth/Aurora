@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 --local Aurora = private.Aurora
---local Base, Scale = Aurora.Base, Aurora.Scale
+--local Base = Aurora.Base
 --local Hook, Skin = Aurora.Hook, Aurora.Skin
 --local Color = Aurora.Color
 
@@ -23,6 +23,4 @@ function private.AddOns.Blizzard_SharedMapDataProviders()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

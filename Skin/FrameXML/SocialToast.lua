@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
---local Base, Scale = Aurora.Base, Aurora.Scale
+--local Base = Aurora.Base
 local Skin = Aurora.Skin
 --local Color = Aurora.Color
 
@@ -25,6 +25,4 @@ function private.FrameXML.SocialToast()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

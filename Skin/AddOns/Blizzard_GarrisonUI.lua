@@ -41,9 +41,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame._auroraIconBorder = bg
 
             Frame.IconBorder:Hide()
-
-            --[[ Scale ]]--
-            Frame:SetSize(Frame:GetSize())
         end
         function Skin.GarrisonLandingPageReportMissionTemplate(Button)
             Button.BG:Hide()
@@ -163,9 +160,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame._auroraIconBorder = bg
 
             Frame.IconBorder:Hide()
-
-            --[[ Scale ]]--
-            Frame:SetSize(Frame:GetSize())
         end
         function Skin.GarrisonMissionListButtonNewHighlightTemplate(Frame)
         end
@@ -376,11 +370,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     -- Section --
     -------------
 
-    --[[ Scale ]]--
-
-
-
-
     ----====####$$$$%%%%$$$$####====----
     --   Blizzard_GarrisonMissionUI   --
     ----====####$$$$%%%%$$$$####====----
@@ -389,11 +378,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
-
-
 
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_GarrisonShipyardUI   --
@@ -411,11 +395,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
-
-
 
     ----====####$$$$%%%%$$$$####====----
     --  Blizzard_GarrisonLandingPage  --
@@ -466,18 +445,12 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonFollowerPortraitTemplate(LandingFollowerTab.PortraitFrame)
     Skin.GarrisonFollowerXPBarTemplate(LandingFollowerTab.XPBar)
     Skin.GarrisonMissionFollowerDurabilityFrameTemplate(LandingFollowerTab.DurabilityFrame)
-    Skin.VerticalLayoutFrame(LandingFollowerTab.AbilitiesFrame)
 
     Skin.BaseLandingPageFollowerListTemplate(GarrisonLandingPage.ShipFollowerList)
 
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
-
-
 
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_GarrisonCapacitiveDisplay --
@@ -506,11 +479,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     -- Section --
     -------------
 
-    --[[ Scale ]]--
-
-
-
-
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_GarrisonMonumentUI   --
     ----====####$$$$%%%%%$$$$####====----
@@ -519,11 +487,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     -- Section --
     -------------
 
-    --[[ Scale ]]--
-
-
-
-
     ----====####$$$$%%%%$$$$####====----
     --  Blizzard_GarrisonRecruiterUI  --
     ----====####$$$$%%%%$$$$####====----
@@ -531,11 +494,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
-
-
 
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_OrderHallMissionUI   --
@@ -571,8 +529,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     OrderHallFollowerList.MaterialFrame:SetPoint("BOTTOMRIGHT", 0, -30)
     Skin.SearchBoxTemplate(OrderHallFollowerList.SearchBox)
 
-    --[[ Scale ]]--
-
     ------------
     -- MapTab --
     ------------
@@ -580,8 +536,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     OrderHallMapTab.ScrollContainer:ClearAllPoints()
     OrderHallMapTab.ScrollContainer:SetPoint("TOPLEFT")
     OrderHallMapTab.ScrollContainer:SetPoint("BOTTOMRIGHT")
-
-    --[[ Scale ]]--
 
     ----------------
     -- MissionTab --
@@ -625,15 +579,11 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonFollowerCombatAllySpellTemplate(ZoneSupportMissionPage.CombatAllySpell)
     Skin.StartMissionButtonTemplate(ZoneSupportMissionPage.StartMissionButton)
 
-    --[[ Scale ]]--
-
     -----------------
     -- FollowerTab --
     -----------------
     local OrderHallFollowerTab = OrderHallMissionFrame.FollowerTab
     Skin.GarrisonFollowerTabTemplate(OrderHallFollowerTab)
-
-    --[[ Scale ]]--
 
     ---------------------
     -- MissionComplete --
@@ -644,10 +594,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonMissionCompleteTemplate(OrderHallMissionComplete)
     Skin.GarrisonFollowerMissionCompleteStageTemplate(OrderHallMissionComplete.Stage)
     Skin.GarrisonFollowerMissionRewardsFrameTemplate(OrderHallMissionComplete.BonusRewards)
-
-    --[[ Scale ]]--
-
-
 
 
     ----====####$$$$%%%%%$$$$####====----
@@ -678,8 +624,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     BFAFollowerList.MaterialFrame:SetPoint("BOTTOMRIGHT", 0, -30)
     Skin.SearchBoxTemplate(BFAFollowerList.SearchBox)
 
-    --[[ Scale ]]--
-
     ------------
     -- MapTab --
     ------------
@@ -688,8 +632,6 @@ function private.AddOns.Blizzard_GarrisonUI()
     BFAMapTab.ScrollContainer:SetPoint("TOPLEFT")
     BFAMapTab.ScrollContainer:SetPoint("BOTTOMRIGHT")
 
-    --[[ Scale ]]--
-
     ----------------
     -- MissionTab --
     ----------------
@@ -697,15 +639,11 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonMissionListTemplate(BFAMissionTab.MissionList)
     Skin.OrderHallMissionPageTemplate(BFAMissionTab.MissionPage)
 
-    --[[ Scale ]]--
-
     -----------------
     -- FollowerTab --
     -----------------
     local BFAFollowerTab = BFAMissionFrame.FollowerTab
     Skin.GarrisonFollowerTabTemplate(BFAFollowerTab)
-
-    --[[ Scale ]]--
 
 
     ---------------------
@@ -719,11 +657,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonFollowerMissionRewardsFrameTemplate(BFAMissionComplete.BonusRewards)
     Skin.GarrisonMissionBonusRewardsTemplate(BFAMissionComplete.BonusRewards)
 
-    --[[ Scale ]]--
-
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -27,33 +27,11 @@ do --[[ AddOns\Blizzard_Channels.lua ]]
             end
         end
     end
-    do --[[ ChannelRoster.lua ]]
-        Hook.ChannelRosterMixin = {}
-        function Hook.ChannelRosterMixin:UpdateRosterWidth()
-            local rosterLeftEdge = self:GetChannelFrame().LeftInset:GetRight()
-            local rosterRightEdge = self.ScrollFrame.scrollBar:GetLeft()
-
-            if self:GetChannelFrame():GetList().ScrollBar:IsShown() then
-                rosterLeftEdge = self:GetChannelFrame():GetList().ScrollBar:GetRight()
-            end
-
-            -- Add some padding for the inset and scrollbar textures.
-            local rosterWidth = rosterRightEdge - rosterLeftEdge
-            Scale.RawSetWidth(self, rosterWidth)
-            Scale.RawSetWidth(self.ScrollFrame.scrollChild, rosterWidth - Scale.Value(9)) -- Sizing hack, pull the edge of the scroll child inside the right scrollbar.
-        end
-    end
 end
 
 do --[[ AddOns\Blizzard_Channels.xml ]]
     do --[[ ChannelButton.xml ]]
-        function Skin.ChannelButtonBaseTemplate(Button)
-            --[[ Scale ]]--
-            Button:SetSize(Button:GetSize())
-            Button.Text:SetHeight(0)
-            Button.Text:SetPoint("LEFT", 6, 0)
-            Button.Text:SetPoint("RIGHT", -6, 0)
-        end
+        Skin.ChannelButtonBaseTemplate = private.nop
         function Skin.ChannelButtonHeaderTemplate(Button)
             _G.hooksecurefunc(Button, "Update", Hook.ChannelButtonHeaderMixin.Update)
 
@@ -75,10 +53,6 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
             plus:SetPoint("BOTTOMRIGHT", Button.Collapsed, -3, 0)
             plus:SetColorTexture(1, 1, 1)
             Button.Collapsed.plus = plus
-
-            --[[ Scale ]]--
-            Button.Collapsed:SetSize(7, 7)
-            Button.Collapsed:SetPoint("TOPRIGHT", -8, -6)
         end
         function Skin.ChannelButtonTemplate(Button)
             Skin.ChannelButtonBaseTemplate(Button)
@@ -94,10 +68,7 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
         end
     end
     do --[[ RosterButton.xml ]]
-        function Skin.ChannelRosterButtonTemplate(Button)
-            --[[ Scale ]]--
-            Button:SetSize(Button:GetSize())
-        end
+        Skin.ChannelRosterButtonTemplate = private.nop
     end
     do --[[ CreateChannelPopup.xml ]]
         function Skin.CreateChannelPopupEditBoxTemplate(EditBox)
@@ -119,8 +90,6 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ ChannelRoster.xml ]]
         function Skin.ChannelRosterTemplate(Frame)
-            _G.hooksecurefunc(Frame, "UpdateRosterWidth", Hook.ChannelRosterMixin.UpdateRosterWidth)
-
             Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
         end
     end
@@ -134,9 +103,6 @@ function private.AddOns.Blizzard_Channels()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
 
 
     ----====####$$$$%%%%%$$$$####====----
@@ -171,14 +137,6 @@ function private.AddOns.Blizzard_Channels()
     Skin.CreateChannelPopupButtonTemplate(CreateChannelPopup.CancelButton)
     CreateChannelPopup.CancelButton:ClearAllPoints()
     CreateChannelPopup.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
-
-    --[[ Scale ]]--
-    CreateChannelPopup:SetSize(212, 200)
-    CreateChannelPopup.Name:SetPoint("TOPLEFT", 23, -60)
-    CreateChannelPopup.Name.Label:SetPoint("BOTTOMLEFT", CreateChannelPopup.Name, "TOPLEFT", 0, 5)
-    CreateChannelPopup.Password:SetPoint("TOPLEFT", CreateChannelPopup.Name, "BOTTOMLEFT", 0, -30)
-    CreateChannelPopup.Password.Label:SetPoint("BOTTOMLEFT", CreateChannelPopup.Password, "TOPLEFT", 0, 5)
-    CreateChannelPopup.UseVoiceChat:SetPoint("TOPLEFT", CreateChannelPopup.Password, "BOTTOMLEFT", -7, -14)
 
 
     ----====####$$$$%%%%%$$$$####====----
@@ -216,9 +174,6 @@ function private.AddOns.Blizzard_Channels()
     Skin.InsetFrameTemplate(ChannelFrame.RightInset)
 
     Skin.GlowBoxFrame(ChannelFrame.Tutorial, "Left")
-
-    --[[ Scale ]]--
-    ChannelFrame.ChannelList:SetWidth(178)
 
     ----====####$$$$%%%%%$$$$####====----
     --    VoiceActivityNotification    --

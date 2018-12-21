@@ -5,14 +5,13 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\NavigationBar.lua ]]
     function Hook.NavBar_Initialize(self, template, homeData, homeButton, overflowButton)
         Skin.NavBarTemplate(self)
-        Scale.RawSetWidth(homeButton, homeButton.text:GetStringWidth() + 20)
     end
     function Hook.NavBar_AddButton(self, buttonData)
         local navButton = self.navList[#self.navList]

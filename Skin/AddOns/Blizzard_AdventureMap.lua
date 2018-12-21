@@ -63,8 +63,6 @@ function private.AddOns.Blizzard_AdventureMap()
     Skin.UIPanelButtonTemplate(AdventureMapQuestChoiceDialog.DeclineButton)
     Skin.UIPanelButtonTemplate(AdventureMapQuestChoiceDialog.AcceptButton)
 
-    --[[ Scale ]]--
-
 
     ----====####$$$$%%%%$$$$####====----
     --   AM_QuestChoiceDataProvider   --

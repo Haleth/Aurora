@@ -45,6 +45,4 @@ function private.AddOns.Blizzard_AzeriteRespecUI()
     ButtonFrame.ButtonBottomBorder:Hide()
 
     Skin.GlowBoxFrame(AzeriteRespecFrame.HelpBox)
-
-    --[[ Scale ]]--
 end

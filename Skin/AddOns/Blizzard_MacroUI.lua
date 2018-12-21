@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -13,28 +13,6 @@ do --[[ AddOns\Blizzard_MacroUI.lua ]]
     function Hook.MacroFrame_OnShow(self)
         --_G.MacroPopupButton1:SetPoint("TOPLEFT", 25, -30)
         _G.MacroPopupButton1:SetPoint("TOPLEFT", _G.MacroPopupEditBox, "BOTTOMLEFT", 5, -20)
-    end
-
-    local MACRO_POPUP_FRAME_MINIMUM_PADDING = 40
-    function Hook.MacroPopupFrame_AdjustAnchors(self)
-        local rightSpace = _G.GetScreenWidth() - _G.MacroFrame:GetRight()
-        local leftSpace = self.parentLeft
-
-        self:ClearAllPoints()
-        local minSpace = self:GetWidth() + Scale.Value(MACRO_POPUP_FRAME_MINIMUM_PADDING)
-        if ( leftSpace >= rightSpace ) then
-            if leftSpace < minSpace then
-                Scale.RawSetPoint(self, "TOPRIGHT", _G.MacroFrame, "TOPLEFT", minSpace - leftSpace, 0)
-            else
-                self:SetPoint("TOPRIGHT", _G.MacroFrame, "TOPLEFT", -5, 0)
-            end
-        else
-            if rightSpace < minSpace then
-                Scale.RawSetPoint(self, "TOPLEFT", _G.MacroFrame, "TOPRIGHT", rightSpace - minSpace, 0)
-            else
-                self:SetPoint("TOPLEFT", _G.MacroFrame, "TOPRIGHT", 5, 0)
-            end
-        end
     end
 end
 
@@ -63,12 +41,12 @@ function private.AddOns.Blizzard_MacroUI()
     Skin.ButtonFrameTemplate(_G.MacroFrame)
 
     -- BlizzWTF: These should use the widgets included in the template
-    local portrait, title = select(18, _G.MacroFrame:GetRegions())
+    local portrait, title = select(6, _G.MacroFrame:GetRegions())
     portrait:Hide()
     title:SetAllPoints(_G.MacroFrame.TitleText)
 
     _G.MacroHorizontalBarLeft:Hide()
-    select(21, _G.MacroFrame:GetRegions()):Hide()
+    select(9, _G.MacroFrame:GetRegions()):Hide()
 
     _G.MacroFrameSelectedMacroBackground:SetAlpha(0)
     _G.MacroFrameSelectedMacroName:SetPoint("TOPLEFT", _G.MacroFrameSelectedMacroButton, "TOPRIGHT", 9, 5)
@@ -110,11 +88,9 @@ function private.AddOns.Blizzard_MacroUI()
     Skin.TabButtonTemplate(_G.MacroFrameTab1)
     _G.MacroFrameTab1:ClearAllPoints()
     _G.MacroFrameTab1:SetPoint("BOTTOMLEFT", _G.MacroButtonScrollFrame, "TOPLEFT", 20, 0)
-    Hook.PanelTemplates_TabResize(_G.MacroFrameTab1, -15)
     Skin.TabButtonTemplate(_G.MacroFrameTab2)
     _G.MacroFrameTab2:ClearAllPoints()
     _G.MacroFrameTab2:SetPoint("BOTTOMLEFT", _G.MacroFrameTab1, "BOTTOMRIGHT", 10, 0)
-    Hook.PanelTemplates_TabResize(_G.MacroFrameTab2, -15, nil, nil, Scale.Value(150))
 
     Skin.UIPanelButtonTemplate(_G.MacroDeleteButton)
     _G.MacroDeleteButton:SetPoint("BOTTOMLEFT", 5, 5)
@@ -123,16 +99,9 @@ function private.AddOns.Blizzard_MacroUI()
     Skin.UIPanelButtonTemplate(_G.MacroExitButton)
     _G.MacroExitButton:SetPoint("BOTTOMRIGHT", -5, 5)
 
-    --[[ Scale ]]--
-    _G.MacroFrameSelectedMacroName:SetSize(256, 16)
-    _G.MacroFrameCharLimitText:SetSize(0, 10)
-    _G.MacroSaveButton:SetPoint("BOTTOM", _G.MacroCancelButton, "TOP", 0, 15)
-
     ---------------------
     -- MacroPopupFrame --
     ---------------------
-    _G.hooksecurefunc("MacroPopupFrame_AdjustAnchors", Hook.MacroPopupFrame_AdjustAnchors)
-
     _G.MacroPopupFrame:SetSize(490, 471)
     _G.MacroPopupFrame:SetPoint("TOPLEFT", _G.MacroFrame, "TOPRIGHT", 5, 0)
     _G.MacroPopupFrame.BG:Hide()
@@ -153,7 +122,4 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroPopupScrollFrame:ClearAllPoints()
     _G.MacroPopupScrollFrame:SetPoint("TOPLEFT", _G.MacroPopupEditBox, "BOTTOMLEFT", 5, -20)
     _G.MacroPopupScrollFrame:SetPoint("BOTTOMRIGHT", -23, 33)
-
-    --[[ Scale ]]--
-    _G.MacroPopupEditBox:SetSize(182, 20)
 end

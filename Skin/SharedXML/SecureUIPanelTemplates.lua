@@ -25,9 +25,6 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         bg:SetFrameLevel(EditBox:GetFrameLevel())
         Base.SetBackdrop(bg, Color.frame)
         EditBox._auroraBG = bg
-
-        --[[ Scale ]]--
-        EditBox:SetSize(EditBox:GetSize())
     end
 
     function Skin.UIPanelScrollBarButton(Button)
@@ -69,9 +66,6 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
         Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
         Skin.ScrollBarThumb(Slider.ThumbTexture)
-
-        --[[ Scale ]]--
-        Slider:SetWidth(Slider:GetWidth())
     end
 
     function Skin.UIPanelScrollFrameTemplate(ScrollFrame)

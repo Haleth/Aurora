@@ -622,6 +622,4 @@ function private.AddOns.Blizzard_Communities()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

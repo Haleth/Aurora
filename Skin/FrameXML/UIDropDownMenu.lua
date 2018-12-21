@@ -5,15 +5,11 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\UIDropDownMenu.lua ]]
-    function Hook.UIDropDownMenu_RefreshDropDownSize(self)
-        Scale.RawSetWidth(self, self.maxWidth + Scale.Value(25))
-    end
-
     local skinnedLevels, skinnedButtons = 2, private.isPatch and 1 or 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
     function Hook.UIDropDownMenu_CreateFrames(level, index)
         while level > skinnedLevels do
@@ -212,7 +208,6 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
 end
 
 function private.FrameXML.UIDropDownMenu()
-    _G.hooksecurefunc("UIDropDownMenu_RefreshDropDownSize", Hook.UIDropDownMenu_RefreshDropDownSize)
     _G.hooksecurefunc("UIDropDownMenu_CreateFrames", Hook.UIDropDownMenu_CreateFrames)
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)

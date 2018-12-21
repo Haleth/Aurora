@@ -181,13 +181,6 @@ function private.FrameXML.QuestFrame()
     _G.QuestGreetingFrameHorizontalBreak:SetColorTexture(1, 1, 1, .2)
     _G.QuestGreetingFrameHorizontalBreak:SetSize(256, 1)
 
-    --[[ Scale ]]--
-    _G.QuestProgressScrollChildFrame:SetSize(300, 403)
-    _G.QuestProgressTitleText:SetSize(300, 0)
-    _G.QuestProgressTitleText:SetPoint("TOPLEFT", 5, -10)
-    _G.QuestProgressText:SetSize(300, 0)
-    _G.QuestProgressText:SetPoint("TOPLEFT", _G.QuestProgressTitleText, "BOTTOMLEFT", 0, -5)
-
     -------------------
     -- QuestNPCModel --
     -------------------

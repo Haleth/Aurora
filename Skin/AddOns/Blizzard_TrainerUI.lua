@@ -51,10 +51,4 @@ function private.AddOns.Blizzard_TrainerUI()
     Skin.ClassTrainerSkillButtonTemplate(ClassTrainerFrame.skillStepButton)
     Skin.HybridScrollBarTemplate(_G.ClassTrainerScrollFrameScrollBar)
     Skin.InsetFrameTemplate(ClassTrainerFrame.bottomInset)
-
-    --[[ Scale ]]--
-    _G.ClassTrainerFrameFilterDropDown:SetPoint("TOPRIGHT", 6, -30)
-    ClassTrainerFrame.skillStepButton:SetPoint("TOPLEFT", ClassTrainerFrame.Inset, 6, -5)
-    ClassTrainerFrame.scrollFrame:SetSize(304, 330)
-    ClassTrainerFrame.scrollFrame:SetPoint("TOPRIGHT", ClassTrainerFrame.Inset, -5, -5)
 end

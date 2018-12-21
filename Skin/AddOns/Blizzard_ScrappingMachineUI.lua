@@ -52,6 +52,4 @@ function private.AddOns.Blizzard_ScrappingMachineUI()
     end
 
     Skin.MagicButtonTemplate(ScrappingMachineFrame.ScrapButton)
-
-    --[[ Scale ]]--
 end

@@ -18,14 +18,6 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
     function Skin.QuestChoiceItemTemplate(Button)
         Button._auroraIconBorder = F.ReskinIcon(Button.Icon)
         Button.Name:SetTextColor(1, 1, 1)
-
-        --[[ Scale ]]--
-        Button:SetSize(167, 41)
-        Button.Icon:SetSize(37, 37)
-        Button.Name:ClearAllPoints()
-        Button.Name:SetPoint("TOPLEFT", Button.Icon, "TOPRIGHT", 5, 0)
-        Button.Name:SetPoint("BOTTOM", Button.Icon, 0, 0)
-        Button.Name:SetPoint("RIGHT", -5, 0)
     end
     function Skin.QuestChoiceCurrencyTemplate(Frame)
         Base.CropIcon(Frame.Icon, Frame)
@@ -36,11 +28,6 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         Skin.QuestChoiceCurrencyTemplate(Frame.Currencies.Currency1)
         Skin.QuestChoiceCurrencyTemplate(Frame.Currencies.Currency2)
         Skin.QuestChoiceCurrencyTemplate(Frame.Currencies.Currency3)
-
-        --[[ Scale ]]--
-        Frame:SetSize(210, 10)
-        Frame.Item:SetPoint("TOPLEFT", 30, -5)
-        Frame._auroraNoSetHeight = true
     end
 
     function Skin.QuestChoiceOptionTemplate(Button)
@@ -57,27 +44,12 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         Button.Header.Text:SetTextColor(Color.grayLight:GetRGB())
         Button.OptionText:SetTextColor(Color.grayLight:GetRGB())
         Button.OptionText:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -30)
-
-        --[[ Scale ]]--
-        Button:SetSize(210, 268)
-        Button.Rewards:SetPoint("BOTTOM", Button.OptionButtonsContainer, "TOP", 0, 5)
-        Button.Header:SetSize(256, 32)
-        Button.Header:SetPoint("TOP", 10)
-        Button.Header.Text:SetWidth(180)
-        Button.Header.Text:SetPoint("TOPLEFT", 28, 2)
-        Button.Header.Text:SetPoint("BOTTOMRIGHT", -28, 2)
-        Button.OptionText:SetWidth(200)
-        Button.OptionText:SetPoint("BOTTOM", Button.Rewards, "TOP", 0, 35)
-        Button.OptionText:SetText("Text")
     end
 end
 
 --/dump QuestChoiceFrame.Option1.OptionText:GetContentHeight()
 function private.AddOns.Blizzard_QuestChoice()
     local QuestChoiceFrame = _G.QuestChoiceFrame
-    QuestChoiceFrame.topPadding = 100
-    Skin.HorizontalLayoutFrame(QuestChoiceFrame)
-
     QuestChoiceFrame.BottomLeftCorner:Hide()
     QuestChoiceFrame.BottomRightCorner:Hide()
     QuestChoiceFrame.TopLeftCorner:Hide()
@@ -112,8 +84,4 @@ function private.AddOns.Blizzard_QuestChoice()
     end
 
     Skin.UIPanelCloseButton(QuestChoiceFrame.CloseButton)
-
-    --[[ Scale ]]--
-    QuestChoiceFrame._auroraNoSetHeight = true
-    QuestChoiceFrame._auroraNoSetSize = true
 end

@@ -125,11 +125,6 @@ function private.FrameXML.MainMenuBarMicroButtons()
                 button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
 
                 button.NotificationOverlay.UnreadNotificationIcon:SetSize(16, 16)
-
-                --[[ Scale ]]--
-                _G.GuildMicroButtonTabard:SetAllPoints()
-                _G.GuildMicroButtonTabard.emblem:SetSize(16, 16)
-                _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", 0, 3)
             elseif name == "LFDMicroButton" then
                 iconTexture = ""
                 button:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 2, 0)
@@ -160,7 +155,4 @@ function private.FrameXML.MainMenuBarMicroButtons()
     Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)
     Skin.MicroButtonAlertTemplate(_G.LFDMicroButtonAlert)
     Skin.MicroButtonAlertTemplate(_G.EJMicroButtonAlert)
-
-    --[[ Scale ]]--
-    _G.MicroButtonAndBagsBar:SetSize(298, 88)
 end

@@ -50,6 +50,4 @@ function private.AddOns.Blizzard_BattlefieldMap()
 
     Skin.UIPanelCloseButton(BorderFrame.CloseButton)
     BorderFrame.CloseButton:SetPoint("TOPRIGHT", 10, 9)
-
-    --[[ Scale ]]--
 end

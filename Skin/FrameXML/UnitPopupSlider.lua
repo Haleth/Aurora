@@ -24,6 +24,4 @@ function private.FrameXML.UnitPopupSlider()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

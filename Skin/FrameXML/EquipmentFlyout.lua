@@ -70,7 +70,4 @@ function private.FrameXML.EquipmentFlyout()
     _G.Test2:Hide() -- BlizzWTF: seriously? This is not a test, it's the BG texture
     Skin.NavButtonPrevious(NavigationFrame.PrevButton)
     Skin.NavButtonNext(NavigationFrame.NextButton)
-
-    --[[ Scale ]]--
-    _G.EquipmentFlyoutFrame:SetSize(43, 43)
 end

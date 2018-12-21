@@ -5,18 +5,10 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
-    do --[[ Blizzard_CompactRaidFrameContainer ]]
-        function Hook.CompactRaidFrameContainer_UpdateBorder(self)
-            local usedX, usedY = Hook.FlowContainer_GetUsedBounds(self)
-            if self.showBorder and self.groupMode ~= "discrete" and usedX > 0 and usedY > 0 then
-                Scale.RawSetSize(self.borderFrame, usedX + 11, usedY + 13)
-            end
-        end
-    end
     do --[[ Blizzard_CompactRaidFrameManager ]]
         function Hook.CompactRaidFrameManager_Toggle(self)
             if self.collapsed then
@@ -25,13 +17,6 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
                 Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowLeft")
             end
          end
-        function Hook.CompactRaidFrameManager_UpdateOptionsFlowContainer(self)
-            if _G.InCombatLockdown() then return end
-            local container = self.displayFrame.optionsFlowContainer
-
-            local _, usedY = Hook.FlowContainer_GetUsedBounds(container)
-            Scale.RawSetHeight(self, usedY + Scale.Value(40))
-        end
     end
 end
 
@@ -60,7 +45,6 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameContainer --
     ----====####$$$$%%%%%%%%$$$$####====----
-    _G.hooksecurefunc("CompactRaidFrameManager_Toggle", Hook.CompactRaidFrameManager_Toggle)
 
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameManager --
@@ -129,30 +113,4 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     Skin.UIMenuButtonStretchTemplate(_G[leaderOptions:GetName().."RaidWorldMarkerButton"])
 
     Skin.UICheckButtonTemplate(displayFrame.everyoneIsAssistButton)
-
-    --[[ Scale ]]--
-    _G.hooksecurefunc("CompactRaidFrameManager_UpdateOptionsFlowContainer", Hook.CompactRaidFrameManager_UpdateOptionsFlowContainer)
-
-    _G.CompactRaidFrameManager:SetSize(200, 140)
-    _G.CompactRaidFrameManager:SetPoint("TOPLEFT", -182, -140)
-    _G.CompactRaidFrameManager._auroraNoSetHeight = true
-
-    _G.CompactRaidFrameManager.toggleButton:SetSize(16, 64)
-    _G.CompactRaidFrameManager.toggleButton:GetNormalTexture()._auroraNoSetSize = true
-
-    displayFrame.label:SetPoint("TOPLEFT", 10, -8)
-    displayFrame.memberCountLabel:SetPoint("TOPRIGHT", -28, -8)
-
-    optionsButton:SetPoint("TOPRIGHT", -9, -7)
-
-    displayFrame.optionsFlowContainer:SetPoint("RIGHT", -10, 0)
-
-    displayFrame.filterOptions:SetSize(200, 85)
-    displayFrame.filterOptions.filterRoleTank:SetPoint("TOPLEFT", 19, 4)
-
-    displayFrame.raidMarkers:SetSize(200, 50)
-
-    displayFrame.leaderOptions:SetSize(200, 45)
-    displayFrame.leaderOptions.rolePollButton:SetPoint("TOPLEFT", 20, -5)
-    _G[displayFrame.leaderOptions:GetName().."RaidWorldMarkerButton"].Icon:SetSize(14, 14)
 end

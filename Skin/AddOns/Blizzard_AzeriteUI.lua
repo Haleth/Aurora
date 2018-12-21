@@ -55,7 +55,6 @@ function private.AddOns.Blizzard_AzeriteUI()
     -- Section --
     -------------
 
-    --[[ Scale ]]--
 
     ----====####$$$$%%%%%%%%%%%%%%$$$$####====----
     -- Blizzard_AzeriteEmpoweredItemUITemplates --

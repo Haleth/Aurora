@@ -56,6 +56,4 @@ function private.AddOns.Blizzard_BindingUI()
     for i = 1, _G.KEY_BINDINGS_DISPLAYED do
         Skin.KeyBindingFrameBindingTemplate(KeyBindingFrame.keyBindingRows[i])
     end
-
-    --[[ Scale ]]--
 end

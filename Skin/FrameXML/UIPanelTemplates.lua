@@ -50,16 +50,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
 
         Button:SetNormalTexture("")
         Button:GetHighlightTexture():SetTexCoord(0.005859375, 0.5703125, 0.7578125, 0.841796875)
-
-        --[[ Scale ]]--
-        Button:SetSize(Button:GetSize())
-        Button.money:SetPoint("TOPRIGHT", 5, -7)
-        Button.icon:SetSize(36, 36)
-        Button.icon:SetPoint("LEFT", 6, 0)
-        Button.name:SetPoint("TOPLEFT", Button.icon, "TOPRIGHT", 6, -1)
-        Button.name:SetPoint("RIGHT", Button.money, "LEFT", -2, 0)
-        Button.subText:SetSize(240, 30)
-        Button.subText:SetPoint("LEFT", Button.name, 0, -19)
     end
     function Skin.UIPanelInfoButton(Button)
         Button:SetSize(16, 16)
@@ -78,9 +68,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Button:SetHighlightTexture("")
         Button:SetPushedTexture("")
         Base.SetBackdrop(Button, Color.button)
-
-        --[[ Scale ]]--
-        Button.icon:SetSize(12, 12)
     end
     function Skin.UIPanelLargeSilverButton(Button)
         local buttonName = Button:GetName()
@@ -162,11 +149,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Skin.GlowBoxArrowTemplate(Frame.Arrow, direction)
         Frame.Arrow:ClearAllPoints()
         Frame.Arrow:SetPoint(Util.OpposingSide[point], Frame, point)
-
-        --[[ Scale ]]--
-        Frame:SetSize(Frame:GetSize())
-        Frame.Text:SetSize(Frame.Text:GetSize())
-        Frame.Text:SetPoint(Frame.Text:GetPoint())
     end
 
 
@@ -286,10 +268,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         local highlight = Frame:GetHighlightTexture()
         highlight:SetPoint("CENTER")
         highlight:SetSize(38, 38)
-
-        --[[ Scale ]]--
-        Frame:SetSize(Frame:GetSize())
-        Frame.I:SetSize(Frame.I:GetSize())
     end
     function Skin.UIExpandingButtonTemplate(Button)
         Skin.UIPanelSquareButton(Button)

@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -13,59 +13,6 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_GarrisonSharedTemplates --
     ----====####$$$$%%%%%%$$$$####====----
-    function Hook.GarrisonFollowerList_UpdateData(self)
-        local followers = self.followers
-        local followersList = self.followersList
-        local numFollowers = #followersList
-        local scrollFrame = self.listScroll
-        local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
-        local buttons = scrollFrame.buttons
-        local numButtons = #buttons
-
-        for i = 1, numButtons do
-            local button = buttons[i]
-            local index = offset + i -- adjust index
-            if index <= numFollowers and followersList[index] ~= 0 then
-                local follower = followers[followersList[index]]
-
-                if follower.isCollected then
-                    -- adjust text position if we have additional text to show below name
-                    local nameOffsetY = 0
-                    if follower.status then
-                        nameOffsetY = nameOffsetY + 6
-                    end
-                    -- show iLevel for max level followers
-                    if _G.ShouldShowILevelInFollowerList(follower) then
-                        nameOffsetY = nameOffsetY + 6
-                        button.Follower.ILevel:SetPoint("TOPLEFT", button.Follower.Name, "BOTTOMLEFT", 0, -2)
-                        button.Follower.Status:SetPoint("TOPLEFT", button.Follower.ILevel, "BOTTOMLEFT", 0, 0)
-                    else
-                        button.Follower.Status:SetPoint("TOPLEFT", button.Follower.Name, "BOTTOMLEFT", 0, -2)
-                    end
-
-                    if button.Follower.DurabilityFrame:IsShown() then
-                        nameOffsetY = nameOffsetY + 8
-
-                        if follower.status then
-                            button.Follower.DurabilityFrame:SetPoint("TOPLEFT", button.Follower.Status, "BOTTOMLEFT", 0, -4)
-                        elseif _G.ShouldShowILevelInFollowerList(follower) then
-                            button.Follower.DurabilityFrame:SetPoint("TOPLEFT", button.Follower.ILevel, "BOTTOMLEFT", 0, -6)
-                        else
-                            button.Follower.DurabilityFrame:SetPoint("TOPLEFT", button.Follower.Name, "BOTTOMLEFT", 0, -6)
-                        end
-                    end
-                    button.Follower.Name:SetPoint("LEFT", button.Follower.PortraitFrame, "RIGHT", 10, nameOffsetY)
-
-                    if follower.xp > 0 or follower.levelXP > 0 then
-                        Scale.RawSetWidth(button.Follower.XPBar, (follower.xp/follower.levelXP) * Scale.Value(214))
-                    end
-                end
-
-                Scale.RawSetHeight(button, button.Follower:GetHeight())
-            end
-        end
-    end
-
     function Hook.GarrisonFollowerButton_SetCounterButton(button, followerID, index, info, lastUpdate, followerTypeID)
         local counter = button.Counters[index]
         if not counter._auroraSkinned then
@@ -80,62 +27,12 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
             counter:SetSize(size, size)
         end
     end
-    function Hook.GarrisonFollowerList_ExpandButtonAbilities(self, button, traitsFirst)
-        if not button.isCollected then
-            return -1
-        end
-
-        local abHeight = 0
-        local buttonCount = 0
-        for i = 1, #button.info.abilities do
-            if traitsFirst == button.info.abilities[i].isTrait and button.info.abilities[i].icon then
-                buttonCount = buttonCount + 1
-
-                local Ability = button.Abilities[buttonCount]
-                abHeight = abHeight + (Ability:GetHeight() + Scale.Value(3))
-            end
-        end
-        for i = 1, #button.info.abilities do
-            if traitsFirst ~= button.info.abilities[i].isTrait and button.info.abilities[i].icon then
-                buttonCount = buttonCount + 1
-
-                local Ability = button.Abilities[buttonCount]
-                abHeight = abHeight + (Ability:GetHeight() + Scale.Value(3))
-            end
-        end
-
-        for i = (#button.info.abilities + 1), #button.Abilities do
-            button.Abilities[i]:Hide()
-        end
-        if abHeight > 0 then
-            abHeight = abHeight + 8
-            button.AbilitiesBG:Show()
-            Scale.RawSetHeight(button.AbilitiesBG, abHeight)
-        else
-            button.AbilitiesBG:Hide()
-        end
-        return abHeight
-    end
-    function Hook.GarrisonFollowerList_ExpandButton(self, button, followerListFrame)
-        local abHeight = Hook.GarrisonFollowerList_ExpandButtonAbilities(self, button, false)
-        if abHeight == -1 then
-            return
-        end
-
-        button.UpArrow:Show()
-        button.DownArrow:Hide()
-        Scale.RawSetHeight(button, Scale.Value(51) + abHeight)
-        followerListFrame.expandedFollowerHeight = Scale.Value(51) + abHeight + Scale.Value(6)
-    end
     function Hook.GarrisonFollowerButton_AddAbility(self, index, ability, followerType)
         local Ability = self.Abilities[index]
         if not Ability._auroraSkinned then
             Skin.GarrisonFollowerListButtonAbilityTemplate(Ability)
             Ability._auroraSkinned = true
         end
-    end
-    function Hook.GarrisonFollowerList_CollapseButton(self, button)
-        button:SetHeight(46)
     end
     function Hook.GarrisonFollowerTabMixin_OnLoad(self)
         _G.hooksecurefunc(self.abilitiesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
@@ -224,9 +121,6 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         Frame.PortraitFrame:SetPoint("TOPLEFT", -3, 3)
         Frame.Highlight:SetTexCoord(0, 0.99568965517241, 0.01785714285714, 0.96428571428571)
         Frame.Highlight:SetAllPoints()
-
-        --[[ Scale ]]--
-        Frame:SetWidth(260)
     end
     function Skin.GarrisonFollowerCombatAllySpellTemplate(Button)
         Base.CropIcon(Button.iconTexture, Button)
@@ -302,9 +196,6 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         nameBG:SetPoint("BOTTOMRIGHT", -3, -1)
         Base.SetBackdrop(nameBG, Color.frame)
         Frame._auroraNameBG = nameBG
-
-        --[[ Scale ]]--
-        Frame:SetSize(Frame:GetSize())
     end
     function Skin.GarrisonMissionPageOvermaxRewardTemplate(Frame)
         Base.CropIcon(Frame.Icon)
@@ -315,9 +206,6 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         iconBG:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
         Base.SetBackdrop(iconBG, Color.black, 0)
         Frame._auroraIconBorder = iconBG
-
-        --[[ Scale ]]--
-        Frame:SetSize(Frame:GetSize())
     end
     function Skin.GarrisonMissionPageRewardTemplate(Frame)
         Skin.GarrisonMissionPageOvermaxRewardTemplate(Frame.OvermaxItem)
@@ -368,16 +256,12 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     end
     function Skin.GarrisonMissionPageStageTemplate(Frame)
         Skin.GarrisonMissionStageTemplate(Frame)
-        Skin.VerticalLayoutFrame(Frame.MissionInfo)
     end
     function Skin.GarrisonMissionPageCloseButtonTemplate(Button)
         Skin.UIPanelCloseButton(Button)
         Button:SetSize(32, 32)
     end
-    function Skin.GarrisonMissionFrameTemplate(Frame)
-        --[[ Scale ]]--
-        Frame:SetSize(Frame:GetSize())
-    end
+    Skin.GarrisonMissionFrameTemplate = private.nop
     function Skin.GarrisonMissionCompleteDialogTemplate(Frame)
         Skin.GarrisonMissionStageTemplate(Frame.Stage)
         local left, right = select(5, Frame.Stage:GetRegions())
@@ -428,20 +312,14 @@ function private.AddOns.Blizzard_GarrisonTemplates()
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_GarrisonSharedTemplates --
     ----====####$$$$%%%%%%$$$$####====----
-    --_G.hooksecurefunc(_G.GarrisonFollowerList, "UpdateData", Hook.GarrisonFollowerList_UpdateData)
     _G.hooksecurefunc("GarrisonFollowerButton_SetCounterButton", Hook.GarrisonFollowerButton_SetCounterButton)
-    --_G.hooksecurefunc(_G.GarrisonFollowerList, "ExpandButton", Hook.GarrisonFollowerList_ExpandButton)
     _G.hooksecurefunc("GarrisonFollowerButton_AddAbility", Hook.GarrisonFollowerButton_AddAbility)
-    --_G.hooksecurefunc(_G.GarrisonFollowerList, "CollapseButton", Hook.GarrisonFollowerList_CollapseButton)
 
     _G.hooksecurefunc(_G.GarrisonFollowerTabMixin, "OnLoad", Hook.GarrisonFollowerTabMixin_OnLoad)
 
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
-
 
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_GarrisonMissionTemplates --
@@ -459,6 +337,4 @@ function private.AddOns.Blizzard_GarrisonTemplates()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

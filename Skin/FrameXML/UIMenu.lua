@@ -26,6 +26,4 @@ function private.FrameXML.UIMenu()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

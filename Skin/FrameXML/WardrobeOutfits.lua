@@ -21,6 +21,4 @@ function private.FrameXML.WardrobeOutfits()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

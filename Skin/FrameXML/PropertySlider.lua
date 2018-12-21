@@ -24,6 +24,4 @@ function private.FrameXML.PropertySlider()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

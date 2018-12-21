@@ -36,15 +36,4 @@ function private.FrameXML.ActionBarFrame()
     for i = 1, 12 do
         Skin.ActionBarButtonTemplate(_G["ActionButton"..i])
     end
-
-    --[[ Scale ]]--
-    _G.ActionButton1:SetPoint("BOTTOMLEFT", _G.MainMenuBarArtFrameBackground, 8, 4)
-    for i = 2, 12 do
-        _G["ActionButton"..i]:SetPoint("LEFT", _G["ActionButton"..i - 1], "RIGHT", 6, 0)
-    end
-
-    _G.ActionBarUpButton:SetSize(21, 19)
-    _G.ActionBarUpButton:SetPoint("RIGHT", _G.ActionButton12, 25, 9)
-    _G.ActionBarDownButton:SetSize(21, 19)
-    _G.ActionBarDownButton:SetPoint("CENTER", _G.ActionBarUpButton, "BOTTOMLEFT", 10, -10)
 end

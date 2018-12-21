@@ -54,7 +54,6 @@ end
 do --[[ FrameXML\QuestMapFrame.xml ]]
     function Skin.WarCampaignTooltipTemplate(Frame)
         Base.SetBackdrop(Frame)
-        Skin.VerticalLayoutFrame(Frame)
         Skin.InternalEmbeddedItemTooltipTemplate(Frame.ItemTooltip)
     end
     function Skin.QuestLogHeaderTemplate(Button)
@@ -87,9 +86,6 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
         Frame.Background:SetAllPoints(clipFrame)
         Frame.HighlightTexture:SetAllPoints(clipFrame)
         Frame.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.2)
-
-        --[[ Scale ]]--
-        Frame:SetHeight(59)
     end
 end
 
@@ -152,7 +148,6 @@ function private.FrameXML.QuestMapFrame()
     local QuestsFrame = QuestMapFrame.QuestsFrame
     QuestsFrame.Background:Hide()
 
-    Skin.VerticalLayoutFrame(QuestsFrame.Contents)
     QuestsFrame.Contents.Separator:SetSize(260, 10)
 
     Skin.QuestMapHeader(QuestsFrame.Contents.WarCampaignHeader)
@@ -200,6 +195,4 @@ function private.FrameXML.QuestMapFrame()
     left:Hide()
     right:Hide()
     Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
-
-    --[[ Scale ]]--
 end

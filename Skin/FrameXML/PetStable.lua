@@ -25,9 +25,6 @@ do --[[ FrameXML\PetStable.xml ]]
         Base.CropIcon(Button.Checked)
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())
-
-        --[[ Scale ]]--
-        Button:SetSize(37, 37)
     end
     function Skin.PetStableActiveSlotTemplate(Button)
         Skin.PetStableSlotTemplate(Button)
@@ -98,20 +95,4 @@ function private.FrameXML.PetStable()
     Hook.SquareButton_SetIcon(_G.PetStableNextPageButton, "RIGHT")
     Skin.UIPanelSquareButton(_G.PetStablePrevPageButton)
     Hook.SquareButton_SetIcon(_G.PetStablePrevPageButton, "LEFT")
-
-    --[[ Scale ]]--
-    _G.PetStableSelectedPetIcon:SetSize(40, 40)
-    _G.PetStableSelectedPetIcon:SetPoint("TOPLEFT", 2, -1)
-
-    _G.PetStableActivePet1:SetPoint("TOPLEFT", PetStableFrame.LeftInset, 25, -50)
-    _G.PetStableStabledPet1:SetPoint("TOPLEFT", PetStableFrame.BottomInset, 50, -9)
-    _G.PetStableStabledPet6:SetPoint("TOPLEFT", _G.PetStableStabledPet1, "BOTTOMLEFT", 0, -5)
-    for i = 1, _G.NUM_PET_STABLE_SLOTS do
-        if (i % 5) > 1 then
-            _G["PetStableStabledPet"..i]:SetPoint("LEFT", _G["PetStableStabledPet"..(i - 1)], "RIGHT", 7, 0)
-        end
-    end
-
-    _G.PetStableNextPageButton:SetPoint("BOTTOMLEFT", PetStableFrame.BottomInset, "BOTTOM", 40, 5)
-    _G.PetStablePrevPageButton:SetPoint("BOTTOMRIGHT", PetStableFrame.BottomInset, "BOTTOM", -40, 5)
 end

@@ -33,9 +33,6 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
 
         CheckButton._auroraBDFrame = bd
         Base.SetHighlight(CheckButton, "backdrop")
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(CheckButton:GetSize())
     end
 
     function Skin.OptionsCheckButtonTemplate(CheckButton)

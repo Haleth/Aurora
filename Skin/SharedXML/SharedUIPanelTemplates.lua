@@ -5,7 +5,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -78,9 +78,6 @@ do -- BlizzWTF: These are not templates, but they should be
         disabled:SetColorTexture(0, 0, 0, .3)
         disabled:SetDrawLayer("OVERLAY")
         disabled:SetAllPoints(bg)
-
-        --[[ Scale ]]--
-        Button:SetSize(Button:GetSize())
     end
     function Skin.NavButtonPrevious(Button)
         NavButton(Button)
@@ -128,57 +125,15 @@ do -- BlizzWTF: These are not templates, but they should be
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
-    function Hook.PanelTemplates_GetTabWidth(tab)
-        return tab:GetTextWidth() + Scale.Value(20)
-    end
+    local resizing = false
     function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
-        if not tab._auroraTabResize then return end
-        local sideWidths = Scale.Value(20)
-        local tabText = tab.Text or _G[tab:GetName().."Text"]
+        if not tab._auroraTabResize or resizing then return end
 
-        local width, tabWidth
-        local textWidth
-        if absoluteTextSize then
-            textWidth = absoluteTextSize
-        else
-            tabText:SetWidth(0)
-            textWidth = tabText:GetStringWidth()
-        end
-        -- If there's an absolute size specified then use it
-        if absoluteSize then
-            if absoluteSize < sideWidths then
-                width = Scale.Value(1)
-                tabWidth = sideWidths
-            else
-                width = absoluteSize - sideWidths
-                tabWidth = absoluteSize
-            end
-            Scale.RawSetWidth(tabText, width)
-        else
-            -- Otherwise try to use padding
-            if padding then
-                width = textWidth + Scale.Value(padding)
-            else
-                width = textWidth + Scale.Value(24)
-            end
-            -- If greater than the maxWidth then cap it
-            if maxWidth and width > maxWidth then
-                if padding then
-                    width = maxWidth + Scale.Value(padding)
-                else
-                    width = maxWidth + Scale.Value(24)
-                end
-                Scale.RawSetWidth(tabText, width)
-            else
-                tabText:SetWidth(0)
-            end
-            if (minWidth and width < minWidth) then
-                width = minWidth
-            end
-            tabWidth = width + sideWidths
-        end
-
-        Scale.RawSetWidth(tab, tabWidth)
+        resizing = true
+        local left = tab.Left or tab.leftTexture or _G[tab:GetName().."Left"];
+        left:SetWidth(10)
+        _G.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
+        resizing = false
     end
     function Hook.PanelTemplates_DeselectTab(tab)
         local text = tab.Text or _G[tab:GetName().."Text"]
@@ -235,9 +190,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Base.SetBackdrop(Button, Color.button)
         Base.SetHighlight(Button, "backdrop")
-
-        --[[ Scale ]]--
-        Button:SetSize(Button:GetSize())
     end
     function Skin.UIPanelDynamicResizeButtonTemplate(Button)
         Skin.UIPanelButtonTemplate(Button)
@@ -262,9 +214,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         CheckButton._auroraBDFrame = bd
         Base.SetHighlight(CheckButton, "backdrop")
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(CheckButton:GetSize())
     end
     function Skin.UICheckButtonTemplate(CheckButton)
         CheckButton:SetNormalTexture("")
@@ -288,9 +237,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         disabled:SetAllPoints(check)
 
         Base.SetHighlight(CheckButton, "backdrop")
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(CheckButton:GetSize())
     end
 
     function Skin.NineSlicePanelTemplate(Frame)
@@ -376,9 +322,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
             Base.SetBackdrop(Frame)
         end
-
-        --[[ Scale ]]--
-        Frame:SetSize(Frame:GetSize())
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
@@ -395,10 +338,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             _G[name.."BtnCornerRight"]:SetTexture("")
             _G[name.."ButtonBottomBorder"]:SetTexture("")
         end
-
-        --[[ Scale ]]--
-        Frame.Inset:SetPoint("TOPLEFT", 4, -60)
-        Frame.Inset:SetPoint("BOTTOMRIGHT", -6, 26)
     end
 
     function Skin.MagicButtonTemplate(Button)
@@ -470,9 +409,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
         Base.SetBackdrop(thumb, Color.button)
         Slider._auroraThumb = thumb
-
-        --[[ Scale ]]--
-        Slider:SetSize(Slider:GetSize())
     end
 
     function Skin.UIPanelStretchableArtScrollBarTemplate(Slider)
@@ -492,9 +428,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         _G[name.."Border"]:SetBackdrop(nil)
 
         Skin.ScrollBarThumb(Slider:GetThumbTexture())
-
-        --[[ Scale ]]--
-        Slider:SetWidth(Slider:GetWidth())
     end
     function Skin.UIPanelScrollFrameTemplate2(Slider)
         Skin.UIPanelScrollFrameTemplate(Slider)

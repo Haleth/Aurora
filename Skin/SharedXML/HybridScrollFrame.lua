@@ -32,9 +32,6 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Slider.ScrollBarBottom:Hide()
 
         Skin.ScrollBarThumb(Slider.thumbTexture)
-
-        --[[ Scale ]]--
-        Slider:SetSize(Slider:GetSize())
     end
 
     function Skin.HybridScrollBarTemplate(Slider)
@@ -67,9 +64,6 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Skin.UIPanelScrollDownButtonTemplate(downButton)
 
         Skin.ScrollBarThumb(Slider.thumbTexture)
-
-        --[[ Scale ]]--
-        Slider:SetSize(Slider:GetSize())
     end
     function Skin.MinimalHybridScrollBarTemplate(Slider)
         local parent = Slider:GetParent()
@@ -82,9 +76,6 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Skin.UIPanelScrollDownButtonTemplate(parent.scrollDown)
 
         Skin.ScrollBarThumb(Slider.thumbTexture)
-
-        --[[ Scale ]]--
-        Slider:SetSize(Slider:GetSize())
     end
     -- HybridScrollFrameTemplate -- Has no visible parts
     function Skin.BasicHybridScrollFrameTemplate(ScrollFrame)

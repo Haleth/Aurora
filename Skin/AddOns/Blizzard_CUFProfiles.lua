@@ -40,9 +40,6 @@ do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.xml ]]
 
         CheckButton._auroraBDFrame = bd
         Base.SetHighlight(CheckButton, "backdrop")
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(CheckButton:GetSize())
     end
     function Skin.CompactUnitFrameProfilesSliderTemplate(Slider)
         Skin.HorizontalSliderTemplate(Slider)
@@ -123,6 +120,4 @@ function private.AddOns.Blizzard_CUFProfiles()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

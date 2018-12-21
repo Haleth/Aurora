@@ -69,6 +69,4 @@ function private.FrameXML.QuickJoinToast()
     -------------
     -- Section --
     -------------
-
-    --[[ Scale ]]--
 end

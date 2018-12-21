@@ -4,7 +4,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Color, Util = Aurora.Color, Aurora.Util
 
 Aurora.classIcons = { -- adjusted for borderless icons
@@ -335,7 +335,7 @@ do -- Base API
                     fontPath = fontObj:GetFont()
                 end
 
-                fontObj:SetFont(fontPath, Scale.Value(fontSize), fontStyle)
+                fontObj:SetFont(fontPath, fontSize, fontStyle)
             end
 
             if fontColor then
@@ -347,7 +347,7 @@ do -- Base API
             end
 
             if shadowX and shadowY then
-                fontObj:SetShadowOffset(Scale.Value(shadowX), Scale.Value(shadowY))
+                fontObj:SetShadowOffset(shadowX, shadowY)
             end
         end
     end
@@ -446,18 +446,10 @@ end
 do -- Scale API
     local floor = _G.math.floor
 
-    local uiScaleChanging = false
-    local uiMod, pixelScale
+    local pixelScale, uiScaleChanging = false
     function private.UpdateUIScale()
         if uiScaleChanging then return end
-        local pysWidth, pysHeight = _G.GetPhysicalScreenSize()
-
-        if not private.disabled.uiScale then
-            -- Set UI scale modifier
-            uiMod = (pysHeight / 768) * (private.uiScale or 1)
-            private.debug("physical size", pysWidth, pysHeight)
-            private.debug("uiMod", uiMod)
-        end
+        local _, pysHeight = _G.GetPhysicalScreenSize()
 
         if not private.disabled.pixelScale then
             -- Calculate current UI scale
@@ -479,171 +471,6 @@ do -- Scale API
         end
     end
     private.UpdateUIScale()
-
-    function Scale.GetUIScale()
-        return uiMod or 1
-    end
-
-    function Scale.Value(value, getFloat)
-        local mult = getFloat and 100 or 1
-        return floor((value * uiMod) * mult + 0.5) / mult
-    end
-
-    function Scale.Size(self, width, height)
-        if not (width and height) then
-            width, height = self:GetSize()
-        end
-        return self:SetSize(Scale.Value(width), Scale.Value(height))
-    end
-
-    function Scale.Height(self, height)
-        if not (height) then
-            height = self:GetHeight()
-        end
-        return self:SetHeight(Scale.Value(height))
-    end
-
-    function Scale.Width(self, width)
-        if not (width) then
-            width = self:GetWidth()
-        end
-        return self:SetWidth(Scale.Value(width))
-    end
-
-    function Scale.Thickness(self, thickness)
-        if not (thickness) then
-            thickness = self:GetThickness()
-        end
-        return self:SetThickness(Scale.Value(thickness))
-    end
-
-    function Scale.Atlas(self, atlas, useAtlasSize)
-        if useAtlasSize then
-            private.debug("SetAtlas", self:GetDebugName(), atlas, self:GetAtlas())
-            atlas = atlas or self:GetAtlas()
-            if atlas then
-                local _, x, y = _G.GetAtlasInfo(atlas)
-                self:SetSize(x, y)
-            end
-        end
-    end
-
-    local ScaleArgs do
-        local function pack(t, ...)
-            for i = 1, _G.select("#", ...) do
-                t[i] = _G.select(i, ...)
-            end
-        end
-
-        local args = {}
-        function ScaleArgs(self, method, ...)
-            if self.debug then
-                private.debug("raw args", method, ...)
-            end
-            _G.wipe(args)
-            --[[ This function gets called A LOT, so we recycle this table
-                to reduce needless garbage creation.]]
-            if ... then
-                pack(args, ...)
-            else
-                pack(args, self["Get"..method](self))
-            end
-
-            for i = 1, #args do
-                if _G.type(args[i]) == "number" then
-                    args[i] = Scale.Value(args[i])
-                end
-            end
-            if self.debug then
-                private.debug("final args", method, _G.unpack(args))
-            end
-            return _G.unpack(args)
-        end
-    end
-
-    function Scale.Point(self, ...)
-        self:SetPoint(ScaleArgs(self, "Point", ...))
-    end
-
-    function Scale.EndPoint(self, ...)
-        self:SetEndPoint(ScaleArgs(self, "EndPoint", ...))
-    end
-    function Scale.StartPoint(self, ...)
-        self:SetStartPoint(ScaleArgs(self, "StartPoint", ...))
-    end
-
-
-    -- Widget Hooks --
-    local function doSet(self, method)
-        if (self:IsForbidden() or _G.InCombatLockdown()) or self["_setting"..method] then
-            return false
-        end
-        return not self["_auroraNoSet"..method]
-    end
-    local positionMethods = {
-        "Size",
-        "Height",
-        "Width",
-        "Point",
-        "StartPoint",
-        "EndPoint",
-        "Thickness",
-        "Atlas",
-    }
-
-    local widgets = {
-        Frame = {
-            Texture = false,
-            Line = false,
-            MaskTexture = false,
-            FontString = false,
-        },
-        Button = false,
-        CheckButton = false,
-        Cooldown = false,
-        ColorSelect = false,
-        EditBox = false,
-        GameTooltip = false,
-        MessageFrame = false,
-        Model = false,
-        ScrollFrame = false,
-        ScrollingMessageFrame = false,
-        SimpleHTML = false,
-        Slider = false,
-        StatusBar = false,
-    }
-
-    local function HookSetters(widget)
-        local mt = _G.getmetatable(widget).__index
-        for _, method in next, positionMethods do
-            local methodName = "Set" .. method
-            if widget[methodName] then
-                Scale["Raw"..methodName] = mt[methodName]
-                if not private.disabled.uiScale then
-                    local methodCheck = "_setting"..method
-                    _G.hooksecurefunc(mt, methodName, function(self, ...)
-                        if not doSet(self, method) then return end
-                        self[methodCheck] = true
-                        Scale[method](self, ...)
-                        self[methodCheck] = nil
-                    end)
-                end
-            end
-        end
-    end
-
-    for widgetType, children in _G.next, widgets do
-        local widget = _G.CreateFrame(widgetType, nil, _G.UIParent)
-        HookSetters(widget)
-        if children then
-            for childType, hasChildren in _G.next, children do
-                local child = widget["Create"..childType](widget)
-                HookSetters(child)
-            end
-        end
-        widget:Hide()
-    end
-    HookSetters(_G.Minimap)
 end
 
 do -- Color API

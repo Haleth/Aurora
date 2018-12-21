@@ -5,7 +5,7 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base, Scale = Aurora.Base, Aurora.Scale
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -36,7 +36,6 @@ do --[[ FrameXML\ItemTextFrame.lua ]]
                 _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
                 _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
             end
-            Scale.RawSetSize(_G.ItemTextPageText, _G.ItemTextScrollFrame:GetSize())
         end
     end
 end

@@ -27,19 +27,6 @@ do --[[ FrameXML\ActionButtonTemplate.xml ]]
         Base.CropIcon(CheckButton:GetPushedTexture())
         Base.CropIcon(CheckButton:GetHighlightTexture())
         Base.CropIcon(CheckButton:GetCheckedTexture())
-
-        --[[ Scale ]]--
-        CheckButton:SetSize(36, 36)
-        CheckButton.HotKey:SetPoint("TOPLEFT", 1, -3)
-        CheckButton.HotKey:SetPoint("BOTTOMRIGHT", CheckButton, "TOPRIGHT", -1, -13)
-        CheckButton.Count:SetPoint("BOTTOMRIGHT", -2, 2)
-
-        CheckButton.Name:ClearAllPoints()
-        CheckButton.Name:SetPoint("TOPLEFT", CheckButton, "BOTTOMLEFT", 0, 12)
-        CheckButton.Name:SetPoint("BOTTOMRIGHT", 0, 2)
-
-        CheckButton.cooldown:SetPoint("TOPLEFT")
-        CheckButton.cooldown:SetPoint("BOTTOMRIGHT")
     end
 end
 

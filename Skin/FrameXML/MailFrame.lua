@@ -150,14 +150,6 @@ do --[[ FrameXML\MailFrame.xml ]]
 
         Base.CropIcon(button:GetHighlightTexture())
         Base.CropIcon(button:GetCheckedTexture())
-
-        --[[ Scale ]]--
-        Frame:SetSize(305, 45)
-        _G[name.."Sender"]:SetSize(200, 16)
-        _G[name.."Sender"]:SetPoint("TOPLEFT", 47, -4)
-        _G[name.."Subject"]:SetSize(248, 18)
-        _G[name.."ExpireTime"]:SetSize(100, 16)
-        _G[name.."ExpireTime"]:SetPoint("TOPRIGHT", -4, -4)
     end
     function Skin.SendMailAttachment(Button)
         Button:GetRegions():Hide()
@@ -178,9 +170,6 @@ do --[[ FrameXML\MailFrame.xml ]]
         Button._auroraIconBorder = bg
 
         Base.CropIcon(Button:GetHighlightTexture())
-
-        --[[ Scale ]]--
-        Button:SetSize(Button:GetSize())
     end
     function Skin.OpenMailAttachment(Button)
         Skin.ItemButtonTemplate(Button)
@@ -200,11 +189,6 @@ do --[[ FrameXML\MailFrame.xml ]]
         bg:SetPoint("BOTTOMRIGHT", 8, 1)
         bg:SetFrameLevel(EditBox:GetFrameLevel())
         Base.SetBackdrop(bg, Color.frame)
-
-        --[[ Scale ]]--
-        EditBox:SetWidth(EditBox:GetWidth())
-        local _, _, label = EditBox:GetRegions()
-        label:SetPoint("RIGHT", EditBox, "LEFT", -12, 0)
     end
 end
 
@@ -229,9 +213,6 @@ function private.FrameXML.MailFrame()
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)
-
-    --[[ Scale ]]--
-
 
     ----------------
     -- InboxFrame --
@@ -268,9 +249,6 @@ function private.FrameXML.MailFrame()
     Skin.UIPanelButtonTemplate(_G.OpenAllMail)
     _G.OpenAllMail:ClearAllPoints()
     _G.OpenAllMail:SetPoint("BOTTOM", 0, 14)
-
-    --[[ Scale ]]--
-
 
     -------------------
     -- SendMailFrame --
@@ -336,17 +314,6 @@ function private.FrameXML.MailFrame()
     _G.SendMailFrameLockSendMail:SetPoint("TOPLEFT", "SendMailAttachment1", -12, 12)
     _G.SendMailFrameLockSendMail:SetPoint("BOTTOMRIGHT", "SendMailCancelButton", 5, -5)
 
-    --[[ Scale ]]--
-    _G.SendMailNameEditBox:SetPoint("TOPLEFT", 90, -30)
-
-
-    Skin.FriendsFrameTabTemplate(_G.MailFrameTab1)
-    _G.MailFrameTab1:ClearAllPoints()
-    _G.MailFrameTab1:SetPoint("TOPLEFT", _G.MailFrame, "BOTTOMLEFT", 20, -1)
-    Skin.FriendsFrameTabTemplate(_G.MailFrameTab2)
-    _G.MailFrameTab2:SetPoint("TOPLEFT", _G.MailFrameTab1, "TOPRIGHT", 1, 0)
-
-
     -------------------
     -- OpenMailFrame --
     -------------------
@@ -400,16 +367,4 @@ function private.FrameXML.MailFrame()
     _G.OpenMailDeleteButton:SetPoint("RIGHT", _G.OpenMailCancelButton, "LEFT", -1, 0)
     Skin.UIPanelButtonTemplate(_G.OpenMailReplyButton)
     _G.OpenMailReplyButton:SetPoint("RIGHT", _G.OpenMailDeleteButton, "LEFT", -1, 0)
-
-    --[[ Scale ]]--
-    _G.OpenMailSenderLabel:SetSize(0, 16)
-    _G.OpenMailSenderLabel:SetPoint("TOPRIGHT", _G.OpenMailFrame, "TOPLEFT", 105, -33)
-    _G.OpenMailSubjectLabel:SetSize(0, 16)
-    _G.OpenMailSubjectLabel:SetPoint("TOPRIGHT", _G.OpenMailFrame, "TOPLEFT", 105, -55)
-    _G.OpenMailSubject:SetSize(225, 0)
-    _G.OpenMailSubject:SetPoint("TOPLEFT", _G.OpenMailSubjectLabel, "TOPRIGHT", 5, -4)
-
-    _G.OpenMailReportSpamButton:SetPoint("TOPRIGHT", -12, -32)
-    _G.OpenMailSender:SetPoint("TOPLEFT", _G.OpenMailSenderLabel, "TOPRIGHT", 5, 0)
-    _G.OpenMailSender:SetPoint("BOTTOMRIGHT", _G.OpenMailReportSpamButton, "BOTTOMLEFT", -5, 0)
 end
