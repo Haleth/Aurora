@@ -22,7 +22,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
 
     function Hook.AchievementFrame_UpdateTabs(clickedTab)
         for i = 1, 3 do
-            _G["AchievementFrameTab"..i]:SetPoint("CENTER")
+            _G["AchievementFrameTab"..i].text:SetPoint("CENTER")
         end
     end
     function Hook.AchievementFrameBaseTab_OnClick()
@@ -210,11 +210,6 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."LeftHighlight"]:SetTexture("")
         _G[name.."MiddleHighlight"]:SetTexture("")
         _G[name.."RightHighlight"]:SetTexture("")
-
-        Button.text:ClearAllPoints()
-        Button.text:SetPoint("TOPLEFT")
-        Button.text:SetPoint("BOTTOMRIGHT")
-        --Button.text:SetPoint("CENTER")
 
         Base.SetBackdrop(Button)
         Base.SetHighlight(Button, "backdrop")
