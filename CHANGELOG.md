@@ -1,4 +1,12 @@
-﻿## [8.1.0.1] - 2018-12-13 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * C stack overflow after playing for a while
+  * Opening the Warboard would cause an error
+
+
+
+## [8.1.0.1] - 2018-12-13 ##
 ### Changed ###
 
   * Skinned PvP season change notice
@@ -6,7 +14,7 @@
 ### Fixed ###
 
   * Button gradients did not work
-  * Some video options button were not positioned properly
+  * Some video options buttons were not positioned properly
   * The LFD inset border was not skinned
 
 
