@@ -10,7 +10,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\UIDropDownMenu.lua ]]
-    local skinnedLevels, skinnedButtons = 2, private.isPatch and 1 or 8 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
+    local skinnedLevels, skinnedButtons = 2, 1 -- mirrors for UIDROPDOWNMENU_MAXLEVELS and UIDROPDOWNMENU_MAXBUTTONS
     function Hook.UIDropDownMenu_CreateFrames(level, index)
         while level > skinnedLevels do
             -- New list frames have been created, skin them!
@@ -147,13 +147,7 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         local name = Button:GetName()
         Base.SetBackdrop(_G[name.."Backdrop"])
         Base.SetBackdrop(_G[name.."MenuBackdrop"])
-        if private.isPatch then
-            Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
-        else
-            for i = 1, _G.UIDROPDOWNMENU_MINBUTTONS do
-                Skin.UIDropDownMenuButtonTemplate(_G[name.."Button"..i])
-            end
-        end
+        Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
     end
     function Skin.UIDropDownMenuTemplate(Frame)
         Frame.Left:SetAlpha(0)

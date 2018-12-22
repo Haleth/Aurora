@@ -95,11 +95,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Base.CropIcon(Frame.Icon, Frame)
     end
     function Skin.PVPConquestBarTemplate(StatusBar)
-        if private.isPatch then
-            _G.hooksecurefunc(StatusBar.Reward, "SetTexture", Hook.PVPConquestBarRewardMixin_SetTexture)
-        else
-            Hook.PVPConquestBarRewardMixin_SetTexture(StatusBar.Reward)
-        end
+        _G.hooksecurefunc(StatusBar.Reward, "SetTexture", Hook.PVPConquestBarRewardMixin_SetTexture)
 
         StatusBar.Border:Hide()
         StatusBar.Background:Hide()
@@ -243,7 +239,7 @@ function private.AddOns.Blizzard_PVPUI()
     bg2:Hide()
 
     local CasualPanel = HonorInset.CasualPanel
-    local NextRewardLevel = private.isPatch and CasualPanel.HonorLevelDisplay.NextRewardLevel or HonorInset.HonorLevelDisplay.NextRewardLevel
+    local NextRewardLevel = CasualPanel.HonorLevelDisplay.NextRewardLevel
     Base.CropIcon(NextRewardLevel.RewardIcon, NextRewardLevel)
     NextRewardLevel.IconCover:SetAllPoints(NextRewardLevel.RewardIcon)
     NextRewardLevel.CircleMask:Hide()

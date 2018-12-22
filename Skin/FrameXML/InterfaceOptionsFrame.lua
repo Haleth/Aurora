@@ -36,13 +36,5 @@ function private.FrameXML.InterfaceOptionsFrame()
     Base.SetBackdrop(_G[name.."PanelContainer"], Color.frame)
 
     Skin.OptionsFrameTabButtonTemplate(_G.InterfaceOptionsFrameTab1)
-    if not private.isPatch then
-        _G.InterfaceOptionsFrameTab1TabSpacer:SetAlpha(0)
-    end
-
     Skin.OptionsFrameTabButtonTemplate(_G.InterfaceOptionsFrameTab2)
-    if not private.isPatch then
-        _G.InterfaceOptionsFrameTab2TabSpacer1:SetAlpha(0)
-        _G.InterfaceOptionsFrameTab2TabSpacer2:SetAlpha(0)
-    end
 end

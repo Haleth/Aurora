@@ -7,14 +7,8 @@ local Skin = private.Aurora.Skin
 function private.FrameXML.TabardFrame()
     F.ReskinPortraitFrame(_G.TabardFrame, true)
 
-    if private.isPatch then
-        for i = 7, 16 do -- OuterFrame textures
-            _G.select(i, _G.TabardFrame:GetRegions()):Hide()
-        end
-    else
-        for i = 19, 28 do -- OuterFrame textures
-            _G.select(i, _G.TabardFrame:GetRegions()):Hide()
-        end
+    for i = 7, 16 do -- OuterFrame textures
+        _G.select(i, _G.TabardFrame:GetRegions()):Hide()
     end
     _G.TabardFrameEmblemTopRight:SetPoint("TOPRIGHT", 15, -50)
 

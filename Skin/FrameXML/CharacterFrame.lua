@@ -30,15 +30,9 @@ function private.FrameXML.CharacterFrame()
     local CharacterFrame = _G.CharacterFrame
     Skin.ButtonFrameTemplate(CharacterFrame)
 
-    if private.isPatch then
-        CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
-        CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
-        CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
-    else
-        CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInset, "TOPRIGHT", 0, 0)
-        _G.CharacterFrameInset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
-        _G.CharacterFrameInset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
-    end
+    CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
+    CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
+    CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
 
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab1)
     _G.CharacterFrameTab1:SetPoint("TOPLEFT", CharacterFrame, "BOTTOMLEFT", 20, -1)
@@ -47,16 +41,11 @@ function private.FrameXML.CharacterFrame()
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab3)
     _G.CharacterFrameTab3:SetPoint("TOPLEFT", _G.CharacterFrameTab2, "TOPRIGHT", 1, 0)
 
-    if private.isPatch then
-        Skin.InsetFrameTemplate(CharacterFrame.InsetRight)
-        CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)
-    else
-        Skin.InsetFrameTemplate(_G.CharacterFrameInsetRight)
-        _G.CharacterFrameInsetRight:SetPoint("TOPLEFT", _G.CharacterFrameInset, "TOPRIGHT", 1, -20)
-    end
+    Skin.InsetFrameTemplate(CharacterFrame.InsetRight)
+    CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)
 
     local CharacterStatsPane = _G.CharacterStatsPane
-    _G.hooksecurefunc(_G.CharacterStatsPane.statsFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(CharacterStatsPane.statsFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 
     local ClassBackground = CharacterStatsPane.ClassBackground
     local atlas = "legionmission-landingpage-background-"..private.charClass.token

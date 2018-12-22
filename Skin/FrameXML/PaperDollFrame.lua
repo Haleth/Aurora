@@ -124,11 +124,7 @@ function private.FrameXML.PaperDollFrame()
     classBG:SetAlpha(0.5)
 
     _G.PaperDollSidebarTabs:ClearAllPoints()
-    if private.isPatch then
-        _G.PaperDollSidebarTabs:SetPoint("BOTTOM", CharacterFrame.InsetRight, "TOP", 0, -3)
-    else
-        _G.PaperDollSidebarTabs:SetPoint("BOTTOM", _G.CharacterFrameInsetRight, "TOP", 0, -3)
-    end
+    _G.PaperDollSidebarTabs:SetPoint("BOTTOM", CharacterFrame.InsetRight, "TOP", 0, -3)
     _G.PaperDollSidebarTabs.DecorLeft:Hide()
     _G.PaperDollSidebarTabs.DecorRight:Hide()
 
@@ -139,11 +135,7 @@ function private.FrameXML.PaperDollFrame()
 
 
     Hook.HybridScrollFrame_CreateButtons(_G.PaperDollTitlesPane, "PlayerTitleButtonTemplate") -- Called here since the original is called OnLoad
-    if private.isPatch then
-        _G.PaperDollTitlesPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
-    else
-        _G.PaperDollTitlesPane:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInsetRight, -4, 4)
-    end
+    _G.PaperDollTitlesPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
     Skin.HybridScrollBarTemplate(_G.PaperDollTitlesPane.scrollBar)
     _G.PaperDollTitlesPane.scrollBar:ClearAllPoints()
     _G.PaperDollTitlesPane.scrollBar:SetPoint("TOPRIGHT", 2, -19)
@@ -152,11 +144,7 @@ function private.FrameXML.PaperDollFrame()
 
     local PaperDollEquipmentManagerPane = _G.PaperDollEquipmentManagerPane
     Hook.HybridScrollFrame_CreateButtons(PaperDollEquipmentManagerPane, "GearSetButtonTemplate") -- Called here since the original is called OnLoad
-    if private.isPatch then
-        PaperDollEquipmentManagerPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
-    else
-        PaperDollEquipmentManagerPane:SetPoint("BOTTOMRIGHT", _G.CharacterFrameInsetRight, -4, 4)
-    end
+    PaperDollEquipmentManagerPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
 
     Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.EquipSet)
     PaperDollEquipmentManagerPane.EquipSet.ButtonBackground:Hide()

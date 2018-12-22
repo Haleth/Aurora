@@ -46,11 +46,7 @@ function private.FrameXML.ItemTextFrame()
     Skin.ButtonFrameTemplate(_G.ItemTextFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    if private.isPatch then
-        select(6, _G.ItemTextFrame:GetRegions()):Hide()
-    else
-        select(18, _G.ItemTextFrame:GetRegions()):Hide()
-    end
+    select(6, _G.ItemTextFrame:GetRegions()):Hide()
     _G.ItemTextFramePageBg:SetAlpha(0)
 
     _G.ItemTextMaterialTopLeft:SetAlpha(0)

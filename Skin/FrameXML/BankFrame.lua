@@ -47,11 +47,7 @@ do --[[ FrameXML\BankFrame.xml ]]
     end
     function Skin.BankItemButtonBagTemplate(CheckButton)
         Skin.ItemButtonTemplate(CheckButton)
-        if private.isPatch then
-            Base.CropIcon(CheckButton:GetCheckedTexture())
-        else
-            Base.CropIcon(CheckButton.HighlightFrame.HighlightTexture)
-        end
+        Base.CropIcon(CheckButton:GetCheckedTexture())
     end
     Skin.ReagentBankItemButtonGenericTemplate = Skin.BankItemButtonGenericTemplate
 
@@ -78,11 +74,7 @@ function private.FrameXML.BankFrame()
     --[[ BankFrame ]]--
     Skin.PortraitFrameTemplate(_G.BankFrame)
     _G.BankPortraitTexture:Hide()
-    if private.isPatch then
-        select(7, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
-    else
-        select(16, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
-    end
+    select(7, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
 
     Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab1)
     _G.BankFrameTab1:SetPoint("TOPLEFT", _G.BankFrame, "BOTTOMLEFT", 20, -1)

@@ -101,11 +101,7 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
         local name = Frame:GetName()
         if Frame:GetNumRegions() > 6 then
             --BlizzWTF: This region interferes with the ButtonFrameTemplate bg in QuestLogPopupDetailFrame
-            if private.isPatch then
-                select(6, Frame:GetRegions()):Hide()
-            else
-                select(18, Frame:GetRegions()):Hide()
-            end
+            select(6, Frame:GetRegions()):Hide()
         else
             _G[name.."Bg"]:Hide()
         end

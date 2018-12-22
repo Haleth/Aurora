@@ -255,26 +255,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         })
     end
     function Skin.InsetFrameTemplate(Frame)
-        if private.isPatch then
-            Frame.Bg:Hide()
-            for _, tex in next, Frame.NineSlice do
-                if type(tex) == "table" then
-                    tex:Hide()
-                end
+        Frame.Bg:Hide()
+        for _, tex in next, Frame.NineSlice do
+            if type(tex) == "table" then
+                tex:Hide()
             end
-        else
-            Frame.Bg:Hide()
-
-            Frame.InsetBorderTopLeft:Hide()
-            Frame.InsetBorderTopRight:Hide()
-
-            Frame.InsetBorderBottomLeft:Hide()
-            Frame.InsetBorderBottomRight:Hide()
-
-            Frame.InsetBorderTop:Hide()
-            Frame.InsetBorderBottom:Hide()
-            Frame.InsetBorderLeft:Hide()
-            Frame.InsetBorderRight:Hide()
         end
     end
 
@@ -286,42 +271,18 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        if private.isPatch then
-            Frame.TitleBg:Hide()
-            Frame.portrait:SetAlpha(0)
+        Frame.TitleBg:Hide()
+        Frame.portrait:SetAlpha(0)
 
-            local titleText = Frame.TitleText
-            titleText:ClearAllPoints()
-            titleText:SetPoint("TOPLEFT")
-            titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        local titleText = Frame.TitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT")
+        titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-            Frame.TopTileStreaks:SetTexture("")
-            Frame.NineSlice.Center = Frame.Bg
-            Skin.NineSlicePanelTemplate(Frame.NineSlice)
-            Base.SetBackdrop(Frame.NineSlice)
-        else
-            Frame.Bg:Hide()
-            Frame.TitleBg:Hide()
-            Frame.portrait:SetAlpha(0)
-            Frame.PortraitFrame:SetTexture("")
-            Frame.TopRightCorner:Hide()
-            Frame.TopLeftCorner:SetTexture("")
-            Frame.TopBorder:SetTexture("")
-
-            local titleText = Frame.TitleText
-            titleText:ClearAllPoints()
-            titleText:SetPoint("TOPLEFT")
-            titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-            Frame.TopTileStreaks:SetTexture("")
-            Frame.BotLeftCorner:Hide()
-            Frame.BotRightCorner:Hide()
-            Frame.BottomBorder:Hide()
-            Frame.LeftBorder:Hide()
-            Frame.RightBorder:Hide()
-
-            Base.SetBackdrop(Frame)
-        end
+        Frame.TopTileStreaks:SetTexture("")
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+        Base.SetBackdrop(Frame.NineSlice)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
@@ -330,14 +291,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.ButtonFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
         Skin.InsetFrameTemplate(Frame.Inset)
-
-        if not private.isPatch then
-            local name = Frame:GetName()
-
-            _G[name.."BtnCornerLeft"]:SetTexture("")
-            _G[name.."BtnCornerRight"]:SetTexture("")
-            _G[name.."ButtonBottomBorder"]:SetTexture("")
-        end
     end
 
     function Skin.MagicButtonTemplate(Button)

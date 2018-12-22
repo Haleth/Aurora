@@ -26,20 +26,9 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
             _G.hooksecurefunc(Frame, "AdjustSizeForTiers", Hook.AzeriteEmpoweredItemUIMixin_AdjustSizeForTiers)
 
             Skin.PortraitFrameTemplate(Frame.BorderFrame)
-            if not private.isPatch then
-                Frame.BorderFrame:GetBackdropTexture("bg"):SetParent(Frame)
-            end
 
             Frame.ClipFrame:SetPoint("TOPLEFT")
             Frame.ClipFrame:SetPoint("BOTTOMRIGHT")
-
-            if not private.isPatch then
-                local holder = _G.CreateFrame("Frame", nil, Frame.ClipFrame.BackgroundFrame.KeyOverlay)
-                holder:SetFrameLevel(holder:GetFrameLevel() + 1)
-                holder:SetAllPoints(Frame.BorderFrame.TitleText)
-                Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetParent(holder)
-                Frame.ClipFrame.BackgroundFrame.KeyOverlay.Shadow:SetAllPoints(holder)
-            end
 
             Skin.GlowBoxFrame(Frame.FirstPowerLockedInHelpBox, "Left")
         end

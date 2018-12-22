@@ -13,11 +13,7 @@ function private.FrameXML.GuildRegistrarFrame()
     _G.GuildRegistrarFrameMiddle:Hide()
 
     -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-    if private.isPatch then
-        _G.select(7, _G.GuildRegistrarFrame:GetRegions()):Hide() -- GuildRegistrarFrameBg
-    else
-        _G.select(19, _G.GuildRegistrarFrame:GetRegions()):Hide() -- GuildRegistrarFrameBg
-    end
+    _G.select(7, _G.GuildRegistrarFrame:GetRegions()):Hide() -- GuildRegistrarFrameBg
 
     -- BlizzWTF: This should use the title text included in the template
     _G.GuildRegistrarFrameNpcNameText:SetAllPoints(_G.GuildRegistrarFrame.TitleText)

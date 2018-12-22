@@ -96,11 +96,7 @@ function private.FrameXML.QuestMapFrame()
     local QuestLogPopupDetailFrame = _G.QuestLogPopupDetailFrame
     Skin.ButtonFrameTemplate(QuestLogPopupDetailFrame)
     Skin.QuestFramePanelTemplate(QuestLogPopupDetailFrame)
-    if private.isPatch then
-        select(12, QuestLogPopupDetailFrame:GetRegions()):Hide() -- Portrait
-    else
-        select(24, QuestLogPopupDetailFrame:GetRegions()):Hide() -- Portrait
-    end
+    select(12, QuestLogPopupDetailFrame:GetRegions()):Hide() -- Portrait
 
     Skin.UIPanelScrollFrameTemplate(QuestLogPopupDetailFrame.ScrollFrame)
     QuestLogPopupDetailFrame.ScrollFrame:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 2))

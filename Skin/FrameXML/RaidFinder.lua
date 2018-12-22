@@ -7,10 +7,6 @@ local Skin = Aurora.Skin
 
 function private.FrameXML.RaidFinder()
     _G.RaidFinderFrameRoleBackground:Hide()
-    if not private.isPatch then
-        _G.RaidFinderFrameBtnCornerRight:Hide()
-        _G.RaidFinderFrameButtonBottomBorder:Hide()
-    end
 
     Skin.InsetFrameTemplate(_G.RaidFinderFrameRoleInset)
     Skin.InsetFrameTemplate(_G.RaidFinderFrameBottomInset)

@@ -15,11 +15,9 @@ do --[[ FrameXML\AnchorUtil.xml ]]
     Hook.AnchorUtil = AnchorUtil
 
     do --[[ FrameXML\NineSlice.lua ]]
-        if private.isPatch then
         function AnchorUtil.ApplyNineSliceLayout(container, userLayout, textureKit)
             if not container._auroraBackdrop then return end
             container:SetBackdrop(private.backdrop)
-        end
         end
     end
 end

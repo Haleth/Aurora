@@ -603,11 +603,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     _G.hooksecurefunc(BFAMissionFrame, "SetupTabs", Hook.OrderHallMission_SetupTabs)
     Skin.GarrisonMissionFrameTemplate(BFAMissionFrame)
     Skin.GarrisonUITemplate(BFAMissionFrame)
-    if private.isPatch then
-        BFAMissionFrame.OverlayElements.CloseButtonBorder:Hide()
-    else
-        BFAMissionFrame.CloseButtonBorder:Hide()
-    end
+    BFAMissionFrame.OverlayElements.CloseButtonBorder:Hide()
     BFAMissionFrame.TitleScroll:Hide()
 
     Skin.OrderHallFrameTabButtonTemplate(BFAMissionFrame.Tab1)
