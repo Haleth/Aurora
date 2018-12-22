@@ -217,7 +217,7 @@ function private.FrameXML.PaperDollFrame()
         end
 
         Skin.PaperDollItemSlotButtonBottomTemplate(button)
-        _G.select(13, button:GetRegions()):Hide()
+        _G.select(14, button:GetRegions()):Hide()
     end
 
 
