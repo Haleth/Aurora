@@ -18,20 +18,20 @@ end
 
 do --[[ AddOns\Blizzard_AchievementUI.lua ]]
     local IN_GUILD_VIEW = false
-    local COLOR_ALPHA = 0.8
+    local red, green, blue = Color.red:Hue(0.03), Color.green:Lightness(-0.4), Color.blue:Hue(-0.05)
+    local redDesat, greenDesat, blueDesat = red:Saturation(-0.4), green:Saturation(-0.4), blue:Saturation(-0.4)
 
     function Hook.AchievementFrame_UpdateTabs(clickedTab)
         for i = 1, 3 do
             _G["AchievementFrameTab"..i].text:SetPoint("CENTER")
         end
     end
-    function Hook.AchievementFrameBaseTab_OnClick()
-        if _G.AchievementFrameGuildEmblemLeft:IsShown() then
+    function Hook.AchievementFrame_ToggleView()
+        IN_GUILD_VIEW = not (_G.AchievementFrameHeaderTitle:GetText() == _G.ACHIEVEMENT_TITLE)
+
+        if IN_GUILD_VIEW then
             _G.AchievementFrameGuildEmblemLeft:SetVertexColor(1, 1, 1, 0.25)
             _G.AchievementFrameGuildEmblemRight:SetVertexColor(1, 1, 1, 0.25)
-            IN_GUILD_VIEW = true
-        else
-            IN_GUILD_VIEW = false
         end
     end
     function Hook.AchievementButton_UpdatePlusMinusTexture(button)
@@ -48,13 +48,15 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
     function Hook.AchievementButton_Saturate(self)
+        Base.SetBackdropColor(self, Color.button, 1)
+
         if IN_GUILD_VIEW then
-            Base.SetBackdropColor(self, Color.red, COLOR_ALPHA)
+            self.titleBar:SetColorTexture(green:GetRGB())
         else
             if self.accountWide then
-                Base.SetBackdropColor(self, Color.blue, COLOR_ALPHA)
+                self.titleBar:SetColorTexture(blue:GetRGB())
             else
-                Base.SetBackdropColor(self, Color.red, COLOR_ALPHA)
+                self.titleBar:SetColorTexture(red:GetRGB())
             end
         end
 
@@ -64,13 +66,15 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
     function Hook.AchievementButton_Desaturate(self)
+        Base.SetBackdropColor(self, Color.button, 1)
+
         if IN_GUILD_VIEW then
-            Base.SetBackdropColor(self, Color.red:Saturation(-0.3), COLOR_ALPHA)
+            self.titleBar:SetColorTexture(greenDesat:GetRGB())
         else
             if self.accountWide then
-                Base.SetBackdropColor(self, Color.blue:Saturation(-0.3), COLOR_ALPHA)
+                self.titleBar:SetColorTexture(blueDesat:GetRGB())
             else
-                Base.SetBackdropColor(self, Color.red:Saturation(-0.3), COLOR_ALPHA)
+                self.titleBar:SetColorTexture(redDesat:GetRGB())
             end
         end
     end
@@ -263,7 +267,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         hooksecurefunc(Button, "Saturate", Hook.AchievementButton_Saturate)
         hooksecurefunc(Button, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(Button, Color.frame)
+        Base.SetBackdrop(Button, Color.button, 1)
         Button.background:Hide()
 
         local name = Button:GetName()
@@ -275,13 +279,21 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."BottomTsunami1"]:Hide()
         _G[name.."TopTsunami1"]:Hide()
 
-        Button.titleBar:Hide()
+        local titleMask = Button:CreateMaskTexture()
+        titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        titleMask:SetAllPoints(Button.titleBar)
+        Button.titleBar:AddMaskTexture(titleMask)
+        Button.titleBar:SetHeight(68)
+        Button.titleBar:SetPoint("TOPLEFT", 10, 8)
+        Button.titleBar:SetPoint("TOPRIGHT", -10, 8)
+
         Button.glow:Hide()
         Button.rewardBackground:SetAlpha(0)
         Button.guildCornerL:Hide()
         Button.guildCornerR:Hide()
-        Button.plusMinus:SetAlpha(0)
+        Button.label:SetPoint("TOP", 0, -4)
 
+        Button.plusMinus:SetAlpha(0)
         local plusMinus = _G.CreateFrame("Frame", nil, Button)
         Base.SetBackdrop(plusMinus, Color.button)
         plusMinus:SetAllPoints(Button.plusMinus)
@@ -297,7 +309,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         plusMinus.minus:SetColorTexture(1, 1, 1)
         Button._auroraPlusMinus = plusMinus
 
-        Base.SetBackdrop(Button.highlight, Color.white, 0)
+        Base.SetBackdrop(Button.highlight, Color.highlight, Color.frame.a)
         Button.highlight:DisableDrawLayer("OVERLAY")
         Button.highlight:ClearAllPoints()
         Button.highlight:SetPoint("TOPLEFT", 1, -1)
@@ -312,8 +324,19 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Base.SetBackdrop(Frame, Color.frame)
         Frame.background:Hide()
-        Frame.titleBar:Hide()
+
+        local titleMask = Frame:CreateMaskTexture()
+        titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        titleMask:SetPoint("TOPLEFT", Frame.titleBar, 0, 8)
+        titleMask:SetPoint("BOTTOMRIGHT", Frame.titleBar, 0, -15)
+
+        Frame.titleBar:AddMaskTexture(titleMask)
+        Frame.titleBar:ClearAllPoints()
+        Frame.titleBar:SetPoint("TOPLEFT", 10, -1)
+        Frame.titleBar:SetPoint("BOTTOMRIGHT", -10, 1)
+
         Frame.glow:Hide()
+        Frame.label:SetPoint("TOP", 0, -4)
 
         Skin.AchievementIconFrameTemplate(Frame.icon)
     end
@@ -324,7 +347,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Skin.ComparisonPlayerTemplate(Frame)
 
-        Base.SetBackdrop(Frame.highlight, Color.white, 0)
+        Base.SetBackdrop(Frame.highlight, Color.highlight, Color.frame.a)
         Frame.highlight:DisableDrawLayer("OVERLAY")
         Frame.highlight:ClearAllPoints()
         Frame.highlight:SetPoint("TOPLEFT", 1, -1)
@@ -364,7 +387,7 @@ end
 
 function private.AddOns.Blizzard_AchievementUI()
     hooksecurefunc("AchievementFrame_UpdateTabs", Hook.AchievementFrame_UpdateTabs)
-    hooksecurefunc("AchievementFrameBaseTab_OnClick", Hook.AchievementFrameBaseTab_OnClick)
+    hooksecurefunc("AchievementFrame_ToggleView", Hook.AchievementFrame_ToggleView)
     hooksecurefunc("AchievementButton_UpdatePlusMinusTexture", Hook.AchievementButton_UpdatePlusMinusTexture)
     hooksecurefunc("AchievementButton_GetMiniAchievement", Hook.AchievementButton_GetMiniAchievement)
     hooksecurefunc("AchievementButton_GetProgressBar", Hook.AchievementButton_GetProgressBar)
