@@ -390,6 +390,7 @@ function private.SetupGUI()
 end
 
 -- easy slash command
+local test = private.test
 _G.SLASH_AURORA1 = "/aurora"
 _G.SlashCmdList.AURORA = function(msg, editBox)
     private.debug("/aurora", msg)
@@ -405,6 +406,17 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
             debugger:Display()
         else
             _G.print("LibTextDump is not available.")
+        end
+    elseif msg == "test" then
+        local AceConfig = _G.LibStub("AceConfig-3.0", true)
+        if AceConfig then
+            if test.init then
+                test.init = nil
+                AceConfig:RegisterOptionsTable("test", test)
+            end
+            _G.LibStub("AceConfigDialog-3.0"):Open("test")
+        else
+            _G.print("AceConfig does not exist.")
         end
     else
         _G.InterfaceOptionsFrame_OpenToCategory(gui)

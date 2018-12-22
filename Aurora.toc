@@ -11,7 +11,12 @@
 ## X-Curse-Project-ID: 278735
 ## X-WoWI-ID: 18589
 
+#@do-not-package@
+test.lua
+#@end-do-not-package@
+
 Skin\skin.xml
 
 aurora.lua
 gui.lua
+

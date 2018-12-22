@@ -2,6 +2,7 @@ package-as: Aurora
 
 ignore:
     - *.sublime*
+    - test.lua
 
 manual-changelog:
   filename: CHANGELOG.md
