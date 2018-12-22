@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\CharacterFrame.xml ]]
     function Skin.CharacterStatFrameCategoryTemplate(Button)
@@ -35,11 +35,13 @@ function private.FrameXML.CharacterFrame()
     CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
 
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab1)
-    _G.CharacterFrameTab1:SetPoint("TOPLEFT", CharacterFrame, "BOTTOMLEFT", 20, -1)
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab2)
-    _G.CharacterFrameTab2:SetPoint("TOPLEFT", _G.CharacterFrameTab1, "TOPRIGHT", 1, 0)
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab3)
-    _G.CharacterFrameTab3:SetPoint("TOPLEFT", _G.CharacterFrameTab2, "TOPRIGHT", 1, 0)
+    Util.PositionRelative("TOPLEFT", CharacterFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.CharacterFrameTab1,
+        _G.CharacterFrameTab2,
+        _G.CharacterFrameTab3,
+    })
 
     Skin.InsetFrameTemplate(CharacterFrame.InsetRight)
     CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)

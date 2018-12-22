@@ -6,6 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ FrameXML\WorldStateFrame.lua ]]
     function Hook.CaptureBar_Create(id)
@@ -95,11 +96,13 @@ function private.FrameXML.WorldStateFrame()
     bottom:Hide()
 
     Skin.CharacterFrameTabButtonTemplate(_G.WorldStateScoreFrameTab1)
-    _G.WorldStateScoreFrameTab1:SetPoint("TOPLEFT", _G.WorldStateScoreFrame, "BOTTOMLEFT", 20, -1)
     Skin.CharacterFrameTabButtonTemplate(_G.WorldStateScoreFrameTab2)
-    _G.WorldStateScoreFrameTab2:SetPoint("TOPLEFT", _G.WorldStateScoreFrameTab1, "TOPRIGHT", 1, 0)
     Skin.CharacterFrameTabButtonTemplate(_G.WorldStateScoreFrameTab3)
-    _G.WorldStateScoreFrameTab3:SetPoint("TOPLEFT", _G.WorldStateScoreFrameTab2, "TOPRIGHT", 1, 0)
+    Util.PositionRelative("TOPLEFT", _G.WorldStateScoreFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.WorldStateScoreFrameTab1,
+        _G.WorldStateScoreFrameTab2,
+        _G.WorldStateScoreFrameTab3,
+    })
 
     Skin.UIPanelButtonTemplate(_G.WorldStateScoreFrameQueueButton)
     Skin.UIPanelButtonTemplate(_G.WorldStateScoreFrameLeaveButton)

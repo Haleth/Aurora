@@ -6,6 +6,7 @@ local select = _G.select
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ FrameXML\BankFrame.lua ]]
     function Hook.BankFrameItemButton_Update(button)
@@ -77,9 +78,11 @@ function private.FrameXML.BankFrame()
     select(7, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
 
     Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab1)
-    _G.BankFrameTab1:SetPoint("TOPLEFT", _G.BankFrame, "BOTTOMLEFT", 20, -1)
     Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab2)
-    _G.BankFrameTab2:SetPoint("TOPLEFT", _G.BankFrameTab1, "TOPRIGHT", 1, 0)
+    Util.PositionRelative("TOPLEFT", _G.BankFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.BankFrameTab1,
+        _G.BankFrameTab2,
+    })
 
     Skin.GlowBoxFrame(_G.BankFrame.GlowBox, "Left")
     Skin.BagSearchBoxTemplate(_G.BankItemSearchBox)

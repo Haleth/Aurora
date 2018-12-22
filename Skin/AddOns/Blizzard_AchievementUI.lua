@@ -6,7 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 local function SkinSearchPreview(button)
     button:GetNormalTexture():SetColorTexture(0.1, 0.1, 0.1, .9)
@@ -547,14 +547,13 @@ function private.AddOns.Blizzard_AchievementUI()
 
     Skin.UIPanelCloseButton(_G.AchievementFrameCloseButton)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab1)
-    _G.AchievementFrameTab1:ClearAllPoints()
-    _G.AchievementFrameTab1:SetPoint("TOPLEFT", _G.AchievementFrame, "BOTTOMLEFT", 20, -1)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab2)
-    _G.AchievementFrameTab2:ClearAllPoints()
-    _G.AchievementFrameTab2:SetPoint("TOPLEFT", _G.AchievementFrameTab1, "TOPRIGHT", 1, 0)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab3)
-    _G.AchievementFrameTab3:ClearAllPoints()
-    _G.AchievementFrameTab3:SetPoint("TOPLEFT", _G.AchievementFrameTab2, "TOPRIGHT", 1, 0)
+    Util.PositionRelative("TOPLEFT", _G.AchievementFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.AchievementFrameTab1,
+        _G.AchievementFrameTab2,
+        _G.AchievementFrameTab3,
+    })
 
 
     _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 4)

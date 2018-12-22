@@ -6,7 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\MoneyFrame.lua ]]
     local numCurrencies = 0
@@ -113,10 +113,11 @@ function private.FrameXML.MerchantFrame()
     end
 
     Skin.CharacterFrameTabButtonTemplate(_G.MerchantFrameTab1)
-    _G.MerchantFrameTab1:ClearAllPoints()
-    _G.MerchantFrameTab1:SetPoint("TOPLEFT", _G.MerchantFrame, "BOTTOMLEFT", 20, -1)
     Skin.CharacterFrameTabButtonTemplate(_G.MerchantFrameTab2)
-    _G.MerchantFrameTab2:SetPoint("TOPLEFT", _G.MerchantFrameTab1, "TOPRIGHT", 1, 0)
+    Util.PositionRelative("TOPLEFT", _G.MerchantFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.MerchantFrameTab1,
+        _G.MerchantFrameTab2,
+    })
 
     Skin.UIDropDownMenuTemplate(_G.MerchantFrame.lootFilter)
 end
