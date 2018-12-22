@@ -26,6 +26,9 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
             _G.hooksecurefunc(Frame, "AdjustSizeForTiers", Hook.AzeriteEmpoweredItemUIMixin_AdjustSizeForTiers)
 
             Skin.PortraitFrameTemplate(Frame.BorderFrame)
+            local shadow = Frame.BorderFrame:CreateTexture(nil, "ARTWORK")
+            shadow:SetAllPoints(Frame.BorderFrame.TitleText)
+            shadow:SetAtlas("Azerite-TopShadow")
 
             Frame.ClipFrame:SetPoint("TOPLEFT")
             Frame.ClipFrame:SetPoint("BOTTOMRIGHT")
