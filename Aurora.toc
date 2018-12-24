@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 80100
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
@@ -7,14 +7,12 @@
 ## OptionalDeps: Ace3, LibTextDump-1.0
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
-
 ## X-Curse-Project-ID: 278735
 ## X-WoWI-ID: 18589
 
 #@do-not-package@
 test.lua
 #@end-do-not-package@
-
 Skin\skin.xml
 
 aurora.lua
