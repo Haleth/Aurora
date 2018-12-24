@@ -1,8 +1,14 @@
 ﻿## [Unreleased] ##
+### Changed ###
+
+  * Re-added the title bar shadow for the Azerite UI
+  * The colored achievement backgrounds are now less garring
+
 ### Fixed ###
 
   * C stack overflow after playing for a while
   * Opening the Warboard would cause an error
+  * A few texture in the character frame were not hidden
 
 
 
