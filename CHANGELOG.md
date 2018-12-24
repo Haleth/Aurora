@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.1.0.2] - 2018-12-24 ##
 ### Changed ###
 
   * Re-added the title bar shadow for the Azerite UI
@@ -314,6 +314,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.0.2]: https://github.com/Haleth/Aurora/compare/8.1.0.1...8.1.0.2
 [8.1.0.1]: https://github.com/Haleth/Aurora/compare/8.1.0.0...8.1.0.1
 [8.1.0.0]: https://github.com/Haleth/Aurora/compare/8.0.1.9...8.1.0.0
 [8.0.1.9]: https://github.com/Haleth/Aurora/compare/8.0.1.8...8.0.1.9
