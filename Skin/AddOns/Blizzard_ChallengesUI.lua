@@ -80,7 +80,7 @@ function private.AddOns.Blizzard_ChallengesUI()
     ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")
     ChallengesFrame.WeeklyInfo:SetPoint("BOTTOMRIGHT")
     Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
-    Skin.MythicPlusSeasonChangesNoticeTemplate(ChallengesFrame.DungeonIcons[1].SeasonChangeNoticeFrame)
+    --Skin.MythicPlusSeasonChangesNoticeTemplate(ChallengesFrame.DungeonIcons[1].SeasonChangeNoticeFrame)
 
     local bg, inset = ChallengesFrame:GetRegions()
     bg:Hide()
