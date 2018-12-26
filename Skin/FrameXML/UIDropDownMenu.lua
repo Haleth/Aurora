@@ -182,22 +182,6 @@ do --[[ FrameXML\UIDropDownMenuTemplates.xml ]]
         bg:SetPoint("BOTTOMRIGHT", Frame.Right, -19, 23)
         bg:SetFrameLevel(Frame:GetFrameLevel())
         Base.SetBackdrop(bg, Color.button)
-
-
-        --[[Scale]]
-        if not Frame.noResize then
-            Frame:SetWidth(40)
-            Frame.Middle:SetWidth(115)
-        end
-        Frame:SetHeight(32)
-
-        Frame.Left:SetSize(25, 64)
-        Frame.Left:SetPoint("TOPLEFT", 0, 17)
-        Frame.Middle:SetHeight(64)
-        Frame.Right:SetSize(25, 64)
-
-        Frame.Text:SetSize(0, 10)
-        Frame.Text:SetPoint("RIGHT", Frame.Right, -43, 2)
     end
 end
 

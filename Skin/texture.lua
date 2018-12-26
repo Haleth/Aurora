@@ -17,21 +17,6 @@ do -- arrows
         texture:SetVertexOffset(4, 0, 0)
         return texture
     end
-    local function setcallback(frame, texture, name)
-        local callback
-        callback = function()
-            Base.SetTexture(texture, name)
-            callback = nil
-        end
-
-        local func = frame:GetScript("OnShow")
-        if func then
-            frame:HookScript("OnShow", callback)
-        else
-            frame:SetScript("OnShow", callback)
-        end
-    end
-
     local function GetVertOffset(frame, texture)
         return texture:GetHeight() / 2
     end
@@ -44,7 +29,9 @@ do -- arrows
 
         local offset = GetVertOffset(frame, texture)
         if offset < 1 then
-            setcallback(frame, texture, "arrowLeft")
+            _G.C_Timer.After(0, function(...)
+                Base.SetTexture(texture, "arrowLeft")
+            end)
         else
             texture:SetVertexOffset(1, 0, -offset)
             texture:SetVertexOffset(2, 0, offset)
@@ -55,7 +42,9 @@ do -- arrows
 
         local offset = GetVertOffset(frame, texture)
         if offset < 1 then
-            setcallback(frame, texture, "arrowRight")
+            _G.C_Timer.After(0, function(...)
+                Base.SetTexture(texture, "arrowRight")
+            end)
         else
             texture:SetVertexOffset(3, 0, -offset)
             texture:SetVertexOffset(4, 0, offset)
@@ -66,7 +55,9 @@ do -- arrows
 
         local offset = GetHorizOffset(frame, texture)
         if offset < 1 then
-            setcallback(frame, texture, "arrowUp")
+            _G.C_Timer.After(0, function(...)
+                Base.SetTexture(texture, "arrowUp")
+            end)
         else
             texture:SetVertexOffset(1, offset, 0)
             texture:SetVertexOffset(3, -offset, 0)
@@ -77,7 +68,9 @@ do -- arrows
 
         local offset = GetHorizOffset(frame, texture)
         if offset < 1 then
-            setcallback(frame, texture, "arrowDown")
+            _G.C_Timer.After(0, function(...)
+                Base.SetTexture(texture, "arrowDown")
+            end)
         else
             texture:SetVertexOffset(2, offset, 0)
             texture:SetVertexOffset(4, -offset, 0)
