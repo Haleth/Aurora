@@ -29,10 +29,12 @@ do --[[ FrameXML\StaticPopup.xml ]]
         Button:SetNormalTexture("")
         if texture:find("Hide") then
             Button._auroraHighlight[1]:Hide()
-            Button._auroraHighlight[2]:Show()
+            Button._auroraHighlight[2]:Hide()
+            Button._auroraHighlight[3]:Show()
         else
             Button._auroraHighlight[1]:Show()
-            Button._auroraHighlight[2]:Hide()
+            Button._auroraHighlight[2]:Show()
+            Button._auroraHighlight[3]:Hide()
         end
         Button._setNormal = nil
     end
@@ -46,17 +48,21 @@ do --[[ FrameXML\StaticPopup.xml ]]
         local name = Frame:GetName()
         Base.SetBackdrop(Frame)
 
-        local close = _G[name .. "CloseButton"]
-        Skin.UIPanelCloseButton(close)
+        do -- CloseButton
+            local close = _G[name .. "CloseButton"]
+            Skin.UIPanelCloseButton(close)
+            local bg = close:GetBackdropTexture("bg")
 
-        local hideTex = close:CreateTexture(nil, "ARTWORK")
-        hideTex:SetColorTexture(1, 1, 1)
-        hideTex:SetPoint("TOPLEFT", close, "BOTTOMLEFT", 4, 5)
-        hideTex:SetPoint("BOTTOMRIGHT", -4, 4)
-        tinsert(close._auroraHighlight, hideTex)
+            local hline = close:CreateTexture()
+            hline:SetColorTexture(1, 1, 1)
+            hline:SetHeight(1)
+            hline:SetPoint("BOTTOMLEFT", bg, 4, 4)
+            hline:SetPoint("BOTTOMRIGHT", bg, -4, 4)
+            _G.tinsert(close._auroraHighlight, hline)
 
-        _G.hooksecurefunc(close, "SetNormalTexture", CloseButton_SetNormalTexture)
-        _G.hooksecurefunc(close, "SetPushedTexture", CloseButton_SetPushedTexture)
+            _G.hooksecurefunc(close, "SetNormalTexture", CloseButton_SetNormalTexture)
+            _G.hooksecurefunc(close, "SetPushedTexture", CloseButton_SetPushedTexture)
+        end
 
         Skin.StaticPopupButtonTemplate(Frame.button1)
         Skin.StaticPopupButtonTemplate(Frame.button2)

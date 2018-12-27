@@ -1,5 +1,18 @@
 local _, private = ...
 
+local item = _G.Item:CreateFromItemID(30234)
+item:ContinueOnItemLoad(function(...)
+    local color = item:GetItemQualityColor()
+    item.data = {
+        id = item:GetItemID(),
+        link = item:GetItemLink(),
+        name = item:GetItemName(),
+        color = {color.r, color.g, color.b},
+        texture = item:GetItemIcon(),
+        count = 1,
+    }
+end)
+
 local test = {
     init = true,
     type = "group",
@@ -96,9 +109,6 @@ do -- Alert Frames
         -- _G.LootUpgradeAlertSystem:AddAlert(itemLink, quantity, specID, baseQuality)
         -- _G.MoneyWonAlertSystem:AddAlert(amount)
 
-        local itemID, apItemID = 30234 --[[ Nordrassil Wrath-Kilt ]], 147406 --[[ Greater Pathfinder's Symbol ]]
-        local _, itemLink = _G.GetItemInfo(itemID)
-        _G.GetItemInfo(apItemID)
         local rollType, lootSpec = _G.LOOT_ROLL_TYPE_NEED, 268 --[[ Brewmaster ]]
         local currencyID = 823 -- Apexis Crystals
         local bonusPrompt, bonusDuration = 244782, 10
@@ -123,8 +133,7 @@ do -- Alert Frames
                     desc = "LootAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.GetItemInfo(itemID)
-                        _G.LootAlertSystem:AddAlert(itemID, 1, rollType, 98, lootSpec)
+                        _G.LootAlertSystem:AddAlert(item.data.id, 1, rollType, 98, lootSpec)
                     end,
                     order = 1,
                 },
@@ -133,8 +142,7 @@ do -- Alert Frames
                     desc = "LootAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.GetItemInfo(itemID)
-                        _G.LootAlertSystem:AddAlert(itemID, 1, rollType, 98, lootSpec, nil, nil, nil, nil, true)
+                        _G.LootAlertSystem:AddAlert(item.data.id, 1, rollType, 98, lootSpec, nil, nil, nil, nil, true)
                     end,
                     order = 1,
                 },
@@ -143,8 +151,7 @@ do -- Alert Frames
                     desc = "LootAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.GetItemInfo(itemID)
-                        _G.LootAlertSystem:AddAlert(itemID, 1, nil, nil, lootSpec, nil, nil, nil, true)
+                        _G.LootAlertSystem:AddAlert(item.data.id, 1, nil, nil, lootSpec, nil, nil, nil, true)
                     end,
                     order = 1,
                 },
@@ -153,8 +160,7 @@ do -- Alert Frames
                     desc = "LootUpgradeAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.GetItemInfo(itemID)
-                        _G.LootUpgradeAlertSystem:AddAlert(itemID, 1, lootSpec, 3)
+                        _G.LootUpgradeAlertSystem:AddAlert(item.data.id, 1, lootSpec, 3)
                     end,
                     order = 1,
                 },
@@ -177,14 +183,10 @@ do -- Alert Frames
                     set = function(info, value)
                         rewardType = bonusResults[value]
                         if rewardType == "item" then
-                            local _, link = _G.GetItemInfo(itemID)
-                            itemLink = link
                             rewardQuantity = 1
                         elseif rewardType == "money" then
                             rewardQuantity = 123456
                         elseif rewardType == "artifact_power" then
-                            local _, link = _G.GetItemInfo(147406)
-                            itemLink = link
                             rewardQuantity = 123456
                         end
                     end,
@@ -195,7 +197,6 @@ do -- Alert Frames
                     desc = "LootAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.GetItemInfo(itemID)
                         _G.BonusRollFrame_StartBonusRoll(bonusPrompt, "Woah! A bonus roll!", bonusDuration, currencyID, 2)
                         _G.C_Timer.After(bonusDuration, _G.BonusRollFrame_CloseBonusRoll)
                     end,
@@ -215,7 +216,7 @@ do -- Alert Frames
                     desc = "LootAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.BonusRollFrame_OnEvent(_G.BonusRollFrame, "BONUS_ROLL_RESULT", rewardType, itemLink, rewardQuantity, lootSpec)
+                        _G.BonusRollFrame_OnEvent(_G.BonusRollFrame, "BONUS_ROLL_RESULT", rewardType, item.data.link, rewardQuantity, lootSpec)
                     end,
                     order = 3,
                 },
@@ -229,7 +230,6 @@ do -- Alert Frames
                     desc = "MoneyWonAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.GetItemInfo(itemID)
                         _G.MoneyWonAlertSystem:AddAlert(123456)
                     end,
                     order = 5,
@@ -262,8 +262,7 @@ do -- Alert Frames
                     desc = "StorePurchaseAlertSystem",
                     type = "execute",
                     func = function()
-                        local name, _, _, _, _, _, _, _, _, icon = _G.GetItemInfo(itemID)
-                        _G.StorePurchaseAlertSystem:AddAlert(icon, name, itemID)
+                        _G.StorePurchaseAlertSystem:AddAlert(item.data.texture, item.data.name, item.data.id)
                     end,
                     order = 7,
                 },
@@ -272,7 +271,7 @@ do -- Alert Frames
                     desc = "LegendaryItemAlertSystem",
                     type = "execute",
                     func = function()
-                        _G.LegendaryItemAlertSystem:AddAlert(itemID)
+                        _G.LegendaryItemAlertSystem:AddAlert(item.data.id)
                     end,
                     order = 7,
                 },
@@ -479,6 +478,106 @@ do -- Alert Frames
             garrisonAlerts = garrisonAlerts,
             bnetAlerts = bnetAlerts,
             miscAlerts = miscAlerts,
+        }
+    }
+end
+
+do -- Popup Frames
+    local staticPopups do
+        local addedFrameType, addedFrame = {
+            "none",
+            "edit box",
+            "money",
+            "money input",
+        }, 1
+
+        _G.StaticPopupDialogs.TESTPOPUP1 = {
+            text = "This is the main popup text",
+            button1 = _G.YES,
+            button2 = _G.NO,
+            timeout = 0,
+            closeButton = true,
+            hideOnEscape = true,
+            OnShow = function(self)
+                if addedFrame == 3 then
+                    _G.MoneyFrame_Update(self.moneyFrame, 123456)
+                end
+            end,
+        }
+
+        staticPopups = {
+            name = "Static Popups",
+            type = "group",
+            args = {
+                closeButtonIsHide = {
+                    name = "closeButtonIsHide",
+                    type = "toggle",
+                    get = function() return _G.StaticPopupDialogs.TESTPOPUP1.closeButtonIsHide end,
+                    set = function(info, value)
+                        _G.StaticPopupDialogs.TESTPOPUP1.closeButtonIsHide = value
+                    end,
+                    order = 1,
+                },
+                addedFrame = {
+                    name = "addedFrame",
+                    type = "select",
+                    values = addedFrameType,
+                    get = function()
+                        return addedFrame
+                    end,
+                    set = function(info, value)
+                        addedFrame = value
+                        local popup = _G.StaticPopupDialogs.TESTPOPUP1
+                        -- Blzz assumes these are mutually exclusive, so we put them on the same option
+
+                        popup.hasEditBox = false
+                        popup.hasMoneyFrame = false
+                        popup.hasMoneyInputFrame = false
+                        if addedFrame == 2 then
+                            popup.hasEditBox = true
+                        elseif addedFrame == 3 then
+                            popup.hasMoneyFrame = true
+                        elseif addedFrame == 4 then
+                            popup.hasMoneyInputFrame = true
+                        end
+                    end,
+                    order = 1,
+                },
+                hasItemFrame = {
+                    name = "hasItemFrame",
+                    type = "toggle",
+                    get = function() return _G.StaticPopupDialogs.TESTPOPUP1.hasItemFrame end,
+                    set = function(info, value)
+                        _G.StaticPopupDialogs.TESTPOPUP1.hasItemFrame = value
+                    end,
+                    order = 1,
+                },
+                subText = {
+                    name = "subText",
+                    type = "toggle",
+                    get = function() return _G.StaticPopupDialogs.TESTPOPUP1.subText end,
+                    set = function(info, value)
+                        _G.StaticPopupDialogs.TESTPOPUP1.subText = value and "Here is some subText"
+                    end,
+                    order = 1,
+                },
+                staticPopup = {
+                    name = "staticPopup",
+                    desc = "LFGDungeonReadyDialog",
+                    type = "execute",
+                    func = function()
+                        _G.StaticPopup_Show("TESTPOPUP1", "Text Arg1", "Text Arg2", item.data)
+                    end,
+                },
+            },
+        }
+    end
+
+    test.args.popup = {
+        name = "Popup Frames",
+        type = "group",
+        args = {
+            staticPopups = staticPopups,
         }
     }
 end
