@@ -1,5 +1,8 @@
 local _, private = ...
 
+--[[ Lua Globals ]]
+-- luacheck: globals next
+
 local item = _G.Item:CreateFromItemID(30234)
 item:ContinueOnItemLoad(function(...)
     local color = item:GetItemQualityColor()
@@ -486,9 +489,10 @@ do -- Popup Frames
     local staticPopups do
         local addedFrameType, addedFrame = {
             "none",
-            "edit box",
-            "money",
-            "money input",
+            "hasEditBox",
+            "hasMoneyFrame",
+            "hasMoneyInputFrame",
+            "hasItemFrame",
         }, 1
 
         _G.StaticPopupDialogs.TESTPOPUP1 = {
@@ -528,27 +532,13 @@ do -- Popup Frames
                     set = function(info, value)
                         addedFrame = value
                         local popup = _G.StaticPopupDialogs.TESTPOPUP1
-                        -- Blzz assumes these are mutually exclusive, so we put them on the same option
 
-                        popup.hasEditBox = false
-                        popup.hasMoneyFrame = false
-                        popup.hasMoneyInputFrame = false
-                        if addedFrame == 2 then
-                            popup.hasEditBox = true
-                        elseif addedFrame == 3 then
-                            popup.hasMoneyFrame = true
-                        elseif addedFrame == 4 then
-                            popup.hasMoneyInputFrame = true
+                        -- Blzz assumes these are mutually exclusive, so we put them on the same option
+                        for i, option in next, addedFrameType do
+                            if option ~= "none" then
+                                popup[option] = i == value
+                            end
                         end
-                    end,
-                    order = 1,
-                },
-                hasItemFrame = {
-                    name = "hasItemFrame",
-                    type = "toggle",
-                    get = function() return _G.StaticPopupDialogs.TESTPOPUP1.hasItemFrame end,
-                    set = function(info, value)
-                        _G.StaticPopupDialogs.TESTPOPUP1.hasItemFrame = value
                     end,
                     order = 1,
                 },
