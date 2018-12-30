@@ -8,6 +8,11 @@ local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\UIParent.lua ]]
+    function Hook.SetPortraitToTexture(texture, path)
+        if not texture:IsForbidden() then
+            texture:SetTexture(path)
+        end
+    end
     function Hook.BuildIconArray(parent, baseName, template, rowSize, numRows, onButtonCreated)
         if Skin[template] then
             for i = 1, rowSize * numRows do
@@ -18,6 +23,7 @@ do --[[ FrameXML\UIParent.lua ]]
 end
 
 function private.FrameXML.UIParent()
+    _G.hooksecurefunc("SetPortraitToTexture", Hook.SetPortraitToTexture)
     _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
 
     -- Blizzard doesn't create the chat bubbles in lua, so we're calling it here

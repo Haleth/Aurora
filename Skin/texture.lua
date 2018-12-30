@@ -6,6 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
+local Color = Aurora.Color
 
 do -- arrows
     local function setup(frame, texture)
@@ -157,28 +158,40 @@ end
 
 do -- LFG Icons
     local map = {
-        GUIDE = {0.03515625, 0.22265625, 0.03125, 0.21875},
-        HEALER = {0.296875, 0.484375, 0.03125, 0.21875},
-        CHECK = {0.55859375, 0.74609375, 0.03125, 0.21875},
-        TANK = {0.03515625, 0.22265625, 0.29296875, 0.48046875},
-        DAMAGER = {0.296875, 0.484375, 0.29296875, 0.48046875},
-        PROMPT = {0.55859375, 0.74609375, 0.29296875, 0.48046875},
+        GUIDE = {color = Color.blue:Hue(-0.1):Lightness(-0.7), 0.03515625, 0.22265625, 0.03125, 0.21875},
+        HEALER = {color = Color.green:Lightness(-0.7), 0.296875, 0.484375, 0.03125, 0.21875},
+        --CHECK = {color = Color.black, 0.55859375, 0.74609375, 0.03125, 0.21875},
+        TANK = {color = Color.blue:Lightness(-0.7), 0.03515625, 0.22265625, 0.29296875, 0.48046875},
+        DAMAGER = {color = Color.red:Lightness(-0.7), 0.296875, 0.484375, 0.29296875, 0.48046875},
+        --PROMPT = {color = Color.black, 0.55859375, 0.74609375, 0.29296875, 0.48046875},
         --COVER = {0.01953125, 0.24609375, 0.5234375, 0.75},
-        CROSS = {0.296875, 0.484375, 0.5546875, 0.7421875},
+        --CROSS = {color = Color.black, 0.296875, 0.484375, 0.5546875, 0.7421875},
     }
+    local roleTextures = {}
     for name, coords in next, map do
         Base.RegisterTexture("role"..name, function(frame, texture)
+            texture:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-ROLES]])
             texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
+            texture:SetBlendMode("ADD")
 
-            local layer, subLevel = texture:GetDrawLayer()
-            local bg = frame:CreateTexture(nil, layer, nil, subLevel - 1)
-            bg:SetColorTexture(0, 0, 0)
-            bg:SetAllPoints(texture)
+            if not roleTextures[texture] then
+                local layer, subLevel = texture:GetDrawLayer()
+                local border = frame:CreateTexture(nil, layer, nil, subLevel - 2)
+                border:SetColorTexture(0, 0, 0)
+                border:SetAllPoints(texture)
 
-            local mask = frame:CreateMaskTexture()
-            mask:SetTexture([[Interface\CharacterFrame\TemporaryPortrait-Female-MagharOrc]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-            mask:SetAllPoints(texture)
-            texture:AddMaskTexture(mask)
+                local bg = frame:CreateTexture(nil, layer, nil, subLevel - 1)
+                bg:SetColorTexture(coords.color:GetRGB())
+                bg:SetPoint("TOPLEFT", border, 1, -1)
+                bg:SetPoint("BOTTOMRIGHT", border, -1, 1)
+
+                local mask = frame:CreateMaskTexture()
+                mask:SetTexture([[Interface\CharacterFrame\TemporaryPortrait-Female-MagharOrc]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+                mask:SetAllPoints(texture)
+                texture:AddMaskTexture(mask)
+
+                roleTextures[texture] = true
+            end
         end)
     end
 end
