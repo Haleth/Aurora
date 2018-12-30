@@ -30,22 +30,25 @@ function private.FrameXML.PVPHelper()
     PVPReadyDialog.filigree:Hide()
     PVPReadyDialog.bottomArt:Hide()
 
-    do
-        local button = _G["PVPReadyDialogCloseButton"]
-        button:SetSize(17, 17)
-        button:SetNormalTexture("")
-        button:SetHighlightTexture("")
-        button:SetPushedTexture("")
+    do -- CloseButton
+        local close = _G.PVPReadyDialogCloseButton
+        Base.SetBackdrop(close, Color.button)
+        local bg = close:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 3, -10)
+        bg:SetPoint("BOTTOMRIGHT", -11, 4)
 
-        Base.SetBackdrop(button, Color.button)
+        close:SetNormalTexture("")
+        close:SetHighlightTexture("")
+        close:SetPushedTexture("")
 
-        button._auroraHighlight = {}
-        local hline = button:CreateTexture()
+        close._auroraHighlight = {}
+        local hline = close:CreateTexture()
         hline:SetColorTexture(1, 1, 1)
-        hline:SetSize(7, 1)
-        hline:SetPoint("BOTTOM", 0, 4)
-        _G.tinsert(button._auroraHighlight, hline)
-        Base.SetHighlight(button, "color")
+        hline:SetHeight(1)
+        hline:SetPoint("BOTTOMLEFT", 4, 4)
+        hline:SetPoint("BOTTOMRIGHT", -4, 4)
+        _G.tinsert(close._auroraHighlight, hline)
+        Base.SetHighlight(close, "color")
     end
 
     Skin.UIPanelButtonTemplate(PVPReadyDialog.enterButton)

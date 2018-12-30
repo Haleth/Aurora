@@ -125,7 +125,6 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Button.Background:Hide()
         Button.Ring:Hide()
         Base.CropIcon(Button.Icon, Button)
-        Button.Icon:SetTexture(Button.Icon:GetTexture())
 
         local highlight = Button:GetHighlightTexture()
         highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
