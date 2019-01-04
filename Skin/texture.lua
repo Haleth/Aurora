@@ -179,6 +179,7 @@ do -- LFG Icons
                 local border = frame:CreateTexture(nil, layer, nil, subLevel - 2)
                 border:SetColorTexture(0, 0, 0)
                 border:SetAllPoints(texture)
+                frame._auroraBorder = border
 
                 local bg = frame:CreateTexture(nil, layer, nil, subLevel - 1)
                 bg:SetColorTexture(coords.color:GetRGB())

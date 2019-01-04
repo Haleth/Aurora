@@ -10,13 +10,11 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\LFGFrame.lua ]]
-    function Hook.LFGDungeonReadyStatusIndividual_UpdateIcon(button)
-        local _, role = _G.GetLFGProposalMember(button:GetID())
-        Base.SetTexture(button.texture, "role"..role)
-
-        if not button._auroraSkinned then
-            Skin.LFGDungeonReadyStatusPlayerTemplate(button)
-            button._auroraSkinned = true
+    function Hook.LFG_SetRoleIconIncentive(roleButton, incentiveIndex)
+        if incentiveIndex then
+            roleButton._auroraBorder:SetColorTexture(Color.yellow:GetRGB())
+        else
+            roleButton._auroraBorder:SetColorTexture(Color.black:GetRGB())
         end
     end
     function Hook.LFGDungeonReadyPopup_Update()
@@ -41,6 +39,29 @@ do --[[ FrameXML\LFGFrame.lua ]]
             end
         end
     end
+    function Hook.LFGDungeonReadyStatusIndividual_UpdateIcon(button)
+        local _, role = _G.GetLFGProposalMember(button:GetID())
+        Base.SetTexture(button.texture, "role"..role)
+
+        if not button._auroraSkinned then
+            Skin.LFGDungeonReadyStatusPlayerTemplate(button)
+            button._auroraSkinned = true
+        end
+    end
+    local skinnedIndex = 1
+    function Hook.LFGRewardsFrame_SetItemButton(parentFrame, dungeonID, index, id, name, texture, numItems, rewardType, rewardID, quality, shortageIndex, showTankIcon, showHealerIcon, showDamageIcon)
+        local parentName = parentFrame:GetName()
+        local frame = _G[parentName.."Item"..index]
+
+        if skinnedIndex < index then
+            Skin.LFGRewardsLootTemplate(frame)
+            skinnedIndex = index
+        end
+
+        if shortageIndex then
+            frame._auroraIconBorder:SetBackdropBorderColor(Color.yellow)
+        end
+    end
 end
 
 do --[[ FrameXML\LFGFrame.xml ]]
@@ -56,6 +77,19 @@ do --[[ FrameXML\LFGFrame.xml ]]
     function Skin.LFGRoleButtonWithBackgroundAndRewardTemplate(Button)
         Skin.LFGRoleButtonWithBackgroundTemplate(Button)
         Button.shortageBorder:SetAlpha(0)
+
+        local incentiveIcon = Button.incentiveIcon
+        incentiveIcon:SetSize(14, 14)
+        incentiveIcon:SetPoint("BOTTOMRIGHT", -1, 1)
+
+        incentiveIcon.texture:SetAllPoints(incentiveIcon)
+        Base.CropIcon(incentiveIcon.texture)
+
+        local border = incentiveIcon.border
+        border:SetDrawLayer("ARTWORK", -2)
+        border:SetColorTexture(Color.yellow:GetRGB())
+        border:SetPoint("TOPLEFT", incentiveIcon.texture, -1, 1)
+        border:SetPoint("BOTTOMRIGHT", incentiveIcon.texture, 1, -1)
     end
     function Skin.LFGSpecificChoiceTemplate(Frame)
         Skin.UICheckButtonTemplate(Frame.enableButton)
@@ -68,9 +102,11 @@ do --[[ FrameXML\LFGFrame.xml ]]
 
 
     function Skin.LFGRewardsLootShortageTemplate(Frame)
+        Base.SetTexture(Frame.texture, "role"..(Frame.role or "GUIDE"))
     end
     function Skin.LFGRewardsLootTemplate(Button)
         Skin.LargeItemButtonTemplate(Button)
+        Button.shortageBorder:SetAlpha(0)
         Button.IconBorder:SetAlpha(0)
         Skin.LFGRewardsLootShortageTemplate(Button.roleIcon1)
         Skin.LFGRewardsLootShortageTemplate(Button.roleIcon2)
@@ -101,8 +137,10 @@ do --[[ FrameXML\LFGFrame.xml ]]
 end
 
 function private.FrameXML.LFGFrame()
-    _G.hooksecurefunc("LFGDungeonReadyStatusIndividual_UpdateIcon", Hook.LFGDungeonReadyStatusIndividual_UpdateIcon)
+    _G.hooksecurefunc("LFG_SetRoleIconIncentive", Hook.LFG_SetRoleIconIncentive)
     _G.hooksecurefunc("LFGDungeonReadyPopup_Update", Hook.LFGDungeonReadyPopup_Update)
+    _G.hooksecurefunc("LFGDungeonReadyStatusIndividual_UpdateIcon", Hook.LFGDungeonReadyStatusIndividual_UpdateIcon)
+    _G.hooksecurefunc("LFGRewardsFrame_SetItemButton", Hook.LFGRewardsFrame_SetItemButton)
 
 
     --------------------------
