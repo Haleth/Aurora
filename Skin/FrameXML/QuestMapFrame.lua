@@ -63,30 +63,6 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
     end
     function Skin.QuestLogObjectiveTemplate(Button)
     end
-    function Skin.QuestMapHeader(Frame)
-        local clipFrame = _G.CreateFrame("Frame", nil, Frame)
-        clipFrame:SetClipsChildren(true)
-
-        if Frame.layoutIndex == _G.QUEST_LOG_STORY_LAYOUT_INDEX then
-            clipFrame:SetPoint("TOPLEFT", 0, -14)
-            clipFrame:SetPoint("BOTTOMRIGHT", 0, 5)
-        else
-            clipFrame:SetPoint("TOPLEFT")
-            clipFrame:SetPoint("BOTTOMRIGHT", 0, 9)
-
-            local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
-            overlay:SetSize(142, 142)
-            overlay:SetPoint("TOPRIGHT", 16, 38)
-            overlay:SetAlpha(0.2)
-            overlay:SetDesaturated(true)
-            Frame._auroraOverlay = overlay
-        end
-
-        Frame.Background:SetColorTexture(Color.button:GetRGB())
-        Frame.Background:SetAllPoints(clipFrame)
-        Frame.HighlightTexture:SetAllPoints(clipFrame)
-        Frame.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.2)
-    end
 end
 
 function private.FrameXML.QuestMapFrame()
@@ -144,10 +120,46 @@ function private.FrameXML.QuestMapFrame()
     local QuestsFrame = QuestMapFrame.QuestsFrame
     QuestsFrame.Background:Hide()
 
+    do -- WarCampaignHeader
+        local WarCampaignHeader = QuestsFrame.Contents.WarCampaignHeader
+
+        local clipFrame = _G.CreateFrame("Frame", nil, WarCampaignHeader)
+        clipFrame:SetPoint("TOPLEFT")
+        clipFrame:SetPoint("BOTTOMRIGHT", 0, 9)
+        clipFrame:SetClipsChildren(true)
+
+        local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
+        overlay:SetSize(142, 142)
+        overlay:SetPoint("TOPRIGHT", 16, 38)
+        overlay:SetAlpha(0.2)
+        overlay:SetDesaturated(true)
+        WarCampaignHeader._auroraOverlay = overlay
+
+        WarCampaignHeader.Background:SetAllPoints(clipFrame)
+        WarCampaignHeader.HighlightTexture:SetAllPoints(clipFrame)
+        WarCampaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+    end
+
     QuestsFrame.Contents.Separator:SetSize(260, 10)
 
-    Skin.QuestMapHeader(QuestsFrame.Contents.WarCampaignHeader)
-    Skin.QuestMapHeader(QuestsFrame.Contents.StoryHeader)
+    do -- StoryHeader
+        local StoryHeader = QuestsFrame.Contents.StoryHeader
+        StoryHeader.Text:SetPoint("TOPLEFT", 18, -25)
+
+        local mask = StoryHeader:CreateMaskTexture(nil, "BACKGROUND")
+        mask:SetTexture([[Interface/SpellBook/UI-SpellbookPanel-Tab-Highlight]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetPoint("LEFT", -54, 0)
+        mask:SetPoint("RIGHT", 38, 0)
+        mask:SetPoint("TOP", StoryHeader.Text, 0, 52)
+        mask:SetPoint("BOTTOM", StoryHeader.Progress, 0, -58)
+
+        StoryHeader.Background:AddMaskTexture(mask)
+        StoryHeader.Background:SetColorTexture(Color.button:GetRGB())
+
+        StoryHeader.HighlightTexture:AddMaskTexture(mask)
+        StoryHeader.HighlightTexture:SetAllPoints(StoryHeader.Background)
+        StoryHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+    end
 
     QuestsFrame.DetailFrame.BottomDetail:Hide()
     QuestsFrame.DetailFrame.TopDetail:Hide()
