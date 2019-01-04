@@ -77,6 +77,11 @@ function private.FrameXML.LFDFrame()
     Skin.UIDropDownMenuTemplate(_G.LFDQueueFrameTypeDropDown)
 
     Skin.UIPanelScrollFrameTemplate(_G.LFDQueueFrameRandomScrollFrame)
+    _G.LFDQueueFrameRandomScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.LFDQueueFrameRandomScrollFrame, "TOPRIGHT", 2.4, -17)
+    _G.LFDQueueFrameRandomScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.LFDQueueFrameRandomScrollFrame, "BOTTOMRIGHT", 2.4, 17)
+    _G.LFDQueueFrameRandomScrollFrameScrollBackground:Hide()
+    _G.LFDQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
+    _G.LFDQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
     Skin.LFGRewardFrameTemplate(_G.LFDQueueFrameRandomScrollFrameChildFrame)
 
     for i = 1, _G.NUM_LFD_CHOICE_BUTTONS do
