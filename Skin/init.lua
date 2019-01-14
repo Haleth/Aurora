@@ -5,7 +5,7 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 0, 4
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 1 and tonumber(minor) >= 0)
+private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 1 and tonumber(minor) >= 5)
 
 private.uiScale = 1
 private.disabled = {

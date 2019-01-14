@@ -129,7 +129,7 @@ function private.AddOns.Blizzard_WorldMap()
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_WorldMapTooltip    --
     ----====####$$$$%%%%$$$$####====----
-    if not private.disabled.tooltips then
+    if not private.isPatch and not private.disabled.tooltips then
         Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
         Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
         Skin.GameTooltipTemplate(_G.WorldMapTooltip)
