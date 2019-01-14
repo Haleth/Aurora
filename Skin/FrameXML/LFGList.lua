@@ -1,335 +1,295 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals bit math
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
-local Skin = Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
+
+do --[[ FrameXML\LFGList.lua ]]
+    local skinnedResults = 1
+    function Hook.LFGListSearchPanel_UpdateAutoComplete(self)
+        for i = (skinnedResults + 1), #self.AutoCompleteFrame.Results do
+            Skin.LFGListSearchAutoCompleteButtonTemplate(self.AutoCompleteFrame.Results[i])
+        end
+        skinnedResults = #self.AutoCompleteFrame.Results
+    end
+    local skinnedCategories = 1
+    function Hook.LFGListCategorySelection_AddButton(self, btnIndex, categoryID, filters)
+        local baseFilters = self:GetParent().baseFilters
+        local allFilters = bit.bor(baseFilters, filters)
+
+        if filters ~= 0 and #_G.C_LFGList.GetAvailableActivities(categoryID, nil, allFilters) == 0 then
+            return btnIndex, false
+        end
+
+        local button = self.CategoryButtons[btnIndex]
+        if btnIndex > skinnedCategories and button then
+            Skin.LFGListCategoryTemplate(button)
+            skinnedCategories = btnIndex
+        end
+
+        local atlasName
+        if bit.band(allFilters, _G.LE_LFG_LIST_FILTER_RECOMMENDED) ~= 0 then
+            atlasName = "groupfinder-background-"..(_G.LFG_LIST_CATEGORY_TEXTURES[categoryID] or "raids").."-".._G.LFG_LIST_PER_EXPANSION_TEXTURES[_G.LFGListUtil_GetCurrentExpansion()]
+        elseif bit.band(allFilters, _G.LE_LFG_LIST_FILTER_NOT_RECOMMENDED) ~= 0 then
+            atlasName = "groupfinder-background-"..(_G.LFG_LIST_CATEGORY_TEXTURES[categoryID] or "raids").."-".._G.LFG_LIST_PER_EXPANSION_TEXTURES[math.max(0,_G.LFGListUtil_GetCurrentExpansion() - 1)]
+        else
+            atlasName = "groupfinder-background-"..(_G.LFG_LIST_CATEGORY_TEXTURES[categoryID] or "questing")
+        end
+
+        local suffix = ""
+        if bit.band(allFilters, _G.LE_LFG_LIST_FILTER_PVE) ~= 0 then
+            suffix = "-pve"
+        elseif bit.band(allFilters, _G.LE_LFG_LIST_FILTER_PVP) ~= 0 then
+            suffix = "-pvp"
+        end
+
+        --Try with the suffix and then without it
+        if not button.Icon:SetAtlas(atlasName..suffix) then
+            button.Icon:SetAtlas(atlasName)
+        end
+    end
+
+    local atlasToRole = {
+        ["groupfinder-icon-role-large-tank"] = "TANK",
+        ["groupfinder-icon-role-large-heal"] = "HEALER",
+        ["groupfinder-icon-role-large-dps"] = "DAMAGER",
+    }
+    function Hook.LFGListGroupDataDisplayEnumerate_Update(self, numPlayers, displayData, disabled, iconOrder)
+        for i = 1, #self.Icons do
+            local icon = self.Icons[i]
+            local atlas = icon:GetAtlas()
+            if atlasToRole[atlas] then
+                Base.SetTexture(icon, "role"..atlasToRole[atlas])
+                icon:SetSize(18, 18)
+            else
+                icon:SetTexture("")
+                icon:SetSize(9, 9)
+
+                icon._auroraBG:SetColorTexture(Color.button:GetRGB())
+            end
+        end
+    end
+    function Hook.LFGListApplicationViewer_UpdateRoleIcons(member, grayedOut, tank, healer, damage, noTouchy, assignedRole)
+        for i = 1, 3 do
+            local icon = member["RoleIcon"..i]:GetNormalTexture()
+            local atlas = icon:GetAtlas()
+            if atlasToRole[atlas] then
+                Base.SetTexture(icon, "role"..atlasToRole[atlas])
+            end
+        end
+    end
+end
+
+do --[[ FrameXML\LFGList.xml ]]
+    function Skin.LFGListGroupDataDisplayTemplate(Frame)
+        local RoleCount = Frame.RoleCount
+        Base.SetTexture(RoleCount.DamagerIcon, "roleDAMAGER")
+        Base.SetTexture(RoleCount.HealerIcon, "roleHEALER")
+        Base.SetTexture(RoleCount.TankIcon, "roleTANK")
+
+        for i = 1, #Frame.Enumerate.Icons do
+            Base.SetTexture(Frame.Enumerate.Icons[i], "roleTANK")
+        end
+    end
+    function Skin.LFGListSearchAutoCompleteButtonTemplate(Button)
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+
+        local highlight = Button:GetHighlightTexture()
+        highlight:SetColorTexture(Color.highlight:GetRGB())
+        highlight:SetAlpha(Color.frame.a)
+    end
+    function Skin.LFGListApplicantMemberTemplate(Button)
+    end
+    function Skin.LFGListApplicantTemplate(Button)
+        Skin.LFGListApplicantMemberTemplate(Button.Member1)
+        Skin.UIMenuButtonStretchTemplate(Button.DeclineButton)
+        Skin.UIMenuButtonStretchTemplate(Button.InviteButton)
+    end
+    function Skin.LFGListCategoryTemplate(Button)
+        Base.SetBackdrop(Button, Color.button)
+        Button.Icon:ClearAllPoints()
+        Button.Icon:SetPoint("TOPLEFT", 1, -1)
+        Button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
+        Button.Icon:SetTexCoord(0.06006, 0.95495, 0.15625, 0.61458)
+        Button.Cover:Hide()
+
+
+        local color = Color.highlight
+        Button.SelectedTexture:SetColorTexture(color.r, color.g, color.b, Color.frame.a)
+        Button.SelectedTexture:SetAllPoints()
+        Button.HighlightTexture:SetTexture("")
+        Base.SetHighlight(Button, "backdrop")
+    end
+    function Skin.LFGListMagicButtonTemplate(Button)
+        Skin.MagicButtonTemplate(Button)
+    end
+    function Skin.LFGListEditBoxTemplate(Button)
+        Skin.InputBoxInstructionsTemplate(Button)
+    end
+    function Skin.LFGListOptionCheckButtonTemplate(Frame)
+        Skin.UICheckButtonTemplate(Frame.CheckButton) -- BlizzWTF: This doesn't use the template, but it should
+    end
+    function Skin.LFGListRequirementTemplate(Frame)
+        Skin.UICheckButtonTemplate(Frame.CheckButton) -- BlizzWTF: This doesn't use the template, but it should
+        Skin.LFGListEditBoxTemplate(Frame.EditBox)
+    end
+    function Skin.LFGListColumnHeaderTemplate(Button)
+        Button.Left:Hide()
+        Button.Right:Hide()
+        Button.Middle:Hide()
+    end
+    function Skin.LFGListSearchEntryTemplate(Button)
+        Skin.LFGListGroupDataDisplayTemplate(Button.DataDisplay)
+        Skin.UIMenuButtonStretchTemplate(Button.CancelButton)
+    end
+end
 
 function private.FrameXML.LFGList()
-    local r, g, b = C.r, C.g, C.b
+    _G.hooksecurefunc("LFGListSearchPanel_UpdateAutoComplete", Hook.LFGListSearchPanel_UpdateAutoComplete)
+    _G.hooksecurefunc("LFGListCategorySelection_AddButton", Hook.LFGListCategorySelection_AddButton)
+    _G.hooksecurefunc("LFGListGroupDataDisplayEnumerate_Update", Hook.LFGListGroupDataDisplayEnumerate_Update)
+    _G.hooksecurefunc("LFGListApplicationViewer_UpdateRoleIcons", Hook.LFGListApplicationViewer_UpdateRoleIcons)
 
-    local LFGListFrame = _G.LFGListFrame
+    ------------------
+    -- LFGListFrame --
+    ------------------
+    local LFGListFrame =_G.LFGListFrame
 
-    -- [[ Category selection ]]
+    Skin.UIDropDownMenuTemplate(_G.LFGListFrameDropDown)
 
+    -- CategorySelection --
     local CategorySelection = LFGListFrame.CategorySelection
-
     Skin.InsetFrameTemplate(CategorySelection.Inset)
     CategorySelection.Inset.CustomBG:Hide()
 
-    F.Reskin(CategorySelection.FindGroupButton)
-    F.Reskin(CategorySelection.StartGroupButton)
-
     CategorySelection.CategoryButtons[1]:SetNormalFontObject(_G.GameFontNormal)
+    Skin.LFGListCategoryTemplate(CategorySelection.CategoryButtons[1])
 
-    hooksecurefunc("LFGListCategorySelection_AddButton", function(self, btnIndex)
-        local bu = self.CategoryButtons[btnIndex]
+    Skin.LFGListMagicButtonTemplate(CategorySelection.FindGroupButton)
+    Skin.LFGListMagicButtonTemplate(CategorySelection.StartGroupButton)
 
-        if bu and not bu.styled then
-            bu.Cover:Hide()
-
-            bu.Icon:SetDrawLayer("BACKGROUND", 1)
-            bu.Icon:SetTexCoord(.01, .99, .01, .99)
-
-            local bg = F.CreateBG(bu)
-            bg:SetPoint("TOPLEFT", 4, -4)
-            bg:SetPoint("BOTTOMRIGHT", -4, 4)
-
-            bu.styled = true
-        end
-    end)
-
-    -- [[ Nothing available ]]
-
+    -- NothingAvailable --
     local NothingAvailable = LFGListFrame.NothingAvailable
+    Skin.InsetFrameTemplate(NothingAvailable.Inset)
 
-    NothingAvailable.Inset:DisableDrawLayer("BORDER")
-
-    -- [[ Search panel ]]
-
+    -- SearchPanel --
     local SearchPanel = LFGListFrame.SearchPanel
+    Hook.HybridScrollFrame_CreateButtons(SearchPanel.ScrollFrame, "LFGListSearchEntryTemplate") -- Called here since the original is called OnLoad
 
-    SearchPanel.ResultsInset.Bg:Hide()
-    SearchPanel.ResultsInset:DisableDrawLayer("BORDER")
+    Skin.SearchBoxTemplate(SearchPanel.SearchBox)
+    Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
+    Skin.UIDropDownMenuTemplate(_G.LFGListLanguageFilterDropDownFrame)
 
-    F.Reskin(SearchPanel.RefreshButton)
-    F.Reskin(SearchPanel.BackButton)
-    F.Reskin(SearchPanel.SignUpButton)
-    F.Reskin(SearchPanel.ScrollFrame.StartGroupButton)
-    F.ReskinInput(SearchPanel.SearchBox)
-    F.ReskinScroll(SearchPanel.ScrollFrame.scrollBar)
+    local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
+    Base.SetBackdrop(AutoCompleteFrame)
+    AutoCompleteFrame.BottomLeftBorder:Hide()
+    AutoCompleteFrame.BottomRightBorder:Hide()
+    AutoCompleteFrame.BottomBorder:Hide()
+    AutoCompleteFrame.LeftBorder:Hide()
+    AutoCompleteFrame.RightBorder:Hide()
 
-    SearchPanel.RefreshButton:SetSize(24, 24)
-    SearchPanel.RefreshButton.Icon:SetPoint("CENTER")
+    AutoCompleteFrame.Results[1]:SetPoint("TOPLEFT", AutoCompleteFrame, 1, 0)
+    AutoCompleteFrame.Results[1]:SetPoint("TOPRIGHT", AutoCompleteFrame, -1, 0)
+    Skin.LFGListSearchAutoCompleteButtonTemplate(AutoCompleteFrame.Results[1])
 
-    -- Auto complete frame
+    do -- RefreshButton
+        local RefreshButton = SearchPanel.RefreshButton
+        RefreshButton:SetNormalTexture("")
+        RefreshButton:SetPushedTexture("")
+        RefreshButton:SetHighlightTexture("")
 
-    SearchPanel.AutoCompleteFrame.BottomLeftBorder:Hide()
-    SearchPanel.AutoCompleteFrame.BottomRightBorder:Hide()
-    SearchPanel.AutoCompleteFrame.BottomBorder:Hide()
-    SearchPanel.AutoCompleteFrame.LeftBorder:Hide()
-    SearchPanel.AutoCompleteFrame.RightBorder:Hide()
+        local dis = RefreshButton:GetDisabledTexture()
+        dis:SetColorTexture(0, 0, 0, .4)
+        dis:SetDrawLayer("OVERLAY")
+        dis:SetAllPoints(RefreshButton)
 
-    local function resultOnEnter(self)
-        self.hl:Show()
+        Base.SetBackdrop(RefreshButton, Color.button)
+        local bg = RefreshButton:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 4, -5)
+        bg:SetPoint("BOTTOMRIGHT", -5, 5)
+
+        Base.SetHighlight(RefreshButton, "backdrop")
     end
 
-    local function resultOnLeave(self)
-        self.hl:Hide()
-    end
+    Skin.InsetFrameTemplate(SearchPanel.ResultsInset)
 
-    local numResults = 1
-    hooksecurefunc("LFGListSearchPanel_UpdateAutoComplete", function(self)
-        local AutoCompleteFrame = self.AutoCompleteFrame
+    Skin.UIPanelButtonTemplate(SearchPanel.ScrollFrame.StartGroupButton)
+    Skin.HybridScrollBarTrimTemplate(SearchPanel.ScrollFrame.scrollBar)
 
-        for i = numResults, #AutoCompleteFrame.Results do
-            local result = AutoCompleteFrame.Results[i]
+    Skin.LFGListMagicButtonTemplate(SearchPanel.BackButton)
+    Skin.LFGListMagicButtonTemplate(SearchPanel.SignUpButton)
 
-            if numResults == 1 then
-                result:SetPoint("TOPLEFT", AutoCompleteFrame.LeftBorder, "TOPRIGHT", -8, 1)
-                result:SetPoint("TOPRIGHT", AutoCompleteFrame.RightBorder, "TOPLEFT", 5, 1)
-            else
-                result:SetPoint("TOPLEFT", AutoCompleteFrame.Results[i-1], "BOTTOMLEFT", 0, 1)
-                result:SetPoint("TOPRIGHT", AutoCompleteFrame.Results[i-1], "BOTTOMRIGHT", 0, 1)
-            end
-
-            result:SetNormalTexture("")
-            result:SetPushedTexture("")
-            result:SetHighlightTexture("")
-
-            local hl = result:CreateTexture(nil, "BACKGROUND")
-            hl:SetAllPoints()
-            hl:SetTexture(C.media.backdrop)
-            hl:SetVertexColor(r, g, b, .2)
-            hl:Hide()
-            result.hl = hl
-
-            F.CreateBD(result, .5)
-
-            result:HookScript("OnEnter", resultOnEnter)
-            result:HookScript("OnLeave", resultOnLeave)
-
-            numResults = numResults + 1
-        end
-    end)
-
-    -- [[ Application viewer ]]
-
+    -- ApplicationViewer --
     local ApplicationViewer = LFGListFrame.ApplicationViewer
+    Hook.HybridScrollFrame_CreateButtons(ApplicationViewer.ScrollFrame, "LFGListApplicantTemplate") -- Called here since the original is called OnLoad
 
     ApplicationViewer.InfoBackground:Hide()
+    Skin.LFGListGroupDataDisplayTemplate(ApplicationViewer.DataDisplay)
+    Skin.UICheckButtonTemplate(ApplicationViewer.AutoAcceptButton) -- BlizzWTF: This doesn't use the template, but it should
+    Skin.InsetFrameTemplate(ApplicationViewer.Inset)
+    Skin.LFGListColumnHeaderTemplate(ApplicationViewer.NameColumnHeader)
+    Skin.LFGListColumnHeaderTemplate(ApplicationViewer.RoleColumnHeader)
+    Skin.LFGListColumnHeaderTemplate(ApplicationViewer.ItemLevelColumnHeader)
 
-    ApplicationViewer.Inset.Bg:Hide()
-    ApplicationViewer.Inset:DisableDrawLayer("BORDER")
+    do -- RefreshButton
+        local RefreshButton = ApplicationViewer.RefreshButton
+        RefreshButton:SetNormalTexture("")
+        RefreshButton:SetPushedTexture("")
+        RefreshButton:SetHighlightTexture("")
 
-    local function headerOnEnter(self)
-        self.hl:Show()
+        local dis = RefreshButton:GetDisabledTexture()
+        dis:SetColorTexture(0, 0, 0, .4)
+        dis:SetDrawLayer("OVERLAY")
+        dis:SetAllPoints(RefreshButton)
+
+        Base.SetBackdrop(RefreshButton, Color.button)
+        local bg = RefreshButton:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 4, -5)
+        bg:SetPoint("BOTTOMRIGHT", -5, 5)
+
+        Base.SetHighlight(RefreshButton, "backdrop")
     end
 
-    local function headerOnLeave(self)
-        self.hl:Hide()
-    end
+    Skin.HybridScrollBarTemplate(ApplicationViewer.ScrollFrame.scrollBar)
+    Skin.LFGListMagicButtonTemplate(ApplicationViewer.RemoveEntryButton)
+    Skin.LFGListMagicButtonTemplate(ApplicationViewer.EditButton)
 
-    for _, headerName in pairs({"NameColumnHeader", "RoleColumnHeader", "ItemLevelColumnHeader"}) do
-        local header = ApplicationViewer[headerName]
-        header.Left:Hide()
-        header.Middle:Hide()
-        header.Right:Hide()
-
-        header:SetHighlightTexture("")
-
-        local hl = header:CreateTexture(nil, "BACKGROUND")
-        hl:SetAllPoints()
-        hl:SetTexture(C.media.backdrop)
-        hl:SetVertexColor(r, g, b, .2)
-        hl:Hide()
-        header.hl = hl
-
-        F.CreateBD(header, .25)
-
-        header:HookScript("OnEnter", headerOnEnter)
-        header:HookScript("OnLeave", headerOnLeave)
-    end
-
-    ApplicationViewer.RoleColumnHeader:SetPoint("LEFT", ApplicationViewer.NameColumnHeader, "RIGHT", 1, 0)
-    ApplicationViewer.ItemLevelColumnHeader:SetPoint("LEFT", ApplicationViewer.RoleColumnHeader, "RIGHT", 1, 0)
-
-    F.Reskin(ApplicationViewer.RefreshButton)
-    F.Reskin(ApplicationViewer.RemoveEntryButton)
-    F.Reskin(ApplicationViewer.EditButton)
-    F.ReskinScroll(_G.LFGListApplicationViewerScrollFrameScrollBar)
-
-    ApplicationViewer.RefreshButton:SetSize(24, 24)
-    ApplicationViewer.RefreshButton.Icon:SetPoint("CENTER")
-
-    -- [[ Entry creation ]]
-
+    -- EntryCreation --
     local EntryCreation = LFGListFrame.EntryCreation
-
     Skin.InsetFrameTemplate(EntryCreation.Inset)
     EntryCreation.Inset.CustomBG:Hide()
 
-    for i = 1, 9 do
-        select(i, EntryCreation.Description:GetRegions()):Hide()
+    do -- ActivityFinder
+        local Dialog = EntryCreation.ActivityFinder.Dialog
+        EntryCreation.ActivityFinder.Background:SetAlpha(Color.frame.a)
+        EntryCreation.ActivityFinder.Background:SetPoint("TOPLEFT")
+        EntryCreation.ActivityFinder.Background:SetPoint("BOTTOMRIGHT")
+
+        Base.SetBackdrop(Dialog)
+        Dialog.Bg:Hide()
+
+        Skin.LFGListEditBoxTemplate(Dialog.EntryBox)
+        Skin.MinimalHybridScrollBarTemplate(Dialog.ScrollFrame.scrollBar)
+        Skin.TooltipBorderedFrameTemplate(Dialog.BorderFrame)
+        Skin.UIPanelButtonTemplate(Dialog.SelectButton)
+        Skin.UIPanelButtonTemplate(Dialog.CancelButton)
     end
 
-    F.Reskin(EntryCreation.ListGroupButton)
-    F.Reskin(EntryCreation.CancelButton)
-    F.CreateBD(EntryCreation.Description, 0)
-    F.CreateGradient(EntryCreation.Description)
-    F.ReskinInput(EntryCreation.Name)
-    F.ReskinInput(EntryCreation.ItemLevel.EditBox)
-    F.ReskinInput(EntryCreation.VoiceChat.EditBox)
-    F.ReskinDropDown(EntryCreation.CategoryDropDown)
-    F.ReskinDropDown(EntryCreation.GroupDropDown)
-    F.ReskinDropDown(EntryCreation.ActivityDropDown)
-    F.ReskinCheck(EntryCreation.ItemLevel.CheckButton)
-    F.ReskinCheck(EntryCreation.VoiceChat.CheckButton)
-
-    -- [[ Role count ]]
-
-    hooksecurefunc("LFGListGroupDataDisplayRoleCount_Update", function(self)
-        if not self.styled then
-            for _, roleButton in pairs({self.TankIcon, self.HealerIcon, self.DamagerIcon}) do
-                roleButton:SetTexture(C.media.roleIcons)
-
-                local left = self:CreateTexture(nil, "OVERLAY")
-                left:SetWidth(1)
-                left:SetTexture(C.media.backdrop)
-                left:SetVertexColor(0, 0, 0)
-
-                local right = self:CreateTexture(nil, "OVERLAY")
-                right:SetWidth(1)
-                right:SetTexture(C.media.backdrop)
-                right:SetVertexColor(0, 0, 0)
-
-                local top = self:CreateTexture(nil, "OVERLAY")
-                top:SetHeight(1)
-                top:SetTexture(C.media.backdrop)
-                top:SetVertexColor(0, 0, 0)
-
-                local bottom = self:CreateTexture(nil, "OVERLAY")
-                bottom:SetHeight(1)
-                bottom:SetTexture(C.media.backdrop)
-                bottom:SetVertexColor(0, 0, 0)
-
-                if roleButton == self.TankIcon then
-                    roleButton:SetTexCoord(0, .24, .25, .5)
-
-                    left:SetPoint("TOPLEFT", roleButton, 2, -3)
-                    left:SetPoint("BOTTOMLEFT", roleButton, 2, 1)
-                    right:SetPoint("TOPRIGHT", roleButton, -1, -3)
-                    right:SetPoint("BOTTOMRIGHT", roleButton, -1, 1)
-                    top:SetPoint("TOPLEFT", roleButton, 2, -2)
-                    top:SetPoint("TOPRIGHT", roleButton, -1, -2)
-                    bottom:SetPoint("BOTTOMLEFT", roleButton, 2, 1)
-                    bottom:SetPoint("BOTTOMRIGHT", roleButton, -1, 1)
-                elseif roleButton == self.HealerIcon then
-                    roleButton:SetTexCoord(.249, .5, 0.003, .243)
-
-                    left:SetPoint("TOPLEFT", roleButton, 2, -1)
-                    left:SetPoint("BOTTOMLEFT", roleButton, 2, 1)
-                    right:SetPoint("TOPRIGHT", roleButton, -1, -1)
-                    right:SetPoint("BOTTOMRIGHT", roleButton, -1, 1)
-                    top:SetPoint("TOPLEFT", roleButton, 2, -1)
-                    top:SetPoint("TOPRIGHT", roleButton, -1, -1)
-                    bottom:SetPoint("BOTTOMLEFT", roleButton, 2, 1)
-                    bottom:SetPoint("BOTTOMRIGHT", roleButton, -1, 1)
-                else
-                    roleButton:SetTexCoord(.25, .5, .25, .5)
-
-                    left:SetPoint("TOPLEFT", roleButton, 2, -3)
-                    left:SetPoint("BOTTOMLEFT", roleButton, 2, 1)
-                    right:SetPoint("TOPRIGHT", roleButton, -1, -3)
-                    right:SetPoint("BOTTOMRIGHT", roleButton, -1, 1)
-                    top:SetPoint("TOPLEFT", roleButton, 2, -2)
-                    top:SetPoint("TOPRIGHT", roleButton, -1, -2)
-                    bottom:SetPoint("BOTTOMLEFT", roleButton, 2, 1)
-                    bottom:SetPoint("BOTTOMRIGHT", roleButton, -1, 1)
-                end
-            end
-
-            self.styled = true
-        end
-    end)
-
-    -- Activity finder
-
-    local ActivityFinder = EntryCreation.ActivityFinder
-
-    ActivityFinder.Background:SetTexture("")
-    ActivityFinder.Dialog.Bg:Hide()
-    for i = 1, 9 do
-        select(i, ActivityFinder.Dialog.BorderFrame:GetRegions()):Hide()
-    end
-
-    F.CreateBD(ActivityFinder.Dialog)
-    ActivityFinder.Dialog:SetBackdropColor(.2, .2, .2, .9)
-
-    F.Reskin(ActivityFinder.Dialog.SelectButton)
-    F.Reskin(ActivityFinder.Dialog.CancelButton)
-    F.ReskinInput(ActivityFinder.Dialog.EntryBox)
-    F.ReskinScroll(_G.LFGListEntryCreationSearchScrollFrameScrollBar)
-
-    -- [[ Application dialog ]]
-
-    local LFGListApplicationDialog = _G.LFGListApplicationDialog
-
-    for i = 1, 9 do
-        select(i, LFGListApplicationDialog.Description:GetRegions()):Hide()
-    end
-
-    F.CreateBD(LFGListApplicationDialog)
-    F.CreateBD(LFGListApplicationDialog.Description, .25)
-    F.Reskin(LFGListApplicationDialog.SignUpButton)
-    F.Reskin(LFGListApplicationDialog.CancelButton)
-
-    -- [[ Invite dialog ]]
-
-    local LFGListInviteDialog = _G.LFGListInviteDialog
-
-    F.CreateBD(LFGListInviteDialog)
-    F.Reskin(LFGListInviteDialog.AcceptButton)
-    F.Reskin(LFGListInviteDialog.DeclineButton)
-    F.Reskin(LFGListInviteDialog.AcknowledgeButton)
-
-    do
-        local RoleIcon = LFGListInviteDialog.RoleIcon
-
-        RoleIcon:SetTexture(C.media.roleIcons)
-
-        local left = LFGListInviteDialog:CreateTexture(nil, "OVERLAY")
-        left:SetWidth(1)
-        left:SetTexture(C.media.backdrop)
-        left:SetVertexColor(0, 0, 0)
-        left:SetPoint("TOPLEFT", RoleIcon, 8, -6)
-        left:SetPoint("BOTTOMLEFT", RoleIcon, 8, 10)
-
-        local right = LFGListInviteDialog:CreateTexture(nil, "OVERLAY")
-        right:SetWidth(1)
-        right:SetTexture(C.media.backdrop)
-        right:SetVertexColor(0, 0, 0)
-        right:SetPoint("TOPRIGHT", RoleIcon, -8, -6)
-        right:SetPoint("BOTTOMRIGHT", RoleIcon, -8, 10)
-
-        local top = LFGListInviteDialog:CreateTexture(nil, "OVERLAY")
-        top:SetHeight(1)
-        top:SetTexture(C.media.backdrop)
-        top:SetVertexColor(0, 0, 0)
-        top:SetPoint("TOPLEFT", RoleIcon, 8, -6)
-        top:SetPoint("TOPRIGHT", RoleIcon, -8, -6)
-
-        local bottom = LFGListInviteDialog:CreateTexture(nil, "OVERLAY")
-        bottom:SetHeight(1)
-        bottom:SetTexture(C.media.backdrop)
-        bottom:SetVertexColor(0, 0, 0)
-        bottom:SetPoint("BOTTOMLEFT", RoleIcon, 8, 10)
-        bottom:SetPoint("BOTTOMRIGHT", RoleIcon, -8, 10)
-    end
+    Skin.LFGListEditBoxTemplate(EntryCreation.Name)
+    Skin.UIDropDownMenuTemplate(EntryCreation.CategoryDropDown)
+    Skin.UIDropDownMenuTemplate(EntryCreation.GroupDropDown)
+    Skin.UIDropDownMenuTemplate(EntryCreation.ActivityDropDown)
+    Skin.InputScrollFrameTemplate(EntryCreation.Description)
+    Skin.LFGListRequirementTemplate(EntryCreation.ItemLevel)
+    Skin.LFGListRequirementTemplate(EntryCreation.HonorLevel)
+    Skin.LFGListRequirementTemplate(EntryCreation.VoiceChat)
+    Skin.LFGListOptionCheckButtonTemplate(EntryCreation.PrivateGroup)
+    Skin.LFGListMagicButtonTemplate(EntryCreation.ListGroupButton)
+    Skin.LFGListMagicButtonTemplate(EntryCreation.CancelButton)
 end

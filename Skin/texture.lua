@@ -170,21 +170,17 @@ do -- LFG Icons
     local roleTextures = {}
     for name, coords in next, map do
         Base.RegisterTexture("role"..name, function(frame, texture)
-            texture:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-ROLES]])
-            texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
-            texture:SetBlendMode("ADD")
-
             if not roleTextures[texture] then
                 local layer, subLevel = texture:GetDrawLayer()
                 local border = frame:CreateTexture(nil, layer, nil, subLevel - 2)
                 border:SetColorTexture(0, 0, 0)
                 border:SetAllPoints(texture)
-                frame._auroraBorder = border
+                texture._auroraBorder = border
 
                 local bg = frame:CreateTexture(nil, layer, nil, subLevel - 1)
-                bg:SetColorTexture(coords.color:GetRGB())
                 bg:SetPoint("TOPLEFT", border, 1, -1)
                 bg:SetPoint("BOTTOMRIGHT", border, -1, 1)
+                texture._auroraBG = bg
 
                 local mask = frame:CreateMaskTexture()
                 mask:SetTexture([[Interface\CharacterFrame\TemporaryPortrait-Female-MagharOrc]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
@@ -193,6 +189,12 @@ do -- LFG Icons
 
                 roleTextures[texture] = true
             end
+
+            texture:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-ROLES]])
+            texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
+            texture:SetBlendMode("ADD")
+
+            texture._auroraBG:SetColorTexture(coords.color:GetRGB())
         end)
     end
 end

@@ -11,10 +11,11 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\LFGFrame.lua ]]
     function Hook.LFG_SetRoleIconIncentive(roleButton, incentiveIndex)
+        local roleIcon = roleButton:GetNormalTexture()
         if incentiveIndex then
-            roleButton._auroraBorder:SetColorTexture(Color.yellow:GetRGB())
+            roleIcon._auroraBorder:SetColorTexture(Color.yellow:GetRGB())
         else
-            roleButton._auroraBorder:SetColorTexture(Color.black:GetRGB())
+            roleIcon._auroraBorder:SetColorTexture(Color.black:GetRGB())
         end
     end
     function Hook.LFGDungeonReadyPopup_Update()
