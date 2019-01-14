@@ -166,7 +166,7 @@ function private.FrameXML.LFGFrame()
         hline:SetPoint("BOTTOMLEFT", bg, 4, 4)
         hline:SetPoint("BOTTOMRIGHT", bg, -4, 4)
         _G.tinsert(close._auroraHighlight, hline)
-        Base.SetHighlight(close, "color")
+        Base.SetHighlight(close, "texture")
     end
 
     local LFGDungeonReadyDialog = _G.LFGDungeonReadyDialog
@@ -197,7 +197,7 @@ function private.FrameXML.LFGFrame()
         hline:SetPoint("BOTTOMLEFT", bg, 4, 4)
         hline:SetPoint("BOTTOMRIGHT", bg, -4, 4)
         _G.tinsert(close._auroraHighlight, hline)
-        Base.SetHighlight(close, "color")
+        Base.SetHighlight(close, "texture")
     end
 
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.enterButton)

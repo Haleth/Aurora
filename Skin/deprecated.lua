@@ -415,7 +415,7 @@ F.ReskinExpandOrCollapse = function(f)
     bg.plus:SetColorTexture(1, 1, 1)
     _G.tinsert(f._auroraHighlight, bg.plus)
 
-    Base.SetHighlight(f, "color")
+    Base.SetHighlight(f, "texture")
     _G.hooksecurefunc(f, "SetNormalTexture", Hook_SetNormalTexture)
 end
 

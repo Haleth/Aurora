@@ -57,7 +57,7 @@ do -- BlizzWTF: These are not templates, but they should be
         bg.plus:SetColorTexture(1, 1, 1)
         _G.tinsert(Button._auroraHighlight, bg.plus)
 
-        Base.SetHighlight(Button, "color")
+        Base.SetHighlight(Button, "texture")
         _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
     end
 
@@ -477,7 +477,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
                 vline:SetPoint("LEFT", bg, 4, -1)
             end
 
-            Base.SetHighlight(Button, "color")
+            Base.SetHighlight(Button, "texture")
         end
     end
     function Skin.ColumnDisplayTemplate(Frame)

@@ -353,6 +353,7 @@ do -- Base API
     end
 
     do -- Base.SetHighlight
+        --[[
         local tempColor = {}
         local function GetColorTexture(string)
             _G.wipe(tempColor)
@@ -373,6 +374,7 @@ do -- Base API
 
             return tempColor[1], tempColor[2], tempColor[3], tempColor[4]
         end
+        ]]
         local function OnEnter(button, isBackground)
             if button:IsEnabled() then
                 if isBackground then
@@ -380,7 +382,7 @@ do -- Base API
                     Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight, alpha)
                 else
                     for _, texture in next, button._auroraHighlight do
-                        button._auroraSetColor(texture, Color.highlight:GetRGB())
+                        texture:SetVertexColor(Color.highlight:GetRGBA())
                     end
                 end
             end
@@ -390,30 +392,28 @@ do -- Base API
                 Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             else
                 for _, texture in next, button._auroraHighlight do
-                    button._auroraSetColor(texture, button._returnColor:GetRGBA())
+                    texture:SetVertexColor(button._returnColor:GetRGBA())
                 end
             end
         end
         function Base.SetHighlight(button, highlightType, enter, leave)
-            local setColor, r, g, b, a
-            if highlightType == "color" then
-                r, g, b, a = GetColorTexture(button._auroraHighlight[1]:GetTexture())
-                setColor = button._auroraHighlight[1].SetColorTexture
-            elseif highlightType == "texture" then
-                r, g, b, a = button._auroraHighlight[1]:GetVertexColor()
-                setColor = button._auroraHighlight[1].SetVertexColor
-            elseif highlightType == "backdrop" then
+            local isBackdrop = highlightType == "backdrop"
+            local r, g, b, a
+
+            if isBackdrop then
                 local bdFrame = button._auroraBDFrame or button
                 r, g, b = bdFrame:GetBackdropBorderColor()
                 _, _, _, a = bdFrame:GetBackdropColor()
+            else
+                r, g, b, a = button._auroraHighlight[1]:GetVertexColor()
             end
+
             button._returnColor = Color.Create(r, g, b, a)
-            button._auroraSetColor = setColor
             button:HookScript("OnEnter", function(self)
-                (enter or OnEnter)(self, highlightType == "backdrop")
+                (enter or OnEnter)(self, isBackdrop)
             end)
             button:HookScript("OnLeave", function(self)
-                (leave or OnLeave)(self, highlightType == "backdrop")
+                (leave or OnLeave)(self, isBackdrop)
             end)
         end
     end
