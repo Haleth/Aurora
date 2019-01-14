@@ -102,7 +102,9 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.ShadowBottom:Hide()
         Frame.ShadowLeft:Hide()
         Frame.ShadowRight:Hide()
-        Base.SetBackdrop(Frame, Color.yellow, 0.75)
+
+        Base.SetBackdrop(Frame, Color.yellow:Lightness(-0.8), 0.75)
+        Frame:SetBackdropBorderColor(Color.yellow)
     end
     function Skin.GlowBoxArrowTemplate(Frame, direction)
         direction = direction or "Down"
