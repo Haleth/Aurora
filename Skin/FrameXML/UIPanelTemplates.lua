@@ -1,7 +1,7 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
--- luacheck: globals select
+-- luacheck: globals select next
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -151,6 +151,20 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.Arrow:SetPoint(Util.OpposingSide[point], Frame, point)
     end
 
+    function Skin.ThinBorderTemplate(Frame)
+        local edge = private.backdrop.edgeSize
+        Frame.TopLeft:SetSize(edge, edge)
+        Frame.TopRight:SetSize(edge, edge)
+        Frame.BottomLeft:SetSize(edge, edge)
+        Frame.BottomRight:SetSize(edge, edge)
+
+        Frame.TopLeft:SetPoint("TOPLEFT")
+        Frame.TopRight:SetPoint("TOPRIGHT")
+        Frame.BottomLeft:SetPoint("BOTTOMLEFT")
+        Frame.BottomRight:SetPoint("BOTTOMRIGHT")
+    end
+    function Skin.GlowBorderTemplate(Frame)
+    end
 
     function Skin.BaseBasicFrameTemplate(Frame)
         Frame.TopLeftCorner:Hide()
@@ -178,6 +192,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.TitleBg:Hide()
         Frame.TopTileStreaks:SetTexture("")
     end
+
     function Skin.InsetFrameTemplate2(Frame)
         Frame.TopLeftCorner:Hide()
         Frame.TopRightCorner:Hide()
@@ -204,6 +219,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
 
         Frame.Bg:Hide()
     end
+
     function Skin.EtherealFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
 
@@ -262,12 +278,27 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.yellow)
     end
+
     function Skin.MainHelpPlateButton(Frame)
         Frame.Ring:Hide()
 
         local highlight = Frame:GetHighlightTexture()
         highlight:SetPoint("CENTER")
         highlight:SetSize(38, 38)
+    end
+    function Skin.HelpPlateButton(Button)
+        Button.BgGlow:SetPoint("CENTER")
+        Button.BgGlow:SetSize(38, 38)
+
+        local highlight = Button:GetHighlightTexture()
+        highlight:SetPoint("CENTER")
+        highlight:SetSize(38, 38)
+    end
+    function Skin.HelpPlateBox(Frame)
+        Skin.ThinBorderTemplate(Frame)
+    end
+    function Skin.HelpPlateBoxHighlight(Frame)
+        Skin.GlowBorderTemplate(Frame)
     end
     function Skin.UIExpandingButtonTemplate(Button)
         Skin.UIPanelSquareButton(Button)
@@ -276,4 +307,14 @@ end
 
 function private.FrameXML.UIPanelTemplates()
     _G.hooksecurefunc("SquareButton_SetIcon", Hook.SquareButton_SetIcon)
+
+    local HelpPlateTooltip = _G.HelpPlateTooltip
+    Skin.GlowBoxTemplate(HelpPlateTooltip)
+    for direction, dirUpper in next, {Down = "UP", Up = "DOWN", Left = "RIGHT", Right = "LEFT"} do
+        local arrow = HelpPlateTooltip["Arrow"..dirUpper]
+        Base.SetTexture(arrow, "arrow"..direction)
+        arrow:SetVertexColor(1, 1, 0)
+
+        HelpPlateTooltip["ArrowGlow"..dirUpper]:SetAlpha(0)
+    end
 end
