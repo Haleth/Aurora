@@ -435,12 +435,15 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.MaximizeMinimizeButtonFrameTemplate(Frame)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
-            Base.SetBackdrop(Frame, Color.button)
-            local bg = Frame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 17, -10)
-            bg:SetPoint("BOTTOMRIGHT", 3, 4)
-
             local Button = Frame[name]
+
+            Base.SetBackdrop(Button, Color.button)
+            local bg = Button:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 3, -10)
+            bg:SetPoint("BOTTOMRIGHT", -11, 4)
+            --bg:SetPoint("TOPLEFT", 17, -10)
+            --bg:SetPoint("BOTTOMRIGHT", 3, 4)
+
             Button:SetNormalTexture("")
             Button:SetPushedTexture("")
             Button:SetHighlightTexture("")
