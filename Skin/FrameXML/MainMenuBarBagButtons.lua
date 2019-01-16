@@ -8,8 +8,8 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
 
---[[ do FrameXML\MainMenuBarBagButtons.lua
-end ]]
+--do --[[ FrameXML\MainMenuBarBagButtons.lua ]]
+--end
 
 do --[[ FrameXML\MainMenuBarBagButtons.xml ]]
     function Skin.BagSlotButtonTemplate(CheckButton)

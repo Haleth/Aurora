@@ -1,7 +1,7 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next = _G.next
+--[[ Lua Globals ]]
+-- luacheck: globals next
 
 --[[ Core ]]
 local Aurora = private.Aurora

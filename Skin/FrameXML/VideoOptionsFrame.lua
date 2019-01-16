@@ -8,11 +8,11 @@ local Aurora = private.Aurora
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
---[[ do FrameXML\VideoOptionsFrame.lua
-end ]]
+--do --[[ FrameXML\VideoOptionsFrame.lua ]]
+--end
 
---[[ do FrameXML\VideoOptionsFrame.xml
-end ]]
+--do --[[ FrameXML\VideoOptionsFrame.xml ]]
+--end
 
 function private.FrameXML.VideoOptionsFrame()
     Skin.OptionsFrameTemplate(_G.VideoOptionsFrame)

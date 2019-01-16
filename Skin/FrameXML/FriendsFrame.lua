@@ -1,13 +1,16 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next, select = _G.next, _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals next select
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
 local F, C = _G.unpack(private.Aurora)
+
+--do --[[ FrameXML\FriendsFrame.lua ]]
+--end
 
 do --[[ FrameXML\FriendsFrame.xml ]]
     function Skin.FriendsFrameTabTemplate(Button)

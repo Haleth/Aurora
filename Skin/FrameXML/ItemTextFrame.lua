@@ -3,7 +3,7 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals select
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
@@ -39,6 +39,9 @@ do --[[ FrameXML\ItemTextFrame.lua ]]
         end
     end
 end
+
+--do --[[ FrameXML\ItemTextFrame.xml ]]
+--end
 
 function private.FrameXML.ItemTextFrame()
     _G.ItemTextFrame:HookScript("OnEvent", Hook.ItemTextFrame_OnEvent)

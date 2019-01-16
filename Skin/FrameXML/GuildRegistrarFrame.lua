@@ -1,9 +1,18 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
+
+--do --[[ FrameXML\GuildRegistrarFrame.lua ]]
+--end
+
+--do --[[ FrameXML\GuildRegistrarFrame.xml ]]
+--end
 
 function private.FrameXML.GuildRegistrarFrame()
     Skin.ButtonFrameTemplate(_G.GuildRegistrarFrame)

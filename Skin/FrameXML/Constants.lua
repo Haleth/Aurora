@@ -6,5 +6,5 @@ private.TRIVIAL_QUEST_DISPLAY = _G.TRIVIAL_QUEST_DISPLAY:gsub("ff000000", Color.
 
 private.FRAME_TITLE_HEIGHT = 27
 
-function private.FrameXML.Constants()
-end
+--function private.FrameXML.Constants()
+--end

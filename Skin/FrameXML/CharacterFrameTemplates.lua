@@ -1,6 +1,9 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 
@@ -22,7 +25,5 @@ do --[[ FrameXML\CharacterFrameTemplates.xml ]]
     end
 end
 
-function private.FrameXML.CharacterFrameTemplates()
-    --[[
-    ]]
-end
+--function private.FrameXML.CharacterFrameTemplates()
+--end

@@ -3,7 +3,7 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals type floor mod
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
@@ -25,5 +25,5 @@ do --[[ FrameXML\MoneyFrame.xml ]]
     end
 end
 
-function private.FrameXML.MoneyFrame()
-end
+--function private.FrameXML.MoneyFrame()
+--end

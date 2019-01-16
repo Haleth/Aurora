@@ -10,39 +10,36 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_WarboardUI.lua ]]
-    local WarboardQuestChoiceFrameMixin do
-        local textureKitColors = {
-            ["alliance"] = {
-                title = Color.Create(0.36, 0.36, 1), -- 5E5EFF
-                description = Color.Create(0.53, 0.53, 1), -- 8888FF
-            },
-            ["horde"] = {
-                title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
-                description = Color.Create(0.86, 0.47, 0.47), -- DD7878
-            },
-        }
+    local textureKitColors = {
+        ["alliance"] = {
+            title = Color.Create(0.36, 0.36, 1), -- 5E5EFF
+            description = Color.Create(0.53, 0.53, 1), -- 8888FF
+        },
+        ["horde"] = {
+            title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
+            description = Color.Create(0.86, 0.47, 0.47), -- DD7878
+        },
+    }
 
-        WarboardQuestChoiceFrameMixin = {}
-        function WarboardQuestChoiceFrameMixin:TryShow()
-            local textureKit = _G.GetUITextureKitInfo(self.uiTextureKitID)
-            local textureKitColor = textureKitColors[textureKit]
-            if textureKitColor then
-                for _, option in next, self.Options do
-                    option.Header.Text:SetTextColor(textureKitColor.title:GetRGBA())
-                    option.OptionText:SetTextColor(textureKitColor.description:GetRGBA())
-                end
-            end
-
-            if not self.NineSlice.Center then
-                self.NineSlice.Center = self.Background.BackgroundTile
-                Skin.NineSlicePanelTemplate(self.NineSlice)
-                Base.SetBackdrop(self.NineSlice)
-
-                self.CloseButton.Border:Hide()
+    Hook.WarboardQuestChoiceFrameMixin = {}
+    function Hook.WarboardQuestChoiceFrameMixin:TryShow()
+        local textureKit = _G.GetUITextureKitInfo(self.uiTextureKitID)
+        local textureKitColor = textureKitColors[textureKit]
+        if textureKitColor then
+            for _, option in next, self.Options do
+                option.Header.Text:SetTextColor(textureKitColor.title:GetRGBA())
+                option.OptionText:SetTextColor(textureKitColor.description:GetRGBA())
             end
         end
+
+        if not self.NineSlice.Center then
+            self.NineSlice.Center = self.Background.BackgroundTile
+            Skin.NineSlicePanelTemplate(self.NineSlice)
+            Base.SetBackdrop(self.NineSlice)
+
+            self.CloseButton.Border:Hide()
+        end
     end
-    Hook.WarboardQuestChoiceFrameMixin = WarboardQuestChoiceFrameMixin
 end
 
 do --[[ AddOns\Blizzard_WarboardUI.xml ]]

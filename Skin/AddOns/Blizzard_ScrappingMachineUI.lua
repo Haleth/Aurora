@@ -10,7 +10,8 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_ScrappingMachineUI.lua ]]
-    function Hook.ScrappingMachineItemSlotMixin_ClearSlot(self)
+    Hook.ScrappingMachineItemSlotMixin = {}
+    function Hook.ScrappingMachineItemSlotMixin:ClearSlot()
         self._auroraIconBorder:SetBackdropBorderColor(Color.button, 1)
     end
 end

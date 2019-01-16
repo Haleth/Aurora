@@ -1,4 +1,4 @@
-local _, private = ...
+--local _, private = ...
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -15,7 +15,7 @@ end ]]
 --[[ do AddOns\Blizzard_OrderHallUI.xml
 end ]]
 
-function private.AddOns.Blizzard_OrderHallUI()
+--function private.AddOns.Blizzard_OrderHallUI()
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_OrderHallMissionUI   --
     ----====####$$$$%%%%%$$$$####====----
@@ -31,4 +31,4 @@ function private.AddOns.Blizzard_OrderHallUI()
     -------------
     -- Section --
     -------------
-end
+--end

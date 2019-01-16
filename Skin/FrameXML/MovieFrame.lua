@@ -1,6 +1,9 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
@@ -9,6 +12,9 @@ do --[[ FrameXML\MovieFrame.lua ]]
         self:SetScale(_G.UIParent:GetScale())
     end
 end
+
+--do --[[ FrameXML\MovieFrame.xml ]]
+--end
 
 function private.FrameXML.MovieFrame()
     _G.MovieFrame.CloseDialog:HookScript("OnShow", Hook.MovieFrameCloseDialog_OnShow)

@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do AddOns\Blizzard_CompactUnitFrameProfiles.lua
-end ]]
+--do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.lua ]]
+--end
 
 do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.xml ]]
     function Skin.CompactUnitFrameProfilesDropdownTemplate(Frame)

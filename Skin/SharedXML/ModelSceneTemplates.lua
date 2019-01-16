@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do SharedXML\ModelSceneTemplates.lua
-end ]]
+--do --[[ SharedXML\ModelSceneTemplates.lua ]]
+--end
 
 do --[[ SharedXML\ModelSceneTemplates.xml ]]
     function Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
@@ -49,12 +49,5 @@ do --[[ SharedXML\ModelSceneTemplates.xml ]]
     end
 end
 
-function private.SharedXML.ModelSceneTemplates()
-    ----====####$$$$%%%%$$$$####====----
-    --              File              --
-    ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
-end
+--function private.SharedXML.ModelSceneTemplates()
+--end

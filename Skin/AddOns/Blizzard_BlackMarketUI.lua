@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals select pairs
 
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 local F, C = _G.unpack(Aurora)
@@ -34,7 +31,7 @@ function private.AddOns.Blizzard_BlackMarketUI()
         header.Middle:Hide()
         header.Right:Hide()
 
-        local bg = CreateFrame("Frame", nil, header)
+        local bg = _G.CreateFrame("Frame", nil, header)
         bg:SetPoint("TOPLEFT", 2, 0)
         bg:SetPoint("BOTTOMRIGHT", -1, 0)
         bg:SetFrameLevel(header:GetFrameLevel()-1)
@@ -51,7 +48,7 @@ function private.AddOns.Blizzard_BlackMarketUI()
     Skin.ThinGoldEdgeTemplate(BlackMarketFrame.MoneyFrameBorder)
     Skin.SmallMoneyFrameTemplate(_G.BlackMarketMoneyFrame)
 
-    hooksecurefunc("BlackMarketScrollFrame_Update", function()
+    _G.hooksecurefunc("BlackMarketScrollFrame_Update", function()
         local buttons = _G.BlackMarketScrollFrame.buttons
         for i = 1, #buttons do
             local bu = buttons[i]
@@ -66,7 +63,7 @@ function private.AddOns.Blizzard_BlackMarketUI()
                 bu.Item:SetPushedTexture("")
                 bu.Item._auroraIconBorder = F.ReskinIcon(bu.Item.IconTexture)
 
-                local bg = CreateFrame("Frame", nil, bu)
+                local bg = _G.CreateFrame("Frame", nil, bu)
                 bg:SetPoint("TOPLEFT")
                 bg:SetPoint("BOTTOMRIGHT", 0, 5)
                 bg:SetFrameLevel(bu:GetFrameLevel()-1)

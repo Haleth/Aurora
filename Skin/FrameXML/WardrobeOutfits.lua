@@ -7,8 +7,8 @@ local _, private = ...
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---[[ do FrameXML\WardrobeOutfits.lua
-end ]]
+--do --[[ FrameXML\WardrobeOutfits.lua ]]
+--end
 
 do --[[ FrameXML\WardrobeOutfits.xml ]]
     function Skin.WardrobeOutfitDropDownTemplate(Frame)
@@ -17,8 +17,5 @@ do --[[ FrameXML\WardrobeOutfits.xml ]]
     end
 end
 
-function private.FrameXML.WardrobeOutfits()
-    -------------
-    -- Section --
-    -------------
-end
+--function private.FrameXML.WardrobeOutfits()
+--end

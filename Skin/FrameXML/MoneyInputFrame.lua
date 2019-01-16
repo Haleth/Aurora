@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\MoneyInputFrame.lua
-end ]]
+--do --[[ FrameXML\MoneyInputFrame.lua ]]
+--end
 
 do --[[ FrameXML\MoneyInputFrame.xml ]]
     local money = {"gold", "silver", "copper"}
@@ -39,7 +39,5 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
     end
 end
 
-function private.FrameXML.MoneyInputFrame()
-    --[[
-    ]]
-end
+--function private.FrameXML.MoneyInputFrame()
+--end

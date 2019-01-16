@@ -19,6 +19,6 @@ do --[[ SharedXML\Pools.lua ]]
 end
 
 
-function private.SharedXML.Pools()
+--function private.SharedXML.Pools()
     --_G.hooksecurefunc(_G.ObjectPoolMixin, "Acquire", Hook.ObjectPoolMixin_Acquire)
-end
+--end

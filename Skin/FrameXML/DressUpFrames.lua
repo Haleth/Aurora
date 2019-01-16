@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
--- [[ Core ]]
+--[[ Core ]]
 local F = _G.unpack(private.Aurora)
 local Skin = private.Aurora.Skin
 

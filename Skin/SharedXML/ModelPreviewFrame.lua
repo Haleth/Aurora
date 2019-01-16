@@ -7,11 +7,11 @@ local _, private = ...
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---[[ do FrameXML\ModelPreviewFrame.lua
-end ]]
+--do --[[ FrameXML\ModelPreviewFrame.lua ]]
+--end
 
---[[ do FrameXML\ModelPreviewFrame.xml
-end ]]
+--do --[[ FrameXML\ModelPreviewFrame.xml ]]
+--end
 
 function private.SharedXML.ModelPreviewFrame()
     local ModelPreviewFrame = _G.ModelPreviewFrame

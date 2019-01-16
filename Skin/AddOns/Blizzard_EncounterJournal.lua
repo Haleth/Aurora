@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, next = _G.select, _G.next
+--[[ Lua Globals ]]
+-- luacheck: globals select next
 
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local F, C = _G.unpack(private.Aurora)
@@ -90,7 +87,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     F.ReskinClose(_G.EncounterJournalSearchResultsCloseButton)
     F.ReskinScroll(searchResults.scrollFrame.scrollBar)
 
-    hooksecurefunc("EncounterJournal_SearchUpdate", function()
+    _G.hooksecurefunc("EncounterJournal_SearchUpdate", function()
         local scrollFrame = searchResults.scrollFrame
         local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
         local results = scrollFrame.buttons
@@ -123,7 +120,7 @@ function private.AddOns.Blizzard_EncounterJournal()
         end
     end)
 
-    hooksecurefunc(searchResults.scrollFrame, "update", function(self)
+    _G.hooksecurefunc(searchResults.scrollFrame, "update", function(self)
         for i = 1, #self.buttons do
             local result = self.buttons[i]
 
@@ -212,7 +209,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             index = index + 1
         end
     end
-    hooksecurefunc("EncounterJournal_ListInstances", listInstances)
+    _G.hooksecurefunc("EncounterJournal_ListInstances", listInstances)
     listInstances()
 
 
@@ -299,7 +296,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             item.icon:SetDrawLayer("OVERLAY")
             F.CreateBG(item.icon)
 
-            local bg = CreateFrame("Frame", nil, item)
+            local bg = _G.CreateFrame("Frame", nil, item)
             bg:SetPoint("TOPLEFT")
             bg:SetPoint("BOTTOMRIGHT", 0, 1)
             bg:SetFrameLevel(item:GetFrameLevel() - 1)
@@ -316,7 +313,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             local numBossButtons = 1
             local bossButton
 
-            hooksecurefunc("EncounterJournal_DisplayInstance", function()
+            _G.hooksecurefunc("EncounterJournal_DisplayInstance", function()
                 bossButton = _G["EncounterJournalBossButton"..numBossButtons]
                 while bossButton do
                     F.Reskin(bossButton, true)
@@ -341,7 +338,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             end)
         end
 
-        hooksecurefunc("EncounterJournal_ToggleHeaders", function(self)
+        _G.hooksecurefunc("EncounterJournal_ToggleHeaders", function(self)
             local index = 1
             local header = _G["EncounterJournalInfoHeader"..index]
             while header do
@@ -379,7 +376,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             end
         end)
 
-        hooksecurefunc("EncounterJournal_SetUpOverview", function(self, role, index)
+        _G.hooksecurefunc("EncounterJournal_SetUpOverview", function(self, role, index)
             local header = self.overviews[index]
             if not header.styled then
                 header.flashAnim.Play = F.dummy
@@ -401,7 +398,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             end
         end)
 
-        hooksecurefunc("EncounterJournal_SetBullets", function(object, description)
+        _G.hooksecurefunc("EncounterJournal_SetBullets", function(object, description)
             local parent = object:GetParent()
 
             if parent.Bullets then
@@ -473,7 +470,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             F.CreateBG(reward.icon)
         end
     end
-    hooksecurefunc("EJSuggestFrame_RefreshDisplay", function()
+    _G.hooksecurefunc("EJSuggestFrame_RefreshDisplay", function()
         local self = suggestFrame
 
         if #self.suggestions > 0 then
@@ -507,7 +504,7 @@ function private.AddOns.Blizzard_EncounterJournal()
         end
     end)
 
-    hooksecurefunc("EJSuggestFrame_UpdateRewards", function(suggestion)
+    _G.hooksecurefunc("EJSuggestFrame_UpdateRewards", function(suggestion)
         local rewardData = suggestion.reward.data
         if rewardData then
             suggestion.reward.icon:SetMask("")
@@ -545,7 +542,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     SkinLootBtn(ItemSetsFrame.ClassButton)
     F.ReskinScroll(_G.EncounterJournalScrollBar, "EncounterJournal")
 
-    hooksecurefunc(ItemSetsFrame, "UpdateList", function()
+    _G.hooksecurefunc(ItemSetsFrame, "UpdateList", function()
         local itemSets = ItemSetsFrame.buttons
         for i = 1, #itemSets do
             local itemSet = itemSets[i]
@@ -554,7 +551,7 @@ function private.AddOns.Blizzard_EncounterJournal()
             itemSet.Background:Hide()
 
             if not itemSet.bg then
-                local bg = CreateFrame("Frame", nil, itemSet)
+                local bg = _G.CreateFrame("Frame", nil, itemSet)
                 bg:SetPoint("TOPLEFT")
                 bg:SetPoint("BOTTOMRIGHT", 0, 1)
                 bg:SetFrameLevel(itemSet:GetFrameLevel() - 1)

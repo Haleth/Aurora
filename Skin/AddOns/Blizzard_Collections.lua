@@ -90,7 +90,8 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
         end
     end
     do --[[ Blizzard_HeirloomCollection ]]
-        function Hook.HeirloomsMixin_UpdateButton(self, button)
+        Hook.HeirloomsMixin = {}
+        function Hook.HeirloomsMixin:UpdateButton(button)
             if not button._auroraSkinned then
                 Skin.HeirloomSpellButtonTemplate(button)
                 button._auroraSkinned = true
@@ -119,7 +120,8 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
             ambIntensity=1, ambR=0.8, ambG=0.4, ambB=0.4,
             dirIntensity=0.5, dirR=1, dirG=0, dirB=0
         }
-        function Hook.WardrobeItemsCollectionMixin_UpdateItems(self)
+        Hook.WardrobeItemsCollectionMixin = {}
+        function Hook.WardrobeItemsCollectionMixin:UpdateItems()
             for i = 1, self.PAGE_SIZE do
                 local model = self.Models[i]
                 local visualInfo = model.visualInfo
@@ -167,14 +169,18 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
                 end
             end
         end
-        function Hook.WardrobeSetsCollectionMixin_SetItemFrameQuality(self, itemFrame)
+
+        Hook.WardrobeSetsCollectionMixin = {}
+        function Hook.WardrobeSetsCollectionMixin:SetItemFrameQuality(itemFrame)
             local quality
             if itemFrame.collected then
                 quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
             end
             Hook.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
         end
-        function Hook.WardrobeSetsTransmogMixin_UpdateSets(self)
+
+        Hook.WardrobeSetsTransmogMixin = {}
+        function Hook.WardrobeSetsTransmogMixin:UpdateSets()
             for i = 1, self.PAGE_SIZE do
                 local model = self.Models[i]
                 if model.setID then
@@ -707,7 +713,7 @@ function private.AddOns.Blizzard_Collections()
     --   Blizzard_HeirloomCollection   --
     ----====####$$$$%%%%%$$$$####====----
     local HeirloomsJournal = _G.HeirloomsJournal
-    _G.hooksecurefunc(HeirloomsJournal, "UpdateButton", Hook.HeirloomsMixin_UpdateButton)
+    Util.Mixin(HeirloomsJournal, Hook.HeirloomsMixin)
 
     Skin.CollectionsProgressBarTemplate(HeirloomsJournal.progressBar)
     Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
@@ -740,7 +746,7 @@ function private.AddOns.Blizzard_Collections()
 
     -- Items
     local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
-    _G.hooksecurefunc(ItemsCollectionFrame, "UpdateItems", Hook.WardrobeItemsCollectionMixin_UpdateItems)
+    Util.Mixin(ItemsCollectionFrame, Hook.WardrobeItemsCollectionMixin)
 
     Skin.CollectionsBackgroundTemplate(ItemsCollectionFrame)
     Skin.CollectionsPagingFrameTemplate(ItemsCollectionFrame.PagingFrame)
@@ -756,7 +762,7 @@ function private.AddOns.Blizzard_Collections()
 
     -- Sets
     local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
-    _G.hooksecurefunc(SetsCollectionFrame, "SetItemFrameQuality", Hook.WardrobeSetsCollectionMixin_SetItemFrameQuality)
+    Util.Mixin(SetsCollectionFrame, Hook.WardrobeSetsCollectionMixin)
     Skin.InsetFrameTemplate(SetsCollectionFrame.LeftInset)
     Skin.CollectionsBackgroundTemplate(SetsCollectionFrame.RightInset)
     Skin.HybridScrollBarTrimTemplate(SetsCollectionFrame.ScrollFrame.scrollBar)
@@ -767,7 +773,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.UIMenuButtonStretchTemplate(DetailsFrame.VariantSetsButton)
 
     local SetsTransmogFrame = WardrobeCollectionFrame.SetsTransmogFrame
-    _G.hooksecurefunc(SetsTransmogFrame, "UpdateSets", Hook.WardrobeSetsTransmogMixin_UpdateSets)
+    Util.Mixin(SetsTransmogFrame, Hook.WardrobeSetsTransmogMixin)
     Skin.CollectionsBackgroundTemplate(SetsTransmogFrame)
     Skin.CollectionsPagingFrameTemplate(SetsTransmogFrame.PagingFrame)
     for i = 1, #SetsTransmogFrame.Models do

@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\VideoOptionsPanels.lua
-end ]]
+--do --[[ FrameXML\VideoOptionsPanels.lua ]]
+--end
 
 do --[[ FrameXML\VideoOptionsPanels.xml ]]
     function Skin.VideoOptionsDropDownMenuTemplate(Frame)

@@ -3,7 +3,7 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals next tinsert type
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin

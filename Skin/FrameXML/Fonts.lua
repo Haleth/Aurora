@@ -1,6 +1,9 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Color = Aurora.Color

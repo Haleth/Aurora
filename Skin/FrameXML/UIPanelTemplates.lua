@@ -1,15 +1,15 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
+--[[ Lua Globals ]]
 -- luacheck: globals select next
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ AddOns\Blizzard_Communities.lua ]]
+do --[[ FrameXML\UIPanelTemplates.lua ]]
     function Hook.SquareButton_SetIcon(self, name)
         name = name:upper()
         if name == "LEFT" then

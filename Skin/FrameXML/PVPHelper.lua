@@ -1,6 +1,9 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
@@ -10,6 +13,9 @@ do --[[ FrameXML\PVPHelper.lua ]]
         Base.SetTexture(self.roleIcon.texture, "role"..role)
     end
 end
+
+--do --[[ FrameXML\PVPHelper.xml ]]
+--end
 
 function private.FrameXML.PVPHelper()
     _G.hooksecurefunc("PVPReadyDialog_Display", Hook.PVPReadyDialog_Display)

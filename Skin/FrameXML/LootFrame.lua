@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Base, Skin = Aurora.Base, Aurora.Skin
@@ -73,7 +70,7 @@ function private.FrameXML.LootFrame()
         item:SetPushedTexture("")
     end
 
-    hooksecurefunc("LootFrame_UpdateButton", function(index)
+    _G.hooksecurefunc("LootFrame_UpdateButton", function(index)
         if _G["LootButton"..index.."IconQuestTexture"]:IsShown() then
             _G["LootButton"..index]._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
         end
@@ -115,7 +112,7 @@ function private.FrameXML.LootFrame()
         _G.LootFrame:SetAlpha(1)
     end)
 
-    hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
+    _G.hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
         for i = 1, _G.MAX_RAID_MEMBERS do
             local playerFrame = MasterLooterFrame["player"..i]
             if playerFrame then

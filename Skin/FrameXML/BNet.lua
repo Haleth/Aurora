@@ -1,8 +1,17 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
+
+--do --[[ FrameXML\BNet.lua ]]
+--end
+
+--do --[[ FrameXML\BNet.xml ]]
+--end
 
 function private.FrameXML.BNet()
     ------------------

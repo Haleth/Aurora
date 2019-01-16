@@ -7,8 +7,8 @@ local _, private = ...
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---[[ do FrameXML\InterfaceOptionsPanels.lua
-end ]]
+--do --[[ FrameXML\InterfaceOptionsPanels.lua ]]
+--end
 
 do --[[ FrameXML\InterfaceOptionsPanels.xml ]]
     function Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)

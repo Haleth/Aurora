@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local tinsert, next = _G.tinsert, _G.next
+--[[ Lua Globals ]]
+-- luacheck: globals next tinsert
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.QueueStatusFrame()
@@ -93,7 +90,7 @@ function private.FrameXML.QueueStatusFrame()
     end
 
     F.CreateBD(_G.QueueStatusFrame)
-    hooksecurefunc("QueueStatusEntry_SetMinimalDisplay", function(entry)
+    _G.hooksecurefunc("QueueStatusEntry_SetMinimalDisplay", function(entry)
         if not entry._auroraSkinned then
             SkinEntry(entry)
         end
@@ -105,7 +102,7 @@ function private.FrameXML.QueueStatusFrame()
         end
     end)
 
-    hooksecurefunc("QueueStatusEntry_SetFullDisplay", function(entry)
+    _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", function(entry)
         if not entry._auroraSkinned then
             SkinEntry(entry)
         end

@@ -9,13 +9,10 @@ local Hook = Aurora.Hook
 local Util = Aurora.Util
 
 do --[[ FrameXML\AnchorUtil.xml ]]
-    local AnchorUtil = {}
-
-    --[[ FrameXML\Anchor.lua ]]
-    Hook.AnchorUtil = AnchorUtil
+    Hook.AnchorUtil = {}
 
     do --[[ FrameXML\NineSlice.lua ]]
-        function AnchorUtil.ApplyNineSliceLayout(container, userLayout, textureKit)
+        function Hook.AnchorUtil.ApplyNineSliceLayout(container, userLayout, textureKit)
             if not container._auroraBackdrop then return end
             container:SetBackdrop(private.backdrop)
         end

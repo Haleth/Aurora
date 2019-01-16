@@ -7,162 +7,154 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
-    ----====####$$$$%%%%%$$$$####====----
-    -- Blizzard_ObjectiveTrackerShared --
-    ----====####$$$$%%%%%$$$$####====----
-    function Hook.QuestObjectiveItem_Initialize(itemButton, questLogIndex)
-        if not itemButton._auroraSkinned then
-            Skin.QuestObjectiveItemButtonTemplate(itemButton)
-            itemButton._auroraSkinned = true
+    do --[[ Blizzard_ObjectiveTrackerShared.lua ]]
+        function Hook.QuestObjectiveItem_Initialize(itemButton, questLogIndex)
+            if not itemButton._auroraSkinned then
+                Skin.QuestObjectiveItemButtonTemplate(itemButton)
+                itemButton._auroraSkinned = true
+            end
         end
-    end
-    function Hook.QuestObjectiveSetupBlockButton_AddRightButton(block, button, initialAnchorOffsets)
-        if not button._auroraSkinned then
-            Skin.QuestObjectiveFindGroupButtonTemplate(button)
-            button._auroraSkinned = true
-        end
-    end
-
-    ----====####$$$$$$$####====----
-    -- Blizzard_ObjectiveTracker --
-    ----====####$$$$$$$####====----
-    function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE_AddObjective(self, block, objectiveKey, text, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText)
-        local line = block.lines[objectiveKey]
-        if not line._auroraSkinned then
-            local template = lineType and lineType.template or self.lineTemplate
-            if Skin[template] then
-                Skin[template](line)
-                line._auroraSkinned = true
-            else
-                private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_AddObjective:", template, "does not exist.")
-                line._auroraSkinned = template
+        function Hook.QuestObjectiveSetupBlockButton_AddRightButton(block, button, initialAnchorOffsets)
+            if not button._auroraSkinned then
+                Skin.QuestObjectiveFindGroupButtonTemplate(button)
+                button._auroraSkinned = true
             end
         end
     end
-    function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock(self, id)
-        local block = self.usedBlocks[id]
-        if not block._auroraSkinned then
-            if Skin[self.blockTemplate] then
-                Skin[self.blockTemplate](block)
-                block._auroraSkinned = true
-            else
-                private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock:", self.blockTemplate, "does not exist.")
+
+    do --[[ Blizzard_ObjectiveTracker.lua ]]
+        Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE = {}
+        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:AddObjective(block, objectiveKey, text, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText)
+            local line = block.lines[objectiveKey]
+            if not line._auroraSkinned then
+                local template = lineType and lineType.template or self.lineTemplate
+                if Skin[template] then
+                    Skin[template](line)
+                    line._auroraSkinned = true
+                else
+                    private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_AddObjective:", template, "does not exist.")
+                    line._auroraSkinned = template
+                end
             end
         end
-    end
-    function Hook.ObjectiveTracker_Initialize(self)
-        _G.hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddObjective", Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE_AddObjective)
-        _G.hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "GetBlock", Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock)
-
-        _G.hooksecurefunc(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", Hook.QUEST_TRACKER_MODULE_SetBlockHeader)
-        _G.hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", Hook.BONUS_OBJECTIVE_TRACKER_MODULE_AddProgressBar)
-        _G.hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", Hook.BONUS_OBJECTIVE_TRACKER_MODULE_AddProgressBar)
-        _G.hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", Hook.SCENARIO_TRACKER_MODULE_AddProgressBar)
-
-        _G.hooksecurefunc(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, "Update", Hook.AUTO_QUEST_POPUP_TRACKER_MODULE_Update)
-    end
-    function Hook.ObjectiveTracker_Collapse()
-        local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-        local line, arrow = minimizeButton._auroraLine, minimizeButton._auroraArrow
-        line:SetPoint("TOPLEFT", minimizeButton, "BOTTOMLEFT", 3, 4)
-        line:SetPoint("BOTTOMRIGHT", -3, 3)
-
-        arrow:SetPoint("TOPLEFT", 3, -3)
-        arrow:SetPoint("BOTTOMRIGHT", line, "TOPRIGHT", 0, 2)
-        Base.SetTexture(arrow, "arrowDown")
-    end
-    function Hook.ObjectiveTracker_Expand()
-        local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-        local line, arrow = minimizeButton._auroraLine, minimizeButton._auroraArrow
-        line:SetPoint("TOPLEFT", 3, -3)
-        line:SetPoint("BOTTOMRIGHT", minimizeButton, "TOPRIGHT", -3, -4)
-
-        arrow:SetPoint("TOPLEFT", line, 0, -2)
-        arrow:SetPoint("BOTTOMRIGHT", -3, 3)
-        Base.SetTexture(arrow, "arrowUp")
-    end
-
-    ----====####$$$$%%%%$$$$####====----
-    -- Blizzard_QuestObjectiveTracker --
-    ----====####$$$$%%%%$$$$####====----
-    local coords = _G.UnitFactionGroup("player") == "Horde" and _G.QUEST_TAG_TCOORDS.HORDE or _G.QUEST_TAG_TCOORDS.ALLIANCE
-    local factionIcon = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16,
-            coords[1], coords[2], coords[3], coords[4], 0, 2)
-
-    function Hook.QUEST_TRACKER_MODULE_SetBlockHeader(self, block, text, questLogIndex, isQuestComplete, questID)
-        if _G.C_CampaignInfo.IsCampaignQuest(questID) then
-            text = text..factionIcon
-            block.HeaderText:SetText(text)
-        end
-    end
-
-    ----====####$$$$%%%%%%%%%%$$$$####====----
-    -- Blizzard_AchievementObjectiveTracker --
-    ----====####$$$$%%%%%%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    -- Blizzard_AutoQuestPopUpTracker --
-    ----====####$$$$%%%%$$$$####====----
-    function Hook.AUTO_QUEST_POPUP_TRACKER_MODULE_Update(self)
-        for _, block in next, self.usedBlocks do
+        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:GetBlock(id)
+            local block = self.usedBlocks[id]
             if not block._auroraSkinned then
-                Skin.AutoQuestPopUpBlockTemplate(block)
-                block._auroraSkinned = true
+                if Skin[self.blockTemplate] then
+                    Skin[self.blockTemplate](block)
+                    block._auroraSkinned = true
+                else
+                    private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock:", self.blockTemplate, "does not exist.")
+                end
+            end
+        end
+        function Hook.ObjectiveTracker_Initialize(self)
+            Util.Mixin(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
+            Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.QUEST_TRACKER_MODULE)
+            Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.BONUS_OBJECTIVE_TRACKER_MODULE)
+            Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.BONUS_OBJECTIVE_TRACKER_MODULE)
+            Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
+            Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
+        end
+        function Hook.ObjectiveTracker_Collapse()
+            local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
+            local line, arrow = minimizeButton._auroraLine, minimizeButton._auroraArrow
+            line:SetPoint("TOPLEFT", minimizeButton, "BOTTOMLEFT", 3, 4)
+            line:SetPoint("BOTTOMRIGHT", -3, 3)
+
+            arrow:SetPoint("TOPLEFT", 3, -3)
+            arrow:SetPoint("BOTTOMRIGHT", line, "TOPRIGHT", 0, 2)
+            Base.SetTexture(arrow, "arrowDown")
+        end
+        function Hook.ObjectiveTracker_Expand()
+            local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
+            local line, arrow = minimizeButton._auroraLine, minimizeButton._auroraArrow
+            line:SetPoint("TOPLEFT", 3, -3)
+            line:SetPoint("BOTTOMRIGHT", minimizeButton, "TOPRIGHT", -3, -4)
+
+            arrow:SetPoint("TOPLEFT", line, 0, -2)
+            arrow:SetPoint("BOTTOMRIGHT", -3, 3)
+            Base.SetTexture(arrow, "arrowUp")
+        end
+    end
+
+    do --[[ Blizzard_QuestObjectiveTracker.lua ]]
+        local coords = _G.UnitFactionGroup("player") == "Horde" and _G.QUEST_TAG_TCOORDS.HORDE or _G.QUEST_TAG_TCOORDS.ALLIANCE
+        local factionIcon = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16,
+                coords[1], coords[2], coords[3], coords[4], 0, 2)
+
+        Hook.QUEST_TRACKER_MODULE = {}
+        function Hook.QUEST_TRACKER_MODULE:SetBlockHeader(block, text, questLogIndex, isQuestComplete, questID)
+            if _G.C_CampaignInfo.IsCampaignQuest(questID) then
+                text = text..factionIcon
+                block.HeaderText:SetText(text)
             end
         end
     end
 
-    ----====####$$$$%%%%$$$$####====----
-    -- Blizzard_BonusObjectiveTracker --
-    ----====####$$$$%%%%$$$$####====----
-    function Hook.BONUS_OBJECTIVE_TRACKER_MODULE_AddProgressBar(self, block, line, questID)
-        local progressBar = line.ProgressBar
-        if not progressBar._auroraSkinned then
-            Skin.BonusTrackerProgressBarTemplate(progressBar)
-            progressBar._auroraSkinned = true
+    do --[[ Blizzard_AutoQuestPopUpTracker.lua ]]
+        Hook.AUTO_QUEST_POPUP_TRACKER_MODULE = {}
+        function Hook.AUTO_QUEST_POPUP_TRACKER_MODULE:Update()
+            for _, block in next, self.usedBlocks do
+                if not block._auroraSkinned then
+                    Skin.AutoQuestPopUpBlockTemplate(block)
+                    block._auroraSkinned = true
+                end
+            end
         end
     end
 
-    ----====####$$$$%%%%%%%$$$$####====----
-    -- Blizzard_ScenarioObjectiveTracker --
-    ----====####$$$$%%%%%%%$$$$####====----
-    function Hook.SCENARIO_TRACKER_MODULE_AddProgressBar(self, block, line, criteriaIndex)
-        local progressBar = line.ProgressBar
-        if not progressBar._auroraSkinned then
-            Skin.ScenarioTrackerProgressBarTemplate(progressBar)
-            progressBar._auroraSkinned = true
+    do --[[ Blizzard_BonusObjectiveTracker.lua ]]
+        Hook.BONUS_OBJECTIVE_TRACKER_MODULE = {}
+        function Hook.BONUS_OBJECTIVE_TRACKER_MODULE:AddProgressBar(block, line, questID)
+            local progressBar = line.ProgressBar
+            if not progressBar._auroraSkinned then
+                Skin.BonusTrackerProgressBarTemplate(progressBar)
+                progressBar._auroraSkinned = true
+            end
         end
     end
 
-    -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
-    local uiTextureKits = {
-        [0] = {color = Color.button, overlay = ""},
-        [261] = {color = Color.blue:Lightness(-0.3), overlay = [[Interface\Timer\Alliance-Logo]]},
-        [5117] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
-        ["legion"] = {color = Color.green:Lightness(-0.3), overlay = ""},
-    }
-    function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKitID)
-        -- /dump GetUITextureKitInfo(5117)
+    do --[[ Blizzard_ScenarioObjectiveTracker.lua ]]
+        Hook.SCENARIO_TRACKER_MODULE = {}
+        function Hook.SCENARIO_TRACKER_MODULE:AddProgressBar(block, line, criteriaIndex)
+            local progressBar = line.ProgressBar
+            if not progressBar._auroraSkinned then
+                Skin.ScenarioTrackerProgressBarTemplate(progressBar)
+                progressBar._auroraSkinned = true
+            end
+        end
 
-        if widgetSetID then
-            stageBlock._auroraOverlay:Hide()
-        else
-            stageBlock._auroraOverlay:Show()
+        -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
+        local uiTextureKits = {
+            [0] = {color = Color.button, overlay = ""},
+            [261] = {color = Color.blue:Lightness(-0.3), overlay = [[Interface\Timer\Alliance-Logo]]},
+            [5117] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
+            ["legion"] = {color = Color.green:Lightness(-0.3), overlay = ""},
+        }
+        function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKitID)
+            -- /dump GetUITextureKitInfo(5117)
 
-            local kit
-            if textureKitID then
-                kit = uiTextureKits[textureKitID] or uiTextureKits[0]
-            elseif scenarioType == _G.LE_SCENARIO_TYPE_LEGION_INVASION then
-                kit = uiTextureKits["legion"]
+            if widgetSetID then
+                stageBlock._auroraOverlay:Hide()
             else
-                kit = uiTextureKits[0]
-            end
+                stageBlock._auroraOverlay:Show()
 
-            Base.SetBackdropColor(stageBlock._auroraBG, kit.color, 0.75)
-            stageBlock._auroraOverlay:SetTexture(kit.overlay)
+                local kit
+                if textureKitID then
+                    kit = uiTextureKits[textureKitID] or uiTextureKits[0]
+                elseif scenarioType == _G.LE_SCENARIO_TYPE_LEGION_INVASION then
+                    kit = uiTextureKits["legion"]
+                else
+                    kit = uiTextureKits[0]
+                end
+
+                Base.SetBackdropColor(stageBlock._auroraBG, kit.color, 0.75)
+                stageBlock._auroraOverlay:SetTexture(kit.overlay)
+            end
         end
     end
 end

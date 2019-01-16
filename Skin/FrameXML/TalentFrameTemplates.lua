@@ -24,12 +24,5 @@ do --[[ FrameXML\TalentFrameTemplates.xml ]]
     end
 end
 
-function private.FrameXML.TalentFrameTemplates()
-    ----====####$$$$%%%%$$$$####====----
-    --              TalentFrameTemplates              --
-    ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
-end
+--function private.FrameXML.TalentFrameTemplates()
+--end

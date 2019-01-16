@@ -5,14 +5,13 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
---local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
-do --[[ AddOns\Blizzard_UIWidgetManager.lua ]]
-    local UIWidgetManagerMixin do
-        UIWidgetManagerMixin = {}
-        function UIWidgetManagerMixin:ProcessWidget(widgetID, widgetSetID, widgetType)
+do --[[ AddOns\Blizzard_UIWidgets.lua ]]
+    do --[[ Blizzard_UIWidgetManager.lua ]]
+        Hook.UIWidgetManagerMixin = {}
+        function Hook.UIWidgetManagerMixin:ProcessWidget(widgetID, widgetSetID, widgetType)
             if Skin[widgetType] then
                 private.debug("UIWidgetManagerMixin:ProcessWidget", widgetID, widgetSetID, widgetType)
                 local widgetFrame = self.widgetIdToFrame[widgetID];
@@ -22,13 +21,12 @@ do --[[ AddOns\Blizzard_UIWidgetManager.lua ]]
             end
         end
     end
-    Hook.UIWidgetManagerMixin = UIWidgetManagerMixin
 end
 
---[[ do AddOns\Blizzard_UIWidgetManager.xml
-end ]]
+--do --[[ AddOns\Blizzard_UIWidgets.xml ]]
+--end
 
-function private.AddOns.Blizzard_UIWidgetManager()
+function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_UIWidgetManager    --
     ----====####$$$$%%%%$$$$####====----

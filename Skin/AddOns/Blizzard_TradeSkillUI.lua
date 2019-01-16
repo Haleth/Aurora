@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
+--[[ Lua Globals ]]
+-- luacheck: globals
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 local F, C = _G.unpack(Aurora)
@@ -46,7 +46,7 @@ function private.AddOns.Blizzard_TradeSkillUI()
         tab.Right:SetAlpha(0)
     end
 
-    hooksecurefunc(recipeList, "RefreshDisplay", function(self)
+    _G.hooksecurefunc(recipeList, "RefreshDisplay", function(self)
         for i = 1, #self.buttons do
             local tradeSkillButton = self.buttons[i]
             if not tradeSkillButton._auroraSkinned then
@@ -72,7 +72,7 @@ function private.AddOns.Blizzard_TradeSkillUI()
 
     local contents = detailsFrame.Contents
     contents.ResultIcon.ResultBorder:Hide()
-    hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
+    _G.hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
         if not self._auroraSkinned then
             self._auroraIconBorder = F.ReskinIcon(self:GetNormalTexture())
             self._auroraSkinned = true

@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local pairs = _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals pairs
 
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.RolePoll()

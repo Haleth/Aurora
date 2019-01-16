@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs, ipairs = _G.select, _G.pairs, _G.ipairs
+--[[ Lua Globals ]]
+-- luacheck: globals select ipairs pairs
 
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 
@@ -102,7 +99,7 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarWeekdaySelectedTexture:SetDesaturated(true)
     _G.CalendarWeekdaySelectedTexture:SetVertexColor(r, g, b)
 
-    hooksecurefunc("CalendarFrame_SetToday", function()
+    _G.hooksecurefunc("CalendarFrame_SetToday", function()
         _G.CalendarTodayFrame:SetAllPoints()
     end)
 
@@ -125,7 +122,7 @@ function private.AddOns.Blizzard_Calendar()
         ic:SetTexCoord(_G.unpack(Aurora.classIcons[class]))
     end
 
-    local bd = CreateFrame("Frame", nil, _G.CalendarFilterFrame)
+    local bd = _G.CreateFrame("Frame", nil, _G.CalendarFilterFrame)
     bd:SetPoint("TOPLEFT", 40, 0)
     bd:SetPoint("BOTTOMRIGHT", -19, 0)
     bd:SetFrameLevel(_G.CalendarFilterFrame:GetFrameLevel()-1)
@@ -140,14 +137,14 @@ function private.AddOns.Blizzard_Calendar()
     downtex:SetVertexColor(1, 1, 1)
 
     for i = 1, 6 do
-        local vline = CreateFrame("Frame", nil, _G["CalendarDayButton"..i])
+        local vline = _G.CreateFrame("Frame", nil, _G["CalendarDayButton"..i])
         vline:SetHeight(546)
         vline:SetWidth(1)
         vline:SetPoint("TOP", _G["CalendarDayButton"..i], "TOPRIGHT")
         F.CreateBD(vline)
     end
     for i = 1, 36, 7 do
-        local hline = CreateFrame("Frame", nil, _G["CalendarDayButton"..i])
+        local hline = _G.CreateFrame("Frame", nil, _G["CalendarDayButton"..i])
         hline:SetWidth(637)
         hline:SetHeight(1)
         hline:SetPoint("LEFT", _G["CalendarDayButton"..i], "TOPLEFT")
@@ -157,7 +154,7 @@ function private.AddOns.Blizzard_Calendar()
     local contextMenus = {_G.CalendarContextMenu, _G.CalendarInviteStatusContextMenu}
     for _, contextMenu in pairs(contextMenus) do
         contextMenu:SetBackdrop(nil)
-        local bg = CreateFrame("Frame", nil, contextMenu)
+        local bg = _G.CreateFrame("Frame", nil, contextMenu)
         bg:SetPoint("TOPLEFT", 2, -2)
         bg:SetPoint("BOTTOMRIGHT", -1, 2)
         bg:SetFrameLevel(contextMenu:GetFrameLevel()-1)

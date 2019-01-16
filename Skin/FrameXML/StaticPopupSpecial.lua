@@ -1,8 +1,17 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
+
+--do --[[ FrameXML\StaticPopupSpecial.lua ]]
+--end
+
+--do --[[ FrameXML\StaticPopupSpecial.xml ]]
+--end
 
 function private.FrameXML.StaticPopupSpecial()
     local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame

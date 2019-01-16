@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\VoiceToggleButton.lua
-end ]]
+--do --[[ FrameXML\VoiceToggleButton.lua ]]
+--end
 
 do --[[ FrameXML\VoiceToggleButton.xml ]]
     function Skin.VoiceToggleButtonTemplate(Button)
@@ -40,12 +40,5 @@ do --[[ FrameXML\VoiceToggleButton.xml ]]
     end
 end
 
-function private.FrameXML.VoiceToggleButton()
-    ----====####$$$$%%%%$$$$####====----
-    --              File              --
-    ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
-end
+--function private.FrameXML.VoiceToggleButton()
+--end

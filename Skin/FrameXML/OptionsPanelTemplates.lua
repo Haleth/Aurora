@@ -1,9 +1,15 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
+
+--do --[[ FrameXML\OptionsPanelTemplates.lua ]]
+--end
 
 do --[[ FrameXML\OptionsPanelTemplates.xml ]]
     function Skin.OptionsButtonTemplate(Button)
@@ -56,7 +62,5 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
     end
 end
 
-function private.FrameXML.OptionsPanelTemplates()
-    --[[
-    ]]
-end
+--function private.FrameXML.OptionsPanelTemplates()
+--end

@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ WoW API ]]
-local C_LootHistory = _G.C_LootHistory
+--[[ Lua Globals ]]
+-- luacheck: globals
 
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.LootHistory()
@@ -58,7 +58,7 @@ function private.FrameXML.LootHistory()
     -- [[ Item frame ]]
 
     _G.hooksecurefunc("LootHistoryFrame_UpdateItemFrame", function(self, frame)
-        local rollID, _, _, isDone, winnerIdx = C_LootHistory.GetItem(frame.itemIdx)
+        local rollID, _, _, isDone, winnerIdx = _G.C_LootHistory.GetItem(frame.itemIdx)
         local expanded = self.expandedRolls[rollID]
 
         if not frame.styled then
@@ -80,7 +80,7 @@ function private.FrameXML.LootHistory()
         end
 
         if isDone and not expanded and winnerIdx then
-            local name, class = C_LootHistory.GetPlayerInfo(frame.itemIdx, winnerIdx)
+            local name, class = _G.C_LootHistory.GetPlayerInfo(frame.itemIdx, winnerIdx)
             if name then
                 local colour = _G.CUSTOM_CLASS_COLORS[class]
                 frame.WinnerName:SetVertexColor(colour.r, colour.g, colour.b)
@@ -101,7 +101,7 @@ function private.FrameXML.LootHistory()
         end
 
         if playerFrame.playerIdx then
-            local name, class, _, _, isWinner = C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
+            local name, class, _, _, isWinner = _G.C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
 
             if name then
                 local colour = _G.CUSTOM_CLASS_COLORS[class]
@@ -126,7 +126,7 @@ function private.FrameXML.LootHistory()
 
         info = _G.UIDropDownMenu_CreateInfo()
         info.notCheckable = 1
-        local name, class = C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx)
+        local name, class = _G.C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx)
         local colorStr = _G.CUSTOM_CLASS_COLORS[class].colorStr
         info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorStr..name.."|r")
         info.func = _G.LootHistoryDropDown_OnClick

@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals select pairs
 
--- [[ WoW API ]]
-local hooksecurefunc, CreateFrame = _G.hooksecurefunc, _G.CreateFrame
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 
@@ -86,7 +83,7 @@ function private.AddOns.Blizzard_GuildUI()
         _G.GuildMemberDetailRankText:Show()
     end)
 
-    hooksecurefunc("GuildNews_Update", function()
+    _G.hooksecurefunc("GuildNews_Update", function()
         local buttons = _G.GuildNewsContainer.buttons
         for i = 1, #buttons do
             buttons[i].header:SetAlpha(0)
@@ -125,13 +122,13 @@ function private.AddOns.Blizzard_GuildUI()
     _G.GuildNewsBossModel:ClearAllPoints()
     _G.GuildNewsBossModel:SetPoint(a1, p, a2, x+5, y)
 
-    local f = CreateFrame("Frame", nil, _G.GuildNewsBossModel)
+    local f = _G.CreateFrame("Frame", nil, _G.GuildNewsBossModel)
     f:SetPoint("TOPLEFT", 0, 1)
     f:SetPoint("BOTTOMRIGHT", 1, -52)
     f:SetFrameLevel(_G.GuildNewsBossModel:GetFrameLevel()-1)
     F.CreateBD(f)
 
-    local line = CreateFrame("Frame", nil, _G.GuildNewsBossModel)
+    local line = _G.CreateFrame("Frame", nil, _G.GuildNewsBossModel)
     line:SetPoint("BOTTOMLEFT", 0, -1)
     line:SetPoint("BOTTOMRIGHT", 0, -1)
     line:SetHeight(1)
@@ -192,7 +189,7 @@ function private.AddOns.Blizzard_GuildUI()
     _G.GuildFactionBarShadow:SetAlpha(0)
     _G.GuildFactionBarBG:Hide()
     _G.GuildFactionBarCap:SetAlpha(0)
-    _G.GuildFactionBar.bg = CreateFrame("Frame", nil, _G.GuildFactionFrame)
+    _G.GuildFactionBar.bg = _G.CreateFrame("Frame", nil, _G.GuildFactionFrame)
     _G.GuildFactionBar.bg:SetPoint("TOPLEFT", _G.GuildFactionFrame, -1, -1)
     _G.GuildFactionBar.bg:SetPoint("BOTTOMRIGHT", _G.GuildFactionFrame, -3, 0)
     _G.GuildFactionBar.bg:SetFrameLevel(0)
@@ -260,8 +257,8 @@ function private.AddOns.Blizzard_GuildUI()
         end
     end
 
-    hooksecurefunc("GuildRoster_Update", UpdateIcons)
-    hooksecurefunc(_G.GuildRosterContainer, "update", UpdateIcons)
+    _G.hooksecurefunc("GuildRoster_Update", UpdateIcons)
+    _G.hooksecurefunc(_G.GuildRosterContainer, "update", UpdateIcons)
 
     F.Reskin(select(4, _G.GuildTextEditFrame:GetChildren()))
     F.Reskin(select(3, _G.GuildLogFrame:GetChildren()))

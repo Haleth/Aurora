@@ -7,8 +7,8 @@ local _, private = ...
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---[[ do FrameXML\UnitPopupCustomControls.lua
-end ]]
+--do --[[ FrameXML\UnitPopupCustomControls.lua ]]
+--end
 
 do --[[ FrameXML\UnitPopupCustomControls.xml ]]
     function Skin.UnitPopupVoiceToggleButtonTemplate(Button)

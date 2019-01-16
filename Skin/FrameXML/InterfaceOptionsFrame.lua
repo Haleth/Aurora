@@ -9,11 +9,11 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
---[[ do FrameXML\InterfaceOptionsFrame.lua
-end ]]
+--do --[[ FrameXML\InterfaceOptionsFrame.lua ]]
+--end
 
---[[ do FrameXML\InterfaceOptionsFrame.xml
-end ]]
+--do --[[ FrameXML\InterfaceOptionsFrame.xml ]]
+--end
 
 function private.FrameXML.InterfaceOptionsFrame()
     Base.SetBackdrop(_G.InterfaceOptionsFrame)

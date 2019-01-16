@@ -1,9 +1,15 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
+
+--do --[[ FrameXML\CharacterFrame.lua ]]
+--end
 
 do --[[ FrameXML\CharacterFrame.xml ]]
     function Skin.CharacterStatFrameCategoryTemplate(Button)

@@ -1,6 +1,9 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.RecruitAFriendFrame()

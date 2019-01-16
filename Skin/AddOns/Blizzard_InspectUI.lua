@@ -7,32 +7,37 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 local F, C = _G.unpack(Aurora)
 
 
-do --[[ FrameXML\TalentFrameBase.lua ]]
-    function Hook.InspectPvpTalentSlotMixin_Update(self)
-        if not self._auroraBG then return end
+do --[[ AddOns\Blizzard_InspectUI.lua ]]
+    do --[[ InspectPVPFrame.lua ]]
+        Hook.InspectPvpTalentSlotMixin = {}
+        function Hook.InspectPvpTalentSlotMixin:Update()
+            if not self._auroraBG then return end
 
-        local selectedTalentID = _G.C_SpecializationInfo.GetInspectSelectedPvpTalent(_G.INSPECTED_UNIT, self.slotIndex)
-        if selectedTalentID then
-            local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
-            self.Texture:SetTexture(texture)
-            self._auroraBG:SetColorTexture(Color.black:GetRGB())
-            self.Texture:SetDesaturated(false)
-        else
-            self.Texture:Show()
-            self._auroraBG:SetColorTexture(Color.gray:GetRGB())
-            self.Texture:SetDesaturated(true)
+            local selectedTalentID = _G.C_SpecializationInfo.GetInspectSelectedPvpTalent(_G.INSPECTED_UNIT, self.slotIndex)
+            if selectedTalentID then
+                local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
+                self.Texture:SetTexture(texture)
+                self._auroraBG:SetColorTexture(Color.black:GetRGB())
+                self.Texture:SetDesaturated(false)
+            else
+                self.Texture:Show()
+                self._auroraBG:SetColorTexture(Color.gray:GetRGB())
+                self.Texture:SetDesaturated(true)
+            end
         end
     end
 end
 
-do --[[ AddOns\Blizzard_InspectUI\InspectPVPFrame.xml ]]
-    function Skin.InspectPvpTalentSlotTemplate(Button)
-        Skin.PvpTalentSlotTemplate(Button)
-        _G.hooksecurefunc(Button, "Update", Hook.InspectPvpTalentSlotMixin_Update)
+do --[[ AddOns\Blizzard_InspectUI.xml ]]
+    do --[[ InspectPVPFrame.xml ]]
+        function Skin.InspectPvpTalentSlotTemplate(Button)
+            Skin.PvpTalentSlotTemplate(Button)
+            Util.Mixin(Button, Hook.InspectPvpTalentSlotMixin)
+        end
     end
 end
 

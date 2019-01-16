@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\SecureUIPanelTemplates.lua
-end ]]
+--do --[[ FrameXML\SecureUIPanelTemplates.lua ]]
+--end
 
 do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     function Skin.InputBoxTemplate(EditBox)
@@ -121,5 +121,5 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     end
 end
 
-function private.SharedXML.SecureUIPanelTemplates()
-end
+--function private.SharedXML.SecureUIPanelTemplates()
+--end

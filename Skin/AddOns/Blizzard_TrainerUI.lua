@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do AddOns\Blizzard_TrainerUI.lua
-end ]]
+--do --[[ AddOns\Blizzard_TrainerUI.lua ]]
+--end
 
 do --[[ AddOns\Blizzard_TrainerUI.xml ]]
     function Skin.ClassTrainerSkillButtonTemplate(Button)

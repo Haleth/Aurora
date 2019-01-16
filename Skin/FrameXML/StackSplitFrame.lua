@@ -9,11 +9,11 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\StackSplitFrame.lua
-end ]]
+--do --[[ FrameXML\StackSplitFrame.lua ]]
+--end
 
---[[ do FrameXML\StackSplitFrame.xml
-end ]]
+--do --[[ FrameXML\StackSplitFrame.xml ]]
+--end
 
 function private.FrameXML.StackSplitFrame()
     local StackSplitFrame = _G.StackSplitFrame

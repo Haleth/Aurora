@@ -1,4 +1,3 @@
--- Blizzard_Communities.toc
 local _, private = ...
 
 --[[ Lua Globals ]]
@@ -12,8 +11,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesList ]]
-        local CommunitiesListEntryMixin = {}
-        function CommunitiesListEntryMixin.SetClubInfo(self, clubInfo, isInvitation, isTicket)
+        Hook.CommunitiesListEntryMixin = {}
+        function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket)
             if clubInfo and self._iconBorder then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
                 if isGuild then
@@ -40,7 +39,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 end
             end
         end
-        function CommunitiesListEntryMixin.SetAddCommunity(self)
+        function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             self.Name:SetPoint("LEFT", self._iconBorder, "RIGHT", 10, 0)
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
@@ -49,7 +48,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self._iconBorder:Show()
             self._iconBorder:SetColorTexture(Color.black:GetRGB())
         end
-        function CommunitiesListEntryMixin.SetGuildFinder(self)
+        function Hook.CommunitiesListEntryMixin:SetGuildFinder()
             self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
             self.Selection:Show()
 
@@ -60,11 +59,10 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
 
             self._iconBorder:Hide()
         end
-        Hook.CommunitiesListEntryMixin = CommunitiesListEntryMixin
     end
     do --[[ CommunitiesSettings ]]
-        local CommunitiesSettingsDialogMixin = {}
-        function CommunitiesSettingsDialogMixin.SetClubId(self, clubId)
+        Hook.CommunitiesSettingsDialogMixin = {}
+        function Hook.CommunitiesSettingsDialogMixin:SetClubId(clubId)
             local clubInfo = _G.C_Club.GetClubInfo(clubId)
             if clubInfo then
                 if clubInfo.clubType == _G.Enum.ClubType.BattleNet then
@@ -74,11 +72,10 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 end
             end
         end
-        Hook.CommunitiesSettingsDialogMixin = CommunitiesSettingsDialogMixin
     end
     do --[[ CommunitiesTicketManagerDialog ]]
-        local CommunitiesTicketManagerDialogMixin = {}
-        function CommunitiesTicketManagerDialogMixin.SetClubId(self, clubId)
+        Hook.CommunitiesTicketManagerDialogMixin = {}
+        function Hook.CommunitiesTicketManagerDialogMixin:SetClubId(clubId)
             local clubInfo = _G.C_Club.GetClubInfo(clubId)
             if clubInfo then
                 if clubInfo.clubType == _G.Enum.ClubType.BattleNet then
@@ -88,7 +85,6 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 end
             end
         end
-        Hook.CommunitiesTicketManagerDialogMixin = CommunitiesTicketManagerDialogMixin
     end
 end
 

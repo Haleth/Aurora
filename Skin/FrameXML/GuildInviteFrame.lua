@@ -1,8 +1,17 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
+
+--do --[[ FrameXML\GuildInviteFrame.lua ]]
+--end
+
+--do --[[ FrameXML\GuildInviteFrame.xml ]]
+--end
 
 function private.FrameXML.GuildInviteFrame()
     Skin.TranslucentFrameTemplate(_G.GuildInviteFrame)

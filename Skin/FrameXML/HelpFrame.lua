@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next, select = _G.next, _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals select next
 
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.FrameXML.HelpFrame()

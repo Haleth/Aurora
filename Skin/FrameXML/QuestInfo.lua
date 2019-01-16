@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local next = _G.next
+--[[ Lua Globals ]]
+-- luacheck: globals next
 
--- [[ WoW API ]]
-local hooksecurefunc = _G.hooksecurefunc
-
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local F = _G.unpack(Aurora)
 local Base, Skin = Aurora.Base, Aurora.Skin
@@ -71,8 +68,8 @@ function private.FrameXML.QuestInfo()
         end
     end
 
-    hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
-    hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material, mapView)
+    _G.hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
+    _G.hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material, mapView)
         private.debug("QuestInfo_Display")
         local rewardsFrame = _G.QuestInfoFrame.rewardsFrame
         local isQuestLog = _G.QuestInfoFrame.questLog ~= nil
@@ -137,7 +134,7 @@ function private.FrameXML.QuestInfo()
             end
         end
     end)
-    hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
+    _G.hooksecurefunc("QuestInfo_GetRewardButton", function(rewardsFrame, index)
         local button = rewardsFrame.RewardButtons[index]
 
         if not button.restyled then
@@ -194,7 +191,7 @@ function private.FrameXML.QuestInfo()
         end
     end
 
-    hooksecurefunc(ItemHighlight, "SetPoint", setHighlight)
+    _G.hooksecurefunc(ItemHighlight, "SetPoint", setHighlight)
     ItemHighlight:HookScript("OnShow", setHighlight)
     ItemHighlight:HookScript("OnHide", clearHighlight)
 
@@ -211,7 +208,7 @@ function private.FrameXML.QuestInfo()
     SkinQuestText(_G.QuestInfoObjectivesText)
     SkinQuestText(_G.QuestInfoRewardText)
 
-    hooksecurefunc(_G.QuestInfoRequiredMoneyText, "SetTextColor", function(self, red, green, blue)
+    _G.hooksecurefunc(_G.QuestInfoRequiredMoneyText, "SetTextColor", function(self, red, green, blue)
         if red == 0 then
             self:SetTextColor(.8, .8, .8)
         elseif red == .2 then

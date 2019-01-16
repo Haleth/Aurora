@@ -5,26 +5,10 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
---local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
---local Color = Aurora.Color
+local Skin = Aurora.Skin
 
-do --[[ AddOns\Blizzard_MapCanvasDetailLayer.lua ]]
-    function Hook.MapCanvasDetailLayerMixin_RefreshDetailTiles(self)
-        local layers = _G.C_Map.GetMapArtLayers(self.mapID)
-        local layerInfo = layers[self.layerIndex]
-
-        for detailTile in self.detailTilePool:EnumerateActive() do
-            if not detailTile._auroraSkinned then
-                detailTile:SetSize(layerInfo.tileWidth, layerInfo.tileHeight)
-                detailTile._auroraSkinned = true
-            end
-        end
-    end
-end
-
---[[ do AddOns\Blizzard_MapCanvas.lua
-end ]]
+--do --[[ AddOns\Blizzard_MapCanvas.lua ]]
+--end
 
 do --[[ AddOns\Blizzard_MapCanvas.xml ]]
     function Skin.MapCanvasFrameScrollContainerTemplate(ScrollFrame)
@@ -33,13 +17,24 @@ do --[[ AddOns\Blizzard_MapCanvas.xml ]]
     end
 end
 
-function private.AddOns.Blizzard_MapCanvas()
+--function private.AddOns.Blizzard_MapCanvas()
+    ----====####$$$$%%%%$$$$####====----
+    --   MapCanvas_DataProviderBase   --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
+    -- MapCanvas_PinFrameLevelsManager --
+    ----====####$$$$%%%%%$$$$####====----
+
     ----====####$$$$%%%%%$$$$####====----
     --  Blizzard_MapCanvasDetailLayer  --
     ----====####$$$$%%%%%$$$$####====----
-    _G.hooksecurefunc(_G.MapCanvasDetailLayerMixin, "RefreshDetailTiles", Hook.MapCanvasDetailLayerMixin_RefreshDetailTiles)
 
-    -------------
-    -- Section --
-    -------------
-end
+    ----====####$$$$%%%%$$$$####====----
+    -- MapCanvas_ScrollContainerMixin --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%$$$$####====----
+    --       Blizzard_MapCanvas       --
+    ----====####$$$$%%%%$$$$####====----
+--end

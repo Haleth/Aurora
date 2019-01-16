@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select, pairs = _G.select, _G.pairs
+--[[ Lua Globals ]]
+-- luacheck: globals select pairs
 
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_VoidStorageUI()

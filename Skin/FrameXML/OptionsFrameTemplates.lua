@@ -9,8 +9,8 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\OptionsFrameTemplates.lua
-end ]]
+--do --[[ FrameXML\OptionsFrameTemplates.lua ]]
+--end
 
 do --[[ FrameXML\OptionsFrameTemplates.xml ]]
     function Skin.OptionsFrameTabButtonTemplate(Button)
@@ -44,7 +44,5 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
     end
 end
 
-function private.FrameXML.OptionsFrameTemplates()
-    --[[
-    ]]
-end
+--function private.FrameXML.OptionsFrameTemplates()
+--end

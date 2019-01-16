@@ -22,8 +22,5 @@ do --[[ FrameXML\UIMenu.xml ]]
     end
 end
 
-function private.FrameXML.UIMenu()
-    -------------
-    -- Section --
-    -------------
-end
+--function private.FrameXML.UIMenu()
+--end

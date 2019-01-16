@@ -1,5 +1,9 @@
 local _, private = ...
 
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local F = Aurora[1]
 

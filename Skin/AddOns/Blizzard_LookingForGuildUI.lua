@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
+--[[ Lua Globals ]]
 -- luacheck: globals select
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin

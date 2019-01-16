@@ -1,9 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_GuildBankUI()

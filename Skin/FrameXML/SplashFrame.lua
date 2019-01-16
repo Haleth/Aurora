@@ -1,11 +1,14 @@
 local _, private = ...
 
--- [[ Core ]]
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---[[ do FrameXML\SplashFrame.lua
-end ]]
+--do --[[ FrameXML\SplashFrame.lua ]]
+--end
 
 do --[[ FrameXML\SplashFrame.xml ]]
     Skin.SplashFeatureFrameTemplate = private.nop

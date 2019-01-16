@@ -1,115 +1,116 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
+--[[ Lua Globals ]]
 -- luacheck: globals select
 
--- [[ Core ]]
+--[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
---[[ do FrameXML\AzeritePaperDollItemOverlay.lua
-end ]]
-do --[[ FrameXML\AzeritePaperDollItemOverlay.xml ]]
-    function Skin.PaperDollAzeriteItemOverlayTemplate(Frame)
-        Frame.RankFrame.Label:SetPoint("CENTER", Frame.RankFrame.Texture, 0, 0)
-    end
-end
-
 do --[[ FrameXML\PaperDollFrame.lua ]]
-    function Hook.PaperDollFrame_SetLevel()
-        local classLocale, classColor = private.charClass.locale, _G.CUSTOM_CLASS_COLORS[private.charClass.token]
+    do --[[ PaperDollFrame.lua ]]
+        function Hook.PaperDollFrame_SetLevel()
+            local classLocale, classColor = private.charClass.locale, _G.CUSTOM_CLASS_COLORS[private.charClass.token]
 
-        local level = _G.UnitLevel("player")
-        local effectiveLevel = _G.UnitEffectiveLevel("player")
+            local level = _G.UnitLevel("player")
+            local effectiveLevel = _G.UnitEffectiveLevel("player")
 
-        if ( effectiveLevel ~= level ) then
-            level = _G.EFFECTIVE_LEVEL_FORMAT:format(effectiveLevel, level)
-        end
-
-        local _, specName = _G.GetSpecializationInfo(_G.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
-        if specName and specName ~= "" then
-            _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, level, classColor.colorStr, specName, classLocale)
-        end
-
-        local showTrialCap = false
-        if _G.GameLimitedMode_IsActive() then
-            local rLevel = _G.GetRestrictedAccountData()
-            if _G.UnitLevel("player") >= rLevel then
-                showTrialCap = true
+            if ( effectiveLevel ~= level ) then
+                level = _G.EFFECTIVE_LEVEL_FORMAT:format(effectiveLevel, level)
             end
-        end
-        if showTrialCap then
-            _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "TOP", 0, -36)
-        else
-            --_G.CharacterTrialLevelErrorText:Show()
-            _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "BOTTOM", 0, -4)
+
+            local _, specName = _G.GetSpecializationInfo(_G.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
+            if specName and specName ~= "" then
+                _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, level, classColor.colorStr, specName, classLocale)
+            end
+
+            local showTrialCap = false
+            if _G.GameLimitedMode_IsActive() then
+                local rLevel = _G.GetRestrictedAccountData()
+                if _G.UnitLevel("player") >= rLevel then
+                    showTrialCap = true
+                end
+            end
+            if showTrialCap then
+                _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "TOP", 0, -36)
+            else
+                --_G.CharacterTrialLevelErrorText:Show()
+                _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "BOTTOM", 0, -4)
+            end
         end
     end
 end
 
 do --[[ FrameXML\PaperDollFrame.xml ]]
-    function Skin.PaperDollItemSlotButtonTemplate(Button)
-        Skin.ItemButtonTemplate(Button)
-        Skin.PaperDollAzeriteItemOverlayTemplate(Button)
-        _G[Button:GetName().."Frame"]:Hide()
-
-        if Button.verticalFlyout then
-            Button.popoutButton:SetPoint("TOP", Button, "BOTTOM")
-            Button.popoutButton:SetSize(38, 8)
-            Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
-            Base.SetTexture(Button.popoutButton._auroraArrow, "arrowDown")
-        else
-            Button.popoutButton:SetPoint("LEFT", Button, "RIGHT")
-            Button.popoutButton:SetSize(8, 38)
-            Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
+    do --[[ AzeritePaperDollItemOverlay.xml ]]
+        function Skin.PaperDollAzeriteItemOverlayTemplate(Frame)
+            Frame.RankFrame.Label:SetPoint("CENTER", Frame.RankFrame.Texture, 0, 0)
         end
     end
-    function Skin.PaperDollItemSlotButtonLeftTemplate(Button)
-        Skin.PaperDollItemSlotButtonTemplate(Button)
-    end
-    function Skin.PaperDollItemSlotButtonRightTemplate(Button)
-        Skin.PaperDollItemSlotButtonTemplate(Button)
-    end
-    function Skin.PaperDollItemSlotButtonBottomTemplate(Button)
-        Skin.PaperDollItemSlotButtonTemplate(Button)
-    end
-    function Skin.PlayerTitleButtonTemplate(Button)
-        Button.BgTop:SetTexture("")
-        Button.BgBottom:SetTexture("")
-        Button.BgMiddle:SetTexture("")
+    do --[[ PaperDollFrame.xml ]]
+        function Skin.PaperDollItemSlotButtonTemplate(Button)
+            Skin.ItemButtonTemplate(Button)
+            Skin.PaperDollAzeriteItemOverlayTemplate(Button)
+            _G[Button:GetName().."Frame"]:Hide()
 
-        Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
-        Button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2)
-    end
-    function Skin.GearSetButtonTemplate(Button)
-        Button.BgTop:SetTexture("")
-        Button.BgBottom:SetTexture("")
-        Button.BgMiddle:SetTexture("")
+            if Button.verticalFlyout then
+                Button.popoutButton:SetPoint("TOP", Button, "BOTTOM")
+                Button.popoutButton:SetSize(38, 8)
+                Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
+                Base.SetTexture(Button.popoutButton._auroraArrow, "arrowDown")
+            else
+                Button.popoutButton:SetPoint("LEFT", Button, "RIGHT")
+                Button.popoutButton:SetSize(8, 38)
+                Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
+            end
+        end
+        function Skin.PaperDollItemSlotButtonLeftTemplate(Button)
+            Skin.PaperDollItemSlotButtonTemplate(Button)
+        end
+        function Skin.PaperDollItemSlotButtonRightTemplate(Button)
+            Skin.PaperDollItemSlotButtonTemplate(Button)
+        end
+        function Skin.PaperDollItemSlotButtonBottomTemplate(Button)
+            Skin.PaperDollItemSlotButtonTemplate(Button)
+        end
+        function Skin.PlayerTitleButtonTemplate(Button)
+            Button.BgTop:SetTexture("")
+            Button.BgBottom:SetTexture("")
+            Button.BgMiddle:SetTexture("")
 
-        Button.HighlightBar:SetColorTexture(0, 0, 1, 0.3)
-        Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+            Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+            Button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2)
+        end
+        function Skin.GearSetButtonTemplate(Button)
+            Button.BgTop:SetTexture("")
+            Button.BgBottom:SetTexture("")
+            Button.BgMiddle:SetTexture("")
 
-        Base.CropIcon(Button.icon, Button)
-    end
-    function Skin.GearSetPopupButtonTemplate(CheckButton)
-        Skin.SimplePopupButtonTemplate(CheckButton)
-        Base.CropIcon(_G[CheckButton:GetName().."Icon"])
-        Base.CropIcon(CheckButton:GetHighlightTexture())
-        Base.CropIcon(CheckButton:GetCheckedTexture())
-    end
-    function Skin.PaperDollSidebarTabTemplate(Button)
-        Button.TabBg:SetAlpha(0)
-        Button.Hider:SetTexture("")
+            Button.HighlightBar:SetColorTexture(0, 0, 1, 0.3)
+            Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
 
-        Button.Icon:ClearAllPoints()
-        Button.Icon:SetPoint("TOPLEFT", 1, -1)
-        Button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
+            Base.CropIcon(Button.icon, Button)
+        end
+        function Skin.GearSetPopupButtonTemplate(CheckButton)
+            Skin.SimplePopupButtonTemplate(CheckButton)
+            Base.CropIcon(_G[CheckButton:GetName().."Icon"])
+            Base.CropIcon(CheckButton:GetHighlightTexture())
+            Base.CropIcon(CheckButton:GetCheckedTexture())
+        end
+        function Skin.PaperDollSidebarTabTemplate(Button)
+            Button.TabBg:SetAlpha(0)
+            Button.Hider:SetTexture("")
 
-        Button.Highlight:SetTexture("")
+            Button.Icon:ClearAllPoints()
+            Button.Icon:SetPoint("TOPLEFT", 1, -1)
+            Button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop")
+            Button.Highlight:SetTexture("")
+
+            Base.SetBackdrop(Button, Color.button)
+            Base.SetHighlight(Button, "backdrop")
+        end
     end
 end
 

@@ -7,8 +7,8 @@ local _, private = ...
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---[[ do FrameXML\UnitPopupSlider.lua
-end ]]
+--do --[[ FrameXML\UnitPopupSlider.lua ]]
+--end
 
 do --[[ FrameXML\UnitPopupSlider.xml ]]
     function Skin.UnitPopupSliderTemplate(Slider)
@@ -16,12 +16,5 @@ do --[[ FrameXML\UnitPopupSlider.xml ]]
     end
 end
 
-function private.FrameXML.UnitPopupSlider()
-    ----====####$$$$%%%%$$$$####====----
-    --              File              --
-    ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
-end
+--function private.FrameXML.UnitPopupSlider()
+--end

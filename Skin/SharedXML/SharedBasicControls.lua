@@ -7,8 +7,8 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 
---[[ do FrameXML\SharedBasicControls.lua
-end ]]
+--do --[[ FrameXML\SharedBasicControls.lua ]]
+--end
 
 do --[[ FrameXML\SharedBasicControls.xml ]]
     function Skin.UIPanelDialogTemplate(Frame)

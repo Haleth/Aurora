@@ -1,4 +1,4 @@
-local _, private = ...
+--local _, private = ...
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -15,12 +15,5 @@ end ]]
 --[[ do AddOns\Blizzard_SharedMapDataProviders.xml
 end ]]
 
-function private.AddOns.Blizzard_SharedMapDataProviders()
-    ----====####$$$$%%%%$$$$####====----
-    --              File              --
-    ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
-end
+--function private.AddOns.Blizzard_SharedMapDataProviders()
+--end
