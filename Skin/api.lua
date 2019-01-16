@@ -75,6 +75,19 @@ do -- Base API
             return red, green, blue, a or alpha
         end
 
+        local bgTextures = {
+            bg = true,
+
+            l = true,
+            r = true,
+            t = true,
+            b = true,
+
+            tl = true,
+            tr = true,
+            bl = true,
+            br = true,
+        }
         local sides = {
             l = {l=0, r=0.125, t=0, b=1, tileV = true},
             r = {l=0.125, r=0.25, t=0, b=1, tileV = true},
@@ -88,36 +101,30 @@ do -- Base API
             br = {l=0.875, r=1, t=0, b=1, point = "BOTTOMRIGHT"},
         }
         local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
-        local function SetBackdrop(frame, options, bgTextures)
+        local function SetBackdrop(frame, options, textures)
             if frame.settingBD then return end
             frame.settingBD = true
             old_SetBackdrop(frame, nil)
             if options then
                 if not frame._auroraBackdrop then
-                    if bgTextures then
-                        for _, tex in next, bgTextures do
-                            if type(tex) == "table" then
-                                tex:ClearAllPoints()
+                    local bd = textures or {}
+                    bd.borderLayer = textures and textures.borderLayer or "BACKGROUND"
+                    bd.borderSublevel = textures and textures.borderSublevel or -7
+
+                    for name in next, bgTextures do
+                        if bd[name] then
+                            bd[name]:ClearAllPoints()
+                        else
+                            if name == "bg" then
+                                bd[name] = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
+                            else
+                                bd[name] = frame:CreateTexture(nil, bd.borderLayer, nil, bd.borderSublevel)
                             end
                         end
                     end
 
-                    frame._auroraBackdrop = bgTextures or {
-                        bg = frame:CreateTexture(nil, "BACKGROUND", nil, -8),
 
-                        l = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-                        r = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-                        t = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-                        b = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-
-                        tl = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-                        tr = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-                        bl = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-                        br = frame:CreateTexture(nil, "BACKGROUND", nil, -7),
-
-                        borderLayer = "BACKGROUND",
-                        borderSublevel = -7,
-                    }
+                    frame._auroraBackdrop = bd
                 end
                 local bd = frame._auroraBackdrop
 
@@ -298,7 +305,7 @@ do -- Base API
             end
         end
 
-        function Base.CreateBackdrop(frame, options, bgTextures)
+        function Base.CreateBackdrop(frame, options, textures)
             frame.SetBackdrop = SetBackdrop
             frame.GetBackdrop = GetBackdrop
             frame.SetBackdropColor = SetBackdropColor
@@ -309,7 +316,7 @@ do -- Base API
             frame.GetBackdropBorderLayer = GetBackdropBorderLayer
             frame.GetBackdropTexture = GetBackdropTexture
 
-            frame:SetBackdrop(options, bgTextures)
+            frame:SetBackdrop(options, textures)
         end
 
         function Base.SetBackdrop(frame, color, alpha)
