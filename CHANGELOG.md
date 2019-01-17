@@ -1,4 +1,21 @@
-﻿## [8.1.0.2] - 2018-12-24 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * Updated PvE group finder
+  * Minor tweaks to the quest log zone story header
+  * Help boxes now have a darker background
+
+### Fixed ###
+
+  * Graphical error with dropdown buttons
+  * Error upon viewing the Mythic+ tab
+  * Error when socketing an item
+  * Error when viewing guild bank permissions
+  * A few textures in the LFD frame were not hidden
+
+
+
+## [8.1.0.2] - 2018-12-24 ##
 ### Changed ###
 
   * Re-added the title bar shadow for the Azerite UI
@@ -8,7 +25,7 @@
 
   * C stack overflow after playing for a while
   * Opening the Warboard would cause an error
-  * A few texture in the character frame were not hidden
+  * A few textures in the character frame were not hidden
 
 
 
