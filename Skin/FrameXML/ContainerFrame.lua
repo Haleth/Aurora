@@ -56,6 +56,10 @@ do --[[ FrameXML\ContainerFrame.lua ]]
 end
 
 do --[[ FrameXML\ContainerFrame.xml ]]
+    function Skin.ContainerFrameHelpBoxTemplate(Frame)
+        Skin.GlowBoxFrame(Frame, "Right")
+    end
+
     function Skin.ContainerFrameItemButtonTemplate(Button)
         local name = Button:GetName()
 
@@ -69,7 +73,6 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Button.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
         Button.BattlepayItemTexture:SetAllPoints()
     end
-
     function Skin.ContainerFrameTemplate(Frame)
         _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
         Base.SetBackdrop(Frame)
@@ -109,15 +112,25 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
         Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
 
+        do -- ExtraBagSlotsHelpBox
+            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+            local HelpBox = Frame.ExtraBagSlotsHelpBox
+
+            local Arrow = _G.CreateFrame("Frame", nil, HelpBox)
+            Arrow.Arrow = HelpBox.Arrow
+            Arrow.Arrow:SetParent(Arrow)
+            Arrow.Glow = HelpBox.ArrowGlow
+            Arrow.Glow:SetParent(Arrow)
+            HelpBox.Arrow = Arrow
+
+            Skin.GlowBoxFrame(HelpBox, "Right")
+        end
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])
         _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
 
         Frame.ClickableTitleFrame:ClearAllPoints()
         Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)
         Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    end
-    function Skin.ContainerFrameHelpBoxTemplate(Frame)
-        Skin.GlowBoxFrame(Frame, "Right")
     end
 end
 
@@ -148,4 +161,6 @@ function private.FrameXML.ContainerFrame()
     iconBorder:SetPoint("TOPLEFT", autoSort, -1, 1)
     iconBorder:SetPoint("BOTTOMRIGHT", autoSort, 1, -1)
     iconBorder:SetColorTexture(0, 0, 0)
+
+    Skin.GlowBoxFrame(_G.BagHelpBox, "Right")
 end
