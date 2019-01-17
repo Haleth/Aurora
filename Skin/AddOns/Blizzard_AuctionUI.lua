@@ -1,10 +1,7 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
-
--- [[ WoW API ]]
-local CreateFrame = _G.CreateFrame
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -55,7 +52,7 @@ function private.AddOns.Blizzard_AuctionUI()
                 _G[name.."Right"]:Hide()
                 select(middleIdx, button:GetRegions()):Hide() -- middle
 
-                local bd = CreateFrame("Frame", nil, button)
+                local bd = _G.CreateFrame("Frame", nil, button)
                 bd:SetPoint("TOPLEFT", item, "TOPRIGHT", 2, 1)
                 bd:SetPoint("BOTTOMRIGHT", 0, 4)
                 bd:SetFrameLevel(button:GetFrameLevel()-1)

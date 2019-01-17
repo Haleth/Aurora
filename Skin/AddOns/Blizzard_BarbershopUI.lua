@@ -1,5 +1,8 @@
 local _, private = ...
 
+--[[ Lua Globals ]]
+-- luacheck: globals
+
 -- [[ Core ]]
 local F = _G.unpack(private.Aurora)
 

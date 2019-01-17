@@ -1,7 +1,7 @@
 local _, private = ...
 
+--[[ Lua Globals ]]
 -- luacheck: globals select next
--- luacheck: globals hooksecurefunc
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -264,8 +264,8 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Frame.frame:Hide()
     end
     function Skin.AchievementTemplate(Button)
-        hooksecurefunc(Button, "Saturate", Hook.AchievementButton_Saturate)
-        hooksecurefunc(Button, "Desaturate", Hook.AchievementButton_Desaturate)
+        _G.hooksecurefunc(Button, "Saturate", Hook.AchievementButton_Saturate)
+        _G.hooksecurefunc(Button, "Desaturate", Hook.AchievementButton_Desaturate)
 
         Base.SetBackdrop(Button, Color.button, 1)
         Button.background:Hide()
@@ -319,8 +319,8 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Skin.AchievementCheckButtonTemplate(Button.tracked)
     end
     function Skin.ComparisonPlayerTemplate(Frame)
-        hooksecurefunc(Frame, "Saturate", Hook.AchievementButton_Saturate)
-        hooksecurefunc(Frame, "Desaturate", Hook.AchievementButton_Desaturate)
+        _G.hooksecurefunc(Frame, "Saturate", Hook.AchievementButton_Saturate)
+        _G.hooksecurefunc(Frame, "Desaturate", Hook.AchievementButton_Desaturate)
 
         Base.SetBackdrop(Frame, Color.frame)
         Frame.background:Hide()
@@ -356,8 +356,8 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Skin.ComparisonTemplate(Frame)
         Skin.ComparisonPlayerTemplate(Frame.player)
 
-        hooksecurefunc(Frame.friend, "Saturate", Hook.AchievementButton_Saturate)
-        hooksecurefunc(Frame.friend, "Desaturate", Hook.AchievementButton_Desaturate)
+        _G.hooksecurefunc(Frame.friend, "Saturate", Hook.AchievementButton_Saturate)
+        _G.hooksecurefunc(Frame.friend, "Desaturate", Hook.AchievementButton_Desaturate)
 
         Base.SetBackdrop(Frame.friend, Color.frame)
         Frame.friend.background:Hide()
@@ -386,26 +386,26 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 end
 
 function private.AddOns.Blizzard_AchievementUI()
-    hooksecurefunc("AchievementFrame_UpdateTabs", Hook.AchievementFrame_UpdateTabs)
-    hooksecurefunc("AchievementFrame_ToggleView", Hook.AchievementFrame_ToggleView)
-    hooksecurefunc("AchievementButton_UpdatePlusMinusTexture", Hook.AchievementButton_UpdatePlusMinusTexture)
-    hooksecurefunc("AchievementButton_GetMiniAchievement", Hook.AchievementButton_GetMiniAchievement)
-    hooksecurefunc("AchievementButton_GetProgressBar", Hook.AchievementButton_GetProgressBar)
-    hooksecurefunc("AchievementButton_GetMeta", Hook.AchievementButton_GetMeta)
-    hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
-    hooksecurefunc("AchievementFrameStats_SetStat", Hook.AchievementFrameStats_SetStat)
-    hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
-    hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
-    hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
+    _G.hooksecurefunc("AchievementFrame_UpdateTabs", Hook.AchievementFrame_UpdateTabs)
+    _G.hooksecurefunc("AchievementFrame_ToggleView", Hook.AchievementFrame_ToggleView)
+    _G.hooksecurefunc("AchievementButton_UpdatePlusMinusTexture", Hook.AchievementButton_UpdatePlusMinusTexture)
+    _G.hooksecurefunc("AchievementButton_GetMiniAchievement", Hook.AchievementButton_GetMiniAchievement)
+    _G.hooksecurefunc("AchievementButton_GetProgressBar", Hook.AchievementButton_GetProgressBar)
+    _G.hooksecurefunc("AchievementButton_GetMeta", Hook.AchievementButton_GetMeta)
+    _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
+    _G.hooksecurefunc("AchievementFrameStats_SetStat", Hook.AchievementFrameStats_SetStat)
+    _G.hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
+    _G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
+    _G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
 
-    hooksecurefunc("AchievementComparisonPlayerButton_Saturate", function(self)
+    _G.hooksecurefunc("AchievementComparisonPlayerButton_Saturate", function(self)
         if not self._auroraSkinned then
             Skin.SummaryAchievementTemplate(self)
             self._auroraSkinned = true
         end
         Hook.AchievementButton_Saturate(self)
     end)
-    hooksecurefunc("AchievementComparisonPlayerButton_Desaturate", function(self)
+    _G.hooksecurefunc("AchievementComparisonPlayerButton_Desaturate", function(self)
         if not self._auroraSkinned then
             Skin.SummaryAchievementTemplate(self)
             self._auroraSkinned = true

@@ -7,11 +7,11 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 
---[[ do AddOns\Blizzard_Contribution.lua
-end ]]
+--do --[[ AddOns\Blizzard_Contribution.lua ]]
+--end
 
- --[[ doAddOns\Blizzard_Contribution.xml
-end ]]
+--do --[[ AddOns\Blizzard_Contribution.xml ]]
+--end
 
 function private.AddOns.Blizzard_Contribution()
     if not private.disabled.tooltips then

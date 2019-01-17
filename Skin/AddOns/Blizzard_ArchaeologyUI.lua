@@ -1,12 +1,9 @@
 local _, private = ...
 
--- [[ Lua Globals ]]
-local select = _G.select
+--[[ Lua Globals ]]
+-- luacheck: globals select
 
--- [[ WoW API ]]
-local CreateFrame = _G.CreateFrame
-
--- [[ Core ]]
+--[[ Core ]]
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_ArchaeologyUI()
@@ -43,12 +40,12 @@ function private.AddOns.Blizzard_ArchaeologyUI()
         select(3, bu:GetRegions()):SetTexCoord(.08, .92, .08, .92)
         select(4, bu:GetRegions()):SetTextColor(1, 1, 1)
         select(5, bu:GetRegions()):SetTextColor(1, 1, 1)
-        local bg = CreateFrame("Frame", nil, bu)
+        local bg = _G.CreateFrame("Frame", nil, bu)
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
         bg:SetFrameLevel(bu:GetFrameLevel()-1)
         F.CreateBD(bg, .25)
-        local vline = CreateFrame("Frame", nil, bu)
+        local vline = _G.CreateFrame("Frame", nil, bu)
         vline:SetPoint("LEFT", 44, 0)
         vline:SetSize(1, 44)
         F.CreateBD(vline)
@@ -85,7 +82,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     bar:SetTexture(C.media.backdrop)
     bar:SetGradient("VERTICAL", .65, .25, 0, .75, .35, .1)
 
-    local bg = CreateFrame("Frame", nil, _G.ArchaeologyFrameArtifactPageSolveFrameStatusBar)
+    local bg = _G.CreateFrame("Frame", nil, _G.ArchaeologyFrameArtifactPageSolveFrameStatusBar)
     bg:SetPoint("TOPLEFT", -1, 1)
     bg:SetPoint("BOTTOMRIGHT", 1, -1)
     bg:SetFrameLevel(0)
