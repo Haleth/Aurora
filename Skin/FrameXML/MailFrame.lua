@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\MailFrame.lua ]]
     function Hook.MailFrame_UpdateTrialState(self)
@@ -303,9 +303,11 @@ function private.FrameXML.MailFrame()
     _G.SendMailMoneyFrame:SetPoint("BOTTOMLEFT", 175, 9)
 
     Skin.UIPanelButtonTemplate(_G.SendMailCancelButton)
-    _G.SendMailCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(_G.SendMailMailButton)
-    _G.SendMailMailButton:SetPoint("RIGHT", _G.SendMailCancelButton, "LEFT", -1, 0)
+    Util.PositionRelative("BOTTOMRIGHT", _G.SendMailFrame, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+        _G.SendMailCancelButton,
+        _G.SendMailMailButton,
+    })
 
     _G.SendMailFrameLockSendMail:SetPoint("TOPLEFT", "SendMailAttachment1", -12, 12)
     _G.SendMailFrameLockSendMail:SetPoint("BOTTOMRIGHT", "SendMailCancelButton", 5, -5)
@@ -354,9 +356,18 @@ function private.FrameXML.MailFrame()
     Skin.ItemButtonTemplate(_G.OpenMailMoneyButton)
 
     Skin.UIPanelButtonTemplate(_G.OpenMailCancelButton)
-    _G.OpenMailCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(_G.OpenMailDeleteButton)
-    _G.OpenMailDeleteButton:SetPoint("RIGHT", _G.OpenMailCancelButton, "LEFT", -1, 0)
     Skin.UIPanelButtonTemplate(_G.OpenMailReplyButton)
-    _G.OpenMailReplyButton:SetPoint("RIGHT", _G.OpenMailDeleteButton, "LEFT", -1, 0)
+    Util.PositionRelative("BOTTOMRIGHT", _G.OpenMailFrame, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+        _G.OpenMailCancelButton,
+        _G.OpenMailDeleteButton,
+        _G.OpenMailReplyButton,
+    })
+
+    Skin.FriendsFrameTabTemplate(_G.MailFrameTab1)
+    Skin.FriendsFrameTabTemplate(_G.MailFrameTab2)
+    Util.PositionRelative("TOPLEFT", _G.MailFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.MailFrameTab1,
+        _G.MailFrameTab2,
+    })
 end
