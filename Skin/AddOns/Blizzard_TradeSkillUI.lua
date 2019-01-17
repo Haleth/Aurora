@@ -8,6 +8,7 @@ local Aurora = private.Aurora
 local Skin = Aurora.Skin
 local F, C = _G.unpack(Aurora)
 
+-- TODO: FIXME
 function private.AddOns.Blizzard_TradeSkillUI()
     local TradeSkillFrame = _G.TradeSkillFrame
     F.ReskinPortraitFrame(TradeSkillFrame)

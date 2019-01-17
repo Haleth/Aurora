@@ -8,6 +8,7 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local F, C = _G.unpack(private.Aurora)
 
+-- TODO: FIXME
 function private.AddOns.Blizzard_EncounterJournal()
     local r, g, b = C.r, C.g, C.b
 
