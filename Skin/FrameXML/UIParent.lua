@@ -9,6 +9,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\UIParent.lua ]]
     function Hook.SetPortraitToTexture(texture, path)
+        texture = _G[texture] or texture
         if not texture:IsForbidden() then
             texture:SetTexture(path)
         end
