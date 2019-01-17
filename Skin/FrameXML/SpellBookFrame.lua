@@ -78,13 +78,6 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
                             skillLineTab:SetPoint("TOPLEFT", prevTab, "BOTTOMLEFT", 0, -5)
                         end
                     end
-
-                    -- Set the selected tab
-                    if _G.SpellBookFrame.selectedSkillLine == i then
-                        skillLineTab._auroraIconBG:SetColorTexture(Color.yellow:GetRGB())
-                    else
-                        skillLineTab._auroraIconBG:SetColorTexture(Color.black:GetRGB())
-                    end
                 end
             else
                 _G["SpellBookSkillLineTab"..i.."Flash"]:Hide()
@@ -104,11 +97,7 @@ end
 
 do --[[ FrameXML\SpellBookFrame.xml ]]
     function Skin.SpellBookSkillLineTabTemplate(CheckButton)
-        CheckButton:GetRegions():Hide()
-
-        CheckButton._auroraIconBG = Base.CropIcon(CheckButton:GetNormalTexture(), CheckButton)
-        Base.CropIcon(CheckButton:GetHighlightTexture())
-        Base.CropIcon(CheckButton:GetCheckedTexture())
+        Skin.SideTabTemplate(CheckButton)
     end
     function Skin.SpellBookFrameTabButtonTemplate(Button)
         Skin.CharacterFrameTabButtonTemplate(Button)

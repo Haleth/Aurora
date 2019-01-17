@@ -232,10 +232,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     end
     do --[[ CommunitiesTabs ]]
         function Skin.CommunitiesFrameTabTemplate(CheckButton)
-            CheckButton:GetRegions():Hide()
-            Base.CropIcon(CheckButton.Icon, CheckButton)
-            Base.CropIcon(CheckButton:GetHighlightTexture())
-            Base.CropIcon(CheckButton:GetCheckedTexture())
+            Skin.SideTabTemplate(CheckButton)
             CheckButton.IconOverlay:Hide()
         end
     end

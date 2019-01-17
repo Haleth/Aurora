@@ -102,6 +102,25 @@ do -- BlizzWTF: These are not templates, but they should be
         Base.SetHighlight(Button, "texture")
     end
 
+    -- Side Tabs
+    local function Hook_SetChecked(self, isChecked)
+        -- Set the selected tab
+        if isChecked then
+            self._auroraIconBG:SetColorTexture(Color.yellow:GetRGB())
+        else
+            self._auroraIconBG:SetColorTexture(Color.black:GetRGB())
+        end
+    end
+    function Skin.SideTabTemplate(CheckButton)
+        _G.hooksecurefunc(CheckButton, "SetChecked", Hook_SetChecked)
+        CheckButton:GetRegions():Hide()
+
+        local icon = CheckButton.Icon or CheckButton:GetNormalTexture()
+        CheckButton._auroraIconBG = Base.CropIcon(icon, CheckButton)
+        Base.CropIcon(CheckButton:GetHighlightTexture())
+        Base.CropIcon(CheckButton:GetCheckedTexture())
+    end
+
     -- Scroll thumb
     local function Hook_Hide(self)
         self._auroraThumb:Hide()
