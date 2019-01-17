@@ -19,7 +19,12 @@ do --[[ AddOns\Blizzard_GuildControlUI.lua ]]
     end
     local skinnedPerms = 0
     function Hook.GuildControlUI_BankTabPermissions_Update(self)
-        for i = skinnedPerms + 1, _G.GuildControlGetNumRanks() do
+        local numTabs = _G.GetNumGuildBankTabs()
+        if numTabs < _G.MAX_BUY_GUILDBANK_TABS then
+            numTabs = numTabs + 1;
+        end
+
+        for i = skinnedPerms + 1, numTabs do
             Skin.BankTabPermissionTemplate(_G["GuildControlBankTab"..i])
             skinnedPerms = skinnedPerms + 1
         end
@@ -43,6 +48,7 @@ do --[[ AddOns\Blizzard_GuildControlUI.xml ]]
 
         --Skin.SmallMoneyFrameTemplate(Frame.buy.money)
         Skin.UIPanelButtonTemplate(Frame.buy.button)
+        Frame.buy.button:SetPoint("LEFT", Frame.buy.money, "RIGHT", -4.4, 0)
    end
 end
 
