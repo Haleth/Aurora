@@ -4,91 +4,134 @@ local _, private = ...
 -- luacheck: globals select pairs
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
+
+--do --[[ AddOns\Blizzard_VoidStorageUI.lua ]]
+--end
+
+do --[[ AddOns\Blizzard_VoidStorageUI.xml ]]
+    function Skin.VoidStorageItemButtonTemplate(Button)
+        local name = Button:GetName()
+
+        local bg = _G[name.."Bg"]
+        bg:SetTexCoord(0.671875, 0.736328125, 0.009765625, 0.07421875)
+        Base.CreateBackdrop(Button, {
+            edgeSize = 1,
+            bgFile = [[Interface\VoidStorage\VoidStorage]],
+            insets = {left = 1, right = 1, top = 1, bottom = 1}
+        }, {bg = bg})
+        Button._auroraIconBorder = Button
+
+        Base.CropIcon(Button.icon)
+        Button.icon:SetPoint("TOPLEFT", 1, -1)
+        Button.icon:SetPoint("BOTTOMRIGHT", -1, 1)
+
+        Base.CropIcon(Button:GetPushedTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
+    end
+    function Skin.VoidStorageTabTemplate(CheckButton)
+        Skin.SideTabTemplate(CheckButton)
+    end
+    function Skin.VoidStorageInsetFrameTemplate(Frame)
+        Skin.InsetFrameTemplate(Frame)
+        select(2, Frame:GetRegions()):Hide()
+    end
+end
 
 function private.AddOns.Blizzard_VoidStorageUI()
-    F.SetBD(_G.VoidStorageFrame, 20, 0, 0, 20)
-    F.CreateBD(_G.VoidStoragePurchaseFrame)
+    local VOID_DEPOSIT_MAX = 9
+    local VOID_WITHDRAW_MAX = 9
+    local VOID_STORAGE_MAX = 80
 
-    _G.VoidStorageBorderFrame:DisableDrawLayer("BORDER")
-    _G.VoidStorageBorderFrame:DisableDrawLayer("BACKGROUND")
-    _G.VoidStorageBorderFrame:DisableDrawLayer("OVERLAY")
-    _G.VoidStorageDepositFrame:DisableDrawLayer("BACKGROUND")
-    _G.VoidStorageDepositFrame:DisableDrawLayer("BORDER")
-    _G.VoidStorageWithdrawFrame:DisableDrawLayer("BACKGROUND")
-    _G.VoidStorageWithdrawFrame:DisableDrawLayer("BORDER")
-    _G.VoidStorageCostFrame:DisableDrawLayer("BACKGROUND")
-    _G.VoidStorageCostFrame:DisableDrawLayer("BORDER")
-    _G.VoidStorageStorageFrame:DisableDrawLayer("BACKGROUND")
-    _G.VoidStorageStorageFrame:DisableDrawLayer("BORDER")
+    local VoidStorageFrame = _G.VoidStorageFrame
     _G.VoidStorageFrameMarbleBg:Hide()
-    select(2, _G.VoidStorageFrame:GetRegions()):Hide()
-    _G.VoidStorageFrameLines:Hide()
+    select(2, VoidStorageFrame:GetRegions()):Hide()
+    _G.VoidStorageFrameLines:SetParent(_G.VoidStorageBorderFrame)
+    _G.VoidStorageFrameLines:SetAllPoints()
+
+    ------------------
+    -- ContentFrame --
+    ------------------
+    Skin.VoidStorageInsetFrameTemplate(_G.VoidStorageDepositFrame)
+    local arrowDeposit = select(4, _G.VoidStorageDepositFrame:GetRegions())
+    arrowDeposit:SetSize(20, 40)
+    arrowDeposit:SetVertexColor(Color.violet:GetRGB())
+    Base.SetTexture(arrowDeposit, "arrowRight")
+    for i = 1, VOID_DEPOSIT_MAX do
+        Skin.VoidStorageItemButtonTemplate(_G["VoidStorageDepositButton"..i])
+    end
+
+    Skin.VoidStorageInsetFrameTemplate(_G.VoidStorageWithdrawFrame)
+    local arrowWithdraw = select(4, _G.VoidStorageWithdrawFrame:GetRegions())
+    arrowWithdraw:SetSize(20, 40)
+    Base.SetTexture(arrowWithdraw, "arrowLeft")
+    arrowWithdraw:SetVertexColor(Color.violet:GetRGB())
+    for i = 1, VOID_WITHDRAW_MAX do
+        Skin.VoidStorageItemButtonTemplate(_G["VoidStorageWithdrawButton"..i])
+    end
+
+    Skin.VoidStorageInsetFrameTemplate(_G.VoidStorageStorageFrame)
     _G.VoidStorageStorageFrameLine1:Hide()
     _G.VoidStorageStorageFrameLine2:Hide()
     _G.VoidStorageStorageFrameLine3:Hide()
     _G.VoidStorageStorageFrameLine4:Hide()
-    select(12, _G.VoidStorageDepositFrame:GetRegions()):Hide()
-    select(12, _G.VoidStorageWithdrawFrame:GetRegions()):Hide()
-    for i = 1, 10 do
-        select(i, _G.VoidStoragePurchaseFrame:GetRegions()):Hide()
+    for i = 1, VOID_STORAGE_MAX do
+        Skin.VoidStorageItemButtonTemplate(_G["VoidStorageStorageButton"..i])
     end
 
-    for _, voidButton in pairs({"VoidStorageDepositButton", "VoidStorageWithdrawButton"}) do
-        for i = 1, 9 do
-            local bu = _G[voidButton..i]
-            local border = bu.IconBorder
+    Skin.VoidStorageInsetFrameTemplate(_G.VoidStorageCostFrame)
+    Skin.UIPanelButtonTemplate(_G.VoidStorageTransferButton)
 
-            bu:SetPushedTexture("")
-            _G[voidButton..i.."Bg"]:Hide()
+    -----------------
+    -- BorderFrame --
+    -----------------
+    Skin.BasicFrameTemplate(_G.VoidStorageBorderFrame)
+    _G.VoidStorageBorderFrameCornerTL:Hide()
+    _G.VoidStorageBorderFrameCornerTR:Hide()
+    _G.VoidStorageBorderFrameCornerBL:Hide()
+    _G.VoidStorageBorderFrameCornerBR:Hide()
 
-            bu.icon:SetTexCoord(.08, .92, .08, .92)
+    _G.VoidStorageBorderFrameLeftEdge:Hide()
+    _G.VoidStorageBorderFrameRightEdge:Hide()
+    _G.VoidStorageBorderFrameBottomEdge:Hide()
+    _G.VoidStorageBorderFrameTopEdge:Hide()
+    _G.VoidStorageBorderFrameHeader:Hide()
 
-            border:SetTexture(C.media.backdrop)
-            border:SetPoint("TOPLEFT", -1, 1)
-            border:SetPoint("BOTTOMRIGHT", 1, -1)
-            border:SetDrawLayer("BACKGROUND")
+    Skin.VoidStorageTabTemplate(VoidStorageFrame.Page1)
+    Skin.VoidStorageTabTemplate(VoidStorageFrame.Page2)
+    Util.PositionRelative("TOPLEFT", VoidStorageFrame, "TOPRIGHT", 2, -40, 5, "Down", {
+        VoidStorageFrame.Page1,
+        VoidStorageFrame.Page2,
+    })
 
-            F.CreateBDFrame(bu, .25)
-        end
-    end
+    _G.VoidStorageBorderFrameMouseBlockFrame:ClearAllPoints()
+    _G.VoidStorageBorderFrameMouseBlockFrame:SetAllPoints()
+    _G.VoidStorageBorderFrame.Bg:ClearAllPoints()
+    _G.VoidStorageBorderFrame.Bg:SetAllPoints()
 
-    for i = 1, 80 do
-        local bu = _G["VoidStorageStorageButton"..i]
-        local border = bu.IconBorder
-        local searchOverlay = bu.searchOverlay
+    select(2, _G.VoidStoragePurchaseFrame:GetRegions()):Hide()
+    Base.CreateBackdrop(_G.VoidStoragePurchaseFrame, private.backdrop, {
+        tl = _G.VoidStoragePurchaseFrameCornerTL,
+        tr = _G.VoidStoragePurchaseFrameCornerTR,
+        bl = _G.VoidStoragePurchaseFrameCornerBL,
+        br = _G.VoidStoragePurchaseFrameCornerBR,
 
-        bu:SetPushedTexture("")
+        t = _G.VoidStoragePurchaseFrameTopEdge,
+        b = _G.VoidStoragePurchaseFrameBottomEdge,
+        l = _G.VoidStoragePurchaseFrameLeftEdge,
+        r = _G.VoidStoragePurchaseFrameRightEdge,
 
-        border:SetTexture(C.media.backdrop)
-        border:SetPoint("TOPLEFT", -1, 1)
-        border:SetPoint("BOTTOMRIGHT", 1, -1)
-        border:SetDrawLayer("BACKGROUND")
+        bg = _G.VoidStoragePurchaseFrameMarbleBg,
+    })
+    Base.SetBackdrop(_G.VoidStoragePurchaseFrame)
 
-        searchOverlay:SetPoint("TOPLEFT", -1, 1)
-        searchOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
+    Skin.UIPanelButtonTemplate(_G.VoidStoragePurchaseButton)
+    Skin.GlowBoxTemplate(_G.VoidStorageHelpBox)
+    Skin.GlowBoxArrowTemplate(_G.VoidStorageHelpBoxArrow)
+    Skin.UIPanelButtonTemplate(_G.VoidStorageHelpBoxButton)
 
-        _G["VoidStorageStorageButton"..i.."Bg"]:Hide()
-        _G["VoidStorageStorageButton"..i.."IconTexture"]:SetTexCoord(.08, .92, .08, .92)
-    end
-
-    for i = 1, 2 do
-        local tab = _G.VoidStorageFrame["Page"..i]
-
-        tab:GetRegions():Hide()
-        tab:SetCheckedTexture(C.media.checked)
-
-        F.CreateBG(tab)
-
-        tab:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
-    end
-
-    _G.VoidStorageFrame.Page1:ClearAllPoints()
-    _G.VoidStorageFrame.Page1:SetPoint("LEFT", _G.VoidStorageFrame, "TOPRIGHT", 2, -60)
-
-    F.Reskin(_G.VoidStoragePurchaseButton)
-    F.Reskin(_G.VoidStorageHelpBoxButton)
-    F.Reskin(_G.VoidStorageTransferButton)
-    F.ReskinClose(_G.VoidStorageBorderFrame:GetChildren(), nil)
-    F.ReskinInput(_G.VoidItemSearchBox)
+    Skin.BagSearchBoxTemplate(_G.VoidItemSearchBox)
 end
