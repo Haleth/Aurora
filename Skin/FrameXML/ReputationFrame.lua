@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next
+-- luacheck: globals next type
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -14,47 +14,27 @@ do --[[ FrameXML\ReputationFrame.lua ]]
         _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -49)
     end
     function Hook.ReputationFrame_SetRowType(factionRow, isChild, isHeader, hasRep)
-        if isHeader then
-            for _, texture in next, factionRow._auroraHighlight do
-                texture:Hide()
-            end
-        else
-            for _, texture in next, factionRow._auroraHighlight do
-                texture:Show()
+        for _, texture in next, factionRow._auroraBackdrop do
+            if type(texture) == "table" and texture.SetShown then
+                texture:SetShown(not isHeader)
             end
         end
     end
     function Hook.ReputationFrame_Update(self)
         for i = 1, _G.NUM_FACTIONS_DISPLAYED do
-            local factionRowName = "ReputationBar"..i
-            local factionRow = _G[factionRowName]
-            local factionButton = _G[factionRowName.."ExpandOrCollapseButton"]
-            local factionBackground = _G[factionRowName.."Background"]
-
+            local factionRow = _G["ReputationBar"..i]
             if not factionRow.index then return end
-
-            if factionRow.isCollapsed then
-                factionButton:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up")
-            else
-                factionButton:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up")
-            end
 
             local _, _, _, _, _, _, atWarWith = _G.GetFactionInfo(factionRow.index)
             if atWarWith then
-                factionBackground:SetColorTexture(0.6, 0.2, 0.2)
+                Base.SetBackdropColor(factionRow, Color.red)
             else
-                factionBackground:SetColorTexture(Color.button:GetRGB())
+                Base.SetBackdropColor(factionRow, Color.button)
             end
 
             if factionRow.index == _G.GetSelectedFaction() then
-                if ( _G.ReputationDetailFrame:IsShown() ) then
-                    for _, texture in next, factionRow._auroraHighlight do
-                        texture:SetColorTexture(Color.highlight:GetRGB())
-                    end
-                end
-            else
-                for _, texture in next, factionRow._auroraHighlight do
-                    texture:SetColorTexture(factionRow._returnColor:GetRGB())
+                if _G.ReputationDetailFrame:IsShown() then
+                    factionRow:SetBackdropBorderColor(Color.highlight)
                 end
             end
         end
@@ -62,10 +42,16 @@ do --[[ FrameXML\ReputationFrame.lua ]]
 end
 
 do --[[ FrameXML\ReputationFrame.xml ]]
+    local function OnEnter(button)
+        button:SetBackdropBorderColor(Color.highlight)
+    end
     local function OnLeave(button)
         if (_G.GetSelectedFaction() ~= button.index) or (not _G.ReputationDetailFrame:IsShown()) then
-            for _, texture in next, button._auroraHighlight do
-                texture:SetColorTexture(button._returnColor:GetRGBA())
+            local _, _, _, _, _, _, atWarWith = _G.GetFactionInfo(button.index)
+            if atWarWith then
+                button:SetBackdropBorderColor(Color.red)
+            else
+                button:SetBackdropBorderColor(Color.button)
             end
         end
     end
@@ -73,43 +59,10 @@ do --[[ FrameXML\ReputationFrame.xml ]]
     function Skin.ReputationBarTemplate(Button)
         local factionRowName = Button:GetName()
 
-        local background = _G[factionRowName.."Background"]
-        background:SetColorTexture(Color.button:GetRGB())
-        background:SetPoint("TOPRIGHT")
-        background:SetHeight(20)
-
-        do -- highlight
-            Button._auroraHighlight = {}
-            local left = Button:CreateTexture(nil, "ARTWORK", nil, 3)
-            left:SetColorTexture(Color.frame:GetRGB())
-            left:SetPoint("TOPLEFT")
-            left:SetPoint("BOTTOMLEFT")
-            left:SetWidth(1)
-            _G.tinsert(Button._auroraHighlight, left)
-
-            local right = Button:CreateTexture(nil, "ARTWORK", nil, 3)
-            right:SetColorTexture(Color.frame:GetRGB())
-            right:SetPoint("TOPRIGHT")
-            right:SetPoint("BOTTOMRIGHT")
-            right:SetWidth(1)
-            _G.tinsert(Button._auroraHighlight, right)
-
-            local top = Button:CreateTexture(nil, "ARTWORK", nil, 3)
-            top:SetColorTexture(Color.frame:GetRGB())
-            top:SetPoint("TOPLEFT")
-            top:SetPoint("TOPRIGHT")
-            top:SetHeight(1)
-            _G.tinsert(Button._auroraHighlight, top)
-
-            local bottom = Button:CreateTexture(nil, "ARTWORK", nil, 3)
-            bottom:SetColorTexture(Color.frame:GetRGB())
-            bottom:SetPoint("BOTTOMLEFT")
-            bottom:SetPoint("BOTTOMRIGHT")
-            bottom:SetHeight(1)
-            _G.tinsert(Button._auroraHighlight, bottom)
-
-            Base.SetHighlight(Button, "color", nil, OnLeave)
-        end
+        Button.Background = _G[factionRowName.."Background"]
+        Base.CreateBackdrop(Button, private.backdrop, {bg = Button.Background})
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
 
         Skin.ExpandOrCollapse(_G[factionRowName.."ExpandOrCollapseButton"])
 
