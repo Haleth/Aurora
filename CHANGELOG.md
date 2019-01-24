@@ -1,4 +1,9 @@
 ﻿## [Unreleased] ##
+### Added ###
+
+  * Archeology digsite progress bar skin
+  * Skins for a few tutorial frames
+
 ### Changed ###
 
   * Updated PvE group finder
@@ -11,6 +16,7 @@
   * Error upon viewing the Mythic+ tab
   * Error when socketing an item
   * Error when viewing guild bank permissions
+  * Error when viewing received mail
   * A few textures in the LFD frame were not hidden
 
 
