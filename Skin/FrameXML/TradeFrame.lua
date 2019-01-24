@@ -51,7 +51,7 @@ function private.FrameXML.TradeFrame()
             _G[name.."SlotTexture"]:Hide()
 
             local itemButton = _G[name.."ItemButton"]
-            Skin.ItemButtonTemplate(itemButton)
+            Skin.FrameTypeItemButton(itemButton)
 
             local nameFrame = _G[name.."NameFrame"]
             nameFrame:SetAlpha(0)

@@ -31,8 +31,8 @@ do --[[ FrameXML\EquipmentFlyout.lua ]]
 end
 
 do --[[ FrameXML\EquipmentFlyout.xml ]]
-    function Skin.EquipmentFlyoutButtonTemplate(Button)
-        Skin.ItemButtonTemplate(Button)
+    function Skin.EquipmentFlyoutButtonTemplate(ItemButton)
+        Skin.FrameTypeItemButton(ItemButton)
     end
     function Skin.EquipmentFlyoutPopoutButtonTemplate(Button)
         local tex = Button:GetNormalTexture()

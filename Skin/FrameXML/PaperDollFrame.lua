@@ -49,30 +49,30 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
         end
     end
     do --[[ PaperDollFrame.xml ]]
-        function Skin.PaperDollItemSlotButtonTemplate(Button)
-            Skin.ItemButtonTemplate(Button)
-            Skin.PaperDollAzeriteItemOverlayTemplate(Button)
-            _G[Button:GetName().."Frame"]:Hide()
+        function Skin.PaperDollItemSlotButtonTemplate(ItemButton)
+            Skin.FrameTypeItemButton(ItemButton)
+            Skin.PaperDollAzeriteItemOverlayTemplate(ItemButton)
+            _G[ItemButton:GetName().."Frame"]:Hide()
 
-            if Button.verticalFlyout then
-                Button.popoutButton:SetPoint("TOP", Button, "BOTTOM")
-                Button.popoutButton:SetSize(38, 8)
-                Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
-                Base.SetTexture(Button.popoutButton._auroraArrow, "arrowDown")
+            if ItemButton.verticalFlyout then
+                ItemButton.popoutButton:SetPoint("TOP", ItemButton, "BOTTOM")
+                ItemButton.popoutButton:SetSize(38, 8)
+                Skin.EquipmentFlyoutPopoutButtonTemplate(ItemButton.popoutButton)
+                Base.SetTexture(ItemButton.popoutButton._auroraArrow, "arrowDown")
             else
-                Button.popoutButton:SetPoint("LEFT", Button, "RIGHT")
-                Button.popoutButton:SetSize(8, 38)
-                Skin.EquipmentFlyoutPopoutButtonTemplate(Button.popoutButton)
+                ItemButton.popoutButton:SetPoint("LEFT", ItemButton, "RIGHT")
+                ItemButton.popoutButton:SetSize(8, 38)
+                Skin.EquipmentFlyoutPopoutButtonTemplate(ItemButton.popoutButton)
             end
         end
-        function Skin.PaperDollItemSlotButtonLeftTemplate(Button)
-            Skin.PaperDollItemSlotButtonTemplate(Button)
+        function Skin.PaperDollItemSlotButtonLeftTemplate(ItemButton)
+            Skin.PaperDollItemSlotButtonTemplate(ItemButton)
         end
-        function Skin.PaperDollItemSlotButtonRightTemplate(Button)
-            Skin.PaperDollItemSlotButtonTemplate(Button)
+        function Skin.PaperDollItemSlotButtonRightTemplate(ItemButton)
+            Skin.PaperDollItemSlotButtonTemplate(ItemButton)
         end
-        function Skin.PaperDollItemSlotButtonBottomTemplate(Button)
-            Skin.PaperDollItemSlotButtonTemplate(Button)
+        function Skin.PaperDollItemSlotButtonBottomTemplate(ItemButton)
+            Skin.PaperDollItemSlotButtonTemplate(ItemButton)
         end
         function Skin.PlayerTitleButtonTemplate(Button)
             Button.BgTop:SetTexture("")

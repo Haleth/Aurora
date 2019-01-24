@@ -78,7 +78,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
 
         Skin.SmallMoneyFrameTemplate(Frame.moneyFrame)
         Skin.MoneyInputFrameTemplate(Frame.moneyInputFrame)
-        Skin.ItemButtonTemplate(Frame.ItemFrame)
+        Skin.FrameTypeItemButton(Frame.ItemFrame)
 
         local nameFrame = _G[Frame.ItemFrame:GetName().."NameFrame"]
         nameFrame:Hide()

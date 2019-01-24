@@ -36,19 +36,19 @@ do --[[ FrameXML\BankFrame.lua ]]
 end
 
 do --[[ FrameXML\BankFrame.xml ]]
-    function Skin.BankItemButtonGenericTemplate(Button)
-        Skin.ItemButtonTemplate(Button)
+    function Skin.BankItemButtonGenericTemplate(ItemButton)
+        Skin.FrameTypeItemButton(ItemButton)
 
-        local bd = Button._auroraIconBorder:GetBackdropTexture("bg")
+        local bd = ItemButton._auroraIconBorder:GetBackdropTexture("bg")
         bd:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
         bd:SetAlpha(0.75)
         Base.CropIcon(bd)
 
-        Base.CropIcon(Button.IconQuestTexture)
+        Base.CropIcon(ItemButton.IconQuestTexture)
     end
-    function Skin.BankItemButtonBagTemplate(CheckButton)
-        Skin.ItemButtonTemplate(CheckButton)
-        Base.CropIcon(CheckButton:GetCheckedTexture())
+    function Skin.BankItemButtonBagTemplate(ItemButton)
+        Skin.FrameTypeItemButton(ItemButton)
+        Base.CropIcon(ItemButton:GetCheckedTexture())
     end
     Skin.ReagentBankItemButtonGenericTemplate = Skin.BankItemButtonGenericTemplate
 

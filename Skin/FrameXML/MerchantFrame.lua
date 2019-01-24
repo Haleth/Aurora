@@ -36,7 +36,7 @@ do --[[ FrameXML\MerchantFrame.xml ]]
         Frame.Name:SetPoint("TOPLEFT", bg, 2, -1)
         Frame.Name:SetPoint("BOTTOMRIGHT", bg, 0, 14)
 
-        Skin.ItemButtonTemplate(Frame.ItemButton)
+        Skin.FrameTypeItemButton(Frame.ItemButton)
         Skin.SmallAlternateCurrencyFrameTemplate(_G[name.."AltCurrencyFrame"])
     end
 end
@@ -86,7 +86,7 @@ function private.FrameXML.MerchantFrame()
         _G.MerchantBuyBackItem.Name:SetPoint("TOPLEFT", bg, 2, -1)
         _G.MerchantBuyBackItem.Name:SetPoint("BOTTOMRIGHT", bg, 0, 14)
 
-        Skin.ItemButtonTemplate(_G.MerchantBuyBackItem.ItemButton)
+        Skin.FrameTypeItemButton(_G.MerchantBuyBackItem.ItemButton)
         _G[name.."MoneyFrame"]:SetPoint("BOTTOMLEFT", bg, 1, 1)
     end
 

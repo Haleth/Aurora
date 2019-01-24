@@ -8,6 +8,9 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
+--[[ ALPHA 0.4 ]]--
+Skin.ItemButtonTemplate = Skin.FrameTypeItemButton
+
 --[[ ALPHA 0.3 ]]--
 Aurora.Scale = {}
 

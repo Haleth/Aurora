@@ -60,18 +60,18 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Skin.GlowBoxFrame(Frame, "Right")
     end
 
-    function Skin.ContainerFrameItemButtonTemplate(Button)
-        local name = Button:GetName()
+    function Skin.ContainerFrameItemButtonTemplate(ItemButton)
+        local name = ItemButton:GetName()
 
-        Skin.ItemButtonTemplate(Button)
-        local bd = Button._auroraIconBorder:GetBackdropTexture("bg")
+        Skin.FrameTypeItemButton(ItemButton)
+        local bd = ItemButton._auroraIconBorder:GetBackdropTexture("bg")
         bd:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
         bd:SetVertexColor(1, 1, 1, 0.75)
         Base.CropIcon(bd)
         Base.CropIcon(_G[name.."IconQuestTexture"])
-        Base.CropIcon(Button.NewItemTexture)
-        Button.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
-        Button.BattlepayItemTexture:SetAllPoints()
+        Base.CropIcon(ItemButton.NewItemTexture)
+        ItemButton.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
+        ItemButton.BattlepayItemTexture:SetAllPoints()
     end
     function Skin.ContainerFrameTemplate(Frame)
         _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)

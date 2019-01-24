@@ -67,7 +67,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
 end
 
 do --[[ FrameXML\ItemButtonTemplate.xml ]]
-    function Skin.ItemButtonTemplate(Button)
+    function Skin.FrameTypeItemButton(Button)
         Base.CropIcon(Button.icon)
 
         Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)

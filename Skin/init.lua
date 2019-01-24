@@ -2,7 +2,7 @@ local ADDON_NAME, private = ...
 
 -- luacheck: globals select tostring tonumber
 
-private.API_MAJOR, private.API_MINOR = 0, 4
+private.API_MAJOR, private.API_MINOR = 0, 5
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 1 and tonumber(minor) >= 5)

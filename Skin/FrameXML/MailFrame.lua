@@ -171,8 +171,8 @@ do --[[ FrameXML\MailFrame.xml ]]
 
         Base.CropIcon(Button:GetHighlightTexture())
     end
-    function Skin.OpenMailAttachment(Button)
-        Skin.ItemButtonTemplate(Button)
+    function Skin.OpenMailAttachment(ItemButton)
+        Skin.FrameTypeItemButton(ItemButton)
     end
 
     --[[ Fake template ]]--
@@ -349,11 +349,11 @@ function private.FrameXML.MailFrame()
     _G.OpenMailArithmeticLine:SetSize(256, 1)
     _G.OpenMailInvoiceAmountReceived:SetPoint("TOPRIGHT", _G.OpenMailArithmeticLine, "BOTTOMRIGHT", -14, -5)
 
-    Skin.ItemButtonTemplate(_G.OpenMailLetterButton)
+    Skin.FrameTypeItemButton(_G.OpenMailLetterButton)
     for i = 1, _G.ATTACHMENTS_MAX_RECEIVE do
         Skin.OpenMailAttachment(_G.OpenMailFrame.OpenMailAttachments[i])
     end
-    Skin.ItemButtonTemplate(_G.OpenMailMoneyButton)
+    Skin.FrameTypeItemButton(_G.OpenMailMoneyButton)
 
     Skin.UIPanelButtonTemplate(_G.OpenMailCancelButton)
     Skin.UIPanelButtonTemplate(_G.OpenMailDeleteButton)
