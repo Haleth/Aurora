@@ -58,6 +58,9 @@ end
 
 do --[[ AddOns\Blizzard_PVPUI.xml ]]
     function Skin.SeasonRewardFrameTemplate(Frame)
+        Frame.Ring:Hide()
+        Base.CropIcon(Frame.Icon, Frame)
+        Frame.CircleMask:Hide()
     end
     function Skin.PVPSeasonChangesNoticeTemplate(Frame)
         Frame.BottomLeftCorner:Hide()
@@ -78,8 +81,8 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Frame.BottomHide2:Hide()
 
         Frame.Background:SetColorTexture(0, 0, 0, 0.75)
-        Frame.Background:SetPoint("TOPLEFT", 15, -15)
-        Frame.Background:SetPoint("BOTTOMRIGHT", -15, 15)
+        Frame.Background:SetPoint("TOPLEFT")
+        Frame.Background:SetPoint("BOTTOMRIGHT")
 
         Frame.TopLeftFiligree:Hide()
         Frame.TopRightFiligree:Hide()
@@ -245,14 +248,13 @@ function private.AddOns.Blizzard_PVPUI()
     NextRewardLevel.RingBorder:Hide()
 
     local RatedPanel = HonorInset.RatedPanel
-    local SeasonRewardFrame = RatedPanel.SeasonRewardFrame
-    SeasonRewardFrame.Ring:Hide()
-    Base.CropIcon(SeasonRewardFrame.Icon, SeasonRewardFrame)
-    SeasonRewardFrame.CircleMask:Hide()
+    Skin.SeasonRewardFrameTemplate(RatedPanel.SeasonRewardFrame)
 
     Skin.PVPSeasonChangesNoticeTemplate(PVPQueueFrame.NewSeasonPopup)
-    Skin.SeasonRewardFrameTemplate(SeasonRewardFrame)
-    select(3, SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
+    PVPQueueFrame.NewSeasonPopup:SetPoint("TOPLEFT", ConquestFrame, 4, -3)
+    PVPQueueFrame.NewSeasonPopup:SetPoint("BOTTOMRIGHT", 0, 0)
+    Skin.SeasonRewardFrameTemplate(_G.SeasonRewardFrame)
+    select(3, _G.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
 
 
     -------------
