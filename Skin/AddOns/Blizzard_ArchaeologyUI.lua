@@ -1,13 +1,25 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals select
+-- luacheck: globals select floor
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Color = Aurora.Color
+local F, C = _G.unpack(Aurora)
+
+--do --[[ AddOns\Blizzard_ArchaeologyUI.lua ]]
+--end
+
+--do --[[ AddOns\Blizzard_ArchaeologyUI.xml ]]
+--end
 
 -- TODO: FIXME
 function private.AddOns.Blizzard_ArchaeologyUI()
+    ----====####$$$$%%%%$$$$####====----
+    --     Blizzard_ArchaeologyUI     --
+    ----====####$$$$%%%%$$$$####====----
     F.SetBD(_G.ArchaeologyFrame)
     F.Reskin(_G.ArchaeologyFrameArtifactPageSolveFrameSolveButton)
     F.Reskin(_G.ArchaeologyFrameArtifactPageBackButton)
@@ -91,4 +103,31 @@ function private.AddOns.Blizzard_ArchaeologyUI()
 
     _G.ArchaeologyFrameArtifactPageIcon:SetTexCoord(.08, .92, .08, .92)
     F.CreateBG(_G.ArchaeologyFrameArtifactPageIcon)
+
+    ----====####$$$$%%%%%$$$$####====----
+    -- Blizzard_ArchaeologyProgressBar --
+    ----====####$$$$%%%%%$$$$####====----
+    local ArcheologyDigsiteProgressBar = _G.ArcheologyDigsiteProgressBar
+    ArcheologyDigsiteProgressBar.Shadow:Hide()
+    ArcheologyDigsiteProgressBar.BarBackground:Hide()
+    ArcheologyDigsiteProgressBar.BarBorderAndOverlay:Hide()
+
+    local FillBar = ArcheologyDigsiteProgressBar.FillBar
+    Base.SetBackdrop(FillBar, Color.button, 0.3)
+    local healthBarBG = FillBar:GetBackdropTexture("bg")
+    healthBarBG:SetPoint("TOPLEFT", -1, 1)
+    healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1.4)
+
+    Base.SetTexture(FillBar:GetStatusBarTexture(), "gradientUp")
+    FillBar:SetStatusBarColor(Color.yellow:Hue(-0.08):GetRGB())
+
+    local divWidth = FillBar:GetWidth() / 6
+    local xpos = divWidth
+    for i = 1, 5 do
+        local texture = FillBar:CreateTexture(nil, "ARTWORK")
+        texture:SetColorTexture(Color.button:GetRGB())
+        texture:SetSize(1, 10)
+        texture:SetPoint("LEFT", floor(xpos), 0)
+        xpos = xpos + divWidth
+    end
 end
