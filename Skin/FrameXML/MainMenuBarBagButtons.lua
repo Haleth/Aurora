@@ -14,7 +14,11 @@ local Skin = Aurora.Skin
 do --[[ FrameXML\MainMenuBarBagButtons.xml ]]
     function Skin.BagSlotButtonTemplate(CheckButton)
         Skin.ItemButtonTemplate(CheckButton)
-        Base.CropIcon(CheckButton:GetCheckedTexture())
+        if private.isPatch then
+            Base.CropIcon(CheckButton.SlotHighlightTexture)
+        else
+            Base.CropIcon(CheckButton:GetCheckedTexture())
+        end
     end
 end
 
@@ -22,7 +26,11 @@ function private.FrameXML.MainMenuBarBagButtons()
     if private.disabled.mainmenubar then return end
 
     Skin.ItemButtonTemplate(_G.MainMenuBarBackpackButton)
-    Base.CropIcon(_G.MainMenuBarBackpackButton:GetCheckedTexture())
+    if private.isPatch then
+        Base.CropIcon(_G.MainMenuBarBackpackButton.SlotHighlightTexture)
+    else
+        Base.CropIcon(_G.MainMenuBarBackpackButton:GetCheckedTexture())
+    end
 
     Skin.BagSlotButtonTemplate(_G.CharacterBag0Slot)
     Skin.BagSlotButtonTemplate(_G.CharacterBag1Slot)

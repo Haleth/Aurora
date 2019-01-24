@@ -1,11 +1,15 @@
 local _, private = ...
 
 local FrameXML = {
+    -- first
+    "SharedXML.SharedConstants",
+
     -- add C namespace augmentations here
     "SharedXML.C_TimerAugment",
 
     -- add snippets independent of modules here
     "SharedXML.Util",
+    "SharedXML.TimeUtil",
     "SharedXML.AnchorUtil",
     "SharedXML.EasingUtil",
     "SharedXML.BindingUtil",

@@ -10,10 +10,10 @@ local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetManager.lua ]]
-        Hook.UIWidgetManagerMixin = {}
-        function Hook.UIWidgetManagerMixin:ProcessWidget(widgetID, widgetSetID, widgetType)
+        Hook.UIWidgetContainerMixin = {}
+        function Hook.UIWidgetContainerMixin:ProcessWidget(widgetID, widgetType)
             if Skin[widgetType] then
-                private.debug("UIWidgetManagerMixin:ProcessWidget", widgetID, widgetSetID, widgetType)
+                private.debug("UIWidgetContainerMixin:ProcessWidget", widgetID, widgetType)
                 local widgetFrame = self.widgetIdToFrame[widgetID];
                 if widgetFrame and not widgetFrame._auroraSkinned then
                     Skin[widgetType](widgetFrame)
@@ -30,8 +30,10 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_UIWidgetManager    --
     ----====####$$$$%%%%$$$$####====----
-    local UIWidgetManager = _G.UIWidgetManager
-    Util.Mixin(UIWidgetManager, Hook.UIWidgetManagerMixin)
+    if private.isPatch then
+        local UIWidgetContainerMixin = _G.UIWidgetContainerMixin
+        Util.Mixin(UIWidgetContainerMixin, Hook.UIWidgetContainerMixin)
+    end
 
     -------------
     -- Section --
