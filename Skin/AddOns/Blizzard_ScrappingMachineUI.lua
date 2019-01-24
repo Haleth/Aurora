@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_ScrappingMachineUI.lua ]]
     Hook.ScrappingMachineItemSlotMixin = {}
@@ -18,8 +18,7 @@ end
 
 do --[[ AddOns\Blizzard_ScrappingMachineUI.xml ]]
     function Skin.ScrappingMachineItemSlot(Button)
-        _G.hooksecurefunc(Button, "ClearSlot", Hook.ScrappingMachineItemSlotMixin_ClearSlot)
-
+        Util.Mixin(Button, Hook.ScrappingMachineItemSlotMixin)
         Base.CropIcon(Button.Icon)
 
         local bd = _G.CreateFrame("Frame", nil, Button)
