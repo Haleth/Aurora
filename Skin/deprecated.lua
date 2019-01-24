@@ -137,9 +137,7 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
     f:SetDisabledTexture(C.media.backdrop) -- some frames that use this don't have a disabled texture
     Skin.UIPanelCloseButton(f)
 
-    if not a1 then
-        f:SetPoint("TOPRIGHT", -6, -6)
-    else
+    if a1 then
         f:ClearAllPoints()
         f:SetPoint(a1, p, a2, x, y)
     end
