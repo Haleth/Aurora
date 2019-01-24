@@ -114,6 +114,11 @@ do -- Base API
                     for name in next, bgTextures do
                         if bd[name] then
                             bd[name]:ClearAllPoints()
+                            if name == "bg" then
+                                bd[name]:SetDrawLayer("BACKGROUND", -8)
+                            else
+                                bd[name]:SetDrawLayer(bd.borderLayer, bd.borderSublevel)
+                            end
                         else
                             if name == "bg" then
                                 bd[name] = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
