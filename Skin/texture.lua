@@ -181,6 +181,7 @@ do -- LFG Icons
 
             texture:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-ROLES]])
             texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
+            texture:SetAlpha(0.75)
             texture:SetBlendMode("ADD")
 
             texture._auroraBG:SetColorTexture(coords.color:GetRGB())
