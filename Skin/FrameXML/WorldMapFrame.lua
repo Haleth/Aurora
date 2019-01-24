@@ -12,14 +12,18 @@ do --[[ FrameXML\WorldMapFrame.lua ]]
     do --[[ FrameXML\WorldMapBountyBoard.lua ]]
         Hook.WorldMapBountyBoardMixin = {}
         function Hook.WorldMapBountyBoardMixin:TryShowingIntroTutorial()
-            if self:GetDisplayLocation() == _G.LE_MAP_OVERLAY_DISPLAY_LOCATION_TOP_RIGHT or self:GetDisplayLocation() == _G.LE_MAP_OVERLAY_DISPLAY_LOCATION_BOTTOM_RIGHT then
-                Skin.GlowBoxArrowTemplate(self.TutorialBox, "Right")
-            else
-                Skin.GlowBoxArrowTemplate(self.TutorialBox, "Left")
+            if self.TutorialBox.activeTutorial == _G.LE_FRAME_TUTORIAL_BOUNTY_INTRO then
+                if self:GetDisplayLocation() == _G.LE_MAP_OVERLAY_DISPLAY_LOCATION_TOP_RIGHT or self:GetDisplayLocation() == _G.LE_MAP_OVERLAY_DISPLAY_LOCATION_BOTTOM_RIGHT then
+                    Skin.GlowBoxArrowTemplate(self.TutorialBox.Arrow, "Right")
+                else
+                    Skin.GlowBoxArrowTemplate(self.TutorialBox.Arrow, "Left")
+                end
             end
         end
         function Hook.WorldMapBountyBoardMixin:TryShowingCompletionTutorial()
-            Skin.GlowBoxArrowTemplate(self.TutorialBox, "Down")
+            if self.TutorialBox.activeTutorial == _G.LE_FRAME_TUTORIAL_BOUNTY_FINISHED then
+                Skin.GlowBoxArrowTemplate(self.TutorialBox.Arrow, "Down")
+            end
         end
     end
 end
