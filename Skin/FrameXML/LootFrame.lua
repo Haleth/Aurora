@@ -6,11 +6,20 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
-local Base, Skin = Aurora.Base, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
+
+do --[[ FrameXML\LootFrame.lua ]]
+    function Hook.BonusRollFrame_OnShow(self)
+        self.PromptFrame.Timer:SetFrameLevel(self:GetFrameLevel())
+    end
+end
 
 do --[[ FrameXML\LootFrame.xml ]]
     function Skin.BonusRollFrameTemplate(Frame)
+        Frame:HookScript("OnShow", Hook.BonusRollFrame_OnShow)
+
         Base.SetBackdrop(Frame)
         Frame:SetSize(270, 60)
 
@@ -18,6 +27,9 @@ do --[[ FrameXML\LootFrame.xml ]]
         Frame.LootSpinnerBG:SetPoint("TOPLEFT", 4, -4)
         Frame.IconBorder:Hide()
 
+        Base.CropIcon(Frame.SpecIcon, Frame)
+        Frame.SpecIcon:SetSize(18, 18)
+        Frame.SpecIcon:SetPoint("TOPLEFT", -9, 9)
         Frame.SpecRing:SetAlpha(0)
 
         local textFrame = _G.CreateFrame("Frame", nil, Frame)
