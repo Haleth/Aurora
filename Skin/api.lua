@@ -126,6 +126,9 @@ do -- Base API
                                 bd[name] = frame:CreateTexture(nil, bd.borderLayer, nil, bd.borderSublevel)
                             end
                         end
+
+                        bd[name]:SetTexelSnappingBias(0.0)
+                        bd[name]:SetSnapToPixelGrid(false)
                     end
 
 
