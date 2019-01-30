@@ -68,17 +68,13 @@ do --[[ FrameXML\ReputationFrame.xml ]]
 
         local statusName = factionRowName.."ReputationBar"
         local statusBar = _G[statusName]
+        Skin.FrameTypeStatusBar(statusBar)
         statusBar:ClearAllPoints()
         statusBar:SetPoint("TOPRIGHT", -2, -2)
         statusBar:SetPoint("BOTTOMLEFT", Button, "BOTTOMRIGHT", -102, 2)
-        _G[statusName.."LeftTexture"]:Hide()
 
-        local statusBG = _G[statusName.."RightTexture"]
-        statusBG:SetColorTexture(Color.frame:GetRGB())
-        statusBG:SetDrawLayer("BACKGROUND", -3)
-        statusBG:ClearAllPoints()
-        statusBG:SetPoint("TOPLEFT")
-        statusBG:SetPoint("BOTTOMRIGHT")
+        _G[statusName.."LeftTexture"]:Hide()
+        _G[statusName.."RightTexture"]:Hide()
 
         _G[statusName.."AtWarHighlight2"]:SetAlpha(0)
         _G[statusName.."AtWarHighlight1"]:SetAlpha(0)
@@ -86,7 +82,6 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         _G[statusName.."Highlight2"]:SetAlpha(0)
         _G[statusName.."Highlight1"]:SetAlpha(0)
 
-        Base.SetTexture(statusBar:GetStatusBarTexture(), "gradientUp")
     end
 end
 

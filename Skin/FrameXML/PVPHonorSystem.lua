@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals floor
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -10,9 +10,6 @@ local Color = Aurora.Color
 
 do --[[ FrameXML\PVPHonorSystem.lua ]]
     function Hook.PVPHonorXPBar_Update(self)
-        self.Bar:SetStatusBarAtlas("")
-        Base.SetTexture(self.Bar:GetStatusBarTexture(), "gradientUp")
-        self.Bar:SetStatusBarColor(1.0, 0.24, 0)
         self.Bar.Spark:Hide()
 
         if self.rewardInfo and not self.rewardInfo.texCoords then
@@ -29,17 +26,17 @@ do --[[ FrameXML\PVPHonorSystem.xml ]]
         Frame.Frame:Hide()
 
         local bar = Frame.Bar
+        Skin.FrameTypeStatusBar(bar)
         bar.Background:Hide()
-        Base.SetBackdrop(bar, Color.frame)
 
-        local layer, sublevel = bar:GetStatusBarTexture():GetDrawLayer()
-        bar:SetBackdropBorderLayer(layer, sublevel + 1)
-
+        local divWidth = bar:GetWidth() / 5
+        local xpos = divWidth
         for i = 1, 4 do
-            local tick = Frame:CreateTexture()
-            tick:SetPoint("TOPLEFT", bar, 93 * i + 2, 0)
-            tick:SetColorTexture(0, 0, 0)
-            tick:SetSize(1, 17)
+            local texture = bar:CreateTexture(nil, "ARTWORK")
+            texture:SetColorTexture(Color.button:GetRGB())
+            texture:SetSize(1, 17)
+            texture:SetPoint("LEFT", xpos, 0)
+            xpos = xpos + divWidth
         end
 
         Frame.NextAvailable.Frame:SetAlpha(0)

@@ -141,6 +141,34 @@ do -- BlizzWTF: These are not templates, but they should be
         Base.SetBackdrop(thumb, Color.button)
         Texture._auroraThumb = thumb
     end
+
+    -- Status Bar frame type
+    local atlasColors = {
+        ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0)
+    }
+    local function Hook_SetStatusBarAtlas(self, atlas)
+        if atlasColors[atlas] then
+            self:GetStatusBarTexture():SetVertexColor(atlasColors[atlas]:GetRGB())
+        else
+            private.debug("SetStatusBarAtlas", atlas)
+        end
+    end
+    local function Hook_SetStatusBarColor(self, r, g, b)
+        self:GetStatusBarTexture():SetVertexColor(r, g, b)
+    end
+    function Skin.FrameTypeStatusBar(Frame)
+        _G.hooksecurefunc(Frame, "SetStatusBarAtlas", Hook_SetStatusBarAtlas)
+        _G.hooksecurefunc(Frame, "SetStatusBarColor", Hook_SetStatusBarColor)
+
+        Base.SetBackdrop(Frame, Color.button, Color.frame.a)
+        local bg = Frame:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+
+        local red, green, blue = Frame:GetStatusBarColor()
+        Base.SetTexture(Frame:GetStatusBarTexture(), "gradientUp")
+        Frame:SetStatusBarColor(red, green, blue)
+    end
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]

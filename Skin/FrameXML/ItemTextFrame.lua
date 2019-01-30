@@ -5,7 +5,6 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -63,15 +62,9 @@ function private.FrameXML.ItemTextFrame()
     _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
     _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
 
+    Skin.FrameTypeStatusBar(_G.ItemTextStatusBar)
     _G.ItemTextStatusBar:SetHeight(17)
-    Base.SetTexture(_G.ItemTextStatusBar:GetStatusBarTexture(), "gradientUp")
-    local statusBG = _G.ItemTextStatusBar:GetRegions()
-    statusBG:SetColorTexture(Color.frame:GetRGB())
-    statusBG:SetDrawLayer("BACKGROUND", -3)
-    statusBG:ClearAllPoints()
-    statusBG:SetPoint("TOPLEFT")
-    statusBG:SetPoint("BOTTOMRIGHT")
-
+    _G.ItemTextStatusBar:GetRegions():Hide()
 
     for i, delta in _G.next, {"PrevPageButton", "NextPageButton"} do
         local button = _G["ItemText"..delta]

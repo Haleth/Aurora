@@ -159,6 +159,8 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
     end
     function Skin.ProfessionStatusBarTemplate(StatusBar)
         local name = StatusBar:GetName()
+        Skin.FrameTypeStatusBar(StatusBar)
+        StatusBar:SetStatusBarColor(Color.green:GetRGB())
 
         StatusBar:SetSize(115, 12)
         StatusBar.rankText:SetPoint("CENTER")
@@ -166,17 +168,9 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         _G[name.."Left"]:Hide()
         StatusBar.capRight:SetAlpha(0)
 
-        Base.SetBackdrop(StatusBar, Color.button, 0.3)
-        local healthBarBG = StatusBar:GetBackdropTexture("bg")
-        healthBarBG:SetPoint("TOPLEFT", -1, 1)
-        healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
-
         _G[name.."BGLeft"]:Hide()
         _G[name.."BGMiddle"]:Hide()
         _G[name.."BGRight"]:Hide()
-
-        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
-        StatusBar:SetStatusBarColor(Color.green:GetRGB())
     end
     function Skin.PrimaryProfessionTemplate(Button)
         local name = Button:GetName()

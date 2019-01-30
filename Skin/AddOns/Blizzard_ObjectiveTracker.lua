@@ -228,19 +228,15 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
 	end
     function Skin.BonusTrackerProgressBarTemplate(Frame)
         local bar = Frame.Bar
+        Skin.FrameTypeStatusBar(bar)
+
         bar.BarFrame:Hide()
         bar.IconBG:SetAlpha(0)
+        bar.BarBG:Hide()
         bar.Icon:SetMask(nil)
         bar.Icon:SetSize(26, 26)
         bar.Icon:SetPoint("RIGHT", 33, 0)
         Base.CropIcon(bar.Icon, bar)
-        Base.SetTexture(bar:GetStatusBarTexture(), "gradientUp")
-        bar.BarBG:Hide()
-
-        local bd = _G.CreateFrame("Frame", nil, bar)
-        bd:SetPoint("TOPLEFT", -1, 1)
-        bd:SetPoint("BOTTOMRIGHT", 1, -1)
-        Base.SetBackdrop(bd, Color.button, 0.3)
     end
 
     ----====####$$$$%%%%%%%$$$$####====----
@@ -248,21 +244,15 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$%%%%%%%$$$$####====----
     function Skin.ScenarioTrackerProgressBarTemplate(Frame)
         local bar = Frame.Bar
+        Skin.FrameTypeStatusBar(bar)
+
         bar.BarFrame:Hide()
         bar.IconBG:SetColorTexture(0, 0, 0)
-
         bar.BarBG:Hide()
         bar.Icon:SetMask(nil)
         bar.Icon:SetSize(26, 26)
         bar.Icon:SetPoint("RIGHT", 33, 0)
         Base.CropIcon(bar.Icon)
-
-        local bd = _G.CreateFrame("Frame", nil, bar)
-        bd:SetPoint("TOPLEFT", -1, 1)
-        bd:SetPoint("BOTTOMRIGHT", 1, -1)
-        Base.SetBackdrop(bd, Color.button, 0.3)
-
-        Base.SetTexture(bar:GetStatusBarTexture(), "gradientUp")
     end
 end
 
@@ -365,11 +355,7 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ScenarioChallengeModeBlock.TimerBGBack:Hide()
     ScenarioChallengeModeBlock.TimerBG:Hide()
 
-    local bd = _G.CreateFrame("Frame", nil, ScenarioChallengeModeBlock.StatusBar)
-    bd:SetPoint("TOPLEFT", -1, 1)
-    bd:SetPoint("BOTTOMRIGHT", 1, -1)
-    Base.SetBackdrop(bd, Color.button, 0.3)
-    Base.SetTexture(ScenarioChallengeModeBlock.StatusBar:GetStatusBarTexture(), "gradientUp")
+    Skin.FrameTypeStatusBar(ScenarioChallengeModeBlock.StatusBar)
     ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.cyan:GetRGB())
 
     -- ScenarioProvingGroundsBlock

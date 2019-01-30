@@ -100,20 +100,14 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
     function Skin.PVPConquestBarTemplate(StatusBar)
         _G.hooksecurefunc(StatusBar.Reward, "SetTexture", Hook.PVPConquestBarRewardMixin_SetTexture)
 
+        Skin.FrameTypeStatusBar(StatusBar)
         StatusBar.Border:Hide()
         StatusBar.Background:Hide()
-
-        Base.SetBackdrop(StatusBar, Color.button, 0.3)
-        local bg = StatusBar:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
 
         StatusBar.Reward:SetPoint("LEFT", StatusBar, "RIGHT", -5, 0)
         StatusBar.Reward.Ring:Hide()
         Base.CropIcon(StatusBar.Reward.Icon, StatusBar.Reward)
         StatusBar.Reward.CircleMask:Hide()
-
-        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
     end
     function Skin.PVPQueueFrameButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.button)

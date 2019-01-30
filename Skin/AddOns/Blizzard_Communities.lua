@@ -280,12 +280,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.Middle:Hide()
             Frame.BG:Hide()
 
-            local bg = _G.CreateFrame("Frame", nil, Frame)
+            Base.SetBackdrop(Frame, Color.button, Color.frame.a)
+            local bg = Frame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", 0, -3)
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
-            bg:SetFrameLevel(Frame:GetFrameLevel())
-            Base.SetBackdrop(bg, Color.frame)
-            bg:SetBackdropBorderColor(Color.button)
+            bg:SetPoint("BOTTOMRIGHT", -1, 1)
 
             Base.SetTexture(Frame.Progress, "gradientUp")
             Frame.Shadow:Hide()

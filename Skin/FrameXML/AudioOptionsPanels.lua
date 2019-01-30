@@ -5,9 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
 
 do --[[ FrameXML\AudioOptionsPanels.lua ]]
     function Hook.AudioOptionsVoicePanel_InitializeCommunicationModeUI(self)
@@ -82,11 +80,8 @@ function private.FrameXML.AudioOptionsPanels()
 
     local TestInputDevice = AudioOptionsVoicePanel.TestInputDevice
     Skin.OptionsButtonTemplate(TestInputDevice.ToggleTest)
-    Skin.OptionsBoxTemplate(TestInputDevice.VUMeter)
-    TestInputDevice.VUMeter:SetBackdropBorderColor(Color.button)
-    TestInputDevice.VUMeter.Status:SetPoint("TOPLEFT", 1, -1)
-    TestInputDevice.VUMeter.Status:SetPoint("BOTTOMRIGHT", -1, 1)
-    Base.SetTexture(TestInputDevice.VUMeter.Status:GetStatusBarTexture(), "gradientUp")
+    TestInputDevice.VUMeter:SetBackdrop(nil)
+    Skin.FrameTypeStatusBar(TestInputDevice.VUMeter.Status)
 
     Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.ChatModeDropdown)
 end

@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
+local Skin = Aurora.Skin
 local Color = Aurora.Color
 local F, C = _G.unpack(Aurora)
 
@@ -113,12 +113,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     ArcheologyDigsiteProgressBar.BarBorderAndOverlay:Hide()
 
     local FillBar = ArcheologyDigsiteProgressBar.FillBar
-    Base.SetBackdrop(FillBar, Color.button, 0.3)
-    local healthBarBG = FillBar:GetBackdropTexture("bg")
-    healthBarBG:SetPoint("TOPLEFT", -1, 1)
-    healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1.4)
-
-    Base.SetTexture(FillBar:GetStatusBarTexture(), "gradientUp")
+    Skin.FrameTypeStatusBar(FillBar)
     FillBar:SetStatusBarColor(Color.yellow:Hue(-0.08):GetRGB())
 
     local divWidth = FillBar:GetWidth() / 6

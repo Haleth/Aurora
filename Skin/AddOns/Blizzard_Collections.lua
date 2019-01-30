@@ -208,15 +208,10 @@ end
 do --[[ AddOns\Blizzard_Collections.xml ]]
     do --[[ Blizzard_CollectionTemplates ]]
         function Skin.CollectionsProgressBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
+
             StatusBar.border:Hide()
             select(3, StatusBar:GetRegions()):Hide()
-
-            Base.SetBackdrop(StatusBar, Color.button, 0.3)
-            local healthBarBG = StatusBar:GetBackdropTexture("bg")
-            healthBarBG:SetPoint("TOPLEFT", -1, 1)
-            healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
-
-            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
         end
         function Skin.CollectionsSpellButtonTemplate(CheckButton)
             Base.CropIcon(CheckButton.iconTexture, CheckButton)
@@ -368,23 +363,19 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Button.level:SetPoint("CENTER", Button.levelBG)
 
             local healthFrame = Button.healthFrame
+            Skin.FrameTypeStatusBar(healthFrame.healthBar)
             local left, right, mid, bg = healthFrame.healthBar:GetRegions()
             left:Hide()
             right:Hide()
             mid:Hide()
             bg:Hide()
-            Base.SetTexture(healthFrame.healthBar:GetStatusBarTexture(), "gradientUp")
-
-            Base.SetBackdrop(healthFrame.healthBar, Color.button, 0.3)
-            local healthBarBG = healthFrame.healthBar:GetBackdropTexture("bg")
-            healthBarBG:SetPoint("TOPLEFT", -1, 1)
-            healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
 
             Skin.CompanionLoadOutSpellTemplate(Button.spell1)
             Skin.CompanionLoadOutSpellTemplate(Button.spell2)
             Skin.CompanionLoadOutSpellTemplate(Button.spell3)
 
             local xpBar = Button.xpBar
+            Skin.FrameTypeStatusBar(xpBar)
             local regions = {xpBar:GetRegions()}
             regions[2]:Hide() -- Left
             regions[3]:Hide() -- Right
@@ -395,12 +386,6 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             end
 
             regions[12]:Hide() -- BGMiddle
-            Base.SetTexture(xpBar:GetStatusBarTexture(), "gradientUp")
-
-            Base.SetBackdrop(xpBar, Color.button, 0.3)
-            local xpBarBG = xpBar:GetBackdropTexture("bg")
-            xpBarBG:SetPoint("TOPLEFT", -1, 1)
-            xpBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
 
             local setHighlight = Button.setButton:GetRegions()
             Base.CropIcon(setHighlight)
@@ -630,23 +615,19 @@ function private.AddOns.Blizzard_Collections()
     Base.CropIcon(PetCard.TypeInfo.typeIcon, PetCard.TypeInfo)
 
     local healthBar = PetCard.HealthFrame.healthBar
+    Skin.FrameTypeStatusBar(healthBar)
     local left, right, mid, bg = healthBar:GetRegions()
     left:Hide()
     right:Hide()
     mid:Hide()
     bg:Hide()
-    Base.SetTexture(healthBar:GetStatusBarTexture(), "gradientUp")
-
-    Base.SetBackdrop(healthBar, Color.button, 0.3)
-    local healthBarBG = healthBar:GetBackdropTexture("bg")
-    healthBarBG:SetPoint("TOPLEFT", -1, 1)
-    healthBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
 
     for i = 1, 6 do
         Skin.PetCardSpellButtonTemplate(PetCard["spell"..i])
     end
 
     local xpBar = PetCard.xpBar
+    Skin.FrameTypeStatusBar(xpBar)
     local regions = {xpBar:GetRegions()}
     regions[2]:Hide() -- Left
     regions[3]:Hide() -- Right
@@ -657,12 +638,6 @@ function private.AddOns.Blizzard_Collections()
     end
 
     regions[12]:Hide() -- BGMiddle
-    Base.SetTexture(xpBar:GetStatusBarTexture(), "gradientUp")
-
-    Base.SetBackdrop(xpBar, Color.button, 0.3)
-    local xpBarBG = xpBar:GetBackdropTexture("bg")
-    xpBarBG:SetPoint("TOPLEFT", -1, 1)
-    xpBarBG:SetPoint("BOTTOMRIGHT", 1, -1)
 
 
     Skin.MagicButtonTemplate(PetJournal.FindBattleButton)

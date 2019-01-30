@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
     function Hook.PetBattleUnitFrame_UpdateDisplay(self)
@@ -98,19 +99,21 @@ do --[[ AddOns\Blizzard_PetBattleUI.xml ]]
     function Skin.PetBattleMiniUnitFrameAlly(Button)
         Button._auroraIconBG = Base.CropIcon(Button.Icon, Button)
 
+        Button.HealthBarBG:SetColorTexture(Color.button.r, Color.button.g, Color.button.b, Color.frame.a)
         Button.HealthBarBG:SetPoint("BOTTOMLEFT")
         Button.HealthBarBG:SetPoint("TOPRIGHT", Button, "BOTTOMRIGHT", 0, 7)
-        Base.SetTexture(Button.ActualHealthBar, "gradientUp")
 
-        Button.ActualHealthBar:SetPoint("BOTTOMLEFT", Button.HealthBarBG)
+        Base.SetTexture(Button.ActualHealthBar, "gradientUp")
         Button.ActualHealthBar:SetPoint("TOPLEFT", Button.HealthBarBG)
+        Button.ActualHealthBar:SetPoint("BOTTOMLEFT", Button.HealthBarBG)
 
         Button.BorderAlive:SetAlpha(0)
         Button.BorderDead:SetTexture([[Interface\PetBattles\DeadPetIcon]])
         Button.BorderDead:SetTexCoord(0, 1, 0, 1)
         Button.BorderDead:SetAllPoints()
 
-        Button.HealthDivider:SetAlpha(0)
+        Button.HealthDivider:SetColorTexture(Color.button:GetRGB())
+        Button.HealthDivider:SetHeight(1)
     end
     function Skin.PetBattleMiniUnitFrameEnemy(Button)
         Button._auroraIconBG = Base.CropIcon(Button.Icon, Button)
@@ -126,8 +129,22 @@ do --[[ AddOns\Blizzard_PetBattleUI.xml ]]
         Frame._auroraIconBG = Base.CropIcon(Frame.Icon, Frame)
         Frame.HealthBorder:Hide()
         Frame.XPBorder:SetAlpha(0)
-
         Frame.Border:Hide()
+
+        Frame.HealthBG:SetAlpha(0)
+        local healthBD = _G.CreateFrame("Frame", nil, Frame)
+        Base.SetBackdrop(healthBD, Color.button, Color.frame.a)
+        local bg = healthBD:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", Frame.HealthBG, -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", Frame.HealthBG, 1, -1)
+
+        Frame.XPBG:SetAlpha(0)
+        local xpBD = _G.CreateFrame("Frame", nil, Frame)
+        Base.SetBackdrop(xpBD, Color.button, Color.frame.a)
+        bg = xpBD:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", Frame.XPBG, -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", Frame.XPBG, 1, -1)
+
         Base.SetTexture(Frame.ActualHealthBar, "gradientUp")
         Base.SetTexture(Frame.XPBar, "gradientUp")
 
@@ -197,14 +214,20 @@ function private.AddOns.Blizzard_PetBattleUI()
         unit._auroraIconBG = Base.CropIcon(unit.Icon, unit)
 
         unit.Border:SetAlpha(0)
-        unit.HealthBarBG:SetSize(145, 37)
-        unit.HealthBarBG:SetColorTexture(0, 0, 0, 0.5)
+        unit.HealthBarBG:SetAlpha(0)
 
         unit.Border2:SetAlpha(0)
         unit.BorderFlash:Hide()
 
         unit.LevelUnderlay:Hide()
         unit.SpeedUnderlay:SetAlpha(0)
+
+        local healthBD = _G.CreateFrame("Frame", nil, unit)
+        Base.SetBackdrop(healthBD, Color.button, Color.frame.a)
+        local bg = healthBD:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", unit.HealthBarBG, 4, -4)
+        bg:SetPoint("BOTTOMRIGHT", unit.HealthBarBG, -4, 4)
+
         Base.SetTexture(unit.ActualHealthBar, "gradientUp")
         unit.ActualHealthBar:SetVertexColor(0, 1, 0)
 
@@ -240,11 +263,11 @@ function private.AddOns.Blizzard_PetBattleUI()
     BottomFrame.Background:Hide()
 
     local xpBar = BottomFrame.xpBar
+    Skin.FrameTypeStatusBar(xpBar)
     xpBar:SetHeight(10)
     xpBar:ClearAllPoints()
     xpBar:SetPoint("BOTTOMLEFT")
     xpBar:SetPoint("BOTTOMRIGHT")
-    Base.SetTexture(xpBar:GetStatusBarTexture(), "gradientUp")
     local _, xpLeft, xpRight, xpMid = xpBar:GetRegions()
     xpLeft:Hide()
     xpRight:Hide()
@@ -254,7 +277,7 @@ function private.AddOns.Blizzard_PetBattleUI()
     for i = 1, 6 do
         local texture
         texture = _G["PetBattleXPBarDiv"..i]
-        texture:SetColorTexture(0, 0, 0)
+        texture:SetColorTexture(Color.button:GetRGB())
         texture:SetSize(1, 10)
         xpBar._auroraDivs[i] = texture
     end

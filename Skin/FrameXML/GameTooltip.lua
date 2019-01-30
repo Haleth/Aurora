@@ -27,6 +27,13 @@ do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.EmbeddedItemTooltip_PrepareForSpell(self)
         self._auroraIconBorder:Show()
     end
+
+    local statusBarPoolHooked = false
+    function Hook.GameTooltip_AddStatusBar(self, min, max, value, text)
+        if not statusBarPoolHooked then
+            _G.hooksecurefunc(self.statusBarPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+        end
+    end
 end
 
 do --[[ FrameXML\GameTooltip.xml ]]
@@ -34,31 +41,25 @@ do --[[ FrameXML\GameTooltip.xml ]]
         function Skin.GameTooltipTemplate(GameTooltip)
             Base.SetBackdrop(GameTooltip)
 
-            local status = _G[GameTooltip:GetName().."StatusBar"]
-            status:SetHeight(4)
-            status:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
-            status:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
-            Base.SetTexture(status:GetStatusBarTexture(), "gradientUp")
+            local statusBar = _G[GameTooltip:GetName().."StatusBar"]
+            Skin.FrameTypeStatusBar(statusBar)
+            Base.SetBackdropColor(statusBar, Color.frame)
 
-            local statusBG = status:CreateTexture(nil, "BACKGROUND")
-            statusBG:SetColorTexture(0, 0, 0)
-            statusBG:SetPoint("TOPLEFT", -1, 1)
-            statusBG:SetPoint("BOTTOMRIGHT", 1, -1)
+            statusBar:SetHeight(4)
+            statusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
+            statusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
         end
         function Skin.ShoppingTooltipTemplate(GameTooltip)
             Base.SetBackdrop(GameTooltip)
         end
         function Skin.TooltipStatusBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
         end
         function Skin.TooltipProgressBarTemplate(Frame)
             local bar = Frame.Bar
-            Base.SetBackdrop(bar, Color.frame)
-            bar:SetBackdropBorderColor(Color.button)
+            Skin.FrameTypeStatusBar(bar)
 
-            local texture = bar:GetStatusBarTexture()
-            Base.SetTexture(texture, "gradientUp")
-            texture:SetDrawLayer("BORDER")
-
+            bar:GetStatusBarTexture():SetDrawLayer("BORDER")
             bar.BorderLeft:Hide()
             bar.BorderRight:Hide()
             bar.BorderMid:Hide()

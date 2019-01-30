@@ -5,7 +5,6 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\Timer.lua ]]
@@ -19,16 +18,10 @@ end
 
 do --[[ FrameXML\Timer.xml ]]
     function Skin.StartTimerBar(Frame)
-        Base.SetTexture(Frame.bar:GetStatusBarTexture(), "gradientUp")
+        Skin.FrameTypeStatusBar(Frame.bar)
         local bg, border = Frame.bar:GetRegions()
         bg:Hide()
         border:Hide()
-
-        local backdrop = _G.CreateFrame("Frame", nil, Frame.bar)
-        backdrop:SetPoint("TOPLEFT", -1, 1)
-        backdrop:SetPoint("BOTTOMRIGHT", 1, -1)
-        backdrop:SetFrameLevel(Frame.bar:GetFrameLevel() - 1)
-        Base.SetBackdrop(backdrop)
     end
 end
 

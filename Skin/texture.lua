@@ -81,49 +81,39 @@ end
 
 do -- gradients
     local min, max = 0.3, 0.7
-    local hookedStatusBar, hookedTexture = {}, {}
-    local function SetGradientMinMax(frame, texture, direction)
-        if frame.SetStatusBarColor then
-            local red, green, blue = frame:GetStatusBarColor()
-            texture:SetGradient(direction, red * min, green * min, blue * min, red * max, green * max, blue * max)
+    local hookedTexture = {}
 
-            if not hookedStatusBar[frame] then
-                _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
-                    texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
-                end)
-                hookedStatusBar[frame] = true
-            end
+    local function SetVertexColorMinMax(texture, r, g, b)
+        texture:SetGradient(hookedTexture[texture], r * min, g * min, b * min, r * max, g * max, b * max)
+    end
+    local function SetGradientMinMax(frame, texture, direction)
+        local r, g, b = texture:GetVertexColor()
+        if r and g and b then
+            texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
         else
             texture:SetGradient(direction, min, min, min, max, max, max)
+        end
 
-            if not hookedTexture[texture] then
-                _G.hooksecurefunc(texture, "SetVertexColor", function(self, r, g, b)
-                    texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
-                end)
-                hookedTexture[texture] = true
-            end
+        if not hookedTexture[texture] then
+            _G.hooksecurefunc(texture, "SetVertexColor", SetVertexColorMinMax)
+            hookedTexture[texture] = direction
         end
     end
-    local function SetGradientMaxMin(frame, texture, direction)
-        if frame.SetStatusBarColor then
-            local red, green, blue = frame:GetStatusBarColor()
-            texture:SetGradient(direction, red * max, green * max, blue * max, red * min, green * min, blue * min)
 
-            if not hookedStatusBar[frame] then
-                _G.hooksecurefunc(frame, "SetStatusBarColor", function(self, r, g, b)
-                    texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
-                end)
-                hookedStatusBar[frame] = true
-            end
+    local function SetVertexColorMaxMin(texture, r, g, b)
+        texture:SetGradient(hookedTexture[texture], r * max, g * max, b * max, r * min, g * min, b * min)
+    end
+    local function SetGradientMaxMin(frame, texture, direction)
+        local r, g, b = texture:GetVertexColor()
+        if r and g and b then
+            texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
         else
             texture:SetGradient(direction, max, max, max, min, min, min)
+        end
 
-            if not hookedTexture[texture] then
-                _G.hooksecurefunc(texture, "SetVertexColor", function(self, r, g, b)
-                    texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
-                end)
-                hookedTexture[texture] = true
-            end
+        if not hookedTexture[texture] then
+            _G.hooksecurefunc(texture, "SetVertexColor", SetVertexColorMaxMin)
+            hookedTexture[texture] = direction
         end
     end
 

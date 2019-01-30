@@ -164,6 +164,8 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
     end
     function Skin.AchievementFrameSummaryCategoryTemplate(StatusBar)
+        Skin.FrameTypeStatusBar(StatusBar)
+
         local name = StatusBar:GetName()
         StatusBar.label:SetPoint("LEFT", 6, 0)
         StatusBar.text:SetPoint("RIGHT", -6, 0)
@@ -171,6 +173,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
         _G[name.."Middle"]:Hide()
+        _G[name.."FillBar"]:Hide()
 
         local r, g, b = Color.highlight:GetRGB()
         _G[name.."ButtonHighlightLeft"]:Hide()
@@ -179,8 +182,6 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         local highlight = _G[name.."ButtonHighlightMiddle"]
         highlight:SetAllPoints()
         highlight:SetColorTexture(r, g, b, 0.2)
-
-        Base.SetTexture(_G[name.."Bar"], "gradientUp")
     end
     function Skin.AchievementCheckButtonTemplate(CheckButton)
         CheckButton:SetSize(11, 11)
@@ -228,22 +229,22 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Button.border:Hide()
     end
     function Skin.AchievementProgressBarTemplate(StatusBar)
-        local name = StatusBar:GetName()
+        Skin.FrameTypeStatusBar(StatusBar)
 
+        local name = StatusBar:GetName()
+        _G[name.."BG"]:Hide()
         _G[name.."BorderLeft"]:Hide()
         _G[name.."BorderRight"]:Hide()
         _G[name.."BorderCenter"]:Hide()
-
-        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
     end
     function Skin.AchievementHeaderStatusBarTemplate(StatusBar)
-        local name = StatusBar:GetName()
+        Skin.FrameTypeStatusBar(StatusBar)
 
+        local name = StatusBar:GetName()
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
         _G[name.."Middle"]:Hide()
-
-        Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
+        _G[name.."FillBar"]:Hide()
     end
     function Skin.AchievementCategoryTemplate(Button)
         Base.SetBackdrop(Button, Color.button)
@@ -443,6 +444,9 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
+    ------------
+    -- Header --
+    ------------
     _G.AchievementFrameHeaderLeft:Hide()
     _G.AchievementFrameHeaderRight:Hide()
 
@@ -456,6 +460,9 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
+    ----------------
+    -- Categories --
+    ----------------
     Base.SetBackdrop(_G.AchievementFrameCategories, Color.frame)
     Skin.HybridScrollBarTemplate(_G.AchievementFrameCategoriesContainerScrollBar)
     _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameCategoriesContainer, "TOPRIGHT", 0, -12)
@@ -463,6 +470,9 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
+    ------------------
+    -- Achievements --
+    ------------------
     Base.SetBackdrop(_G.AchievementFrameAchievements, Color.frame)
     _G.AchievementFrameAchievementsBackground:Hide()
     select(3, _G.AchievementFrameAchievements:GetRegions()):Hide()
@@ -474,6 +484,9 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
+    -----------
+    -- Stats --
+    -----------
     Base.SetBackdrop(_G.AchievementFrameStats, Color.frame)
     _G.AchievementFrameStatsBG:Hide()
     Skin.HybridScrollBarTemplate(_G.AchievementFrameStatsContainerScrollBar)
@@ -483,6 +496,9 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
 
+    -------------
+    -- Summary --
+    -------------
     Base.SetBackdrop(_G.AchievementFrameSummary, Color.frame)
     _G.AchievementFrameSummaryBackground:Hide()
     _G.AchievementFrameSummary:GetChildren():Hide()
@@ -490,18 +506,23 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.AchievementFrameSummaryAchievementsHeaderHeader:Hide()
 
     _G.AchievementFrameSummaryCategoriesHeaderTexture:Hide()
+
+    Skin.FrameTypeStatusBar(_G.AchievementFrameSummaryCategoriesStatusBar)
     _G.AchievementFrameSummaryCategoriesStatusBarTitle:SetPoint("LEFT", 6, 0)
     _G.AchievementFrameSummaryCategoriesStatusBarText:SetPoint("RIGHT", -6, 0)
     _G.AchievementFrameSummaryCategoriesStatusBarLeft:Hide()
     _G.AchievementFrameSummaryCategoriesStatusBarRight:Hide()
     _G.AchievementFrameSummaryCategoriesStatusBarMiddle:Hide()
-    Base.SetTexture(_G.AchievementFrameSummaryCategoriesStatusBarBar, "gradientUp")
+    _G.AchievementFrameSummaryCategoriesStatusBarFillBar:Hide()
     for i = 1, 12 do
         Skin.AchievementFrameSummaryCategoryTemplate(_G["AchievementFrameSummaryCategoriesCategory"..i])
     end
 
 
 
+    ----------------
+    -- Comparison --
+    ----------------
     Base.SetBackdrop(_G.AchievementFrameComparison, Color.frame)
     _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonSummaryFriend, "TOPLEFT")
     _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", _G.AchievementFrameComparisonSummaryFriend, "TOPRIGHT")

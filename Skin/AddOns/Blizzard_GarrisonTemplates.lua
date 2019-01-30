@@ -292,9 +292,11 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Skin.UIPanelButtonTemplate(Frame.NextMissionButton)
         end
         function Skin.GarrisonFollowerXPBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
+
+            StatusBar:GetRegions():Hide()
             StatusBar.XPLeft:ClearAllPoints()
             StatusBar.XPRight:ClearAllPoints()
-            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
         end
         function Skin.GarrisonFollowerXPGainTemplate(Frame)
         end

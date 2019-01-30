@@ -37,12 +37,15 @@ do --[[ FrameXML\LootFrame.xml ]]
         promptFrame.InfoFrame:SetPoint("TOPLEFT", textFrame, 4, 0)
         promptFrame.InfoFrame:SetPoint("BOTTOMRIGHT", textFrame)
 
-        Base.SetTexture(promptFrame.Timer.Bar, "gradientUp")
-        promptFrame.Timer:SetPoint("BOTTOMLEFT", 1, 1)
+        Skin.FrameTypeStatusBar(promptFrame.Timer)
+        promptFrame.Timer:SetHeight(6)
+        promptFrame.Timer:SetPoint("BOTTOMLEFT", 4, 4)
         promptFrame.RollButton:SetPoint("TOPRIGHT", -40, -10)
 
+        Frame.BlackBackgroundHoist:Hide()
+
         textFrame:SetPoint("TOPLEFT", promptFrame.Icon, "TOPRIGHT", 4, 1)
-        textFrame:SetPoint("BOTTOMRIGHT", promptFrame.Timer, "TOPRIGHT", 0, 3)
+        textFrame:SetPoint("BOTTOMRIGHT", promptFrame.Timer, "TOPRIGHT", 1, 3)
 
         Frame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", -2, 0)
     end
