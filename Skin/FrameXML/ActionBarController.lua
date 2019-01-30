@@ -111,36 +111,6 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Skin.GlowBoxFrame(Frame)
         end
     end
-    do --[[ MainMenuBar.xml ]]
-        function Skin.MainMenuBarWatchBarTemplate(Frame)
-            local StatusBar = Frame.StatusBar
-            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
-            Base.SetTexture(StatusBar.Underlay, "gradientUp")
-
-            StatusBar.WatchBarTexture0:SetAlpha(0)
-            StatusBar.WatchBarTexture1:SetAlpha(0)
-            StatusBar.WatchBarTexture2:SetAlpha(0)
-            StatusBar.WatchBarTexture3:SetAlpha(0)
-
-            StatusBar.XPBarTexture0:SetAlpha(0)
-            StatusBar.XPBarTexture1:SetAlpha(0)
-            StatusBar.XPBarTexture2:SetAlpha(0)
-            StatusBar.XPBarTexture3:SetAlpha(0)
-
-            do -- set xp divs
-                local divWidth = 1024 / 20
-                local xpos = divWidth
-                for i = 1, 19 do
-                    local texture = StatusBar:CreateTexture(nil, "ARTWORK")
-                    texture:SetColorTexture(0, 0, 0)
-                    texture:SetSize(1, 11)
-
-                    texture:SetPoint("LEFT", floor(xpos), 0)
-                    xpos = xpos + divWidth
-                end
-            end
-        end
-    end
     do --[[ ActionButtonTemplate.xml ]]
         function Skin.ActionButtonTemplate(CheckButton)
             Base.CropIcon(CheckButton.icon)
