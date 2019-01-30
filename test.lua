@@ -711,4 +711,48 @@ do -- Popup Frames
     }
 end
 
+do -- Misc
+    function _G.GetMaxBattlefieldID()
+        return 1
+    end
+    function _G.GetBattlefieldStatus(id)
+        return "active"
+    end
+
+    local misc do
+        misc = {
+            name = "Misc. Frames",
+            type = "group",
+            args = {
+                itemTextStatusBar = {
+                    name = "TextFrame loading bar",
+                    desc = "ItemTextStatusBar",
+                    type = "execute",
+                    func = function()
+                        _G.ItemTextFrame_OnEvent(_G.ItemTextFrame, "ITEM_TEXT_TRANSLATION", 5)
+                    end,
+                },
+                worldState = {
+                    name = "PvP score frame",
+                    desc = "WorldStateScoreFrame",
+                    type = "execute",
+                    func = function()
+                        _G.ToggleWorldStateScoreFrame()
+                    end,
+                },
+                timer = {
+                    name = "PvP Start Timer",
+                    desc = "StartTimerBar",
+                    type = "execute",
+                    func = function()
+                        _G.TimerTracker_OnEvent(_G.TimerTracker, "START_TIMER", 1, 80, 80)
+                    end,
+                },
+            },
+        }
+    end
+
+    test.args.misc = misc
+end
+
 private.test = test
