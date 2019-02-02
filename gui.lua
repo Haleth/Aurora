@@ -411,7 +411,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
         local AceConfig = _G.LibStub("AceConfig-3.0", true)
         if AceConfig then
             if test.init then
-                test.init = nil
+                test.init()
                 AceConfig:RegisterOptionsTable("test", test)
             end
             _G.LibStub("AceConfigDialog-3.0"):Open("test")
