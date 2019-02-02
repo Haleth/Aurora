@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.1.0.3] - 2019-02-02 ##
 ### Added ###
 
   * Archeology digsite progress bar skin
@@ -339,6 +339,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.0.3]: https://github.com/Haleth/Aurora/compare/8.1.0.2...8.1.0.3
 [8.1.0.2]: https://github.com/Haleth/Aurora/compare/8.1.0.1...8.1.0.2
 [8.1.0.1]: https://github.com/Haleth/Aurora/compare/8.1.0.0...8.1.0.1
 [8.1.0.0]: https://github.com/Haleth/Aurora/compare/8.0.1.9...8.1.0.0
