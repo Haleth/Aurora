@@ -10,172 +10,179 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do -- BlizzWTF: These are not templates, but they should be
-    -- ExpandOrCollapse
-    local function Hook_SetNormalTexture(self, texture)
-        if self.settingTexture then return end
-        self.settingTexture = true
-        self:SetNormalTexture("")
+    do -- ExpandOrCollapse
+        local function Hook_SetNormalTexture(self, texture)
+            if self.settingTexture then return end
+            self.settingTexture = true
+            self:SetNormalTexture("")
 
-        if texture == 130838 then
-            texture = "Plus"
-        elseif texture == 130821 then
-            texture = "Minus"
-        end
-
-        if texture and texture ~= "" then
-            if texture:find("Plus") then
-                self._auroraBG.plus:Show()
-            elseif texture:find("Minus") then
-                self._auroraBG.plus:Hide()
+            if texture == 130838 then
+                texture = "Plus"
+            elseif texture == 130821 then
+                texture = "Minus"
             end
-            self._auroraBG:Show()
-        else
-            self._auroraBG:Hide()
+
+            if texture and texture ~= "" then
+                if texture:find("Plus") then
+                    self._auroraBG.plus:Show()
+                elseif texture:find("Minus") then
+                    self._auroraBG.plus:Hide()
+                end
+                self._auroraBG:Show()
+            else
+                self._auroraBG:Hide()
+            end
+            self.settingTexture = nil
         end
-        self.settingTexture = nil
-    end
-    function Skin.ExpandOrCollapse(Button)
-        Button:SetHighlightTexture("")
-        Button:SetPushedTexture("")
+        function Skin.ExpandOrCollapse(Button)
+            Button:SetHighlightTexture("")
+            Button:SetPushedTexture("")
 
-        local bg = _G.CreateFrame("Frame", nil, Button)
-        bg:SetSize(13, 13)
-        bg:SetPoint("TOPLEFT", Button:GetNormalTexture(), 0, -2)
-        Base.SetBackdrop(bg, Color.button)
-        Button._auroraBG = bg
+            local bg = _G.CreateFrame("Frame", nil, Button)
+            bg:SetSize(13, 13)
+            bg:SetPoint("TOPLEFT", Button:GetNormalTexture(), 0, -2)
+            Base.SetBackdrop(bg, Color.button)
+            Button._auroraBG = bg
 
-        Button._auroraHighlight = {}
-        bg.minus = bg:CreateTexture(nil, "OVERLAY")
-        bg.minus:SetPoint("TOPLEFT", 2, -6)
-        bg.minus:SetPoint("BOTTOMRIGHT", -2, 6)
-        bg.minus:SetColorTexture(1, 1, 1)
-        _G.tinsert(Button._auroraHighlight, bg.minus)
+            Button._auroraHighlight = {}
+            bg.minus = bg:CreateTexture(nil, "OVERLAY")
+            bg.minus:SetPoint("TOPLEFT", 2, -6)
+            bg.minus:SetPoint("BOTTOMRIGHT", -2, 6)
+            bg.minus:SetColorTexture(1, 1, 1)
+            _G.tinsert(Button._auroraHighlight, bg.minus)
 
-        bg.plus = bg:CreateTexture(nil, "OVERLAY")
-        bg.plus:SetPoint("TOPLEFT", 6, -2)
-        bg.plus:SetPoint("BOTTOMRIGHT", -6, 2)
-        bg.plus:SetColorTexture(1, 1, 1)
-        _G.tinsert(Button._auroraHighlight, bg.plus)
+            bg.plus = bg:CreateTexture(nil, "OVERLAY")
+            bg.plus:SetPoint("TOPLEFT", 6, -2)
+            bg.plus:SetPoint("BOTTOMRIGHT", -6, 2)
+            bg.plus:SetColorTexture(1, 1, 1)
+            _G.tinsert(Button._auroraHighlight, bg.plus)
 
-        Base.SetHighlight(Button, "texture")
-        _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
-    end
-
-    -- Nav buttons
-    local function NavButton(Button)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetHighlightTexture("")
-
-        local bg = _G.CreateFrame("Frame", nil, Button)
-        bg:SetPoint("TOPLEFT", 4, -5)
-        bg:SetPoint("BOTTOMRIGHT", -5, 5)
-        bg:SetFrameLevel(Button:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.button)
-        Button._auroraBG = bg
-
-        local disabled = Button:GetDisabledTexture()
-        disabled:SetColorTexture(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-        disabled:SetAllPoints(bg)
-    end
-    function Skin.NavButtonPrevious(Button)
-        NavButton(Button)
-
-        local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", Button._auroraBG, 7, -5)
-        arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -9, 4)
-        Base.SetTexture(arrow, "arrowLeft")
-
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
-    end
-    function Skin.NavButtonNext(Button)
-        NavButton(Button)
-
-        local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", Button._auroraBG, 8, -5)
-        arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -8, 4)
-        Base.SetTexture(arrow, "arrowRight")
-
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
-    end
-
-    -- Side Tabs
-    local function Hook_SetChecked(self, isChecked)
-        -- Set the selected tab
-        if isChecked then
-            self._auroraIconBG:SetColorTexture(Color.yellow:GetRGB())
-        else
-            self._auroraIconBG:SetColorTexture(Color.black:GetRGB())
+            Base.SetHighlight(Button, "texture")
+            _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
         end
     end
-    function Skin.SideTabTemplate(CheckButton)
-        _G.hooksecurefunc(CheckButton, "SetChecked", Hook_SetChecked)
-        CheckButton:GetRegions():Hide()
 
-        local icon = CheckButton.Icon or CheckButton:GetNormalTexture()
-        CheckButton._auroraIconBG = Base.CropIcon(icon, CheckButton)
-        Base.CropIcon(CheckButton:GetHighlightTexture())
-        Base.CropIcon(CheckButton:GetCheckedTexture())
-    end
+    do -- Nav buttons
+        local function NavButton(Button)
+            Button:SetNormalTexture("")
+            Button:SetPushedTexture("")
+            Button:SetHighlightTexture("")
 
-    -- Scroll thumb
-    local function Hook_Hide(self)
-        self._auroraThumb:Hide()
-    end
-    local function Hook_Show(self)
-        self._auroraThumb:Show()
-    end
-    function Skin.ScrollBarThumb(Texture)
-        Texture:SetAlpha(0)
-        Texture:SetSize(17, 24)
-        _G.hooksecurefunc(Texture, "Hide", Hook_Hide)
-        _G.hooksecurefunc(Texture, "Show", Hook_Show)
+            local bg = _G.CreateFrame("Frame", nil, Button)
+            bg:SetPoint("TOPLEFT", 4, -5)
+            bg:SetPoint("BOTTOMRIGHT", -5, 5)
+            bg:SetFrameLevel(Button:GetFrameLevel())
+            Base.SetBackdrop(bg, Color.button)
+            Button._auroraBG = bg
 
-        local thumb = _G.CreateFrame("Frame", nil, Texture:GetParent())
-        thumb:SetPoint("TOPLEFT", Texture, 0, -2)
-        thumb:SetPoint("BOTTOMRIGHT", Texture, 0, 2)
-        thumb:SetShown(Texture:IsShown())
-        Base.SetBackdrop(thumb, Color.button)
-        Texture._auroraThumb = thumb
-    end
+            local disabled = Button:GetDisabledTexture()
+            disabled:SetColorTexture(0, 0, 0, .3)
+            disabled:SetDrawLayer("OVERLAY")
+            disabled:SetAllPoints(bg)
+        end
+        function Skin.NavButtonPrevious(Button)
+            NavButton(Button)
 
-    -- Status Bar frame type
-    local atlasColors = {
-        ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
-        ["objectivewidget-bar-fill-left"] = Color.blue,
-        ["objectivewidget-bar-fill-middle"] = Color.yellow,
-        ["objectivewidget-bar-fill-right"] = Color.red,
-    }
-    local function Hook_SetStatusBarAtlas(self, atlas)
-        if atlasColors[atlas] then
-            local texture = self:GetStatusBarTexture()
-            texture:SetTexture([[Interface\Buttons\WHITE8x8]])
-            texture:SetVertexColor(atlasColors[atlas]:GetRGB())
-        else
-            private.debug("SetStatusBarAtlas", atlas)
+            local arrow = Button:CreateTexture(nil, "ARTWORK")
+            arrow:SetPoint("TOPLEFT", Button._auroraBG, 7, -5)
+            arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -9, 4)
+            Base.SetTexture(arrow, "arrowLeft")
+
+            Button._auroraHighlight = {arrow}
+            Base.SetHighlight(Button, "texture")
+        end
+        function Skin.NavButtonNext(Button)
+            NavButton(Button)
+
+            local arrow = Button:CreateTexture(nil, "ARTWORK")
+            arrow:SetPoint("TOPLEFT", Button._auroraBG, 8, -5)
+            arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -8, 4)
+            Base.SetTexture(arrow, "arrowRight")
+
+            Button._auroraHighlight = {arrow}
+            Base.SetHighlight(Button, "texture")
         end
     end
-    local function Hook_SetStatusBarColor(self, r, g, b)
-        self:GetStatusBarTexture():SetVertexColor(r, g, b)
-    end
-    function Skin.FrameTypeStatusBar(Frame)
-        _G.hooksecurefunc(Frame, "SetStatusBarAtlas", Hook_SetStatusBarAtlas)
-        _G.hooksecurefunc(Frame, "SetStatusBarColor", Hook_SetStatusBarColor)
 
-        Base.SetBackdrop(Frame, Color.button, Color.frame.a)
-        local bg = Frame:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
-
-        local red, green, blue = Frame:GetStatusBarColor()
-        if not Frame:GetStatusBarTexture() then
-            Frame:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
+    do -- Side Tabs
+        local function Hook_SetChecked(self, isChecked)
+            -- Set the selected tab
+            if isChecked then
+                self._auroraIconBG:SetColorTexture(Color.yellow:GetRGB())
+            else
+                self._auroraIconBG:SetColorTexture(Color.black:GetRGB())
+            end
         end
-        Base.SetTexture(Frame:GetStatusBarTexture(), "gradientUp")
-        Frame:SetStatusBarColor(red, green, blue)
+        function Skin.SideTabTemplate(CheckButton)
+            _G.hooksecurefunc(CheckButton, "SetChecked", Hook_SetChecked)
+            CheckButton:GetRegions():Hide()
+
+            local icon = CheckButton.Icon or CheckButton:GetNormalTexture()
+            CheckButton._auroraIconBG = Base.CropIcon(icon, CheckButton)
+            Base.CropIcon(CheckButton:GetHighlightTexture())
+            Base.CropIcon(CheckButton:GetCheckedTexture())
+        end
+    end
+
+    do -- Scroll thumb
+        local function Hook_Hide(self)
+            self._auroraThumb:Hide()
+        end
+        local function Hook_Show(self)
+            self._auroraThumb:Show()
+        end
+        function Skin.ScrollBarThumb(Texture)
+            Texture:SetAlpha(0)
+            Texture:SetSize(17, 24)
+            _G.hooksecurefunc(Texture, "Hide", Hook_Hide)
+            _G.hooksecurefunc(Texture, "Show", Hook_Show)
+
+            local thumb = _G.CreateFrame("Frame", nil, Texture:GetParent())
+            thumb:SetPoint("TOPLEFT", Texture, 0, -2)
+            thumb:SetPoint("BOTTOMRIGHT", Texture, 0, 2)
+            thumb:SetShown(Texture:IsShown())
+            Base.SetBackdrop(thumb, Color.button)
+            Texture._auroraThumb = thumb
+        end
+    end
+end
+
+do -- Basic frame type skins
+    do -- StatusBar
+        local atlasColors = {
+            ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
+            ["objectivewidget-bar-fill-left"] = Color.blue,
+            ["objectivewidget-bar-fill-middle"] = Color.yellow,
+            ["objectivewidget-bar-fill-right"] = Color.red,
+        }
+        local function Hook_SetStatusBarAtlas(self, atlas)
+            if atlasColors[atlas] then
+                local texture = self:GetStatusBarTexture()
+                texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+                texture:SetVertexColor(atlasColors[atlas]:GetRGB())
+            else
+                private.debug("SetStatusBarAtlas", atlas)
+            end
+        end
+        local function Hook_SetStatusBarColor(self, r, g, b)
+            self:GetStatusBarTexture():SetVertexColor(r, g, b)
+        end
+        function Skin.FrameTypeStatusBar(Frame)
+            _G.hooksecurefunc(Frame, "SetStatusBarAtlas", Hook_SetStatusBarAtlas)
+            _G.hooksecurefunc(Frame, "SetStatusBarColor", Hook_SetStatusBarColor)
+
+            Base.SetBackdrop(Frame, Color.button, Color.frame.a)
+            local bg = Frame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", -1, 1)
+            bg:SetPoint("BOTTOMRIGHT", 1, -1)
+
+            local red, green, blue = Frame:GetStatusBarColor()
+            if not Frame:GetStatusBarTexture() then
+                Frame:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
+            end
+            Base.SetTexture(Frame:GetStatusBarTexture(), "gradientUp")
+            Frame:SetStatusBarColor(red, green, blue)
+        end
     end
 end
 
