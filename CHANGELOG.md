@@ -6,9 +6,11 @@
 
 ### Changed ###
 
+  * Updates for 8.1.5
   * Updated PvE group finder
   * Minor tweaks to the quest log zone story header
   * Help boxes now have a darker background
+  * Minor tweaks to the rep frame faction buttons
 
 ### Fixed ###
 
