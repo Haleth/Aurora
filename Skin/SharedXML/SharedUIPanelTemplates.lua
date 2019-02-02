@@ -144,11 +144,16 @@ do -- BlizzWTF: These are not templates, but they should be
 
     -- Status Bar frame type
     local atlasColors = {
-        ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0)
+        ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
+        ["objectivewidget-bar-fill-left"] = Color.blue,
+        ["objectivewidget-bar-fill-middle"] = Color.yellow,
+        ["objectivewidget-bar-fill-right"] = Color.red,
     }
     local function Hook_SetStatusBarAtlas(self, atlas)
         if atlasColors[atlas] then
-            self:GetStatusBarTexture():SetVertexColor(atlasColors[atlas]:GetRGB())
+            local texture = self:GetStatusBarTexture()
+            texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+            texture:SetVertexColor(atlasColors[atlas]:GetRGB())
         else
             private.debug("SetStatusBarAtlas", atlas)
         end

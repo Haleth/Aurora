@@ -9,31 +9,81 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_UIWidgets.lua ]]
-    do --[[ Blizzard_UIWidgetManager.lua ]]
+    do --[[ Blizzard_UIWidgetManager ]]
         Hook.UIWidgetContainerMixin = {}
-        function Hook.UIWidgetContainerMixin:ProcessWidget(widgetID, widgetType)
-            if Skin[widgetType] then
-                private.debug("UIWidgetContainerMixin:ProcessWidget", widgetID, widgetType)
-                local widgetFrame = self.widgetIdToFrame[widgetID];
+        function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
+            local template = widgetTypeInfo.templateInfo.frameTemplate
+
+            if Skin[template] then
+                local widgetFrame = self.widgetFrames[widgetID]
                 if widgetFrame and not widgetFrame._auroraSkinned then
-                    Skin[widgetType](widgetFrame)
+                    Skin[template](widgetFrame)
+                    widgetFrame._auroraSkinned = true
+                else
+                    private.debug("Missing Template", template)
+                end
+            end
+        end
+
+        Hook.UIWidgetManagerMixin = {}
+        if private.isPatch then
+            function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
+                Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
+            end
+        else
+            function Hook.UIWidgetManagerMixin:CreateWidget(widgetID, widgetSetID, widgetType)
+                if self.widgetVisTypeInfo[widgetType] then
+                    local frameTemplate = self.widgetVisTypeInfo[widgetType].templateInfo.frameTemplate
+                    private.debug("frameTemplate", frameTemplate, Skin[frameTemplate])
+
+                    if Skin[frameTemplate] then
+                        Skin[frameTemplate](self.widgetIdToFrame[widgetID])
+                    end
                 end
             end
         end
     end
 end
 
---do --[[ AddOns\Blizzard_UIWidgets.xml ]]
---end
+do --[[ AddOns\Blizzard_UIWidgets.xml ]]
+    do --[[ Blizzard_UIWidgetTemplateDoubleStatusBar ]]
+        function Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
+
+            StatusBar.BG:SetAlpha(0)
+            StatusBar.BorderLeft:SetAlpha(0)
+            StatusBar.BorderRight:SetAlpha(0)
+            StatusBar.BorderCenter:SetAlpha(0)
+            StatusBar.Spark:SetAlpha(0)
+            StatusBar.SparkGlow:SetAlpha(0)
+            StatusBar.BorderGlow:SetAllPoints(StatusBar)
+            StatusBar.BorderGlow:SetTexCoord(0.025, 0.975, 0.19354838709677, 0.80645161290323)
+        end
+        function Skin.UIWidgetTemplateDoubleStatusBar(Frame)
+            Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.LeftBar)
+            Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.RightBar)
+        end
+    end
+end
 
 function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_UIWidgetManager    --
     ----====####$$$$%%%%$$$$####====----
-    if private.isPatch then
-        local UIWidgetContainerMixin = _G.UIWidgetContainerMixin
-        Util.Mixin(UIWidgetContainerMixin, Hook.UIWidgetContainerMixin)
-    end
+    Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
+
+
+    if not private.isPatch then return end
+    ----====####$$$$%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTopCenterFrame --
+    ----====####$$$$%%%%%$$$$####====----
+    Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
+
+
+    ----====####$$$$%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetBelowMinimapFrame --
+    ----====####$$$$%%%%%%%%$$$$####====----
+    Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
 
     -------------
     -- Section --
