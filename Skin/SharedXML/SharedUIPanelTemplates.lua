@@ -171,6 +171,9 @@ do -- BlizzWTF: These are not templates, but they should be
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
 
         local red, green, blue = Frame:GetStatusBarColor()
+        if not Frame:GetStatusBarTexture() then
+            Frame:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
+        end
         Base.SetTexture(Frame:GetStatusBarTexture(), "gradientUp")
         Frame:SetStatusBarColor(red, green, blue)
     end
