@@ -64,7 +64,7 @@ do --[[ FrameXML\LFGList.lua ]]
             local icon = self.Icons[i]
             local atlas = icon:GetAtlas()
             if atlasToRole[atlas] then
-                Base.SetTexture(icon, "role"..atlasToRole[atlas])
+                Base.SetTexture(icon, "icon"..atlasToRole[atlas])
                 icon:SetSize(18, 18)
             else
                 icon:SetTexture("")
@@ -76,10 +76,9 @@ do --[[ FrameXML\LFGList.lua ]]
     end
     function Hook.LFGListApplicationViewer_UpdateRoleIcons(member, grayedOut, tank, healer, damage, noTouchy, assignedRole)
         for i = 1, 3 do
-            local icon = member["RoleIcon"..i]:GetNormalTexture()
-            local atlas = icon:GetAtlas()
-            if atlasToRole[atlas] then
-                Base.SetTexture(icon, "role"..atlasToRole[atlas])
+            local icon = member["RoleIcon"..i]
+            if icon.role then
+                Base.SetTexture(icon:GetNormalTexture(), "icon"..icon.role)
             end
         end
     end
@@ -88,12 +87,12 @@ end
 do --[[ FrameXML\LFGList.xml ]]
     function Skin.LFGListGroupDataDisplayTemplate(Frame)
         local RoleCount = Frame.RoleCount
-        Base.SetTexture(RoleCount.DamagerIcon, "roleDAMAGER")
-        Base.SetTexture(RoleCount.HealerIcon, "roleHEALER")
-        Base.SetTexture(RoleCount.TankIcon, "roleTANK")
+        Base.SetTexture(RoleCount.DamagerIcon, "iconDAMAGER")
+        Base.SetTexture(RoleCount.HealerIcon, "iconHEALER")
+        Base.SetTexture(RoleCount.TankIcon, "iconTANK")
 
         for i = 1, #Frame.Enumerate.Icons do
-            Base.SetTexture(Frame.Enumerate.Icons[i], "roleTANK")
+            Base.SetTexture(Frame.Enumerate.Icons[i], "iconTANK")
         end
     end
     function Skin.LFGListSearchAutoCompleteButtonTemplate(Button)

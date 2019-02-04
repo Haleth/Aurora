@@ -10,7 +10,7 @@ local Color = Aurora.Color
 
 do --[[ FrameXML\PVPHelper.lua ]]
     function Hook.PVPReadyDialog_Display(self, index, displayName, isRated, queueType, gameType, role)
-        Base.SetTexture(self.roleIcon.texture, "role"..role)
+        Base.SetTexture(self.roleIcon.texture, "icon"..role)
     end
 end
 

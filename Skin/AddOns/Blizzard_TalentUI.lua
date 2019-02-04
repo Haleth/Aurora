@@ -20,7 +20,7 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
             button.specIcon:SetTexture(icon)
 
             local role = _G.GetSpecializationRole(i, false, self.isPet)
-            Base.SetTexture(button.roleIcon, "role"..role)
+            Base.SetTexture(button.roleIcon, "icon"..role)
 
             Skin.PlayerSpecButtonTemplate(button)
         end
@@ -54,7 +54,7 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
 
         local role = _G.GetSpecializationRole(shownSpec, nil, self.isPet)
         if role then
-            Base.SetTexture(scrollChild.roleIcon, "role"..role)
+            Base.SetTexture(scrollChild.roleIcon, "icon"..role)
         end
 
         local index = 1

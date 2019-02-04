@@ -36,13 +36,13 @@ do --[[ FrameXML\LFGFrame.lua ]]
             end
 
             if _G.LFGDungeonReadyDialogRoleIcon:IsShown() then
-                Base.SetTexture(_G.LFGDungeonReadyDialogRoleIconTexture, "role"..role)
+                Base.SetTexture(_G.LFGDungeonReadyDialogRoleIconTexture, "icon"..role)
             end
         end
     end
     function Hook.LFGDungeonReadyStatusIndividual_UpdateIcon(button)
         local _, role = _G.GetLFGProposalMember(button:GetID())
-        Base.SetTexture(button.texture, "role"..role)
+        Base.SetTexture(button.texture, "icon"..role)
 
         if not button._auroraSkinned then
             Skin.LFGDungeonReadyStatusPlayerTemplate(button)
@@ -68,7 +68,7 @@ end
 do --[[ FrameXML\LFGFrame.xml ]]
     function Skin.LFGRoleButtonTemplate(Button)
         Button.cover:SetColorTexture(0, 0, 0, 0.75)
-        Base.SetTexture(Button:GetNormalTexture(), "role"..(Button.role or "GUIDE"))
+        Base.SetTexture(Button:GetNormalTexture(), "icon"..(Button.role or "GUIDE"))
         Skin.UICheckButtonTemplate(Button.checkButton)
         Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
     end
@@ -103,7 +103,7 @@ do --[[ FrameXML\LFGFrame.xml ]]
 
 
     function Skin.LFGRewardsLootShortageTemplate(Frame)
-        Base.SetTexture(Frame.texture, "role"..(Frame.role or "GUIDE"))
+        Base.SetTexture(Frame.texture, "icon"..(Frame.role or "GUIDE"))
     end
     function Skin.LFGRewardsLootTemplate(Button)
         Skin.LargeItemButtonTemplate(Button)
@@ -207,7 +207,7 @@ function private.FrameXML.LFGFrame()
     _G.LFGDungeonReadyDialogRoleIcon:ClearAllPoints()
     _G.LFGDungeonReadyDialogRoleIcon:SetPoint("BOTTOMLEFT", 121, 57)
     _G.LFGDungeonReadyDialogRoleIconLeaderIcon:SetPoint("TOPLEFT")
-    Base.SetTexture(_G.LFGDungeonReadyDialogRoleIconLeaderIcon, "roleGUIDE")
+    Base.SetTexture(_G.LFGDungeonReadyDialogRoleIconLeaderIcon, "iconGUIDE")
 
     Skin.LFGDungeonReadyRewardTemplate(_G.LFGDungeonReadyDialogRewardsFrame.Rewards[1])
     Skin.LFGDungeonReadyRewardTemplate(_G.LFGDungeonReadyDialogRewardsFrame.Rewards[2])

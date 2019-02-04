@@ -25,9 +25,9 @@ do --[[ FrameXML\Blizzard_LookingForGuildUI.xml ]]
     function Skin.LookingForGuildSectionTemplate(Frame)
     end
     local paramToRole = {
-        [8] = "roleTANK",
-        [9] = "roleHEALER",
-        [10] = "roleDAMAGER",
+        [8] = "iconTANK",
+        [9] = "iconHEALER",
+        [10] = "iconDAMAGER",
     }
     function Skin.LookingForGuildRoleTemplate(Button)
         Button.cover:SetColorTexture(0, 0, 0)

@@ -135,7 +135,32 @@ do -- gradients
     end)
 end
 
-do -- LFG Icons
+do -- Icons
+    local iconTextures = {}
+    local function CreateIcon(frame, texture)
+        texture:SetTexelSnappingBias(0.0)
+        texture:SetSnapToPixelGrid(false)
+
+        local layer, subLevel = texture:GetDrawLayer()
+        local border = frame:CreateTexture(nil, layer, nil, subLevel - 2)
+        border:SetPoint("TOPLEFT", texture, -1, 1)
+        border:SetPoint("BOTTOMRIGHT", texture, 1, -1)
+        texture._auroraBorder = border
+
+        local bg = frame:CreateTexture(nil, layer, nil, subLevel - 1)
+        bg:SetAllPoints(texture)
+        texture._auroraBG = bg
+
+        local mask = frame:CreateMaskTexture()
+        mask:SetTexture([[Interface\CharacterFrame\TemporaryPortrait-Female-MagharOrc]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetAllPoints(texture)
+        texture:AddMaskTexture(mask)
+        texture._auroraMask = mask
+
+        iconTextures[texture] = true
+    end
+
+
     local map = {
         GUIDE = {color = Color.blue:Hue(-0.1):Lightness(-0.7), 0.03515625, 0.22265625, 0.03125, 0.21875},
         HEALER = {color = Color.green:Lightness(-0.7), 0.296875, 0.484375, 0.03125, 0.21875},
@@ -146,27 +171,10 @@ do -- LFG Icons
         --COVER = {0.01953125, 0.24609375, 0.5234375, 0.75},
         --CROSS = {color = Color.black, 0.296875, 0.484375, 0.5546875, 0.7421875},
     }
-    local roleTextures = {}
     for name, coords in next, map do
-        Base.RegisterTexture("role"..name, function(frame, texture)
-            if not roleTextures[texture] then
-                local layer, subLevel = texture:GetDrawLayer()
-                local border = frame:CreateTexture(nil, layer, nil, subLevel - 2)
-                border:SetColorTexture(0, 0, 0)
-                border:SetAllPoints(texture)
-                texture._auroraBorder = border
-
-                local bg = frame:CreateTexture(nil, layer, nil, subLevel - 1)
-                bg:SetPoint("TOPLEFT", border, 1, -1)
-                bg:SetPoint("BOTTOMRIGHT", border, -1, 1)
-                texture._auroraBG = bg
-
-                local mask = frame:CreateMaskTexture()
-                mask:SetTexture([[Interface\CharacterFrame\TemporaryPortrait-Female-MagharOrc]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-                mask:SetAllPoints(texture)
-                texture:AddMaskTexture(mask)
-
-                roleTextures[texture] = true
+        Base.RegisterTexture("icon"..name, function(frame, texture)
+            if not iconTextures[texture] then
+                CreateIcon(frame, texture)
             end
 
             texture:SetTexture([[Interface\LFGFrame\UI-LFG-ICON-ROLES]])
@@ -174,7 +182,26 @@ do -- LFG Icons
             texture:SetAlpha(0.75)
             texture:SetBlendMode("ADD")
 
+            texture._auroraBorder:SetColorTexture(0, 0, 0)
             texture._auroraBG:SetColorTexture(coords.color:GetRGB())
+            texture._auroraMask:Show()
+        end)
+    end
+
+    for name, color in next, _G.CUSTOM_CLASS_COLORS do
+        Base.RegisterTexture("icon"..name, function(frame, texture)
+            if not iconTextures[texture] then
+                CreateIcon(frame, texture)
+            end
+
+            local coords = Aurora.classIcons[name]
+            texture:SetTexture([[Interface\Glues\CharacterCreate\UI-CharacterCreate-Classes]])
+            texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
+            texture:SetAlpha(1)
+            texture:SetBlendMode("DISABLE")
+
+            texture._auroraBorder:SetColorTexture(color:GetRGB())
+            texture._auroraMask:Hide()
         end)
     end
 end
@@ -198,15 +225,16 @@ Base.RegisterTexture("test", function(frame, texture)
         end
     end
 end)
+]]
 
 local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")
 snapshot:SetPoint("CENTER")
 snapshot:SetSize(64, 64)
-Base.SetTexture(snapshot, "test")
-Base.SetTexture(snapshot, "roleDAMAGER")
-Base.SetTexture(snapshot, "gradientUp")
-Base.SetTexture(snapshot, "arrowLeft")
-Base.SetTexture(snapshot, "gradientLeft")
+Base.SetTexture(snapshot, "iconDEATHKNIGHT")
+--Base.SetTexture(snapshot, "test")
+--Base.SetTexture(snapshot, "iconDAMAGER")
+--Base.SetTexture(snapshot, "gradientUp")
+--Base.SetTexture(snapshot, "arrowLeft")
+--Base.SetTexture(snapshot, "gradientLeft")
 --local color = _G.RAID_CLASS_COLORS[private.charClass.token]
 --snapshot:SetVertexColor(color.r, color.g, color.b)
-]]
