@@ -1,4 +1,11 @@
-﻿## [8.1.0.3] - 2019-02-02 ##
+﻿## [8.1.0.4] - 2019-02-04 ##
+### Fixed ###
+
+  * The arena group finder would not display class icons
+
+
+
+## [8.1.0.3] - 2019-02-02 ##
 ### Added ###
 
   * Archeology digsite progress bar skin
@@ -339,6 +346,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.0.4]: https://github.com/Haleth/Aurora/compare/8.1.0.3...8.1.0.4
 [8.1.0.3]: https://github.com/Haleth/Aurora/compare/8.1.0.2...8.1.0.3
 [8.1.0.2]: https://github.com/Haleth/Aurora/compare/8.1.0.1...8.1.0.2
 [8.1.0.1]: https://github.com/Haleth/Aurora/compare/8.1.0.0...8.1.0.1
