@@ -54,24 +54,37 @@ do --[[ FrameXML\LFGList.lua ]]
         end
     end
 
-    local atlasToRole = {
-        ["groupfinder-icon-role-large-tank"] = "TANK",
-        ["groupfinder-icon-role-large-heal"] = "HEALER",
-        ["groupfinder-icon-role-large-dps"] = "DAMAGER",
-    }
     function Hook.LFGListGroupDataDisplayEnumerate_Update(self, numPlayers, displayData, disabled, iconOrder)
-        for i = 1, #self.Icons do
+        local iconIndex = numPlayers;
+        for i=1, #self.Icons do
             local icon = self.Icons[i]
-            local atlas = icon:GetAtlas()
-            if atlasToRole[atlas] then
-                Base.SetTexture(icon, "icon"..atlasToRole[atlas])
-                icon:SetSize(18, 18)
+            if i > numPlayers then
+                icon._auroraBorder:Hide();
+                icon._auroraBG:Hide();
             else
-                icon:SetTexture("")
-                icon:SetSize(9, 9)
-
-                icon._auroraBG:SetColorTexture(Color.button:GetRGB())
+                icon._auroraBorder:Show();
+                icon._auroraBG:Show();
             end
+        end
+
+        for i=1, #iconOrder do
+            for j=1, displayData[iconOrder[i]] do
+                Base.SetTexture(self.Icons[iconIndex], "icon"..iconOrder[i])
+                self.Icons[iconIndex]:SetSize(14, 14)
+                iconIndex = iconIndex - 1;
+                if iconIndex < 1 then
+                    return;
+                end
+            end
+        end
+
+        for i=1, iconIndex do
+            local icon = self.Icons[i]
+            icon:SetAlpha(0)
+            icon:SetSize(8, 8)
+
+            icon._auroraBorder:SetColorTexture(0, 0, 0)
+            icon._auroraBG:SetColorTexture(Color.button:GetRGB())
         end
     end
     function Hook.LFGListApplicationViewer_UpdateRoleIcons(member, grayedOut, tank, healer, damage, noTouchy, assignedRole)
