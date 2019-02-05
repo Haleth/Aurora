@@ -225,7 +225,6 @@ Base.RegisterTexture("test", function(frame, texture)
         end
     end
 end)
-]]
 
 local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")
 snapshot:SetPoint("CENTER")
@@ -238,3 +237,4 @@ Base.SetTexture(snapshot, "iconDEATHKNIGHT")
 --Base.SetTexture(snapshot, "gradientLeft")
 --local color = _G.RAID_CLASS_COLORS[private.charClass.token]
 --snapshot:SetVertexColor(color.r, color.g, color.b)
+]]
