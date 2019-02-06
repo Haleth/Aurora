@@ -17,5 +17,5 @@ script:
   - bash release.sh -d
 
 after_script:
-  - git clone "https://github.com/Gethe/lua-doc-parser.git" .
+  - git clone "https://github.com/Gethe/lua-doc-parser.git" ./
   - bash build_travis.sh
