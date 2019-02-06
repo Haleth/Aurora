@@ -7,7 +7,6 @@ addons:
     - luarocks
     - pandoc
 
-before_install: luarocks install --local luacheck
-
-before_script: /home/travis/.luarocks/bin/luacheck . -q
-script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+install: luarocks install --local luacheck
+script: /home/travis/.luarocks/bin/luacheck . -q
+deploy: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
