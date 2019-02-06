@@ -1,9 +1,6 @@
 sudo: false
 language: c
 
-services:
-  - docker
-
 addons:
   apt:
     packages:
@@ -14,6 +11,8 @@ before_install: luarocks install --local luacheck
 
 before_script: /home/travis/.luarocks/bin/luacheck . -q
 script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+
 after_script:
-  - docker pull p3lim/lua-doc-parser
-  - docker run p3lim/lua-doc-parser
+  - git clone "https://github.com/Gethe/lua-doc-parser.git"
+  - parse.py
+  - build.sh

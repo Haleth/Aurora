@@ -3,17 +3,17 @@
 --[[ Lua Globals ]]
 -- luacheck: globals
 
---[[ Core
-local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color ]]
+--[[ Core ]]
+--local Aurora = private.Aurora
+--local Base = Aurora.Base
+--local Hook, Skin = Aurora.Hook, Aurora.Skin
+--local Color = Aurora.Color
 
---[[ do AddOns\Blizzard_OrderHallUI.lua
-end ]]
+--do --[[ AddOns\Blizzard_OrderHallUI.lua ]]
+--end
 
---[[ do AddOns\Blizzard_OrderHallUI.xml
-end ]]
+--do --[[ AddOns\Blizzard_OrderHallUI.xml ]]
+--end
 
 --function private.AddOns.Blizzard_OrderHallUI()
     ----====####$$$$%%%%%$$$$####====----
