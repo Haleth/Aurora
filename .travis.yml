@@ -13,7 +13,7 @@ before_install: luarocks install --local luacheck
 
 before_script: $HOME/.luarocks/bin/luacheck . -q
 script:
-  - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh
+  - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh -o release.sh
   - bash release.sh -d
 
 after_script:
