@@ -22,12 +22,18 @@ Aurora.classIcons = { -- adjusted for borderless icons
     ["DEMONHUNTER"] = {0.76171875, 0.97265625, 0.51953125, 0.734375},
 }
 
+--[[ Test:header
+Hello world!
+--]]
 do -- Base API
     local backdrop = {
         edgeSize = 1,
     }
     private.backdrop = backdrop
 
+--[[ Test:header
+Hello world!
+--]]
     do -- Base.AddSkin
         local skinList
         function Base.AddSkin(addonName, func)
