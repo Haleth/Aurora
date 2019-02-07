@@ -1,26 +1,24 @@
 sudo: false
-language: python
-python:
-    - "3.6"
 
-env:
-  - LUA="lua=5.1"
+matrix:
+  include:
+    - language: c
+      addons:
+        apt:
+          packages:
+            - luarocks
+            - pandoc
+      install: luarocks install --local luacheck
+      before_script: $HOME/.luarocks/bin/luacheck . -q
+      script:
+        - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh -o release.sh
+        - bash release.sh -d
+      after_script:
 
-before_install:
-  - pip install pandoc
-  - pip install hererocks
-  - hererocks lua_install -r^ --$LUA
-  - export PATH=$PATH:$PWD/lua_install/bin
-
-install:
-  - luarocks install --local luacheck
-
-before_script: $HOME/.luarocks/bin/luacheck . -q
-script:
-  - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh -o release.sh
-  - bash release.sh -d
-
-after_script:
-  - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/build_travis.sh -o build_travis.sh
-  - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
-  - bash build_travis.sh
+    - language: python
+      python: 3.6
+      before_script:
+        - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/build_travis.sh -o build_travis.sh
+        - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
+      script:
+        - bash build_travis.sh
