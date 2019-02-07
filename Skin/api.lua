@@ -23,9 +23,12 @@ Aurora.classIcons = { -- adjusted for borderless icons
     ["DEMONHUNTER"] = {0.76171875, 0.97265625, 0.51953125, 0.734375},
 }
 
---[[ API:test
-Hello world!
+--[[ Public-API:header
+The public API is housed in the global variable `Aurora`. The tables
+listed here each have a Pre and Post table that can be used to define a
+function to be called before or after a particular API function.
 --]]
+
 do -- Base API
     local backdrop = {
         edgeSize = 1,
@@ -34,6 +37,14 @@ do -- Base API
 
     do -- Base.AddSkin
         local skinList
+--[[ Base.AddSkin(*addonName, func*)
+Allows an external addon to add a skinning function for the specified
+AddOn. `func` will run when the `ADDON_LOADED` event is triggered for
+addonName.
+
+* `addonName` - the name of the AddOn to be skinned _(string)_
+* `func`      - used to skin the AddOn _(function)_
+--]]
         function Base.AddSkin(addonName, func)
             assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
             private.AddOns[addonName] = func
@@ -42,6 +53,9 @@ do -- Base API
             end
         end
 
+        --[[ Base.GetSkinList()
+        Returns an indexed list of all non-Blizzard AddOn skins.
+        --]]
         function Base.GetSkinList()
             if not skinList then
                 skinList = {}
