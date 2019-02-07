@@ -5,7 +5,7 @@ git config --global user.email "travis@travis-ci.org"
 git config --global user.name "Travis CI"
 
 # clone the wiki repo
-git clone "https://${GITHUB_OAUTH}@github.com/Haleth/Aurora.git.wiki" .wiki
+git clone "https://${GITHUB_OAUTH}@github.com/Haleth/Aurora.wiki.git" .wiki
 
 # run the python script
 python parse.py -o ".wiki"
@@ -20,4 +20,4 @@ git add .
 git commit -m "$TRAVIS_BUILD_ID"
 
 # push the wiki repo
-git push "https://${GITHUB_OAUTH}@github.com/Haleth/Aurora.git" master > /dev/null 2>&1
+git push "https://${GITHUB_OAUTH}@github.com/Haleth/Aurora.wiki.git" master > /dev/null 2>&1
