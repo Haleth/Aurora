@@ -18,7 +18,6 @@ matrix:
     - language: python
       python: 3.6
       before_script:
-        - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/build_travis.sh -o build_travis.sh
         - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
       script:
         - bash build_travis.sh
