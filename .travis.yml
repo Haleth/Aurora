@@ -20,4 +20,4 @@ matrix:
       before_script:
         - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
       script:
-        - bash build_travis.sh
+        - bash build.sh
