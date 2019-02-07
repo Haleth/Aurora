@@ -17,5 +17,6 @@ script:
   - bash release.sh -d
 
 after_script:
-  - git clone "https://github.com/Gethe/lua-doc-parser.git"
-  - bash lua-doc-parser/build_travis.sh
+  - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/build_travis.sh -o build_travis.sh
+  - curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
+  - bash build_travis.sh
