@@ -1,15 +1,19 @@
 sudo: false
-language: c
+language: python
 python:
     - "3.6"
 
-addons:
-  apt:
-    packages:
-    - luarocks
-    - pandoc
+env:
+  - LUA="lua=5.1"
 
-before_install: luarocks install --local luacheck
+before_install:
+  - pip install pandoc
+  - pip install hererocks
+  - hererocks lua_install -r^ --$LUA
+  - export PATH=$PATH:$PWD/lua_install/bin
+
+install:
+  - luarocks install --local luacheck
 
 before_script: $HOME/.luarocks/bin/luacheck . -q
 script:
