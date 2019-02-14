@@ -1,6 +1,7 @@
 local ADDON_NAME, private = ...
 
--- luacheck: globals select tostring tonumber
+-- luacheck: globals select tostring tonumber math
+-- luacheck: globals setmetatable rawset debugprofilestop type tinsert
 
 private.API_MAJOR, private.API_MINOR = 0, 5
 
@@ -84,6 +85,67 @@ local Aurora = {
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
+
+if _G.GetCVar("scriptProfile") == "1" then
+    local profile, track = {}
+    local function UpdateUsage(func, info)
+        info.prev = info.total
+        info.total = math.max(info.total, _G.GetFunctionCPUUsage(func, true))
+        info.time = info.total - info.prev
+    end
+    function track(table, name)
+        local mt = {
+            __newindex = function(t, k, v)
+                local n = name.."."..k
+                if type(v) == "table" then
+                    track(v, n)
+                    rawset(t, k, v)
+                else
+                    local info = {
+                        num = 0,
+                        time = 0,
+                        total = 0,
+                        prev = 0,
+                        name = n,
+                    }
+
+                    local timer
+                    rawset(t, k, function(...)
+                        if timer then timer:Cancel() end
+                        local ret = v(...)
+
+                        UpdateUsage(v, info)
+                        info.num = info.num + 1
+
+                        timer = _G.C_Timer.NewTimer(1, function()
+                            UpdateUsage(v, info)
+                        end)
+
+                        return ret
+                    end)
+
+                    if profile[n] then
+                        profile[n] = profile[n] + 1
+                        info.name = info.name..profile[n]
+                    else
+                        profile[n] = 1
+                    end
+                    tinsert(profile, info)
+                end
+            end
+        }
+        setmetatable(table, mt)
+    end
+
+    track(Aurora.Base, "Base")
+    track(Aurora.Hook, "Hook")
+    track(Aurora.Skin, "Skin")
+    track(Aurora.Util, "Util")
+
+    profile.track = track
+    profile.host = ADDON_NAME
+    Aurora.Profile = profile
+end
 
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")

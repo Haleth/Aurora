@@ -60,6 +60,8 @@ local F, C = {}, {}
 Aurora[1] = F
 Aurora[2] = C
 
+Aurora.Profile.track(F, "F")
+
 C.r, C.g, C.b = _G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB()
 C.classcolours = _G.CUSTOM_CLASS_COLORS
 C.backdrop = private.backdrop

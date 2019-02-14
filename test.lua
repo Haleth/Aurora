@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next
+-- luacheck: globals next table
 
 --[[ Core ]]
 local commands = private.commands
@@ -770,4 +770,156 @@ function commands.test()
     else
         _G.print("AceConfig does not exist.")
     end
+end
+
+local profile -- /aurora profile
+function commands.profile()
+    if not profile then
+        local Aurora = _G.Aurora
+        profile = Aurora.Profile
+
+        local COLUMN_INFO = {
+            [1] = {
+                title = _G.NAME,
+                width = 200,
+                attribute = "name",
+            },
+            [2] = {
+                title = "Time",
+                width = 100,
+                attribute = "time",
+            },
+            [3] = {
+                title = "Total Time",
+                width = 100,
+                attribute = "total",
+            },
+            [4] = {
+                title = "# Called",
+                width = 0,
+                attribute = "num",
+            },
+        };
+
+        function Aurora.Skin.FriendsFrameWhoButtonTemplate(Button)
+            local name, variable, level, class = Button:GetRegions()
+            name:SetWidth(COLUMN_INFO[1].width)
+            Button.name = name
+
+            variable:SetWidth(COLUMN_INFO[2].width)
+            variable:SetPoint("LEFT", name, "RIGHT", 0, 0)
+            Button.variable = variable
+
+            level:SetWidth(COLUMN_INFO[3].width)
+            level:SetJustifyH("LEFT")
+            level:SetPoint("LEFT", variable, "RIGHT", 0, 0)
+            Button.level = level
+
+            class:SetWidth(COLUMN_INFO[4].width)
+            class:SetPoint("LEFT", level, "RIGHT", 0, 0)
+            Button.class = class
+        end
+
+        local frame = _G.CreateFrame("Frame", nil, _G.UIParent, "ButtonFrameTemplate")
+        frame:SetPoint("CENTER")
+        frame:SetSize(500, 400)
+        profile.frame = frame
+        frame.TitleText:Show()
+
+        _G.ButtonFrameTemplate_HidePortrait(frame)
+        _G.FrameTemplate_SetAtticHeight(frame, 52)
+        _G.ButtonFrameTemplate_HideButtonBar(frame)
+
+        local scroll = _G.CreateFrame("ScrollFrame", nil, frame, "BasicHybridScrollFrameTemplate")
+        scroll:SetPoint("TOPLEFT", frame.Inset, 0, 0)
+        scroll:SetPoint("BOTTOMRIGHT", frame.Inset, -20, 0)
+        frame.scroll = scroll
+        function scroll:update()
+            --print("profile data update")
+            local offset = _G.HybridScrollFrame_GetOffset(self)
+            local buttons = self.buttons
+            local numButtons = #buttons
+            local numFunctions = #profile
+
+            local sortType = frame.columns.sortType
+            table.sort(profile, function(a, b)
+                if a[sortType] ~= b[sortType] then
+                    if sortType == "name" then
+                        return a.name < b.name
+                    else
+                        return a[sortType] > b[sortType]
+                    end
+                else
+                    return a.name < b.name
+                end
+            end)
+
+            local button, index, info
+            for i = 1, numButtons do
+                button = buttons[i]
+                index = offset + i
+                info = profile[index]
+
+                if index <= numFunctions then
+                    --print("info", index)
+
+                    button.name:SetText(info.name)
+                    button.variable:SetFormattedText("%.6f", info.time)
+                    button.level:SetFormattedText("%.6f", info.total)
+                    button.class:SetText(info.num)
+
+                    button.tooltip1 = info.name
+                    button.tooltip2 = info.time
+
+                    button:Show()
+                    button.index = index
+                else
+                    button:Hide()
+                end
+            end
+
+            local totalHeight = numFunctions * self.buttonHeight
+            local displayedHeight = numButtons * self.buttonHeight
+            _G.HybridScrollFrame_Update(self, totalHeight, displayedHeight)
+        end
+
+        _G.HybridScrollFrame_CreateButtons(scroll, "FriendsFrameWhoButtonTemplate", 0, 0)
+
+        local columns = _G.CreateFrame("Frame", nil, frame, "ColumnDisplayTemplate")
+        columns:SetHeight(26)
+        columns:SetPoint("TOPLEFT", frame.TopTileStreaks, 8, 0)
+        columns:SetPoint("BOTTOMRIGHT", scroll, "TOPRIGHT", 24, 0)
+        columns:LayoutColumns(COLUMN_INFO)
+        function columns:sortingFunction(columnIndex)
+            self.sortType = COLUMN_INFO[columnIndex].attribute
+            frame.scroll:update()
+        end
+        columns.sortType = "time"
+        frame.columns = columns
+
+
+        local mem
+        local cpuTotal, cpuPrev, cpu
+        _G.C_Timer.NewTicker(1, function(...)
+            _G.UpdateAddOnMemoryUsage()
+            _G.UpdateAddOnCPUUsage()
+
+            scroll:update()
+            mem = _G.GetAddOnMemoryUsage(profile.host)
+            if mem > 1000 then
+                mem = mem / 1000
+                mem = ("%.2f MB"):format(mem)
+            else
+                mem = ("%.0f KB"):format(mem)
+            end
+
+            cpuPrev = cpuTotal or 0
+            cpuTotal = _G.GetAddOnCPUUsage(profile.host)
+            cpu = cpuTotal - cpuPrev
+
+            frame.TitleText:SetFormattedText("%s  Memory: %s  CPU: %.2f ms", profile.host, mem, cpu)
+        end)
+    end
+
+    profile.frame:Show()
 end
