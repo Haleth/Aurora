@@ -25,14 +25,28 @@ do -- arrows
         return texture:GetWidth() / 2
     end
 
+    local arrows = {}
+    _G.C_Timer.NewTicker(0, function(...)
+        --[[
+            This is primarily for dropdown menus, where the arrow texture
+            seems to not have a defined size at the original time of
+            skinning. Due to this, we add them to a queue and wait for them
+            to be visible, at which point it should have proper dimensions.
+        ]]
+        for texture, name in next, arrows do
+            if texture:IsVisible() then
+                Base.SetTexture(texture, name)
+                arrows[texture] = nil
+            end
+        end
+    end)
+
     Base.RegisterTexture("arrowLeft", function(frame, texture)
         texture = setup(frame, texture)
 
         local offset = GetVertOffset(frame, texture)
         if offset < 1 then
-            _G.C_Timer.After(0, function(...)
-                Base.SetTexture(texture, "arrowLeft")
-            end)
+            arrows[texture] = "arrowLeft"
         else
             texture:SetVertexOffset(1, 0, -offset)
             texture:SetVertexOffset(2, 0, offset)
@@ -43,9 +57,7 @@ do -- arrows
 
         local offset = GetVertOffset(frame, texture)
         if offset < 1 then
-            _G.C_Timer.After(0, function(...)
-                Base.SetTexture(texture, "arrowRight")
-            end)
+            arrows[texture] = "arrowRight"
         else
             texture:SetVertexOffset(3, 0, -offset)
             texture:SetVertexOffset(4, 0, offset)
@@ -56,9 +68,7 @@ do -- arrows
 
         local offset = GetHorizOffset(frame, texture)
         if offset < 1 then
-            _G.C_Timer.After(0, function(...)
-                Base.SetTexture(texture, "arrowUp")
-            end)
+            arrows[texture] = "arrowUp"
         else
             texture:SetVertexOffset(1, offset, 0)
             texture:SetVertexOffset(3, -offset, 0)
@@ -69,9 +79,7 @@ do -- arrows
 
         local offset = GetHorizOffset(frame, texture)
         if offset < 1 then
-            _G.C_Timer.After(0, function(...)
-                Base.SetTexture(texture, "arrowDown")
-            end)
+            arrows[texture] = "arrowDown"
         else
             texture:SetVertexOffset(2, offset, 0)
             texture:SetVertexOffset(4, -offset, 0)
