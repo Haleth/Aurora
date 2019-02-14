@@ -12,7 +12,7 @@ matrix:
       before_script: $HOME/.luarocks/bin/luacheck . -q
       script:
         - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh -o release.sh
-        - bash release.sh -d
+        - bash release.sh
       after_script:
 
     - language: python
