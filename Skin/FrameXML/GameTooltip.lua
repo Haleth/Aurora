@@ -32,6 +32,7 @@ do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_AddStatusBar(self, min, max, value, text)
         if not statusBarPoolHooked then
             _G.hooksecurefunc(self.statusBarPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+            statusBarPoolHooked = true
         end
     end
 end
@@ -54,6 +55,8 @@ do --[[ FrameXML\GameTooltip.xml ]]
         end
         function Skin.TooltipStatusBarTemplate(StatusBar)
             Skin.FrameTypeStatusBar(StatusBar)
+            local _, border = StatusBar:GetRegions()
+            border:Hide()
         end
         function Skin.TooltipProgressBarTemplate(Frame)
             local bar = Frame.Bar
@@ -102,6 +105,7 @@ function private.FrameXML.GameTooltip()
     _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)
+    _G.hooksecurefunc("GameTooltip_AddStatusBar", Hook.GameTooltip_AddStatusBar)
 
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
