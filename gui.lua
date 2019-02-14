@@ -390,6 +390,7 @@ function private.SetupGUI()
 end
 
 -- easy slash command
+private.commands = {}
 _G.SLASH_AURORA1 = "/aurora"
 _G.SlashCmdList.AURORA = function(msg, editBox)
     private.debug("/aurora", msg)

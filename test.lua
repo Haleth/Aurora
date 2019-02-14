@@ -3,7 +3,8 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals next
 
-local commands = {}
+--[[ Core ]]
+local commands = private.commands
 
 local item = _G.Item:CreateFromItemID(30234)
 item:ContinueOnItemLoad(function(...)
@@ -770,5 +771,3 @@ function commands.test()
         _G.print("AceConfig does not exist.")
     end
 end
-
-private.commands = commands
