@@ -17,9 +17,8 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                 -- New list frames have been created, skin them!
                 skinnedLevels = skinnedLevels + 1
                 local listFrameName = "DropDownList"..skinnedLevels
-                Skin.UIDropDownListTemplate(listFrameName)
-                for i = _G.UIDROPDOWNMENU_MINBUTTONS + 1, skinnedButtons do
-                    -- If skinnedButtons is more than the default, we need to skin those too for the new list
+                Skin.UIDropDownListTemplate(_G[listFrameName])
+                for i = 1, skinnedButtons do
                     Skin.UIDropDownMenuButtonTemplate(_G[listFrameName.."Button"..i])
                 end
             end
