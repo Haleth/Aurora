@@ -82,69 +82,78 @@ local Aurora = {
     Skin = {},
     Color = {},
     Util = {},
+    Profile = {},
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
 
 if _G.GetCVar("scriptProfile") == "1" then
-    local profile, track = {}
+    local profile, trackTable = Aurora.Profile
     local function UpdateUsage(func, info)
         info.prev = info.total
         info.total = math.max(info.total, _G.GetFunctionCPUUsage(func, true))
         info.time = info.total - info.prev
     end
-    function track(table, name)
+    local function trackFunction(func, name)
+        local info = {
+            num = 0,
+            time = 0,
+            total = 0,
+            prev = 0,
+            name = name,
+        }
+
+        if profile[name] then
+            profile[name] = profile[name] + 1
+            info.name = info.name..profile[name]
+        else
+            profile[name] = 1
+        end
+        tinsert(profile, info)
+
+        local timer
+        return function(...)
+            if timer then timer:Cancel() end
+            local ret = func(...)
+
+            UpdateUsage(func, info)
+            info.num = info.num + 1
+
+            timer = _G.C_Timer.NewTimer(1, function()
+                UpdateUsage(func, info)
+            end)
+
+            return ret
+        end
+    end
+    function trackTable(table, name)
         local mt = {
             __newindex = function(t, k, v)
                 local n = name.."."..k
                 if type(v) == "table" then
-                    track(v, n)
+                    trackTable(v, n)
                     rawset(t, k, v)
                 else
-                    local info = {
-                        num = 0,
-                        time = 0,
-                        total = 0,
-                        prev = 0,
-                        name = n,
-                    }
-
-                    local timer
-                    rawset(t, k, function(...)
-                        if timer then timer:Cancel() end
-                        local ret = v(...)
-
-                        UpdateUsage(v, info)
-                        info.num = info.num + 1
-
-                        timer = _G.C_Timer.NewTimer(1, function()
-                            UpdateUsage(v, info)
-                        end)
-
-                        return ret
-                    end)
-
-                    if profile[n] then
-                        profile[n] = profile[n] + 1
-                        info.name = info.name..profile[n]
-                    else
-                        profile[n] = 1
-                    end
-                    tinsert(profile, info)
+                    rawset(t, k, trackFunction(v, n))
                 end
             end
         }
         setmetatable(table, mt)
     end
 
-    track(Aurora.Base, "Base")
-    track(Aurora.Hook, "Hook")
-    track(Aurora.Skin, "Skin")
-    track(Aurora.Util, "Util")
+    trackTable(Aurora.Base, "Base")
+    trackTable(Aurora.Hook, "Hook")
+    trackTable(Aurora.Skin, "Skin")
+    trackTable(Aurora.Util, "Util")
 
-    profile.track = track
+    profile.trackTable = trackTable
+    profile.trackFunction = trackFunction
     profile.host = ADDON_NAME
-    Aurora.Profile = profile
+else
+    local profile = Aurora.Profile
+    profile.trackTable = private.nop
+    profile.trackFunction = private.nop
+    profile.host = ADDON_NAME
 end
 
 local eventFrame = _G.CreateFrame("Frame")
