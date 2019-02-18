@@ -818,6 +818,10 @@ function commands.profile()
             class:SetWidth(COLUMN_INFO[4].width)
             class:SetPoint("LEFT", level, "RIGHT", 0, 0)
             Button.class = class
+
+            local highlight = Button:GetHighlightTexture()
+            highlight:SetPoint("LEFT")
+            highlight:SetPoint("RIGHT", class)
         end
 
         local frame = _G.CreateFrame("Frame", nil, _G.UIParent, "ButtonFrameTemplate")
@@ -897,7 +901,7 @@ function commands.profile()
         columns.sortType = "time"
         frame.columns = columns
 
-
+        local isProfiling = _G.GetCVar("scriptProfile") == "1"
         local mem
         local cpuTotal, cpuPrev, cpu
         _G.C_Timer.NewTicker(1, function(...)
@@ -917,7 +921,11 @@ function commands.profile()
             cpuTotal = _G.GetAddOnCPUUsage(profile.host)
             cpu = cpuTotal - cpuPrev
 
-            frame.TitleText:SetFormattedText("%s  Memory: %s  CPU: %.2f ms", profile.host, mem, cpu)
+            if isProfiling then
+                frame.TitleText:SetFormattedText("%s  Memory: %s  CPU: %.2f ms", profile.host, mem, cpu)
+            else
+                frame.TitleText:SetFormattedText("%s  Memory: %s  Enable CVAR \"scriptProfile\" for CPU", profile.host, mem, cpu)
+            end
         end)
     end
 
