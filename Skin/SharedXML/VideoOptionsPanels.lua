@@ -119,7 +119,9 @@ function private.SharedXML.VideoOptionsPanels()
     --------------------
     -- Column A
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_BufferingDropDown)
-    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
+    if not private.isPatch then
+        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
+    end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
