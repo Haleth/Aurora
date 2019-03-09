@@ -88,12 +88,33 @@ private.Aurora = Aurora
 _G.Aurora = Aurora
 
 if _G.GetCVar("scriptProfile") == "1" then
-    local profile, trackTable = Aurora.Profile
-    local function UpdateUsage(func, info)
+    local profile, timeDecay, trackTable = Aurora.Profile, 60
+    local function UpdateUsage(info)
+        if info.isUpdating then return end
+        info.isUpdating = true
+
         info.prev = info.total
-        info.total = math.max(info.total, _G.GetFunctionCPUUsage(func, true))
-        info.time = info.total - info.prev
+        info.total = math.max(info.total, _G.GetFunctionCPUUsage(info.func, true))
+
+        local time = info.total - info.prev
+        if time > 0 then
+            info.time = time
+        else
+            info.time = info.time / timeDecay
+            if info.time < 0.000001 then
+                info.time = 0
+            end
+        end
+
+        info.isUpdating = false
     end
+
+    _G.C_Timer.NewTicker(1, function()
+        for i = 1, #profile do
+            UpdateUsage(profile[i])
+        end
+    end)
+
     local function trackFunction(func, name)
         local info = {
             num = 0,
@@ -101,6 +122,7 @@ if _G.GetCVar("scriptProfile") == "1" then
             total = 0,
             prev = 0,
             name = name,
+            isUpdating = false,
         }
 
         if profile[name] then
@@ -111,20 +133,15 @@ if _G.GetCVar("scriptProfile") == "1" then
         end
         tinsert(profile, info)
 
-        local timer
-        return function(...)
-            if timer then timer:Cancel() end
+        info.func = function(...)
             local ret = func(...)
 
-            UpdateUsage(func, info)
+            UpdateUsage(info)
             info.num = info.num + 1
-
-            timer = _G.C_Timer.NewTimer(1, function()
-                UpdateUsage(func, info)
-            end)
 
             return ret
         end
+        return info.func
     end
     function trackTable(table, name)
         local mt = {
@@ -133,7 +150,7 @@ if _G.GetCVar("scriptProfile") == "1" then
                 if type(v) == "table" then
                     trackTable(v, n)
                     rawset(t, k, v)
-                else
+                elseif v then
                     rawset(t, k, trackFunction(v, n))
                 end
             end
