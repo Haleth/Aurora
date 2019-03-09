@@ -219,11 +219,11 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
         end
         function Skin.GarrisonMissionPageFollowerTemplate(Frame)
             Frame:GetRegions():Hide()
-            local portraitBG = _G.CreateFrame("Frame", nil, Frame)
-            portraitBG:SetFrameLevel(Frame:GetFrameLevel())
-            portraitBG:SetPoint("TOPLEFT", Frame, -1, 1)
-            portraitBG:SetPoint("BOTTOMRIGHT", Frame, 1, -1)
-            Base.SetBackdrop(portraitBG, Color.button, 0.5)
+
+            Base.SetBackdrop(Frame, Color.button, Color.frame.a)
+            local bg = Frame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", Frame, 3, -2)
+            bg:SetPoint("BOTTOMRIGHT", Frame, 0, -1)
 
             Skin.GarrisonFollowerMissionPortraitTemplate(Frame.PortraitFrame)
             Skin.GarrisonMissionAbilityLargeCounterTemplate(Frame.Counters[1])
@@ -236,6 +236,13 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonMissionEnemyLargeMechanicTemplate(Frame.Mechanics[1])
         end
         function Skin.GarrisonLargeFollowerXPFrameTemplate(Frame)
+            Frame:GetRegions():Hide()
+
+            Base.SetBackdrop(Frame, Color.button, Color.frame.a)
+            local bg = Frame:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", Frame, 3, -2)
+            bg:SetPoint("BOTTOMRIGHT", Frame, 0, -1)
+
             Skin.GarrisonFollowerPortraitTemplate(Frame.PortraitFrame)
             Skin.GarrisonFollowerXPBarTemplate(Frame.XP)
             Skin.GarrisonFollowerXPGainTemplate(Frame.XPGain)
