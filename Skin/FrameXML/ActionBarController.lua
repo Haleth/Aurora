@@ -18,35 +18,38 @@ local function SetTexture(texture, anchor, left, right, top, bottom)
     texture:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
 end
 local function SetMicroButton(button, file, left, right, top, bottom)
+    --print("SetMicroButton", button:GetName(), file)
     if file == "" then
         if not left then
             left, right, top, bottom = .19, .81, .21, .82
         end
-        SetTexture(button:GetNormalTexture(), button, left, right, top, bottom)
-        SetTexture(button:GetPushedTexture(), button, left, right, top, bottom)
-        SetTexture(button:GetDisabledTexture(), button, left, right, top, bottom)
+        SetTexture(button._normal, button, left, right, top, bottom)
+        SetTexture(button._pushed, button, left, right, top, bottom)
+        SetTexture(button._disabled, button, left, right, top, bottom)
     elseif file then
         if not left then
             left, right, top, bottom = 0.2, 0.8, 0.08, 0.92
         end
-        button:SetNormalTexture(file)
-        SetTexture(button:GetNormalTexture(), button, left, right - 0.04, top + 0.04, bottom)
+        button._normal:SetTexture(file)
+        SetTexture(button._normal, button, left, right - 0.04, top + 0.04, bottom)
 
-        button:SetPushedTexture(file)
-        local pushed = button:GetPushedTexture()
-        SetTexture(pushed, button, left + 0.04, right, top, bottom - 0.04)
-        pushed:SetVertexColor(0.5, 0.5, 0.5)
+        SetTexture(button._pushed, button, left + 0.04, right, top, bottom - 0.04)
+        button._pushed:SetVertexColor(0.5, 0.5, 0.5)
+        button._pushed:SetTexture(file)
 
-        button:SetDisabledTexture(file)
-        local disabled = button:GetDisabledTexture()
-        SetTexture(disabled, button, left, right, top, bottom)
-        disabled:SetDesaturated(true)
+        SetTexture(button._disabled, button, left, right, top, bottom)
+        button._disabled:SetDesaturated(true)
+        button._disabled:SetTexture(file)
     else
-        button:SetNormalTexture("")
-        button:SetPushedTexture("")
-        button:SetDisabledTexture("")
+        button._normal:SetTexture("")
+        button._pushed:SetTexture("")
+        if button._disabled then
+            button._disabled:SetTexture("")
+        end
     end
 end
+SetTexture = Aurora.Profile.trackFunction(SetTexture, "ActionBarController.SetTexture")
+SetMicroButton = Aurora.Profile.trackFunction(SetMicroButton, "ActionBarController.SetMicroButton")
 
 do --[[ FrameXML\ActionBarController.lua ]]
     do --[[ MainMenuBarMicroButtons.lua ]]
@@ -63,9 +66,12 @@ do --[[ FrameXML\ActionBarController.lua ]]
                 _G.LFDMicroButton:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 1, 0)
             end
         end
+
+        local status
         function Hook.MainMenuMicroButton_OnUpdate(self, elapsed)
             if self.updateInterval == _G.PERFORMANCEBAR_UPDATE_INTERVAL then
-                local status = _G.GetFileStreamingStatus()
+                --print("OnUpdate", self.updateInterval)
+                status = _G.GetFileStreamingStatus()
                 if status == 0 then
                     status = _G.GetBackgroundLoadingStatus() ~= 0 and 1 or 0
                 end
@@ -96,6 +102,10 @@ do --[[ FrameXML\ActionBarController.xml ]]
     do --[[ MainMenuBarMicroButtons.xml ]]
         function Skin.MainMenuBarMicroButton(Button)
             Button:SetSize(24, 34)
+
+            Button._normal = Button:GetNormalTexture()
+            Button._pushed = Button:GetPushedTexture()
+            Button._disabled = Button:GetDisabledTexture()
 
             -- 24 x 34
             Base.SetBackdrop(Button, Color.button)
