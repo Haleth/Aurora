@@ -261,11 +261,10 @@ addonName.
                 bd.bgBlue = blue
                 bd.bgAlpha = alpha
 
-                local tex = bd.bg:GetTexture()
-                if tex then
+                if bd.bg:GetTexture() then
                     bd.bg:SetVertexColor(red, green, blue, alpha)
                 else
-                    private.debug("SetBackdropColor no texture", frame:GetName(), tex)
+                    private.debug("SetBackdropColor no texture", frame:GetName(), bd.bg:GetTexture())
                 end
             end
         end
