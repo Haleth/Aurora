@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.1.5.0] - 2019-03-11 ##
 ### Changed ###
 
   * Updates for 8.1.5
@@ -359,6 +359,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.5.0]: https://github.com/Haleth/Aurora/compare/8.1.0.4...8.1.5.0
 [8.1.0.4]: https://github.com/Haleth/Aurora/compare/8.1.0.3...8.1.0.4
 [8.1.0.3]: https://github.com/Haleth/Aurora/compare/8.1.0.2...8.1.0.3
 [8.1.0.2]: https://github.com/Haleth/Aurora/compare/8.1.0.1...8.1.0.2
