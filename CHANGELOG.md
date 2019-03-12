@@ -1,4 +1,17 @@
-﻿## [8.1.0.4] - 2019-02-04 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * Updates for 8.1.5
+  * Some minor performance improvements
+
+### Fixed ###
+
+  * Some tooltip status bars were not skinned
+  * Dropdown menus with more than two levels were not skinned
+
+
+
+## [8.1.0.4] - 2019-02-04 ##
 ### Fixed ###
 
   * The arena group finder would not display class icons
