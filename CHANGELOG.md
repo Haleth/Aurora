@@ -1,4 +1,11 @@
-﻿## [8.1.5.0] - 2019-03-11 ##
+﻿## [8.1.5.1] - 2019-03-13 ##
+### Fixed ###
+
+  * A bug prevented the skin from working for some users
+
+
+
+## [8.1.5.0] - 2019-03-11 ##
 ### Changed ###
 
   * Updates for 8.1.5
@@ -359,6 +366,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.5.1]: https://github.com/Haleth/Aurora/compare/8.1.5.0...8.1.5.1
 [8.1.5.0]: https://github.com/Haleth/Aurora/compare/8.1.0.4...8.1.5.0
 [8.1.0.4]: https://github.com/Haleth/Aurora/compare/8.1.0.3...8.1.0.4
 [8.1.0.3]: https://github.com/Haleth/Aurora/compare/8.1.0.2...8.1.0.3
