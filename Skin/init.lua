@@ -169,7 +169,9 @@ if _G.GetCVar("scriptProfile") == "1" then
 else
     local profile = Aurora.Profile
     profile.trackTable = private.nop
-    profile.trackFunction = private.nop
+    profile.trackFunction = function(...)
+        return ...
+    end
     profile.host = ADDON_NAME
 end
 

@@ -4,7 +4,7 @@
 ## Author: Haleth/Lightsword, Gethe
 ## Version: 8.1.5.0
 ## LoadWith: Blizzard_CompactRaidFrames
-## OptionalDeps: Ace3, LibTextDump-1.0
+## OptionalDeps: Ace3, LibTextDump-1.0, BugSack
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
 ## X-Curse-Project-ID: 278735
