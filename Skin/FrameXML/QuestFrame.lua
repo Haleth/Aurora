@@ -26,36 +26,30 @@ do --[[ FrameXML\QuestFrame.lua ]]
         end
     end
     function Hook.QuestFrameGreetingPanel_OnShow()
-        local numActiveQuests = _G.GetNumActiveQuests()
-        if numActiveQuests > 0 then
-            for i = 1, numActiveQuests do
-                local questTitleButton = _G["QuestTitleButton"..i]
-                local title = _G.GetActiveTitle(i)
-                if _G.IsActiveQuestTrivial(i) then
+        local id, title, lastTitleButton
+        for questTitleButton in _G.QuestFrameGreetingPanel.titleButtonPool:EnumerateActive() do
+            id = questTitleButton:GetID()
+            if questTitleButton.isActive == 1 then
+                title = _G.GetActiveTitle(id)
+                if _G.IsActiveQuestTrivial(id) then
+                    questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
+                else
+                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
+                end
+                lastTitleButton = questTitleButton
+            elseif questTitleButton.isActive == 0 then
+                title = _G.GetAvailableTitle(id)
+                if _G.GetAvailableQuestInfo(id) then
                     questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
                 else
                     questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
                 end
             end
-
         end
 
-        local numAvailableQuests = _G.GetNumAvailableQuests()
-        if numAvailableQuests > 0 then
-            if numActiveQuests > 0 then
-                _G.QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "QuestTitleButton"..numActiveQuests, "BOTTOMLEFT",22,-10)
-                _G.AvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10)
-            end
-
-            for i = numActiveQuests + 1, numActiveQuests + numAvailableQuests do
-                local questTitleButton = _G["QuestTitleButton"..i]
-                local title = _G.GetAvailableTitle(i - numActiveQuests)
-                if _G.GetAvailableQuestInfo(i - numActiveQuests) then
-                    questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
-                else
-                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                end
-            end
+        if _G.GetNumAvailableQuests() > 0 and _G.GetNumActiveQuests() > 0 then
+            _G.QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", lastTitleButton, "BOTTOMLEFT", 22, -10)
+            _G.AvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10)
         end
     end
     function Hook.QuestFrame_UpdatePortraitText(text)
