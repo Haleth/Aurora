@@ -49,14 +49,12 @@ do --[[ FrameXML\LFGFrame.lua ]]
             button._auroraSkinned = true
         end
     end
-    local skinnedIndex = 1
     function Hook.LFGRewardsFrame_SetItemButton(parentFrame, dungeonID, index, id, name, texture, numItems, rewardType, rewardID, quality, shortageIndex, showTankIcon, showHealerIcon, showDamageIcon)
         local parentName = parentFrame:GetName()
         local frame = _G[parentName.."Item"..index]
 
-        if skinnedIndex < index then
+        if not frame._auroraIconBorder then
             Skin.LFGRewardsLootTemplate(frame)
-            skinnedIndex = index
         end
 
         if shortageIndex then
