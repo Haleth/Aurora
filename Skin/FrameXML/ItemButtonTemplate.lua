@@ -46,18 +46,17 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
     end
     function Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
         if button._auroraIconBorder then
-            local isRelic = (itemIDOrLink and _G.IsArtifactRelicItem(itemIDOrLink))
+            local color
+            if quality ~= _G.LE_ITEM_QUALITY_POOR then
+                color = _G.BAG_ITEM_QUALITY_COLORS[quality] or quality
+            end
 
-            if quality then
-                local color = _G.type(quality) == "table" and quality or _G.BAG_ITEM_QUALITY_COLORS[quality]
-                if color and color == quality or quality >= _G.LE_ITEM_QUALITY_COMMON then
-                    SetRelic(button, isRelic, color)
-                    button._auroraIconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
-                    button.IconBorder:Hide()
-                else
-                    SetRelic(button, false)
-                    button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
-                end
+            if color then
+                local isRelic = (itemIDOrLink and _G.IsArtifactRelicItem(itemIDOrLink))
+                SetRelic(button, isRelic, color)
+
+                button._auroraIconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
+                button.IconBorder:Hide()
             else
                 SetRelic(button, false)
                 button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
