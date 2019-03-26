@@ -96,6 +96,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
     function Skin.PVPRewardTemplate(Frame)
         Frame.Border:Hide()
         Base.CropIcon(Frame.Icon, Frame)
+        Frame.Icon._auroraResetPortrait = true
     end
     function Skin.PVPConquestBarTemplate(StatusBar)
         _G.hooksecurefunc(StatusBar.Reward, "SetTexture", Hook.PVPConquestBarRewardMixin_SetTexture)
