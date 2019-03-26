@@ -57,24 +57,13 @@ function private.FrameXML.CharacterFrame()
 
     local ClassBackground = CharacterStatsPane.ClassBackground
     local atlas = "legionmission-landingpage-background-"..private.charClass.token
-    if private.isPatch then
-        local info = _G.C_Texture.GetAtlasInfo(atlas)
-        ClassBackground:ClearAllPoints()
-        ClassBackground:SetPoint("CENTER")
-        ClassBackground:SetSize(_G.Round(info.width * 0.7), _G.Round(info.height * 0.7))
-        ClassBackground:SetAtlas(atlas)
-        ClassBackground:SetDesaturated(true)
-        ClassBackground:SetAlpha(0.4)
-    else
-        local _, width, height = _G.GetAtlasInfo(atlas)
-        width, height = _G.Round(width * 0.7), _G.Round(height * 0.7)
-        ClassBackground:ClearAllPoints()
-        ClassBackground:SetPoint("CENTER")
-        ClassBackground:SetSize(width, height)
-        ClassBackground:SetAtlas(atlas)
-        ClassBackground:SetDesaturated(true)
-        ClassBackground:SetAlpha(0.4)
-    end
+    local info = _G.C_Texture.GetAtlasInfo(atlas)
+    ClassBackground:ClearAllPoints()
+    ClassBackground:SetPoint("CENTER")
+    ClassBackground:SetSize(_G.Round(info.width * 0.7), _G.Round(info.height * 0.7))
+    ClassBackground:SetAtlas(atlas)
+    ClassBackground:SetDesaturated(true)
+    ClassBackground:SetAlpha(0.4)
 
 
     CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Shadow_Huge2")

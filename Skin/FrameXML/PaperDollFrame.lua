@@ -148,9 +148,6 @@ function private.FrameXML.PaperDollFrame()
     PaperDollEquipmentManagerPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
 
     Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.EquipSet)
-    if not private.isPatch then
-        PaperDollEquipmentManagerPane.EquipSet.ButtonBackground:Hide()
-    end
     Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.SaveSet)
 
     Skin.HybridScrollBarTemplate(PaperDollEquipmentManagerPane.scrollBar)

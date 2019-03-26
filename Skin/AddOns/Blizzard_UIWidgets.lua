@@ -26,21 +26,8 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         end
 
         Hook.UIWidgetManagerMixin = {}
-        if private.isPatch then
-            function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
-                Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
-            end
-        else
-            function Hook.UIWidgetManagerMixin:CreateWidget(widgetID, widgetSetID, widgetType)
-                if self.widgetVisTypeInfo[widgetType] then
-                    local frameTemplate = self.widgetVisTypeInfo[widgetType].templateInfo.frameTemplate
-                    private.debug("frameTemplate", frameTemplate, Skin[frameTemplate])
-
-                    if Skin[frameTemplate] then
-                        Skin[frameTemplate](self.widgetIdToFrame[widgetID])
-                    end
-                end
-            end
+        function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
+            Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
         end
     end
 end
@@ -73,7 +60,6 @@ function private.AddOns.Blizzard_UIWidgets()
     Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
 
 
-    if not private.isPatch then return end
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_UIWidgetTopCenterFrame --
     ----====####$$$$%%%%%$$$$####====----
@@ -84,8 +70,4 @@ function private.AddOns.Blizzard_UIWidgets()
     -- Blizzard_UIWidgetBelowMinimapFrame --
     ----====####$$$$%%%%%%%%$$$$####====----
     Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
-
-    -------------
-    -- Section --
-    -------------
 end

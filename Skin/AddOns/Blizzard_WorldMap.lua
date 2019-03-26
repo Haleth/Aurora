@@ -118,19 +118,5 @@ function private.AddOns.Blizzard_WorldMap()
     WorldMapFrame.NavBar:SetPoint("BOTTOMRIGHT", WorldMapFrame.TitleCanvasSpacerFrame, -5, 5)
 
     Skin.WorldMapSidePanelToggleTemplate(WorldMapFrame.SidePanelToggle)
-
-    -------------
-    -- Section --
-    -------------
-
-    ----====####$$$$%%%%$$$$####====----
-    --    Blizzard_WorldMapTooltip    --
-    ----====####$$$$%%%%$$$$####====----
-    if not private.isPatch and not private.disabled.tooltips then
-        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip1)
-        Skin.ShoppingTooltipTemplate(_G.WorldMapCompareTooltip2)
-        Skin.GameTooltipTemplate(_G.WorldMapTooltip)
-        Skin.InternalEmbeddedItemTooltipTemplate(_G.WorldMapTooltip.ItemTooltip)
-    end
 end
 
