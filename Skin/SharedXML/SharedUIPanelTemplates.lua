@@ -151,6 +151,8 @@ do -- Basic frame type skins
     do -- StatusBar
         local atlasColors = {
             ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
+            ["_islands-queue-progressbar-fill"] = Color.Create(0.7098, 0.5019, 0.1725),
+            ["_islands-queue-progressbar-fill_2"] = Color.Create(0.3765, 0.8157, 0.9098),
             ["ChallengeMode-TimerFill"] = Color.Create(0.1490, 0.6196, 1.0),
             ["objectivewidget-bar-fill-left"] = Color.Create(0.1176, 0.2823, 0.7176),
             ["objectivewidget-bar-fill-neutral"] = Color.Create(0.3608, 0.2980, 0.0),
