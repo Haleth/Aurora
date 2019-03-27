@@ -164,9 +164,15 @@ do -- Basic frame type skins
             if atlasColors[atlas] then
                 local texture = self:GetStatusBarTexture()
                 texture:SetTexture([[Interface\Buttons\WHITE8x8]])
-                texture:SetVertexColor(atlasColors[atlas]:GetRGB())
+                if atlasColors[atlas.."_2"] then
+                    local r, g, b = atlasColors[atlas]:GetRGB()
+                    local r2, g2, b2 = atlasColors[atlas.."_2"]:GetRGB()
+                    texture:SetGradient("VERTICAL", r, g, b, r2, g2, b2)
+                else
+                    texture:SetVertexColor(atlasColors[atlas]:GetRGB())
+                end
             else
-                private.debug("SetStatusBarAtlas", atlas)
+                private.debug("SetStatusBarAtlas missing atlas", atlas)
             end
         end
         local function Hook_SetStatusBarColor(self, r, g, b)
