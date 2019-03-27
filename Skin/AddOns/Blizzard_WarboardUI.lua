@@ -40,13 +40,19 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
             self.CloseButton.Border:Hide()
         end
     end
+
+    Hook.WarboardQuestChoiceOptionFrameMixin = {}
+    function Hook.WarboardQuestChoiceOptionFrameMixin:ConfigureButtons()
+        self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
+    end
 end
 
 do --[[ AddOns\Blizzard_WarboardUI.xml ]]
     function Skin.WarboardQuestChoiceOptionTemplate(Button)
+        Util.Mixin(Button, Hook.WarboardQuestChoiceOptionFrameMixin)
+
         Button.Background:Hide()
         Button.ArtworkBorder:SetAlpha(0)
-        Button.ArtworkBorderDisabled:SetColorTexture(1, 0, 0, 0.3)
         Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
         Button.Artwork:ClearAllPoints()
         Button.Artwork:SetPoint("TOPLEFT", 31, -31)
