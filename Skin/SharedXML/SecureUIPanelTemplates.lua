@@ -108,6 +108,18 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         _G[name.."Bottom"]:Hide()
         _G[name.."Middle"]:Hide()
     end
+    function Skin.UIPanelButtonNoTooltipTemplate(Button)
+        Button.Left:SetAlpha(0)
+        Button.Right:SetAlpha(0)
+        Button.Middle:SetAlpha(0)
+        Button:SetHighlightTexture("")
+
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button, "backdrop")
+    end
+    function Skin.UIPanelButtonNoTooltipResizeToFitTemplate(Button)
+        Skin.UIPanelButtonNoTooltipTemplate(Button)
+    end
     function Skin.SelectionFrameTemplate(Frame)
         Base.SetBackdrop(Frame)
         Frame.TopLeft:ClearAllPoints()

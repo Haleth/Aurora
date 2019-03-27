@@ -257,13 +257,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Base.SetHighlight(Button, "texture")
     end
     function Skin.UIPanelButtonTemplate(Button)
-        Button.Left:SetAlpha(0)
-        Button.Right:SetAlpha(0)
-        Button.Middle:SetAlpha(0)
-        Button:SetHighlightTexture("")
-
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop")
+        Skin.UIPanelButtonNoTooltipTemplate(Button)
     end
     function Skin.UIPanelDynamicResizeButtonTemplate(Button)
         Skin.UIPanelButtonTemplate(Button)
