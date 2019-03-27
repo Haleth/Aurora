@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals next
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -14,19 +14,29 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
             local template = widgetTypeInfo.templateInfo.frameTemplate
 
+            local widgetFrame = self.widgetFrames[widgetID]
             if Skin[template] then
-                local widgetFrame = self.widgetFrames[widgetID]
                 if widgetFrame and not widgetFrame._auroraSkinned then
                     Skin[template](widgetFrame)
                     widgetFrame._auroraSkinned = true
-                else
-                    private.debug("UIWidgetContainerMixin:CreateWidget Missing Template", template)
                 end
+            else
+                private.debug("UIWidgetContainerMixin:CreateWidget Missing Template", widgetFrame and widgetFrame:GetDebugName(), template)
             end
         end
 
         Hook.UIWidgetManagerMixin = {}
         function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
+            local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
+            local widgetID, widgetType, widgetTypeInfo, widgetVisInfo
+            for _, widgetInfo in next, setWidgets do
+                widgetID, widgetType = widgetInfo.widgetID, widgetInfo.widgetType
+                widgetTypeInfo = _G.UIWidgetManager:GetWidgetTypeInfo(widgetType)
+                widgetVisInfo = widgetTypeInfo.visInfoDataFunction(widgetID)
+
+                Hook.UIWidgetContainerMixin.CreateWidget(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetVisInfo)
+            end
+
             Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
         end
     end
@@ -50,6 +60,29 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
             Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.LeftBar)
             Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.RightBar)
         end
+    end
+    do --[[ Blizzard_UIWidgetTemplateIconAndText ]]
+        Skin.UIWidgetTemplateIconAndText = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateStatusBar ]]
+        function Skin.UIWidgetTemplateStatusBar(Frame)
+            local StatusBar = Frame.Bar
+            Skin.FrameTypeStatusBar(StatusBar)
+
+            StatusBar.BGLeft:SetAlpha(0)
+            StatusBar.BGRight:SetAlpha(0)
+            StatusBar.BGCenter:SetAlpha(0)
+            StatusBar.BorderLeft:SetAlpha(0)
+            StatusBar.BorderRight:SetAlpha(0)
+            StatusBar.BorderCenter:SetAlpha(0)
+            StatusBar.Spark:SetAlpha(0)
+        end
+    end
+    do --[[ Blizzard_UIWidgetTemplateTextureWithState ]]
+        Skin.UIWidgetTemplateTextureWithState = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateTextWithState ]]
+        Skin.UIWidgetTemplateTextWithState = private.nop
     end
 end
 

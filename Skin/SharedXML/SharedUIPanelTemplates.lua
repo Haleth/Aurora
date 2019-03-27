@@ -151,9 +151,14 @@ do -- Basic frame type skins
     do -- StatusBar
         local atlasColors = {
             ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
-            ["objectivewidget-bar-fill-left"] = Color.blue,
-            ["objectivewidget-bar-fill-middle"] = Color.yellow,
-            ["objectivewidget-bar-fill-right"] = Color.red,
+            ["ChallengeMode-TimerFill"] = Color.Create(0.1490, 0.6196, 1.0),
+            ["objectivewidget-bar-fill-left"] = Color.Create(0.1176, 0.2823, 0.7176),
+            ["objectivewidget-bar-fill-neutral"] = Color.Create(0.3608, 0.2980, 0.0),
+            ["objectivewidget-bar-fill-right"] = Color.Create(0.5765, 0.0, 0.0),
+            ["UI-Frame-Bar-Fill-Green"] = Color.Create(0.0941, 0.7647, 0.0157),
+            ["UI-Frame-Bar-Fill-Red"] = Color.Create(0.7725, 0.0, 0.0),
+            ["UI-Frame-Bar-Fill-Yellow"] = Color.Create(0.9608, 0.6314, 0.0),
+            ["UI-Frame-Bar-Fill-Blue"] = Color.Create(0.0667, 0.4470, 0.8745),
         }
         local function Hook_SetStatusBarAtlas(self, atlas)
             if atlasColors[atlas] then
@@ -176,12 +181,19 @@ do -- Basic frame type skins
             bg:SetPoint("TOPLEFT", -1, 1)
             bg:SetPoint("BOTTOMRIGHT", 1, -1)
 
+            local atlas = Frame:GetStatusBarAtlas()
             local red, green, blue = Frame:GetStatusBarColor()
+
             if not Frame:GetStatusBarTexture() then
                 Frame:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
             end
             Base.SetTexture(Frame:GetStatusBarTexture(), "gradientUp")
-            Frame:SetStatusBarColor(red, green, blue)
+
+            if atlas then
+                Hook_SetStatusBarAtlas(Frame, atlas)
+            else
+                Hook_SetStatusBarColor(Frame, red, green, blue)
+            end
         end
     end
 end
