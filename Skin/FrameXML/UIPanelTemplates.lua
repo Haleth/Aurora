@@ -55,7 +55,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Button:GetHighlightTexture():SetTexCoord(0.005859375, 0.5703125, 0.7578125, 0.841796875)
     end
     function Skin.UIPanelInfoButton(Button)
-        Button:SetSize(16, 16)
         Button.texture:SetTexture([[Interface\Common\help-i]])
         Button.texture:SetTexCoord(0.234375, 0.765625, 0.234375, 0.765625)
         Button.texture:SetSize(16, 16)
