@@ -50,17 +50,17 @@ function private.FrameXML.PVEFrame()
     local PVEFrame = _G.PVEFrame
     Skin.PortraitFrameTemplate(PVEFrame)
 
-    _G.PVEFrameBlueBg:Hide()
-    _G.PVEFrameTLCorner:Hide()
-    _G.PVEFrameTRCorner:Hide()
-    _G.PVEFrameBRCorner:Hide()
-    _G.PVEFrameBLCorner:Hide()
-    _G.PVEFrameLLVert:Hide()
-    _G.PVEFrameRLVert:Hide()
-    _G.PVEFrameBottomLine:Hide()
-    _G.PVEFrameTopLine:Hide()
-    _G.PVEFrameTopFiligree:Hide()
-    _G.PVEFrameBottomFiligree:Hide()
+    _G.PVEFrameBlueBg:SetAlpha(0)
+    _G.PVEFrameTLCorner:SetAlpha(0)
+    _G.PVEFrameTRCorner:SetAlpha(0)
+    _G.PVEFrameBRCorner:SetAlpha(0)
+    _G.PVEFrameBLCorner:SetAlpha(0)
+    _G.PVEFrameLLVert:SetAlpha(0)
+    _G.PVEFrameRLVert:SetAlpha(0)
+    _G.PVEFrameBottomLine:SetAlpha(0)
+    _G.PVEFrameTopLine:SetAlpha(0)
+    _G.PVEFrameTopFiligree:SetAlpha(0)
+    _G.PVEFrameBottomFiligree:SetAlpha(0)
 
     Skin.InsetFrameTemplate(PVEFrame.Inset)
     Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab1)
@@ -85,7 +85,7 @@ function private.FrameXML.PVEFrame()
     GroupFinderFrame.groupButton3.icon:SetTexture([[Interface\Icons\INV_Helmet_06]])
     GroupFinderFrame.groupButton4.icon:SetTexture([[Interface\Icons\Achievement_General_StayClassy]])
 
-    PVEFrame.shadows:Hide()
+    PVEFrame.shadows:SetAlpha(0)
 
 
     -------------
