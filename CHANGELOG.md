@@ -1,4 +1,17 @@
-﻿## [8.1.5.1] - 2019-03-13 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Add Islands queue frame skin
+
+### Fixed ###
+
+  * Missed some changes to the QuestFrame in 8.1.5
+  * Nil error when selecting a Call to Arms role
+  * A conflict with some addons using circular texture masks
+
+
+
+## [8.1.5.1] - 2019-03-13 ##
 ### Fixed ###
 
   * A bug prevented the skin from working for some users
