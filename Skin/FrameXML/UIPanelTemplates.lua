@@ -12,21 +12,24 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\UIPanelTemplates.lua ]]
     function Hook.SquareButton_SetIcon(self, name)
         name = name:upper()
+        if not self.GetBackdropTexture then return end
+
+        local bg = self:GetBackdropTexture("bg")
         if name == "LEFT" then
-            self.icon:SetPoint("TOPLEFT", 7, -4)
-            self.icon:SetPoint("BOTTOMRIGHT", -7, 4)
+            self.icon:SetPoint("TOPLEFT", bg, 8, -4)
+            self.icon:SetPoint("BOTTOMRIGHT", bg, -8, 4)
             Base.SetTexture(self.icon, "arrowLeft")
         elseif name == "RIGHT" then
-            self.icon:SetPoint("TOPLEFT", 7, -4)
-            self.icon:SetPoint("BOTTOMRIGHT", -7, 4)
+            self.icon:SetPoint("TOPLEFT", bg, 8, -4)
+            self.icon:SetPoint("BOTTOMRIGHT", bg, -8, 4)
             Base.SetTexture(self.icon, "arrowRight")
         elseif name == "UP" then
-            self.icon:SetPoint("TOPLEFT", 4, -7)
-            self.icon:SetPoint("BOTTOMRIGHT", -4, 7)
+            self.icon:SetPoint("TOPLEFT", bg, 4, -8)
+            self.icon:SetPoint("BOTTOMRIGHT", bg, -4, 8)
             Base.SetTexture(self.icon, "arrowUp")
         elseif name == "DOWN" then
-            self.icon:SetPoint("TOPLEFT", 4, -7)
-            self.icon:SetPoint("BOTTOMRIGHT", -4, 7)
+            self.icon:SetPoint("TOPLEFT", bg, 4, -8)
+            self.icon:SetPoint("BOTTOMRIGHT", bg, -4, 8)
             Base.SetTexture(self.icon, "arrowDown")
         end
     end
@@ -62,12 +65,21 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         highlight:SetTexCoord(0.234375, 0.765625, 0.234375, 0.765625)
         highlight:SetSize(16, 16)
     end
-    function Skin.UIPanelSquareButton(Button)
-        Button:SetSize(20, 20)
+    function Skin.UIPanelSquareButton(Button, direction)
         Button:SetNormalTexture("")
         Button:SetHighlightTexture("")
         Button:SetPushedTexture("")
+
         Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 2, -2)
+        bg:SetPoint("BOTTOMRIGHT", -2, 2)
+
+        Base.SetHighlight(Button, "backdrop")
+
+        if direction then
+            Hook.SquareButton_SetIcon(Button, direction)
+        end
     end
     function Skin.UIPanelLargeSilverButton(Button)
         local buttonName = Button:GetName()

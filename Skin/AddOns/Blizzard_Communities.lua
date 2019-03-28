@@ -225,6 +225,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.AddToChatButtonTemplate(Frame)
             Skin.UIMenuButtonStretchTemplate(Frame)
+            Hook.SquareButton_SetIcon(Frame, "DOWN")
         end
         function Skin.StreamDropDownMenuTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
@@ -527,7 +528,7 @@ function private.AddOns.Blizzard_Communities()
     Skin.UIDropDownMenuTemplate(CommunitiesTicketManagerDialog.ExpiresDropDownMenu)
     Skin.UIDropDownMenuTemplate(CommunitiesTicketManagerDialog.UsesDropDownMenu)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.GenerateLinkButton)
-    Skin.UIPanelSquareButton(CommunitiesTicketManagerDialog.MaximizeButton)
+    Skin.UIPanelSquareButton(CommunitiesTicketManagerDialog.MaximizeButton, "DOWN")
     Skin.CommunitiesTicketManagerScrollFrameTemplate(CommunitiesTicketManagerDialog.InviteManager)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.Close)
 

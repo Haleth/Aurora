@@ -95,8 +95,6 @@ function private.FrameXML.PetStable()
         Skin.PetStableSlotTemplate(_G["PetStableStabledPet"..i])
     end
 
-    Skin.UIPanelSquareButton(_G.PetStableNextPageButton)
-    Hook.SquareButton_SetIcon(_G.PetStableNextPageButton, "RIGHT")
-    Skin.UIPanelSquareButton(_G.PetStablePrevPageButton)
-    Hook.SquareButton_SetIcon(_G.PetStablePrevPageButton, "LEFT")
+    Skin.UIPanelSquareButton(_G.PetStableNextPageButton, "RIGHT")
+    Skin.UIPanelSquareButton(_G.PetStablePrevPageButton, "LEFT")
 end

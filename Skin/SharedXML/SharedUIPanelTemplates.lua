@@ -68,12 +68,10 @@ do -- BlizzWTF: These are not templates, but they should be
             Button:SetPushedTexture("")
             Button:SetHighlightTexture("")
 
-            local bg = _G.CreateFrame("Frame", nil, Button)
-            bg:SetPoint("TOPLEFT", 4, -5)
+            Base.SetBackdrop(Button, Color.button)
+            local bg = Button:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 5, -5)
             bg:SetPoint("BOTTOMRIGHT", -5, 5)
-            bg:SetFrameLevel(Button:GetFrameLevel())
-            Base.SetBackdrop(bg, Color.button)
-            Button._auroraBG = bg
 
             local disabled = Button:GetDisabledTexture()
             disabled:SetColorTexture(0, 0, 0, .3)
@@ -83,9 +81,10 @@ do -- BlizzWTF: These are not templates, but they should be
         function Skin.NavButtonPrevious(Button)
             NavButton(Button)
 
+            local bg = Button:GetBackdropTexture("bg")
             local arrow = Button:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", Button._auroraBG, 7, -5)
-            arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -9, 4)
+            arrow:SetPoint("TOPLEFT", bg, 8, -5)
+            arrow:SetPoint("BOTTOMRIGHT", bg, -8, 5)
             Base.SetTexture(arrow, "arrowLeft")
 
             Button._auroraHighlight = {arrow}
@@ -94,9 +93,10 @@ do -- BlizzWTF: These are not templates, but they should be
         function Skin.NavButtonNext(Button)
             NavButton(Button)
 
+            local bg = Button:GetBackdropTexture("bg")
             local arrow = Button:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", Button._auroraBG, 8, -5)
-            arrow:SetPoint("BOTTOMRIGHT", Button._auroraBG, -8, 4)
+            arrow:SetPoint("TOPLEFT", bg, 8, -4)
+            arrow:SetPoint("BOTTOMRIGHT", bg, -8, 4)
             Base.SetTexture(arrow, "arrowRight")
 
             Button._auroraHighlight = {arrow}
@@ -397,8 +397,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.UIMenuButtonStretchTemplate(Button)
-        Button:SetSize(Button:GetSize())
-
         Button.TopLeft:Hide()
         Button.TopRight:Hide()
         Button.BottomLeft:Hide()
@@ -410,13 +408,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Button.MiddleMiddle:Hide()
         Button:SetHighlightTexture("")
 
-        local bd = _G.CreateFrame("Frame", nil, Button)
-        bd:SetPoint("TOPLEFT", 1, -1)
-        bd:SetPoint("BOTTOMRIGHT", -1, 1)
-        bd:SetFrameLevel(Button:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.button, 0.3)
-
-        Button._auroraBDFrame = bd
+        Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 1, -1)
+        bg:SetPoint("BOTTOMRIGHT", -1, 1)
+        Base.SetBackdrop(Button, Color.button, 0.3)
         Base.SetHighlight(Button, "backdrop")
     end
 

@@ -238,8 +238,6 @@ function private.AddOns.Blizzard_TalentUI()
     end
 
     Skin.UIExpandingButtonTemplate(PlayerTalentFrameTalents.PvpTalentButton)
-    PlayerTalentFrameTalents.PvpTalentButton:ClearAllPoints()
-    PlayerTalentFrameTalents.PvpTalentButton:SetPoint("TOPRIGHT", _G.PlayerTalentFrame.CloseButton, "BOTTOMRIGHT", 0, -5)
 
     --------------------
     -- PvpTalentFrame --
