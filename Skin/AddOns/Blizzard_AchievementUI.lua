@@ -8,12 +8,13 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-local function SkinSearchPreview(button)
-    button:GetNormalTexture():SetColorTexture(0.1, 0.1, 0.1, .9)
-    button:GetPushedTexture():SetColorTexture(0.1, 0.1, 0.1, .9)
+local function SkinSearchButton(button)
+    button:SetNormalTexture("")
+    button:SetPushedTexture("")
 
     local r, g, b = Color.highlight:GetRGB()
-    button.selectedTexture:SetColorTexture(r, g, b, 0.2)
+    local highlight = button.selectedTexture or button:GetHighlightTexture()
+    highlight:SetColorTexture(r, g, b, 0.2)
 end
 
 do --[[ AddOns\Blizzard_AchievementUI.lua ]]
@@ -151,17 +152,19 @@ end
 
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Skin.AchievementSearchPreviewButton(Button)
-        SkinSearchPreview(Button)
+        SkinSearchButton(Button)
 
         Button.iconFrame:SetAlpha(0)
         Base.CropIcon(Button.icon, Button)
     end
     function Skin.AchievementFullSearchResultsButton(Button)
+        SkinSearchButton(Button)
+
         Button.iconFrame:SetAlpha(0)
         Base.CropIcon(Button.icon, Button)
 
-        local r, g, b = Color.highlight:GetRGB()
-        Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
+        Button.path:SetTextColor(Color.grayLight:GetRGB())
+        Button.resultType:SetTextColor(Color.grayLight:GetRGB())
     end
     function Skin.AchievementFrameSummaryCategoryTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
@@ -417,7 +420,8 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------------
     -- AchievementFrame --
     ----------------------
-    Base.SetBackdrop(_G.AchievementFrame)
+    local AchievementFrame = _G.AchievementFrame
+    Base.SetBackdrop(AchievementFrame)
 
     _G.AchievementFrameBackground:Hide()
 
@@ -455,8 +459,8 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.AchievementFrameHeaderLeftDDLInset:SetAlpha(0)
     _G.AchievementFrameHeaderRightDDLInset:SetAlpha(0)
 
-    _G.AchievementFrameHeaderPoints:SetPoint("TOP", _G.AchievementFrame)
-    _G.AchievementFrameHeaderPoints:SetPoint("BOTTOM", _G.AchievementFrame, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
+    _G.AchievementFrameHeaderPoints:SetPoint("TOP", AchievementFrame)
+    _G.AchievementFrameHeaderPoints:SetPoint("BOTTOM", AchievementFrame, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
 
 
 
@@ -570,7 +574,7 @@ function private.AddOns.Blizzard_AchievementUI()
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab1)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab2)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab3)
-    Util.PositionRelative("TOPLEFT", _G.AchievementFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+    Util.PositionRelative("TOPLEFT", AchievementFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.AchievementFrameTab1,
         _G.AchievementFrameTab2,
         _G.AchievementFrameTab3,
@@ -603,24 +607,27 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.AchievementFrameFilterDropDownButton._auroraHighlight = {filterArrow}
     Base.SetHighlight(_G.AchievementFrameFilterDropDownButton, "texture")
 
-    Skin.SearchBoxTemplate(_G.AchievementFrame.searchBox)
-    _G.AchievementFrame.searchBox:ClearAllPoints()
-    _G.AchievementFrame.searchBox:SetPoint("TOPRIGHT", -148, 5)
+    local searchBox = AchievementFrame.searchBox
+    Skin.SearchBoxTemplate(searchBox)
+    searchBox:ClearAllPoints()
+    searchBox:SetPoint("TOPRIGHT", -148, 5)
 
-    local prevContainer = _G.AchievementFrame.searchPreviewContainer
+    local prevContainer = AchievementFrame.searchPreviewContainer
     prevContainer:DisableDrawLayer("OVERLAY")
+
+    -- This needs to be a separate frame due to FrameLevel changes in Blizz's code
     local prevContainerBG = _G.CreateFrame("Frame", nil, prevContainer)
-    prevContainerBG:SetPoint("TOPRIGHT", 1, 1)
-    prevContainerBG:SetPoint("BOTTOMLEFT", prevContainer.borderAnchor, 6, 4)
-    prevContainerBG:SetFrameLevel(prevContainer:GetFrameLevel() - 1)
-    Base.SetBackdrop(prevContainerBG, Color.frame)
+    prevContainerBG:SetPoint("TOPLEFT")
+    prevContainerBG:SetPoint("BOTTOMRIGHT", AchievementFrame.showAllSearchResults, 0, 0)
+    prevContainerBG:SetFrameLevel(prevContainer:GetFrameLevel() - 2)
+    Base.SetBackdrop(prevContainerBG)
 
-    for i = 1, #_G.AchievementFrame.searchPreview do
-        Skin.AchievementSearchPreviewButton(_G.AchievementFrame.searchPreview[i])
+    for i = 1, #AchievementFrame.searchPreview do
+        Skin.AchievementSearchPreviewButton(AchievementFrame.searchPreview[i])
     end
-    SkinSearchPreview(_G.AchievementFrame.showAllSearchResults)
+    SkinSearchButton(AchievementFrame.showAllSearchResults)
 
-    local searchResults = _G.AchievementFrame.searchResults
+    local searchResults = AchievementFrame.searchResults
     Base.SetBackdrop(searchResults)
     searchResults:GetRegions():Hide() -- background
 
@@ -641,6 +648,9 @@ function private.AddOns.Blizzard_AchievementUI()
     searchResults.topRightCorner2:Hide()
     searchResults.topBorder2:Hide()
 
+    searchResults.scrollFrame:ClearAllPoints()
+    searchResults.scrollFrame:SetPoint("TOPLEFT", 3, -(private.FRAME_TITLE_HEIGHT + 3))
+    searchResults.scrollFrame:SetPoint("BOTTOMRIGHT", -23, 3)
     Skin.UIPanelCloseButton(searchResults.closeButton)
     Skin.HybridScrollBarTrimTemplate(searchResults.scrollFrame.scrollBar)
 end
