@@ -71,12 +71,11 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
 
         Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
-        local bg = _G.CreateFrame("Frame", nil, Button)
-        bg:SetFrameLevel(Button:GetFrameLevel())
+        Base.SetBackdrop(Button, Color.black, Color.frame.a)
+        local bg = Button:GetBackdropTexture("bg")
         bg:SetPoint("TOPLEFT", -1, 1)
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
-        Base.SetBackdrop(bg, Color.black, 0.3)
-        Button._auroraIconBorder = bg
+        Button._auroraIconBorder = Button
 
         Button:SetNormalTexture("")
         Base.CropIcon(Button:GetPushedTexture())
