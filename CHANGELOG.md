@@ -3,6 +3,11 @@
 
   * Add Islands queue frame skin
 
+### Changed ###
+
+  * Updated Archaeology UI
+  * Updated Adventure Journal
+
 ### Fixed ###
 
   * Missed some changes to the QuestFrame in 8.1.5
