@@ -204,6 +204,8 @@ function private.AddOns.Blizzard_ArchaeologyUI()
 
     local FillBar = ArcheologyDigsiteProgressBar.FillBar
     Skin.FrameTypeStatusBar(FillBar)
+    FillBar:ClearAllPoints()
+    FillBar:SetPoint("BOTTOM", 0, 7)
     FillBar:SetStatusBarColor(Color.yellow:Hue(-0.08):GetRGB())
 
     local divWidth = FillBar:GetWidth() / 6
