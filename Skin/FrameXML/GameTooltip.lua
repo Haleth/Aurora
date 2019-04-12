@@ -35,6 +35,13 @@ do --[[ FrameXML\GameTooltip.lua ]]
             statusBarPoolHooked = true
         end
     end
+    local progressBarPoolHooked = false
+    function Hook.GameTooltip_AddProgressBar(self, min, max, value, text)
+        if not progressBarPoolHooked then
+            _G.hooksecurefunc(self.progressBarPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+            progressBarPoolHooked = true
+        end
+    end
 end
 
 do --[[ FrameXML\GameTooltip.xml ]]
@@ -106,6 +113,7 @@ function private.FrameXML.GameTooltip()
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)
     _G.hooksecurefunc("GameTooltip_AddStatusBar", Hook.GameTooltip_AddStatusBar)
+    _G.hooksecurefunc("GameTooltip_AddProgressBar", Hook.GameTooltip_AddProgressBar)
 
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)

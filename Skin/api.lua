@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next assert type pcall tinsert math error
+-- luacheck: globals next assert type pcall tinsert math error select wipe
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -752,11 +752,22 @@ do -- Util API
             _G.error("Found usage")
         end)
     end
-    function Util.Mixin(table, hook)
-        for name, func in next, hook do
+
+    local tempMixin = {}
+    function Util.Mixin(table, ...)
+        wipe(tempMixin)
+        for i = 1, select("#", ...) do
+            local hook = select(i, ...)
+            for name, func in next, hook do
+                tempMixin[name] = func
+            end
+        end
+
+        for name, func in next, tempMixin do
             _G.hooksecurefunc(table, name, func)
         end
     end
+
     function Util.TestHook(table, func, name)
         _G.hooksecurefunc(table, func, function(...)
             _G.print("Test", name, ...)

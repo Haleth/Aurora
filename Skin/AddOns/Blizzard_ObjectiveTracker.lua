@@ -40,6 +40,20 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 end
             end
         end
+        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:AddTimerBar(block, line, duration, startTime)
+            local timerBar = line.TimerBar
+            if not timerBar._auroraSkinned then
+                Skin.ObjectiveTrackerTimerBarTemplate(timerBar)
+                timerBar._auroraSkinned = true
+            end
+        end
+        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:AddProgressBar(block, line, questID)
+            local progressBar = line.ProgressBar
+            if not progressBar._auroraSkinned then
+                Skin.ObjectiveTrackerProgressBarTemplate(progressBar)
+                progressBar._auroraSkinned = true
+            end
+        end
         function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:GetBlock(id)
             local block = self.usedBlocks[id]
             if not block._auroraSkinned then
@@ -53,11 +67,11 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
         function Hook.ObjectiveTracker_Initialize(self)
             Util.Mixin(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
-            Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.QUEST_TRACKER_MODULE)
-            Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.BONUS_OBJECTIVE_TRACKER_MODULE)
-            Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.BONUS_OBJECTIVE_TRACKER_MODULE)
-            Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
-            Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
+            Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.QUEST_TRACKER_MODULE)
+            Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
+            Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
+            Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
+            Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
         end
         function Hook.ObjectiveTracker_Collapse()
             local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
@@ -108,8 +122,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     end
 
     do --[[ Blizzard_BonusObjectiveTracker.lua ]]
-        Hook.BONUS_OBJECTIVE_TRACKER_MODULE = {}
-        function Hook.BONUS_OBJECTIVE_TRACKER_MODULE:AddProgressBar(block, line, questID)
+        Hook.BonusObjectiveTrackerModuleMixin = {}
+        function Hook.BonusObjectiveTrackerModuleMixin:AddProgressBar(block, line, questID)
             local progressBar = line.ProgressBar
             if not progressBar._auroraSkinned then
                 Skin.BonusTrackerProgressBarTemplate(progressBar)
@@ -127,6 +141,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 progressBar._auroraSkinned = true
             end
         end
+        Hook.SCENARIO_TRACKER_MODULE.GetBlock = private.nop
 
         -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
         local uiTextureKits = {
@@ -189,7 +204,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     -- Blizzard_ObjectiveTracker --
     ----====####$$$$$$$####====----
     Skin.ObjectiveTrackerBlockTemplate = private.nop
-	function Skin.ObjectiveTrackerHeaderTemplate(Frame)
+    function Skin.ObjectiveTrackerHeaderTemplate(Frame)
         Frame.Background:Hide()
 
         local bg = Frame:CreateTexture(nil, "ARTWORK")
@@ -198,9 +213,27 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bg:SetVertexColor(Color.highlight.r * 0.7, Color.highlight.g * 0.7, Color.highlight.b * 0.7)
         bg:SetPoint("BOTTOMLEFT", -30, -4)
         bg:SetSize(210, 30)
-	end
+    end
     Skin.ObjectiveTrackerLineTemplate = private.nop
     Skin.ObjectiveTrackerCheckLineTemplate = private.nop
+    function Skin.ObjectiveTrackerTimerBarTemplate(Frame)
+        Skin.FrameTypeStatusBar(Frame.Bar)
+
+        local left, right, mid, bg = Frame.Bar:GetRegions()
+        left:Hide()
+        right:Hide()
+        mid:Hide()
+        bg:Hide()
+    end
+    function Skin.ObjectiveTrackerProgressBarTemplate(Frame)
+        Skin.FrameTypeStatusBar(Frame.Bar)
+
+        local left, right, mid, _, bg = Frame.Bar:GetRegions()
+        left:Hide()
+        right:Hide()
+        mid:Hide()
+        bg:Hide()
+    end
 
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
@@ -223,11 +256,13 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         Skin.ObjectiveTrackerCheckLineTemplate(Frame)
     end
     Skin.BonusObjectiveTrackerBlockTemplate = private.nop
-	function Skin.BonusObjectiveTrackerHeaderTemplate(Frame)
-		Skin.ObjectiveTrackerHeaderTemplate(Frame)
-	end
+    function Skin.BonusObjectiveTrackerHeaderTemplate(Frame)
+        Skin.ObjectiveTrackerHeaderTemplate(Frame)
+    end
     function Skin.BonusTrackerProgressBarTemplate(Frame)
         local bar = Frame.Bar
+        bar:ClearAllPoints()
+        bar:SetPoint("TOPLEFT", 10, -10)
         Skin.FrameTypeStatusBar(bar)
 
         bar.BarFrame:Hide()
