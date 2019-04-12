@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_ChallengesUI.lua ]]
     function Hook.ChallengesFrame_Update(self)
@@ -41,12 +42,42 @@ end
 
 do --[[ AddOns\Blizzard_ChallengesUI.xml ]]
     function Skin.MythicPlusSeasonChangesNoticeTemplate(Frame)
+        Frame.BottomLeftCorner:Hide()
+        Frame.BottomRightCorner:Hide()
+        Frame.TopLeftCorner:Hide()
+        Frame.TopRightCorner:Hide()
+
+        Frame.BottomBorder:Hide()
+        Frame.TopBorder:Hide()
+        Frame.LeftBorder:Hide()
+        Frame.RightBorder:Hide()
+
+        Frame.LeftHide:Hide()
+        Frame.LeftHide2:Hide()
+        Frame.RightHide:Hide()
+        Frame.RightHide2:Hide()
+        Frame.BottomHide:Hide()
+        Frame.BottomHide2:Hide()
+
+        Frame.Background:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, 0.75)
+        Frame.Background:SetAllPoints()
+
+        Frame.TopLeftFiligree:Hide()
+        Frame.TopRightFiligree:Hide()
+
+        Frame.NewSeason:SetTextColor(Color.white:GetRGB())
+        Frame.SeasonDescription:SetTextColor(Color.grayLight:GetRGB())
+        Frame.SeasonDescription2:SetTextColor(Color.grayLight:GetRGB())
+        Frame.SeasonDescription3:SetTextColor(Color.grayLight:GetRGB())
+
+        Frame.Affix:GetRegions():Hide()
         Skin.ChallengesKeystoneFrameAffixTemplate(Frame.Affix)
         Skin.UIPanelButtonTemplate(Frame.Leave)
     end
     function Skin.ChallengesKeystoneFrameAffixTemplate(Frame)
-        Frame.Border:Hide()
+        Frame.Border:SetAlpha(0)
         Base.CropIcon(Frame.Portrait)
+        Frame.Portrait._auroraResetPortrait = true
     end
     function Skin.ChallengesDungeonIconFrameTemplate(Frame)
         Frame:GetRegions():Hide()
@@ -80,7 +111,11 @@ function private.AddOns.Blizzard_ChallengesUI()
     ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")
     ChallengesFrame.WeeklyInfo:SetPoint("BOTTOMRIGHT")
     Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
-    --Skin.MythicPlusSeasonChangesNoticeTemplate(ChallengesFrame.DungeonIcons[1].SeasonChangeNoticeFrame)
+    Skin.MythicPlusSeasonChangesNoticeTemplate(ChallengesFrame.SeasonChangeNoticeFrame)
+    ChallengesFrame.SeasonChangeNoticeFrame:ClearAllPoints()
+    ChallengesFrame.SeasonChangeNoticeFrame:SetPoint("TOPLEFT", 0, -private.FRAME_TITLE_HEIGHT)
+    ChallengesFrame.SeasonChangeNoticeFrame:SetPoint("BOTTOMRIGHT")
+    ChallengesFrame.SeasonChangeNoticeFrame:SetFrameLevel(ChallengesFrame.SeasonChangeNoticeFrame:GetFrameLevel() + 2)
 
     local bg, inset = ChallengesFrame:GetRegions()
     bg:Hide()
