@@ -152,6 +152,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         }
         function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKitID)
             -- /dump GetUITextureKitInfo(5117)
+            private.debug("ScenarioStage_CustomizeBlock", scenarioType, widgetSetID, textureKitID)
 
             if widgetSetID then
                 stageBlock._auroraOverlay:Hide()

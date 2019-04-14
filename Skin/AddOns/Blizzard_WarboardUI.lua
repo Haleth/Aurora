@@ -54,9 +54,6 @@ do --[[ AddOns\Blizzard_WarboardUI.xml ]]
         Button.Background:Hide()
         Button.ArtworkBorder:SetAlpha(0)
         Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
-        Button.Artwork:ClearAllPoints()
-        Button.Artwork:SetPoint("TOPLEFT", 31, -31)
-        Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -31, -112)
 
         Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
         Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
