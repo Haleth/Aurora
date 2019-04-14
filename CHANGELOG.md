@@ -1,7 +1,8 @@
-﻿## [Unreleased] ##
+﻿## [8.1.5.2] - 2019-04-14 ##
 ### Added ###
 
-  * Add Islands queue frame skin
+  * Islands queue frame skin
+  * Mythic+ new season popup
 
 ### Changed ###
 
@@ -13,6 +14,8 @@
   * Missed some changes to the QuestFrame in 8.1.5
   * Nil error when selecting a Call to Arms role
   * A conflict with some addons using circular texture masks
+  * World quest progress bars were not skinned
+  * Warboard artwork in Warfronts was distorted.
 
 
 
@@ -384,6 +387,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.1.5.2]: https://github.com/Haleth/Aurora/compare/8.1.5.1...8.1.5.2
 [8.1.5.1]: https://github.com/Haleth/Aurora/compare/8.1.5.0...8.1.5.1
 [8.1.5.0]: https://github.com/Haleth/Aurora/compare/8.1.0.4...8.1.5.0
 [8.1.0.4]: https://github.com/Haleth/Aurora/compare/8.1.0.3...8.1.0.4
