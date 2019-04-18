@@ -99,11 +99,7 @@ end
 
 do --[[ FrameXML\LFGList.xml ]]
     function Skin.LFGListGroupDataDisplayTemplate(Frame)
-        local RoleCount = Frame.RoleCount
-        Base.SetTexture(RoleCount.DamagerIcon, "iconDAMAGER")
-        Base.SetTexture(RoleCount.HealerIcon, "iconHEALER")
-        Base.SetTexture(RoleCount.TankIcon, "iconTANK")
-
+        Skin.RoleCountNoScriptsTemplate(Frame.RoleCount)
         for i = 1, #Frame.Enumerate.Icons do
             Base.SetTexture(Frame.Enumerate.Icons[i], "iconTANK")
         end

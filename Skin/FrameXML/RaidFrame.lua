@@ -4,9 +4,14 @@ local _, private = ...
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local F = _G.unpack(Aurora)
+local Skin = Aurora.Skin
 
 function private.FrameXML.RaidFrame()
+    if private.isPatch then
+        Skin.RoleCountTemplate(_G.RaidFrame.RoleCount)
+    end
     F.ReskinCheck(_G.RaidFrameAllAssistCheckButton)
     F.Reskin(_G.RaidFrameConvertToRaidButton)
     F.Reskin(_G.RaidFrameRaidInfoButton)

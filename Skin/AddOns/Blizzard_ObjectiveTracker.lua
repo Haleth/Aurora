@@ -27,7 +27,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
 
     do --[[ Blizzard_ObjectiveTracker.lua ]]
         Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE = {}
-        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:AddObjective(block, objectiveKey, text, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText)
+        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:AddObjective(block, objectiveKey, text, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
             local line = block.lines[objectiveKey]
             if not line._auroraSkinned then
                 local template = lineType and lineType.template or self.lineTemplate
@@ -329,8 +329,14 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     minimizeButton._auroraHighlight = {line, arrow}
     Base.SetHighlight(minimizeButton, "texture")
 
-    for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader"} do
-        Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
+    if private.isPatch then
+        for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
+            Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
+        end
+    else
+        for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader"} do
+            Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
+        end
     end
 
     ----====####$$$$%$$$$####====----
@@ -396,4 +402,9 @@ function private.AddOns.Blizzard_ObjectiveTracker()
 
     -- ScenarioProvingGroundsBlock
     Skin.GlowBoxFrame(_G.ScenarioBlocksFrame.WarfrontHelpBox, "Right")
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_ObjectiveTrackerUIWidgetContainer --
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
 end

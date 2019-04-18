@@ -139,10 +139,12 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsSliderTemplate(_G.Advanced_BrightnessSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)
 
-    -- Stereo 3D
-    Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_StereoEnabled)
-    Skin.VideoOptionsSliderTemplate(_G.Advanced_Convergence)
-    Skin.VideoOptionsSliderTemplate(_G.Advanced_EyeSeparation)
+    if not private.isPatch then
+        -- Stereo 3D
+        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_StereoEnabled)
+        Skin.VideoOptionsSliderTemplate(_G.Advanced_Convergence)
+        Skin.VideoOptionsSliderTemplate(_G.Advanced_EyeSeparation)
+    end
 
     -------------------
     -- Network Panel --

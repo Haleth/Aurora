@@ -237,6 +237,76 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             CheckButton.IconOverlay:Hide()
         end
     end
+    do --[[ ClubFinderApplicantList ]]
+        function Skin.ClubFinderApplicantListFrameTemplate(CheckButton)
+        end
+    end
+    do --[[ ClubFinder ]]
+        -- TODO: 8.2
+        function Skin.ClubsRecruitmentDialogTemplate(Frame)
+        end
+        function Skin.ClubFinderRequestToJoinTemplate(Frame)
+        end
+        function Skin.ClubFinderFocusDropdownTemplate(Frame)
+            Skin.UIDropDownMenuTemplate(Frame)
+        end
+        function Skin.ClubFinderCheckboxTemplate(CheckButton)
+            CheckButton:SetNormalTexture("")
+            CheckButton:SetPushedTexture("")
+            CheckButton:SetHighlightTexture("")
+
+            Base.SetBackdrop(CheckButton, Color.frame)
+            CheckButton:SetBackdropBorderColor(Color.button)
+            local bg = CheckButton:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", 6, -6)
+            bg:SetPoint("BOTTOMRIGHT", -6, 6)
+
+            local check = CheckButton:GetCheckedTexture()
+            check:ClearAllPoints()
+            check:SetPoint("TOPLEFT", -1, 1)
+            check:SetPoint("BOTTOMRIGHT", 1, -1)
+            check:SetDesaturated(true)
+            check:SetVertexColor(Color.highlight:GetRGB())
+
+            local disabled = CheckButton:GetDisabledCheckedTexture()
+            disabled:SetAllPoints(check)
+
+            Base.SetHighlight(CheckButton, "backdrop")
+        end
+        function Skin.ClubFinderGuildCardsFrameTemplate(Frame)
+        end
+        local roleIcons = {
+            ["UI-Frame-TankIcon"] = "iconTANK",
+            ["UI-Frame-HealerIcon"] = "iconHEALER",
+            ["UI-Frame-DpsIcon"] = "iconDAMAGER",
+        }
+        function Skin.ClubFinderRoleTemplate(Frame)
+            local atlas = Frame.Icon:GetAtlas()
+            Base.SetTexture(Frame.Icon, roleIcons[atlas])
+            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
+        end
+        function Skin.ClubFinderCommunitiesCardFrameTemplate(Frame)
+        end
+        function Skin.ClubFinderOptionsTemplate(Frame)
+            Skin.UIDropDownMenuTemplate(Frame.TypeDropdown)
+            Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
+            Skin.UIDropDownMenuTemplate(Frame.ClubSizeDropdown)
+            Skin.UIDropDownMenuTemplate(Frame.SortByDropdown)
+            Skin.ClubFinderRoleTemplate(Frame.TankRoleFrame)
+            Skin.ClubFinderRoleTemplate(Frame.HealerRoleFrame)
+            Skin.ClubFinderRoleTemplate(Frame.DpsRoleFrame)
+            Skin.SearchBoxTemplate(Frame.SearchBox)
+            Skin.UIPanelButtonTemplate(Frame.Search)
+        end
+        function Skin.ClubFinderGuildAndCommunityFrameTemplate(Frame)
+            Skin.ClubFinderOptionsTemplate(Frame.OptionsList)
+            Skin.ClubFinderGuildCardsFrameTemplate(Frame.GuildCards)
+            Skin.ClubFinderCommunitiesCardFrameTemplate(Frame.CommunityCards)
+            Skin.ClubFinderRequestToJoinTemplate(Frame.RequestToJoinFrame)
+            Skin.UIPanelButtonTemplate(Frame.PendingClubs)
+            Skin.InsetFrameTemplate(Frame.InsetFrame)
+        end
+    end
     do --[[ CommunitiesSettings ]]
         function Skin.CommunitiesSettingsButtonTemplate(Button)
             Skin.UIPanelDynamicResizeButtonTemplate(Button)
@@ -486,8 +556,17 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
+    --     ClubFinderApplicantList     --
+    ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%$$$$####====----
+    --           ClubFinder           --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
     --       CommunitiesSettings       --
     ----====####$$$$%%%%%$$$$####====----
+    -- TODO: 8.2
     local CommunitiesSettingsDialog = _G.CommunitiesSettingsDialog
     _G.hooksecurefunc(CommunitiesSettingsDialog, "SetClubId", Hook.CommunitiesSettingsDialogMixin.SetClubId)
 
@@ -568,7 +647,6 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesFrame.PortraitOverlay:SetAlpha(0)
 
     Skin.MaximizeMinimizeButtonFrameTemplate(CommunitiesFrame.MaximizeMinimizeFrame)
-    CommunitiesFrame.MaximizeMinimizeFrame:SetPoint("RIGHT", CommunitiesFrame.CloseButton, "LEFT", -5, 0)
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
@@ -587,17 +665,27 @@ function private.AddOns.Blizzard_Communities()
     Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropDownMenu)
     Skin.CommunitiesCalendarButtonTemplate(CommunitiesFrame.CommunitiesCalendarButton)
     Skin.CommunitiesMemberListFrameTemplate(CommunitiesFrame.MemberList)
+    if private.isPatch then
+        Skin.ClubFinderApplicantListFrameTemplate(CommunitiesFrame.ApplicantList)
+        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.CommunityAndGuildFinderFrame)
+    end
     Skin.CommunitiesChatTemplate(CommunitiesFrame.Chat)
     Skin.CommunitiesChatEditBoxTemplate(CommunitiesFrame.ChatEditBox)
 
     Skin.CommunitiesInvitationFrameTemplate(CommunitiesFrame.InvitationFrame)
     Skin.CommunitiesTicketFrameTemplate(CommunitiesFrame.TicketFrame)
-    Skin.CommunitiesGuildFinderFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+    if not private.isPatch then
+        Skin.CommunitiesGuildFinderFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+    end
     Skin.GuildBenefitsFrameTemplate(CommunitiesFrame.GuildBenefitsFrame)
     Skin.GuildDetailsFrameTemplate(CommunitiesFrame.GuildDetailsFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
     Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
+    if private.isPatch then
+        Skin.ClubsRecruitmentDialogTemplate(CommunitiesFrame.RecruitmentDialog)
+    end
     Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
     Skin.CommunitiesInviteButtonTemplate(CommunitiesFrame.InviteButton)
     Skin.CommunitiesControlFrameTemplate(CommunitiesFrame.CommunitiesControlFrame)

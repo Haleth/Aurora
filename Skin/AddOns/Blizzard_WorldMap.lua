@@ -106,7 +106,6 @@ function private.AddOns.Blizzard_WorldMap()
     Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
     WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)
     Skin.MaximizeMinimizeButtonFrameTemplate(WorldMapFrame.BorderFrame.MaximizeMinimizeFrame)
-    WorldMapFrame.BorderFrame.MaximizeMinimizeFrame:SetPoint("RIGHT", WorldMapFrame.BorderFrame.CloseButton, "LEFT", -5, 0)
 
     Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
     Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])

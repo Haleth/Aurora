@@ -1,4 +1,11 @@
-﻿## [8.1.5.2] - 2019-04-14 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * Updates for 8.2.0
+
+
+
+## [8.1.5.2] - 2019-04-14 ##
 ### Added ###
 
   * Islands queue frame skin

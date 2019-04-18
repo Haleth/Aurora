@@ -105,10 +105,8 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         StatusBar.Border:Hide()
         StatusBar.Background:Hide()
 
+        Skin.PVPConquestRewardButton(StatusBar.Reward)
         StatusBar.Reward:SetPoint("LEFT", StatusBar, "RIGHT", -5, 0)
-        StatusBar.Reward.Ring:Hide()
-        Base.CropIcon(StatusBar.Reward.Icon, StatusBar.Reward)
-        StatusBar.Reward.CircleMask:Hide()
     end
     function Skin.PVPQueueFrameButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.button)
@@ -146,8 +144,6 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         highlight:SetPoint("BOTTOMRIGHT")
 
         Skin.PVPRewardTemplate(Button.Reward)
-    end
-    function Skin.PVPRatedTierTemplate(Frame)
     end
     function Skin.PVPRatedActivityButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.button)
@@ -236,6 +232,7 @@ function private.AddOns.Blizzard_PVPUI()
     bg2:Hide()
 
     local CasualPanel = HonorInset.CasualPanel
+    Skin.PVPHonorRewardTemplate(CasualPanel.HonorLevelDisplay.NextRewardLevel)
     local NextRewardLevel = CasualPanel.HonorLevelDisplay.NextRewardLevel
     Base.CropIcon(NextRewardLevel.RewardIcon, NextRewardLevel)
     NextRewardLevel.IconCover:SetAllPoints(NextRewardLevel.RewardIcon)

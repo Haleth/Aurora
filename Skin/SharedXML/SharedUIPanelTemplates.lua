@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do -- BlizzWTF: These are not templates, but they should be
     do -- ExpandOrCollapse
@@ -207,23 +207,32 @@ do -- Basic frame type skins
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
-    local resizing = false
-    function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
-        if not tab._auroraTabResize or resizing then return end
+    do --[[ PortraitFrame ]]
+        Hook.PortraitFrameMixin = {}
+        function Hook.PortraitFrameMixin:SetBorder(layoutName)
+            if not self.NineSlice._auroraBackdrop then return end
+            self.NineSlice:SetBackdrop(private.backdrop)
+        end
+    end
+    do --[[ SharedUIPanelTemplates ]]
+        local resizing = false
+        function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
+            if not tab._auroraTabResize or resizing then return end
 
-        resizing = true
-        local left = tab.Left or tab.leftTexture or _G[tab:GetName().."Left"];
-        left:SetWidth(10)
-        _G.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
-        resizing = false
-    end
-    function Hook.PanelTemplates_DeselectTab(tab)
-        local text = tab.Text or _G[tab:GetName().."Text"]
-        text:SetPoint("CENTER", tab, "CENTER")
-    end
-    function Hook.PanelTemplates_SelectTab(tab)
-        local text = tab.Text or _G[tab:GetName().."Text"]
-        text:SetPoint("CENTER", tab, "CENTER")
+            resizing = true
+            local left = tab.Left or tab.leftTexture or _G[tab:GetName().."Left"];
+            left:SetWidth(10)
+            _G.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
+            resizing = false
+        end
+        function Hook.PanelTemplates_DeselectTab(tab)
+            local text = tab.Text or _G[tab:GetName().."Text"]
+            text:SetPoint("CENTER", tab, "CENTER")
+        end
+        function Hook.PanelTemplates_SelectTab(tab)
+            local text = tab.Text or _G[tab:GetName().."Text"]
+            text:SetPoint("CENTER", tab, "CENTER")
+        end
     end
 end
 
@@ -569,6 +578,12 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
+    if private.isPatch then
+        Util.Mixin(_G.PortraitFrameMixin, Hook.PortraitFrameMixin)
+    else
+        Util.Mixin(_G.AnchorUtil, Hook.AnchorUtil)
+    end
+
     _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)

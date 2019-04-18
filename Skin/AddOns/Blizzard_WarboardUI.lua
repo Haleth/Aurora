@@ -19,6 +19,10 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
             title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
             description = Color.Create(0.86, 0.47, 0.47), -- DD7878
         },
+        ["marine"] = {
+            title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
+            description = Color.Create(0.83, 0.23, 0.23), -- DD7878
+        },
     }
 
     Hook.WarboardQuestChoiceFrameMixin = {}

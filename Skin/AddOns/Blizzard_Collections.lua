@@ -287,6 +287,15 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
         end
     end
     do --[[ Blizzard_MountCollection ]]
+        function Skin.MountEquipmentButtonTemplate(Button)
+            Base.SetBackdrop(Button, Color.frame)
+            local bg = Button:GetRegions()
+            bg:SetTexCoord(0.20289855072464, 0.79710144927536, 0.20289855072464, 0.79710144927536)
+            bg:SetAllPoints()
+
+            Base.CropIcon(Button:GetPushedTexture())
+            Base.CropIcon(Button:GetHighlightTexture())
+        end
         function Skin.MountListButtonTemplate(Button)
             Button.background:Hide()
             Base.SetBackdrop(Button, Color.frame)
@@ -316,7 +325,11 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Texture:SetSize(1, 11)
         end
         function Skin.CompanionListButtonTemplate(Button)
-            Button:GetRegions():Hide()
+            if private.isPatch then
+                Button.background:Hide()
+            else
+                Button:GetRegions():Hide()
+            end
             Base.SetBackdrop(Button, Color.frame)
             local bg = Button:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", 0, -1)
@@ -540,6 +553,16 @@ function private.AddOns.Blizzard_Collections()
     _G.MountJournalSummonRandomFavoriteButtonBorder:Hide()
 
     Skin.InsetFrameTemplate(MountJournal.LeftInset)
+    if private.isPatch then
+        local BottomLeftInset = MountJournal.BottomLeftInset
+        Skin.InsetFrameTemplate(BottomLeftInset)
+        Skin.MountEquipmentButtonTemplate(BottomLeftInset.SlotButton)
+        BottomLeftInset.SlotButton:SetPoint("LEFT", 23, 5)
+        BottomLeftInset.Background:Hide()
+        BottomLeftInset.BackgroundOverlay:Hide()
+        select(4, BottomLeftInset:GetRegions()):Hide()
+    end
+
     Skin.InsetFrameTemplate(MountJournal.RightInset)
     Skin.SearchBoxTemplate(MountJournal.searchBox)
     Skin.UIMenuButtonStretchTemplate(_G.MountJournalFilterButton)

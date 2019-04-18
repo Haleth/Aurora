@@ -91,6 +91,16 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Base.SetBackdrop(Button, Color.button)
         Base.SetHighlight(Button, "backdrop")
     end
+
+    function Skin.RoleCountNoScriptsTemplate(Frame)
+        Base.SetTexture(Frame.DamagerIcon, "iconDAMAGER")
+        Base.SetTexture(Frame.HealerIcon, "iconHEALER")
+        Base.SetTexture(Frame.TankIcon, "iconTANK")
+    end
+    function Skin.RoleCountTemplate(Frame)
+        Skin.RoleCountNoScriptsTemplate(Frame)
+    end
+
     function Skin.GlowBoxTemplate(Frame)
         Frame.BG:Hide()
 

@@ -6,7 +6,6 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook = Aurora.Hook
-local Util = Aurora.Util
 
 do --[[ FrameXML\AnchorUtil.xml ]]
     Hook.AnchorUtil = {}
@@ -21,5 +20,4 @@ end
 
 
 function private.SharedXML.AnchorUtil()
-    Util.Mixin(_G.AnchorUtil, Hook.AnchorUtil)
 end

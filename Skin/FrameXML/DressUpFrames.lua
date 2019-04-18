@@ -37,8 +37,6 @@ function private.FrameXML.DressUpFrames()
     F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
 
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
-    DressUpFrame.MaxMinButtonFrame:ClearAllPoints()
-    DressUpFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", DressUpFrame.CloseButton, "TOPLEFT", -1, 0)
 
     F.Reskin(_G.DressUpFrameCancelButton)
     F.Reskin(_G.DressUpFrameResetButton)
