@@ -4,10 +4,16 @@ local _, private = ...
 -- luacheck: globals pairs
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F, C = _G.unpack(Aurora)
 
 function private.FrameXML.RolePoll()
-    F.CreateBD(_G.RolePollPopup)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.RolePollPopup.Border)
+    else
+        F.CreateBD(_G.RolePollPopup)
+    end
     F.Reskin(_G.RolePollPopupAcceptButton)
     F.ReskinClose(_G.RolePollPopupCloseButton)
 

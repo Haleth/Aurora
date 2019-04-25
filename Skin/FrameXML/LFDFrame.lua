@@ -29,7 +29,11 @@ function private.FrameXML.LFDFrame()
     -- LFDRoleCheckPopup --
     -----------------------
     local LFDRoleCheckPopup = _G.LFDRoleCheckPopup
-    Base.SetBackdrop(LFDRoleCheckPopup)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(LFDRoleCheckPopup.Border)
+    else
+        Base.SetBackdrop(LFDRoleCheckPopup)
+    end
 
     _G.LFDRoleCheckPopupRoleButtonTank:SetPoint("LEFT", 33, 0)
     Skin.LFDRoleCheckPopupButtonTemplate(_G.LFDRoleCheckPopupRoleButtonTank)
@@ -48,7 +52,11 @@ function private.FrameXML.LFDFrame()
     -- LFDReadyCheckPopup --
     ------------------------
     local LFDReadyCheckPopup = _G.LFDReadyCheckPopup
-    Base.SetBackdrop(LFDReadyCheckPopup)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(LFDReadyCheckPopup.Border)
+    else
+        Base.SetBackdrop(LFDReadyCheckPopup)
+    end
     Skin.UIPanelButtonTemplate(LFDReadyCheckPopup.YesButton)
     Skin.UIPanelButtonTemplate(LFDReadyCheckPopup.NoButton)
     Util.PositionRelative("BOTTOMLEFT", LFDReadyCheckPopup, "BOTTOMLEFT", 32, 15, 5, "Right", {

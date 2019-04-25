@@ -4,7 +4,9 @@ local _, private = ...
 -- luacheck: globals select next
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F, C = _G.unpack(Aurora)
 
 function private.FrameXML.HelpFrame()
     local r, g, b = C.r, C.g, C.b
@@ -97,7 +99,11 @@ function private.FrameXML.HelpFrame()
 
     -- ReportCheatingDialog
     local ReportCheatingDialog = _G.ReportCheatingDialog
-    F.CreateBD(ReportCheatingDialog)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
+    else
+        F.CreateBD(ReportCheatingDialog)
+    end
     F.CreateBD(ReportCheatingDialog.CommentFrame, .25)
     for i = 1, 9 do
         select(i, ReportCheatingDialog.CommentFrame:GetRegions()):Hide()

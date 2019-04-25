@@ -119,7 +119,6 @@ function private.AddOns.Blizzard_Channels()
     --       CreateChannelPopup       --
     ----====####$$$$%%%%$$$$####====----
     local CreateChannelPopup = _G.CreateChannelPopup
-    Base.SetBackdrop(CreateChannelPopup)
 
     CreateChannelPopup.Title:ClearAllPoints()
     CreateChannelPopup.Title:SetPoint("TOPLEFT")
@@ -127,6 +126,12 @@ function private.AddOns.Blizzard_Channels()
 
     CreateChannelPopup.Titlebar:Hide()
     CreateChannelPopup.Corner:Hide()
+
+    if private.isPatch then
+        Skin.DialogBorderTemplate(CreateChannelPopup.BG)
+    else
+        Base.SetBackdrop(CreateChannelPopup)
+    end
 
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Name)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Password)

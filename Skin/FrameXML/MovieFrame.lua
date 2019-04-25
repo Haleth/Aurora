@@ -19,7 +19,11 @@ end
 function private.FrameXML.MovieFrame()
     _G.MovieFrame.CloseDialog:HookScript("OnShow", Hook.MovieFrameCloseDialog_OnShow)
 
-    Base.SetBackdrop(_G.MovieFrame.CloseDialog)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.MovieFrame.CloseDialog.Border)
+    else
+        Base.SetBackdrop(_G.MovieFrame.CloseDialog)
+    end
 
     Skin.CinematicDialogButtonTemplate(_G.MovieFrame.CloseDialog.ConfirmButton)
     Skin.CinematicDialogButtonTemplate(_G.MovieFrame.CloseDialog.ResumeButton)

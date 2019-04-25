@@ -36,14 +36,14 @@ do --[[ AddOns\Blizzard_QuestChoice.xml ]]
         Button.Artwork:SetPoint("TOPLEFT", 13, -29)
         Button.Artwork:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", -17, -100)
 
-        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
-        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
-        Skin.QuestChoiceRewardsTemplate(Button.Rewards)
-
         Button.Header.Background:Hide()
         Button.Header.Text:SetTextColor(Color.grayLight:GetRGB())
         Button.OptionText:SetTextColor(Color.grayLight:GetRGB())
         Button.OptionText:SetPoint("TOP", Button.Artwork, "BOTTOM", 0, -30)
+
+        Skin.QuestChoiceRewardsTemplate(Button.Rewards)
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
     end
 end
 

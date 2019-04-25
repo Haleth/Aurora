@@ -4,13 +4,20 @@ local _, private = ...
 -- luacheck: globals select
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F = _G.unpack(Aurora)
 
 function private.FrameXML.ColorPickerFrame()
     _G.ColorPickerFrameHeader:Hide()
     local header = select(3, _G.ColorPickerFrame:GetRegions())
     header:SetPoint("TOP", _G.ColorPickerFrame, 0, -4)
-    F.CreateBD(_G.ColorPickerFrame)
+
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.ColorPickerFrame.Border)
+    else
+        F.CreateBD(_G.ColorPickerFrame)
+    end
 
     F.Reskin(_G.ColorPickerCancelButton)
     _G.ColorPickerCancelButton:SetWidth(100)
@@ -38,6 +45,10 @@ function private.FrameXML.ColorPickerFrame()
         end
     end)
 
-    F.CreateBD(_G.OpacityFrame)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
+    else
+        F.CreateBD(_G.OpacityFrame)
+    end
     F.ReskinSlider(_G.OpacityFrameSlider, true)
 end

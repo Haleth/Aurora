@@ -740,15 +740,23 @@ function commands.test()
                                     _G.ItemTextFrame_OnEvent(_G.ItemTextFrame, "ITEM_TEXT_TRANSLATION", 5)
                                 end,
                             },
-                            worldState = {
-                                name = "PvP score frame",
-                                desc = "WorldStateScoreFrame",
+                            pvpScore = {
+                                name = "PvP scoreboard",
+                                desc = "PVPMatchScoreboard",
                                 type = "execute",
                                 func = function()
-                                    _G.ToggleWorldStateScoreFrame()
+                                    _G.PVPMatchScoreboard:BeginShow()
                                 end,
                             },
-                            timer = {
+                            pvpResults = {
+                                name = "PvP results",
+                                desc = "PVPMatchResults",
+                                type = "execute",
+                                func = function()
+                                    _G.PVPMatchResults:BeginShow()
+                                end,
+                            },
+                            pvpTimer = {
                                 name = "PvP Start Timer",
                                 desc = "StartTimerBar",
                                 type = "execute",

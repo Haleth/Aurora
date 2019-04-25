@@ -145,7 +145,11 @@ function private.FrameXML.LFGFrame()
     --------------------------
     -- LFGDungeonReadyPopup --
     --------------------------
-    Base.SetBackdrop(_G.LFGDungeonReadyStatus)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.LFGDungeonReadyStatus.Border)
+    else
+        Base.SetBackdrop(_G.LFGDungeonReadyStatus)
+    end
     do -- CloseButton
         local close = _G.LFGDungeonReadyStatusCloseButton
         Base.SetBackdrop(close, Color.button)
@@ -168,7 +172,11 @@ function private.FrameXML.LFGFrame()
     end
 
     local LFGDungeonReadyDialog = _G.LFGDungeonReadyDialog
-    Base.SetBackdrop(LFGDungeonReadyDialog)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(LFGDungeonReadyDialog.Border)
+    else
+        Base.SetBackdrop(LFGDungeonReadyDialog)
+    end
 
     LFGDungeonReadyDialog.background:ClearAllPoints()
     LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 1, -1)
@@ -215,7 +223,11 @@ function private.FrameXML.LFGFrame()
     -- LFGInvitePopup --
     --------------------
     local LFGInvitePopup = _G.LFGInvitePopup
-    Base.SetBackdrop(LFGInvitePopup)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(LFGInvitePopup.Border)
+    else
+        Base.SetBackdrop(LFGInvitePopup)
+    end
 
     LFGInvitePopup.RoleButtons[1]:SetPoint("TOPLEFT", 35, -35)
     for i = 1, #LFGInvitePopup.RoleButtons do

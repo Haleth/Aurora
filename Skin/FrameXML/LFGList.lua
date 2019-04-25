@@ -279,8 +279,12 @@ function private.FrameXML.LFGList()
         EntryCreation.ActivityFinder.Background:SetPoint("TOPLEFT")
         EntryCreation.ActivityFinder.Background:SetPoint("BOTTOMRIGHT")
 
-        Base.SetBackdrop(Dialog)
         Dialog.Bg:Hide()
+        if private.isPatch then
+            Skin.DialogBorderTemplate(Dialog.Border)
+        else
+            Base.SetBackdrop(Dialog)
+        end
 
         Skin.LFGListEditBoxTemplate(Dialog.EntryBox)
         Skin.MinimalHybridScrollBarTemplate(Dialog.ScrollFrame.scrollBar)

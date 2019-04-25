@@ -5,8 +5,8 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local F = _G.unpack(Aurora)
 local Skin = Aurora.Skin
+local F = _G.unpack(Aurora)
 
 function private.FrameXML.RaidFrame()
     if private.isPatch then
@@ -16,7 +16,11 @@ function private.FrameXML.RaidFrame()
     F.Reskin(_G.RaidFrameConvertToRaidButton)
     F.Reskin(_G.RaidFrameRaidInfoButton)
 
-    F.CreateBD(_G.RaidInfoFrame)
+    if private.isPatch then
+        Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame.Border)
+    else
+        F.CreateBD(_G.RaidInfoFrame)
+    end
     _G.RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
     _G.RaidInfoDetailHeader:Hide()
     _G.RaidInfoDetailFooter:Hide()

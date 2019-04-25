@@ -455,11 +455,18 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     end
     do --[[ GuildRoster ]]
         function Skin.CommunitiesGuildMemberDetailFrameTemplate(Frame)
-            Base.SetBackdrop(Frame)
-            Frame.BackBackground:Hide()
-            select(12, Frame:GetRegions()):Hide()
+            if private.isPatch then
+                select(11, Frame:GetRegions()):Hide()
+            else
+                Base.SetBackdrop(Frame)
+                Frame.BackBackground:Hide()
+                select(12, Frame:GetRegions()):Hide()
+            end
             Frame.Corner:Hide()
 
+            if private.isPatch then
+                Skin.DialogBorderDarkTemplate(Frame.Border)
+            end
             Skin.UIPanelCloseButton(Frame.CloseButton)
             Skin.UIPanelButtonTemplate(Frame.RemoveButton)
             Skin.UIPanelButtonTemplate(Frame.GroupInviteButton)
@@ -570,12 +577,15 @@ function private.AddOns.Blizzard_Communities()
     local CommunitiesSettingsDialog = _G.CommunitiesSettingsDialog
     _G.hooksecurefunc(CommunitiesSettingsDialog, "SetClubId", Hook.CommunitiesSettingsDialogMixin.SetClubId)
 
-    Base.SetBackdrop(CommunitiesSettingsDialog)
-
     CommunitiesSettingsDialog.IconPreview:RemoveMaskTexture(CommunitiesSettingsDialog.CircleMask)
     CommunitiesSettingsDialog._iconBorder = Base.CropIcon(CommunitiesSettingsDialog.IconPreview, CommunitiesSettingsDialog)
     CommunitiesSettingsDialog.IconPreviewRing:SetAlpha(0)
 
+    if private.isPatch then
+        Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog.BG)
+    else
+        Base.SetBackdrop(CommunitiesSettingsDialog)
+    end
     Skin.InputBoxTemplate(CommunitiesSettingsDialog.NameEdit)
     Skin.InputBoxTemplate(CommunitiesSettingsDialog.ShortNameEdit)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.ChangeAvatarButton)

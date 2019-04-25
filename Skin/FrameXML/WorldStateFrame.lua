@@ -80,6 +80,8 @@ do --[[ FrameXML\WorldStateFrame.xml ]]
 end
 
 function private.FrameXML.WorldStateFrame()
+    if private.isPatch then return end
+
     local MAX_SCORE_BUTTONS = 20
 
     Skin.ButtonFrameTemplate(_G.WorldStateScoreFrame)

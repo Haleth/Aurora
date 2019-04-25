@@ -347,6 +347,47 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             end
         end
     end
+    --[[
+    if private.isPatch then
+        Skin.DialogBorderTemplate(Frame.BG)
+        Skin.DialogBorderTemplate(Frame.Border)
+    else
+        Base.SetBackdrop(Frame)
+    end
+    ]]
+    function Skin.DialogBorderNoCenterTemplate(Frame)
+        Base.CreateBackdrop(Frame, private.backdrop, {
+            tl = Frame.TopLeftCorner,
+            tr = Frame.TopRightCorner,
+            bl = Frame.BottomLeftCorner,
+            br = Frame.BottomRightCorner,
+
+            t = Frame.TopEdge,
+            b = Frame.BottomEdge,
+            l = Frame.LeftEdge,
+            r = Frame.RightEdge,
+
+            bg = Frame.Bg
+        })
+
+        Base.SetBackdrop(Frame, Color.frame, 0)
+    end
+    function Skin.DialogBorderTemplate(Frame)
+        Skin.DialogBorderNoCenterTemplate(Frame)
+        Base.SetBackdrop(Frame)
+    end
+    function Skin.DialogBorderDarkTemplate(Frame)
+        Skin.DialogBorderNoCenterTemplate(Frame)
+        Frame:GetBackdropTexture("bg"):SetAlpha(0.87)
+    end
+    function Skin.DialogBorderTranslucentTemplate(Frame)
+        Skin.DialogBorderNoCenterTemplate(Frame)
+        Frame:GetBackdropTexture("bg"):SetAlpha(0.8)
+    end
+    function Skin.DialogBorderOpaqueTemplate(Frame)
+        Skin.DialogBorderNoCenterTemplate(Frame)
+        Frame:GetBackdropTexture("bg"):SetAlpha(1)
+    end
 
     function Skin.SimplePanelTemplate(Frame)
         Skin.InsetFrameTemplate(Frame.Inset)

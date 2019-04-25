@@ -4,7 +4,9 @@ local _, private = ...
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F = _G.unpack(Aurora)
 
 function private.FrameXML.GameMenuFrame()
     local header = _G.GameMenuFrameHeader
@@ -12,7 +14,11 @@ function private.FrameXML.GameMenuFrame()
     header:ClearAllPoints()
     header:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
 
-    F.CreateBD(_G.GameMenuFrame)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.GameMenuFrame.Border)
+    else
+        F.CreateBD(_G.GameMenuFrame)
+    end
 
     local buttons = {
         "Help",

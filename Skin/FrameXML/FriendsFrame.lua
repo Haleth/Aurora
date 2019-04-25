@@ -59,15 +59,15 @@ function private.FrameXML.FriendsFrame()
     end)
     _G.hooksecurefunc("FriendsFrame_Update", function()
         if _G.FriendsFrame.selectedTab == 1 and _G.FriendsTabHeader.selectedTab == 1 and
-                _G.FriendsFrameBattlenetFrame.Tag:IsShown() then
+                bnetFrame.Tag:IsShown() then
             _G.FriendsFrameTitleText:Hide()
         else
             _G.FriendsFrameTitleText:Show()
         end
     end)
 
-    F.CreateBD(_G.FriendsFrameBattlenetFrame.UnavailableInfoFrame)
-    _G.FriendsFrameBattlenetFrame.UnavailableInfoFrame:SetPoint("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 1, -18)
+    F.CreateBD(bnetFrame.UnavailableInfoFrame)
+    bnetFrame.UnavailableInfoFrame:SetPoint("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 1, -18)
 
     _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
     F.ReskinDropDown(_G.FriendsFrameStatusDropDown)
@@ -226,7 +226,11 @@ function private.FrameXML.FriendsFrame()
     bottom:Hide()
 
     -- Add Friend
-    F.CreateBD(_G.AddFriendFrame)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
+    else
+        F.CreateBD(_G.AddFriendFrame)
+    end
     F.Reskin(_G.AddFriendInfoFrameContinueButton)
 
     F.ReskinInput(_G.AddFriendNameEditBox)
@@ -238,7 +242,11 @@ function private.FrameXML.FriendsFrame()
     end
 
     -- Friends of friends
-    F.CreateBD(_G.FriendsFriendsFrame)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.FriendsFriendsFrame.Border)
+    else
+        F.CreateBD(_G.FriendsFriendsFrame)
+    end
     F.CreateBD(_G.FriendsFriendsList, .25)
     F.ReskinDropDown(_G.FriendsFriendsFrameDropDown)
     F.ReskinScroll(_G.FriendsFriendsScrollFrameScrollBar)
@@ -246,8 +254,13 @@ function private.FrameXML.FriendsFrame()
     F.Reskin(_G.FriendsFriendsCloseButton)
 
     -- BattleTag Invite
+    if private.isPatch then
+        Skin.DialogBorderTemplate(_G.BattleTagInviteFrame.Border)
+    else
+        F.CreateBD(_G.BattleTagInviteFrame)
+    end
     F.CreateBD(_G.BattleTagInviteFrame)
-    local send, cancel = _G.BattleTagInviteFrame:GetChildren()
+    local _, send, cancel = _G.BattleTagInviteFrame:GetChildren()
     F.Reskin(send)
     F.Reskin(cancel)
 end

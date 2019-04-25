@@ -46,8 +46,14 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
     end
 
     Hook.WarboardQuestChoiceOptionFrameMixin = {}
-    function Hook.WarboardQuestChoiceOptionFrameMixin:ConfigureButtons()
-        self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
+    if private.isPatch then
+        function Hook.WarboardQuestChoiceOptionFrameMixin:UpdateOptionSize()
+            self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
+        end
+    else
+        function Hook.WarboardQuestChoiceOptionFrameMixin:ConfigureButtons()
+            self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
+        end
     end
 end
 
@@ -59,12 +65,12 @@ do --[[ AddOns\Blizzard_WarboardUI.xml ]]
         Button.ArtworkBorder:SetAlpha(0)
         Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
 
-        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
-        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
-
         Button.Header.Ribbon:Hide()
         Button.Header.Text:SetTextColor(.9, .9, .9)
         Button.OptionText:SetTextColor(.9, .9, .9)
+
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[1])
+        Skin.QuestChoiceOptionButtonTemplate(Button.OptionButtonsContainer.Buttons[2])
     end
 end
 

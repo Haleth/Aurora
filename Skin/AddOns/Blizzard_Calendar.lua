@@ -8,6 +8,8 @@ local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_Calendar()
+    -- TODO: 8.2
+    if private.isPatch then return end
     local r, g, b = C.r, C.g, C.b
 
     _G.CalendarFrame:DisableDrawLayer("BORDER")

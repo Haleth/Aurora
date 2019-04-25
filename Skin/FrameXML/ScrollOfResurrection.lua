@@ -4,12 +4,18 @@ local _, private = ...
 -- luacheck: globals select
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Skin = Aurora.Skin
+local F = _G.unpack(Aurora)
 
 function private.FrameXML.ScrollOfResurrection()
     local ScrollOfResurrectionSelectionFrame = _G.ScrollOfResurrectionSelectionFrame
-    _G.ScrollOfResurrectionSelectionFrameBackground:Hide()
-    F.CreateBD(ScrollOfResurrectionSelectionFrame)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(ScrollOfResurrectionSelectionFrame.Border)
+    else
+        _G.ScrollOfResurrectionSelectionFrameBackground:Hide()
+        F.CreateBD(ScrollOfResurrectionSelectionFrame)
+    end
     F.ReskinInput(ScrollOfResurrectionSelectionFrame.targetEditBox)
 
     F.CreateBD(ScrollOfResurrectionSelectionFrame.list, .25)
@@ -19,7 +25,11 @@ function private.FrameXML.ScrollOfResurrection()
     F.Reskin(_G.ScrollOfResurrectionSelectionFrameCancelButton)
 
     local ScrollOfResurrectionFrame = _G.ScrollOfResurrectionFrame
-    F.CreateBD(ScrollOfResurrectionFrame)
+    if private.isPatch then
+        Skin.DialogBorderTemplate(ScrollOfResurrectionFrame.Border)
+    else
+        F.CreateBD(ScrollOfResurrectionFrame)
+    end
     F.ReskinInput(ScrollOfResurrectionFrame.targetEditBox)
     for i = 1, 9 do
         select(i, ScrollOfResurrectionFrame.noteFrame:GetRegions()):Hide()

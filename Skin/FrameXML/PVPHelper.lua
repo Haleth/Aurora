@@ -26,6 +26,11 @@ function private.FrameXML.PVPHelper()
 
     --[[ PVPReadyDialog ]]--
     local PVPReadyDialog = _G.PVPReadyDialog
+    if private.isPatch then
+        Skin.DialogBorderTemplate(PVPReadyDialog.Border)
+    else
+        Base.SetBackdrop(PVPReadyDialog)
+    end
     Base.SetBackdrop(PVPReadyDialog)
 
     PVPReadyDialog.background:SetAlpha(0.75)
