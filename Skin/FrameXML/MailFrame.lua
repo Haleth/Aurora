@@ -21,14 +21,15 @@ do --[[ FrameXML\MailFrame.lua ]]
             local name = "MailItem"..i
             local item = _G[name]
             if index <= numItems then
-                local _, _, _, _, _, _, _, _, wasRead, _, _, _, _, firstItemQuantity, firstItemID, firstItemLink = _G.GetInboxHeaderInfo(index)
+                local _, _, _, _, _, _, _, _, wasRead, _, _, _, _, firstItemQuantity, _, firstItemLink = _G.GetInboxHeaderInfo(index)
 
                 if not firstItemQuantity then
                     item.Button._auroraIconBorder:SetBackdropBorderColor(Color.frame, 1)
                 end
 
                 if wasRead then
-                    Hook.SetItemButtonQuality(item.Button, _G.GRAY_FONT_COLOR, firstItemID, firstItemLink)
+                    -- We need to call this in case the item is a relic, to ensure that the relic border color is updated.
+                    Hook.SetItemButtonQuality(item.Button, _G.LE_ITEM_QUALITY_COMMON, firstItemLink)
                 end
             else
                 item.Button._auroraIconBorder:SetBackdropBorderColor(Color.frame, 1)

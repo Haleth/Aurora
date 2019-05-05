@@ -24,7 +24,7 @@ function private.AddOns.Blizzard_AuctionUI()
     moneyBG:SetPoint("BOTTOMLEFT", 20, 18)
     moneyBG:SetPoint("TOPRIGHT", _G.AuctionFrame, "BOTTOMLEFT", 175, 35)
 
-    F.ReskinClose(_G.AuctionFrameCloseButton, "TOPRIGHT", _G.AuctionFrame, "TOPRIGHT", -4, -15)
+    F.ReskinClose(_G.AuctionFrameCloseButton)
 
     local function SkinSort(sortButtons)
         for i = 1, #sortButtons do

@@ -47,8 +47,8 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
     function Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
         if button._auroraIconBorder then
             local color
-            if quality ~= _G.LE_ITEM_QUALITY_POOR then
-                color = _G.BAG_ITEM_QUALITY_COLORS[quality] or quality
+            if quality and quality > _G.LE_ITEM_QUALITY_POOR then
+                color = _G.BAG_ITEM_QUALITY_COLORS[quality]
             end
 
             if color then
