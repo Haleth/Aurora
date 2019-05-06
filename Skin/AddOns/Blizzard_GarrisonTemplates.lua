@@ -42,7 +42,10 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
     end
     do --[[ Blizzard_GarrisonMissionTemplates.lua ]]
         function Hook.GarrisonMission_RemoveFollowerFromMission(self, frame, updateValues)
-            Hook.GarrisonFollowerPortraitMixin_SetQuality(frame.PortraitFrame, 1)
+            if frame.PortraitFrame then
+                -- Ship followers have frame.Portrait instead
+                Hook.GarrisonFollowerPortraitMixin.SetQuality(frame.PortraitFrame, 1)
+            end
         end
         function Hook.GarrisonMissionFrame_SetItemRewardDetails(frame)
             local _, _, quality = _G.GetItemInfo(frame.itemID)

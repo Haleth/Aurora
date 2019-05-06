@@ -6,7 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_SetBackdropStyle(self, style)
@@ -97,10 +97,7 @@ do --[[ FrameXML\GameTooltip.xml ]]
             Frame._auroraIconBorder = bg
 
             Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
-            _G.hooksecurefunc(Frame.FollowerTooltip.PortraitFrame, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
+            Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
         end
     end
 end

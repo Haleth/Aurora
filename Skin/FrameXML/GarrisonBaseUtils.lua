@@ -6,24 +6,25 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GarrisonBaseUtils.lua ]]
-    function Hook.GarrisonFollowerPortraitMixin_SetQuality(self, quality)
+    Hook.GarrisonFollowerPortraitMixin = {}
+    function Hook.GarrisonFollowerPortraitMixin:SetQuality(quality)
         if not self._auroraPortraitBG then return end
         local color = _G.ITEM_QUALITY_COLORS[quality]
         self._auroraPortraitBG:SetBackdropBorderColor(color.r, color.g, color.b)
         self._auroraLvlBG:SetBackdropBorderColor(color.r, color.g, color.b)
     end
-    function Hook.GarrisonFollowerPortraitMixin_SetNoLevel(self)
+    function Hook.GarrisonFollowerPortraitMixin:SetNoLevel()
         if not self._auroraLvlBG then return end
         self._auroraLvlBG:Hide()
     end
-    function Hook.GarrisonFollowerPortraitMixin_SetLevel(self)
+    function Hook.GarrisonFollowerPortraitMixin:SetLevel()
         if not self._auroraLvlBG then return end
         self._auroraLvlBG:Show()
     end
-    function Hook.GarrisonFollowerPortraitMixin_SetILevel(self)
+    function Hook.GarrisonFollowerPortraitMixin:SetILevel()
         if not self._auroraLvlBG then return end
         self._auroraLvlBG:Show()
     end
@@ -62,8 +63,5 @@ do --[[ FrameXML\GarrisonBaseUtils.xml ]]
 end
 
 function private.FrameXML.GarrisonBaseUtils()
-    _G.hooksecurefunc(_G.GarrisonFollowerPortraitMixin, "SetQuality", Hook.GarrisonFollowerPortraitMixin_SetQuality)
-    _G.hooksecurefunc(_G.GarrisonFollowerPortraitMixin, "SetNoLevel", Hook.GarrisonFollowerPortraitMixin_SetNoLevel)
-    _G.hooksecurefunc(_G.GarrisonFollowerPortraitMixin, "SetLevel", Hook.GarrisonFollowerPortraitMixin_SetLevel)
-    _G.hooksecurefunc(_G.GarrisonFollowerPortraitMixin, "SetILevel", Hook.GarrisonFollowerPortraitMixin_SetILevel)
+    Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
 end

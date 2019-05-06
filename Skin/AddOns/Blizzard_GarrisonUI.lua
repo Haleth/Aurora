@@ -121,7 +121,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
     do --[[ Blizzard_GarrisonMissionUI.xml ]]
         function Skin.GarrisonFollowerMissionPortraitTemplate(Frame)
             Skin.GarrisonFollowerPortraitTemplate(Frame)
-            Hook.GarrisonFollowerPortraitMixin_SetQuality(Frame, 1)
+            Hook.GarrisonFollowerPortraitMixin.SetQuality(Frame, 1)
             Frame.Level:Hide()
 
             Frame.Empty:SetAtlas("Garr_FollowerPortrait_Bg")
