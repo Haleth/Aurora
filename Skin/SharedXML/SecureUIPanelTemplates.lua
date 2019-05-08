@@ -131,6 +131,27 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         Frame.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
         Skin.UIPanelButtonTemplate(Frame.OkayButton)
     end
+    function Skin.SecureDialogBorderNoCenterTemplate(Frame)
+        Base.CreateBackdrop(Frame, private.backdrop, {
+            tl = Frame.TopLeftCorner,
+            tr = Frame.TopRightCorner,
+            bl = Frame.BottomLeftCorner,
+            br = Frame.BottomRightCorner,
+
+            t = Frame.TopEdge,
+            b = Frame.BottomEdge,
+            l = Frame.LeftEdge,
+            r = Frame.RightEdge,
+
+            bg = Frame.Bg
+        })
+
+        Base.SetBackdrop(Frame, Color.frame, 0)
+    end
+    function Skin.SecureDialogBorderTemplate(Frame)
+        Skin.SecureDialogBorderNoCenterTemplate(Frame)
+        Base.SetBackdrop(Frame)
+    end
 end
 
 --function private.SharedXML.SecureUIPanelTemplates()

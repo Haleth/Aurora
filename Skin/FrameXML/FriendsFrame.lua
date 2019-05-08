@@ -256,11 +256,13 @@ function private.FrameXML.FriendsFrame()
     -- BattleTag Invite
     if private.isPatch then
         Skin.DialogBorderTemplate(_G.BattleTagInviteFrame.Border)
+        local _, send, cancel = _G.BattleTagInviteFrame:GetChildren()
+        F.Reskin(send)
+        F.Reskin(cancel)
     else
         F.CreateBD(_G.BattleTagInviteFrame)
+        local send, cancel = _G.BattleTagInviteFrame:GetChildren()
+        F.Reskin(send)
+        F.Reskin(cancel)
     end
-    F.CreateBD(_G.BattleTagInviteFrame)
-    local _, send, cancel = _G.BattleTagInviteFrame:GetChildren()
-    F.Reskin(send)
-    F.Reskin(cancel)
 end

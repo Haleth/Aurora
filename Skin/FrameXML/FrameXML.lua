@@ -216,10 +216,6 @@ local FrameXML = {
     "VehicleSeatIndicator",
     "DurabilityFrame",
     "BattlegroundChatFilters",
-    "PVPMatchUtil",
-    "PVPMatchTable",
-    "PVPMatchResults",
-    "PVPMatchScoreboard",
     "PVEFrame",
     "LFGFrame",
     "LFDFrame",
@@ -277,6 +273,7 @@ local FrameXML = {
     "SplashFrame",
     "QuestChoiceFrameMixin",
     "AzeriteEmpoweredItemDataSource",
+    "GuildUtil",
 
     -- Save off whatever we need available unmodified.
     "SecureCapsule",

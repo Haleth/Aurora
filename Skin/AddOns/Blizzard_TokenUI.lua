@@ -76,20 +76,25 @@ function private.AddOns.Blizzard_TokenUI()
     _G.hooksecurefunc("TokenFrame_Update", Hook.TokenFrame_Update)
     _G.hooksecurefunc(_G.TokenFrameContainer, "update", Hook.TokenFrame_Update)
 
-
     Skin.HybridScrollBarTemplate(_G.TokenFrame.Container.scrollBar)
-    Base.SetBackdrop(_G.TokenFramePopup)
-    _G.TokenFramePopup:SetSize(175, 90)
+
+    local TokenFramePopup = _G.TokenFramePopup
+    if private.isPatch then
+        Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
+    else
+        Base.SetBackdrop(TokenFramePopup)
+    end
+    TokenFramePopup:SetSize(175, 90)
 
     local titleText = _G.TokenFramePopupTitle
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT")
-    titleText:SetPoint("BOTTOMRIGHT", _G.TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    titleText:SetPoint("BOTTOMRIGHT", TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
     _G.TokenFramePopupCorner:Hide()
 
     Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupInactiveCheckBox)
-    _G.TokenFramePopupInactiveCheckBox:SetPoint("TOPLEFT", _G.TokenFramePopup, 24, -26)
+    _G.TokenFramePopupInactiveCheckBox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
     Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupBackpackCheckBox)
     _G.TokenFramePopupBackpackCheckBox:SetPoint("TOPLEFT", _G.TokenFramePopupInactiveCheckBox, "BOTTOMLEFT", 0, -8)
 
