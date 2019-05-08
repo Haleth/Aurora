@@ -1,7 +1,13 @@
 ﻿## [Unreleased] ##
 ### Changed ###
 
+  * Updated Calendar skin
   * Updates for 8.2.0
+
+### Fixed ###
+
+  * Error when mousing over some items in the auction house.
+  * Error when removing a follower from a WoD garrison ship mission.
 
 
 
