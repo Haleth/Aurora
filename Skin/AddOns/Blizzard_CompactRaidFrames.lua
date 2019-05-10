@@ -23,9 +23,10 @@ end
 do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
     function Skin.CRFManagerFilterButtonTemplate(Button)
         Skin.UIMenuButtonStretchTemplate(Button)
+        local bg = Button:GetBackdropTexture("bg")
         Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
-        Button.selectedHighlight:SetPoint("TOPLEFT", Button._auroraBDFrame, 1, -1)
-        Button.selectedHighlight:SetPoint("BOTTOMRIGHT", Button._auroraBDFrame, -1, 1)
+        Button.selectedHighlight:SetPoint("TOPLEFT", bg, 1, -1)
+        Button.selectedHighlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
     end
     Skin.CRFManagerFilterRoleButtonTemplate = Skin.CRFManagerFilterButtonTemplate
     Skin.CRFManagerFilterGroupButtonTemplate = Skin.CRFManagerFilterButtonTemplate
