@@ -397,6 +397,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
+        if private.isPatch then
+            Util.Mixin(Frame, Hook.PortraitFrameMixin)
+        end
+
         Frame.TitleBg:Hide()
         Frame.portrait:SetAlpha(0)
 
@@ -619,9 +623,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
-    if private.isPatch then
-        Util.Mixin(_G.PortraitFrameMixin, Hook.PortraitFrameMixin)
-    else
+    if not private.isPatch then
         Util.Mixin(_G.AnchorUtil, Hook.AnchorUtil)
     end
 
