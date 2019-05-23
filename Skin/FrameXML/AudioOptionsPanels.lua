@@ -74,6 +74,9 @@ function private.FrameXML.AudioOptionsPanels()
     local AudioOptionsVoicePanel = _G.AudioOptionsVoicePanel
     Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.OutputDeviceDropdown)
     Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatVolume)
+    if private.isPatch then
+        Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatDucking)
+    end
     Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.MicDeviceDropdown)
     Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicVolume)
     Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicSensitivity)

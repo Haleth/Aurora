@@ -80,7 +80,9 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SSAODropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_DepthEffectsDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_LightingQualityDropDown)
+    if not private.isPatch then
+        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_LightingQualityDropDown)
+    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_OutlineModeDropDown)
 
     ----------------
@@ -107,7 +109,9 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SSAODropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_DepthEffectsDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_LightingQualityDropDown)
+    if not private.isPatch then
+        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_LightingQualityDropDown)
+    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_OutlineModeDropDown)
 
 

@@ -8,6 +8,7 @@
 
   * Error when mousing over some items in the auction house.
   * Error when removing a follower from a WoD garrison ship mission.
+  * Anchoring bug in the raid frame manager.
 
 
 
