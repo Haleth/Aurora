@@ -781,6 +781,12 @@ do -- Util API
         end
         _G.DisplayTableInspectorWindow(focusedTable)
     end
+    function Util.Dump(value)
+        if not debugTools then
+            debugTools = _G.UIParentLoadAddOn("Blizzard_DebugTools")
+        end
+        _G.DevTools_Dump({value()}, "value")
+    end
 
     Util.OpposingSide = {
         LEFT = "RIGHT",
