@@ -9,7 +9,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\GossipFrame.lua ]]
-    local availDataPerQuest, activeDataPerQuest = 7, 6
+    local availDataPerQuest, activeDataPerQuest, gossipDataPerOption = 7, 6, 2
     function Hook.GossipFrameAvailableQuestsUpdate(...)
         local numAvailQuestsData = _G.select("#", ...)
         local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numAvailQuestsData / availDataPerQuest)
@@ -38,6 +38,20 @@ do --[[ FrameXML\GossipFrame.lua ]]
             buttonIndex = buttonIndex + 1
         end
     end
+    function Hook.GossipFrameOptionsUpdate(...)
+        local numGossipOptions = _G.select("#", ...)
+        local buttonIndex = _G.GossipFrame.buttonIndex - (numGossipOptions / gossipDataPerOption)
+        for i = 1, numGossipOptions, gossipDataPerOption do
+            local gossipText = _G.select(i, ...)
+            local titleButton = _G["GossipTitleButton" .. buttonIndex]
+            local color = gossipText:match("|c(%x+)%(")
+            if color then
+                private.debug("GossipFrameOptionsUpdate", color)
+                titleButton:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+            end
+            buttonIndex = buttonIndex + 1
+        end
+    end
 end
 
 do --[[ FrameXML\GossipFrame.xml ]]
@@ -60,6 +74,7 @@ end
 function private.FrameXML.GossipFrame()
     _G.hooksecurefunc("GossipFrameAvailableQuestsUpdate", Hook.GossipFrameAvailableQuestsUpdate)
     _G.hooksecurefunc("GossipFrameActiveQuestsUpdate", Hook.GossipFrameActiveQuestsUpdate)
+    _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
 
     -----------------
     -- GossipFrame --
