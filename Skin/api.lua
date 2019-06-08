@@ -158,6 +158,7 @@ addonName.
                 if options.tileSize then
                     bd.bg:SetSize(options.tileSize, options.tileSize)
                 end]]
+                bd.bg:Show()
                 options.bgFile = options.bgFile or [[Interface\Buttons\WHITE8x8]]
                 if Base.IsTextureRegistered(options.bgFile) then
                     Base.SetTexture(bd.bg, options.bgFile)
@@ -179,6 +180,7 @@ addonName.
 
                 options.edgeFile = options.edgeFile or [[Interface\Buttons\WHITE8x8]]
                 for side, info in next, sides do
+                    bd[side]:Show()
                     bd[side]:SetTexture(options.edgeFile)
                     if info.tileH then
                         bd[side]:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
@@ -188,6 +190,7 @@ addonName.
                 end
 
                 for corner, info in next, corners do
+                    bd[corner]:Show()
                     bd[corner]:SetTexture(options.edgeFile)
                     bd[corner]:SetTexCoord(info.l, info.r, info.t, info.b)
                 end

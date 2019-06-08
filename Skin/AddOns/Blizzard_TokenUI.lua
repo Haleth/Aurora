@@ -22,13 +22,17 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
             button.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 
             if button.isHeader then
-                button._auroraBG:Show()
+                Base.SetBackdrop(button, Color.button)
                 button._auroraMinus:Show()
                 button._auroraPlus:SetShown(not button.isExpanded)
+                button.stripe:Hide()
+                button.icon.bg:Hide()
             else
-                button._auroraBG:Hide()
+                button:SetBackdrop(nil)
                 button._auroraMinus:Hide()
                 button._auroraPlus:Hide()
+                button.stripe:SetShown(button.index % 2 == 1)
+                button.icon.bg:Show()
             end
         end
     end
@@ -40,17 +44,12 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
         stripe:SetPoint("TOPLEFT", 1, 1)
         stripe:SetPoint("BOTTOMRIGHT", -1, -1)
 
-        Base.CropIcon(Button.icon, Button)
+        Button.icon.bg = Base.CropIcon(Button.icon, Button)
 
         Button.categoryMiddle:SetAlpha(0)
         Button.categoryLeft:SetAlpha(0)
         Button.categoryRight:SetAlpha(0)
-
-        local layer, subLevel = Button.categoryMiddle:GetDrawLayer()
-        local bg = Button:CreateTexture(nil, layer, subLevel + 3)
-        bg:SetColorTexture(Color.button:GetRGB())
-        bg:SetAllPoints()
-        Button._auroraBG = bg
+        Base.SetBackdrop(Button, Color.button)
 
         Button.expandIcon:SetTexture("")
         local minus = Button:CreateTexture(nil, "ARTWORK")
