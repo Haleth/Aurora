@@ -4,67 +4,57 @@ local _, private = ...
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+
+do --[[ AddOns\Blizzard_ItemUpgradeUI.lua ]]
+    function Hook.ItemUpgradeFrame_Update()
+        local icon = _G.GetItemUpgradeItemInfo()
+
+        local ItemButton = _G.ItemUpgradeFrame.ItemButton
+        if icon then
+            ItemButton.Cost:SetShown(not _G.ItemUpgradeFrame.NoMoreUpgrades:IsShown())
+        else
+            ItemButton.IconTexture:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
+            ItemButton.Cost:Hide()
+        end
+        Base.CropIcon(ItemButton.IconTexture)
+    end
+end
+
+--do --[[ AddOns\Blizzard_ItemUpgradeUI.xml ]]
+--end
 
 function private.AddOns.Blizzard_ItemUpgradeUI()
+    if not private.isPatch then return end
+    _G.hooksecurefunc("ItemUpgradeFrame_Update", Hook.ItemUpgradeFrame_Update)
+
     local ItemUpgradeFrame = _G.ItemUpgradeFrame
+    Skin.ButtonFrameTemplate(ItemUpgradeFrame)
+
+    local TextFrame = ItemUpgradeFrame.TextFrame
+    TextFrame:GetRegions():Hide() -- BG
+    TextFrame.Right:Hide()
+    TextFrame.TopRight:Hide()
+    TextFrame.BottomRight:Hide()
+    TextFrame.Top:Hide()
+    TextFrame.Bottom:Hide()
+
     local ItemButton = ItemUpgradeFrame.ItemButton
-
-    ItemUpgradeFrame:DisableDrawLayer("BACKGROUND")
-    ItemUpgradeFrame:DisableDrawLayer("BORDER")
-    _G.ItemUpgradeFrameMoneyFrameLeft:Hide()
-    _G.ItemUpgradeFrameMoneyFrameMiddle:Hide()
-    _G.ItemUpgradeFrameMoneyFrameRight:Hide()
-    ItemUpgradeFrame.ButtonFrame:GetRegions():Hide()
-    ItemUpgradeFrame.ButtonFrame.ButtonBorder:Hide()
-    ItemUpgradeFrame.ButtonFrame.ButtonBottomBorder:Hide()
+    Base.CropIcon(ItemButton.IconTexture, ItemButton)
     ItemButton.Frame:Hide()
-    ItemButton.Grabber:Hide()
-    ItemButton.TextFrame:Hide()
-    ItemButton.TextGrabber:Hide()
+    Base.CropIcon(ItemButton.Cost.Icon, ItemButton.Cost)
+    Base.CropIcon(ItemButton:GetPushedTexture())
+    --Base.CropIcon(ItemButton:GetHighlightTexture())
+    ItemButton:GetHighlightTexture():SetTexCoord(0.05, 0.95, 0.05, 0.95)
 
-    F.CreateBD(ItemButton, .25)
-    ItemButton:SetHighlightTexture("")
-    ItemButton:SetPushedTexture("")
-    ItemButton.IconTexture:SetPoint("TOPLEFT", 1, -1)
-    ItemButton.IconTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+    local ButtonFrame = ItemUpgradeFrame.ButtonFrame
+    ButtonFrame:GetRegions():Hide()
+    ButtonFrame.ButtonBorder:Hide()
+    ButtonFrame.ButtonBottomBorder:Hide()
 
-    local btnBG = _G.CreateFrame("Frame", nil, ItemButton)
-    btnBG:SetSize(341, 50)
-    btnBG:SetPoint("LEFT", ItemButton, "RIGHT", -1, 0)
-    btnBG:SetFrameLevel(ItemButton:GetFrameLevel()-1)
-    F.CreateBD(btnBG, .25)
-
-    ItemButton:HookScript("OnEnter", function(self)
-        self:SetBackdropBorderColor(1, .56, .85)
-    end)
-    ItemButton:HookScript("OnLeave", function(self)
-        self:SetBackdropBorderColor(0, 0, 0)
-    end)
-
-    ItemButton.Cost.Icon:SetTexCoord(.08, .92, .08, .92)
-    ItemButton.Cost.Icon.bg = F.CreateBG(ItemButton.Cost.Icon)
-
-    _G.hooksecurefunc("ItemUpgradeFrame_Update", function()
-        if _G.GetItemUpgradeItemInfo() then
-            ItemButton.IconTexture:SetTexCoord(.08, .92, .08, .92)
-            ItemButton.Cost.Icon.bg:Show()
-        else
-            ItemButton.IconTexture:SetTexture("")
-            ItemButton.Cost.Icon.bg:Hide()
-        end
-    end)
-
-    local currency = _G.ItemUpgradeFrameMoneyFrame.Currency
-    currency.icon:SetPoint("LEFT", currency.count, "RIGHT", 1, 0)
-    currency.icon:SetTexCoord(.08, .92, .08, .92)
-    F.CreateBG(currency.icon)
-
-    local frameBG = _G.CreateFrame("Frame", nil, ItemUpgradeFrame)
-    frameBG:SetAllPoints(ItemUpgradeFrame)
-    frameBG:SetFrameLevel(ItemUpgradeFrame:GetFrameLevel()-1)
-    F.CreateBD(frameBG)
-
-    F.ReskinPortraitFrame(ItemUpgradeFrame)
-    F.Reskin(_G.ItemUpgradeFrameUpgradeButton)
+    Skin.ThinGoldEdgeTemplate(_G.ItemUpgradeFrameMoneyFrame)
+    Skin.BackpackTokenTemplate(_G.ItemUpgradeFrameMoneyFrame.Currency)
+    Skin.MagicButtonTemplate(_G.ItemUpgradeFrameUpgradeButton)
 end
