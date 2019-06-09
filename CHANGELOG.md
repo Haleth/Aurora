@@ -1,6 +1,7 @@
 ﻿## [Unreleased] ##
 ### Changed ###
 
+  * Minor tweaks to the currencies list
   * Updated Calendar skin
   * Updates for 8.2.0
 
