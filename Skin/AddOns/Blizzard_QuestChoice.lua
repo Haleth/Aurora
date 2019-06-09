@@ -9,14 +9,12 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
-local F = _G.unpack(Aurora)
-
 do --[[ AddOns\Blizzard_QuestChoice.xml ]]
     function Skin.QuestChoiceOptionButtonTemplate(Button)
         Skin.UIPanelButtonTemplate(Button)
     end
     function Skin.QuestChoiceItemTemplate(Button)
-        Button._auroraIconBorder = F.ReskinIcon(Button.Icon)
+        Button._auroraIconBorder = Base.CropIcon(Button.Icon, Button)
         Button.Name:SetTextColor(1, 1, 1)
     end
     function Skin.QuestChoiceCurrencyTemplate(Frame)

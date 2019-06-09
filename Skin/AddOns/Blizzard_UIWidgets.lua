@@ -5,6 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
@@ -43,9 +44,20 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
 end
 
 do --[[ AddOns\Blizzard_UIWidgets.xml ]]
+    do --[[ Blizzard_UIWidgetTemplateBase ]]
+        function Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
+        end
+        function Skin.UIWidgetBaseSpellTemplate(Frame)
+            Base.CropIcon(Frame.Icon, Frame)
+
+            Frame.Border:SetAlpha(0)
+            Frame.DebuffBorder:SetAlpha(0)
+        end
+    end
     do --[[ Blizzard_UIWidgetTemplateDoubleStatusBar ]]
         function Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(StatusBar)
-            Skin.FrameTypeStatusBar(StatusBar)
+            Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
 
             StatusBar.BG:SetAlpha(0)
             StatusBar.BorderLeft:SetAlpha(0)
@@ -67,8 +79,7 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
     do --[[ Blizzard_UIWidgetTemplateStatusBar ]]
         function Skin.UIWidgetTemplateStatusBar(Frame)
             local StatusBar = Frame.Bar
-            Skin.FrameTypeStatusBar(StatusBar)
-
+            Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
             StatusBar.BGLeft:SetAlpha(0)
             StatusBar.BGRight:SetAlpha(0)
             StatusBar.BGCenter:SetAlpha(0)
@@ -83,6 +94,11 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
     end
     do --[[ Blizzard_UIWidgetTemplateTextWithState ]]
         Skin.UIWidgetTemplateTextWithState = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateSpellDisplay ]]
+        function Skin.UIWidgetTemplateSpellDisplay(Frame)
+            Skin.UIWidgetBaseSpellTemplate(Frame.Spell)
+        end
     end
 end
 

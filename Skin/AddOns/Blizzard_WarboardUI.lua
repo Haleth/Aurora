@@ -20,8 +20,8 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
             description = Color.Create(0.86, 0.47, 0.47), -- DD7878
         },
         ["marine"] = {
-            title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
-            description = Color.Create(0.83, 0.23, 0.23), -- DD7878
+            title = Color.white,
+            description = Color.grayLight,
         },
         ["mechagon"] = {
             title = Color.Create(0.83, 0.23, 0.23), -- D43C3C
@@ -37,7 +37,18 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
             for _, option in next, self.Options do
                 option.Header.Text:SetTextColor(textureKitColor.title:GetRGBA())
                 option.OptionText:SetTextColor(textureKitColor.description:GetRGBA())
+
+                if option.WidgetContainer.widgetFrames then
+                    for _, widgetFrame in next, option.WidgetContainer.widgetFrames do
+                        if widgetFrame.widgetType == _G.Enum.UIWidgetVisualizationType.SpellDisplay then
+                            widgetFrame.Spell:SetFontColor(textureKitColor.description)
+                        elseif widgetFrame.widgetType == _G.Enum.UIWidgetVisualizationType.TextWithState then
+                            widgetFrame.Text:SetTextColor(textureKitColor.description:GetRGB())
+                        end
+                    end
+                end
             end
+
         end
 
         if not self.NineSlice.Center then
