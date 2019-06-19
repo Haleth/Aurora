@@ -586,11 +586,17 @@ do -- Color API
     end
 
     Color.red = Color.Create(0.8, 0.2, 0.2)
+    Color.orange = Color.Create(0.8, 0.5, 0.2)
     Color.yellow = Color.Create(0.8, 0.8, 0.2)
+    Color.lime = Color.Create(0.5, 0.8, 0.2)
     Color.green = Color.Create(0.2, 0.8, 0.2)
+    Color.jade = Color.Create(0.2, 0.8, 0.5)
     Color.cyan = Color.Create(0.2, 0.8, 0.8)
+    Color.marine = Color.Create(0.2, 0.5, 0.8)
     Color.blue = Color.Create(0.2, 0.2, 0.8)
-    Color.violet = Color.Create(0.8, 0.2, 0.8)
+    Color.violet = Color.Create(0.5, 0.2, 0.8)
+    Color.magenta = Color.Create(0.8, 0.2, 0.8)
+    Color.ruby = Color.Create(0.8, 0.2, 0.5)
 
     Color.black = Color.Create(0, 0, 0)
     Color.grayDark = Color.Create(0.25, 0.25, 0.25)
