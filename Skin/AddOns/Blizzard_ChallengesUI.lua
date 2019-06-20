@@ -70,8 +70,12 @@ do --[[ AddOns\Blizzard_ChallengesUI.xml ]]
         Frame.SeasonDescription2:SetTextColor(Color.grayLight:GetRGB())
         Frame.SeasonDescription3:SetTextColor(Color.grayLight:GetRGB())
 
-        Frame.Affix:GetRegions():Hide()
         Skin.ChallengesKeystoneFrameAffixTemplate(Frame.Affix)
+        if private.isPatch then
+            Frame.Affix.AffixBorder:Hide()
+        else
+            Frame.Affix:GetRegions():Hide()
+        end
         Skin.UIPanelButtonTemplate(Frame.Leave)
     end
     function Skin.ChallengesKeystoneFrameAffixTemplate(Frame)
