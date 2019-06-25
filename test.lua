@@ -5,6 +5,14 @@ local _, private = ...
 
 --[[ Core ]]
 local commands = private.commands
+local function CopyTable(oldTable)
+    local newTable = {}
+    for k, v in next, oldTable do
+        newTable[k] = v
+    end
+    return newTable
+end
+
 
 local item = _G.Item:CreateFromItemID(30234)
 item:ContinueOnItemLoad(function(...)
@@ -720,11 +728,104 @@ function commands.test()
             end
 
             do -- Misc
+                function _G.GetNumBattlefieldScores()
+                    return 20
+                end
                 function _G.GetMaxBattlefieldID()
                     return 1
                 end
                 function _G.GetBattlefieldStatus(id)
                     return "active"
+                end
+
+                local PVPTeamInfo = {
+                    name = "team ",
+                    size = 10,
+                    rating = 0,
+                    ratingNew = 0,
+                    ratingMMR = 0,
+                }
+                function _G.C_PvP.GetTeamInfo(index)
+                    local info = CopyTable(PVPTeamInfo)
+                    info.name = info.name..index
+                    return info
+                end
+
+                local PVPPostMatchCurrencyReward = {
+                    currencyType = 0,
+                    quantityChanged = 0,
+                }
+                function _G.C_PvP.GetPostMatchCurrencyRewards()
+                    local rewards = {}
+                    local info = CopyTable(PVPPostMatchCurrencyReward)
+                    info.currencyType = _G.Constant.Currency.Honor
+                    info.quantityChanged = 123
+                    rewards[1] = info
+
+                    info = CopyTable(PVPPostMatchCurrencyReward)
+                    info.currencyType = _G.Constant.Currency.Conquest
+                    info.quantityChanged = 456
+                    rewards[2] = info
+                    return rewards
+                end
+
+                function _G.C_PvP.IsRatedBattleground()
+                    return true
+                end
+                function _G.C_PvP.IsRatedMap()
+                    return true
+                end
+
+                local PVPScoreInfo = {
+                    name = "player ",
+                    guid = "",
+                    killingBlows = 0,
+                    honorableKills = 0,
+                    deaths = 0,
+                    honorGained = 0,
+                    faction = 0,
+                    raceName = "",
+                    className = "",
+                    classToken = "",
+                    damageDone = 0,
+                    healingDone = 0,
+                    rating = 0,
+                    ratingChange = 0,
+                    prematchMMR = 0,
+                    mmrChange = 0,
+                    talentSpec = "",
+                    honorLevel = 0,
+                    stats = {
+                        {
+                            pvpStatID = 0,
+                            pvpStatValue = 0,
+                            name = "",
+                            tooltip = "",
+                            iconName = "",
+                        }
+                    },
+                }
+
+                local numClasses = _G.GetNumClasses()
+                function _G.C_PvP.GetScoreInfo(offsetIndex)
+                    local info = CopyTable(PVPScoreInfo)
+                    info.name = info.name..offsetIndex
+
+                    local raceInfo = _G.C_CreatureInfo.GetRaceInfo((offsetIndex % 12) + 1)
+                    info.raceName = raceInfo.raceName
+                    info.faction = _G.PLAYER_FACTION_GROUP[_G.C_CreatureInfo.GetFactionInfo(raceInfo.raceID).groupTag]
+
+                    local classInfo = _G.C_CreatureInfo.GetClassInfo((offsetIndex % numClasses) + 1)
+                    info.className = classInfo.className
+                    info.classToken = classInfo.classFile
+
+                    local numSpecs = _G.GetNumSpecializationsForClassID(classInfo.classID)
+                    local _, name = _G.GetSpecializationInfoForClassID(classInfo.classID, (offsetIndex % numSpecs) + 1)
+                    info.talentSpec = name
+
+                    info.honorLevel = offsetIndex
+
+                    return info
                 end
 
                 local misc do
@@ -774,7 +875,10 @@ function commands.test()
             AceConfig:RegisterOptionsTable("test", test)
         end
 
-        _G.LibStub("AceConfigDialog-3.0"):Open("test")
+
+        _G.C_Timer.After(0, function()
+            _G.LibStub("AceConfigDialog-3.0"):Open("test")
+        end)
     else
         _G.print("AceConfig does not exist.")
     end
