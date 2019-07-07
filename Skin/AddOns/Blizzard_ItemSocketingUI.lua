@@ -41,6 +41,18 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
                 coords = defaultCoords,
                 color = Color.white,
             },
+            PunchcardRed = {
+                coords = defaultCoords,
+                color = Color.red,
+            },
+            PunchcardYellow = {
+                coords = defaultCoords,
+                color = Color.yellow,
+            },
+            PunchcardBlue = {
+                coords = defaultCoords,
+                color = Color.blue,
+            },
         }
 
         function Hook.ItemSocketingFrame_Update()
