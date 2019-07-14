@@ -4,115 +4,67 @@ local _, private = ...
 -- luacheck: globals next tinsert
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+
+do --[[ FrameXML\QueueStatusFrame.lua ]]
+    function Hook.QueueStatusEntry_SetFullDisplay(entry, title, queuedTime, myWait, isTank, isHealer, isDPS, totalTanks, totalHealers, totalDPS, tankNeeds, healerNeeds, dpsNeeds, subTitle, extraText)
+        local nextRoleIcon = 1
+        if isDPS then
+            local icon = entry["RoleIcon"..nextRoleIcon]
+            Base.SetTexture(icon, "iconDAMAGER")
+            icon._auroraBG:Show()
+            nextRoleIcon = nextRoleIcon + 1
+        end
+        if isHealer then
+            local icon = entry["RoleIcon"..nextRoleIcon]
+            Base.SetTexture(icon, "iconHEALER")
+            icon._auroraBG:Show()
+            nextRoleIcon = nextRoleIcon + 1
+        end
+        if isTank then
+            local icon = entry["RoleIcon"..nextRoleIcon]
+            Base.SetTexture(icon, "iconTANK")
+            icon._auroraBG:Show()
+            nextRoleIcon = nextRoleIcon + 1
+        end
+
+        for i = nextRoleIcon, _G.LFD_NUM_ROLES do
+            local icon = entry["RoleIcon"..i]
+            if icon._auroraBG then
+                icon._auroraBG:Hide()
+            end
+        end
+    end
+end
+
+do --[[ FrameXML\QueueStatusFrame.xml ]]
+    function Skin.QueueStatusRoleCountTemplate(Frame)
+        local debugName = Frame:GetDebugName()
+        if debugName:find("Healer") then
+            Base.SetTexture(Frame.Texture, "iconHEALER")
+        elseif debugName:find("Tank") then
+            Base.SetTexture(Frame.Texture, "iconTANK")
+        elseif debugName:find("Damager") then
+            Base.SetTexture(Frame.Texture, "iconDAMAGER")
+        end
+
+        Frame.Cover:SetColorTexture(0, 0, 0)
+    end
+    function Skin.QueueStatusEntryTemplate(Frame)
+        Frame.EntrySeparator:SetHeight(1)
+        Skin.QueueStatusRoleCountTemplate(Frame.HealersFound)
+        Skin.QueueStatusRoleCountTemplate(Frame.TanksFound)
+        Skin.QueueStatusRoleCountTemplate(Frame.DamagersFound)
+    end
+end
 
 function private.FrameXML.QueueStatusFrame()
-    local function SkinEntry(entry)
-        for _, roleButton in next, {entry.HealersFound, entry.TanksFound, entry.DamagersFound} do
-            roleButton.Texture:SetTexture(C.media.roleIcons)
-            roleButton.Cover:SetTexture(C.media.roleIcons)
+     _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", Hook.QueueStatusEntry_SetFullDisplay)
 
-            local left = roleButton:CreateTexture(nil, "OVERLAY")
-            left:SetWidth(1)
-            left:SetTexture(C.media.backdrop)
-            left:SetVertexColor(0, 0, 0)
-            left:SetPoint("TOPLEFT", 5, -3)
-            left:SetPoint("BOTTOMLEFT", 5, 6)
+    local QueueStatusFrame = _G.QueueStatusFrame
+    Skin.TooltipBorderedFrameTemplate(QueueStatusFrame)
 
-            local right = roleButton:CreateTexture(nil, "OVERLAY")
-            right:SetWidth(1)
-            right:SetTexture(C.media.backdrop)
-            right:SetVertexColor(0, 0, 0)
-            right:SetPoint("TOPRIGHT", -4, -3)
-            right:SetPoint("BOTTOMRIGHT", -4, 6)
-
-            local top = roleButton:CreateTexture(nil, "OVERLAY")
-            top:SetHeight(1)
-            top:SetTexture(C.media.backdrop)
-            top:SetVertexColor(0, 0, 0)
-            top:SetPoint("TOPLEFT", 5, -3)
-            top:SetPoint("TOPRIGHT", -4, -3)
-
-            local bottom = roleButton:CreateTexture(nil, "OVERLAY")
-            bottom:SetHeight(1)
-            bottom:SetTexture(C.media.backdrop)
-            bottom:SetVertexColor(0, 0, 0)
-            bottom:SetPoint("BOTTOMLEFT", 5, 6)
-            bottom:SetPoint("BOTTOMRIGHT", -4, 6)
-        end
-
-        for i = 1, _G.LFD_NUM_ROLES do
-            local roleIcon = entry["RoleIcon"..i]
-
-            roleIcon:SetTexture(C.media.roleIcons)
-
-            entry["RoleIconBorders"..i] = {}
-            local borders = entry["RoleIconBorders"..i]
-
-            local left = entry:CreateTexture(nil, "OVERLAY")
-            left:SetWidth(1)
-            left:SetTexture(C.media.backdrop)
-            left:SetVertexColor(0, 0, 0)
-            left:SetPoint("TOPLEFT", roleIcon, 2, -2)
-            left:SetPoint("BOTTOMLEFT", roleIcon, 2, 3)
-            tinsert(borders, left)
-
-            local right = entry:CreateTexture(nil, "OVERLAY")
-            right:SetWidth(1)
-            right:SetTexture(C.media.backdrop)
-            right:SetVertexColor(0, 0, 0)
-            right:SetPoint("TOPRIGHT", roleIcon, -2, -2)
-            right:SetPoint("BOTTOMRIGHT", roleIcon, -2, 3)
-            tinsert(borders, right)
-
-            local top = entry:CreateTexture(nil, "OVERLAY")
-            top:SetHeight(1)
-            top:SetTexture(C.media.backdrop)
-            top:SetVertexColor(0, 0, 0)
-            top:SetPoint("TOPLEFT", roleIcon, 2, -2)
-            top:SetPoint("TOPRIGHT", roleIcon, -2, -2)
-            tinsert(borders, top)
-
-            local bottom = entry:CreateTexture(nil, "OVERLAY")
-            bottom:SetHeight(1)
-            bottom:SetTexture(C.media.backdrop)
-            bottom:SetVertexColor(0, 0, 0)
-            bottom:SetPoint("BOTTOMLEFT", roleIcon, 2, 3)
-            bottom:SetPoint("BOTTOMRIGHT", roleIcon, -2, 3)
-            tinsert(borders, bottom)
-        end
-
-        entry._auroraSkinned = true
-    end
-
-    for i = 1, 9 do
-        _G.select(i, _G.QueueStatusFrame:GetRegions()):Hide()
-    end
-
-    F.CreateBD(_G.QueueStatusFrame)
-    _G.hooksecurefunc("QueueStatusEntry_SetMinimalDisplay", function(entry)
-        if not entry._auroraSkinned then
-            SkinEntry(entry)
-        end
-
-        for i = 1, _G.LFD_NUM_ROLES do
-            for _, border in next, entry["RoleIconBorders"..i] do
-                border:Hide()
-            end
-        end
-    end)
-
-    _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", function(entry)
-        if not entry._auroraSkinned then
-            SkinEntry(entry)
-        end
-
-        for i = 1, _G.LFD_NUM_ROLES do
-            local shown = entry["RoleIcon"..i]:IsShown()
-
-            for _, border in next, entry["RoleIconBorders"..i] do
-                border:SetShown(shown)
-            end
-        end
-    end)
+    _G.hooksecurefunc(QueueStatusFrame.statusEntriesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 end
