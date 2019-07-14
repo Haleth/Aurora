@@ -1,4 +1,11 @@
-﻿## [8.2.0.0] - 2019-06-24 ##
+﻿## [Unrelased] ##
+### Fixed ###
+
+  * Error when using the new punchcard trinket in Mechagon.
+
+
+
+## [8.2.0.0] - 2019-06-24 ##
 ### Changed ###
 
   * Minor tweaks to the currencies list
@@ -402,6 +409,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.2.0.1]: https://github.com/Haleth/Aurora/compare/8.2.0.0...8.2.0.1
 [8.2.0.0]: https://github.com/Haleth/Aurora/compare/8.1.5.2...8.2.0.0
 [8.1.5.2]: https://github.com/Haleth/Aurora/compare/8.1.5.1...8.1.5.2
 [8.1.5.1]: https://github.com/Haleth/Aurora/compare/8.1.5.0...8.1.5.1
