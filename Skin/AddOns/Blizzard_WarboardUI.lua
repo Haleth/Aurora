@@ -61,14 +61,8 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
     end
 
     Hook.WarboardQuestChoiceOptionFrameMixin = {}
-    if private.isPatch then
-        function Hook.WarboardQuestChoiceOptionFrameMixin:UpdateOptionSize()
-            self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
-        end
-    else
-        function Hook.WarboardQuestChoiceOptionFrameMixin:ConfigureButtons()
-            self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
-        end
+    function Hook.WarboardQuestChoiceOptionFrameMixin:UpdateOptionSize()
+        self.ArtworkBorderDisabled:SetColorTexture(0.5, 0.2, 0.2, 0.3)
     end
 end
 

@@ -33,11 +33,7 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
         Skin.ExpandOrCollapse(Button.toggle)
     end
     function Skin.OptionsFrameTemplate(Frame)
-        if private.isPatch then
-            Skin.DialogBorderTemplate(Frame.Border)
-        else
-            Base.SetBackdrop(Frame)
-        end
+        Skin.DialogBorderTemplate(Frame.Border)
 
         local name = Frame:GetName()
         _G[name.."Header"]:SetTexture("")

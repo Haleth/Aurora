@@ -103,7 +103,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="VoiceToggleButton.lua"/>
     <Script file="WardrobeOutfits.lua"/>
     <Script file="WorldMapFrame.lua"/>
-    <Script file="WorldStateFrame.lua"/>
     <Script file="ZoneAbility.lua"/>
 
     <Script file="..\SharedXML\AddonList.lua"/>

@@ -14,11 +14,7 @@ function private.FrameXML.GameMenuFrame()
     header:ClearAllPoints()
     header:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.GameMenuFrame.Border)
-    else
-        F.CreateBD(_G.GameMenuFrame)
-    end
+    Skin.DialogBorderTemplate(_G.GameMenuFrame.Border)
 
     local buttons = {
         "Help",

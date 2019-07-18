@@ -454,14 +454,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     end
     do --[[ GuildRoster ]]
         function Skin.CommunitiesGuildMemberDetailFrameTemplate(Frame)
-            if private.isPatch then
-                Skin.DialogBorderDarkTemplate(Frame.Border)
-            else
-                Base.SetBackdrop(Frame)
-                Frame.BackBackground:Hide()
-                select(12, Frame:GetRegions()):Hide()
-                Frame.Corner:Hide()
-            end
+            Skin.DialogBorderDarkTemplate(Frame.Border)
             Skin.UIPanelCloseButton(Frame.CloseButton)
             Skin.UIPanelButtonTemplate(Frame.RemoveButton)
             Skin.UIPanelButtonTemplate(Frame.GroupInviteButton)

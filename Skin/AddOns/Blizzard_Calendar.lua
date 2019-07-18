@@ -234,12 +234,7 @@ function private.AddOns.Blizzard_Calendar()
     -- View Holiday --
     ------------------
     _G.CalendarViewHolidayInfoTexture:SetAlpha(0)
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarViewHolidayFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarViewHolidayFrame)
-        _G.CalendarViewHolidayBackground:Hide()
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarViewHolidayFrame.Border)
     Skin.CalendarTitleFrameTemplate(_G.CalendarViewHolidayTitleFrame)
     Skin.UIPanelScrollFrameTemplate(_G.CalendarViewHolidayScrollFrame)
     Skin.CalendarEventCloseButtonTemplate(_G.CalendarViewHolidayCloseButton)
@@ -249,12 +244,7 @@ function private.AddOns.Blizzard_Calendar()
     ---------------
     -- View Raid --
     ---------------
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarViewRaidFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarViewRaidFrame)
-        _G.CalendarViewRaidBackground:Hide()
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarViewRaidFrame.Border)
     Skin.CalendarTitleFrameTemplate(_G.CalendarViewRaidTitleFrame)
     Skin.UIPanelScrollFrameTemplate(_G.CalendarViewRaidScrollFrame)
     Skin.CalendarEventCloseButtonTemplate(_G.CalendarViewRaidCloseButton)
@@ -264,12 +254,7 @@ function private.AddOns.Blizzard_Calendar()
     ----------------
     -- View Event --
     ----------------
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarViewEventFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarViewEventFrame)
-        _G.CalendarViewEventBackground:Hide()
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarViewEventFrame.Border)
     Skin.CalendarTitleFrameTemplate(_G.CalendarViewEventTitleFrame)
     _G.CalendarViewEventDescriptionContainer:SetBackdrop(nil)
     Skin.CalendarEventDescriptionScrollFrame(_G.CalendarViewEventDescriptionScrollFrame)
@@ -287,12 +272,7 @@ function private.AddOns.Blizzard_Calendar()
     -- Create/Edit Event --
     -----------------------
     _G.CalendarCreateEventFrameButtonBackground:Hide()
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarCreateEventFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarCreateEventFrame)
-        _G.CalendarCreateEventBackground:Hide()
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarCreateEventFrame.Border)
     Skin.CalendarTitleFrameTemplate(_G.CalendarCreateEventTitleFrame)
     Skin.InputBoxTemplate(_G.CalendarCreateEventTitleEdit)
     Skin.UIDropDownMenuTemplate(_G.CalendarCreateEventTypeDropDown)
@@ -324,11 +304,7 @@ function private.AddOns.Blizzard_Calendar()
     -- Mass Invite --
     -----------------
     _G.CalendarMassInviteFrame:SetPoint("BOTTOMRIGHT", _G.CalendarCreateEventMassInviteButton, "TOPRIGHT", 160, 4)
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarMassInviteFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarMassInviteFrame)
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarMassInviteFrame.Border)
     Skin.UIDropDownMenuTemplate(_G.CalendarMassInviteCommunityDropDown)
     Skin.CalendarTitleFrameTemplate(_G.CalendarMassInviteTitleFrame)
     Skin.InputBoxTemplate(_G.CalendarMassInviteMinLevelEdit)
@@ -342,11 +318,7 @@ function private.AddOns.Blizzard_Calendar()
     ------------------
     -- Event Picker --
     ------------------
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarEventPickerFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarEventPickerFrame)
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarEventPickerFrame.Border)
     _G.CalendarEventPickerFrameButtonBackground:Hide()
     Skin.CalendarTitleFrameTemplate(_G.CalendarEventPickerTitleFrame)
     Skin.HybridScrollBarTemplate(_G.CalendarEventPickerScrollBar)
@@ -359,11 +331,7 @@ function private.AddOns.Blizzard_Calendar()
     --------------------
     _G.CalendarTexturePickerFrame:ClearAllPoints()
     _G.CalendarTexturePickerFrame:SetPoint("TOPRIGHT", _G.CalendarCreateEventTypeDropDown, "BOTTOMRIGHT", -4, 0)
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.CalendarTexturePickerFrame.Border)
-    else
-        Base.SetBackdrop(_G.CalendarTexturePickerFrame)
-    end
+    Skin.DialogBorderDarkTemplate(_G.CalendarTexturePickerFrame.Border)
     _G.CalendarTexturePickerFrameButtonBackground:Hide()
     Skin.CalendarTitleFrameTemplate(_G.CalendarTexturePickerTitleFrame)
     Skin.HybridScrollBarTemplate(_G.CalendarTexturePickerScrollBar)

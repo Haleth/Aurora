@@ -78,11 +78,7 @@ function private.AddOns.Blizzard_TokenUI()
     Skin.HybridScrollBarTemplate(_G.TokenFrame.Container.scrollBar)
 
     local TokenFramePopup = _G.TokenFramePopup
-    if private.isPatch then
-        Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
-    else
-        Base.SetBackdrop(TokenFramePopup)
-    end
+    Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
     TokenFramePopup:SetSize(175, 90)
 
     local titleText = _G.TokenFramePopupTitle

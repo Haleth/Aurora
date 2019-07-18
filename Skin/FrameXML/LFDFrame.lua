@@ -5,7 +5,6 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
@@ -29,11 +28,7 @@ function private.FrameXML.LFDFrame()
     -- LFDRoleCheckPopup --
     -----------------------
     local LFDRoleCheckPopup = _G.LFDRoleCheckPopup
-    if private.isPatch then
-        Skin.DialogBorderTemplate(LFDRoleCheckPopup.Border)
-    else
-        Base.SetBackdrop(LFDRoleCheckPopup)
-    end
+    Skin.DialogBorderTemplate(LFDRoleCheckPopup.Border)
 
     _G.LFDRoleCheckPopupRoleButtonTank:SetPoint("LEFT", 33, 0)
     Skin.LFDRoleCheckPopupButtonTemplate(_G.LFDRoleCheckPopupRoleButtonTank)
@@ -52,11 +47,7 @@ function private.FrameXML.LFDFrame()
     -- LFDReadyCheckPopup --
     ------------------------
     local LFDReadyCheckPopup = _G.LFDReadyCheckPopup
-    if private.isPatch then
-        Skin.DialogBorderTemplate(LFDReadyCheckPopup.Border)
-    else
-        Base.SetBackdrop(LFDReadyCheckPopup)
-    end
+    Skin.DialogBorderTemplate(LFDReadyCheckPopup.Border)
     Skin.UIPanelButtonTemplate(LFDReadyCheckPopup.YesButton)
     Skin.UIPanelButtonTemplate(LFDReadyCheckPopup.NoButton)
     Util.PositionRelative("BOTTOMLEFT", LFDReadyCheckPopup, "BOTTOMLEFT", 32, 15, 5, "Right", {

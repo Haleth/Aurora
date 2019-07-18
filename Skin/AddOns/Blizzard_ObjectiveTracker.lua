@@ -329,14 +329,8 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     minimizeButton._auroraHighlight = {line, arrow}
     Base.SetHighlight(minimizeButton, "texture")
 
-    if private.isPatch then
-        for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
-            Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
-        end
-    else
-        for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader"} do
-            Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
-        end
+    for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
+        Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
     end
 
     ----====####$$$$%$$$$####====----

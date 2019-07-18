@@ -9,11 +9,7 @@ local Skin = Aurora.Skin
 local F, C = _G.unpack(Aurora)
 
 function private.FrameXML.RolePoll()
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.RolePollPopup.Border)
-    else
-        F.CreateBD(_G.RolePollPopup)
-    end
+    Skin.DialogBorderTemplate(_G.RolePollPopup.Border)
     F.Reskin(_G.RolePollPopupAcceptButton)
     F.ReskinClose(_G.RolePollPopupCloseButton)
 

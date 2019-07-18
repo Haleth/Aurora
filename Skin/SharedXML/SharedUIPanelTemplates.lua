@@ -347,14 +347,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             end
         end
     end
-    --[[
-    if private.isPatch then
-        Skin.DialogBorderTemplate(Frame.BG)
-        Skin.DialogBorderTemplate(Frame.Border)
-    else
-        Base.SetBackdrop(Frame)
-    end
-    ]]
     function Skin.DialogBorderNoCenterTemplate(Frame)
         Base.CreateBackdrop(Frame, private.backdrop, {
             tl = Frame.TopLeftCorner,
@@ -397,9 +389,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        if private.isPatch then
-            Util.Mixin(Frame, Hook.PortraitFrameMixin)
-        end
+        Util.Mixin(Frame, Hook.PortraitFrameMixin)
 
         Frame.TitleBg:Hide()
         Frame.portrait:SetAlpha(0)

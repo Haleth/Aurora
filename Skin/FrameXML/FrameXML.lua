@@ -72,6 +72,7 @@ local FrameXML = {
     "AchievementUtil",
     "MapUtil",
     "AzeriteUtil",
+    "AzeriteEssenceUtil",
     "VehicleUtil",
     "AuraUtil",
     "CalendarUtil",

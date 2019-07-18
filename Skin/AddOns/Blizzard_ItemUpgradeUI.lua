@@ -22,7 +22,6 @@ end
 --end
 
 function private.AddOns.Blizzard_ItemUpgradeUI()
-    if not private.isPatch then return end
     _G.hooksecurefunc("ItemUpgradeFrame_Update", Hook.ItemUpgradeFrame_Update)
 
     local ItemUpgradeFrame = _G.ItemUpgradeFrame

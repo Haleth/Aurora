@@ -19,11 +19,7 @@ function private.FrameXML.InterfaceOptionsFrame()
     _G.InterfaceOptionsFrameHeader:SetTexture("")
     _G.InterfaceOptionsFrameHeaderText:SetPoint("TOP", 0, -10)
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.InterfaceOptionsFrame.Border)
-    else
-        Base.SetBackdrop(_G.InterfaceOptionsFrame)
-    end
+    Skin.DialogBorderTemplate(_G.InterfaceOptionsFrame.Border)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameCancel)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameOkay)
     Util.PositionRelative("BOTTOMRIGHT", _G.InterfaceOptionsFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {

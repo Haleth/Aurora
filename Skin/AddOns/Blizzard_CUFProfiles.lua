@@ -45,11 +45,7 @@ do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.xml ]]
         Skin.HorizontalSliderTemplate(Slider)
     end
     function Skin.CompactUnitFrameProfileDialogWithCoverTemplate(Frame)
-        if private.isPatch then
-            Skin.DialogBorderDarkTemplate(Frame.Border)
-        else
-            Base.SetBackdrop(Frame)
-        end
+        Skin.DialogBorderDarkTemplate(Frame.Border)
     end
 end
 

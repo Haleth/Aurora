@@ -116,11 +116,7 @@ function private.FrameXML.ReputationFrame()
     -- ReputationDetailFrame --
     ---------------------------
     _G.ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.ReputationDetailFrame.Border)
-    else
-        Base.SetBackdrop(_G.ReputationDetailFrame, Color.frame)
-    end
+    Skin.DialogBorderTemplate(_G.ReputationDetailFrame.Border)
 
     _G.ReputationDetailFactionName:SetPoint("TOPLEFT", 10, -10)
     _G.ReputationDetailFactionName:SetPoint("TOPRIGHT", -10, -10)

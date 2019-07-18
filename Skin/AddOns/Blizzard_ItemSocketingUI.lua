@@ -10,125 +10,66 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
-    if private.isPatch then
-        local defaultCoords = {0.11627906976744, 0.88372093023256, 0.11627906976744, 0.88372093023256}
-        local GEM_TYPE_INFO = {
-            Yellow = {
-                coords = defaultCoords,
-                color = Color.yellow,
-            },
-            Red = {
-                coords = defaultCoords,
-                color = Color.red,
-            },
-            Blue = {
-                coords = defaultCoords,
-                color = Color.blue,
-            },
-            Meta = {
-                coords = {0.18965517241379, 0.77586206896552, 0.16981132075472, 0.81132075471698},
-                color = Color.grayLight,
-            },
-            Hydraulic = {
-                coords = defaultCoords,
-                color = Color.grayDark,
-            },
-            Cogwheel = {
-                coords = defaultCoords,
-                color = Color.yellow,
-            },
-            Prismatic = {
-                coords = defaultCoords,
-                color = Color.white,
-            },
-            PunchcardRed = {
-                coords = defaultCoords,
-                color = Color.red,
-            },
-            PunchcardYellow = {
-                coords = defaultCoords,
-                color = Color.yellow,
-            },
-            PunchcardBlue = {
-                coords = defaultCoords,
-                color = Color.blue,
-            },
-        }
+    local defaultCoords = {0.11627906976744, 0.88372093023256, 0.11627906976744, 0.88372093023256}
+    local GEM_TYPE_INFO = {
+        Yellow = {
+            coords = defaultCoords,
+            color = Color.yellow,
+        },
+        Red = {
+            coords = defaultCoords,
+            color = Color.red,
+        },
+        Blue = {
+            coords = defaultCoords,
+            color = Color.blue,
+        },
+        Meta = {
+            coords = {0.18965517241379, 0.77586206896552, 0.16981132075472, 0.81132075471698},
+            color = Color.grayLight,
+        },
+        Hydraulic = {
+            coords = defaultCoords,
+            color = Color.grayDark,
+        },
+        Cogwheel = {
+            coords = defaultCoords,
+            color = Color.yellow,
+        },
+        Prismatic = {
+            coords = defaultCoords,
+            color = Color.white,
+        },
+        PunchcardRed = {
+            coords = defaultCoords,
+            color = Color.red,
+        },
+        PunchcardYellow = {
+            coords = defaultCoords,
+            color = Color.yellow,
+        },
+        PunchcardBlue = {
+            coords = defaultCoords,
+            color = Color.blue,
+        },
+    }
 
-        function Hook.ItemSocketingFrame_Update()
-            for i, socket in ipairs(_G.ItemSocketingFrame.Sockets) do
-                local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)]
-                socket.Background:SetTexCoord(gemInfo.coords[1], gemInfo.coords[2], gemInfo.coords[3], gemInfo.coords[4])
-                socket:SetBackdropBorderColor(gemInfo.color, 1)
-            end
-
-            local num = _G.GetNumSockets()
-            if num == 3 then
-                _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -80, 39)
-            elseif num == 2 then
-                _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -40, 39)
-            else
-                _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", 0, 39)
-            end
+    function Hook.ItemSocketingFrame_Update()
+        for i, socket in ipairs(_G.ItemSocketingFrame.Sockets) do
+            local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)]
+            socket.Background:SetTexCoord(gemInfo.coords[1], gemInfo.coords[2], gemInfo.coords[3], gemInfo.coords[4])
+            socket:SetBackdropBorderColor(gemInfo.color, 1)
         end
-    else
-        local GEM_TYPE_INFO = {
-            Yellow = {
-                left = 0.01953125, right = 0.1484375, top = 0.66015625, bottom = 0.7890625,
-                color = Color.yellow,
-            },
-            Red = {
-                left = 0.1953125, right = 0.32421875, top = 0.66015625, bottom = 0.7890625,
-                color = Color.red,
-            },
-            Blue = {
-                left = 0.37109375, right = 0.5, top = 0.66015625, bottom = 0.7890625,
-                color = Color.blue,
-            },
-            Meta = {
-                left = 0.22265625, right = 0.34765625, top = 0.44140625, bottom = 0.56640625,
-                color = Color.grayLight,
-            },
-            Hydraulic = {
-                left = 0.09375, right = 0.609375, top = 0.509765625, bottom = 0.57421875,
-                color = Color.grayDark,
-            },
-            Cogwheel = {
-                left = 0.09375, right = 0.609375, top = 0.421875, bottom = 0.486328125,
-                color = Color.yellow,
-            },
-            Prismatic = {
-                left = 0.09375, right = 0.609375, top = 0.7734375, bottom = 0.837890625,
-                color = Color.white,
-            },
-        }
 
-        function Hook.ItemSocketingFrame_Update()
-            local socket, socketName
-            local gemBorder
-
-            for i = 1, _G.MAX_NUM_SOCKETS do
-                socketName = "ItemSocketingSocket"..i
-                socket = _G[socketName]
-
-                local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)]
-                --Util.TableInspect(gemInfo)
-                gemBorder = _G[socketName.."Background"]
-                gemBorder:SetTexCoord(gemInfo.left, gemInfo.right, gemInfo.top, gemInfo.bottom)
-                socket:SetBackdropBorderColor(gemInfo.color, 1)
-            end
-
-            local num = _G.GetNumSockets()
-            if num == 3 then
-                _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -80, 39)
-            elseif num == 2 then
-                _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -40, 39)
-            else
-                _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", 0, 39)
-            end
+        local num = _G.GetNumSockets()
+        if num == 3 then
+            _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -80, 39)
+        elseif num == 2 then
+            _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -40, 39)
+        else
+            _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", 0, 39)
         end
     end
-
 end
 
 do --[[ AddOns\Blizzard_ItemSocketingUI.xml ]]
@@ -138,19 +79,11 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.xml ]]
         _G[name.."Right"]:SetAlpha(0)
         select(2, Button:GetRegions()):Hide() -- drop shadow
 
-        if private.isPatch then
-            Base.CreateBackdrop(Button, {
-                edgeSize = 1,
-                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-                insets = {left = 1, right = 1, top = 1, bottom = 1}
-            }, {bg = Button.Background})
-        else
-            Base.CreateBackdrop(Button, {
-                edgeSize = 1,
-                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-                insets = {left = 1, right = 1, top = 1, bottom = 1}
-            }, {bg = _G[name.."Background"]})
-        end
+        Base.CreateBackdrop(Button, {
+            edgeSize = 1,
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            insets = {left = 1, right = 1, top = 1, bottom = 1}
+        }, {bg = Button.Background})
 
         Base.CropIcon(Button.icon)
         Button.icon:ClearAllPoints()
@@ -161,15 +94,13 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.xml ]]
         shine:ClearAllPoints()
         shine:SetAllPoints(Button.icon)
 
-        if private.isPatch then
-            local BracketFrame = Button.BracketFrame
-            BracketFrame:ClearAllPoints()
-            BracketFrame:SetPoint("TOPLEFT", -4, 4)
-            BracketFrame:SetPoint("BOTTOMRIGHT", 4, -4)
+        local BracketFrame = Button.BracketFrame
+        BracketFrame:ClearAllPoints()
+        BracketFrame:SetPoint("TOPLEFT", -4, 4)
+        BracketFrame:SetPoint("BOTTOMRIGHT", 4, -4)
 
-            BracketFrame.ClosedBracket:SetAllPoints()
-            BracketFrame.OpenBracket:SetAllPoints()
-        end
+        BracketFrame.ClosedBracket:SetAllPoints()
+        BracketFrame.OpenBracket:SetAllPoints()
 
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())

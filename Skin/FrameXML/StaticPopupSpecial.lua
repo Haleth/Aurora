@@ -15,21 +15,12 @@ local Base, Skin = Aurora.Base, Aurora.Skin
 
 function private.FrameXML.StaticPopupSpecial()
     local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
-    if private.isPatch then
-        Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
-    else
-        Base.SetBackdrop(PetBattleQueueReadyFrame)
-    end
+    Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
     Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.AcceptButton)
     Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.DeclineButton)
 
     local PlayerReportFrame = _G.PlayerReportFrame
-    if private.isPatch then
-        Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
-    else
-        Base.SetBackdrop(PetBattleQueueReadyFrame)
-    end
-
+    Skin.DialogBorderTemplate(PlayerReportFrame.Border)
     PlayerReportFrame.Comment.TopLeft:Hide()
     PlayerReportFrame.Comment.TopRight:Hide()
     PlayerReportFrame.Comment.Top:Hide()

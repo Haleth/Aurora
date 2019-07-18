@@ -52,9 +52,5 @@ do --[[ SharedXML\NineSlice.lua ]]
 end
 
 function private.SharedXML.NineSlice()
-    if private.isPatch then
-        Util.Mixin(_G.NineSliceUtil, Hook.NineSliceUtil)
-    else
-        Util.Mixin(_G.AnchorUtil, Hook.AnchorUtil)
-    end
+    Util.Mixin(_G.NineSliceUtil, Hook.NineSliceUtil)
 end

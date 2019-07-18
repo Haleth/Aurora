@@ -226,11 +226,7 @@ function private.FrameXML.FriendsFrame()
     bottom:Hide()
 
     -- Add Friend
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
-    else
-        F.CreateBD(_G.AddFriendFrame)
-    end
+    Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
     F.Reskin(_G.AddFriendInfoFrameContinueButton)
 
     F.ReskinInput(_G.AddFriendNameEditBox)
@@ -242,11 +238,7 @@ function private.FrameXML.FriendsFrame()
     end
 
     -- Friends of friends
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.FriendsFriendsFrame.Border)
-    else
-        F.CreateBD(_G.FriendsFriendsFrame)
-    end
+    Skin.DialogBorderTemplate(_G.FriendsFriendsFrame.Border)
     F.CreateBD(_G.FriendsFriendsList, .25)
     F.ReskinDropDown(_G.FriendsFriendsFrameDropDown)
     F.ReskinScroll(_G.FriendsFriendsScrollFrameScrollBar)
@@ -254,15 +246,8 @@ function private.FrameXML.FriendsFrame()
     F.Reskin(_G.FriendsFriendsCloseButton)
 
     -- BattleTag Invite
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.BattleTagInviteFrame.Border)
-        local _, send, cancel = _G.BattleTagInviteFrame:GetChildren()
-        F.Reskin(send)
-        F.Reskin(cancel)
-    else
-        F.CreateBD(_G.BattleTagInviteFrame)
-        local send, cancel = _G.BattleTagInviteFrame:GetChildren()
-        F.Reskin(send)
-        F.Reskin(cancel)
-    end
+    Skin.DialogBorderTemplate(_G.BattleTagInviteFrame.Border)
+    local _, send, cancel = _G.BattleTagInviteFrame:GetChildren()
+    F.Reskin(send)
+    F.Reskin(cancel)
 end

@@ -13,12 +13,7 @@ function private.FrameXML.ColorPickerFrame()
     local header = select(3, _G.ColorPickerFrame:GetRegions())
     header:SetPoint("TOP", _G.ColorPickerFrame, 0, -4)
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.ColorPickerFrame.Border)
-    else
-        F.CreateBD(_G.ColorPickerFrame)
-    end
-
+    Skin.DialogBorderTemplate(_G.ColorPickerFrame.Border)
     F.Reskin(_G.ColorPickerCancelButton)
     _G.ColorPickerCancelButton:SetWidth(100)
 
@@ -45,10 +40,6 @@ function private.FrameXML.ColorPickerFrame()
         end
     end)
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
-    else
-        F.CreateBD(_G.OpacityFrame)
-    end
+    Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
     F.ReskinSlider(_G.OpacityFrameSlider, true)
 end

@@ -40,20 +40,11 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
     function Skin.HybridScrollBarTemplate(Slider)
         Skin.HybridScrollBarBackgroundTemplate(Slider)
 
-        if private.isPatch then
-            Slider.ScrollUpButton:SetPoint("BOTTOM", Slider, "TOP")
-            Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+        Slider.ScrollUpButton:SetPoint("BOTTOM", Slider, "TOP")
+        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
 
-            Slider.ScrollDownButton:SetPoint("TOP", Slider, "BOTTOM")
-            Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-        else
-            local parent = Slider:GetParent()
-            parent.scrollUp:SetPoint("BOTTOM", Slider, "TOP")
-            Skin.UIPanelScrollUpButtonTemplate(parent.scrollUp)
-
-            parent.scrollDown:SetPoint("TOP", Slider, "BOTTOM")
-            Skin.UIPanelScrollDownButtonTemplate(parent.scrollDown)
-        end
+        Slider.ScrollDownButton:SetPoint("TOP", Slider, "BOTTOM")
+        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
     end
     function Skin.HybridScrollBarTrimTemplate(Slider)
         local parent = Slider:GetParent()

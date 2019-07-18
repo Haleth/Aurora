@@ -183,11 +183,7 @@ function private.FrameXML.ChatConfigFrame()
     _G.ChatConfigFrameHeaderText:SetPoint("TOPLEFT")
     _G.ChatConfigFrameHeaderText:SetPoint("BOTTOMRIGHT", _G.ChatConfigFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(ChatConfigFrame.Border)
-    else
-        Base.SetBackdrop(ChatConfigFrame)
-    end
+    Skin.DialogBorderTemplate(ChatConfigFrame.Border)
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCategoryFrame)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton1)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton2)

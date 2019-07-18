@@ -9,18 +9,12 @@ local Skin = Aurora.Skin
 local F = _G.unpack(Aurora)
 
 function private.FrameXML.RaidFrame()
-    if private.isPatch then
-        Skin.RoleCountTemplate(_G.RaidFrame.RoleCount)
-    end
+    Skin.RoleCountTemplate(_G.RaidFrame.RoleCount)
     F.ReskinCheck(_G.RaidFrameAllAssistCheckButton)
     F.Reskin(_G.RaidFrameConvertToRaidButton)
     F.Reskin(_G.RaidFrameRaidInfoButton)
 
-    if private.isPatch then
-        Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame.Border)
-    else
-        F.CreateBD(_G.RaidInfoFrame)
-    end
+    Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame.Border)
     _G.RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
     _G.RaidInfoDetailHeader:Hide()
     _G.RaidInfoDetailFooter:Hide()

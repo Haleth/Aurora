@@ -25,12 +25,7 @@ end
 function private.AddOns.Blizzard_BindingUI()
     local KeyBindingFrame = _G.KeyBindingFrame
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(KeyBindingFrame.BG)
-    else
-        Base.SetBackdrop(KeyBindingFrame)
-    end
-
+    Skin.DialogBorderTemplate(KeyBindingFrame.BG)
     KeyBindingFrame.header:DisableDrawLayer("BACKGROUND")
     KeyBindingFrame.header:DisableDrawLayer("BORDER")
     KeyBindingFrame.header.text:ClearAllPoints()

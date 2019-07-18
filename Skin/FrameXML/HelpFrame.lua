@@ -99,11 +99,7 @@ function private.FrameXML.HelpFrame()
 
     -- ReportCheatingDialog
     local ReportCheatingDialog = _G.ReportCheatingDialog
-    if private.isPatch then
-        Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
-    else
-        F.CreateBD(ReportCheatingDialog)
-    end
+    Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
     F.CreateBD(ReportCheatingDialog.CommentFrame, .25)
     for i = 1, 9 do
         select(i, ReportCheatingDialog.CommentFrame:GetRegions()):Hide()

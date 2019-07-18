@@ -5,7 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\MovieFrame.lua ]]
     function Hook.MovieFrameCloseDialog_OnShow(self)
@@ -19,12 +19,7 @@ end
 function private.FrameXML.MovieFrame()
     _G.MovieFrame.CloseDialog:HookScript("OnShow", Hook.MovieFrameCloseDialog_OnShow)
 
-    if private.isPatch then
-        Skin.DialogBorderTemplate(_G.MovieFrame.CloseDialog.Border)
-    else
-        Base.SetBackdrop(_G.MovieFrame.CloseDialog)
-    end
-
+    Skin.DialogBorderTemplate(_G.MovieFrame.CloseDialog.Border)
     Skin.CinematicDialogButtonTemplate(_G.MovieFrame.CloseDialog.ConfirmButton)
     Skin.CinematicDialogButtonTemplate(_G.MovieFrame.CloseDialog.ResumeButton)
 end

@@ -80,9 +80,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SSAODropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_DepthEffectsDropDown)
-    if not private.isPatch then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_LightingQualityDropDown)
-    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_OutlineModeDropDown)
 
     ----------------
@@ -109,9 +106,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SSAODropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_DepthEffectsDropDown)
-    if not private.isPatch then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_LightingQualityDropDown)
-    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_OutlineModeDropDown)
 
 
@@ -142,13 +136,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsSliderTemplate(_G.Advanced_ContrastSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_BrightnessSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)
-
-    if not private.isPatch then
-        -- Stereo 3D
-        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_StereoEnabled)
-        Skin.VideoOptionsSliderTemplate(_G.Advanced_Convergence)
-        Skin.VideoOptionsSliderTemplate(_G.Advanced_EyeSeparation)
-    end
 
     -------------------
     -- Network Panel --
