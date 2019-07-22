@@ -1,4 +1,15 @@
 ﻿## [Unrelased] ##
+### Changed ###
+
+  * Updated LFG queue status skin.
+
+### Fixed ###
+
+  * Occasional error when using currency panel.
+
+
+
+## [8.2.0.1] - 2019-07-13 ##
 ### Fixed ###
 
   * Error when using the new punchcard trinket in Mechagon.
