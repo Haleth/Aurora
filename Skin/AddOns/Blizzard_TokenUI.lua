@@ -15,24 +15,25 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
 
         for i = 1, #buttons do
             local button = buttons[i]
+            if button:IsShown() then
+                local r, g, b = Color.highlight:GetRGB()
+                button.highlight:SetColorTexture(r, g, b, 0.2)
+                button.highlight:SetPoint("TOPLEFT", 1, 0)
+                button.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 
-            local r, g, b = Color.highlight:GetRGB()
-            button.highlight:SetColorTexture(r, g, b, 0.2)
-            button.highlight:SetPoint("TOPLEFT", 1, 0)
-            button.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
-
-            if button.isHeader then
-                Base.SetBackdrop(button, Color.button)
-                button._auroraMinus:Show()
-                button._auroraPlus:SetShown(not button.isExpanded)
-                button.stripe:Hide()
-                button.icon.bg:Hide()
-            else
-                button:SetBackdrop(nil)
-                button._auroraMinus:Hide()
-                button._auroraPlus:Hide()
-                button.stripe:SetShown(button.index % 2 == 1)
-                button.icon.bg:Show()
+                if button.isHeader then
+                    Base.SetBackdrop(button, Color.button)
+                    button._auroraMinus:Show()
+                    button._auroraPlus:SetShown(not button.isExpanded)
+                    button.stripe:Hide()
+                    button.icon.bg:Hide()
+                else
+                    button:SetBackdrop(nil)
+                    button._auroraMinus:Hide()
+                    button._auroraPlus:Hide()
+                    button.stripe:SetShown(button.index % 2 == 1)
+                    button.icon.bg:Show()
+                end
             end
         end
     end
