@@ -6,6 +6,8 @@
 ### Fixed ###
 
   * Occasional error when using currency panel.
+  * The BG close button had off anchor texture.
+  * Error when other addons add new map overlays.
 
 
 

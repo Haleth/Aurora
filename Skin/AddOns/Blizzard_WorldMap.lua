@@ -19,7 +19,9 @@ do --[[ AddOns\Blizzard_WorldMap.lua ]]
             --self.NavBar:SetPoint("TOPLEFT", self.TitleCanvasSpacerFrame, 4, -25)
         end
         function Hook.WorldMapMixin:AddOverlayFrame(templateName, templateType, anchorPoint, relativeTo, relativePoint, offsetX, offsetY)
-            Skin[templateName](self.overlayFrames[#self.overlayFrames])
+            if Skin[templateName] then
+                Skin[templateName](self.overlayFrames[#self.overlayFrames])
+            end
         end
     end
 end
