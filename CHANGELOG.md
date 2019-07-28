@@ -1,4 +1,4 @@
-﻿## [Unrelased] ##
+﻿## [8.2.0.2] - 2019-07-28 ##
 ### Changed ###
 
   * Updated LFG queue status skin.
@@ -422,6 +422,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.2.0.2]: https://github.com/Haleth/Aurora/compare/8.2.0.1...8.2.0.2
 [8.2.0.1]: https://github.com/Haleth/Aurora/compare/8.2.0.0...8.2.0.1
 [8.2.0.0]: https://github.com/Haleth/Aurora/compare/8.1.5.2...8.2.0.0
 [8.1.5.2]: https://github.com/Haleth/Aurora/compare/8.1.5.1...8.1.5.2
