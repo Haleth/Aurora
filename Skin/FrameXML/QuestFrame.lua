@@ -163,7 +163,7 @@ function private.FrameXML.QuestFrame()
     Skin.UIPanelButtonTemplate(_G.QuestFrameAcceptButton)
     _G.QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
     if private.isPatch then
-        Skin.QuestScrollFrameTemplate(_G.QuestFrame.ScrollFrame)
+        Skin.QuestScrollFrameTemplate(_G.QuestFrameDetailPanel.ScrollFrame)
     else
         Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
     end
