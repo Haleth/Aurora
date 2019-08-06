@@ -467,7 +467,7 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------
     -- Categories --
     ----------------
-    Base.SetBackdrop(_G.AchievementFrameCategories, Color.frame)
+    _G.AchievementFrameCategories:SetBackdrop(nil)
     Skin.HybridScrollBarTemplate(_G.AchievementFrameCategoriesContainerScrollBar)
     _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameCategoriesContainer, "TOPRIGHT", 0, -12)
     _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameCategoriesContainer, "BOTTOMRIGHT", 0, 12)
@@ -477,7 +477,6 @@ function private.AddOns.Blizzard_AchievementUI()
     ------------------
     -- Achievements --
     ------------------
-    Base.SetBackdrop(_G.AchievementFrameAchievements, Color.frame)
     _G.AchievementFrameAchievementsBackground:Hide()
     select(3, _G.AchievementFrameAchievements:GetRegions()):Hide()
 
@@ -491,7 +490,6 @@ function private.AddOns.Blizzard_AchievementUI()
     -----------
     -- Stats --
     -----------
-    Base.SetBackdrop(_G.AchievementFrameStats, Color.frame)
     _G.AchievementFrameStatsBG:Hide()
     Skin.HybridScrollBarTemplate(_G.AchievementFrameStatsContainerScrollBar)
     _G.AchievementFrameStatsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameStatsContainer, "TOPRIGHT", 0, -12)
@@ -503,7 +501,6 @@ function private.AddOns.Blizzard_AchievementUI()
     -------------
     -- Summary --
     -------------
-    Base.SetBackdrop(_G.AchievementFrameSummary, Color.frame)
     _G.AchievementFrameSummaryBackground:Hide()
     _G.AchievementFrameSummary:GetChildren():Hide()
 
@@ -527,7 +524,6 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------
     -- Comparison --
     ----------------
-    Base.SetBackdrop(_G.AchievementFrameComparison, Color.frame)
     _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonSummaryFriend, "TOPLEFT")
     _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", _G.AchievementFrameComparisonSummaryFriend, "TOPRIGHT")
     _G.AchievementFrameComparisonHeader:SetHeight(private.FRAME_TITLE_HEIGHT * 2)
