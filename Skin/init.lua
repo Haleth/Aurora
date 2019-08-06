@@ -6,7 +6,7 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 0, 5
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 2 and tonumber(minor) >= 0)
+private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 2 and tonumber(minor) >= 5)
 
 private.uiScale = 1
 private.disabled = {
@@ -202,6 +202,11 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
                 if fileList[file] then
                     fileList[file]()
                 end
+            end
+
+            if not private.isPatch then
+                -- run deprecated files
+                private.FrameXML.ScrollOfResurrection()
             end
 
             -- Skin prior loaded AddOns

@@ -37,7 +37,9 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
             Frame.ClipFrame:SetPoint("TOPLEFT")
             Frame.ClipFrame:SetPoint("BOTTOMRIGHT")
 
-            Skin.GlowBoxFrame(Frame.FirstPowerLockedInHelpBox, "Left")
+            if not private.isPatch then
+                Skin.GlowBoxFrame(Frame.FirstPowerLockedInHelpBox, "Left")
+            end
         end
     end
 end

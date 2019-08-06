@@ -44,5 +44,7 @@ function private.AddOns.Blizzard_AzeriteRespecUI()
     ButtonFrame.ButtonBorder:Hide()
     ButtonFrame.ButtonBottomBorder:Hide()
 
-    Skin.GlowBoxFrame(AzeriteRespecFrame.HelpBox)
+    if not private.isPatch then
+        Skin.GlowBoxFrame(AzeriteRespecFrame.HelpBox)
+    end
 end

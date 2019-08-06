@@ -18,9 +18,11 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
         local isOffSpec = self.offSpecID ~= 0 and _G.SpellBookFrame.bookType == _G.BOOKTYPE_SPELL
         local slot, slotType = _G.SpellBook_GetSpellBookSlot(self)
         if slot then
-            if slotType == "FUTURESPELL" then
+            local _, _, spellID = _G.GetSpellBookItemName(slot, _G.SpellBookFrame.bookType)
+            local isDisabled = spellID and (private.isPatch and _G.C_SpellBook.IsSpellDisabled(spellID))
+            if slotType == "FUTURESPELL" or isDisabled then
                 local level = _G.GetSpellAvailableLevel(slot, _G.SpellBookFrame.bookType)
-                if _G.IsCharacterNewlyBoosted() or (level and level > _G.UnitLevel("player")) then
+                if _G.IsCharacterNewlyBoosted() or (level and level > _G.UnitLevel("player")) or isDisabled then
                     self.SpellName:SetTextColor(Color.grayLight:GetRGB())
                     self.SpellSubName:SetTextColor(Color.gray:GetRGB())
                     self.RequiredLevelString:SetTextColor(Color.gray:GetRGB())

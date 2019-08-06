@@ -12,7 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesList ]]
         Hook.CommunitiesListEntryMixin = {}
-        function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket)
+        function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket, isInviteFromFinder)
             if clubInfo and self._iconBorder then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
                 if isGuild then
@@ -143,6 +143,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.GuildMemberListDropDownMenuTemplate(Frame)
+            Skin.UIDropDownMenuTemplate(Frame)
+        end
+        function Skin.CommunityMemberListDropDownMenuTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
         end
     end
@@ -563,7 +566,11 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesSettingsDialog = _G.CommunitiesSettingsDialog
     _G.hooksecurefunc(CommunitiesSettingsDialog, "SetClubId", Hook.CommunitiesSettingsDialogMixin.SetClubId)
-    Base.SetBackdrop(CommunitiesSettingsDialog)
+    if private.isPatch then
+        Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog.BG)
+    else
+        Base.SetBackdrop(CommunitiesSettingsDialog)
+    end
 
     CommunitiesSettingsDialog.IconPreview:RemoveMaskTexture(CommunitiesSettingsDialog.CircleMask)
     CommunitiesSettingsDialog._iconBorder = Base.CropIcon(CommunitiesSettingsDialog.IconPreview, CommunitiesSettingsDialog)
@@ -655,20 +662,36 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.StreamDropDownMenuTemplate(CommunitiesFrame.StreamDropDownMenu)
     Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropDownMenu)
+    if private.isPatch then
+        Skin.CommunityMemberListDropDownMenuTemplate(CommunitiesFrame.CommunityMemberListDropDownMenu)
+    end
     Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropDownMenu)
     Skin.CommunitiesCalendarButtonTemplate(CommunitiesFrame.CommunitiesCalendarButton)
     Skin.CommunitiesMemberListFrameTemplate(CommunitiesFrame.MemberList)
+    if private.isPatch then
+        Skin.ClubFinderApplicantListFrameTemplate(CommunitiesFrame.ApplicantList)
+        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.CommunityAndGuildFinderFrame)
+    end
     Skin.CommunitiesChatTemplate(CommunitiesFrame.Chat)
     Skin.CommunitiesChatEditBoxTemplate(CommunitiesFrame.ChatEditBox)
 
     Skin.CommunitiesInvitationFrameTemplate(CommunitiesFrame.InvitationFrame)
+    if private.isPatch then
+        Skin.ClubFinderInvitationsFrameTemplate(CommunitiesFrame.ClubFinderInvitationFrame)
+    end
     Skin.CommunitiesTicketFrameTemplate(CommunitiesFrame.TicketFrame)
-    Skin.CommunitiesGuildFinderFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+    if not private.isPatch then
+        Skin.CommunitiesGuildFinderFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+    end
     Skin.GuildBenefitsFrameTemplate(CommunitiesFrame.GuildBenefitsFrame)
     Skin.GuildDetailsFrameTemplate(CommunitiesFrame.GuildDetailsFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
     Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
+    if private.isPatch then
+        Skin.ClubsRecruitmentDialogTemplate(CommunitiesFrame.RecruitmentDialog)
+    end
     Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
     Skin.CommunitiesInviteButtonTemplate(CommunitiesFrame.InviteButton)
     Skin.CommunitiesControlFrameTemplate(CommunitiesFrame.CommunitiesControlFrame)

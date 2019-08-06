@@ -162,7 +162,11 @@ function private.FrameXML.QuestFrame()
     _G.QuestFrameDeclineButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(_G.QuestFrameAcceptButton)
     _G.QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
-    Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
+    if private.isPatch then
+        Skin.QuestScrollFrameTemplate(_G.QuestFrame.ScrollFrame)
+    else
+        Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
+    end
 
 
     Skin.QuestFramePanelTemplate(_G.QuestFrameGreetingPanel)

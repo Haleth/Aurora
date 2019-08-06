@@ -533,8 +533,10 @@ function private.AddOns.Blizzard_Collections()
         _G.CollectionsJournalTab5,
     })
 
-    Skin.GlowBoxFrame(CollectionsJournal.HeirloomTabHelpBox)
-    Skin.GlowBoxFrame(CollectionsJournal.WardrobeTabHelpBox)
+    if not private.isPatch then
+        Skin.GlowBoxFrame(CollectionsJournal.HeirloomTabHelpBox)
+        Skin.GlowBoxFrame(CollectionsJournal.WardrobeTabHelpBox)
+    end
 
 
     ----====####$$$$%%%%$$$$####====----
@@ -718,7 +720,9 @@ function private.AddOns.Blizzard_Collections()
     HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
 
     Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
-    Skin.GlowBoxFrame(HeirloomsJournal.UpgradeLevelHelpBox)
+    if not private.isPatch then
+        Skin.GlowBoxFrame(HeirloomsJournal.UpgradeLevelHelpBox)
+    end
 
 
     ----====####$$$$%%%%%$$$$####====----

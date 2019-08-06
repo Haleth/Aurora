@@ -61,6 +61,7 @@ local FrameXML = {
 
     "ObjectAPI_ContinuableContainer",
     "ObjectAPI_ItemLocation",
+    "ObjectAPI_AsyncCallbackSystem",
     "ObjectAPI_Item",
     "ObjectAPI_Spell",
     "ObjectAPI_PlayerLocation",
@@ -79,6 +80,7 @@ local FrameXML = {
     "CommunitiesUtil",
     "ItemUtil",
     "ItemDisplay",
+    "HelpTip",
     "CurrencyContainer",
     -- IME needs to be loaded after UIParent
     "SharedXML.IME",
@@ -114,6 +116,7 @@ local FrameXML = {
     "ItemButtonTemplate",
     "NavigationBar",
     "SharedXML.HybridScrollFrame",
+    "SharedXML.ScrollList",
     "GameMenuFrame",
     "CharacterFrameTemplates",
     "TextStatusBar",
@@ -177,6 +180,7 @@ local FrameXML = {
     "CharacterFrame",
     "PaperDollFrame",
     "ReputationFrame",
+    "QuestIndicators",
     "QuestFrame",
     "QuestPOI",
     "QuestInfo",
@@ -187,7 +191,6 @@ local FrameXML = {
     "ItemTextFrame",
     "TaxiFrame",
     "BankFrame",
-    "ScrollOfResurrection",
     "RoleSelectionTemplate",
     "ItemRef",
     "SocialQueue",
@@ -275,6 +278,7 @@ local FrameXML = {
     "QuestChoiceFrameMixin",
     "AzeriteEmpoweredItemDataSource",
     "GuildUtil",
+    "QuestSession",
 
     -- Save off whatever we need available unmodified.
     "SecureCapsule",
