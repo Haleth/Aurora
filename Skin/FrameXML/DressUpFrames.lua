@@ -4,43 +4,53 @@ local _, private = ...
 -- luacheck: globals select
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
-local Skin = private.Aurora.Skin
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+local Util = Aurora.Util
 
 function private.FrameXML.DressUpFrames()
-    -- SideDressUp
-    for i = 1, 4 do
-        select(i, _G.SideDressUpFrame:GetRegions()):Hide()
+    -----------------
+    -- SideDressUp --
+    -----------------
+
+    --[[ Used with:
+        - AuctionUI
+        - VoidStorageUI
+    ]]
+    local SideDressUpFrame = _G.SideDressUpFrame
+    Base.SetBackdrop(SideDressUpFrame)
+
+    local top, bottom, left, right = _G.SideDressUpFrame:GetRegions()
+    top:Hide()
+    bottom:Hide()
+    left:Hide()
+    right:Hide()
+
+    if private.isPatch then
+        Skin.UIPanelButtonTemplate(SideDressUpFrame.ResetButton)
+        Skin.UIPanelCloseButton(_G.SideDressUpFrameCloseButton)
+        select(5, _G.SideDressUpFrameCloseButton:GetRegions()):Hide()
+    else
+        Skin.UIPanelButtonTemplate(_G.SideDressUpModel.ResetButton)
+        Skin.UIPanelCloseButton(_G.SideDressUpModelCloseButton)
+        select(5, _G.SideDressUpModelCloseButton:GetRegions()):Hide()
     end
-    select(5, _G.SideDressUpModelCloseButton:GetRegions()):Hide()
-
-    _G.SideDressUpModel:HookScript("OnShow", function(self)
-        self:ClearAllPoints()
-        self:SetPoint("LEFT", self:GetParent():GetParent(), "RIGHT", 1, 0)
-    end)
-
-    F.Reskin(_G.SideDressUpModelResetButton)
-    F.ReskinClose(_G.SideDressUpModelCloseButton)
-
-    _G.SideDressUpModel.bg = _G.CreateFrame("Frame", nil, _G.SideDressUpModel)
-    _G.SideDressUpModel.bg:SetPoint("TOPLEFT", 0, 1)
-    _G.SideDressUpModel.bg:SetPoint("BOTTOMRIGHT", 1, -1)
-    _G.SideDressUpModel.bg:SetFrameLevel(_G.SideDressUpModel:GetFrameLevel()-1)
-    F.CreateBD(_G.SideDressUpModel.bg)
 
 
-    -- Dressup Frame
+    ------------------
+    -- DressUpFrame --
+    ------------------
     local DressUpFrame = _G.DressUpFrame
-    F.ReskinPortraitFrame(DressUpFrame, true)
-
-    F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
-    F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
-
+    Skin.ButtonFrameTemplate(DressUpFrame)
+    Skin.WardrobeOutfitDropDownTemplate(DressUpFrame.OutfitDropDown)
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
-
-    F.Reskin(_G.DressUpFrameCancelButton)
-    F.Reskin(_G.DressUpFrameResetButton)
-    _G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
+    Skin.UIPanelButtonTemplate(_G.DressUpFrameCancelButton)
+    Skin.UIPanelButtonTemplate(DressUpFrame.ResetButton)
+    Util.PositionRelative("BOTTOMRIGHT", DressUpFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
+        _G.DressUpFrameCancelButton,
+        DressUpFrame.ResetButton,
+    })
 
     DressUpFrame.ModelBackground:SetDrawLayer("BACKGROUND", 3)
     DressUpFrame.ModelBackground:ClearAllPoints()
