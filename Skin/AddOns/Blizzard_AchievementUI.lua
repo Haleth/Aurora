@@ -610,7 +610,7 @@ function private.AddOns.Blizzard_AchievementUI()
     local searchBox = AchievementFrame.searchBox
     Skin.SearchBoxTemplate(searchBox)
     searchBox:ClearAllPoints()
-    searchBox:SetPoint("TOPRIGHT", -148, 5)
+    searchBox:SetPoint("TOPRIGHT", -148, 2)
 
     local prevContainer = AchievementFrame.searchPreviewContainer
     prevContainer:DisableDrawLayer("OVERLAY")

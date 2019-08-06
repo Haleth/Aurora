@@ -18,13 +18,14 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         EditBox.Right:Hide()
         EditBox.Middle:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, EditBox)
+        Base.SetBackdrop(EditBox, Color.frame)
+        EditBox:SetBackdropBorderColor(Color.button)
+
+        local bg = EditBox:GetBackdropTexture("bg")
+        bg:ClearAllPoints()
         bg:SetHeight(20)
         bg:SetPoint("LEFT", -5, 0)
         bg:SetPoint("RIGHT", 0, 0)
-        bg:SetFrameLevel(EditBox:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.frame)
-        EditBox._auroraBG = bg
     end
 
     function Skin.UIPanelScrollBarButton(Button)
