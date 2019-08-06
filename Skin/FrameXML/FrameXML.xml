@@ -35,6 +35,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="GuildInviteFrame.lua"/>
     <Script file="GuildRegistrarFrame.lua"/>
     <Script file="HelpFrame.lua"/>
+    <Script file="HelpTip.lua"/>
     <Script file="InterfaceOptionsFrame.lua"/>
     <Script file="InterfaceOptionsPanels.lua"/>
     <Script file="ItemButtonTemplate.lua"/>

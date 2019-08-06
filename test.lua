@@ -27,11 +27,12 @@ item:ContinueOnItemLoad(function(...)
     }
 end)
 
-local test
+local test, container
 function commands.test()
     local AceConfig = _G.LibStub("AceConfig-3.0", true)
     if AceConfig then
         if not test then
+            container = _G.LibStub("AceGUI-3.0"):Create("Frame")
             test = {
                 type = "group",
                 args = {}
@@ -502,6 +503,94 @@ function commands.test()
             end
 
             do -- Popup Frames
+                local helpTips do
+                    local buttonStyleType do
+                        buttonStyleType = {}
+                        for name, index in next, _G.HelpTip.ButtonStyle do
+                            buttonStyleType[index] = name
+                        end
+                    end
+                    local targetPointType do
+                        targetPointType = {}
+                        for name, index in next, _G.HelpTip.Point do
+                            targetPointType[index] = name
+                        end
+                    end
+                    local alignmentType do
+                        alignmentType = {}
+                        for name, index in next, _G.HelpTip.Alignment do
+                            alignmentType[index] = name
+                        end
+                    end
+
+                    local textFormat = "%s-%s-%s"
+                    local infoTable = {
+                        text = "text",                                   -- also acts as a key for various API, MUST BE SET
+                        textColor = _G.HIGHLIGHT_FONT_COLOR,
+                        textJustifyH = "LEFT",
+                        buttonStyle = _G.HelpTip.ButtonStyle.None,  -- button to close the helptip, or no button at all
+                        targetPoint = _G.HelpTip.Point.TopEdgeCenter,   -- where at the parent the helptip should point
+                        alignment = _G.HelpTip.Alignment.Center,   -- alignment of the helptip relative to the parent (basically where the arrow is located)
+                        hideArrow = false,                      -- whether to hide the arrow
+                        offsetX = 0,
+                        offsetY = 0,
+                    }
+                    helpTips = {
+                        name = "Help Tips",
+                        type = "group",
+                        args = {
+                            buttonStyle = {
+                                name = "buttonStyle",
+                                type = "select",
+                                values = buttonStyleType,
+                                get = function()
+                                    return infoTable.buttonStyle
+                                end,
+                                set = function(info, value)
+                                    infoTable.buttonStyle = value
+                                end,
+                                order = 1,
+                            },
+                            targetPoint = {
+                                name = "targetPoint",
+                                type = "select",
+                                values = targetPointType,
+                                get = function()
+                                    return infoTable.targetPoint
+                                end,
+                                set = function(info, value)
+                                    infoTable.targetPoint = value
+                                end,
+                                order = 1,
+                            },
+                            alignment = {
+                                name = "alignment",
+                                type = "select",
+                                values = alignmentType,
+                                get = function()
+                                    return infoTable.alignment
+                                end,
+                                set = function(info, value)
+                                    infoTable.alignment = value
+                                end,
+                                order = 1,
+                            },
+                            helpTip = {
+                                name = "helpTip",
+                                desc = "HelpTip:Show()",
+                                type = "execute",
+                                func = function(self, ...)
+                                    local text = textFormat:format(targetPointType[infoTable.targetPoint], alignmentType[infoTable.alignment], buttonStyleType[infoTable.buttonStyle])
+                                    if not _G.HelpTip:IsShowing(container.frame, text) then
+                                        local info = CopyTable(infoTable)
+                                        info.text = text
+                                        _G.HelpTip:Show(container.frame, info)
+                                    end
+                                end,
+                            }
+                        }
+                    }
+                end
                 local staticPopups do
                     local addedFrameType, addedFrame = {
                         "none",
@@ -721,6 +810,7 @@ function commands.test()
                     name = "Popup Frames",
                     type = "group",
                     args = {
+                        helpTips = helpTips,
                         staticPopups = staticPopups,
                         lfgPopups = lfgPopups,
                     }
@@ -877,7 +967,7 @@ function commands.test()
 
 
         _G.C_Timer.After(0, function()
-            _G.LibStub("AceConfigDialog-3.0"):Open("test")
+            _G.LibStub("AceConfigDialog-3.0"):Open("test", container)
         end)
     else
         _G.print("AceConfig does not exist.")
