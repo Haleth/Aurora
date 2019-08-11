@@ -1,4 +1,11 @@
-﻿## [8.2.0.2] - 2019-07-28 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * Updates for 8.2.5.
+
+
+
+## [8.2.0.2] - 2019-07-28 ##
 ### Changed ###
 
   * Updated LFG queue status skin.
