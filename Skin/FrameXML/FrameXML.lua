@@ -67,6 +67,7 @@ local FrameXML = {
     "ObjectAPI_PlayerLocation",
 
     -- add new modules below here
+    "GlobalCallbackRegistry",
     "WorldFrame",
     "UIParent",
     "QuestUtils",
@@ -180,7 +181,6 @@ local FrameXML = {
     "CharacterFrame",
     "PaperDollFrame",
     "ReputationFrame",
-    "QuestIndicators",
     "QuestFrame",
     "QuestPOI",
     "QuestInfo",

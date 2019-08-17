@@ -671,7 +671,7 @@ function private.AddOns.Blizzard_Communities()
     if private.isPatch then
         Skin.ClubFinderApplicantListFrameTemplate(CommunitiesFrame.ApplicantList)
         Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.GuildFinderFrame)
-        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.CommunityAndGuildFinderFrame)
+        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.CommunityFinderFrame)
     end
     Skin.CommunitiesChatTemplate(CommunitiesFrame.Chat)
     Skin.CommunitiesChatEditBoxTemplate(CommunitiesFrame.ChatEditBox)
