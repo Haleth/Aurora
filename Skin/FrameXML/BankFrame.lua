@@ -48,7 +48,7 @@ do --[[ FrameXML\BankFrame.xml ]]
     end
     function Skin.BankItemButtonBagTemplate(ItemButton)
         Skin.FrameTypeItemButton(ItemButton)
-        Base.CropIcon(ItemButton:GetCheckedTexture())
+        Base.CropIcon(ItemButton.SlotHighlightTexture)
     end
     Skin.ReagentBankItemButtonGenericTemplate = Skin.BankItemButtonGenericTemplate
 
