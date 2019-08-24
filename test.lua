@@ -503,7 +503,8 @@ function commands.test()
             end
 
             do -- Popup Frames
-                local helpTips do
+                local helpTips
+                if _G.HelpTip then
                     local buttonStyleType do
                         buttonStyleType = {}
                         for name, index in next, _G.HelpTip.ButtonStyle do

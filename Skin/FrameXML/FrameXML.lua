@@ -31,6 +31,7 @@ local FrameXML = {
     "SharedXML.CustomBindingButtonMixin",
     "SharedXML.PixelUtil",
     "SharedXML.TableBuilder",
+    "SharedXML.NewFeatureLabel",
     "MixinUtil",
 
     -- intrinsics

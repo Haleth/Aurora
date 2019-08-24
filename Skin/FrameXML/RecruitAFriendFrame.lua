@@ -7,6 +7,7 @@ local _, private = ...
 local F = _G.unpack(private.Aurora)
 
 function private.FrameXML.RecruitAFriendFrame()
+    if private.isPatch then return end
     local RecruitAFriendFrame = _G.RecruitAFriendFrame
     local RecruitAFriendSentFrame = _G.RecruitAFriendSentFrame
 
