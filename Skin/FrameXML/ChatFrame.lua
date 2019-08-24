@@ -5,7 +5,6 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -31,9 +30,9 @@ end
 
 do --[[ FrameXML\ChatFrame.xml ]]
     function Skin.ChatFrameEditBoxTemplate(EditBox)
-        local name = EditBox:GetName()
-        Base.SetBackdrop(EditBox, Color.frame, 0.3)
+        Skin.FrameTypeEditBox(EditBox)
 
+        local name = EditBox:GetName()
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
         _G[name.."Mid"]:Hide()

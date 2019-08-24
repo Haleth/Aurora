@@ -14,12 +14,11 @@ local Color = Aurora.Color
 
 do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     function Skin.InputBoxTemplate(EditBox)
+        Skin.FrameTypeEditBox(EditBox)
+
         EditBox.Left:Hide()
         EditBox.Right:Hide()
         EditBox.Middle:Hide()
-
-        Base.SetBackdrop(EditBox, Color.frame)
-        EditBox:SetBackdropBorderColor(Color.button)
 
         local bg = EditBox:GetBackdropTexture("bg")
         bg:ClearAllPoints()

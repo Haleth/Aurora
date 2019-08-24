@@ -7,7 +7,6 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
 
 --do --[[ FrameXML\StaticPopupSpecial.lua ]]
 --end
@@ -31,8 +30,7 @@ do --[[ FrameXML\StaticPopupSpecial.xml ]]
 
             bg = EditBox.Middle
         })
-        Base.SetBackdrop(EditBox, Color.frame)
-        EditBox:SetBackdropBorderColor(Color.button)
+        Skin.FrameTypeEditBox(EditBox)
 
         local scrollframe = EditBox.ScrollFrame
         Skin.UIPanelScrollFrameTemplate(scrollframe)

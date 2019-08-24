@@ -135,7 +135,8 @@ function private.OnLoad()
     end
 
     -- Create API hooks
-    local Base, Hook = Aurora.Base, Aurora.Hook
+    local Base = Aurora.Base
+    local Hook, Skin = Aurora.Hook, Aurora.Skin
     function Hook.GameTooltip_SetBackdropStyle(self, style)
         if not self.IsEmbedded then
             Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
@@ -187,6 +188,8 @@ function private.OnLoad()
             EditBox:SetPoint("TOPLEFT", 57, -28)
         else
             EditBox = _G.FriendsFrameBroadcastInput
+            Skin.FrameTypeEditBox(EditBox)
+
             EditBox:ClearAllPoints()
             EditBox:SetSize(245, 29)
             EditBox:SetPoint("TOPLEFT", 54, -26)
@@ -196,9 +199,6 @@ function private.OnLoad()
             _G.FriendsFrameBroadcastInputMiddle:Hide()
             _G.FriendsFrameBroadcastInputFill:SetPoint("LEFT", 20, 0)
             EditBox.icon:SetPoint("LEFT", 3, 0)
-
-            Base.SetBackdrop(EditBox, Color.frame)
-            EditBox:SetBackdropBorderColor(Color.button)
 
             local stop
             _G.hooksecurefunc(EditBox, "SetTextInsets", function(self, left, right, top, bottom)

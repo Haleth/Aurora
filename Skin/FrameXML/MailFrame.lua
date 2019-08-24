@@ -178,6 +178,7 @@ do --[[ FrameXML\MailFrame.xml ]]
 
     --[[ Fake template ]]--
     function Skin.SendMailInputBox(EditBox)
+        Skin.FrameTypeEditBox(EditBox)
         EditBox:SetHeight(22)
 
         local name = EditBox:GetName()
@@ -185,11 +186,9 @@ do --[[ FrameXML\MailFrame.xml ]]
         _G[name.."Middle"]:Hide()
         _G[name.."Right"]:Hide()
 
-        local bg = _G.CreateFrame("Frame", nil, EditBox)
+        local bg = EditBox:GetBackdropTexture("bg")
         bg:SetPoint("TOPLEFT", -8, -1)
         bg:SetPoint("BOTTOMRIGHT", 8, 1)
-        bg:SetFrameLevel(EditBox:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.frame)
     end
 end
 

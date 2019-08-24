@@ -58,12 +58,12 @@ function private.FrameXML.WardrobeOutfits()
     Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
 
     local EditBox = WardrobeOutfitEditFrame.EditBox
+    Skin.FrameTypeEditBox(EditBox)
+
     EditBox.LeftTexture:Hide()
     EditBox.RightTexture:Hide()
     EditBox.MiddleTexture:Hide()
 
-    Base.SetBackdrop(EditBox, Color.frame)
-    EditBox:SetBackdropBorderColor(Color.button)
     local bg = EditBox:GetBackdropTexture("bg")
     bg:SetPoint("TOPLEFT", -5, -3)
     bg:SetPoint("BOTTOMRIGHT", 5, 3)

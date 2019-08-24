@@ -166,15 +166,14 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.CommunitiesChatEditBoxTemplate(EditBox)
+            Skin.FrameTypeEditBox(EditBox)
+            local bg = EditBox:GetBackdropTexture("bg")
+            bg:SetPoint("TOPLEFT", -5, -5)
+            bg:SetPoint("BOTTOMRIGHT", 5, 5)
+
             EditBox.Left:Hide()
             EditBox.Right:Hide()
             EditBox.Mid:Hide()
-
-            local bd = _G.CreateFrame("Frame", nil, EditBox)
-            bd:SetPoint("TOPLEFT", -5, -5)
-            bd:SetPoint("BOTTOMRIGHT", 5, 5)
-            bd:SetFrameLevel(EditBox:GetFrameLevel())
-            Base.SetBackdrop(bd, Color.frame, 0.5)
         end
     end
     do --[[ CommunitiesInvitationFrame ]]

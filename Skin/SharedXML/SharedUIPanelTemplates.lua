@@ -204,6 +204,12 @@ do -- Basic frame type skins
             end
         end
     end
+    do -- EditBox
+        function Skin.FrameTypeEditBox(Frame)
+            Base.SetBackdrop(Frame, Color.frame)
+            Frame:SetBackdropBorderColor(Color.button)
+        end
+    end
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.lua ]]

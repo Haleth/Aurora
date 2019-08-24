@@ -129,8 +129,7 @@ function private.FrameXML.FriendsFrame()
 
             bg = EditBox.MiddleBorder
         })
-        Base.SetBackdrop(EditBox, Color.frame)
-        EditBox:SetBackdropBorderColor(Color.button)
+        Skin.FrameTypeEditBox(EditBox)
 
         local bg = EditBox:GetBackdropTexture("bg")
         bg:ClearAllPoints()
@@ -260,11 +259,10 @@ function private.FrameXML.FriendsFrame()
 
     Skin.UIPanelInfoButton(_G.AddFriendEntryFrameInfoButton)
     do -- AddFriendNameEditBox
+        Skin.FrameTypeEditBox(_G.AddFriendNameEditBox)
         _G.AddFriendNameEditBoxLeft:Hide()
         _G.AddFriendNameEditBoxRight:Hide()
         _G.AddFriendNameEditBoxMiddle:Hide()
-        Base.SetBackdrop(_G.AddFriendNameEditBox, Color.frame)
-        _G.AddFriendNameEditBox:SetBackdropBorderColor(Color.button)
     end
     Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
     Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
