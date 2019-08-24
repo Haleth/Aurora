@@ -148,6 +148,22 @@ do -- BlizzWTF: These are not templates, but they should be
 end
 
 do -- Basic frame type skins
+    do -- Button
+        local disabledColor = Color.Lightness(Color.button, -0.3)
+        local function Hook_Enable(self)
+            Base.SetBackdrop(self, Color.button)
+        end
+        local function Hook_Disable(self)
+            Base.SetBackdrop(self, disabledColor)
+        end
+        function Skin.FrameTypeButton(Frame)
+            _G.hooksecurefunc(Frame, "Enable", Hook_Enable)
+            _G.hooksecurefunc(Frame, "Disable", Hook_Disable)
+
+            Base.SetBackdrop(Frame, Color.button)
+            Base.SetHighlight(Frame, "backdrop")
+        end
+    end
     do -- StatusBar
         local atlasColors = {
             ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),

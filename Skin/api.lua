@@ -423,7 +423,7 @@ addonName.
             end
         end
         local function OnLeave(button, isBackground)
-            if button._lockHighlight then return end
+            if button._lockHighlight or not button:IsEnabled() then return end
             if isBackground then
                 Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             else
