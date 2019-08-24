@@ -172,6 +172,67 @@ function private.OnLoad()
             end
         end)
     end)
+    _G.hooksecurefunc(private.FrameXML, "FriendsFrame", function()
+        local BNetFrame = _G.FriendsFrameBattlenetFrame
+        BNetFrame.Tag:SetParent(_G.FriendsFrame)
+        BNetFrame.Tag:SetAllPoints(_G.FriendsFrame.TitleText)
+
+        local BroadcastFrame = BNetFrame.BroadcastFrame
+        local EditBox
+        if private.isPatch then
+            EditBox = BroadcastFrame.EditBox
+            EditBox:SetParent(_G.FriendsFrame)
+            EditBox:ClearAllPoints()
+            EditBox:SetSize(239, 25)
+            EditBox:SetPoint("TOPLEFT", 57, -28)
+        else
+            EditBox = _G.FriendsFrameBroadcastInput
+            EditBox:ClearAllPoints()
+            EditBox:SetSize(245, 29)
+            EditBox:SetPoint("TOPLEFT", 54, -26)
+
+            _G.FriendsFrameBroadcastInputLeft:Hide()
+            _G.FriendsFrameBroadcastInputRight:Hide()
+            _G.FriendsFrameBroadcastInputMiddle:Hide()
+            _G.FriendsFrameBroadcastInputFill:SetPoint("LEFT", 20, 0)
+            EditBox.icon:SetPoint("LEFT", 3, 0)
+
+            Base.SetBackdrop(EditBox, Color.frame)
+            EditBox:SetBackdropBorderColor(Color.button)
+
+            local stop
+            _G.hooksecurefunc(EditBox, "SetTextInsets", function(self, left, right, top, bottom)
+                if stop then return end
+                stop = true
+                self:SetTextInsets(20, right, 0, 0)
+                stop = nil
+            end)
+        end
+
+        _G.hooksecurefunc("FriendsFrame_Update", function()
+            local selectedTab = _G.PanelTemplates_GetSelectedTab(_G.FriendsFrame) or _G.FRIEND_TAB_FRIENDS
+            local isFriendsTab = selectedTab == _G.FRIEND_TAB_FRIENDS
+
+            _G.FriendsFrame.TitleText:SetShown(not isFriendsTab)
+            BNetFrame.Tag:SetShown(isFriendsTab)
+            EditBox:SetShown(_G.BNConnected() and isFriendsTab)
+        end)
+        _G.hooksecurefunc("FriendsFrame_CheckBattlenetStatus", function()
+            if _G.BNFeaturesEnabled() then
+                if _G.BNConnected() then
+                    BNetFrame:Hide()
+                    EditBox:Show()
+                    if private.isPatch then
+                        BroadcastFrame:UpdateBroadcast()
+                    else
+                        _G.FriendsFrameBroadcastInput_UpdateDisplay()
+                    end
+                else
+                    EditBox:Hide()
+                end
+            end
+        end)
+    end)
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags

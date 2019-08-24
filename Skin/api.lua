@@ -423,6 +423,7 @@ addonName.
             end
         end
         local function OnLeave(button, isBackground)
+            if button._lockHighlight then return end
             if isBackground then
                 Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             else
@@ -442,14 +443,27 @@ addonName.
             else
                 r, g, b, a = button._auroraHighlight[1]:GetVertexColor()
             end
-
             button._returnColor = Color.Create(r, g, b, a)
+
+            enter = enter or OnEnter
             button:HookScript("OnEnter", function(self)
-                (enter or OnEnter)(self, isBackdrop)
+                enter(self, isBackdrop)
             end)
+            leave = leave or OnLeave
             button:HookScript("OnLeave", function(self)
-                (leave or OnLeave)(self, isBackdrop)
+                leave(self, isBackdrop)
             end)
+
+            if button.LockHighlight then
+                _G.hooksecurefunc(button, "LockHighlight", function(self, ...)
+                    button._lockHighlight = true
+                    enter(self, isBackdrop)
+                end)
+                _G.hooksecurefunc(button, "UnlockHighlight", function(self, ...)
+                    button._lockHighlight = nil
+                    leave(self, isBackdrop)
+                end)
+            end
         end
     end
 

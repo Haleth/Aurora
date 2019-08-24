@@ -817,6 +817,46 @@ function commands.test()
                 }
             end
 
+            do -- Battle.net
+                local isConnected = true
+                function _G.BNConnected()
+                    return isConnected
+                end
+                local featuresEnabled = true
+                function _G.BNFeaturesEnabled()
+                    return featuresEnabled
+                end
+
+                test.args.bnet = {
+                    name = "Battle.net",
+                    type = "group",
+                    args = {
+                        isConnected = {
+                            name = "isConnected",
+                            desc = "BNConnected",
+                            type = "toggle",
+                            get = function() return isConnected end,
+                            set = function(info, value)
+                                isConnected = value
+                                _G.FriendsFrame_CheckBattlenetStatus()
+                            end,
+                            order = 1,
+                        },
+                        featuresEnabled = {
+                            name = "featuresEnabled",
+                            desc = "BNFeaturesEnabled",
+                            type = "toggle",
+                            get = function() return featuresEnabled end,
+                            set = function(info, value)
+                                featuresEnabled = value
+                                _G.FriendsFrame_CheckBattlenetStatus()
+                            end,
+                            order = 1,
+                        },
+                    }
+                }
+            end
+
             do -- Misc
                 function _G.GetNumBattlefieldScores()
                     return 20

@@ -6,13 +6,67 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Skin = Aurora.Skin
-local F, C = _G.unpack(private.Aurora)
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
---do --[[ FrameXML\FriendsFrame.lua ]]
---end
+do --[[ FrameXML\FriendsFrame.lua ]]
+    Hook.FriendsBroadcastFrameMixin = {}
+    function Hook.FriendsBroadcastFrameMixin:ShowFrame()
+        self.BroadcastButton:LockHighlight()
+    end
+    function Hook.FriendsBroadcastFrameMixin:HideFrame()
+        self.BroadcastButton:UnlockHighlight()
+    end
+
+    function Hook.FriendsFrame_UpdateFriendButton(button)
+        local gameIcon = button.gameIcon
+        gameIcon._bg:SetShown(gameIcon:IsShown())
+    end
+end
 
 do --[[ FrameXML\FriendsFrame.xml ]]
+    function Skin.FriendsTabTemplate(Button)
+        Skin.TabButtonTemplate(Button)
+    end
+    function Skin.FriendsFrameSlider(Slider)
+        Skin.HybridScrollBarTrimTemplate(Slider)
+    end
+    function Skin.FriendsFrameScrollFrame(ScrollFrame)
+        Skin.FriendsFrameSlider(ScrollFrame.scrollBar)
+    end
+    function Skin.FriendsFrameHeaderTemplate(Frame)
+    end
+    function Skin.FriendsFrameButtonTemplate(Button)
+        Skin.UIPanelButtonTemplate(Button)
+    end
+    function Skin.FriendsListButtonTemplate(Button)
+        local gameIcon = Button.gameIcon
+        gameIcon._bg = Base.CropIcon(Button.gameIcon, Button)
+        gameIcon:SetSize(22, 22)
+        gameIcon:SetTexCoord(0.15625, 0.84375, 0.15625, 0.84375)
+        gameIcon:SetPoint("TOPRIGHT", -21, -6)
+
+        local travelPassButton = Button.travelPassButton
+        Skin.FrameTypeButton(travelPassButton)
+
+        travelPassButton:SetSize(20, 32)
+        travelPassButton:SetNormalTexture("")
+        travelPassButton:SetPushedTexture("")
+        travelPassButton:SetDisabledTexture("")
+        travelPassButton:SetHighlightTexture("")
+
+        travelPassButton._tex = travelPassButton:CreateTexture(nil, "OVERLAY", nil, 7)
+        travelPassButton._tex:SetTexture([[Interface\FriendsFrame\PlusManz-PlusManz]])
+        travelPassButton._tex:SetPoint("TOPRIGHT", 1, -4)
+        travelPassButton._tex:SetSize(22, 22)
+        travelPassButton._tex:SetAlpha(0.5)
+    end
+    function Skin.WhoFrameColumnHeaderTemplate(Button)
+        Button.Left:Hide()
+        Button.Right:Hide()
+        Button.Middle:Hide()
+        Button.HighlightTexture:SetAlpha(0)
+    end
     function Skin.FriendsFrameTabTemplate(Button)
         Skin.CharacterFrameTabButtonTemplate(Button)
         Button._auroraTabResize = true
@@ -20,234 +74,235 @@ do --[[ FrameXML\FriendsFrame.xml ]]
 end
 
 function private.FrameXML.FriendsFrame()
+    _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", Hook.FriendsFrame_UpdateFriendButton)
+
+    local FriendsFrame = _G.FriendsFrame
+    Skin.ButtonFrameTemplate(FriendsFrame)
+    _G.FriendsFrameIcon:Hide()
+
+    ----------------------
+    -- FriendsTabHeader --
+    ----------------------
+    local FriendsTabHeader = FriendsFrame.FriendsTabHeader
+    local BNetFrame = _G.FriendsFrameBattlenetFrame
+    BNetFrame:GetRegions():Hide() -- BattleTag background
+    BNetFrame:SetWidth(245)
+    BNetFrame:SetPoint("TOPLEFT", 54, -26)
+    Base.SetBackdrop(BNetFrame, _G.FRIENDS_BNET_BACKGROUND_COLOR, Color.frame.a)
+
+    do -- BNetFrame.BroadcastButton
+        local Button = BNetFrame.BroadcastButton
+        Button:GetNormalTexture():SetAlpha(0)
+        Button:GetPushedTexture():SetAlpha(0)
+        Button:SetHighlightTexture("")
+        local icon = Button:CreateTexture(nil, "ARTWORK")
+        icon:SetTexture([[Interface\FriendsFrame\BroadcastIcon]])
+        icon:SetSize(16, 16)
+        icon:SetPoint("CENTER")
+
+        Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        bg:SetPoint("TOPLEFT", 5, -5)
+        bg:SetPoint("BOTTOMRIGHT", -5, 5)
+        Base.SetHighlight(Button, "backdrop")
+    end
+
+    Skin.UIPanelInfoButton(BNetFrame.UnavailableInfoButton)
+
+    local BroadcastFrame = BNetFrame.BroadcastFrame
+    Skin.DialogBorderOpaqueTemplate(BroadcastFrame.Border)
+    BroadcastFrame:SetPoint("TOPLEFT", -55, -24)
+
+    do -- BroadcastFrame.EditBox
+        local EditBox = private.isPatch and BroadcastFrame.EditBox or BroadcastFrame.ScrollFrame
+        Base.CreateBackdrop(EditBox, private.backdrop, {
+            tl = EditBox.TopLeftBorder,
+            tr = EditBox.TopRightBorder,
+            t = EditBox.TopBorder,
+
+            bl = EditBox.BottomLeftBorder,
+            br = EditBox.BottomRightBorder,
+            b = EditBox.BottomBorder,
+
+            l = EditBox.LeftBorder,
+            r = EditBox.RightBorder,
+
+            bg = EditBox.MiddleBorder
+        })
+        Base.SetBackdrop(EditBox, Color.frame)
+        EditBox:SetBackdropBorderColor(Color.button)
+
+        local bg = EditBox:GetBackdropTexture("bg")
+        bg:ClearAllPoints()
+        bg:SetPoint("TOPLEFT", -3, 2)
+        bg:SetPoint("BOTTOMRIGHT", 3, -2)
+    end
+
+
+    if private.isPatch then
+        Skin.FriendsFrameButtonTemplate(BroadcastFrame.UpdateButton)
+        Skin.FriendsFrameButtonTemplate(BroadcastFrame.CancelButton)
+    else
+        Skin.FriendsFrameButtonTemplate(BroadcastFrame.ScrollFrame.UpdateButton)
+        Skin.FriendsFrameButtonTemplate(BroadcastFrame.ScrollFrame.CancelButton)
+    end
+
+    Skin.DialogBorderTemplate(BNetFrame.UnavailableInfoFrame)
+    local _, blizzIcon = select(11, BNetFrame.UnavailableInfoFrame:GetRegions())
+    blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
+
+    Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropDown)
+    _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
+    if private.isPatch then
+        Skin.FriendsTabTemplate(FriendsTabHeader.Tab1)
+        Skin.FriendsTabTemplate(FriendsTabHeader.Tab2)
+        Skin.FriendsTabTemplate(FriendsTabHeader.Tab3)
+    else
+        Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab1)
+        Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab2)
+        Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab3)
+    end
+
+
+    ----------------------
+    -- FriendsListFrame --
+    ----------------------
+    local FriendsListFrame = _G.FriendsListFrame
+    Skin.FriendsFrameButtonTemplate(_G.FriendsFrameAddFriendButton)
+    Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
+    Skin.UIDropDownMenuTemplate(FriendsListFrame.FilterDropDown)
+    Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
+    if private.isPatch then
+        Skin.FriendsFrameScrollFrame(_G.FriendsListFrameScrollFrame)
+        Hook.HybridScrollFrame_CreateButtons(_G.FriendsListFrameScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
+    else
+        _G.FriendsFrameFriendsScrollFrameTop:Hide()
+        _G.FriendsFrameFriendsScrollFrameMiddle:Hide()
+        _G.FriendsFrameFriendsScrollFrameBottom:Hide()
+        Skin.UIMenuButtonStretchTemplate(_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton)
+        Skin.MinimalHybridScrollBarTemplate(_G.FriendsFrameFriendsScrollFrame.scrollBar)
+        _G.FriendsFrameFriendsScrollFrame.scrollBar:ClearAllPoints()
+        _G.FriendsFrameFriendsScrollFrame.scrollBar:SetPoint("TOPRIGHT", 23, -18)
+        _G.FriendsFrameFriendsScrollFrame.scrollBar:SetPoint("BOTTOMRIGHT", 23, 17)
+        Hook.HybridScrollFrame_CreateButtons(_G.FriendsFrameFriendsScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
+    end
+
+
+    ----------------------
+    -- IgnoreListFrame --
+    ----------------------
+    Skin.FriendsFrameButtonTemplate(_G.FriendsFrameIgnorePlayerButton)
+    Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
+    Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameIgnoredHeader)
+    Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameBlockedInviteHeader)
+    if private.isPatch then
+        Skin.FriendsFrameScrollFrame(_G.IgnoreListFrameScrollFrame)
+    else
+        Skin.FauxScrollFrameTemplate(_G.FriendsFrameIgnoreScrollFrame)
+    end
+
+
+    --------------
+    -- WhoFrame --
+    --------------
+    Skin.InsetFrameTemplate(_G.WhoFrameListInset)
+    Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader1)
+    Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader2)
+    Skin.UIDropDownMenuTemplate(_G.WhoFrameDropDown)
+    _G.WhoFrameDropDownHighlightTexture:SetAlpha(0)
+    Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader3)
+    Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader4)
+    Skin.FriendsFrameButtonTemplate(_G.WhoFrameGroupInviteButton)
+    Skin.UIPanelButtonTemplate(_G.WhoFrameAddFriendButton)
+    Skin.UIPanelButtonTemplate(_G.WhoFrameWhoButton)
+    Skin.InsetFrameTemplate(_G.WhoFrameEditBoxInset)
+    if private.isPatch then
+        Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
+    else
+        Skin.FauxScrollFrameTemplate(_G.WhoListScrollFrame)
+    end
+
+
+    ----------------------
+    -- FriendsFrameMisc --
+    ----------------------
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab1)
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab2)
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab3)
+    if private.isPatch then
+        Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab4)
+    end
+    Util.PositionRelative("TOPLEFT", FriendsFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.FriendsFrameTab1,
+        _G.FriendsFrameTab2,
+        _G.FriendsFrameTab3,
+        _G.FriendsFrameTab4,
+    })
+
+    if private.isPatch then
+        Skin.GlowBoxTemplate(FriendsFrame.FriendsFrameQuickJoinHelpTip)
+    end
     if not private.disabled.tooltips then
         Base.SetBackdrop(_G.FriendsTooltip)
     end
 
-    F.ReskinPortraitFrame(_G.FriendsFrame, true)
-    _G.FriendsFrameIcon:Hide()
 
-    --F.ReskinDropDown(_G.FriendsDropDown)
-    --F.ReskinDropDown(_G.TravelPassDropDown)
 
-    for i = 1, 3 do
-        local name = "FriendsFrameTab"..i
-        local tab = _G[name]
-        F.ReskinTab(tab)
-        _G[name.."Text"]:SetPoint("CENTER", tab)
-    end
 
-    -- Friends header
-    local bnetFrame = _G.FriendsFrameBattlenetFrame
-    bnetFrame:GetRegions():Hide()
-    F.CreateBD(bnetFrame, 0)
-    local bnetColor = _G.FRIENDS_BNET_BACKGROUND_COLOR
-    bnetFrame:SetBackdropColor(bnetColor.r, bnetColor.g, bnetColor.b, bnetColor.a)
 
-    bnetFrame.Tag:SetParent(_G.FriendsListFrame)
-    bnetFrame.Tag:SetPoint("TOP", _G.FriendsFrame, "TOP", 0, -4)
-    _G.hooksecurefunc("FriendsFrame_CheckBattlenetStatus", function()
-        if _G.BNFeaturesEnabled() then
-            bnetFrame.BroadcastButton:Hide()
 
-            if _G.BNConnected() then
-                bnetFrame:Hide()
-                _G.FriendsFrameBroadcastInput:Show()
-                _G.FriendsFrameBroadcastInput_UpdateDisplay()
-            end
-        end
-    end)
-    _G.hooksecurefunc("FriendsFrame_Update", function()
-        if _G.FriendsFrame.selectedTab == 1 and _G.FriendsTabHeader.selectedTab == 1 and
-                bnetFrame.Tag:IsShown() then
-            _G.FriendsFrameTitleText:Hide()
-        else
-            _G.FriendsFrameTitleText:Show()
-        end
-    end)
 
-    F.CreateBD(bnetFrame.UnavailableInfoFrame)
-    bnetFrame.UnavailableInfoFrame:SetPoint("TOPLEFT", _G.FriendsFrame, "TOPRIGHT", 1, -18)
-
-    _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
-    F.ReskinDropDown(_G.FriendsFrameStatusDropDown)
-    _G.FriendsFrameBroadcastInput:SetWidth(250)
-    F.ReskinInput(_G.FriendsFrameBroadcastInput)
-    F.ReskinTab("FriendsTabHeaderTab", 3)
-
-    for _, key in next, {"RaFButton", "soRButton"} do
-        local button = _G.FriendsTabHeader[key]
-        button:SetPushedTexture("")
-        button:GetRegions():SetTexCoord(.08, .92, .08, .92)
-        F.CreateBDFrame(button)
-    end
-
-    -- Friends list
-    _G.FriendsFrameFriendsScrollFrameTop:Hide()
-    _G.FriendsFrameFriendsScrollFrameMiddle:Hide()
-    _G.FriendsFrameFriendsScrollFrameBottom:Hide()
-    F.Reskin(_G.FriendsFrameAddFriendButton)
-    F.Reskin(_G.FriendsFrameSendMessageButton)
-    local inviteHeader = _G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton
-    F.ReskinStretchButton(inviteHeader)
-    inviteHeader.RightArrow:SetTexture(C.media.arrowRight)
-    inviteHeader.DownArrow:SetTexture(C.media.arrowDown)
-    inviteHeader.DownArrow:SetSize(10, 8)
-    F.ReskinScroll(_G.FriendsFrameFriendsScrollFrameScrollBar)
-
-    for i = 1, _G.FRIENDS_TO_DISPLAY do
-        local btn = _G["FriendsFrameFriendsScrollFrameButton"..i]
-
-        --local frame = CreateFrame("frame", nil, btn)
-        --frame:SetSize(60, 32)
-
-        btn.background:Hide()
-        F.Reskin(btn.travelPassButton)
-        btn.travelPassButton:SetAlpha(1)
-        btn.travelPassButton:EnableMouse(true)
-        btn.travelPassButton:SetSize(20, 32)
-
-        btn.bg = _G.CreateFrame("Frame", nil, btn)
-        btn.bg:SetSize(24, 24)
-        btn.bg:ClearAllPoints()
-        btn.bg:SetPoint("TOPLEFT", btn.gameIcon, -1, 1)
-        F.CreateBD(btn.bg, 0)
-
-        btn.gameIcon:SetSize(22, 22)
-        btn.gameIcon:SetTexCoord(.15, .85, .15, .85)
-        btn.gameIcon:SetParent(btn.bg)
-        btn.gameIcon:SetPoint("TOPRIGHT", btn.travelPassButton, "TOPLEFT", -2, -5)
-        btn.gameIcon.SetPoint = function() end
-
-        btn.inv = btn.travelPassButton:CreateTexture(nil, "OVERLAY", nil, 7)
-        btn.inv:SetTexture([[Interface\FriendsFrame\PlusManz-PlusManz]])
-        btn.inv:SetPoint("TOPRIGHT", 1, -4)
-        btn.inv:SetSize(22, 22)
-    end
-
-    _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", function(button)
-        if button.buttonType == _G.FRIENDS_BUTTON_TYPE_BNET then
-            local isEnabled = button.travelPassButton:IsEnabled()
-
-            if button.inv then
-                button.inv:SetAlpha(isEnabled and 0.7 or 0.25)
-                button.bg:SetShown(button.gameIcon:IsShown())
-            end
-        elseif button.buttonType == _G.FRIENDS_BUTTON_TYPE_INVITE then
-            for invite in _G.FriendsFrameFriendsScrollFrame.invitePool:EnumerateActive() do
-                if not invite._skinned then
-                    local lineOfs = 4
-                    for i = 1, 2 do
-                        local line = invite.DeclineButton:CreateLine()
-                        line:SetColorTexture(1, 0, 0)
-                        line:SetThickness(0.5)
-                        if i == 1 then
-                            line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
-                            line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
-                        else
-                            line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-                            line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-                        end
-                    end
-                    invite.DeclineButton:SetSize(22, 22)
-                    invite.DeclineButton.Icon:Hide()
-                    F.ReskinStretchButton(invite.DeclineButton)
-                    F.ReskinStretchButton(invite.AcceptButton)
-                    invite._skinned = true
-                end
-            end
-        end
-    end)
-    _G.hooksecurefunc(_G.FriendsFrameFriendsScrollFrame.invitePool, "Acquire", function(self, button)
-        for invite in self:EnumerateActive() do
-            if not invite._skinned then
-                local lineOfs = 4
-                for i = 1, 2 do
-                    local line = invite.DeclineButton:CreateLine()
-                    line:SetColorTexture(1, 0, 0)
-                    line:SetThickness(0.5)
-                    if i == 1 then
-                        line:SetStartPoint("TOPLEFT", lineOfs, -lineOfs)
-                        line:SetEndPoint("BOTTOMRIGHT", -lineOfs, lineOfs)
-                    else
-                        line:SetStartPoint("TOPRIGHT", -lineOfs, -lineOfs)
-                        line:SetEndPoint("BOTTOMLEFT", lineOfs, lineOfs)
-                    end
-                end
-                invite.DeclineButton:SetSize(22, 22)
-                invite.DeclineButton.Icon:Hide()
-                F.ReskinStretchButton(invite.DeclineButton)
-                F.ReskinStretchButton(invite.AcceptButton)
-                invite._skinned = true
-            end
-        end
-    end)
-
-    -- Ignore
-    _G.IgnoreListFrameTop:Hide()
-    _G.IgnoreListFrameMiddle:Hide()
-    _G.IgnoreListFrameBottom:Hide()
-    F.Reskin(_G.FriendsFrameIgnorePlayerButton)
-    F.Reskin(_G.FriendsFrameUnsquelchButton)
-    F.ReskinScroll(_G.FriendsFrameIgnoreScrollFrameScrollBar)
-
-    -- Who
-    local whoListInset = _G.WhoFrameListInset
-    for i = 1, whoListInset:GetNumRegions() do
-        local region = _G.select(i, whoListInset:GetRegions())
-        if region:GetObjectType() == "Texture" then
-            region:Hide()
-        end
-    end
-
-    for i = 1, 4 do
-        _G["WhoFrameColumnHeader"..i]:DisableDrawLayer("BACKGROUND")
-    end
-    F.ReskinDropDown(_G.WhoFrameDropDown)
-
-    F.Reskin(_G.WhoFrameWhoButton)
-    F.Reskin(_G.WhoFrameAddFriendButton)
-    F.Reskin(_G.WhoFrameGroupInviteButton)
-    _G.WhoFrameWhoButton:SetPoint("RIGHT", _G.WhoFrameAddFriendButton, "LEFT", -1, 0)
-    _G.WhoFrameAddFriendButton:SetPoint("RIGHT", _G.WhoFrameGroupInviteButton, "LEFT", -1, 0)
-
-    local whoEditInset = _G.WhoFrameEditBoxInset
-    for i = 1, whoEditInset:GetNumRegions() do
-        local region = _G.select(i, whoEditInset:GetRegions())
-        if region:GetObjectType() == "Texture" then
-            region:Hide()
-        end
-    end
-    F.CreateBD(_G.WhoFrameEditBoxInset, .25)
-
-    F.ReskinScroll(_G.WhoListScrollFrameScrollBar)
-    local top, bottom = _G.WhoListScrollFrame:GetRegions()
-    top:Hide()
-    bottom:Hide()
-
-    -- Add Friend
+    --------------------
+    -- AddFriendFrame --
+    --------------------
     Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
-    F.Reskin(_G.AddFriendInfoFrameContinueButton)
+    Skin.UIPanelButtonTemplate(_G.AddFriendInfoFrameContinueButton)
 
-    F.ReskinInput(_G.AddFriendNameEditBox)
-    F.CreateBD(_G.AddFriendNoteFrame, .25)
-    F.Reskin(_G.AddFriendEntryFrameAcceptButton)
-    F.Reskin(_G.AddFriendEntryFrameCancelButton)
-    for i = 1, 9 do
-        select(i, _G.AddFriendNoteFrame:GetRegions()):Hide()
+    Skin.UIPanelInfoButton(_G.AddFriendEntryFrameInfoButton)
+    do -- AddFriendNameEditBox
+        _G.AddFriendNameEditBoxLeft:Hide()
+        _G.AddFriendNameEditBoxRight:Hide()
+        _G.AddFriendNameEditBoxMiddle:Hide()
+        Base.SetBackdrop(_G.AddFriendNameEditBox, Color.frame)
+        _G.AddFriendNameEditBox:SetBackdropBorderColor(Color.button)
+    end
+    Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
+    Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
+
+
+
+
+
+
+
+    -------------------------
+    -- FriendsFriendsFrame --
+    -------------------------
+    Skin.DialogBorderTemplate(_G.FriendsFriendsFrame.Border)
+    Skin.UIDropDownMenuTemplate(_G.FriendsFriendsFrameDropDown)
+    if private.isPatch then
+        _G.FriendsFriendsFrame.ScrollFrameBorder:SetBackdrop(nil)
+        Skin.FriendsFrameScrollFrame(_G.FriendsFriendsScrollFrame)
+        Skin.UIPanelButtonTemplate(_G.FriendsFriendsFrame.SendRequestButton)
+        Skin.UIPanelButtonTemplate(_G.FriendsFriendsFrame.CloseButton)
+    else
+        _G.FriendsFriendsList:SetBackdrop(nil)
+        Skin.FauxScrollFrameTemplate(_G.FriendsFriendsScrollFrame)
+        Skin.UIPanelButtonTemplate(_G.FriendsFriendsSendRequestButton)
+        Skin.UIPanelButtonTemplate(_G.FriendsFriendsCloseButton)
     end
 
-    -- Friends of friends
-    Skin.DialogBorderTemplate(_G.FriendsFriendsFrame.Border)
-    F.CreateBD(_G.FriendsFriendsList, .25)
-    F.ReskinDropDown(_G.FriendsFriendsFrameDropDown)
-    F.ReskinScroll(_G.FriendsFriendsScrollFrameScrollBar)
-    F.Reskin(_G.FriendsFriendsSendRequestButton)
-    F.Reskin(_G.FriendsFriendsCloseButton)
 
-    -- BattleTag Invite
+
+
+
+
+
+    --------------------------
+    -- BattleTagInviteFrame --
+    --------------------------
     Skin.DialogBorderTemplate(_G.BattleTagInviteFrame.Border)
     local _, send, cancel = _G.BattleTagInviteFrame:GetChildren()
-    F.Reskin(send)
-    F.Reskin(cancel)
+    Skin.UIPanelButtonTemplate(send)
+    Skin.UIPanelButtonTemplate(cancel)
 end

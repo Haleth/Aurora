@@ -18,6 +18,8 @@ do --[[ FrameXML\CharacterFrameTemplates.xml ]]
         _G[name.."Left"]:SetTexture("")
         _G[name.."Middle"]:SetTexture("")
         _G[name.."Right"]:SetTexture("")
+        _G[name.."Text"]:SetPoint("CENTER", Button, "CENTER")
+
         Button:SetHighlightTexture("")
 
         Base.SetBackdrop(Button)
