@@ -39,6 +39,19 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 end
             end
         end
+        if private.isPatch then
+            function Hook.CommunitiesListEntryMixin:SetFindCommunity()
+                self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+
+                self.CircleMask:Hide()
+                self.Icon:SetTexCoord(0, 1, 0, 1)
+                self.Icon:ClearAllPoints()
+                self.Icon:SetPoint("CENTER", self._iconBorder)
+
+                self._iconBorder:Show()
+                self._iconBorder:SetColorTexture(Color.black:GetRGB())
+            end
+        end
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             self.Name:SetPoint("LEFT", self._iconBorder, "RIGHT", 10, 0)
             self.CircleMask:Hide()
@@ -50,7 +63,6 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
         end
         function Hook.CommunitiesListEntryMixin:SetGuildFinder()
             self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-            self.Selection:Show()
 
             self.CircleMask:Hide()
             self.Icon:SetTexCoord(0, 1, 0, 1)
@@ -244,9 +256,49 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
     end
     do --[[ ClubFinder ]]
+        function Skin.ClubFinderEditBoxScrollFrameTemplate(ScrollFrame)
+            Skin.InputScrollFrameTemplate(ScrollFrame)
+        end
+        function Skin.ClubsFinderJoinClubWarningTemplate(Frame)
+            Skin.DialogBorderDarkTemplate(Frame.BG)
+            Skin.UIPanelButtonTemplate(Frame.Accept)
+            Skin.UIPanelButtonTemplate(Frame.Cancel)
+        end
+        function Skin.ClubFinderInvitationsFrameTemplate(Frame)
+            Skin.ClubsFinderJoinClubWarningTemplate(Frame.WarningDialog)
+            Skin.UIPanelButtonTemplate(Frame.AcceptButton)
+            Skin.UIPanelButtonTemplate(Frame.ApplyButton)
+            Skin.UIPanelButtonTemplate(Frame.DeclineButton)
+            Skin.InsetFrameTemplate(Frame.InsetFrame)
+        end
         function Skin.ClubsRecruitmentDialogTemplate(Frame)
         end
         function Skin.ClubFinderRequestToJoinTemplate(Frame)
+            Skin.DialogBorderDarkTemplate(Frame.BG)
+
+            local EditBox = Frame.MessageFrame
+            Base.CreateBackdrop(EditBox, private.backdrop, {
+                tl = EditBox.TopLeft,
+                tr = EditBox.TopRight,
+                t = EditBox.Top,
+
+                bl = EditBox.BottomLeft,
+                br = EditBox.BottomRight,
+                b = EditBox.Bottom,
+
+                l = EditBox.Left,
+                r = EditBox.Right,
+
+                bg = EditBox.Middle
+            })
+            Skin.FrameTypeEditBox(EditBox)
+            Skin.ClubFinderEditBoxScrollFrameTemplate(EditBox.MessageScroll)
+
+            Skin.UIPanelButtonTemplate(Frame.Apply)
+            Skin.UIPanelButtonTemplate(Frame.Cancel)
+        end
+        function Skin.ClubFinderGuildCardTemplate(Frame)
+            Skin.UIPanelButtonTemplate(Frame.RequestJoin)
         end
         function Skin.ClubFinderFocusDropdownTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
@@ -275,6 +327,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Base.SetHighlight(CheckButton, "backdrop")
         end
         function Skin.ClubFinderGuildCardsFrameTemplate(Frame)
+            Skin.ClubFinderGuildCardTemplate(Frame.FirstCard)
+            Skin.ClubFinderGuildCardTemplate(Frame.SecondCard)
+            Skin.ClubFinderGuildCardTemplate(Frame.ThirdCard)
+            Skin.NavButtonPrevious(Frame.PreviousPage)
+            Skin.NavButtonNext(Frame.NextPage)
         end
         local roleIcons = {
             ["UI-Frame-TankIcon"] = "iconTANK",
@@ -286,10 +343,23 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Base.SetTexture(Frame.Icon, roleIcons[atlas])
             Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
         end
+        function Skin.ClubFinderCommunitiesCardTemplate(Button)
+            Base.SetBackdrop(Button, Color.button, Color.frame.a)
+            Button.Background:Hide()
+
+            Button.LogoBorder:Hide()
+            Base.CropIcon(Button.CommunityLogo, Button)
+            Button.CircleMask:Hide()
+
+            Button.HighlightBackground:SetAlpha(0)
+            Base.SetHighlight(Button, "backdrop")
+        end
         function Skin.ClubFinderCommunitiesCardFrameTemplate(Frame)
+            Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.scrollBar)
+            Frame.ListScrollFrame.scrollBar:SetPoint("TOPLEFT", Frame.ListScrollFrame, "TOPRIGHT", -15, -15)
+            Frame.ListScrollFrame.scrollBar:SetPoint("BOTTOMLEFT", Frame.ListScrollFrame, "BOTTOMRIGHT", 15, 15)
         end
         function Skin.ClubFinderOptionsTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame.TypeDropdown)
             Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
             Skin.UIDropDownMenuTemplate(Frame.ClubSizeDropdown)
             Skin.UIDropDownMenuTemplate(Frame.SortByDropdown)
@@ -303,9 +373,16 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.ClubFinderOptionsTemplate(Frame.OptionsList)
             Skin.ClubFinderGuildCardsFrameTemplate(Frame.GuildCards)
             Skin.ClubFinderCommunitiesCardFrameTemplate(Frame.CommunityCards)
+            Skin.ClubFinderGuildCardsFrameTemplate(Frame.PendingGuildCards)
+            Skin.ClubFinderCommunitiesCardFrameTemplate(Frame.PendingCommunityCards)
             Skin.ClubFinderRequestToJoinTemplate(Frame.RequestToJoinFrame)
-            Skin.UIPanelButtonTemplate(Frame.PendingClubs)
             Skin.InsetFrameTemplate(Frame.InsetFrame)
+            Skin.CommunitiesFrameTabTemplate(Frame.ClubFinderSearchTab)
+            Skin.CommunitiesFrameTabTemplate(Frame.ClubFinderPendingTab)
+            Util.PositionRelative("TOPLEFT", Frame, "TOPRIGHT", 10, 43, 5, "Down", {
+                Frame.ClubFinderSearchTab,
+                Frame.ClubFinderPendingTab,
+            })
         end
     end
     do --[[ CommunitiesSettings ]]
