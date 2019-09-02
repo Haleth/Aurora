@@ -129,13 +129,12 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     end
     function Skin.GlowBoxArrowTemplate(Frame, direction)
         direction = direction or "Down"
-        if private.isPatch then
-            Hook.HelpTipTemplateMixin.RotateArrow(Frame:GetParent(), _G.HelpTip.ArrowRotation[direction])
-        else
+        local parent = Frame:GetParent()
+        if not parent.info then
             if direction == "Left" or direction == "Right" then
-                Frame:SetSize(17, 41)
+                Frame:SetSize(21, 53)
             else
-                Frame:SetSize(41, 17)
+                Frame:SetSize(53, 21)
             end
 
             Base.SetTexture(Frame.Arrow, "arrow"..direction)

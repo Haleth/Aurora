@@ -118,7 +118,9 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Base.SetHighlight(Button, "backdrop")
         end
         function Skin.MicroButtonAlertTemplate(Frame)
-            Skin.GlowBoxFrame(Frame)
+            Skin.GlowBoxTemplate(Frame)
+            Skin.UIPanelCloseButton(Frame.CloseButton)
+            Skin.GlowBoxArrowTemplate(Frame.Arrow)
         end
     end
     do --[[ ActionButtonTemplate.xml ]]

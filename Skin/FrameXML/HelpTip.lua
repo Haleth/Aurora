@@ -23,7 +23,7 @@ do --[[ FrameXML\HelpTip.lua ]]
         if rotationInfo.swapOffsets then
             offsetX = 4
         else
-            offsetY = -4
+            offsetY = 4
         end
         self.Arrow:SetPoint(point, anchor, arrowAnchor, offsetX, offsetY)
     end
