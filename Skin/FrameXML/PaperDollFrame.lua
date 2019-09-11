@@ -118,10 +118,13 @@ function private.FrameXML.PaperDollFrame()
     _G.hooksecurefunc("PaperDollFrame_SetLevel", Hook.PaperDollFrame_SetLevel)
 
     local CharacterFrame = _G.CharacterFrame
+
+    local bg = CharacterFrame.NineSlice:GetBackdropTexture("bg")
     local classBG = _G.PaperDollFrame:CreateTexture(nil, "BORDER")
     classBG:SetAtlas("dressingroom-background-"..private.charClass.token)
-    classBG:SetPoint("TOPLEFT", CharacterFrame)
-    classBG:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, 4, -4)
+    classBG:SetPoint("TOPLEFT", bg)
+    classBG:SetPoint("BOTTOM", bg)
+    classBG:SetPoint("RIGHT", CharacterFrame.Inset, 4, 0)
     classBG:SetAlpha(0.5)
 
     _G.PaperDollSidebarTabs:ClearAllPoints()
