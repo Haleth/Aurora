@@ -46,14 +46,7 @@ function private.SharedXML.SharedBasicControls()
     Skin.UIPanelDialogTemplate(ScriptErrorsFrame)
     Skin.UIPanelScrollFrameTemplate(ScriptErrorsFrame.ScrollFrame)
     Skin.UIPanelButtonTemplate(ScriptErrorsFrame.Reload)
-
-    for i, delta in _G.next, {"Previous", "Next"} do
-        if i == 1 then
-            Skin.NavButtonPrevious(ScriptErrorsFrame[delta.."Error"])
-        else
-            Skin.NavButtonNext(ScriptErrorsFrame[delta.."Error"])
-        end
-    end
-
+    Skin.NavButtonPrevious(ScriptErrorsFrame.PreviousError)
+    Skin.NavButtonNext(ScriptErrorsFrame.NextError)
     Skin.UIPanelButtonTemplate(ScriptErrorsFrame.Close)
 end

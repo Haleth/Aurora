@@ -17,15 +17,14 @@ local Util = Aurora.Util
 function private.FrameXML.VideoOptionsFrame()
     Skin.OptionsFrameTemplate(_G.VideoOptionsFrame)
 
-    Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameOkay)
+    Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameApply)
     Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameCancel)
+    Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameOkay)
     Util.PositionRelative("BOTTOMRIGHT", _G.VideoOptionsFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
         _G.VideoOptionsFrameCancel,
         _G.VideoOptionsFrameOkay,
     })
+
     Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameDefaults)
     _G.VideoOptionsFrameDefaults:SetPoint("BOTTOMLEFT", 15, 15)
-    Skin.UIPanelButtonTemplate(_G.VideoOptionsFrameApply)
-
-    _G.VideoOptionsFrameOkay:SetPoint("BOTTOMRIGHT", _G.VideoOptionsFrameCancel, "BOTTOMLEFT", -1, 0)
 end

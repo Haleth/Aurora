@@ -14,7 +14,7 @@ local function CopyTable(oldTable)
 end
 
 
-local item = _G.Item:CreateFromItemID(30234)
+local item = _G.Item:CreateFromItemID(14551)
 item:ContinueOnItemLoad(function(...)
     local color = item:GetItemQualityColor()
     item.data = {

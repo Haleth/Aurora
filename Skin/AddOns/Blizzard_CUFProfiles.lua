@@ -112,8 +112,8 @@ function private.AddOns.Blizzard_CUFProfiles()
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec2)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec3)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec4)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvP)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivatePvE)
+    Skin.CompactUnitFrameProfilesCheckButtonTemplate(optionsFrame.AutoActivatePvP)
+    Skin.CompactUnitFrameProfilesCheckButtonTemplate(optionsFrame.AutoActivatePvE)
 
     Skin.UIPanelButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameResetPositionButton)
 
