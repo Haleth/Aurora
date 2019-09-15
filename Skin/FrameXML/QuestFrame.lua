@@ -72,7 +72,11 @@ do --[[ FrameXML\QuestFrame.lua ]]
             x = x + 5
         end
 
-        _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
+        if private.isPatch then
+            _G.QuestModelScene:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
+        else
+            _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
+        end
     end
     function Hook.QuestFrame_SetTitleTextColor(fontString, material)
         fontString:SetTextColor(Color.white:GetRGB())
@@ -178,9 +182,9 @@ function private.FrameXML.QuestFrame()
     -------------------
     -- QuestNPCModel --
     -------------------
-    local QuestNPCModel = _G.QuestNPCModel
+    local QuestModelScene = private.isPatch and _G.QuestModelScene or _G.QuestNPCModel
 
-    local modelBackground = _G.CreateFrame("Frame", nil, _G.QuestNPCModel)
+    local modelBackground = _G.CreateFrame("Frame", nil, QuestModelScene)
     modelBackground:SetPoint("TOPLEFT", -1, 1)
     modelBackground:SetPoint("BOTTOMRIGHT", 1, -2)
     modelBackground:SetFrameLevel(0)
@@ -190,12 +194,12 @@ function private.FrameXML.QuestFrame()
     _G.QuestNPCModelTopBg:Hide()
     _G.QuestNPCModelShadowOverlay:Hide()
 
-    QuestNPCModel.BorderBottomLeft:Hide()
-    QuestNPCModel.BorderBottomRight:Hide()
-    QuestNPCModel.BorderTop:Hide()
-    QuestNPCModel.BorderBottom:Hide()
-    QuestNPCModel.BorderLeft:Hide()
-    QuestNPCModel.BorderRight:Hide()
+    QuestModelScene.BorderBottomLeft:Hide()
+    QuestModelScene.BorderBottomRight:Hide()
+    QuestModelScene.BorderTop:Hide()
+    QuestModelScene.BorderBottom:Hide()
+    QuestModelScene.BorderLeft:Hide()
+    QuestModelScene.BorderRight:Hide()
 
     _G.QuestNPCCornerTopLeft:Hide()
     _G.QuestNPCCornerTopRight:Hide()

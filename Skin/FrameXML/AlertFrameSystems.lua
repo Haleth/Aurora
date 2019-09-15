@@ -338,7 +338,12 @@ function private.FrameXML.AlertFrameSystems()
     _G.hooksecurefunc(_G.ScenarioAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.InvasionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.DigsiteCompleteAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.StorePurchaseAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    if private.isPatch then
+        _G.hooksecurefunc(_G.EntitlementDeliveredAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+        _G.hooksecurefunc(_G.RafRewardDeliveredAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    else
+        _G.hooksecurefunc(_G.StorePurchaseAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    end
     _G.hooksecurefunc(_G.GarrisonBuildingAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.GarrisonMissionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.GarrisonShipMissionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
@@ -347,8 +352,10 @@ function private.FrameXML.AlertFrameSystems()
     _G.hooksecurefunc(_G.GarrisonTalentAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.WorldQuestCompleteAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.LegendaryItemAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+
     _G.hooksecurefunc(_G.NewPetAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     _G.hooksecurefunc(_G.NewMountAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    _G.hooksecurefunc(_G.NewToyAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 
     --[[
     ]]

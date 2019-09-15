@@ -122,6 +122,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button._iconBorder:SetPoint("BOTTOMRIGHT", bg, "BOTTOMLEFT", 40, 0)
             Button.IconRing:SetAlpha(0)
 
+            Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+
             local highlight = Button:GetHighlightTexture()
             highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             highlight:SetAllPoints(bg)
@@ -154,12 +156,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ListScrollFrame.scrollBar.Background:Hide()
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
-        function Skin.GuildMemberListDropDownMenuTemplate(Frame)
+        function Skin.CommunitiesFrameMemberListDropDownMenuTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
         end
-        function Skin.CommunityMemberListDropDownMenuTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame)
-        end
+        Skin.GuildMemberListDropDownMenuTemplate = Skin.CommunitiesFrameMemberListDropDownMenuTemplate
+        Skin.CommunityMemberListDropDownMenuTemplate = Skin.CommunitiesFrameMemberListDropDownMenuTemplate
     end
     do --[[ CommunitiesChatFrame ]]
         function Skin.CommunitiesChatTemplate(Frame)

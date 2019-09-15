@@ -573,6 +573,9 @@ function private.AddOns.Blizzard_Collections()
     Base.CropIcon(MountDisplay.InfoButton.Icon, MountDisplay.InfoButton)
     Skin.RotateOrbitCameraLeftButtonTemplate(MountDisplay.ModelScene.RotateLeftButton)
     Skin.RotateOrbitCameraRightButtonTemplate(MountDisplay.ModelScene.RotateRightButton)
+    if private.isPatch then
+        Skin.UICheckButtonTemplate(MountDisplay.ModelScene.TogglePlayer)
+    end
 
     Skin.HybridScrollBarTrimTemplate(MountJournal.ListScrollFrame.scrollBar)
     Skin.MagicButtonTemplate(MountJournal.MountButton)

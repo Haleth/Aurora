@@ -244,6 +244,10 @@ function private.FrameXML.ActionBarController()
     Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)
     Skin.MicroButtonAlertTemplate(_G.LFDMicroButtonAlert)
     Skin.MicroButtonAlertTemplate(_G.EJMicroButtonAlert)
+    Skin.MicroButtonAlertTemplate(_G.StoreMicroButtonAlert)
+    if private.isPatch then
+        Skin.MicroButtonAlertTemplate(_G.GuildMicroButtonAlert)
+    end
 
     ----====####$$$$%%%%%$$$$####====----
     --    StatusTrackingBarTemplate    --

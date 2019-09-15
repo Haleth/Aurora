@@ -81,6 +81,7 @@ local FrameXML = {
     "CalendarUtil",
     "CommunitiesUtil",
     "ItemUtil",
+    "TransmogUtil",
     "ItemDisplay",
     "HelpTip",
     "CurrencyContainer",
