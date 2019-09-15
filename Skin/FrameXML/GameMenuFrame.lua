@@ -16,7 +16,6 @@ function private.FrameXML.GameMenuFrame()
 
     local buttons = {
         "Help",
-        "WhatsNew",
         "Store",
 
         "Options",

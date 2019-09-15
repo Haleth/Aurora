@@ -1,91 +1,84 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
-local F, C = _G.unpack(Aurora)
+local Base, Skin, Util = Aurora.Base, Aurora.Skin, Aurora.Util
+local Color = Aurora.Color
 
--- TODO: FIXME
+do --[[ AddOns/Blizzard_TradeSkillUI/Blizzard_TradeSkillUI.xml ]]
+    function Skin.TradeSkillSkillButtonTemplate(Frame)
+        Skin.ClassTrainerSkillButtonTemplate(Frame)
+    end
+    function Skin.TradeSkillItemTemplate(Frame)
+        Skin.QuestItemTemplate(Frame)
+    end
+end
+
 function private.AddOns.Blizzard_TradeSkillUI()
     local TradeSkillFrame = _G.TradeSkillFrame
-    F.ReskinPortraitFrame(TradeSkillFrame)
+    Base.SetBackdrop(TradeSkillFrame)
+    Skin.UIPanelCloseButton(_G.TradeSkillFrameCloseButton)
+    _G.TradeSkillFrameCloseButton:SetPoint("TOPRIGHT", 4, 5)
+    _G.TradeSkillFramePortrait:SetAlpha(0)
+    for i = 2, 5 do
+        select(i, TradeSkillFrame:GetRegions()):Hide()
+    end
+    for i = 7, 10 do
+        select(i, TradeSkillFrame:GetRegions()):Hide()
+    end
 
-    local rankFrame = TradeSkillFrame.RankFrame
-    rankFrame.BorderLeft:Hide()
-    rankFrame.BorderRight:Hide()
-    rankFrame.BorderMid:Hide()
-    rankFrame.Background:SetColorTexture(0.1, 0.1, 0.75, 0.25)
-    rankFrame:SetStatusBarTexture(C.media.backdrop)
-    rankFrame.SetStatusBarColor = F.dummy
+    local rankFrame = _G.TradeSkillRankFrame
+    _G.TradeSkillRankFrameBorder:Hide()
+    _G.TradeSkillRankFrameBackground:SetColorTexture(0.1, 0.1, 0.75, 0.25)
+    rankFrame:SetStatusBarTexture([[Interface\ChatFrame\ChatFrameBackground]])
+    rankFrame.SetStatusBarColor = function() end
     rankFrame:GetStatusBarTexture():SetGradient("VERTICAL", .1, .3, .9, .2, .4, 1)
-    F.CreateBDFrame(rankFrame)
+    Base.SetBackdrop(rankFrame)
 
-    F.ReskinInput(TradeSkillFrame.SearchBox)
-    F.ReskinFilterButton(TradeSkillFrame.FilterButton)
-    TradeSkillFrame.FilterButton:SetPoint("TOPRIGHT", -7, -55)
+    Skin.ClassTrainerSkillButtonTemplate(_G.TradeSkillCollapseAllButton)
 
-    F.ReskinArrow(TradeSkillFrame.LinkToButton, "Right")
-    TradeSkillFrame.LinkToButton:SetPoint("BOTTOMRIGHT", TradeSkillFrame.FilterButton, "TOPRIGHT", 0, 6)
+    Skin.UIDropDownMenuTemplate(_G.TradeSkillInvSlotDropDown)
+    Skin.UIDropDownMenuTemplate(_G.TradeSkillSubClassDropDown)
 
-    --[[ Recipe List ]]--
-    local recipeInset = TradeSkillFrame.RecipeInset
-    recipeInset.Bg:Hide()
-    recipeInset:DisableDrawLayer("BORDER")
-    local recipeList = TradeSkillFrame.RecipeList
-    F.ReskinScroll(recipeList.scrollBar, "TradeSkillFrame")
-    for i = 1, #recipeList.Tabs do
-        local tab = recipeList.Tabs[i]
-        tab.LeftDisabled:SetAlpha(0)
-        tab.MiddleDisabled:SetAlpha(0)
-        tab.RightDisabled:SetAlpha(0)
-
-        tab.Left:SetAlpha(0)
-        tab.Middle:SetAlpha(0)
-        tab.Right:SetAlpha(0)
+    Skin.ClassTrainerDetailScrollFrameTemplate(_G.TradeSkillListScrollFrame)
+    Skin.ClassTrainerDetailScrollFrameTemplate(_G.TradeSkillDetailScrollFrame)
+    for i = 1, 8 do
+        Skin.TradeSkillSkillButtonTemplate(_G["TradeSkillSkill"..i])
+        Skin.TradeSkillItemTemplate(_G["TradeSkillReagent"..i])
     end
 
-    _G.hooksecurefunc(recipeList, "RefreshDisplay", function(self)
-        for i = 1, #self.buttons do
-            local tradeSkillButton = self.buttons[i]
-            if not tradeSkillButton._auroraSkinned then
-                F.ReskinExpandOrCollapse(tradeSkillButton)
-                tradeSkillButton._auroraSkinned = true
-            end
-            tradeSkillButton:SetHighlightTexture("")
-        end
-    end)
+    Skin.UIPanelButtonTemplate(_G.TradeSkillCancelButton)
+    Skin.UIPanelButtonTemplate(_G.TradeSkillCreateButton)
+    Skin.UIPanelButtonTemplate(_G.TradeSkillCreateAllButton)
+    Util.PositionRelative("BOTTOMRIGHT", TradeSkillFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
+        _G.TradeSkillCancelButton,
+        _G.TradeSkillCreateButton,
+    })
+    _G.TradeSkillCreateAllButton:ClearAllPoints()
+    _G.TradeSkillCreateAllButton:SetPoint("BOTTOMLEFT", 15, 15)
 
-    --[[ Recipe Details ]]--
-    local detailsInset = TradeSkillFrame.DetailsInset
-    detailsInset.Bg:Hide()
-    detailsInset:DisableDrawLayer("BORDER")
-    local detailsFrame = TradeSkillFrame.DetailsFrame
-    detailsFrame.Background:Hide()
-    F.ReskinScroll(detailsFrame.ScrollBar, "TradeSkillFrame")
-    F.Reskin(detailsFrame.CreateAllButton)
-    F.Reskin(detailsFrame.ViewGuildCraftersButton)
-    F.Reskin(detailsFrame.ExitButton)
-    F.Reskin(detailsFrame.CreateButton)
-    Skin.NumericInputSpinnerTemplate(detailsFrame.CreateMultipleInputBox)
+    local tradeSkillInputBox = _G.TradeSkillInputBox
+    _G.TradeSkillInputBoxLeft:Hide()
+    _G.TradeSkillInputBoxRight:Hide()
+    _G.TradeSkillInputBoxMiddle:Hide()
+    local bg = _G.CreateFrame("Frame", nil, tradeSkillInputBox)
+    bg:SetHeight(20)
+    bg:SetPoint("LEFT", -5, 0)
+    bg:SetPoint("RIGHT", 0, 0)
+    bg:SetFrameLevel(tradeSkillInputBox:GetFrameLevel())
+    Base.SetBackdrop(bg, Color.frame)
+    tradeSkillInputBox._auroraBG = bg
+    tradeSkillInputBox:DisableDrawLayer("BACKGROUND")
+    tradeSkillInputBox:ClearAllPoints()
 
-    local contents = detailsFrame.Contents
-    contents.ResultIcon.ResultBorder:Hide()
-    _G.hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
-        if not self._auroraSkinned then
-            self._auroraIconBorder = F.ReskinIcon(self:GetNormalTexture())
-            self._auroraSkinned = true
-        end
-    end)
-    for i = 1, #contents.Reagents do
-        local reagent = contents.Reagents[i]
-        reagent.Icon:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBDFrame(reagent.Icon)
-        reagent.NameFrame:Hide()
-        local bg = F.CreateBDFrame(reagent.NameFrame, .2)
-        bg:SetPoint("TOPLEFT", reagent.Icon, "TOPRIGHT", 2, 1)
-        bg:SetPoint("BOTTOMRIGHT", -4, 1)
-    end
+    Skin.NavButtonNext(_G.TradeSkillIncrementButton)
+    _G.TradeSkillIncrementButton:ClearAllPoints()
+    _G.TradeSkillIncrementButton:SetPoint("LEFT", tradeSkillInputBox._auroraBG, "RIGHT", 3, 0)
+
+    Skin.NavButtonPrevious(_G.TradeSkillDecrementButton)
+    _G.TradeSkillDecrementButton:ClearAllPoints()
+    _G.TradeSkillDecrementButton:SetPoint("RIGHT", tradeSkillInputBox._auroraBG, "LEFT", -3, 0)
 end

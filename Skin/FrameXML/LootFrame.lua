@@ -6,60 +6,14 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
-
-do --[[ FrameXML\LootFrame.lua ]]
-    function Hook.BonusRollFrame_OnShow(self)
-        self.PromptFrame.Timer:SetFrameLevel(self:GetFrameLevel())
-    end
-end
+local Skin = Aurora.Skin
 
 do --[[ FrameXML\LootFrame.xml ]]
-    function Skin.BonusRollFrameTemplate(Frame)
-        Frame:HookScript("OnShow", Hook.BonusRollFrame_OnShow)
-
-        Base.SetBackdrop(Frame)
-        Frame:SetSize(270, 60)
-
-        Frame.Background:SetAlpha(0)
-        Frame.LootSpinnerBG:SetPoint("TOPLEFT", 4, -4)
-        Frame.IconBorder:Hide()
-
-        Base.CropIcon(Frame.SpecIcon, Frame)
-        Frame.SpecIcon:SetSize(18, 18)
-        Frame.SpecIcon:SetPoint("TOPLEFT", -9, 9)
-        Frame.SpecRing:SetAlpha(0)
-
-        local textFrame = _G.CreateFrame("Frame", nil, Frame)
-        Base.SetBackdrop(textFrame, Color.frame)
-        textFrame:SetFrameLevel(Frame:GetFrameLevel())
-
-        local rollingFrame = Frame.RollingFrame
-        rollingFrame.Label:SetAllPoints(textFrame)
-        rollingFrame.LootSpinnerFinalText:SetAllPoints(textFrame)
-        rollingFrame.DieIcon:SetPoint("TOPRIGHT", -40, -10)
-        rollingFrame.DieIcon:SetSize(32, 32)
-
-        local promptFrame = Frame.PromptFrame
-        Base.CropIcon(promptFrame.Icon, promptFrame)
-        promptFrame.Icon:SetAllPoints(Frame.LootSpinnerBG)
-
-        promptFrame.InfoFrame:SetPoint("TOPLEFT", textFrame, 4, 0)
-        promptFrame.InfoFrame:SetPoint("BOTTOMRIGHT", textFrame)
-
-        Skin.FrameTypeStatusBar(promptFrame.Timer)
-        promptFrame.Timer:SetHeight(6)
-        promptFrame.Timer:SetPoint("BOTTOMLEFT", 4, 4)
-        promptFrame.RollButton:SetPoint("TOPRIGHT", -40, -10)
-
-        Frame.BlackBackgroundHoist:Hide()
-
-        textFrame:SetPoint("TOPLEFT", promptFrame.Icon, "TOPRIGHT", 4, 1)
-        textFrame:SetPoint("BOTTOMRIGHT", promptFrame.Timer, "TOPRIGHT", 1, 3)
-
-        Frame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", -2, 0)
+    function Skin.LootButtonTemplate(Button)
+        -- TODO
+        Skin.AltItemButton(Button)
+        _G[Button:GetName().."NameFrame"]:Hide()
+        --Skin.FrameTypeItemButton(Button)
     end
 end
 
@@ -70,19 +24,7 @@ function private.FrameXML.LootFrame()
 
     for index = 1, 4 do
         local item = _G["LootButton"..index]
-        local icon = _G["LootButton"..index.."IconTexture"]
-        item._auroraIconBorder = F.ReskinIcon(icon)
-
-        _G["LootButton"..index.."IconQuestTexture"]:SetTexCoord(.08, .92, .08, .92)
-        local nameFrame = _G["LootButton"..index.."NameFrame"]
-        nameFrame:Hide()
-
-        local bg = F.CreateBDFrame(nameFrame, .2)
-        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 3, 1)
-        bg:SetPoint("BOTTOMRIGHT", nameFrame, -5, 11)
-
-        item:SetNormalTexture("")
-        item:SetPushedTexture("")
+        Skin.LootButtonTemplate(item)
     end
 
     _G.hooksecurefunc("LootFrame_UpdateButton", function(index)
@@ -101,9 +43,6 @@ function private.FrameXML.LootFrame()
     F.ReskinPortraitFrame(_G.LootFrame, true)
     F.ReskinArrow(_G.LootFrameUpButton, "Up")
     F.ReskinArrow(_G.LootFrameDownButton, "Down")
-
-    --[[ BonusRollFrame ]]--
-    Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
 
     --[[ MasterLooterFrame ]]--
     local MasterLooterFrame = _G.MasterLooterFrame

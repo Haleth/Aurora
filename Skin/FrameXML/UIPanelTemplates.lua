@@ -281,27 +281,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame:SetBackdropBorderColor(Color.yellow)
     end
 
-    function Skin.MainHelpPlateButton(Frame)
-        Frame.Ring:Hide()
-
-        local highlight = Frame:GetHighlightTexture()
-        highlight:SetPoint("CENTER")
-        highlight:SetSize(38, 38)
-    end
-    function Skin.HelpPlateButton(Button)
-        Button.BgGlow:SetPoint("CENTER")
-        Button.BgGlow:SetSize(38, 38)
-
-        local highlight = Button:GetHighlightTexture()
-        highlight:SetPoint("CENTER")
-        highlight:SetSize(38, 38)
-    end
-    function Skin.HelpPlateBox(Frame)
-        Skin.ThinBorderTemplate(Frame)
-    end
-    function Skin.HelpPlateBoxHighlight(Frame)
-        Skin.GlowBorderTemplate(Frame)
-    end
     function Skin.UIExpandingButtonTemplate(Button)
         Skin.UIPanelSquareButton(Button)
     end
@@ -309,14 +288,4 @@ end
 
 function private.FrameXML.UIPanelTemplates()
     _G.hooksecurefunc("SquareButton_SetIcon", Hook.SquareButton_SetIcon)
-
-    local HelpPlateTooltip = _G.HelpPlateTooltip
-    Skin.GlowBoxTemplate(HelpPlateTooltip)
-    for direction, dirUpper in next, {Down = "UP", Up = "DOWN", Left = "RIGHT", Right = "LEFT"} do
-        local arrow = HelpPlateTooltip["Arrow"..dirUpper]
-        Base.SetTexture(arrow, "arrow"..direction)
-        arrow:SetVertexColor(1, 1, 0)
-
-        HelpPlateTooltip["ArrowGlow"..dirUpper]:SetAlpha(0)
-    end
 end

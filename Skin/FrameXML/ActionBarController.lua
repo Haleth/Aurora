@@ -3,6 +3,8 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals floor
 
+-- TODO: Reorganized the Action Bar formatting.
+
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
@@ -51,7 +53,7 @@ end
 do --[[ FrameXML\ActionBarController.lua ]]
     do --[[ MainMenuBarMicroButtons.lua ]]
         local anchors = {
-            [_G.MicroButtonAndBagsBar] = 11
+            [_G.UIParent] = 11
         }
         function Hook.MoveMicroButtons(anchor, anchorTo, relAnchor, x, y, isStacked)
             _G.CharacterMicroButton:ClearAllPoints()
@@ -115,7 +117,6 @@ do --[[ FrameXML\ActionBarController.xml ]]
         function Skin.ActionButtonTemplate(CheckButton)
             Base.CropIcon(CheckButton.icon)
 
-            CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
             CheckButton.NewActionTexture:SetAllPoints()
             CheckButton.NewActionTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
             CheckButton.SpellHighlightTexture:SetAllPoints()
@@ -149,23 +150,6 @@ do --[[ FrameXML\ActionBarController.xml ]]
             CheckButton.icon:SetPoint("BOTTOMRIGHT", -1, 1)
         end
     end
-    do --[[ ExtraActionBar.xml ]]
-        -- /run ActionButton_StartFlash(ExtraActionButton1)
-        function Skin.ExtraActionButtonTemplate(CheckButton)
-            Base.CropIcon(CheckButton.icon, CheckButton)
-
-            CheckButton.HotKey:SetPoint("TOPLEFT", 5, -5)
-            CheckButton.Count:SetPoint("TOPLEFT", -5, 5)
-            CheckButton.style:Hide()
-
-            CheckButton.cooldown:SetPoint("TOPLEFT")
-            CheckButton.cooldown:SetPoint("BOTTOMRIGHT")
-
-            CheckButton:SetNormalTexture("")
-            Base.CropIcon(CheckButton:GetHighlightTexture())
-            Base.CropIcon(CheckButton:GetCheckedTexture())
-        end
-    end
 end
 
 function private.FrameXML.ActionBarController()
@@ -180,88 +164,43 @@ function private.FrameXML.ActionBarController()
             local button = _G[name]
             Skin.MainMenuBarMicroButton(button)
 
-            local iconTexture, left, right, top, bottom
+            local iconTexture
             if name == "CharacterMicroButton" then
                 SetTexture(_G.MicroButtonPortrait, button)
-                button:SetPoint("BOTTOMLEFT", _G.MicroButtonAndBagsBar, "BOTTOMLEFT", 11, 3)
+                button:SetPoint("BOTTOMLEFT", _G.UIParent, "BOTTOMLEFT", 11, 3)
             elseif name == "SpellbookMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
                 button:SetPoint("BOTTOMLEFT", _G.CharacterMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "TalentMicroButton" then
                 iconTexture = [[Interface\Icons\Ability_Marksmanship]]
                 button:SetPoint("BOTTOMLEFT", _G.SpellbookMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "AchievementMicroButton" then
-                iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "QuestLogMicroButton" then
                 iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.AchievementMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "GuildMicroButton" then
+                button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
+            elseif name == "SocialsMicroButton" then
                 iconTexture = ""
-                SetTexture(_G.GuildMicroButtonTabard.background, button, 0.1428, 0.8571, 0.222, 0.889)
                 button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
-
                 button.NotificationOverlay.UnreadNotificationIcon:SetSize(16, 16)
-            elseif name == "LFDMicroButton" then
+            elseif name == "WorldMapMicroButton" then
                 iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "CollectionsMicroButton" then
-                iconTexture = [[Interface\Icons\MountJournalPortrait]]
-                left, right, top, bottom = 0.3, 0.92, 0.08, 0.92
-                button:SetPoint("BOTTOMLEFT", _G.LFDMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "EJMicroButton" then
-                iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
-                button:SetPoint("BOTTOMLEFT", _G.CollectionsMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "StoreMicroButton" then
-                iconTexture = [[Interface\Icons\WoW_Store]]
-                button:SetPoint("BOTTOMLEFT", _G.EJMicroButton, "BOTTOMRIGHT", 2, 0)
+                button:SetPoint("BOTTOMLEFT", _G.SocialsMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "MainMenuMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
-
-                SetTexture(_G.MainMenuBarPerformanceBar, button, 0.2, 0.8, 0.08, 0.94)
                 _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
-                button:SetPoint("BOTTOMLEFT", _G.StoreMicroButton, "BOTTOMRIGHT", 2, 0)
+                button:SetPoint("BOTTOMLEFT", _G.WorldMapMicroButton, "BOTTOMRIGHT", 2, 0)
+            elseif name == "HelpMicroButton" then
+                iconTexture = ""
+                button:SetPoint("BOTTOMLEFT", _G.MainMenuMicroButton, "BOTTOMRIGHT", 2, 0)
             end
 
-            SetMicroButton(button, iconTexture, left, right, top, bottom)
+            SetMicroButton(button, iconTexture)
         end
     end
-
-    Skin.MicroButtonAlertTemplate(_G.CharacterMicroButtonAlert)
-    Skin.MicroButtonAlertTemplate(_G.TalentMicroButtonAlert)
-    Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)
-    Skin.MicroButtonAlertTemplate(_G.LFDMicroButtonAlert)
-    Skin.MicroButtonAlertTemplate(_G.EJMicroButtonAlert)
-
-    ----====####$$$$%%%%%$$$$####====----
-    --    StatusTrackingBarTemplate    --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --             ExpBar             --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --          ReputationBar          --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --           ArtifactBar           --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --            HonorBar            --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --        StatusTrackingBar        --
-    ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --           MainMenuBar           --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
-        _G.MicroButtonAndBagsBar.MicroBagBar:Hide()
         _G.MainMenuBarArtFrameBackground.BackgroundLarge:SetAlpha(0)
         _G.MainMenuBarArtFrameBackground.BackgroundSmall:SetAlpha(0)
 
@@ -277,7 +216,7 @@ function private.FrameXML.ActionBarController()
     --         ActionBarFrame         --
     ----====####$$$$%%%%$$$$####====----
     if not private.disabled.mainmenubar then
-        for i = 1, 12 do
+        for i = 1, 12 do -- 8
             Skin.ActionBarButtonTemplate(_G["ActionButton"..i])
         end
     end
@@ -287,21 +226,8 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
-    --        OverrideActionBar        --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
     --            StanceBar            --
     ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --         ExtraActionBar         --
-    ----====####$$$$%%%%$$$$####====----
-    Skin.ExtraActionButtonTemplate(_G.ExtraActionButton1)
-
-    ----====####$$$$%%%%$$$$####====----
-    --        PossessActionBar        --
-    ----====####$$$$%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --       ActionBarController       --

@@ -67,11 +67,6 @@ function private.FrameXML.MerchantFrame()
     repairItem:SetTexture([[Interface\Icons\INV_Hammer_20]])
     Base.CropIcon(repairItem, _G.MerchantRepairItemButton)
 
-    _G.MerchantGuildBankRepairButton:SetPushedTexture("")
-    _G.MerchantGuildBankRepairButtonIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
-    _G.MerchantGuildBankRepairButtonIcon:SetVertexColor(0.9, 0.8, 0)
-    Base.CropIcon(_G.MerchantGuildBankRepairButtonIcon, _G.MerchantGuildBankRepairButton)
-
     do
         local name = _G.MerchantBuyBackItem:GetName()
         _G[name.."SlotTexture"]:Hide()
@@ -90,8 +85,6 @@ function private.FrameXML.MerchantFrame()
         _G[name.."MoneyFrame"]:SetPoint("BOTTOMLEFT", bg, 1, 1)
     end
 
-    _G.MerchantExtraCurrencyInset:SetAlpha(0)
-    Skin.ThinGoldEdgeTemplate(_G.MerchantExtraCurrencyBg, true)
     _G.MerchantMoneyInset:Hide()
     Skin.ThinGoldEdgeTemplate(_G.MerchantMoneyBg, true)
 
@@ -118,6 +111,4 @@ function private.FrameXML.MerchantFrame()
         _G.MerchantFrameTab1,
         _G.MerchantFrameTab2,
     })
-
-    Skin.UIDropDownMenuTemplate(_G.MerchantFrame.lootFilter)
 end

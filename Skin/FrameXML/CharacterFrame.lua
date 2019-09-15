@@ -3,9 +3,11 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals
 
+-- TODO: Added Pet Paperdoll panel and stats. Added Honor panel. Added Skill panel.
+
 --[[ Core ]]
 local Aurora = private.Aurora
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base, Skin = Aurora.Base, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 --do --[[ FrameXML\CharacterFrame.lua ]]
@@ -34,53 +36,22 @@ end
 
 function private.FrameXML.CharacterFrame()
     local CharacterFrame = _G.CharacterFrame
-    Skin.ButtonFrameTemplate(CharacterFrame)
-
-    CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
-    CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
-    CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
+    Base.SetBackdrop(CharacterFrame)
+    _G.CharacterFramePortrait:SetAlpha(0)
+    Skin.UIPanelCloseButton(_G.CharacterFrameCloseButton)
+    _G.CharacterFrameCloseButton:SetPoint("TOPRIGHT", CharacterFrame, "TOPRIGHT", 4, 5)
+    _G.CharacterNameFrame:SetPoint("TOP", CharacterFrame, "TOP", 0, -5)
 
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab1)
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab2)
     Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab3)
+    Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab4)
+    Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab5)
     Util.PositionRelative("TOPLEFT", CharacterFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.CharacterFrameTab1,
         _G.CharacterFrameTab2,
         _G.CharacterFrameTab3,
+        _G.CharacterFrameTab4,
+        _G.CharacterFrameTab5,
     })
-
-    Skin.InsetFrameTemplate(CharacterFrame.InsetRight)
-    CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)
-
-    local CharacterStatsPane = _G.CharacterStatsPane
-    _G.hooksecurefunc(CharacterStatsPane.statsFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-
-    local ClassBackground = CharacterStatsPane.ClassBackground
-    local atlas = "legionmission-landingpage-background-"..private.charClass.token
-    if private.isPatch then
-        local info = _G.C_Texture.GetAtlasInfo(atlas)
-        ClassBackground:ClearAllPoints()
-        ClassBackground:SetPoint("CENTER")
-        ClassBackground:SetSize(_G.Round(info.width * 0.7), _G.Round(info.height * 0.7))
-        ClassBackground:SetAtlas(atlas)
-        ClassBackground:SetDesaturated(true)
-        ClassBackground:SetAlpha(0.4)
-    else
-        local _, width, height = _G.GetAtlasInfo(atlas)
-        width, height = _G.Round(width * 0.7), _G.Round(height * 0.7)
-        ClassBackground:ClearAllPoints()
-        ClassBackground:SetPoint("CENTER")
-        ClassBackground:SetSize(width, height)
-        ClassBackground:SetAtlas(atlas)
-        ClassBackground:SetDesaturated(true)
-        ClassBackground:SetAlpha(0.4)
-    end
-
-
-    CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Shadow_Huge2")
-    CharacterStatsPane.ItemLevelFrame.Value:SetShadowOffset(0, 0)
-    CharacterStatsPane.ItemLevelFrame.Background:Hide()
-    Skin.CharacterStatFrameCategoryTemplate(CharacterStatsPane.ItemLevelCategory)
-    Skin.CharacterStatFrameCategoryTemplate(CharacterStatsPane.AttributesCategory)
-    Skin.CharacterStatFrameCategoryTemplate(CharacterStatsPane.EnhancementsCategory)
 end

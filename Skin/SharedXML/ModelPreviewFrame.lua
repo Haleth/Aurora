@@ -16,11 +16,10 @@ local Skin = Aurora.Skin
 function private.SharedXML.ModelPreviewFrame()
     local ModelPreviewFrame = _G.ModelPreviewFrame
 
-    --BlizzWTF: The close button added in this frame interferes with the one created in the template.
     local closeButton = ModelPreviewFrame.CloseButton
-    ModelPreviewFrame.CloseButton = select(2, ModelPreviewFrame:GetChildren())
     Skin.ButtonFrameTemplate(ModelPreviewFrame)
     Skin.MagicButtonTemplate(closeButton)
+    Skin.UIPanelCloseButton(_G.ModelPreviewFrameCloseButton)
     closeButton:SetPoint("BOTTOMRIGHT", -5, 5)
 
     ModelPreviewFrame.Display.YesMountsTex:Hide()

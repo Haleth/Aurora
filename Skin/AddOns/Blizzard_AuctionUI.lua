@@ -84,45 +84,18 @@ function private.AddOns.Blizzard_AuctionUI()
 
     --[[ Browse ]]--
     local filterButtonColor = {r = 0.2, g = 0.2, b = 0.2}
-    local wowTokenColor = _G.BAG_ITEM_QUALITY_COLORS[_G.LE_ITEM_QUALITY_WOW_TOKEN]
     _G.hooksecurefunc("FilterButton_SetUp", function(button, info)
         if not button._auroraSkinned then
             F.CreateBD(button, 0)
             button._auroraSkinned = true
         end
-        local color
-        if info.isToken then
-            color = wowTokenColor
-        else
-            color = filterButtonColor
-        end
+        local color = filterButtonColor
         button:SetBackdropColor(color.r, color.g, color.b, 0.6)
         button:SetBackdropBorderColor(color.r, color.g, color.b)
         button:SetNormalTexture("")
     end)
     SkinScroll(_G.BrowseFilterScrollFrame)
     SkinScroll(_G.BrowseScrollFrame)
-
-    -- WoW token
-    local BrowseWowTokenResults = _G.BrowseWowTokenResults
-    F.Reskin(BrowseWowTokenResults.Buyout)
-
-    local token = BrowseWowTokenResults.Token
-    token.ItemBorder:Hide()
-    local itemBG = F.CreateBDFrame(token.ItemBorder, .2)
-    itemBG:SetPoint("TOPLEFT", token.Icon, "TOPRIGHT", 3, 1)
-    itemBG:SetPoint("BOTTOMRIGHT", -2, 2)
-    local iconBG = F.ReskinIcon(token.Icon)
-    iconBG:SetBackdropBorderColor(wowTokenColor.r, wowTokenColor.g, wowTokenColor.b)
-    token.IconBorder:Hide()
-
-    local WowTokenGameTimeTutorial = _G.WowTokenGameTimeTutorial
-    F.ReskinPortraitFrame(WowTokenGameTimeTutorial, true)
-    WowTokenGameTimeTutorial.Tutorial:SetDrawLayer("BACKGROUND", 7)
-
-    F.Reskin(_G.StoreButton)
-    _G.StoreButton:SetSize(149, 26)
-    _G.StoreButton:SetPoint("TOPLEFT", _G.WowTokenGameTimeTutorial.RightDisplay.Tutorial2, "BOTTOMLEFT", 56, -12)
 
     SkinSort({"BrowseQualitySort", "BrowseLevelSort", "BrowseDurationSort", "BrowseHighBidderSort", "BrowseCurrentBidSort"})
     SkinList("BrowseButton", 5, _G.NUM_BROWSE_TO_DISPLAY)
@@ -133,17 +106,10 @@ function private.AddOns.Blizzard_AuctionUI()
     F.ReskinDropDown(_G.BrowseDropDown)
     F.ReskinCheck(_G.IsUsableCheckButton)
     F.ReskinCheck(_G.ShowOnPlayerCheckButton)
-    F.Reskin(_G.BrowseResetButton)
     F.Reskin(_G.BrowseSearchButton)
-
-    F.ReskinArrow(_G.BrowsePrevPageButton, "Left")
-    _G.BrowsePrevPageButton:SetPoint("TOPLEFT", 660, -60)
-    F.ReskinArrow(_G.BrowseNextPageButton, "Right")
-    _G.BrowseNextPageButton:SetPoint("TOPRIGHT", 67, -60)
 
     SkinButtons({_G.BrowseCloseButton, _G.BrowseBuyoutButton, _G.BrowseBidButton}, true)
     F.ReskinMoneyInput(_G.BrowseBidPrice)
-    F.ReskinCheck(_G.ExactMatchCheckButton)
 
     --[[ Bid ]]--
     SkinSort({"BidQualitySort", "BidLevelSort", "BidDurationSort", "BidBuyoutSort", "BidStatusSort", "BidBidSort"})
@@ -177,7 +143,6 @@ function private.AddOns.Blizzard_AuctionUI()
     F.ReskinDropDown(_G.PriceDropDown)
     F.ReskinMoneyInput(_G.StartPrice)
     F.ReskinMoneyInput(_G.BuyoutPrice)
-    F.ReskinDropDown(_G.DurationDropDown)
     SkinButtons({_G.AuctionsCloseButton, _G.AuctionsCancelAuctionButton})
     F.Reskin(_G.AuctionsCreateAuctionButton)
 

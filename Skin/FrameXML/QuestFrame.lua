@@ -72,11 +72,7 @@ do --[[ FrameXML\QuestFrame.lua ]]
         end
     end
     function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portraitDisplayID, mountPortraitDisplayID, text, name, x, y)
-        if parentFrame == _G.WorldMapFrame then
-            x = x + 2
-        else
-            x = x + 5
-        end
+        x = x + 5
 
         _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
     end
@@ -142,10 +138,8 @@ function private.FrameXML.QuestFrame()
     ----------------
     -- QuestFrame --
     ----------------
-    Skin.ButtonFrameTemplate(_G.QuestFrame)
+    _G.QuestFramePortrait:SetAlpha(0)
     -- BlizzWTF: This should use the title text included in the template
-    _G.QuestFrameNpcNameText:SetAllPoints(_G.QuestFrame.TitleText)
-
 
     Skin.QuestFramePanelTemplate(_G.QuestFrameRewardPanel)
     Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteQuestButton)

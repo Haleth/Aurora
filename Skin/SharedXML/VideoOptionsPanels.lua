@@ -31,7 +31,6 @@ do --[[ FrameXML\VideoOptionsPanels.xml ]]
     function Skin.RaidVideoOptionsSmallCheckButtonTemplate(Frame)
         Skin.VideoOptionsSmallCheckButtonTemplate(Frame)
     end
-
     function Skin.AdvancedVideoOptionsDropDownMenuTemplate(Frame)
         Skin.VideoOptionsDropDownMenuTemplate(Frame)
     end
@@ -69,7 +68,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ProjectedTexturesDropDown)
 
     -- Environment
-    Skin.VideoOptionsSliderTemplate(_G.Graphics_ViewDistanceSlider)
     Skin.VideoOptionsSliderTemplate(_G.Graphics_EnvironmentalDetailSlider)
     Skin.VideoOptionsSliderTemplate(_G.Graphics_GroundClutterSlider)
 
@@ -79,9 +77,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SunshaftsDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SSAODropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_DepthEffectsDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_LightingQualityDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_OutlineModeDropDown)
 
     ----------------
     -- Raid Panel --
@@ -96,7 +91,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ProjectedTexturesDropDown)
 
     -- Environment
-    Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_ViewDistanceSlider)
     Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_EnvironmentalDetailSlider)
     Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_GroundClutterSlider)
 
@@ -106,9 +100,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SunshaftsDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SSAODropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_DepthEffectsDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_LightingQualityDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_OutlineModeDropDown)
 
 
     Skin.TabButtonTemplate(_G.GraphicsButton)
@@ -124,8 +115,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_ResampleQualityDropDown)
-    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
-    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PhysicsInteractionDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
 
     Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)
@@ -139,11 +128,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsSliderTemplate(_G.Advanced_ContrastSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_BrightnessSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)
-
-    -- Stereo 3D
-    Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_StereoEnabled)
-    Skin.VideoOptionsSliderTemplate(_G.Advanced_Convergence)
-    Skin.VideoOptionsSliderTemplate(_G.Advanced_EyeSeparation)
 
     -------------------
     -- Network Panel --

@@ -160,18 +160,6 @@ function private.OnLoad()
         Base.CreateBackdrop(frame, backdrop)
         Base.SetBackdropColor(frame, color, alpha)
     end
-    _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
-        _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
-        _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
-        _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
-
-        _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
-            if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
-                _G.CharacterStatsPane.ItemLevelCategory:Hide()
-                _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
-            end
-        end)
-    end)
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags

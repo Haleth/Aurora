@@ -97,8 +97,6 @@ function private.FrameXML.TradeFrame()
     SkinTradeItems("Player")
 
     --[[ Recipient ]]--
-    _G.TradeFrame.RecipientOverlay.portrait:Hide()
-    _G.TradeFrame.RecipientOverlay.portraitFrame:Hide()
     _G.TradeRecipientBotLeftCorner:Hide()
     _G.TradeRecipientLeftBorder:Hide()
 

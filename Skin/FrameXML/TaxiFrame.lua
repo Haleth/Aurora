@@ -1,19 +1,21 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base, Skin = Aurora.Base, Aurora.Skin
 
 function private.FrameXML.TaxiFrame()
     local TaxiFrame = _G.TaxiFrame
-    TaxiFrame:DisableDrawLayer("BORDER")
-    TaxiFrame:DisableDrawLayer("OVERLAY")
-    TaxiFrame.Bg:Hide()
-    TaxiFrame.TitleBg:Hide()
-    TaxiFrame.TopTileStreaks:Hide()
+    _G.TaxiPortrait:SetAlpha(0)
+    for i = 2, 5 do
+        select(i, _G.TaxiFrame:GetRegions()):Hide()
+    end
 
-    F.SetBD(TaxiFrame, 3, -private.FRAME_TITLE_HEIGHT, -5, 3)
-    F.ReskinClose(TaxiFrame.CloseButton, "TOPRIGHT", _G.TaxiRouteMap, "TOPRIGHT", -6, -6)
+    Base.SetBackdrop(TaxiFrame)
+    _G.TaxiMerchant:SetPoint("TOP", 0, -5)
+    Skin.UIPanelCloseButton(_G.TaxiCloseButton)
+    _G.TaxiCloseButton:SetPoint("TOPRIGHT", 4, 4)
 end

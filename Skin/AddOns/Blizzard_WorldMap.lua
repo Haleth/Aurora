@@ -1,13 +1,13 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_WorldMap.lua ]]
     do --[[ Blizzard_WorldMap.lua ]]
@@ -26,6 +26,10 @@ end
 
 do --[[ AddOns\Blizzard_WorldMap.xml ]]
     do --[[ Blizzard_WorldMapTemplates.xml ]]
+        function Skin.WorldMapFrameTemplate(Frame)
+            Skin.MapCanvasFrameTemplate(Frame)
+            Skin.MapCanvasFrameScrollContainerTemplate(Frame.ScrollContainer)
+        end
         function Skin.WorldMapFloorNavigationFrameTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
         end
@@ -82,46 +86,21 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
         end
     end
 
-    do --[[ Blizzard_WorldMap.xml ]]
-        function Skin.WorldMapFrameTemplate(Frame)
-            Skin.MapCanvasFrameTemplate(Frame)
-            Skin.MapCanvasFrameScrollContainerTemplate(Frame.ScrollContainer)
-        end
-    end
-
 end
 
 function private.AddOns.Blizzard_WorldMap()
-    ----====####$$$$%%%%%$$$$####====----
-    --        Blizzard_WorldMap        --
-    ----====####$$$$%%%%%$$$$####====----
-    local WorldMapFrame = _G.WorldMapFrame
-    Util.Mixin(WorldMapFrame, Hook.WorldMapMixin)
-    Skin.WorldMapFrameTemplate(WorldMapFrame)
-
-    Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
-    WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
-
-    WorldMapFrame.BorderFrame.InsetBorderTop:Hide()
-    Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
-    WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)
-    Skin.MaximizeMinimizeButtonFrameTemplate(WorldMapFrame.BorderFrame.MaximizeMinimizeFrame)
-    WorldMapFrame.BorderFrame.MaximizeMinimizeFrame:SetPoint("RIGHT", WorldMapFrame.BorderFrame.CloseButton, "LEFT", -5, 0)
-
-    Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
-    Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
-    Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[3])
-    Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[4])
-    Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[5])
-
-    Skin.WorldMapNavBarTemplate(WorldMapFrame.NavBar)
-    WorldMapFrame.NavBar:SetPoint("BOTTOMRIGHT", WorldMapFrame.TitleCanvasSpacerFrame, -5, 5)
-
-    Skin.WorldMapSidePanelToggleTemplate(WorldMapFrame.SidePanelToggle)
-
     -------------
     -- Section --
     -------------
+    Aurora.Base.SetBackdrop(_G.WorldMapFrame)
+    for i = 1, 12 do
+        select(i, _G.WorldMapFrame.BorderFrame:GetRegions()):Hide()
+    end
+    _G.WorldMapFrame.BorderFrame:SetFrameStrata("HIGH")
+    Skin.UIDropDownMenuTemplate(_G.WorldMapContinentDropDown)
+    Skin.UIDropDownMenuTemplate(_G.WorldMapZoneDropDown)
+    Skin.UIPanelButtonTemplate(_G.WorldMapZoomOutButton)
+    Skin.UIPanelCloseButton(_G.WorldMapFrameCloseButton)
 
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_WorldMapTooltip    --

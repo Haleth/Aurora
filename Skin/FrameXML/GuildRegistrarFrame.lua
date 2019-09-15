@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -15,17 +15,15 @@ local Color = Aurora.Color
 --end
 
 function private.FrameXML.GuildRegistrarFrame()
-    Skin.ButtonFrameTemplate(_G.GuildRegistrarFrame)
+    _G.GuildRegistrarFramePortrait:SetAlpha(0)
+    for i = 2, 5 do
+        select(i, _G.GuildRegistrarFrame:GetRegions()):Hide()
+    end
+    Base.SetBackdrop(_G.GuildRegistrarFrame)
+    Skin.UIPanelCloseButton(_G.GuildRegistrarFrameCloseButton)
+    _G.GuildRegistrarFrameCloseButton:SetPoint("TOPRIGHT", 4, 4)
 
-    _G.GuildRegistrarFrameTop:Hide()
-    _G.GuildRegistrarFrameBottom:Hide()
-    _G.GuildRegistrarFrameMiddle:Hide()
-
-    -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-    _G.select(7, _G.GuildRegistrarFrame:GetRegions()):Hide() -- GuildRegistrarFrameBg
-
-    -- BlizzWTF: This should use the title text included in the template
-    _G.GuildRegistrarFrameNpcNameText:SetAllPoints(_G.GuildRegistrarFrame.TitleText)
+    _G.GuildRegistrarFrameNpcNameText:SetPoint("TOP", 0, -10)
 
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFrameCancelButton)
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFramePurchaseButton)
@@ -35,4 +33,6 @@ function private.FrameXML.GuildRegistrarFrame()
     local _, _, left, right = _G.GuildRegistrarFrameEditBox:GetRegions()
     left:Hide()
     right:Hide()
+
+    select(2, _G.GuildRegistrarGreetingFrame:GetRegions()):Hide()
 end

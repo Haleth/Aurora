@@ -6,7 +6,6 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Util = Aurora.Util
 
 do --[[ FrameXML\BankFrame.lua ]]
     function Hook.BankFrameItemButton_Update(button)
@@ -14,15 +13,11 @@ do --[[ FrameXML\BankFrame.lua ]]
             local container = button:GetParent():GetID()
             local buttonID = button:GetID()
 
-            if container == _G.REAGENTBANK_CONTAINER then
-                Skin.ReagentBankItemButtonGenericTemplate(button)
+            if button.isBag then
+                container = -4
+                Skin.BankItemButtonBagTemplate(button)
             else
-                if button.isBag then
-                    container = -4
-                    Skin.BankItemButtonBagTemplate(button)
-                else
-                    Skin.BankItemButtonGenericTemplate(button)
-                end
+                Skin.BankItemButtonGenericTemplate(button)
             end
 
             local _, _, _, quality, _, _, _, _, _, itemID = _G.GetContainerItemInfo(container, buttonID)
@@ -50,7 +45,6 @@ do --[[ FrameXML\BankFrame.xml ]]
         Skin.FrameTypeItemButton(ItemButton)
         Base.CropIcon(ItemButton:GetCheckedTexture())
     end
-    Skin.ReagentBankItemButtonGenericTemplate = Skin.BankItemButtonGenericTemplate
 
     -- BlizzWTF: Why is this not shared with ContainerFrame?
     function Skin.BankAutoSortButtonTemplate(Button)
@@ -73,20 +67,11 @@ function private.FrameXML.BankFrame()
     _G.hooksecurefunc("BankFrameItemButton_Update", Hook.BankFrameItemButton_Update)
 
     --[[ BankFrame ]]--
-    Skin.PortraitFrameTemplate(_G.BankFrame)
+    Base.SetBackdrop(_G.BankFrame)
     _G.BankPortraitTexture:Hide()
+    Skin.UIPanelCloseButton(_G.BankCloseButton)
+    -- TODO: Maybe that should be 6 now?
     select(7, _G.BankFrame:GetRegions()):Hide() -- Bank-Background
-
-    Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab1)
-    Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab2)
-    Util.PositionRelative("TOPLEFT", _G.BankFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        _G.BankFrameTab1,
-        _G.BankFrameTab2,
-    })
-
-    Skin.GlowBoxFrame(_G.BankFrame.GlowBox, "Left")
-    Skin.BagSearchBoxTemplate(_G.BankItemSearchBox)
-    Skin.BankAutoSortButtonTemplate(_G.BankItemAutoSortButton)
 
     local BankSlotsFrame = _G.BankSlotsFrame
     BankSlotsFrame:DisableDrawLayer("BORDER")
@@ -94,18 +79,5 @@ function private.FrameXML.BankFrame()
     select(10, BankSlotsFrame:GetRegions()):SetDrawLayer("OVERLAY") -- BAGSLOTTEXT
 
     Skin.UIPanelButtonTemplate(_G.BankFramePurchaseButton)
-    Skin.InsetFrameTemplate(_G.BankFrameMoneyFrameInset)
-    Skin.ThinGoldEdgeTemplate(_G.BankFrameMoneyFrameBorder)
-
-
-    --[[ ReagentBankFrame ]]--
-    local ReagentBankFrame = _G.ReagentBankFrame
-    ReagentBankFrame:DisableDrawLayer("BACKGROUND")
-    ReagentBankFrame:DisableDrawLayer("BORDER")
-    ReagentBankFrame:DisableDrawLayer("ARTWORK")
-
-    Skin.UIPanelButtonTemplate(ReagentBankFrame.DespositButton)
-
-    ReagentBankFrame.UnlockInfo:DisableDrawLayer("BORDER")
-    Skin.UIPanelButtonTemplate(_G.ReagentBankFrameUnlockInfoPurchaseButton) -- BlizzWTF: no parentKey?
+    Skin.SmallMoneyFrameTemplate(_G.BankFrameMoneyFrameInset)
 end

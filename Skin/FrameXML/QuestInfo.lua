@@ -68,7 +68,6 @@ function private.FrameXML.QuestInfo()
         end
     end
 
-    _G.hooksecurefunc("QuestMapFrame_ShowQuestDetails", colourObjectivesText)
     _G.hooksecurefunc("QuestInfo_Display", function(template, parentFrame, acceptButton, material, mapView)
         private.debug("QuestInfo_Display")
         local rewardsFrame = _G.QuestInfoFrame.rewardsFrame

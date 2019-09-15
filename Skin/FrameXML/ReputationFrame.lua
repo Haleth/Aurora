@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next type
+-- luacheck: globals select next type
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -12,13 +12,6 @@ do --[[ FrameXML\ReputationFrame.lua ]]
     function Hook.ReputationFrame_OnShow(self)
         -- The TOPRIGHT anchor for ReputationBar1 is set in C code
         _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -49)
-    end
-    function Hook.ReputationFrame_SetRowType(factionRow, isChild, isHeader, hasRep)
-        for _, texture in next, factionRow._auroraBackdrop do
-            if type(texture) == "table" and texture.SetShown then
-                texture:SetShown(not isHeader)
-            end
-        end
     end
     function Hook.ReputationFrame_Update(self)
         for i = 1, _G.NUM_FACTIONS_DISPLAYED do
@@ -56,43 +49,30 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         end
     end
 
-    function Skin.ReputationBarTemplate(Button)
-        local factionRowName = Button:GetName()
+    function Skin.ReputationBarTemplate(Frame)
+        local factionRowName = Frame:GetName()
 
-        Button.Background = _G[factionRowName.."Background"]
-        Base.CreateBackdrop(Button, private.backdrop, {bg = Button.Background})
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
+        Base.SetBackdrop(Frame, Color.button)
+        Base.SetHighlight(Frame, "backdrop", OnEnter, OnLeave)
 
-        Skin.ExpandOrCollapse(_G[factionRowName.."ExpandOrCollapseButton"])
-
-        local statusName = factionRowName.."ReputationBar"
-        local statusBar = _G[statusName]
-        Skin.FrameTypeStatusBar(statusBar)
-        statusBar:ClearAllPoints()
-        statusBar:SetPoint("TOPRIGHT", -2, -2)
-        statusBar:SetPoint("BOTTOMLEFT", Button, "BOTTOMRIGHT", -102, 2)
-
-        _G[statusName.."LeftTexture"]:Hide()
-        _G[statusName.."RightTexture"]:Hide()
-
-        _G[statusName.."AtWarHighlight2"]:SetAlpha(0)
-        _G[statusName.."AtWarHighlight1"]:SetAlpha(0)
-
-        _G[statusName.."Highlight2"]:SetAlpha(0)
-        _G[statusName.."Highlight1"]:SetAlpha(0)
-
+        _G[factionRowName.."ReputationBarLeft"]:Hide()
+        _G[factionRowName.."ReputationBarRight"]:Hide()
+        _G[factionRowName.."Highlight2"]:SetAlpha(0)
+        _G[factionRowName.."Highlight1"]:SetAlpha(0)
     end
 end
 
 function private.FrameXML.ReputationFrame()
     _G.ReputationFrame:HookScript("OnShow", Hook.ReputationFrame_OnShow)
-    _G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
     _G.hooksecurefunc("ReputationFrame_Update", Hook.ReputationFrame_Update)
 
     ---------------------
     -- ReputationFrame --
     ---------------------
+    -- Hide BG
+    for i = 1, 4 do
+        select(i, _G.ReputationFrame:GetRegions()):Hide()
+    end
     Skin.ReputationBarTemplate(_G.ReputationBar1)
     for i = 2, _G.NUM_FACTIONS_DISPLAYED do
         local factionRow = _G["ReputationBar"..i]
@@ -140,5 +120,4 @@ function private.FrameXML.ReputationFrame()
     _G.ReputationDetailAtWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 10, -6)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
     Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
-    Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailLFGBonusReputationCheckBox)
 end

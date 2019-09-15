@@ -46,13 +46,10 @@ function private.FrameXML.AudioOptionsPanels()
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelEmoteSounds)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelMusic)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelLoopMusic)
-    Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelPetBattleMusic)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelAmbientSounds)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelDialogSounds)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelErrorSpeech)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelSoundInBG)
-    Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelReverb)
-    Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelHRTF)
 
     -- Hardware
     Skin.OptionsBoxTemplate(_G.AudioOptionsSoundPanelHardware)

@@ -1,11 +1,11 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\GossipFrame.lua ]]
@@ -64,13 +64,16 @@ function private.FrameXML.GossipFrame()
     -----------------
     -- GossipFrame --
     -----------------
-    Skin.ButtonFrameTemplate(_G.GossipFrame)
+    _G.GossipFramePortrait:SetAlpha(0)
+    for i = 1, 4 do
+        select(i, _G.GossipFrameGreetingPanel:GetRegions()):Hide()
+    end
+    select(9, _G.GossipFrameGreetingPanel:GetRegions()):Hide()
+    Base.SetBackdrop(_G.GossipFrame)
+    Skin.UIPanelCloseButton(_G.GossipFrameCloseButton)
+    _G.GossipFrameCloseButton:SetPoint("TOPRIGHT", 4, 4)
 
-    -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-    _G.select(7, _G.GossipFrame:GetRegions()):Hide() -- GossipFrameBg
-
-    -- BlizzWTF: This should use the title text included in the template
-    _G.GossipFrameNpcNameText:SetAllPoints(_G.GossipFrame.TitleText)
+    --_G.GossipFrameNpcNameText:SetAllPoints(_G.GossipFrame.TitleText)
 
     Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
     Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)

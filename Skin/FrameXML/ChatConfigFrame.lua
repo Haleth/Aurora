@@ -263,11 +263,6 @@ function private.FrameXML.ChatConfigFrame()
     Skin.UIRadioButtonTemplate(_G.CombatConfigColorsColorizeEntireLineByTarget)
 
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowTimeStamp)
-    Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowBraces)
-    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingUnitNames)
-    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingSpellNames)
-    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingItemNames)
-    Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingFullText)
 
     Skin.InputBoxTemplate(_G.CombatConfigSettingsNameEditBox)
     Skin.UIPanelButtonTemplate(_G.CombatConfigSettingsSaveButton)

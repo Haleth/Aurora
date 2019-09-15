@@ -214,15 +214,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         bg:SetPoint("TOPLEFT", 3, -10)
         bg:SetPoint("BOTTOMRIGHT", -11, 4)
 
-        Button:SetNormalTexture("")
-        Button:SetHighlightTexture("")
-        Button:SetPushedTexture("")
+        if Button.SetNormalTexture then Button:SetNormalTexture("") end
+        if Button.SetHighlightTexture then Button:SetHighlightTexture("") end
+        if Button.SetPushedTexture then Button:SetPushedTexture("") end
 
-        local dis = Button:GetDisabledTexture()
-        if dis then
-            dis:SetColorTexture(0, 0, 0, .4)
-            dis:SetDrawLayer("OVERLAY")
-            dis:SetAllPoints(bg)
+        if Button.GetDisabledTexture then
+            local dis = Button:GetDisabledTexture()
+            if dis then
+                dis:SetColorTexture(0, 0, 0, .4)
+                dis:SetDrawLayer("OVERLAY")
+                dis:SetAllPoints(bg)
+            end
         end
 
         local cross = {}
@@ -318,22 +320,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.InsetFrameTemplate(Frame)
         Frame.Bg:Hide()
-        for _, tex in next, Frame.NineSlice do
-            if type(tex) == "table" then
-                tex:Hide()
-            end
-        end
+        Frame:DisableDrawLayer("BORDER")
     end
 
-    function Skin.SimplePanelTemplate(Frame)
-        Skin.InsetFrameTemplate(Frame.Inset)
-        Frame.NineSlice.Center = Frame.Bg
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        Base.SetBackdrop(Frame.NineSlice)
+    function Skin.PortraitFrameTemplateNoCloseButton_HiRes(Frame)
+        Skin.PortraitFrameTemplateNoCloseButton(Frame)
     end
-
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
+        Base.SetBackdrop(Frame)
         Frame.TitleBg:Hide()
+        Frame.Bg:Hide()
+        Frame:DisableDrawLayer("BORDER")
         Frame.portrait:SetAlpha(0)
 
         local titleText = Frame.TitleText
@@ -342,9 +339,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
         Frame.TopTileStreaks:SetTexture("")
-        Frame.NineSlice.Center = Frame.Bg
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        Base.SetBackdrop(Frame.NineSlice)
+        Frame.TopLeftCorner:SetTexture("")
+        Frame.TopRightCorner:SetTexture("")
+        Frame.BotLeftCorner:SetTexture("")
+        Frame.BotRightCorner:SetTexture("")
+        Frame.TopBorder:SetTexture("")
+        Frame.BottomBorder:SetTexture("")
+        Frame.LeftBorder:SetTexture("")
+        Frame.RightBorder:SetTexture("")
+    end
+    function Skin.PortraitFrameTemplate_HiRes(Frame)
+        Skin.PortraitFrameTemplate(Frame)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)

@@ -27,7 +27,6 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
         Button.selectedHighlight:SetPoint("TOPLEFT", Button._auroraBDFrame, 1, -1)
         Button.selectedHighlight:SetPoint("BOTTOMRIGHT", Button._auroraBDFrame, -1, 1)
     end
-    Skin.CRFManagerFilterRoleButtonTemplate = Skin.CRFManagerFilterButtonTemplate
     Skin.CRFManagerFilterGroupButtonTemplate = Skin.CRFManagerFilterButtonTemplate
     function Skin.CRFManagerRaidIconButtonTemplate(Button)
         Button:SetSize(24, 24)
@@ -91,9 +90,6 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     footerDelineator:SetPoint("BOTTOMRIGHT", 4, 7)
     footerDelineator:SetHeight(1)
 
-    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleTank)
-    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
-    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
     for i = 1, 8 do
         Skin.CRFManagerFilterGroupButtonTemplate(filterOptions["filterGroup"..i])
     end
@@ -108,9 +104,7 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     end
 
     local leaderOptions = displayFrame.leaderOptions
-    Skin.UIMenuButtonStretchTemplate(leaderOptions.rolePollButton)
     Skin.UIMenuButtonStretchTemplate(leaderOptions.readyCheckButton)
-    Skin.UIMenuButtonStretchTemplate(_G[leaderOptions:GetName().."RaidWorldMarkerButton"])
 
     Skin.UICheckButtonTemplate(displayFrame.everyoneIsAssistButton)
 end

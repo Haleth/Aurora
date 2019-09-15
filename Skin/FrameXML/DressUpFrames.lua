@@ -30,23 +30,28 @@ function private.FrameXML.DressUpFrames()
 
 
     -- Dressup Frame
+    _G.DressUpFramePortrait:SetAlpha(0)
     local DressUpFrame = _G.DressUpFrame
-    F.ReskinPortraitFrame(DressUpFrame, true)
+    F.CreateBG(DressUpFrame)
+    DressUpFrame:DisableDrawLayer("OVERLAY")
+    for i = 2, 5 do
+        select(i, DressUpFrame:GetRegions()):Hide()
+    end
+    F.ReskinClose(_G.DressUpFrameCloseButton)
+    _G.DressUpFrameCloseButton:SetPoint("TOPRIGHT", DressUpFrame, "TOPRIGHT", 4, 5)
 
-    F.ReskinDropDown(_G.DressUpFrameOutfitDropDown)
-    F.Reskin(_G.DressUpFrameOutfitDropDown.SaveButton)
+    Skin.RotateOrbitCameraRightButtonTemplate(_G.DressUpModelFrameRotateLeftButton)
+    Skin.RotateOrbitCameraLeftButtonTemplate(_G.DressUpModelFrameRotateRightButton)
 
-    Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
-    DressUpFrame.MaxMinButtonFrame:ClearAllPoints()
-    DressUpFrame.MaxMinButtonFrame:SetPoint("TOPRIGHT", DressUpFrame.CloseButton, "TOPLEFT", -1, 0)
+    local DressUpModelFrame = _G.DressUpModelFrame
+    --DressUpModelFrame:SetDrawLayer("BACKGROUND", 3)
+    DressUpModelFrame:ClearAllPoints()
+    DressUpModelFrame:SetPoint("TOPLEFT")
+    DressUpModelFrame:SetPoint("BOTTOMRIGHT")
+    DressUpModelFrame:SetAlpha(0.6)
 
     F.Reskin(_G.DressUpFrameCancelButton)
     F.Reskin(_G.DressUpFrameResetButton)
+    _G.DressUpFrameCancelButton:SetPoint("BOTTOMRIGHT", DressUpFrame, "BOTTOMRIGHT", -1, 0)
     _G.DressUpFrameResetButton:SetPoint("RIGHT", _G.DressUpFrameCancelButton, "LEFT", -1, 0)
-
-    DressUpFrame.ModelBackground:SetDrawLayer("BACKGROUND", 3)
-    DressUpFrame.ModelBackground:ClearAllPoints()
-    DressUpFrame.ModelBackground:SetPoint("TOPLEFT")
-    DressUpFrame.ModelBackground:SetPoint("BOTTOMRIGHT")
-    DressUpFrame.ModelBackground:SetAlpha(0.6)
 end

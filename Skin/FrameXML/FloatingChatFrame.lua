@@ -97,14 +97,12 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         bottom:SetPoint("BOTTOMRIGHT", -3, 3)
         bottom:SetColorTexture(1, 1, 1)
 
-        Skin.ScrollBarThumb(ScrollingMessageFrame.ScrollBar.ThumbTexture)
-
         Hook.FCF_SetButtonSide(ScrollingMessageFrame, _G.FCF_GetButtonSide(ScrollingMessageFrame))
         _G.FloatingChatFrame_UpdateBackgroundAnchors(ScrollingMessageFrame)
 
         Skin.ChatFrameEditBoxTemplate(ScrollingMessageFrame.editBox)
         ScrollingMessageFrame.editBox:SetPoint("TOPLEFT", ScrollingMessageFrame, "BOTTOMLEFT", 0, -5)
-        ScrollingMessageFrame.editBox:SetPoint("RIGHT", ScrollingMessageFrame.ScrollBar)
+        ScrollingMessageFrame.editBox:SetPoint("RIGHT", ScrollingMessageFrame)
     end
     function Skin.FloatingChatFrameMinimizedTemplate(Button)
         Button:SetSize(172, 23)
@@ -168,11 +166,6 @@ function private.FrameXML.FloatingChatFrame()
     chatIcon:SetPoint("TOPLEFT", _G.ChatFrameMenuButton, 3, -3)
     chatIcon:SetPoint("BOTTOMRIGHT", _G.ChatFrameMenuButton, -3, 3)
     chatIcon:SetTexture([[Interface\GossipFrame\ChatBubbleGossipIcon]])
-
-    Skin.VoiceToggleButtonTemplate(_G.ChatFrameChannelButton)
-    _G.ChatFrameChannelButton:SetPoint("TOP", _G.ChatFrame1ButtonFrame, 0, -3)
-    Skin.ToggleVoiceDeafenButtonTemplate(_G.ChatFrameToggleVoiceDeafenButton)
-    Skin.ToggleVoiceMuteButtonTemplate(_G.ChatFrameToggleVoiceMuteButton)
 
     Skin.UIMenuTemplate(_G.ChatMenu)
     Skin.UIMenuTemplate(_G.EmoteMenu)

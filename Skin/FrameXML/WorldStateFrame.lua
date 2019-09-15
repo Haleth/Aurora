@@ -1,14 +1,14 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
-do --[[ FrameXML\WorldStateFrame.lua ]]
+do --[[ FrameXML\MainHelpPlateButton.lua ]]
     function Hook.CaptureBar_Create(id)
         Skin.WorldStateCaptureBarTemplate(_G["WorldStateCaptureBar"..id])
      end
@@ -80,10 +80,16 @@ do --[[ FrameXML\WorldStateFrame.xml ]]
 end
 
 function private.FrameXML.WorldStateFrame()
-    local MAX_SCORE_BUTTONS = 20
+    local MAX_SCORE_BUTTONS = 22
 
-    Skin.ButtonFrameTemplate(_G.WorldStateScoreFrame)
-    Skin.PVPHonorSystemLargeXPBar(_G.WorldStateScoreFrame.XPBar)
+    for i = 1, 6 do
+        select(i, _G.WorldStateScoreFrame:GetRegions()):Hide()
+    end
+    select(8, _G.WorldStateScoreFrame:GetRegions()):Hide()
+    Base.SetBackdrop(_G.WorldStateScoreFrame)
+    Skin.UIPanelCloseButton(_G.WorldStateScoreFrameCloseButton)
+    _G.WorldStateScoreFrameCloseButton:SetPoint("TOPRIGHT", 4, 4)
+    _G.WorldStateScoreFrameLabel:SetPoint("TOP", 0, -10)
 
     for i = 1, MAX_SCORE_BUTTONS do
         Skin.WorldStateScoreTemplate(_G["WorldStateScoreButton" .. i])
@@ -104,7 +110,6 @@ function private.FrameXML.WorldStateFrame()
         _G.WorldStateScoreFrameTab3,
     })
 
-    Skin.UIPanelButtonTemplate(_G.WorldStateScoreFrameQueueButton)
     Skin.UIPanelButtonTemplate(_G.WorldStateScoreFrameLeaveButton)
 
     _G.WorldStateScoreWinnerFrameLeft:SetTexture([[Interface\Buttons\WHITE8x8]])

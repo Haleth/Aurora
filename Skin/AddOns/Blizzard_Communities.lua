@@ -48,17 +48,6 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self._iconBorder:Show()
             self._iconBorder:SetColorTexture(Color.black:GetRGB())
         end
-        function Hook.CommunitiesListEntryMixin:SetGuildFinder()
-            self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-            self.Selection:Show()
-
-            self.CircleMask:Hide()
-            self.Icon:SetTexCoord(0, 1, 0, 1)
-            self.Icon:ClearAllPoints()
-            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 3)
-
-            self._iconBorder:Hide()
-        end
     end
     do --[[ CommunitiesSettings ]]
         Hook.CommunitiesSettingsDialogMixin = {}
@@ -100,10 +89,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             Button.Selection:SetAllPoints(bg)
 
-            Button.GuildTabardBackground:SetPoint("TOPLEFT", 6, -15)
-            Button.GuildTabardEmblem:SetPoint("TOPLEFT", 11, -15)
-            Button.GuildTabardBorder:SetPoint("TOPLEFT", 6, -15)
-
             Button.CircleMask:Hide()
             Button._iconBorder = Base.CropIcon(Button.Icon, Button)
             Button._iconBorder:SetPoint("TOPLEFT", bg)
@@ -142,9 +127,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ListScrollFrame.scrollBar.Background:Hide()
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
-        function Skin.GuildMemberListDropDownMenuTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame)
-        end
     end
     do --[[ CommunitiesChatFrame ]]
         function Skin.CommunitiesChatTemplate(Frame)
@@ -182,12 +164,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesInviteButtonTemplate(Frame)
             Skin.UIPanelDynamicResizeButtonTemplate(Frame)
-        end
-    end
-    do --[[ CommunitiesGuildFinderFrame ]]
-        function Skin.CommunitiesGuildFinderFrameTemplate(Frame)
-            Skin.UIPanelButtonTemplate(Frame.FindAGuildButton)
-            Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
     end
     do --[[ CommunitiesStreams ]]
@@ -233,7 +209,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     do --[[ CommunitiesTabs ]]
         function Skin.CommunitiesFrameTabTemplate(CheckButton)
             Skin.SideTabTemplate(CheckButton)
-            CheckButton.IconOverlay:Hide()
         end
     end
     do --[[ CommunitiesSettings ]]
@@ -399,41 +374,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
     end
     do --[[ CommunitiesFrame ]]
-        function Skin.GuildBenefitsFrameTemplate(Frame)
-            Skin.CommunitiesGuildPerksFrameTemplate(Frame.Perks)
-            Skin.CommunitiesGuildRewardsFrameTemplate(Frame.Rewards)
-            Skin.GuildRewardsTutorialButtonTemplate(Frame.GuildRewardsTutorialButton)
-            Skin.GuildAchievementPointDisplayTemplate(Frame.GuildAchievementPointDisplay)
-            Skin.CommunitiesGuildProgressBarTemplate(Frame.FactionFrame.Bar)
-
-            Frame.InsetBorderTopLeft:Hide()
-            Frame.InsetBorderTopRight:Hide()
-            Frame.InsetBorderBottomLeft:Hide()
-            Frame.InsetBorderBottomRight:Hide()
-            Frame.InsetBorderLeft:Hide()
-            Frame.InsetBorderRight:Hide()
-            Frame.InsetBorderTopLeft2:Hide()
-            Frame.InsetBorderBottomLeft2:Hide()
-            Frame.InsetBorderLeft2:Hide()
-        end
-        function Skin.GuildDetailsFrameTemplate(Frame)
-            Skin.CommunitiesGuildInfoFrameTemplate(Frame.Info)
-            Skin.CommunitiesGuildNewsFrameTemplate(Frame.News)
-
-            Frame.InsetBorderTopLeft:Hide()
-            Frame.InsetBorderTopRight:Hide()
-            Frame.InsetBorderBottomLeft:Hide()
-            Frame.InsetBorderBottomRight:Hide()
-            Frame.InsetBorderLeft:Hide()
-            Frame.InsetBorderRight:Hide()
-            Frame.InsetBorderTopLeft2:Hide()
-            Frame.InsetBorderBottomLeft2:Hide()
-            Frame.InsetBorderLeft2:Hide()
-        end
         function Skin.CommunitiesControlFrameTemplate(Frame)
             Skin.CommunitiesSettingsButtonTemplate(Frame.CommunitiesSettingsButton)
-            Skin.UIPanelButtonTemplate(Frame.GuildControlButton)
-            Skin.UIPanelButtonTemplate(Frame.GuildRecruitmentButton)
+        end
+        function Skin.CommunitiesFrameFriendTabTemplate(Frame)
+            Skin.FriendsFrameTabTemplate(Frame)
         end
     end
 end
@@ -455,10 +400,6 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%$$$$####====----
     --   CommunitiesInvitationFrame   --
     ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --   CommunitiesGuildFinderFrame   --
-    ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%$$$$####====----
     --       CommunitiesStreams       --
@@ -572,37 +513,37 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.RosterTab)
-    Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.GuildBenefitsTab)
-    Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.GuildInfoTab)
     Util.PositionRelative("TOPLEFT", CommunitiesFrame, "TOPRIGHT", 1, -40, 5, "Down", {
         CommunitiesFrame.ChatTab,
         CommunitiesFrame.RosterTab,
-        CommunitiesFrame.GuildBenefitsTab,
-        CommunitiesFrame.GuildInfoTab,
     })
 
     Skin.StreamDropDownMenuTemplate(CommunitiesFrame.StreamDropDownMenu)
-    Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropDownMenu)
     Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropDownMenu)
-    Skin.CommunitiesCalendarButtonTemplate(CommunitiesFrame.CommunitiesCalendarButton)
     Skin.CommunitiesMemberListFrameTemplate(CommunitiesFrame.MemberList)
     Skin.CommunitiesChatTemplate(CommunitiesFrame.Chat)
     Skin.CommunitiesChatEditBoxTemplate(CommunitiesFrame.ChatEditBox)
 
     Skin.CommunitiesInvitationFrameTemplate(CommunitiesFrame.InvitationFrame)
     Skin.CommunitiesTicketFrameTemplate(CommunitiesFrame.TicketFrame)
-    Skin.CommunitiesGuildFinderFrameTemplate(CommunitiesFrame.GuildFinderFrame)
-    Skin.GuildBenefitsFrameTemplate(CommunitiesFrame.GuildBenefitsFrame)
-    Skin.GuildDetailsFrameTemplate(CommunitiesFrame.GuildDetailsFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
     Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
     Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
     Skin.CommunitiesInviteButtonTemplate(CommunitiesFrame.InviteButton)
     Skin.CommunitiesControlFrameTemplate(CommunitiesFrame.CommunitiesControlFrame)
-    Skin.UIPanelButtonTemplate(CommunitiesFrame.GuildLogButton)
-    Skin.CommunitiesGuildMemberDetailFrameTemplate(CommunitiesFrame.GuildMemberDetailFrame)
-
+    Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab1)
+    Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab2)
+    Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab3)
+    Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab4)
+    Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab5)
+    Util.PositionRelative("TOPLEFT", _G.CommunitiesFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.CommunitiesFrameTab1,
+        _G.CommunitiesFrameTab2,
+        _G.CommunitiesFrameTab3,
+        _G.CommunitiesFrameTab4,
+        _G.CommunitiesFrameTab5,
+    })
     -------------
     -- Section --
     -------------

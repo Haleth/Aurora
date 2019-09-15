@@ -64,25 +64,6 @@ function private.FrameXML.HelpFrame()
     suggestionScrollFrame.ScrollBar:SetPoint("TOPLEFT", suggestionScrollFrame, "TOPRIGHT", -17, -17)
     suggestionScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", suggestionScrollFrame, "BOTTOMRIGHT", -17, 17)
 
-
-    -- HelpBrowser
-    local HelpBrowser = _G.HelpBrowser
-    HelpBrowser.BrowserInset:Hide()
-    F.CreateBDFrame(HelpBrowser)
-
-    for key, arrow in next, {settings=false, home=false, back = "Left", forward = "Right", reload=false, stop=false} do
-        if arrow then
-            F.ReskinArrow(HelpBrowser[key], arrow)
-        else
-            F.Reskin(HelpBrowser[key])
-            HelpBrowser[key].Icon:SetDesaturated(true)
-        end
-        HelpBrowser[key]:SetSize(20, 20)
-    end
-    HelpBrowser.settings:SetPoint("TOPRIGHT", HelpBrowser, "TOPLEFT", 19, 22)
-    HelpBrowser.home:SetPoint("BOTTOMLEFT", HelpBrowser.settings, "BOTTOMRIGHT", 3, 0)
-    HelpBrowser.loading:SetPoint("TOPLEFT", HelpBrowser.stop, "TOPRIGHT", -8, 10)
-
     for i = 1, 9 do
         select(i, _G.BrowserSettingsTooltip:GetRegions()):Hide()
     end

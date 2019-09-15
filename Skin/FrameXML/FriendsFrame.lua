@@ -5,8 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
-local Skin = Aurora.Skin
+local Base, Skin, Util = Aurora.Base, Aurora.Skin, Aurora.Util
 local F, C = _G.unpack(private.Aurora)
 
 --do --[[ FrameXML\FriendsFrame.lua ]]
@@ -26,16 +25,24 @@ function private.FrameXML.FriendsFrame()
 
     F.ReskinPortraitFrame(_G.FriendsFrame, true)
     _G.FriendsFrameIcon:Hide()
+    _G.FriendsFramePortraitFrame:Hide()
 
     --F.ReskinDropDown(_G.FriendsDropDown)
     --F.ReskinDropDown(_G.TravelPassDropDown)
+    --Skin.UIPanelScrollFrameTemplate(_G.FriendsFrameFriendsScrollFrame)
 
-    for i = 1, 3 do
-        local name = "FriendsFrameTab"..i
-        local tab = _G[name]
-        F.ReskinTab(tab)
-        _G[name.."Text"]:SetPoint("CENTER", tab)
-    end
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab1)
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab2)
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab3)
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab4)
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab5)
+    Util.PositionRelative("TOPLEFT", _G.FriendsFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.FriendsFrameTab1,
+        _G.FriendsFrameTab2,
+        _G.FriendsFrameTab3,
+        _G.FriendsFrameTab4,
+        _G.FriendsFrameTab5,
+    })
 
     -- Friends header
     local bnetFrame = _G.FriendsFrameBattlenetFrame
@@ -73,7 +80,7 @@ function private.FrameXML.FriendsFrame()
     F.ReskinDropDown(_G.FriendsFrameStatusDropDown)
     _G.FriendsFrameBroadcastInput:SetWidth(250)
     F.ReskinInput(_G.FriendsFrameBroadcastInput)
-    F.ReskinTab("FriendsTabHeaderTab", 3)
+    F.ReskinTab("FriendsTabHeaderTab", 2)
 
     for _, key in next, {"RaFButton", "soRButton"} do
         local button = _G.FriendsTabHeader[key]
@@ -250,4 +257,27 @@ function private.FrameXML.FriendsFrame()
     local send, cancel = _G.BattleTagInviteFrame:GetChildren()
     F.Reskin(send)
     F.Reskin(cancel)
+
+    -- Guild
+    select(5, _G.GuildFrame:GetRegions()):Hide()
+    select(6, _G.GuildFrame:GetRegions()):Hide()
+    Skin.UIPanelButtonTemplate(_G.GuildFrameGuildInformationButton)
+    Skin.UIPanelButtonTemplate(_G.GuildFrameAddMemberButton)
+    Skin.UIPanelButtonTemplate(_G.GuildFrameControlButton)
+    Skin.UIPanelButtonTemplate(_G.GuildControlPopupFrameCancelButton)
+    Skin.UIPanelButtonTemplate(_G.GuildControlPopupAcceptButton)
+    Skin.UIDropDownMenuTemplate(_G.GuildControlPopupFrameDropDown)
+
+    Base.SetBackdrop(_G.GuildInfoFrame)
+    select(3, _G.GuildInfoFrame:GetRegions()):Hide()
+    _G.GuildInfoCorner:Hide()
+    Base.SetBackdrop(_G.GuildInfoTextBackground)
+    Skin.UIPanelScrollFrameTemplate(_G.GuildInfoFrameScrollFrame)
+    Skin.UIPanelCloseButton(_G.GuildInfoCloseButton)
+    Skin.UIPanelButtonTemplate(_G.GuildInfoSaveButton)
+    Skin.UIPanelButtonTemplate(_G.GuildInfoCancelButton)
+
+    --for i = 1, 13 do
+    --    Skin.GuildControlPopupFrameCheckboxTemplate(_G.["GuildControlPopupFrameCheckbox"..i])
+    --end
 end

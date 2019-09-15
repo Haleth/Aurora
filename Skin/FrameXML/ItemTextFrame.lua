@@ -45,11 +45,12 @@ end
 function private.FrameXML.ItemTextFrame()
     _G.ItemTextFrame:HookScript("OnEvent", Hook.ItemTextFrame_OnEvent)
 
-    Skin.ButtonFrameTemplate(_G.ItemTextFrame)
-
     -- BlizzWTF: The portrait in the template is not being used.
-    select(6, _G.ItemTextFrame:GetRegions()):Hide()
-    _G.ItemTextFramePageBg:SetAlpha(0)
+    for i = 1, 5 do
+        select(i, _G.ItemTextFrame:GetRegions()):Hide()
+    end
+    Skin.UIPanelCloseButton(_G.ItemTextCloseButton)
+    --Skin.ButtonFrameTemplate(_G.ItemTextFrame)
 
     _G.ItemTextMaterialTopLeft:SetAlpha(0)
     _G.ItemTextMaterialTopRight:SetAlpha(0)
@@ -58,9 +59,10 @@ function private.FrameXML.ItemTextFrame()
 
     _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT * 1.25))
 
-    Skin.UIPanelStretchableArtScrollBarTemplate(_G.ItemTextScrollFrame.ScrollBar)
-    _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
-    _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
+    Skin.UIPanelScrollFrameTemplate(_G.ItemTextScrollFrame)
+    _G.ItemTextScrollFrameTop:Hide()
+    _G.ItemTextScrollFrameBottom:Hide()
+    _G.ItemTextScrollFrameMiddle:Hide()
 
     Skin.FrameTypeStatusBar(_G.ItemTextStatusBar)
     _G.ItemTextStatusBar:SetHeight(17)

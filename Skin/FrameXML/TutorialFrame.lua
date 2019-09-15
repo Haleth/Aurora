@@ -1,12 +1,11 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next
+-- luacheck: globals next MAX_TUTORIAL_ALERTS
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
 
 do --[[ FrameXML\TutorialFrame.lua ]]
     local MAX_TUTORIAL_IMAGES = 3
@@ -64,15 +63,14 @@ do --[[ FrameXML\TutorialFrame.lua ]]
         end
     end
 
-    local skinnedPlates = 0
-    function Hook.HelpPlate_GetButton()
-        if skinnedPlates < #_G.HELP_PLATE_BUTTONS then
-            skinnedPlates = skinnedPlates + 1
-            local button = _G.HELP_PLATE_BUTTONS[skinnedPlates]
-            Skin.HelpPlateButton(button)
-            Skin.HelpPlateBox(button.box)
-            Skin.HelpPlateBoxHighlight(button.boxHighlight)
-        end
+    function Skin.TutorialFrameAlertButtonTemplate(Frame)
+        local mask = Frame:CreateMaskTexture(nil, "BORDER")
+        mask:SetTexture([[Interface\PetBattles\BattleBar-AbilityBadge-Neutral]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetPoint("CENTER", 3, 3)
+        mask:SetSize(56, 56)
+        mask:Show()
+        Frame:GetNormalTexture():AddMaskTexture(mask)
+        Frame:GetHighlightTexture():AddMaskTexture(mask)
     end
 end
 
@@ -82,27 +80,11 @@ end
 -- /run TutorialFrame_NewTutorial(1, true)
 function private.FrameXML.TutorialFrame()
     _G.hooksecurefunc("TutorialFrame_Update", Hook.TutorialFrame_Update)
-    _G.hooksecurefunc("HelpPlate_GetButton", Hook.HelpPlate_GetButton)
 
     -------------------
     -- TutorialFrame --
     -------------------
     Base.SetBackdrop(_G.TutorialFrame)
-    _G.TutorialFrameTop:SetAlpha(0)
-    _G.TutorialFrameBottom:SetAlpha(0)
-
-    -- BlizzWTF: Why would you create a ton of textures instead of using vert tiling?
-    for i = 1, 30 do
-        _G["TutorialFrameLeft"..i]:SetAlpha(0)
-        _G["TutorialFrameRight"..i]:SetAlpha(0)
-    end
-
-    _G.TutorialFrame._auroraMouseTex = {
-        _G.TutorialFrameMouseLeftClick,
-        _G.TutorialFrameMouseRightClick,
-        _G.TutorialFrameMouseBothClick,
-        _G.TutorialFrameMouseWheel,
-    }
 
     local title = _G.TutorialFrameTitle
     title:ClearAllPoints()
@@ -111,41 +93,12 @@ function private.FrameXML.TutorialFrame()
     title:SetJustifyH("CENTER")
     title:SetJustifyV("MIDDLE")
 
-    Skin.UIPanelScrollFrameTemplate(_G.TutorialFrameTextScrollFrame)
-    Skin.UIPanelCloseButton(_G.TutorialFrameCloseButton)
-
     -- BlizzWTF: This should use the UIPanelButtonTemplate
-    _G.TutorialFrameOkayButton:SetNormalTexture("")
-    _G.TutorialFrameOkayButton:SetPushedTexture("")
-    _G.TutorialFrameOkayButton:SetHighlightTexture("")
-    Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button)
-    Base.SetHighlight(_G.TutorialFrameOkayButton, "backdrop")
+    Skin.UICheckButtonTemplate(_G.TutorialFrameCheckButton)
 
-    for i, suffix in next, {"PrevButton", "NextButton"} do
-        local button = _G["TutorialFrame"..suffix]
-        if i == 1 then
-            Skin.NavButtonPrevious(button)
-            button:SetPoint("BOTTOMLEFT", 30, 10)
-            button:GetRegions():SetPoint("LEFT", button, "RIGHT", 3, 0)
-        else
-            Skin.NavButtonNext(button)
-            button:SetPoint("BOTTOMRIGHT", -132, 10)
-            button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
-        end
+    for i = 1, MAX_TUTORIAL_ALERTS  do
+        Skin.TutorialFrameAlertButtonTemplate(_G["TutorialFrameAlertButton"..i])
     end
-
-
-    ------------------------------
-    -- TutorialFrameAlertButton --
-    ------------------------------
-    local mask = _G.TutorialFrameAlertButton:CreateMaskTexture(nil, "BORDER")
-    mask:SetTexture([[Interface\PetBattles\BattleBar-AbilityBadge-Neutral]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-    mask:SetPoint("CENTER", 3, 3)
-    mask:SetSize(56, 56)
-    mask:Show()
-    _G.TutorialFrameAlertButton:GetNormalTexture():AddMaskTexture(mask)
-    _G.TutorialFrameAlertButton:GetHighlightTexture():AddMaskTexture(mask)
-
 
     -----------------------------------
     -- TutorialFrameAlertButtonBadge --

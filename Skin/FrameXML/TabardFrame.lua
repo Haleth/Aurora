@@ -1,14 +1,21 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local F = _G.unpack(private.Aurora)
-local Skin = private.Aurora.Skin
+local Aurora = private.Aurora
+local Base, Skin = Aurora.Base, Aurora.Skin
 
 function private.FrameXML.TabardFrame()
-    F.ReskinPortraitFrame(_G.TabardFrame, true)
+    _G.TabardFramePortrait:SetAlpha(0)
+    for i = 2, 5 do -- Bg
+        select(i, _G.TabardFrame:GetRegions()):Hide()
+    end
+    Base.SetBackdrop(_G.TabardFrame)
+    Skin.UIPanelCloseButton(_G.TabardFrameCloseButton)
+    _G.TabardFrameCloseButton:SetPoint("TOPRIGHT", 4, 4)
 
     for i = 7, 16 do -- OuterFrame textures
         _G.select(i, _G.TabardFrame:GetRegions()):Hide()
@@ -23,8 +30,8 @@ function private.FrameXML.TabardFrame()
     _G.TabardFrameGreetingText:SetPoint("TOPLEFT", 50, -30)
     _G.TabardFrameGreetingText:SetPoint("BOTTOMRIGHT", _G.TabardFrame, "TOPRIGHT", -50, -69)
 
-    F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
-    F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
+    Skin.RotateOrbitCameraRightButtonTemplate(_G.TabardCharacterModelRotateLeftButton)
+    Skin.RotateOrbitCameraLeftButtonTemplate(_G.TabardCharacterModelRotateRightButton)
     _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 
     _G.TabardFrameCostFrame:SetBackdrop(nil)
@@ -40,9 +47,6 @@ function private.FrameXML.TabardFrame()
         F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "Right")
     end
 
-    Skin.InsetFrameTemplate(_G.TabardFrameMoneyInset)
-    Skin.ThinGoldEdgeTemplate(_G.TabardFrameMoneyBg)
-
-    F.Reskin(_G.TabardFrameAcceptButton)
-    F.Reskin(_G.TabardFrameCancelButton)
+    Skin.UIPanelButtonTemplate(_G.TabardFrameAcceptButton)
+    Skin.UIPanelButtonTemplate(_G.TabardFrameCancelButton)
 end
