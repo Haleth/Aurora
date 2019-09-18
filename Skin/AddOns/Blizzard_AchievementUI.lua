@@ -577,31 +577,23 @@ function private.AddOns.Blizzard_AchievementUI()
     })
 
 
-    _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 4)
-    _G.AchievementFrameFilterDropDown:SetHeight(16)
-
-    local filterBG = _G.CreateFrame("Frame", nil, _G.AchievementFrameFilterDropDown)
+    Base.SetBackdrop(_G.AchievementFrameFilterDropDown, Color.button)
+    local filterBG = _G.AchievementFrameFilterDropDown:GetBackdropTexture("bg")
     filterBG:SetPoint("TOPLEFT", 0, -6)
     filterBG:SetPoint("BOTTOMRIGHT", _G.AchievementFrameFilterDropDownButton, "BOTTOMLEFT", 1, 0)
-    filterBG:SetFrameLevel(_G.AchievementFrameFilterDropDown:GetFrameLevel()-1)
-    Base.SetBackdrop(filterBG, Color.frame)
 
+    _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 4)
+    _G.AchievementFrameFilterDropDown:SetHeight(16)
     _G.AchievementFrameFilterDropDownText:SetPoint("LEFT", filterBG, 5, 0)
 
-    Base.SetBackdrop(_G.AchievementFrameFilterDropDownButton, Color.button)
+    Skin.FrameTypeButton(_G.AchievementFrameFilterDropDownButton)
     _G.AchievementFrameFilterDropDownButton:SetPoint("TOPRIGHT", 0, -6)
     _G.AchievementFrameFilterDropDownButton:SetSize(16, 16)
-    _G.AchievementFrameFilterDropDownButton:SetNormalTexture("")
-    _G.AchievementFrameFilterDropDownButton:SetHighlightTexture("")
-    _G.AchievementFrameFilterDropDownButton:SetPushedTexture("")
 
     local filterArrow = _G.AchievementFrameFilterDropDownButton:CreateTexture(nil, "ARTWORK")
     filterArrow:SetPoint("TOPLEFT", 4, -6)
     filterArrow:SetPoint("BOTTOMRIGHT", -4, 6)
     Base.SetTexture(filterArrow, "arrowDown")
-
-    _G.AchievementFrameFilterDropDownButton._auroraHighlight = {filterArrow}
-    Base.SetHighlight(_G.AchievementFrameFilterDropDownButton, "texture")
 
     local searchBox = AchievementFrame.searchBox
     Skin.SearchBoxTemplate(searchBox)

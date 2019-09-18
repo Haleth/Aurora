@@ -179,6 +179,7 @@ function private.AddOns.Blizzard_Calendar()
 
     Skin.NavButtonPrevious(_G.CalendarPrevMonthButton)
     Skin.NavButtonNext(_G.CalendarNextMonthButton)
+
     do -- Filter button
         Base.SetBackdrop(_G.CalendarFilterFrame, Color.button)
         _G.CalendarFilterFrame:SetPoint("TOPRIGHT", -80, -13)
@@ -187,28 +188,15 @@ function private.AddOns.Blizzard_Calendar()
         _G.CalendarFilterFrameMiddle:SetAlpha(0)
         _G.CalendarFilterFrameRight:SetAlpha(0)
 
-
         local button = _G.CalendarFilterButton
-        Base.SetBackdrop(button, Color.button)
+        Skin.FrameTypeButton(button)
         button:ClearAllPoints()
         button:SetPoint("TOPRIGHT", _G.CalendarFilterFrame)
-
-        _G.CalendarFilterButtonNormalTexture:SetTexture("")
-        _G.CalendarFilterButtonPushedTexture:SetTexture("")
-        _G.CalendarFilterButtonHighlightTexture:SetTexture("")
-
-        local disabled = _G.CalendarFilterButtonDisabledTexture
-        disabled:SetAllPoints(button)
-        disabled:SetColorTexture(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
 
         local arrow = button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", 4, -7)
         arrow:SetPoint("BOTTOMRIGHT", -4, 7)
         Base.SetTexture(arrow, "arrowDown")
-
-        button._auroraHighlight = {arrow}
-        Base.SetHighlight(button, "texture")
     end
 
     Skin.UIPanelCloseButton(_G.CalendarCloseButton)

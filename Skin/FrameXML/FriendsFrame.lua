@@ -50,11 +50,6 @@ do --[[ FrameXML\FriendsFrame.xml ]]
         Skin.FrameTypeButton(travelPassButton)
 
         travelPassButton:SetSize(20, 32)
-        travelPassButton:SetNormalTexture("")
-        travelPassButton:SetPushedTexture("")
-        travelPassButton:SetDisabledTexture("")
-        travelPassButton:SetHighlightTexture("")
-
         travelPassButton._tex = travelPassButton:CreateTexture(nil, "OVERLAY", nil, 7)
         travelPassButton._tex:SetTexture([[Interface\FriendsFrame\PlusManz-PlusManz]])
         travelPassButton._tex:SetPoint("TOPRIGHT", 1, -4)
