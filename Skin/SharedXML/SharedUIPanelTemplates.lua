@@ -64,43 +64,28 @@ do -- BlizzWTF: These are not templates, but they should be
 
     do -- Nav buttons
         local function NavButton(Button)
-            Button:SetNormalTexture("")
-            Button:SetPushedTexture("")
-            Button:SetHighlightTexture("")
-
-            Base.SetBackdrop(Button, Color.button)
-            local bg = Button:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 5, -5)
-            bg:SetPoint("BOTTOMRIGHT", -5, 5)
-
-            local disabled = Button:GetDisabledTexture()
-            disabled:SetColorTexture(0, 0, 0, .3)
-            disabled:SetDrawLayer("OVERLAY")
-            disabled:SetAllPoints(bg)
-        end
-        function Skin.NavButtonPrevious(Button)
-            NavButton(Button)
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
 
             local bg = Button:GetBackdropTexture("bg")
             local arrow = Button:CreateTexture(nil, "ARTWORK")
             arrow:SetPoint("TOPLEFT", bg, 8, -5)
             arrow:SetPoint("BOTTOMRIGHT", bg, -8, 5)
-            Base.SetTexture(arrow, "arrowLeft")
 
-            Button._auroraHighlight = {arrow}
-            Base.SetHighlight(Button, "texture")
+            return arrow
+        end
+        function Skin.NavButtonPrevious(Button)
+            local arrow = NavButton(Button)
+            Base.SetTexture(arrow, "arrowLeft")
         end
         function Skin.NavButtonNext(Button)
-            NavButton(Button)
-
-            local bg = Button:GetBackdropTexture("bg")
-            local arrow = Button:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", bg, 8, -4)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -8, 4)
+            local arrow = NavButton(Button)
             Base.SetTexture(arrow, "arrowRight")
-
-            Button._auroraHighlight = {arrow}
-            Base.SetHighlight(Button, "texture")
         end
     end
 
@@ -156,12 +141,17 @@ do -- Basic frame type skins
         local function Hook_Disable(self)
             Base.SetBackdrop(self, disabledColor)
         end
-        function Skin.FrameTypeButton(Frame)
-            _G.hooksecurefunc(Frame, "Enable", Hook_Enable)
-            _G.hooksecurefunc(Frame, "Disable", Hook_Disable)
+        function Skin.FrameTypeButton(Button)
+            _G.hooksecurefunc(Button, "Enable", Hook_Enable)
+            _G.hooksecurefunc(Button, "Disable", Hook_Disable)
 
-            Base.SetBackdrop(Frame, Color.button)
-            Base.SetHighlight(Frame, "backdrop")
+            Button:SetNormalTexture("")
+            Button:SetPushedTexture("")
+            Button:SetHighlightTexture("")
+            Button:SetDisabledTexture("")
+
+            Base.SetBackdrop(Button, Color.button)
+            Base.SetHighlight(Button, "backdrop")
         end
     end
     do -- StatusBar
