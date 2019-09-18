@@ -186,34 +186,34 @@ do -- Basic frame type skins
         local function Hook_SetStatusBarColor(self, r, g, b)
             self:GetStatusBarTexture():SetVertexColor(r, g, b)
         end
-        function Skin.FrameTypeStatusBar(Frame)
-            _G.hooksecurefunc(Frame, "SetStatusBarAtlas", Hook_SetStatusBarAtlas)
-            _G.hooksecurefunc(Frame, "SetStatusBarColor", Hook_SetStatusBarColor)
+        function Skin.FrameTypeStatusBar(StatusBar)
+            _G.hooksecurefunc(StatusBar, "SetStatusBarAtlas", Hook_SetStatusBarAtlas)
+            _G.hooksecurefunc(StatusBar, "SetStatusBarColor", Hook_SetStatusBarColor)
 
-            Base.SetBackdrop(Frame, Color.button, Color.frame.a)
-            local bg = Frame:GetBackdropTexture("bg")
+            Base.SetBackdrop(StatusBar, Color.button, Color.frame.a)
+            local bg = StatusBar:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", -1, 1)
             bg:SetPoint("BOTTOMRIGHT", 1, -1)
 
-            local atlas = Frame:GetStatusBarAtlas()
-            local red, green, blue = Frame:GetStatusBarColor()
+            local atlas = StatusBar:GetStatusBarAtlas()
+            local red, green, blue = StatusBar:GetStatusBarColor()
 
-            if not Frame:GetStatusBarTexture() then
-                Frame:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
+            if not StatusBar:GetStatusBarTexture() then
+                StatusBar:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
             end
-            Base.SetTexture(Frame:GetStatusBarTexture(), "gradientUp")
+            Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
 
             if atlas then
-                Hook_SetStatusBarAtlas(Frame, atlas)
+                Hook_SetStatusBarAtlas(StatusBar, atlas)
             else
-                Hook_SetStatusBarColor(Frame, red, green, blue)
+                Hook_SetStatusBarColor(StatusBar, red, green, blue)
             end
         end
     end
     do -- EditBox
-        function Skin.FrameTypeEditBox(Frame)
-            Base.SetBackdrop(Frame, Color.frame)
-            Frame:SetBackdropBorderColor(Color.button)
+        function Skin.FrameTypeEditBox(EditBox)
+            Base.SetBackdrop(EditBox, Color.frame)
+            EditBox:SetBackdropBorderColor(Color.button)
         end
     end
 end
