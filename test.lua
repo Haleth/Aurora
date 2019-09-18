@@ -29,10 +29,15 @@ end)
 
 local test, container
 function commands.test()
+    local Aurora = _G.Aurora
+    local Base = Aurora.Base
+    local Color = Aurora.Color
+
     local AceConfig = _G.LibStub("AceConfig-3.0", true)
     if AceConfig then
         if not test then
             container = _G.LibStub("AceGUI-3.0"):Create("Frame")
+            local frame = container.frame
             test = {
                 type = "group",
                 args = {}
@@ -582,10 +587,10 @@ function commands.test()
                                 type = "execute",
                                 func = function(self, ...)
                                     local text = textFormat:format(targetPointType[infoTable.targetPoint], alignmentType[infoTable.alignment], buttonStyleType[infoTable.buttonStyle])
-                                    if not _G.HelpTip:IsShowing(container.frame, text) then
+                                    if not _G.HelpTip:IsShowing(frame, text) then
                                         local info = CopyTable(infoTable)
                                         info.text = text
-                                        _G.HelpTip:Show(container.frame, info)
+                                        _G.HelpTip:Show(frame, info)
                                     end
                                 end,
                             }
@@ -856,6 +861,63 @@ function commands.test()
                         },
                     }
                 }
+            end
+
+            do -- Skins
+                local bdOptions = {
+                    bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+                    tile = true,
+                    tileSize = 16,
+                    insets = {
+                        left = 4,
+                        right = 4,
+                        top = 4,
+                        bottom = 4
+                    },
+                    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+                    tileEdge = true,
+                    edgeSize = 16,
+
+                    backdropColor = Color.green,
+                    backdropBorderColor = Color.red,
+                };
+
+                local blizzBDFrame = _G.CreateFrame("Frame", nil, frame)
+                blizzBDFrame:SetBackdrop(bdOptions)
+                blizzBDFrame:SetSize(100, 100)
+                blizzBDFrame:SetPoint("BOTTOMRIGHT", frame, "TOP", -5, 0)
+                blizzBDFrame:Hide()
+                --blizzBDFrame:SetBackdropColor(bdOptions.backdropColor:GetRGB())
+                --blizzBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
+
+                local auroraBDFrame = _G.CreateFrame("Frame", nil, frame)
+                Base.CreateBackdrop(auroraBDFrame, bdOptions)
+                auroraBDFrame:SetSize(100, 100)
+                auroraBDFrame:SetPoint("BOTTOMLEFT", frame, "TOP", 5, 0)
+                auroraBDFrame:Hide()
+                --auroraBDFrame:SetBackdropColor(bdOptions.backdropColor:GetRGB())
+                --auroraBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
+
+                local skins do
+                    skins = {
+                        name = "Skins",
+                        type = "group",
+                        args = {
+                            show = {
+                                name = "Show backdrop tests",
+                                type = "toggle",
+                                get = function() return auroraBDFrame:IsShown() end,
+                                set = function(info, value)
+                                    blizzBDFrame:SetShown(value)
+                                    auroraBDFrame:SetShown(value)
+                                end,
+                                order = 1,
+                            },
+                        },
+                    }
+                end
+
+                test.args.skins = skins
             end
 
             do -- Misc

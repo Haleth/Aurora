@@ -30,10 +30,6 @@ function to be called before or after a particular API function.
 --]]
 
 do -- Base API
-    local backdrop = {
-        edgeSize = 1,
-    }
-    private.backdrop = backdrop
 
     do -- Base.AddSkin
         local skinList
@@ -84,6 +80,29 @@ addonName.
     end
 
     do -- Base.SetBackdrop
+        local backdrop = {
+            -- Blizzard options
+            bgFile = [[Interface\Buttons\WHITE8x8]],
+            tile = true,
+            insets = {
+                left = 0,
+                right = 0,
+                top = 0,
+                bottom = 0,
+            },
+            edgeFile = [[Interface\Buttons\WHITE8x8]],
+            edgeSize = 1,
+
+            -- Custom options
+            offsets = {
+                left = 0,
+                right = 0,
+                top = 0,
+                bottom = 0,
+            },
+        }
+        private.backdrop = backdrop
+
         local function GetRGBA(red, green, blue, alpha)
             local a
             if type(red) == "table" then
@@ -91,6 +110,27 @@ addonName.
                 red, green, blue, alpha = red:GetRGBA()
             end
             return red, green, blue, a or alpha
+        end
+        local function CopyBackdrop(bdOptions)
+            return {
+                bgFile = bdOptions.bgFile,
+                tile = bdOptions.tile,
+                insets = {
+                    left = bdOptions.insets.left,
+                    right = bdOptions.insets.right,
+                    top = bdOptions.insets.top,
+                    bottom = bdOptions.insets.bottom,
+                },
+                edgeFile = bdOptions.edgeFile,
+                edgeSize = bdOptions.edgeSize,
+
+                offsets = {
+                    left = bdOptions.offsets.left,
+                    right = bdOptions.offsets.right,
+                    top = bdOptions.offsets.top,
+                    bottom = bdOptions.offsets.bottom,
+                },
+            }
         end
 
         local bgTextures = {
@@ -118,8 +158,12 @@ addonName.
             bl = {l=0.75, r=0.875, t=0, b=1, point = "BOTTOMLEFT"},
             br = {l=0.875, r=1, t=0, b=1, point = "BOTTOMRIGHT"},
         }
+
         local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
-        local function SetBackdrop(frame, options, textures)
+        local BackdropMixin = {}
+
+        -- Blizzard methods
+        function BackdropMixin.SetBackdrop(frame, options, textures)
             if frame.settingBD then return end
             frame.settingBD = true
             old_SetBackdrop(frame, nil)
@@ -149,17 +193,17 @@ addonName.
                         bd[name]:SetSnapToPixelGrid(false)
                     end
 
-
                     frame._auroraBackdrop = bd
                 end
                 local bd = frame._auroraBackdrop
+                options = bd.options or options
 
                 --[[ The tile size is fixed at the original texture size, so this option is DOA.
                 if options.tileSize then
                     bd.bg:SetSize(options.tileSize, options.tileSize)
                 end]]
                 bd.bg:Show()
-                options.bgFile = options.bgFile or [[Interface\Buttons\WHITE8x8]]
+                options.bgFile = options.bgFile or backdrop.bgFile
                 if Base.IsTextureRegistered(options.bgFile) then
                     Base.SetTexture(bd.bg, options.bgFile)
                 else
@@ -168,17 +212,18 @@ addonName.
                     bd.bg:SetVertTile(options.tile)
                 end
 
+                options.insets = options.insets or backdrop.insets
+                options.offsets = options.offsets or backdrop.offsets
+
                 local insets = options.insets
+                local offsets = options.offsets
                 if insets then
-                    bd.bg:SetPoint("TOPLEFT", frame, insets.left, -insets.top)
-                    bd.bg:SetPoint("BOTTOMRIGHT", frame, -insets.right, insets.bottom)
-                else
-                    bd.bg:SetPoint("TOPLEFT", frame)
-                    bd.bg:SetPoint("BOTTOMRIGHT", frame)
+                    bd.bg:SetPoint("TOPLEFT", frame, (insets.left + offsets.left), -(insets.top + offsets.top))
+                    bd.bg:SetPoint("BOTTOMRIGHT", frame, -(insets.right + offsets.right), (insets.bottom + offsets.bottom))
                 end
 
 
-                options.edgeFile = options.edgeFile or [[Interface\Buttons\WHITE8x8]]
+                options.edgeFile = options.edgeFile or backdrop.edgeFile
                 for side, info in next, sides do
                     bd[side]:Show()
                     bd[side]:SetTexture(options.edgeFile)
@@ -207,26 +252,25 @@ addonName.
                 bd.b:SetPoint("TOPLEFT", bd.bl, "TOPRIGHT")
                 bd.b:SetPoint("BOTTOMRIGHT", bd.br, "BOTTOMLEFT")
 
-                if options.edgeSize then
-                    for corner, info in next, corners do
-                        bd[corner]:SetSize(options.edgeSize, options.edgeSize)
-                        if insets then
-                            if info.point == "TOPLEFT" then
-                                bd[corner]:SetPoint(info.point, bd.bg, -insets.left, insets.top)
-                            elseif info.point == "TOPRIGHT" then
-                                bd[corner]:SetPoint(info.point, bd.bg, insets.right, insets.top)
-                            elseif info.point == "BOTTOMLEFT" then
-                                bd[corner]:SetPoint(info.point, bd.bg, -insets.left, -insets.bottom)
-                            elseif info.point == "BOTTOMRIGHT" then
-                                bd[corner]:SetPoint(info.point, bd.bg, insets.left, -insets.bottom)
-                            end
-                        else
-                            bd[corner]:SetPoint(info.point, bd.bg)
+                options.edgeSize = options.edgeSize or backdrop.edgeSize
+                for corner, info in next, corners do
+                    bd[corner]:SetSize(options.edgeSize, options.edgeSize)
+                    if insets then
+                        if info.point == "TOPLEFT" then
+                            bd[corner]:SetPoint(info.point, bd.bg, -insets.left, insets.top)
+                        elseif info.point == "TOPRIGHT" then
+                            bd[corner]:SetPoint(info.point, bd.bg, insets.right, insets.top)
+                        elseif info.point == "BOTTOMLEFT" then
+                            bd[corner]:SetPoint(info.point, bd.bg, -insets.left, -insets.bottom)
+                        elseif info.point == "BOTTOMRIGHT" then
+                            bd[corner]:SetPoint(info.point, bd.bg, insets.left, -insets.bottom)
                         end
+                    else
+                        bd[corner]:SetPoint(info.point, bd.bg)
                     end
                 end
 
-                bd.options = options
+                bd.options = CopyBackdrop(options)
             else
                 if frame._auroraBackdrop then
                     local bd = frame._auroraBackdrop
@@ -242,19 +286,13 @@ addonName.
             end
             frame.settingBD = nil
         end
-        local function GetBackdrop(frame)
+        function BackdropMixin.GetBackdrop(frame)
             if frame._auroraBackdrop then
                 local options = frame._auroraBackdrop.options
-                return {
-                    bgFile = options.bgFile,
-                    tile = options.tile,
-                    insets = options.insets,
-                    edgeFile = options.edgeFile,
-                    edgeSize = options.edgeSize,
-                }
+                return CopyBackdrop(options)
             end
         end
-        local function SetBackdropColor(frame, red, green, blue, alpha)
+        function BackdropMixin.SetBackdropColor(frame, red, green, blue, alpha)
             if frame._auroraBackdrop then
                 red, green, blue, alpha = GetRGBA(red, green, blue, alpha)
 
@@ -271,13 +309,13 @@ addonName.
                 end
             end
         end
-        local function GetBackdropColor(frame)
+        function BackdropMixin.GetBackdropColor(frame)
             if frame._auroraBackdrop then
                 local bd = frame._auroraBackdrop
                 return bd.bgRed, bd.bgGreen, bd.bgBlue, bd.bgAlpha
             end
         end
-        local function SetBackdropBorderColor(frame, red, green, blue, alpha)
+        function BackdropMixin.SetBackdropBorderColor(frame, red, green, blue, alpha)
             if frame._auroraBackdrop then
                 red, green, blue, alpha = GetRGBA(red, green, blue, alpha)
 
@@ -301,13 +339,15 @@ addonName.
                 end
             end
         end
-        local function GetBackdropBorderColor(frame)
+        function BackdropMixin.GetBackdropBorderColor(frame)
             if frame._auroraBackdrop then
                 local bd = frame._auroraBackdrop
                 return bd.borderRed, bd.borderGreen, bd.borderBlue, bd.borderAlpha
             end
         end
-        local function SetBackdropBorderLayer(frame, layer, sublevel)
+
+        -- Custom Methods
+        function BackdropMixin.SetBackdropBorderLayer(frame, layer, sublevel)
             local bd = frame._auroraBackdrop
             bd.l:SetDrawLayer(layer, sublevel)
             bd.r:SetDrawLayer(layer, sublevel)
@@ -322,27 +362,36 @@ addonName.
             bd.borderLayer = layer
             bd.borderSublevel = sublevel
         end
-        local function GetBackdropBorderLayer(frame)
+        function BackdropMixin.GetBackdropBorderLayer(frame)
             if frame._auroraBackdrop then
                 return frame._auroraBackdrop.borderLayer, frame._auroraBackdrop.borderSublevel
             end
         end
-        local function GetBackdropTexture(frame, texture)
+        function BackdropMixin.GetBackdropTexture(frame, texture)
             if frame._auroraBackdrop then
                 return frame._auroraBackdrop[texture]
             end
         end
+        function BackdropMixin.SetBackdropOption(frame, optionKey, optionValue)
+            if frame._auroraBackdrop then
+                local options = frame._auroraBackdrop.options
+                if options[optionKey] ~= optionValue then
+                    options[optionKey] = optionValue
+                    frame:SetBackdrop(options)
+                end
+            end
+        end
+        function BackdropMixin.GetBackdropOption(frame, optionKey)
+            if frame._auroraBackdrop then
+                local options = frame._auroraBackdrop.options
+                return options[optionKey]
+            end
+        end
 
         function Base.CreateBackdrop(frame, options, textures)
-            frame.SetBackdrop = SetBackdrop
-            frame.GetBackdrop = GetBackdrop
-            frame.SetBackdropColor = SetBackdropColor
-            frame.GetBackdropColor = GetBackdropColor
-            frame.SetBackdropBorderColor = SetBackdropBorderColor
-            frame.GetBackdropBorderColor = GetBackdropBorderColor
-            frame.SetBackdropBorderLayer = SetBackdropBorderLayer
-            frame.GetBackdropBorderLayer = GetBackdropBorderLayer
-            frame.GetBackdropTexture = GetBackdropTexture
+            for name, func in next, BackdropMixin do
+                frame[name] = func
+            end
 
             frame:SetBackdrop(options, textures)
         end
