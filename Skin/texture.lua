@@ -9,22 +9,6 @@ local Base = Aurora.Base
 local Color = Aurora.Color
 
 do -- arrows
-    local function setup(frame, texture)
-        texture:SetColorTexture(1, 1, 1)
-
-        texture:SetVertexOffset(1, 0, 0)
-        texture:SetVertexOffset(2, 0, 0)
-        texture:SetVertexOffset(3, 0, 0)
-        texture:SetVertexOffset(4, 0, 0)
-        return texture
-    end
-    local function GetVertOffset(frame, texture)
-        return texture:GetHeight() / 2
-    end
-    local function GetHorizOffset(frame, texture)
-        return texture:GetWidth() / 2
-    end
-
     local arrows = {}
     _G.C_Timer.NewTicker(0, function(...)
         --[[
@@ -41,13 +25,29 @@ do -- arrows
         end
     end)
 
+    local function setup(frame, texture)
+        texture:SetColorTexture(1, 1, 1)
+
+        texture:SetVertexOffset(1, 0, 0)
+        texture:SetVertexOffset(2, 0, 0)
+        texture:SetVertexOffset(3, 0, 0)
+        texture:SetVertexOffset(4, 0, 0)
+        return texture
+    end
+    local function GetOffset(texture, textureType, size)
+        local offset = size / 2
+        if offset < 1 then
+            arrows[texture] = textureType
+        else
+            return offset
+        end
+    end
+
     Base.RegisterTexture("arrowLeft", function(frame, texture)
         texture = setup(frame, texture)
 
-        local offset = GetVertOffset(frame, texture)
-        if offset < 1 then
-            arrows[texture] = "arrowLeft"
-        else
+        local offset = GetOffset(texture, "arrowLeft", texture:GetHeight())
+        if offset then
             texture:SetVertexOffset(1, 0, -offset)
             texture:SetVertexOffset(2, 0, offset)
         end
@@ -55,10 +55,8 @@ do -- arrows
     Base.RegisterTexture("arrowRight", function(frame, texture)
         texture = setup(frame, texture)
 
-        local offset = GetVertOffset(frame, texture)
-        if offset < 1 then
-            arrows[texture] = "arrowRight"
-        else
+        local offset = GetOffset(texture, "arrowRight", texture:GetHeight())
+        if offset then
             texture:SetVertexOffset(3, 0, -offset)
             texture:SetVertexOffset(4, 0, offset)
         end
@@ -66,10 +64,8 @@ do -- arrows
     Base.RegisterTexture("arrowUp", function(frame, texture)
         texture = setup(frame, texture)
 
-        local offset = GetHorizOffset(frame, texture)
-        if offset < 1 then
-            arrows[texture] = "arrowUp"
-        else
+        local offset = GetOffset(texture, "arrowUp", texture:GetWidth())
+        if offset then
             texture:SetVertexOffset(1, offset, 0)
             texture:SetVertexOffset(3, -offset, 0)
         end
@@ -77,10 +73,8 @@ do -- arrows
     Base.RegisterTexture("arrowDown", function(frame, texture)
         texture = setup(frame, texture)
 
-        local offset = GetHorizOffset(frame, texture)
-        if offset < 1 then
-            arrows[texture] = "arrowDown"
-        else
+        local offset = GetOffset(texture, "arrowDown", texture:GetWidth())
+        if offset then
             texture:SetVertexOffset(2, offset, 0)
             texture:SetVertexOffset(4, -offset, 0)
         end
