@@ -112,8 +112,8 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
 
         Base.CropIcon(_G[name.."IconTexture"])
         Base.CreateBackdrop(CheckButton, {
-            edgeSize = 1,
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            tile = false,
         })
         CheckButton:SetBackdropColor(1, 1, 1, 0.75)
         CheckButton:SetBackdropBorderColor(Color.frame, 1)
