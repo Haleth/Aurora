@@ -149,16 +149,18 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Skin.ActionButtonTemplate(CheckButton)
 
             Base.CreateBackdrop(CheckButton, {
-                edgeSize = 1,
                 bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-                insets = {left = 1, right = 1, top = 1, bottom = 1}
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
             })
             CheckButton:SetBackdropColor(1, 1, 1, 0.75)
             CheckButton:SetBackdropBorderColor(Color.frame:GetRGB())
             Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
-
-            CheckButton.icon:SetPoint("TOPLEFT", 1, -1)
-            CheckButton.icon:SetPoint("BOTTOMRIGHT", -1, 1)
         end
     end
     do --[[ ExtraActionBar.xml ]]

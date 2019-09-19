@@ -204,10 +204,14 @@ addonName.
                 end]]
                 bd.bg:Show()
                 options.bgFile = options.bgFile or backdrop.bgFile
+                if options.tile == nil then
+                    options.tile = backdrop.tile
+                end
+
                 if Base.IsTextureRegistered(options.bgFile) then
                     Base.SetTexture(bd.bg, options.bgFile)
                 else
-                    bd.bg:SetTexture(options.bgFile, "REPEAT", "REPEAT")
+                    bd.bg:SetTexture(options.bgFile, options.tile, options.tile)
                     bd.bg:SetHorizTile(options.tile)
                     bd.bg:SetVertTile(options.tile)
                 end
@@ -302,11 +306,7 @@ addonName.
                 bd.bgBlue = blue
                 bd.bgAlpha = alpha
 
-                if bd.bg:GetTexture() then
-                    bd.bg:SetVertexColor(red, green, blue, alpha)
-                else
-                    private.debug("SetBackdropColor no texture", frame:GetName(), bd.bg:GetTexture())
-                end
+                bd.bg:SetVertexColor(red, green, blue, alpha)
             end
         end
         function BackdropMixin.GetBackdropColor(frame)

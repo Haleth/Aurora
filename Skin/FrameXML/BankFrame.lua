@@ -37,12 +37,13 @@ end
 
 do --[[ FrameXML\BankFrame.xml ]]
     function Skin.BankItemButtonGenericTemplate(ItemButton)
+        Base.CreateBackdrop(ItemButton, {
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            tile = false
+        })
         Skin.FrameTypeItemButton(ItemButton)
-
-        local bd = ItemButton._auroraIconBorder:GetBackdropTexture("bg")
-        bd:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
-        bd:SetAlpha(0.75)
-        Base.CropIcon(bd)
+        ItemButton:SetBackdropColor(1, 1, 1, 0.75)
+        Base.CropIcon(ItemButton:GetBackdropTexture("bg"))
 
         Base.CropIcon(ItemButton.IconQuestTexture)
     end

@@ -72,9 +72,12 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
         Base.SetBackdrop(Button, Color.black, Color.frame.a)
-        local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        Button:SetBackdropOption("offsets", {
+            left = -1,
+            right = -1,
+            top = -1,
+            bottom = -1,
+        })
         Button._auroraIconBorder = Button
 
         Button:SetNormalTexture("")

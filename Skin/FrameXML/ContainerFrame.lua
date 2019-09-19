@@ -63,11 +63,15 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     function Skin.ContainerFrameItemButtonTemplate(ItemButton)
         local name = ItemButton:GetName()
 
+        ItemButton.debug = "ItemButton"
+        Base.CreateBackdrop(ItemButton, {
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            tile = false
+        })
         Skin.FrameTypeItemButton(ItemButton)
-        local bd = ItemButton._auroraIconBorder:GetBackdropTexture("bg")
-        bd:SetTexture([[Interface\PaperDoll\UI-Backpack-EmptySlot]])
-        bd:SetVertexColor(1, 1, 1, 0.75)
-        Base.CropIcon(bd)
+        ItemButton:SetBackdropColor(1, 1, 1, 0.75)
+        Base.CropIcon(ItemButton:GetBackdropTexture("bg"))
+
         Base.CropIcon(_G[name.."IconQuestTexture"])
         Base.CropIcon(ItemButton.NewItemTexture)
         ItemButton.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
