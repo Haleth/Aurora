@@ -144,7 +144,6 @@ function private.OnLoad()
     end
 
     local gradientBackdrop = {
-        edgeSize = 1,
         bgFile = "gradientUp",
     }
     function Base.SetBackdrop(frame, color, alpha)

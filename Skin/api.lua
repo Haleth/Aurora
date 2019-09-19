@@ -210,6 +210,9 @@ addonName.
 
                 if Base.IsTextureRegistered(options.bgFile) then
                     Base.SetTexture(bd.bg, options.bgFile)
+                    if bd.bgRed then
+                        bd.bg:SetVertexColor(bd.bgRed, bd.bgGreen, bd.bgBlue, bd.bgAlpha)
+                    end
                 else
                     bd.bg:SetTexture(options.bgFile, options.tile, options.tile)
                     bd.bg:SetHorizTile(options.tile)
