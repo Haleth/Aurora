@@ -11,6 +11,7 @@ matrix:
       install: luarocks install --local luacheck
       before_script: $HOME/.luarocks/bin/luacheck . -q
       script:
+        - if [[ -z "$TRAVIS_TAG" ]]; then rm -f CHANGELOG.md; fi
         - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh -o release.sh
         - bash release.sh
       after_script:
