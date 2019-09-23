@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 local function SetTexture(texture, anchor, left, right, top, bottom)
     if left then
@@ -84,6 +84,47 @@ do --[[ FrameXML\ActionBarController.lua ]]
             end
         end
     end
+    do --[[ StatusTrackingManager.lua ]]
+        Hook.StatusTrackingManagerMixin = {}
+        function Hook.StatusTrackingManagerMixin:AddBarFromTemplate(frameType, template)
+            Skin[template](self.bars[#self.bars])
+        end
+        function Hook.StatusTrackingManagerMixin:HideStatusBars()
+            self._auroraTickPool:ReleaseAll()
+        end
+        function Hook.StatusTrackingManagerMixin:SetDoubleBarSize(bar, width)
+            local barHeight = 8
+            bar.StatusBar:SetHeight(barHeight)
+            bar:SetHeight(barHeight)
+        end
+        function Hook.StatusTrackingManagerMixin:SetSingleBarSize(bar, width)
+            local barHeight = 10
+            bar.StatusBar:SetHeight(barHeight)
+            bar:SetHeight(barHeight)
+        end
+        function Hook.StatusTrackingManagerMixin:LayoutBar(bar, barWidth, isTopBar, isDouble)
+            if isDouble then
+                if isTopBar then
+                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -7);
+                else
+                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -18);
+                end
+            else
+                bar:SetPoint("BOTTOM", self:GetParent(), 0, -11);
+            end
+
+            local numTicks = self.largeSize and 20 or 10
+            local divWidth = bar:GetWidth() / numTicks
+            local xpos = divWidth
+            for i = 1, numTicks - 1 do
+                local tick = self._auroraTickPool:Acquire()
+                tick:SetPoint("TOPLEFT", bar, floor(xpos), 0)
+                tick:SetPoint("BOTTOMLEFT", bar, floor(xpos), 0)
+                tick:Show()
+                xpos = xpos + divWidth
+            end
+        end
+    end
     do --[[ MainMenuBar.lua ]]
         function Hook.MainMenuTrackingBar_Configure(frame, isOnTop)
             local statusBar = frame.StatusBar
@@ -121,6 +162,51 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Skin.GlowBoxTemplate(Frame)
             Skin.UIPanelCloseButton(Frame.CloseButton)
             Skin.GlowBoxArrowTemplate(Frame.Arrow)
+        end
+    end
+    do --[[ StatusTrackingBarTemplate.xml ]]
+        function Skin.StatusTrackingBarManagerTemplate(Frame)
+            Util.Mixin(Frame, Hook.StatusTrackingManagerMixin)
+            Frame.SingleBarLarge:SetAlpha(0)
+            Frame.SingleBarLargeUpper:SetAlpha(0)
+            Frame.SingleBarSmall:SetAlpha(0)
+            Frame.SingleBarSmallUpper:SetAlpha(0)
+
+            local tickPool = _G.CreateObjectPool(function(pool)
+                local tick = Frame:CreateTexture(nil, "ARTWORK")
+                tick:SetColorTexture(Color.button:GetRGB())
+                tick:SetSize(1, Frame:GetInitialBarHeight())
+                return tick
+            end, function(pool, tick)
+                tick:ClearAllPoints()
+                tick:Hide()
+            end)
+            Frame._auroraTickPool = tickPool
+        end
+    end
+    do --[[ StatusTrackingBarTemplate.xml ]]
+        function Skin.StatusTrackingBarTemplate(Frame)
+            local StatusBar = Frame.StatusBar
+            Skin.FrameTypeStatusBar(StatusBar)
+
+            StatusBar.Background:Hide()
+            StatusBar.Underlay:Hide()
+            StatusBar.Overlay:Hide()
+        end
+        function Skin.ReputationStatusBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
+        end
+        function Skin.HonorStatusBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
+        end
+        function Skin.ArtifactStatusBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
+        end
+        function Skin.ExpStatusBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
+        end
+        function Skin.AzeriteBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
         end
     end
     do --[[ ActionButtonTemplate.xml ]]
@@ -274,6 +360,7 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --        StatusTrackingBar        --
     ----====####$$$$%%%%%$$$$####====----
+    Skin.StatusTrackingBarManagerTemplate(_G.StatusTrackingBarManager)
 
     ----====####$$$$%%%%%$$$$####====----
     --           MainMenuBar           --
