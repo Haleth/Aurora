@@ -137,9 +137,10 @@ do --[[ FrameXML\MailFrame.xml ]]
         bg:SetPoint("BOTTOMRIGHT", button, 1, -1)
 
         Base.CreateBackdrop(bg, {
-            edgeSize = 1,
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-            insets = {left = 1, right = 1, top = 1, bottom = 1}
+            tile = false,
+            insets = {left = 1, right = 1, top = 1, bottom = 1},
+            edgeSize = 1,
         })
         Base.CropIcon(bg:GetBackdropTexture("bg"))
         bg:SetBackdropColor(1, 1, 1, 0.75)
@@ -161,9 +162,10 @@ do --[[ FrameXML\MailFrame.xml ]]
         bg:SetPoint("BOTTOMRIGHT", 1, -1)
 
         Base.CreateBackdrop(bg, {
-            edgeSize = 1,
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-            insets = {left = 1, right = 1, top = 1, bottom = 1}
+            tile = false,
+            insets = {left = 1, right = 1, top = 1, bottom = 1},
+            edgeSize = 1,
         })
         Base.CropIcon(bg:GetBackdropTexture("bg"))
         bg:SetBackdropColor(1, 1, 1, 0.75)
