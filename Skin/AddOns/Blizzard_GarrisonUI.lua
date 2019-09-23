@@ -114,8 +114,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame.IncrementButton:ClearAllPoints()
 
             Skin.NumericInputSpinnerTemplate(Frame)
-            Frame._auroraBG:SetPoint("TOPLEFT", 0, -1)
-            Frame._auroraBG:SetPoint("BOTTOMRIGHT", 3, 2)
         end
     end
     do --[[ Blizzard_GarrisonMissionUI.xml ]]
@@ -479,7 +477,7 @@ function private.AddOns.Blizzard_GarrisonUI()
 
     -- BlizzWTF: This should use NumericInputSpinnerTemplate
     GarrisonCapacitiveDisplayFrame.Count:ClearAllPoints()
-    GarrisonCapacitiveDisplayFrame.Count:SetPoint("BOTTOM", -15, 4)
+    GarrisonCapacitiveDisplayFrame.Count:SetPoint("BOTTOM", -10, 4)
     Skin.GarrisonCapacitiveInputSpinner(GarrisonCapacitiveDisplayFrame.Count)
 
     -------------
