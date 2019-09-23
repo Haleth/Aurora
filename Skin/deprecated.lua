@@ -257,11 +257,7 @@ F.ReskinInput = function(f, height, width)
     middle:Hide()
     right:Hide()
 
-    local bd = _G.CreateFrame("Frame", nil, f)
-    bd:SetPoint("TOPLEFT", -2, 0)
-    bd:SetPoint("BOTTOMRIGHT")
-    bd:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bd, Color.frame)
+    Skin.FrameTypeEditBox(f)
 
     if height then f:SetHeight(height) end
     if width then f:SetWidth(width) end
@@ -298,27 +294,11 @@ F.ReskinArrow = function(f, direction)
 end
 
 F.ReskinCheck = function(f, isTriState)
-    local red, green, blue = Color.highlight:GetRGB()
-
-    f:SetNormalTexture("")
-    f:SetPushedTexture("")
-    f:SetHighlightTexture(C.media.backdrop)
-    local hl = f:GetHighlightTexture()
-    hl:SetPoint("TOPLEFT", 5, -5)
-    hl:SetPoint("BOTTOMRIGHT", -5, 5)
-    hl:SetVertexColor(red, green, blue, .2)
-
-    local bd = _G.CreateFrame("Frame", nil, f)
-    bd:SetPoint("TOPLEFT", 4, -4)
-    bd:SetPoint("BOTTOMRIGHT", -4, 4)
-    bd:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bd, Color.frame)
-
-    local ch = f:GetCheckedTexture()
-    ch:SetDesaturated(true)
-    ch:SetVertexColor(red, green, blue)
+    Skin.UICheckButtonTemplate(f)
 
     if isTriState then
+        local red, green, blue = Color.highlight:GetRGB()
+        local ch = f:GetCheckedTexture()
         function f:SetTriState(state)
             if ( not state or state == 0 ) then
                 -- nil or 0 means not checked
@@ -339,24 +319,7 @@ F.ReskinCheck = function(f, isTriState)
 end
 
 F.ReskinRadio = function(f)
-    local red, green, blue = Color.highlight:GetRGB()
-
-    f:SetNormalTexture("")
-    f:SetHighlightTexture("")
-    f:SetCheckedTexture(C.media.backdrop)
-
-    local ch = f:GetCheckedTexture()
-    ch:SetPoint("TOPLEFT", 4, -4)
-    ch:SetPoint("BOTTOMRIGHT", -4, 4)
-    ch:SetVertexColor(red, green, blue, .6)
-
-    local bd = _G.CreateFrame("Frame", nil, f)
-    bd:SetPoint("TOPLEFT", 3, -3)
-    bd:SetPoint("BOTTOMRIGHT", -3, 3)
-    bd:SetFrameLevel(f:GetFrameLevel()-1)
-
-    Base.SetBackdrop(bd, Color.frame)
-    Base.SetHighlight(bd, "backdrop")
+    Skin.UIRadioButtonTemplate(f)
 end
 
 F.ReskinSlider = function(f, isVert)
@@ -378,48 +341,8 @@ F.ReskinSlider = function(f, isVert)
     slider:SetBlendMode("ADD")
 end
 
-local function Hook_SetNormalTexture(self, texture)
-    if self.settingTexture then return end
-    self.settingTexture = true
-    self:SetNormalTexture("")
-
-    if texture and texture ~= "" then
-        if texture:find("Plus") then
-            self._auroraBG.plus:Show()
-        elseif texture:find("Minus") then
-            self._auroraBG.plus:Hide()
-        end
-        self._auroraBG:Show()
-    else
-        self._auroraBG:Hide()
-    end
-    self.settingTexture = nil
-end
 F.ReskinExpandOrCollapse = function(f)
-    f:SetHighlightTexture("")
-    f:SetPushedTexture("")
-
-    local bg = _G.CreateFrame("Frame", nil, f)
-    bg:SetSize(13, 13)
-    bg:SetPoint("TOPLEFT", f:GetNormalTexture(), 0, -2)
-    Base.SetBackdrop(bg, Color.button)
-    f._auroraBG = bg
-
-    f._auroraHighlight = {}
-    bg.minus = bg:CreateTexture(nil, "OVERLAY")
-    bg.minus:SetSize(7, 1)
-    bg.minus:SetPoint("CENTER")
-    bg.minus:SetColorTexture(1, 1, 1)
-    _G.tinsert(f._auroraHighlight, bg.minus)
-
-    bg.plus = bg:CreateTexture(nil, "OVERLAY")
-    bg.plus:SetSize(1, 7)
-    bg.plus:SetPoint("CENTER")
-    bg.plus:SetColorTexture(1, 1, 1)
-    _G.tinsert(f._auroraHighlight, bg.plus)
-
-    Base.SetHighlight(f, "texture")
-    _G.hooksecurefunc(f, "SetNormalTexture", Hook_SetNormalTexture)
+    Skin.ExpandOrCollapse(f)
 end
 
 F.SetBD = function(f, x, y, x2, y2)
