@@ -17,7 +17,7 @@ do --[[ FrameXML\MirrorTimer.xml ]]
 
         Frame:GetRegions():Hide()
         _G[name.."Text"]:ClearAllPoints()
-        _G[name.."Text"]:SetPoint("CENTER")
+        _G[name.."Text"]:SetPoint("CENTER", _G[name.."StatusBar"])
         _G[name.."Border"]:Hide()
     end
 end
