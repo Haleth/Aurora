@@ -535,16 +535,36 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         scrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
         scrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end
+
+    function Skin.SpinnerButton(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 3,
+            right = 3,
+            top = 3,
+            bottom = 3,
+        })
+        local buttonBG = Button:GetBackdropTexture("bg")
+        local arrow = Button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", buttonBG, 6, -3)
+        arrow:SetPoint("BOTTOMRIGHT", buttonBG, -6, 3)
+        return arrow
+    end
     function Skin.NumericInputSpinnerTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)
-        EditBox:DisableDrawLayer("BACKGROUND")
+
         -- BlizzWTF: You use the template, but still create three new textures for the input border?
+        local _, _, left, right, mid = EditBox:GetRegions()
+        left:Hide()
+        right:Hide()
+        mid:Hide()
 
-        Skin.NavButtonNext(EditBox.IncrementButton)
-        EditBox.IncrementButton:SetPoint("LEFT", EditBox._auroraBG, "RIGHT", 3, 0)
+        local bg = EditBox:GetBackdropTexture("bg")
+        Base.SetTexture(Skin.SpinnerButton(EditBox.DecrementButton), "arrowLeft")
+        EditBox.DecrementButton:SetPoint("RIGHT", bg, "LEFT", -3, 0)
 
-        Skin.NavButtonPrevious(EditBox.DecrementButton)
-        EditBox.DecrementButton:SetPoint("RIGHT", EditBox._auroraBG, "LEFT", -3, 0)
+        Base.SetTexture(Skin.SpinnerButton(EditBox.IncrementButton), "arrowRight")
+        EditBox.IncrementButton:SetPoint("LEFT", bg, "RIGHT", 3, 0)
     end
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)
