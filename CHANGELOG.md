@@ -1,7 +1,17 @@
 ﻿## [Unreleased] ##
+### Added ###
+
+  * Cast bar skin
+  * Mirror bar skin (eg. breath, feign)
+
 ### Changed ###
 
   * Updates for 8.2.5.
+  * Various minor tweaks.
+
+### Fixed ###
+
+  * Error when opening the bank.
 
 
 
