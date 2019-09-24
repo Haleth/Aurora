@@ -9,14 +9,46 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GossipFrame.lua ]]
-    Hook.GossipTitleButtonMixin = {}
-    function Hook.GossipTitleButtonMixin:UpdateTitleForQuest(questID, titleText, isIgnored, isTrivial)
-        if isIgnored then
-            self:SetFormattedText(private.IGNORED_QUEST_DISPLAY, titleText)
-        elseif isTrivial then
-            self:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
-        else
-            self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+    if private.isPatch then
+        Hook.GossipTitleButtonMixin = {}
+        function Hook.GossipTitleButtonMixin:UpdateTitleForQuest(questID, titleText, isIgnored, isTrivial)
+            if isIgnored then
+                self:SetFormattedText(private.IGNORED_QUEST_DISPLAY, titleText)
+            elseif isTrivial then
+                self:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+            else
+                self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+            end
+        end
+    else
+        local availDataPerQuest, activeDataPerQuest = 7, 6
+        function Hook.GossipFrameAvailableQuestsUpdate(...)
+            local numAvailQuestsData = _G.select("#", ...)
+            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numAvailQuestsData / availDataPerQuest)
+            for i = 1, numAvailQuestsData, availDataPerQuest do
+                local titleText, _, isTrivial = _G.select(i, ...)
+                local titleButton = _G["GossipTitleButton" .. buttonIndex]
+                if isTrivial then
+                    titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+                else
+                    titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+                end
+                buttonIndex = buttonIndex + 1
+            end
+        end
+        function Hook.GossipFrameActiveQuestsUpdate(...)
+            local numActiveQuestsData = _G.select("#", ...)
+            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numActiveQuestsData / activeDataPerQuest)
+            for i = 1, numActiveQuestsData, activeDataPerQuest do
+                local titleText, _, isTrivial = _G.select(i, ...)
+                local titleButton = _G["GossipTitleButton" .. buttonIndex]
+                if isTrivial then
+                    titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+                else
+                    titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+                end
+                buttonIndex = buttonIndex + 1
+            end
         end
     end
 
@@ -48,7 +80,9 @@ do --[[ FrameXML\GossipFrame.xml ]]
         _G[name.."MaterialBotRight"]:SetAlpha(0)
     end
     function Skin.GossipTitleButtonTemplate(Button)
-        Util.Mixin(Button, Hook.GossipTitleButtonMixin)
+        if private.isPatch then
+            Util.Mixin(Button, Hook.GossipTitleButtonMixin)
+        end
 
         local highlight = Button:GetHighlightTexture()
         local r, g, b = Color.highlight:GetRGB()
