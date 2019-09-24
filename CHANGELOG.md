@@ -1,4 +1,11 @@
-﻿## [8.2.5.0] - 2019-09-23 ##
+﻿## [8.2.5.1] - 2019-09-23 ##
+### Fixed ###
+
+  * Error when talking to some NPCs.
+
+
+
+## [8.2.5.0] - 2019-09-23 ##
 ### Added ###
 
   * Cast bar skin
@@ -439,6 +446,7 @@
   * Many item icons now have proper quality coloring. (WIP)
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.2.5.1]: https://github.com/Haleth/Aurora/compare/8.2.5.0...8.2.5.1
 [8.2.5.0]: https://github.com/Haleth/Aurora/compare/8.2.0.2...8.2.5.0
 [8.2.0.2]: https://github.com/Haleth/Aurora/compare/8.2.0.1...8.2.0.2
 [8.2.0.1]: https://github.com/Haleth/Aurora/compare/8.2.0.0...8.2.0.1
