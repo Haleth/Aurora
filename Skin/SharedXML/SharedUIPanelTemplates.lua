@@ -137,9 +137,19 @@ do -- Basic frame type skins
         local disabledColor = Color.Lightness(Color.button, -0.3)
         local function Hook_Enable(self)
             Base.SetBackdrop(self, Color.button)
+            if self._auroraTextures then
+                for _, texture in next, self._auroraTextures do
+                    texture:SetVertexColor(Color.white:GetRGB())
+                end
+            end
         end
         local function Hook_Disable(self)
             Base.SetBackdrop(self, disabledColor)
+            if self._auroraTextures then
+                for _, texture in next, self._auroraTextures do
+                    texture:SetVertexColor(Color.gray:GetRGB())
+                end
+            end
         end
         function Skin.FrameTypeButton(Button)
             _G.hooksecurefunc(Button, "Enable", Hook_Enable)
