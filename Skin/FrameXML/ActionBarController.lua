@@ -407,6 +407,42 @@ function private.FrameXML.ActionBarController()
         for i = 1, 12 do
             Skin.ActionBarButtonTemplate(_G["ActionButton"..i])
         end
+
+        do -- ActionBarUpButton
+            local ActionBarUpButton = _G.ActionBarUpButton
+            Skin.FrameTypeButton(ActionBarUpButton)
+            ActionBarUpButton:SetBackdropOption("offsets", {
+                left = 8,
+                right = 8,
+                top = 8,
+                bottom = 8,
+            })
+
+            local bg = ActionBarUpButton:GetBackdropTexture("bg")
+            local arrow = ActionBarUpButton:CreateTexture(nil, "ARTWORK")
+            arrow:SetPoint("TOPLEFT", bg, 3, -5)
+            arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
+            Base.SetTexture(arrow, "arrowUp")
+            ActionBarUpButton._auroraTextures = {arrow}
+        end
+
+        do -- ActionBarDownButton
+            local ActionBarDownButton = _G.ActionBarDownButton
+            Skin.FrameTypeButton(ActionBarDownButton)
+            ActionBarDownButton:SetBackdropOption("offsets", {
+                left = 8,
+                right = 8,
+                top = 8,
+                bottom = 8,
+            })
+
+            local bg = ActionBarDownButton:GetBackdropTexture("bg")
+            local arrow = ActionBarDownButton:CreateTexture(nil, "ARTWORK")
+            arrow:SetPoint("TOPLEFT", bg, 3, -5)
+            arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
+            Base.SetTexture(arrow, "arrowDown")
+            ActionBarDownButton._auroraTextures = {arrow}
+        end
     end
 
     ----====####$$$$%%%%%$$$$####====----
