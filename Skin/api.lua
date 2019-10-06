@@ -462,20 +462,25 @@ addonName.
             return tempColor[1], tempColor[2], tempColor[3], tempColor[4]
         end
         ]]
+
+        local function ShowHighlight(button)
+            if button._lockHighlight then
+                return true
+            else
+                return button:IsEnabled()
+            end
+        end
         local function OnEnter(button, isBackground)
-            if button:IsEnabled() then
-                if isBackground then
-                    local alpha = button._returnColor.a or Color.highlight.a
-                    Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight, alpha)
-                else
-                    for _, texture in next, button._auroraHighlight do
-                        texture:SetVertexColor(Color.highlight:GetRGBA())
-                    end
+            if isBackground then
+                local alpha = button._returnColor.a or Color.highlight.a
+                Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight, alpha)
+            else
+                for _, texture in next, button._auroraHighlight do
+                    texture:SetVertexColor(Color.highlight:GetRGBA())
                 end
             end
         end
         local function OnLeave(button, isBackground)
-            if button._lockHighlight then return end
             if isBackground then
                 Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             else
@@ -499,10 +504,12 @@ addonName.
 
             enter = enter or OnEnter
             button:HookScript("OnEnter", function(self)
+                if not ShowHighlight(button) then return end
                 enter(self, isBackdrop)
             end)
             leave = leave or OnLeave
             button:HookScript("OnLeave", function(self)
+                if not ShowHighlight(button) then return end
                 leave(self, isBackdrop)
             end)
 
