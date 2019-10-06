@@ -249,6 +249,28 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
         end
     end
+    do --[[ StanceBar.xml ]]
+        function Skin.StanceButtonTemplate(CheckButton)
+            Skin.ActionButtonTemplate(CheckButton)
+
+            Base.CreateBackdrop(CheckButton, {
+                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
+            })
+            CheckButton:SetBackdropColor(1, 1, 1, 0.75)
+            CheckButton:SetBackdropBorderColor(Color.frame:GetRGB())
+            Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
+
+            local name = CheckButton:GetName()
+            _G[name.."NormalTexture2"]:Hide()
+        end
+    end
     do --[[ ExtraActionBar.xml ]]
         -- /run ActionButton_StartFlash(ExtraActionButton1)
         function Skin.ExtraActionButtonTemplate(CheckButton)
@@ -398,6 +420,15 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --            StanceBar            --
     ----====####$$$$%%%%%$$$$####====----
+    if not private.disabled.mainmenubar then
+        _G.StanceBarLeft:SetAlpha(0)
+        _G.StanceBarMiddle:SetAlpha(0)
+        _G.StanceBarRight:SetAlpha(0)
+
+        for i = 1, _G.NUM_STANCE_SLOTS do
+            Skin.StanceButtonTemplate(_G["StanceButton"..i])
+        end
+    end
 
     ----====####$$$$%%%%$$$$####====----
     --         ExtraActionBar         --
