@@ -28,39 +28,31 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     end
 
     function Skin.UIPanelScrollBarButton(Button)
-        Button:SetSize(17, 17)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetHighlightTexture("")
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 0,
+            right = 1,
+            top = 0,
+            bottom = 0,
+        })
 
-        local disabled = Button:GetDisabledTexture()
-        disabled:SetVertexColor(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-        disabled:SetAllPoints()
-
-        Base.SetBackdrop(Button, Color.button)
+        local bg = Button:GetBackdropTexture("bg")
+        local arrow = Button:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", bg, 3, -5)
+        arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
+        Button._auroraTextures = {arrow}
     end
     function Skin.UIPanelScrollUpButtonTemplate(Button)
         Skin.UIPanelScrollBarButton(Button)
 
-        local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 4, -6)
-        arrow:SetPoint("BOTTOMRIGHT", -5, 7)
+        local arrow = Button._auroraTextures[1]
         Base.SetTexture(arrow, "arrowUp")
-
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
     end
     function Skin.UIPanelScrollDownButtonTemplate(Button)
         Skin.UIPanelScrollBarButton(Button)
 
-        local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 4, -7)
-        arrow:SetPoint("BOTTOMRIGHT", -5, 6)
+        local arrow = Button._auroraTextures[1]
         Base.SetTexture(arrow, "arrowDown")
-
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
     end
     function Skin.UIPanelScrollBarTemplate(Slider)
         Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
