@@ -48,13 +48,14 @@ do --[[ FrameXML\FriendsFrame.xml ]]
 
         local travelPassButton = Button.travelPassButton
         Skin.FrameTypeButton(travelPassButton)
-
         travelPassButton:SetSize(20, 32)
-        travelPassButton._tex = travelPassButton:CreateTexture(nil, "OVERLAY", nil, 7)
-        travelPassButton._tex:SetTexture([[Interface\FriendsFrame\PlusManz-PlusManz]])
-        travelPassButton._tex:SetPoint("TOPRIGHT", 1, -4)
-        travelPassButton._tex:SetSize(22, 22)
-        travelPassButton._tex:SetAlpha(0.5)
+
+        local texture = travelPassButton:CreateTexture(nil, "OVERLAY", nil, 7)
+        texture:SetTexture([[Interface\FriendsFrame\PlusManz-PlusManz]])
+        texture:SetPoint("TOPRIGHT", 1, -4)
+        texture:SetSize(22, 22)
+        texture:SetAlpha(0.75)
+        travelPassButton._auroraTextures = {texture}
     end
     function Skin.WhoFrameColumnHeaderTemplate(Button)
         Button.Left:Hide()
