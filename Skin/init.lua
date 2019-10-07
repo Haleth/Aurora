@@ -7,6 +7,7 @@ private.API_MAJOR, private.API_MINOR = 0, 5
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 2 and tonumber(minor) >= 5)
+private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 
 private.uiScale = 1
 private.disabled = {
