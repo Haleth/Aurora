@@ -56,6 +56,7 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
         end
 
         local function SkinQuestToggle(Button, arrowDir)
+            Skin.FrameTypeButton(Button)
             Button:SetAllPoints()
 
             local arrow = Button:CreateTexture(nil, "ARTWORK")
@@ -65,16 +66,8 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
             Base.SetTexture(arrow, "arrow"..arrowDir)
 
             local quest = Button:CreateTexture(nil, "ARTWORK")
-            quest:SetTexture([[Interface/QuestFrame/QuestMapLogAtlas]])
-            quest:SetTexCoord(0.5390625, 0.556640625, 0.7265625, 0.75)
-            quest:SetPoint("TOPLEFT", 14, -5)
-            quest:SetPoint("BOTTOMRIGHT", -1, 3)
-
-            Button:SetNormalTexture("")
-            Button:SetPushedTexture("")
-            Button:SetHighlightTexture("")
-            Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            quest:SetAtlas("questlog-waypoint-finaldestination-questionmark", true)
+            quest:SetPoint("TOPLEFT", 11, -1)
         end
         function Skin.WorldMapSidePanelToggleTemplate(Frame)
             SkinQuestToggle(Frame.OpenButton, "Right")
