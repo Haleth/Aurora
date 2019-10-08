@@ -409,11 +409,13 @@ function private.FrameXML.ActionBarController()
         do -- ActionBarUpButton
             local ActionBarUpButton = _G.ActionBarUpButton
             Skin.FrameTypeButton(ActionBarUpButton)
+            ActionBarUpButton:ClearAllPoints()
+            ActionBarUpButton:SetPoint("TOPLEFT", _G.ActionButton12, "TOPRIGHT", 6, 1)
             ActionBarUpButton:SetBackdropOption("offsets", {
-                left = 8,
-                right = 8,
-                top = 8,
-                bottom = 8,
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
             })
 
             local bg = ActionBarUpButton:GetBackdropTexture("bg")
@@ -427,11 +429,13 @@ function private.FrameXML.ActionBarController()
         do -- ActionBarDownButton
             local ActionBarDownButton = _G.ActionBarDownButton
             Skin.FrameTypeButton(ActionBarDownButton)
+            ActionBarDownButton:ClearAllPoints()
+            ActionBarDownButton:SetPoint("BOTTOMLEFT", _G.ActionButton12, "BOTTOMRIGHT", 6, -1)
             ActionBarDownButton:SetBackdropOption("offsets", {
-                left = 8,
-                right = 8,
-                top = 8,
-                bottom = 8,
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
             })
 
             local bg = ActionBarDownButton:GetBackdropTexture("bg")
