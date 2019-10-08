@@ -254,6 +254,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         function Hook.PanelTemplates_SelectTab(tab)
             local text = tab.Text or _G[tab:GetName().."Text"]
             text:SetPoint("CENTER", tab, "CENTER")
+            if tab._returnColor then
+                Base.SetBackdropColor(tab, tab._returnColor)
+            end
         end
     end
 end
