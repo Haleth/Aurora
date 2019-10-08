@@ -72,11 +72,7 @@ do --[[ FrameXML\QuestFrame.lua ]]
             x = x + 5
         end
 
-        if private.isPatch then
-            _G.QuestModelScene:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
-        else
-            _G.QuestNPCModel:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
-        end
+        _G.QuestModelScene:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
     end
     function Hook.QuestFrame_SetTitleTextColor(fontString, material)
         fontString:SetTextColor(Color.white:GetRGB())
@@ -166,11 +162,7 @@ function private.FrameXML.QuestFrame()
     _G.QuestFrameDeclineButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(_G.QuestFrameAcceptButton)
     _G.QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
-    if private.isPatch then
-        Skin.QuestScrollFrameTemplate(_G.QuestFrameDetailPanel.ScrollFrame)
-    else
-        Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
-    end
+    Skin.QuestScrollFrameTemplate(_G.QuestFrameDetailPanel.ScrollFrame)
 
 
     Skin.QuestFramePanelTemplate(_G.QuestFrameGreetingPanel)
@@ -182,7 +174,7 @@ function private.FrameXML.QuestFrame()
     -------------------
     -- QuestNPCModel --
     -------------------
-    local QuestModelScene = private.isPatch and _G.QuestModelScene or _G.QuestNPCModel
+    local QuestModelScene = _G.QuestModelScene
 
     local modelBackground = _G.CreateFrame("Frame", nil, QuestModelScene)
     modelBackground:SetPoint("TOPLEFT", -1, 1)

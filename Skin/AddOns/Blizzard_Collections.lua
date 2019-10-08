@@ -533,11 +533,6 @@ function private.AddOns.Blizzard_Collections()
         _G.CollectionsJournalTab5,
     })
 
-    if not private.isPatch then
-        Skin.GlowBoxFrame(CollectionsJournal.HeirloomTabHelpBox)
-        Skin.GlowBoxFrame(CollectionsJournal.WardrobeTabHelpBox)
-    end
-
 
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_MountCollection    --
@@ -573,9 +568,7 @@ function private.AddOns.Blizzard_Collections()
     Base.CropIcon(MountDisplay.InfoButton.Icon, MountDisplay.InfoButton)
     Skin.RotateOrbitCameraLeftButtonTemplate(MountDisplay.ModelScene.RotateLeftButton)
     Skin.RotateOrbitCameraRightButtonTemplate(MountDisplay.ModelScene.RotateRightButton)
-    if private.isPatch then
-        Skin.UICheckButtonTemplate(MountDisplay.ModelScene.TogglePlayer)
-    end
+    Skin.UICheckButtonTemplate(MountDisplay.ModelScene.TogglePlayer)
 
     Skin.HybridScrollBarTrimTemplate(MountJournal.ListScrollFrame.scrollBar)
     Skin.MagicButtonTemplate(MountJournal.MountButton)
@@ -723,9 +716,6 @@ function private.AddOns.Blizzard_Collections()
     HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
 
     Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
-    if not private.isPatch then
-        Skin.GlowBoxFrame(HeirloomsJournal.UpgradeLevelHelpBox)
-    end
 
 
     ----====####$$$$%%%%%$$$$####====----

@@ -90,9 +90,6 @@ function private.FrameXML.HelpFrame()
     end
 
     F.CreateBD(_G.BrowserSettingsTooltip)
-    if not private.isPatch then
-        F.Reskin(_G.BrowserSettingsTooltip.CacheButton)
-    end
     F.Reskin(_G.BrowserSettingsTooltip.CookiesButton)
 
     -- TicketStatusFrame

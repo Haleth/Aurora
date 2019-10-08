@@ -19,7 +19,7 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
         local slot, slotType = _G.SpellBook_GetSpellBookSlot(self)
         if slot then
             local _, _, spellID = _G.GetSpellBookItemName(slot, _G.SpellBookFrame.bookType)
-            local isDisabled = spellID and (private.isPatch and _G.C_SpellBook.IsSpellDisabled(spellID))
+            local isDisabled = spellID and _G.C_SpellBook.IsSpellDisabled(spellID)
             if slotType == "FUTURESPELL" or isDisabled then
                 local level = _G.GetSpellAvailableLevel(slot, _G.SpellBookFrame.bookType)
                 if _G.IsCharacterNewlyBoosted() or (level and level > _G.UnitLevel("player")) or isDisabled then

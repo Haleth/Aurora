@@ -27,20 +27,11 @@ function private.FrameXML.DressUpFrames()
     left:Hide()
     right:Hide()
 
-    if private.isPatch then
-        SideDressUpFrame.ModelScene:SetPoint("TOPLEFT")
-        SideDressUpFrame.ModelScene:SetPoint("BOTTOMRIGHT")
-        Skin.UIPanelButtonTemplate(SideDressUpFrame.ResetButton)
-        Skin.UIPanelCloseButton(_G.SideDressUpFrameCloseButton)
-        select(5, _G.SideDressUpFrameCloseButton:GetRegions()):Hide()
-    else
-        _G.SideDressUpModel:SetPoint("TOPLEFT")
-        _G.SideDressUpModel:SetPoint("BOTTOMRIGHT")
-        _G.SideDressUpModel.controlFrame:SetPoint("TOP", 0, -5)
-        Skin.UIPanelButtonTemplate(_G.SideDressUpModel.ResetButton)
-        Skin.UIPanelCloseButton(_G.SideDressUpModelCloseButton)
-        select(5, _G.SideDressUpModelCloseButton:GetRegions()):Hide()
-    end
+    SideDressUpFrame.ModelScene:SetPoint("TOPLEFT")
+    SideDressUpFrame.ModelScene:SetPoint("BOTTOMRIGHT")
+    Skin.UIPanelButtonTemplate(SideDressUpFrame.ResetButton)
+    Skin.UIPanelCloseButton(_G.SideDressUpFrameCloseButton)
+    select(5, _G.SideDressUpFrameCloseButton:GetRegions()):Hide()
 
 
     ------------------
@@ -51,14 +42,8 @@ function private.FrameXML.DressUpFrames()
     Skin.WardrobeOutfitDropDownTemplate(DressUpFrame.OutfitDropDown)
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
 
-    if private.isPatch then
-        DressUpFrame.ModelScene:SetPoint("TOPLEFT")
-        DressUpFrame.ModelScene:SetPoint("BOTTOMRIGHT")
-    else
-        DressUpFrame.DressUpModel:SetPoint("TOPLEFT")
-        DressUpFrame.DressUpModel:SetPoint("BOTTOMRIGHT")
-        DressUpFrame.DressUpModel.controlFrame:SetPoint("TOP", 0, -65)
-    end
+    DressUpFrame.ModelScene:SetPoint("TOPLEFT")
+    DressUpFrame.ModelScene:SetPoint("BOTTOMRIGHT")
 
     Skin.UIPanelButtonTemplate(_G.DressUpFrameCancelButton)
     _G.DressUpFrameCancelButton:SetFrameLevel(_G.DressUpFrameCancelButton:GetFrameLevel() + 1)

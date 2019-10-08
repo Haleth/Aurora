@@ -53,8 +53,6 @@ function private.FrameXML.StaticPopupSpecial()
     Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.AcceptButton)
     Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.DeclineButton)
 
-    if private.isPatch then
-        Skin.PlayerReportFrameTemplate(_G.ClubFinderReportFrame)
-    end
+    Skin.PlayerReportFrameTemplate(_G.ClubFinderReportFrame)
     Skin.PlayerReportFrameTemplate(_G.PlayerReportFrame)
 end

@@ -50,7 +50,6 @@ do --[[ FrameXML\HelpTip.xml ]]
 end
 
 function private.FrameXML.HelpTip()
-    if not private.isPatch then return end
     Util.Mixin(_G.HelpTipTemplateMixin, Hook.HelpTipTemplateMixin)
     _G.hooksecurefunc(_G.HelpTip.framePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 end

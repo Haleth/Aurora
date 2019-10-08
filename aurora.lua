@@ -136,7 +136,7 @@ function private.OnLoad()
 
     -- Create API hooks
     local Base = Aurora.Base
-    local Hook, Skin = Aurora.Hook, Aurora.Skin
+    local Hook = Aurora.Hook
     function Hook.GameTooltip_SetBackdropStyle(self, style)
         if not self.IsEmbedded then
             Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
@@ -178,35 +178,11 @@ function private.OnLoad()
         BNetFrame.Tag:SetAllPoints(_G.FriendsFrame.TitleText)
 
         local BroadcastFrame = BNetFrame.BroadcastFrame
-        local EditBox
-        if private.isPatch then
-            EditBox = BroadcastFrame.EditBox
-            EditBox:SetParent(_G.FriendsFrame)
-            EditBox:ClearAllPoints()
-            EditBox:SetSize(239, 25)
-            EditBox:SetPoint("TOPLEFT", 57, -28)
-        else
-            EditBox = _G.FriendsFrameBroadcastInput
-            Skin.FrameTypeEditBox(EditBox)
-
-            EditBox:ClearAllPoints()
-            EditBox:SetSize(245, 29)
-            EditBox:SetPoint("TOPLEFT", 54, -26)
-
-            _G.FriendsFrameBroadcastInputLeft:Hide()
-            _G.FriendsFrameBroadcastInputRight:Hide()
-            _G.FriendsFrameBroadcastInputMiddle:Hide()
-            _G.FriendsFrameBroadcastInputFill:SetPoint("LEFT", 20, 0)
-            EditBox.icon:SetPoint("LEFT", 3, 0)
-
-            local stop
-            _G.hooksecurefunc(EditBox, "SetTextInsets", function(self, left, right, top, bottom)
-                if stop then return end
-                stop = true
-                self:SetTextInsets(20, right, 0, 0)
-                stop = nil
-            end)
-        end
+        local EditBox = BroadcastFrame.EditBox
+        EditBox:SetParent(_G.FriendsFrame)
+        EditBox:ClearAllPoints()
+        EditBox:SetSize(239, 25)
+        EditBox:SetPoint("TOPLEFT", 57, -28)
 
         _G.hooksecurefunc("FriendsFrame_Update", function()
             local selectedTab = _G.PanelTemplates_GetSelectedTab(_G.FriendsFrame) or _G.FRIEND_TAB_FRIENDS
@@ -221,11 +197,7 @@ function private.OnLoad()
                 if _G.BNConnected() then
                     BNetFrame:Hide()
                     EditBox:Show()
-                    if private.isPatch then
-                        BroadcastFrame:UpdateBroadcast()
-                    else
-                        _G.FriendsFrameBroadcastInput_UpdateDisplay()
-                    end
+                    BroadcastFrame:UpdateBroadcast()
                 else
                     EditBox:Hide()
                 end

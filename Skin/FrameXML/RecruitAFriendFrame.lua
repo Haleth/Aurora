@@ -1,26 +1,19 @@
-local _, private = ...
+--local _, private = ...
 
 --[[ Lua Globals ]]
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+--local Aurora = private.Aurora
+--local Base = Aurora.Base
+--local Hook, Skin = Aurora.Hook, Aurora.Skin
+--local Color, Util = Aurora.Color, Aurora.Util
 
-function private.FrameXML.RecruitAFriendFrame()
-    if private.isPatch then return end
-    local RecruitAFriendFrame = _G.RecruitAFriendFrame
-    local RecruitAFriendSentFrame = _G.RecruitAFriendSentFrame
+--do --[[ FrameXML\RecruitAFriendFrame.lua ]]
+--end
 
-    RecruitAFriendFrame.NoteFrame:DisableDrawLayer("BACKGROUND")
+--do --[[ FrameXML\RecruitAFriendFrame.xml ]]
+--end
 
-    F.CreateBD(RecruitAFriendFrame)
-    F.ReskinClose(_G.RecruitAFriendFrameCloseButton)
-    F.Reskin(RecruitAFriendFrame.SendButton)
-    F.ReskinInput(_G.RecruitAFriendNameEditBox)
-
-    F.CreateBDFrame(RecruitAFriendFrame.NoteFrame, .25)
-
-    F.CreateBD(RecruitAFriendSentFrame)
-    F.Reskin(RecruitAFriendSentFrame.OKButton)
-    F.ReskinClose(_G.RecruitAFriendSentFrameCloseButton)
-end
+--function private.FrameXML.RecruitAFriendFrame()
+--end

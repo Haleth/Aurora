@@ -110,7 +110,7 @@ function private.FrameXML.FriendsFrame()
     BroadcastFrame:SetPoint("TOPLEFT", -55, -24)
 
     do -- BroadcastFrame.EditBox
-        local EditBox = private.isPatch and BroadcastFrame.EditBox or BroadcastFrame.ScrollFrame
+        local EditBox = BroadcastFrame.EditBox
         Base.CreateBackdrop(EditBox, private.backdrop, {
             tl = EditBox.TopLeftBorder,
             tr = EditBox.TopRightBorder,
@@ -134,13 +134,8 @@ function private.FrameXML.FriendsFrame()
     end
 
 
-    if private.isPatch then
-        Skin.FriendsFrameButtonTemplate(BroadcastFrame.UpdateButton)
-        Skin.FriendsFrameButtonTemplate(BroadcastFrame.CancelButton)
-    else
-        Skin.FriendsFrameButtonTemplate(BroadcastFrame.ScrollFrame.UpdateButton)
-        Skin.FriendsFrameButtonTemplate(BroadcastFrame.ScrollFrame.CancelButton)
-    end
+    Skin.FriendsFrameButtonTemplate(BroadcastFrame.UpdateButton)
+    Skin.FriendsFrameButtonTemplate(BroadcastFrame.CancelButton)
 
     Skin.DialogBorderTemplate(BNetFrame.UnavailableInfoFrame)
     local _, blizzIcon = select(11, BNetFrame.UnavailableInfoFrame:GetRegions())
@@ -148,15 +143,9 @@ function private.FrameXML.FriendsFrame()
 
     Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropDown)
     _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
-    if private.isPatch then
-        Skin.FriendsTabTemplate(FriendsTabHeader.Tab1)
-        Skin.FriendsTabTemplate(FriendsTabHeader.Tab2)
-        Skin.FriendsTabTemplate(FriendsTabHeader.Tab3)
-    else
-        Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab1)
-        Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab2)
-        Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab3)
-    end
+    Skin.FriendsTabTemplate(FriendsTabHeader.Tab1)
+    Skin.FriendsTabTemplate(FriendsTabHeader.Tab2)
+    Skin.FriendsTabTemplate(FriendsTabHeader.Tab3)
 
 
     ----------------------
@@ -167,20 +156,8 @@ function private.FrameXML.FriendsFrame()
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
     Skin.UIDropDownMenuTemplate(FriendsListFrame.FilterDropDown)
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
-    if private.isPatch then
-        Skin.FriendsFrameScrollFrame(_G.FriendsListFrameScrollFrame)
-        Hook.HybridScrollFrame_CreateButtons(_G.FriendsListFrameScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
-    else
-        _G.FriendsFrameFriendsScrollFrameTop:Hide()
-        _G.FriendsFrameFriendsScrollFrameMiddle:Hide()
-        _G.FriendsFrameFriendsScrollFrameBottom:Hide()
-        Skin.UIMenuButtonStretchTemplate(_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton)
-        Skin.MinimalHybridScrollBarTemplate(_G.FriendsFrameFriendsScrollFrame.scrollBar)
-        _G.FriendsFrameFriendsScrollFrame.scrollBar:ClearAllPoints()
-        _G.FriendsFrameFriendsScrollFrame.scrollBar:SetPoint("TOPRIGHT", 23, -18)
-        _G.FriendsFrameFriendsScrollFrame.scrollBar:SetPoint("BOTTOMRIGHT", 23, 17)
-        Hook.HybridScrollFrame_CreateButtons(_G.FriendsFrameFriendsScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
-    end
+    Skin.FriendsFrameScrollFrame(_G.FriendsListFrameScrollFrame)
+    Hook.HybridScrollFrame_CreateButtons(_G.FriendsListFrameScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
 
 
     ----------------------
@@ -190,11 +167,7 @@ function private.FrameXML.FriendsFrame()
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
     Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameIgnoredHeader)
     Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameBlockedInviteHeader)
-    if private.isPatch then
-        Skin.FriendsFrameScrollFrame(_G.IgnoreListFrameScrollFrame)
-    else
-        Skin.FauxScrollFrameTemplate(_G.FriendsFrameIgnoreScrollFrame)
-    end
+    Skin.FriendsFrameScrollFrame(_G.IgnoreListFrameScrollFrame)
 
 
     --------------
@@ -211,11 +184,7 @@ function private.FrameXML.FriendsFrame()
     Skin.UIPanelButtonTemplate(_G.WhoFrameAddFriendButton)
     Skin.UIPanelButtonTemplate(_G.WhoFrameWhoButton)
     Skin.InsetFrameTemplate(_G.WhoFrameEditBoxInset)
-    if private.isPatch then
-        Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
-    else
-        Skin.FauxScrollFrameTemplate(_G.WhoListScrollFrame)
-    end
+    Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
 
 
     ----------------------
@@ -224,9 +193,7 @@ function private.FrameXML.FriendsFrame()
     Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab1)
     Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab2)
     Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab3)
-    if private.isPatch then
-        Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab4)
-    end
+    Skin.FriendsFrameTabTemplate(_G.FriendsFrameTab4)
     Util.PositionRelative("TOPLEFT", FriendsFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.FriendsFrameTab1,
         _G.FriendsFrameTab2,
@@ -234,12 +201,7 @@ function private.FrameXML.FriendsFrame()
         _G.FriendsFrameTab4,
     })
 
-    if private.isPatch then
-        Skin.GlowBoxTemplate(FriendsFrame.FriendsFrameQuickJoinHelpTip)
-    end
-    if not private.disabled.tooltips then
-        Base.SetBackdrop(_G.FriendsTooltip)
-    end
+    Skin.GlowBoxTemplate(FriendsFrame.FriendsFrameQuickJoinHelpTip)
 
 
 
@@ -274,17 +236,10 @@ function private.FrameXML.FriendsFrame()
     -------------------------
     Skin.DialogBorderTemplate(_G.FriendsFriendsFrame.Border)
     Skin.UIDropDownMenuTemplate(_G.FriendsFriendsFrameDropDown)
-    if private.isPatch then
-        _G.FriendsFriendsFrame.ScrollFrameBorder:SetBackdrop(nil)
-        Skin.FriendsFrameScrollFrame(_G.FriendsFriendsScrollFrame)
-        Skin.UIPanelButtonTemplate(_G.FriendsFriendsFrame.SendRequestButton)
-        Skin.UIPanelButtonTemplate(_G.FriendsFriendsFrame.CloseButton)
-    else
-        _G.FriendsFriendsList:SetBackdrop(nil)
-        Skin.FauxScrollFrameTemplate(_G.FriendsFriendsScrollFrame)
-        Skin.UIPanelButtonTemplate(_G.FriendsFriendsSendRequestButton)
-        Skin.UIPanelButtonTemplate(_G.FriendsFriendsCloseButton)
-    end
+    _G.FriendsFriendsFrame.ScrollFrameBorder:SetBackdrop(nil)
+    Skin.FriendsFrameScrollFrame(_G.FriendsFriendsScrollFrame)
+    Skin.UIPanelButtonTemplate(_G.FriendsFriendsFrame.SendRequestButton)
+    Skin.UIPanelButtonTemplate(_G.FriendsFriendsFrame.CloseButton)
 
 
 

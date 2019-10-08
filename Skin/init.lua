@@ -6,7 +6,7 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 0, 5
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 2 and tonumber(minor) >= 5)
+private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 
 private.uiScale = 1
@@ -205,10 +205,9 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
                 end
             end
 
-            if not private.isPatch then
+            --if not private.isPatch then
                 -- run deprecated files
-                private.FrameXML.ScrollOfResurrection()
-            end
+            --end
 
             -- Skin prior loaded AddOns
             for addon, func in _G.next, private.AddOns do
