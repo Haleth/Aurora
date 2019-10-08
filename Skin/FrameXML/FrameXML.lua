@@ -36,6 +36,7 @@ local FrameXML = {
 
     -- intrinsics
     "SharedXML.ScrollingMessageFrame",
+    "SharedXML.DropDownToggleButton",
 
     "SharedXML.ModelSceneTemplates",
     "SharedXML.ModelSceneMixin",
@@ -222,6 +223,7 @@ local FrameXML = {
     "VehicleSeatIndicator",
     "DurabilityFrame",
     "BattlegroundChatFilters",
+    "QueueUpdater",
     "PVEFrame",
     "LFGFrame",
     "LFDFrame",

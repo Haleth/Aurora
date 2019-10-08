@@ -79,8 +79,8 @@ do --[[ FrameXML\MailFrame.lua ]]
 
         local _, _, _, _, isInvoice = _G.GetInboxText(_G.InboxFrame.openMailID)
         if isInvoice then
-            local invoiceType, _, playerName = _G.GetInboxInvoiceInfo(_G.InboxFrame.openMailID)
-            if playerName then
+            local invoiceType = _G.GetInboxInvoiceInfo(_G.InboxFrame.openMailID)
+            if invoiceType then
                 if invoiceType == "buyer" then
                     _G.OpenMailArithmeticLine:SetPoint("TOP", _G.OpenMailInvoicePurchaser, "BOTTOMLEFT", 125, -5)
                 elseif invoiceType == "seller" then

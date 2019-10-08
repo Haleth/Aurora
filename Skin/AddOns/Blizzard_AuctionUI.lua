@@ -10,6 +10,7 @@ local Color = Aurora.Color
 local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_AuctionUI()
+    if private.isPatch then return end
     F.SetBD(_G.AuctionFrame, 11, -12, -1, 10)
     _G.AuctionPortraitTexture:Hide()
     _G.AuctionFrame:DisableDrawLayer("ARTWORK")

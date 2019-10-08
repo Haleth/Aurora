@@ -15,7 +15,7 @@ function private.FrameXML.DressUpFrames()
     -----------------
 
     --[[ Used with:
-        - AuctionUI
+        - AuctionHouseUI
         - VoidStorageUI
     ]]
     local SideDressUpFrame = _G.SideDressUpFrame

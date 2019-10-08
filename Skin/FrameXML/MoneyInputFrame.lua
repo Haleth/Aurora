@@ -12,9 +12,9 @@ local Skin = Aurora.Skin
 
 do --[[ FrameXML\MoneyInputFrame.xml ]]
     local money = {"gold", "silver", "copper"}
-    function Skin.MoneyInputFrameTemplate(frame)
+    function Skin.MoneyInputFrameTemplate(Frame)
         for i = 1, #money do
-            local EditBox = frame[money[i]]
+            local EditBox = Frame[money[i]]
             Skin.FrameTypeEditBox(EditBox)
             EditBox:SetBackdropOption("offsets", {
                 left = -5,
@@ -23,17 +23,23 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
                 bottom = 0,
             })
 
-            local name = EditBox:GetName()
-            _G[name.."Left"]:Hide()
-            _G[name.."Middle"]:Hide()
-            _G[name.."Right"]:Hide()
+            if private.isPatch then
+                EditBox.left:Hide()
+                _G[EditBox:GetName().."Middle"]:Hide()
+                EditBox.right:Hide()
+            else
+                local name = EditBox:GetName()
+                _G[name.."Left"]:Hide()
+                _G[name.."Middle"]:Hide()
+                _G[name.."Right"]:Hide()
+            end
 
             local bg = EditBox:GetBackdropTexture("bg")
             EditBox.texture:ClearAllPoints()
             EditBox.texture:SetPoint("LEFT", bg, "RIGHT", 2, 0)
 
             if i > 1 then
-                EditBox:SetPoint("LEFT", frame[money[i - 1]], "RIGHT", 6, 0)
+                EditBox:SetPoint("LEFT", Frame[money[i - 1]], "RIGHT", 6, 0)
                 EditBox:SetSize(35, 20)
             else
                 EditBox:SetSize(70, 20)

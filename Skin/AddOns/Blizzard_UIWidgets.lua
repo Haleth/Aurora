@@ -110,6 +110,101 @@ function private.AddOns.Blizzard_UIWidgets()
 
 
     ----====####$$$$%%%%%$$$$####====----
+    --  Blizzard_UIWidgetTemplateBase  --
+    ----====####$$$$%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateIconAndText --
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateIconTextAndBackground --
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateCaptureBar --
+    ----====####$$$$%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateStatusBar --
+    ----====####$$$$%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateDoubleStatusBar --
+    ----====####$$$$%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateDoubleIconAndText --
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateStackedResourceTracker --
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateIconTextAndCurrencies --
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateTextWithState --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateHorizontalCurrencies --
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateBulletTextList --
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateScenarioHeaderCurrenciesAndBackground --
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateTextureAndText --
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateSpellDisplay --
+    ----====####$$$$%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateDoubleStateIconRow --
+    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateTextureAndTextRow --
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateZoneControl --
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateCaptureZone --
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_UIWidgetTopCenterFrame --
     ----====####$$$$%%%%%$$$$####====----
     Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
@@ -119,4 +214,11 @@ function private.AddOns.Blizzard_UIWidgets()
     -- Blizzard_UIWidgetBelowMinimapFrame --
     ----====####$$$$%%%%%%%%$$$$####====----
     Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
+
+
+    ----====####$$$$%%%%$$$$####====----
+    -- Blizzard_UIWidgetPowerBarFrame --
+    ----====####$$$$%%%%$$$$####====----
+
+
 end
