@@ -51,5 +51,5 @@ end
 
 function private.FrameXML.HelpTip()
     Util.Mixin(_G.HelpTipTemplateMixin, Hook.HelpTipTemplateMixin)
-    _G.hooksecurefunc(_G.HelpTip.framePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(_G.HelpTip.framePool, Hook.ObjectPoolMixin)
 end

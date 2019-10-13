@@ -225,8 +225,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.Cancel)
         end
         function Skin.CommunitiesNotificationSettingsDialogTemplate(Frame)
-            _G.hooksecurefunc(Frame.buttonPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-
             Skin.SelectionFrameTemplate(Frame)
             Frame.BG:Hide()
 
@@ -407,7 +405,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.scrollBar)
             Frame.ListScrollFrame.scrollBar.Background:Hide()
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
-            Hook.ObjectPoolMixin_Acquire(Frame.ColumnDisplay.columnHeaders)
             Frame.ColumnDisplay.InsetBorderTopLeft:ClearAllPoints()
             Frame.ColumnDisplay.InsetBorderTopRight:ClearAllPoints()
             Frame.ColumnDisplay.InsetBorderBottomLeft:ClearAllPoints()

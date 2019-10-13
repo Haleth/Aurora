@@ -6,7 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 local Color = Aurora.Color
 
 --[[ do AddOns\Blizzard_AdventureMap.lua
@@ -39,7 +39,6 @@ function private.AddOns.Blizzard_AdventureMap()
     --         AM_QuestDialog         --
     ----====####$$$$%%%%$$$$####====----
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
-    _G.hooksecurefunc(AdventureMapQuestChoiceDialog.rewardPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
 
     AdventureMapQuestChoiceDialog.Rewards:SetAlpha(0)
     AdventureMapQuestChoiceDialog.Background:Hide()

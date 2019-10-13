@@ -3,9 +3,11 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ SharedXML\Pools.lua ]]
-    function Hook.ObjectPoolMixin_Acquire(self)
+    Hook.ObjectPoolMixin = {}
+    function Hook.ObjectPoolMixin:Acquire()
         local template = self.frameTemplate or self.textureTemplate or self.fontStringTemplate or self.actorTemplate
         if template and Skin[template] then
             for obj in self:EnumerateActive() do
@@ -19,6 +21,12 @@ do --[[ SharedXML\Pools.lua ]]
 end
 
 
---function private.SharedXML.Pools()
-    --_G.hooksecurefunc(_G.ObjectPoolMixin, "Acquire", Hook.ObjectPoolMixin_Acquire)
---end
+function private.SharedXML.Pools()
+    --Util.Mixin(objectPool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.ObjectPoolMixin, Hook.ObjectPoolMixin)
+
+    Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)
+end

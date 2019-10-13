@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\AlertFrameSystems.lua ]]
     function Hook.DungeonCompletionAlertFrameReward_SetRewardMoney(frame, optionalMoney)
@@ -333,25 +333,25 @@ end
 
 function private.FrameXML.AlertFrameSystems()
     -- Simple Alerts
-    _G.hooksecurefunc(_G.GuildChallengeAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.DungeonCompletionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.ScenarioAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.InvasionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.DigsiteCompleteAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.EntitlementDeliveredAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.RafRewardDeliveredAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.GarrisonBuildingAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.GarrisonMissionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.GarrisonShipMissionAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.GarrisonFollowerAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.GarrisonShipFollowerAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.GarrisonTalentAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.WorldQuestCompleteAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.LegendaryItemAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(_G.GuildChallengeAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.DungeonCompletionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.ScenarioAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.InvasionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.DigsiteCompleteAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.EntitlementDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.RafRewardDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.GarrisonBuildingAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.GarrisonMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.GarrisonShipMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.GarrisonFollowerAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.GarrisonShipFollowerAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.GarrisonTalentAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.WorldQuestCompleteAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.LegendaryItemAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
 
-    _G.hooksecurefunc(_G.NewPetAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.NewMountAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.NewToyAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(_G.NewPetAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.NewMountAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.NewToyAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
 
     --[[
     ]]
@@ -362,11 +362,11 @@ function private.FrameXML.AlertFrameSystems()
 
 
     -- Queued Alerts
-    _G.hooksecurefunc(_G.AchievementAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.CriteriaAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.LootAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.LootUpgradeAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.MoneyWonAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.HonorAwardedAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-    _G.hooksecurefunc(_G.NewRecipeLearnedAlertSystem.alertFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(_G.AchievementAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.CriteriaAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.LootAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.LootUpgradeAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.MoneyWonAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.HonorAwardedAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(_G.NewRecipeLearnedAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
 end

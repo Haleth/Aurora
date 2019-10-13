@@ -53,7 +53,7 @@ function private.FrameXML.CharacterFrame()
     CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)
 
     local CharacterStatsPane = _G.CharacterStatsPane
-    _G.hooksecurefunc(CharacterStatsPane.statsFramePool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(CharacterStatsPane.statsFramePool, Hook.ObjectPoolMixin)
 
     local ClassBackground = CharacterStatsPane.ClassBackground
     local atlas = "legionmission-landingpage-background-"..private.charClass.token

@@ -32,13 +32,6 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
                 Ability._auroraSkinned = true
             end
         end
-
-        Hook.GarrisonFollowerTabMixin = {}
-        function Hook.GarrisonFollowerTabMixin:OnLoad()
-            _G.hooksecurefunc(self.abilitiesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-            _G.hooksecurefunc(self.equipmentPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-            _G.hooksecurefunc(self.countersPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-        end
     end
     do --[[ Blizzard_GarrisonMissionTemplates.lua ]]
         function Hook.GarrisonMission_RemoveFollowerFromMission(self, frame, updateValues)

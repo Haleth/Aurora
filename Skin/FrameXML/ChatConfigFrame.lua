@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\ChatConfigFrame.lua ]]
     function Hook.ChatConfig_CreateCheckboxes(frame, checkBoxTable, checkBoxTemplate, title)
@@ -189,7 +189,7 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton2)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton3)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton4)
-    _G.hooksecurefunc(ChatConfigFrame.ChatTabManager.tabPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(ChatConfigFrame.ChatTabManager.tabPool, Hook.ObjectPoolMixin)
     Skin.ChatConfigBoxTemplate(_G.ChatConfigBackgroundFrame)
 
     local divider = _G.ChatConfigFrame:CreateTexture()

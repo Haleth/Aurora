@@ -61,8 +61,6 @@ do --[[ AddOns\Blizzard_IslandsQueueUI.xml ]]
     function Skin.IslandsQueueScreenDifficultySelector(Frame)
         Frame.Background:Hide()
         Skin.UIPanelButtonNoTooltipTemplate(Frame.QueueButton)
-
-        _G.hooksecurefunc(Frame.difficultyPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     end
     function Skin.IslandsQueueFrameIslandCardTemplate(Frame)
     end

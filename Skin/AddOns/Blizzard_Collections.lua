@@ -758,7 +758,6 @@ function private.AddOns.Blizzard_Collections()
     Skin.HybridScrollBarTrimTemplate(SetsCollectionFrame.ScrollFrame.scrollBar)
 
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
-    _G.hooksecurefunc(DetailsFrame.itemFramesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
     DetailsFrame.ModelFadeTexture:Hide()
     Skin.UIMenuButtonStretchTemplate(DetailsFrame.VariantSetsButton)
 

@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ FrameXML\QueueStatusFrame.lua ]]
     function Hook.QueueStatusEntry_SetFullDisplay(entry, title, queuedTime, myWait, isTank, isHealer, isDPS, totalTanks, totalHealers, totalDPS, tankNeeds, healerNeeds, dpsNeeds, subTitle, extraText)
@@ -66,5 +67,5 @@ function private.FrameXML.QueueStatusFrame()
     local QueueStatusFrame = _G.QueueStatusFrame
     Skin.TooltipBorderedFrameTemplate(QueueStatusFrame)
 
-    _G.hooksecurefunc(QueueStatusFrame.statusEntriesPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
+    Util.Mixin(QueueStatusFrame.statusEntriesPool, Hook.ObjectPoolMixin)
 end

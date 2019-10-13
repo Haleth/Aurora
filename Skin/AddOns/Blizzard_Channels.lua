@@ -80,11 +80,6 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ ChannelList.xml ]]
         function Skin.ChannelListTemplate(ScrollFrame)
-            _G.hooksecurefunc(ScrollFrame.headerButtonPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-            _G.hooksecurefunc(ScrollFrame.textChannelButtonPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-            _G.hooksecurefunc(ScrollFrame.voiceChannelButtonPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-            _G.hooksecurefunc(ScrollFrame.communityChannelButtonPool, "Acquire", Hook.ObjectPoolMixin_Acquire)
-
             Skin.UIPanelStretchableArtScrollBarTemplate(ScrollFrame.ScrollBar)
         end
     end

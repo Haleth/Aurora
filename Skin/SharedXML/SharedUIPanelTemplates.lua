@@ -637,8 +637,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         end
     end
     function Skin.ColumnDisplayTemplate(Frame)
-        _G.hooksecurefunc(Frame.columnHeaders, "Acquire", Hook.ObjectPoolMixin_Acquire)
-
         Frame.Background:Hide()
         Frame.TopTileStreaks:Hide()
     end
