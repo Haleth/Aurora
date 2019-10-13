@@ -571,6 +571,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)
     end
+    function Skin.SearchBoxTemplate(EditBox)
+        Skin.InputBoxInstructionsTemplate(EditBox)
+    end
     function Skin.TabButtonTemplate(Button)
         Button.LeftDisabled:SetAlpha(0)
         Button.MiddleDisabled:SetAlpha(0)

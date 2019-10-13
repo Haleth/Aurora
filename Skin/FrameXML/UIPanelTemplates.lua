@@ -37,9 +37,6 @@ end
 
 
 do --[[ FrameXML\UIPanelTemplates.xml ]]
-    function Skin.SearchBoxTemplate(EditBox)
-        Skin.InputBoxInstructionsTemplate(EditBox)
-    end
     function Skin.BagSearchBoxTemplate(EditBox)
         Skin.SearchBoxTemplate(EditBox)
     end

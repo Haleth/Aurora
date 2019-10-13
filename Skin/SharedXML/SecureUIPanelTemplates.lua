@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals floor
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -16,15 +16,18 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     function Skin.InputBoxTemplate(EditBox)
         Skin.FrameTypeEditBox(EditBox)
 
+        -- This is a slightly fancy way of getting a consistent height from frames of variable height.
+        local yOfs = floor(EditBox:GetHeight() / 2 + .5) - 10
+        EditBox:SetBackdropOption("offsets", {
+            left = -4,
+            right = 1,
+            top = yOfs,
+            bottom = yOfs,
+        })
+
         EditBox.Left:Hide()
         EditBox.Right:Hide()
         EditBox.Middle:Hide()
-
-        local bg = EditBox:GetBackdropTexture("bg")
-        bg:ClearAllPoints()
-        bg:SetHeight(20)
-        bg:SetPoint("LEFT", -5, 0)
-        bg:SetPoint("RIGHT", 0, 0)
     end
 
     function Skin.UIPanelScrollBarButton(Button)
