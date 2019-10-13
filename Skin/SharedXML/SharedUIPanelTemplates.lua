@@ -151,7 +151,7 @@ do -- Basic frame type skins
                 end
             end
         end
-        function Skin.FrameTypeButton(Button)
+        function Skin.FrameTypeButton(Button, OnEnter, OnLeave)
             _G.hooksecurefunc(Button, "Enable", Hook_Enable)
             _G.hooksecurefunc(Button, "Disable", Hook_Disable)
 
@@ -161,7 +161,7 @@ do -- Basic frame type skins
             Button:SetDisabledTexture("")
 
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
         end
     end
     do -- StatusBar

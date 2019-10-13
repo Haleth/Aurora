@@ -464,8 +464,8 @@ addonName.
         ]]
 
         local function ShowHighlight(button)
-            if button._lockHighlight then
-                return true
+            if button._isHighlighted then
+                return button._lockHighlight
             else
                 return button:IsEnabled()
             end
@@ -489,7 +489,7 @@ addonName.
                 end
             end
         end
-        function Base.SetHighlight(button, highlightType, enter, leave)
+        function Base.SetHighlight(button, highlightType, onenter, onleave)
             local isBackdrop = highlightType == "backdrop"
             local r, g, b, a
 
@@ -502,25 +502,28 @@ addonName.
             end
             button._returnColor = Color.Create(r, g, b, a)
 
-            enter = enter or OnEnter
-            button:HookScript("OnEnter", function(self)
+            local function enter(self)
                 if not ShowHighlight(button) then return end
-                enter(self, isBackdrop)
-            end)
-            leave = leave or OnLeave
-            button:HookScript("OnLeave", function(self)
-                if not ShowHighlight(button) then return end
-                leave(self, isBackdrop)
-            end)
+                (onenter or OnEnter)(self, isBackdrop)
+                button._isHighlighted = true
+            end
+            button:HookScript("OnEnter", enter)
+
+            local function leave(self)
+                if ShowHighlight(button) then return end
+                (onleave or OnLeave)(self, isBackdrop)
+                button._isHighlighted = false
+            end
+            button:HookScript("OnLeave", leave)
 
             if button.LockHighlight then
                 _G.hooksecurefunc(button, "LockHighlight", function(self, ...)
                     button._lockHighlight = true
-                    enter(self, isBackdrop)
+                    enter(self)
                 end)
                 _G.hooksecurefunc(button, "UnlockHighlight", function(self, ...)
                     button._lockHighlight = nil
-                    leave(self, isBackdrop)
+                    leave(self)
                 end)
             end
         end
