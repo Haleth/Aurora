@@ -786,12 +786,18 @@ function private.AddOns.Blizzard_Collections()
     Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
     Skin.GlowBoxFrame(WardrobeTransmogFrame.OutfitHelpBox, "Left")
 
-    Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.Model.ClearAllPendingButton)
-    for i = 1, #WardrobeTransmogFrame.Model.SlotButtons do
+    local ModelScene
+    if private.isPatch then
+        ModelScene = WardrobeTransmogFrame.ModelScene
+    else
+        ModelScene = WardrobeTransmogFrame.Model
+    end
+    Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
+    for i = 1, #ModelScene.SlotButtons do
         if i > 13 then
-            Skin.WardrobeTransmogEnchantButtonTemplate(WardrobeTransmogFrame.Model.SlotButtons[i])
+            Skin.WardrobeTransmogEnchantButtonTemplate(ModelScene.SlotButtons[i])
         else
-            Skin.WardrobeTransmogButtonTemplate(WardrobeTransmogFrame.Model.SlotButtons[i])
+            Skin.WardrobeTransmogButtonTemplate(ModelScene.SlotButtons[i])
         end
     end
 
