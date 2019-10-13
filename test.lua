@@ -31,6 +31,7 @@ local test, container
 function commands.test()
     local Aurora = _G.Aurora
     local Base = Aurora.Base
+    local Skin = Aurora.Skin
     local Color = Aurora.Color
 
     local AceConfig = _G.LibStub("AceConfig-3.0", true)
@@ -898,18 +899,50 @@ function commands.test()
                 --auroraBDFrame:SetBackdropColor(bdOptions.backdropColor:GetRGB())
                 --auroraBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
 
+
+                local Dialog = _G.CreateFrame("Frame", nil, frame, "DialogBorderTemplate")
+                Skin.DialogBorderTemplate(Dialog)
+                Dialog:SetSize(300, 300)
+                Dialog:ClearAllPoints()
+                Dialog:SetPoint("TOPRIGHT", frame, "TOPLEFT", -10, 0)
+                Dialog:Hide()
+
+                local EditBox1 = _G.CreateFrame("EditBox", nil, Dialog, "InputBoxTemplate")
+                EditBox1:SetSize(50, 20)
+                EditBox1:SetPoint("TOPLEFT", 10, -10)
+                Skin.InputBoxTemplate(EditBox1)
+
+                local EditBox2 = _G.CreateFrame("EditBox", nil, Dialog, "InputBoxTemplate")
+                EditBox2:SetSize(50, 50)
+                EditBox2:SetPoint("TOPLEFT", 10, -40)
+                Skin.InputBoxTemplate(EditBox2)
+
+                local EditBox3 = _G.CreateFrame("EditBox", nil, Dialog, "InputBoxTemplate")
+                EditBox3:SetSize(100, 50)
+                EditBox3:SetPoint("TOPLEFT", 10, -100)
+                Skin.InputBoxTemplate(EditBox3)
+
                 local skins do
                     skins = {
                         name = "Skins",
                         type = "group",
                         args = {
-                            show = {
+                            backdrop = {
                                 name = "Show backdrop tests",
                                 type = "toggle",
                                 get = function() return auroraBDFrame:IsShown() end,
                                 set = function(info, value)
                                     blizzBDFrame:SetShown(value)
                                     auroraBDFrame:SetShown(value)
+                                end,
+                                order = 1,
+                            },
+                            dialog = {
+                                name = "Show widget tests",
+                                type = "toggle",
+                                get = function() return Dialog:IsShown() end,
+                                set = function(info, value)
+                                    Dialog:SetShown(value)
                                 end,
                                 order = 1,
                             },
