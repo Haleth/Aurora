@@ -59,10 +59,8 @@ do --[[ FrameXML\ReputationFrame.xml ]]
     function Skin.ReputationBarTemplate(Button)
         local factionRowName = Button:GetName()
 
-        Button.Background = _G[factionRowName.."Background"]
-        Base.CreateBackdrop(Button, private.backdrop, {bg = Button.Background})
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
+        Skin.FrameTypeButton(Button, OnEnter, OnLeave)
+        _G[factionRowName.."Background"]:SetAlpha(0)
 
         Skin.ExpandOrCollapse(_G[factionRowName.."ExpandOrCollapseButton"])
 
