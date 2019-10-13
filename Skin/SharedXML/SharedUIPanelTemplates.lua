@@ -361,7 +361,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         end
     end
     function Skin.InsetFrameTemplate(Frame)
-        Frame.Bg:Hide()
+        Frame.NineSlice.Center = Frame.Bg
         Skin.NineSlicePanelTemplate(Frame.NineSlice)
     end
     function Skin.DialogBorderNoCenterTemplate(Frame)

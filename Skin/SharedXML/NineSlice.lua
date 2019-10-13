@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook = Aurora.Hook
-local Util = Aurora.Util
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ SharedXML\NineSlice.lua ]]
     local nineSliceSetup =    {
@@ -46,15 +46,22 @@ do --[[ SharedXML\NineSlice.lua ]]
         ButtonFrameTemplateNoPortrait = BasicSkin,
         ButtonFrameTemplateNoPortraitMinimizable = BasicSkin,
         InsetFrameTemplate = function(Frame)
-            Frame.TopLeftCorner:Hide()
-            Frame.TopRightCorner:Hide()
-            Frame.BottomLeftCorner:Hide()
-            Frame.BottomRightCorner:Hide()
+            Base.CreateBackdrop(Frame, private.backdrop, {
+                tl = Frame.TopLeftCorner,
+                tr = Frame.TopRightCorner,
+                bl = Frame.BottomLeftCorner,
+                br = Frame.BottomRightCorner,
 
-            Frame.TopEdge:Hide()
-            Frame.BottomEdge:Hide()
-            Frame.LeftEdge:Hide()
-            Frame.RightEdge:Hide()
+                t = Frame.TopEdge,
+                b = Frame.BottomEdge,
+                l = Frame.LeftEdge,
+                r = Frame.RightEdge,
+
+                bg = Frame.Center,
+            })
+
+            Frame:SetBackdropColor(Color.frame, 0)
+            Frame:SetBackdropBorderColor(Color.frame, 0)
         end,
         BFAMissionHorde = BasicSkin,
         BFAMissionAlliance = BasicSkin,
