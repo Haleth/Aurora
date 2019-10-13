@@ -30,7 +30,7 @@ end
 function private.FrameXML.CinematicFrame()
     _G.CinematicFrame.closeDialog:HookScript("OnShow", Hook.CinematicFrameCloseDialog_OnShow)
 
-    Skin.DialogBorderTemplate(_G.CinematicFrame.closeDialog)
+    Skin.DialogBorderTemplate(_G.CinematicFrame.closeDialog.Border)
     Skin.CinematicDialogButtonTemplate(_G.CinematicFrameCloseDialogConfirmButton)
     Skin.CinematicDialogButtonTemplate(_G.CinematicFrameCloseDialogResumeButton)
 end

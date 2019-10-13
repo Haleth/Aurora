@@ -237,6 +237,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         end
     end
     do --[[ SharedUIPanelTemplates ]]
+        function Hook.UIPanelCloseButton_SetBorderAtlas(self, atlas, xOffset, yOffset, textureKit)
+            self.Border:SetAlpha(0)
+        end
+
         local resizing = false
         function Hook.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
             if not tab._auroraTabResize or resizing then return end
@@ -350,67 +354,53 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.NineSlicePanelTemplate(Frame)
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
-
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Center,
-        })
+        Frame._auroraNineSlice = true
+        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType());
+        if layout then
+            Hook.NineSliceUtil.ApplyLayout(Frame, layout)
+        end
     end
     function Skin.InsetFrameTemplate(Frame)
         Frame.Bg:Hide()
-        for _, tex in next, Frame.NineSlice do
-            if type(tex) == "table" then
-                tex:Hide()
-            end
-        end
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
     end
     function Skin.DialogBorderNoCenterTemplate(Frame)
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
+        Skin.NineSlicePanelTemplate(Frame)
 
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Bg
-        })
-
-        Base.SetBackdrop(Frame, Color.frame, 0)
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0)
     end
     function Skin.DialogBorderTemplate(Frame)
+        Frame.Center = Frame.Bg
         Skin.DialogBorderNoCenterTemplate(Frame)
         Base.SetBackdrop(Frame)
     end
     function Skin.DialogBorderDarkTemplate(Frame)
+        Frame.Center = Frame.Bg
         Skin.DialogBorderNoCenterTemplate(Frame)
-        Frame:GetBackdropTexture("bg"):SetAlpha(0.87)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0.87)
     end
     function Skin.DialogBorderTranslucentTemplate(Frame)
+        Frame.Center = Frame.Bg
         Skin.DialogBorderNoCenterTemplate(Frame)
-        Frame:GetBackdropTexture("bg"):SetAlpha(0.8)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0.8)
     end
     function Skin.DialogBorderOpaqueTemplate(Frame)
+        Frame.Center = Frame.Bg
         Skin.DialogBorderNoCenterTemplate(Frame)
-        Frame:GetBackdropTexture("bg"):SetAlpha(1)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 1)
     end
 
     function Skin.SimplePanelTemplate(Frame)
         Skin.InsetFrameTemplate(Frame.Inset)
         Frame.NineSlice.Center = Frame.Bg
         Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        Base.SetBackdrop(Frame.NineSlice)
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
@@ -427,7 +417,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.TopTileStreaks:SetTexture("")
         Frame.NineSlice.Center = Frame.Bg
         Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        Base.SetBackdrop(Frame.NineSlice)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
@@ -658,6 +647,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
+    _G.hooksecurefunc("UIPanelCloseButton_SetBorderAtlas", Hook.UIPanelCloseButton_SetBorderAtlas)
+
     _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)

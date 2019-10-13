@@ -6,7 +6,6 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
@@ -40,11 +39,7 @@ function private.AddOns.Blizzard_PVPMatch()
     --         PVPMatchResults         --
     ----====####$$$$%%%%%$$$$####====----
     local PVPMatchResults = _G.PVPMatchResults
-    Base.SetBackdrop(PVPMatchResults)
-    --PVPMatchResults.overlay.decorator:SetAlpha(0)
-
     Skin.UIPanelCloseButton(PVPMatchResults.CloseButton)
-    PVPMatchResults.CloseButton.Border:Hide()
 
     local resultsContent = PVPMatchResults.content
     resultsContent.background:Hide()
@@ -81,9 +76,7 @@ function private.AddOns.Blizzard_PVPMatch()
     --       PVPMatchScoreboard       --
     ----====####$$$$%%%%$$$$####====----
     local PVPMatchScoreboard = _G.PVPMatchScoreboard
-    Base.SetBackdrop(PVPMatchScoreboard)
     Skin.UIPanelCloseButton(PVPMatchScoreboard.CloseButton)
-    PVPMatchScoreboard.CloseButton.Border:Hide()
 
     local scoreContent = PVPMatchScoreboard.Content
     scoreContent.Background:Hide()

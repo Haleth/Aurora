@@ -5,7 +5,6 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
@@ -50,14 +49,6 @@ do --[[ AddOns\Blizzard_WarboardUI.lua ]]
             end
 
         end
-
-        if not self.NineSlice.Center then
-            self.NineSlice.Center = self.Background.BackgroundTile
-            Skin.NineSlicePanelTemplate(self.NineSlice)
-            Base.SetBackdrop(self.NineSlice)
-
-            self.CloseButton.Border:Hide()
-        end
     end
 
     Hook.WarboardQuestChoiceOptionFrameMixin = {}
@@ -86,6 +77,9 @@ end
 function private.AddOns.Blizzard_WarboardUI()
     local WarboardQuestChoiceFrame = _G.WarboardQuestChoiceFrame
     Util.Mixin(WarboardQuestChoiceFrame, Hook.WarboardQuestChoiceFrameMixin)
+
+    WarboardQuestChoiceFrame.NineSlice.Center = WarboardQuestChoiceFrame.Background.BackgroundTile
+    Skin.NineSlicePanelTemplate(WarboardQuestChoiceFrame.NineSlice)
 
     WarboardQuestChoiceFrame.BorderFrame:Hide()
     for _, option in next, WarboardQuestChoiceFrame.Options do
