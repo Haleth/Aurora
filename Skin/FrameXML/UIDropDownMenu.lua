@@ -185,6 +185,34 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             bg:SetFrameLevel(Frame:GetFrameLevel())
             Base.SetBackdrop(bg, Color.button)
         end
+        function Skin.LargeUIDropDownMenuTemplate(Frame)
+            Base.SetBackdrop(Frame, Color.frame)
+            Frame:SetBackdropBorderColor(Color.button)
+            Frame:SetBackdropOption("offsets", {
+                left = 4,
+                right = 4,
+                top = 2,
+                bottom = 7,
+            })
+
+            Skin.FrameTypeButton(Frame.Button)
+            Frame.Button:SetBackdropOption("offsets", {
+                left = 4,
+                right = 0,
+                top = 1,
+                bottom = 2,
+            })
+
+            local bg = Frame.Button:GetBackdropTexture("bg")
+            local arrow = Frame.Button:CreateTexture(nil, "ARTWORK")
+            arrow:SetPoint("TOPLEFT", bg, 4, -8)
+            arrow:SetPoint("BOTTOMRIGHT", bg, -4, 7)
+            Base.SetTexture(arrow, "arrowDown")
+
+            Frame.Left:Hide()
+            Frame.Right:Hide()
+            Frame.Middle:Hide()
+        end
     end
 end
 

@@ -99,6 +99,33 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button.CircleMask:Hide()
         Button.IconOverlay:SetAlpha(0)
     end
+    function Skin.GiantItemButtonTemplate(Button)
+        Button.EmptyBackground:Hide()
+
+        Base.CropIcon(Button.Icon)
+        Base.CreateBackdrop(Button, {
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            tile = false,
+            offsets = {
+                left = 3,
+                right = 4,
+                top = 4,
+                bottom = 3,
+            }
+        })
+        Base.CropIcon(Button:GetBackdropTexture("bg"))
+        Base.SetBackdrop(Button, Color.black, Color.frame.a)
+        Button._auroraIconBorder = Button
+
+        Button:SetBackdropColor(1, 1, 1, 0.75)
+        Button:SetBackdropBorderColor(Color.frame, 1)
+
+        Button.IconMask:Hide()
+        Button.IconOverlay:SetAlpha(0)
+
+        Base.CropIcon(Button:GetPushedTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
+    end
     function Skin.SimplePopupButtonTemplate(CheckButton)
         local name, bg = CheckButton:GetRegions()
         name:ClearAllPoints()

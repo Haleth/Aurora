@@ -33,6 +33,14 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             end
         end
         function Hook.AuctionHouseItemListMixin:RefreshScrollFrame()
+            if not self.isInitialized or not self:IsShown() then
+                return
+            end
+
+            if self.searchStartedFunc and not self.searchStartedFunc() then
+                return
+            end
+
             local numResults = self.getNumEntries()
             if numResults == 0 then return end
 
@@ -109,6 +117,12 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             end
         end
     end
+    do --[[ Blizzard_AuctionHouseAuctionsFrame ]]
+        Hook.AuctionHouseAuctionsSummaryLineMixin = {}
+        function Hook.AuctionHouseAuctionsSummaryLineMixin:UpdateDisplay()
+            self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
+        end
+    end
 end
 
 do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
@@ -133,6 +147,10 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         function Skin.AuctionHouseItemDisplayTemplate(Button)
             Skin.AuctionHouseItemDisplayBaseTemplate(Button)
             Skin.CircularGiantItemButtonTemplate(Button.ItemButton)
+        end
+        function Skin.AuctionHouseInteractableItemDisplayTemplate(Frame)
+            Skin.AuctionHouseItemDisplayBaseTemplate(Frame)
+            Skin.GiantItemButtonTemplate(Frame.ItemButton)
         end
         function Skin.AuctionHouseQuantityInputEditBoxTemplate(Frame)
             Skin.LargeInputBoxTemplate(Frame)
@@ -256,6 +274,12 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         function Skin.AuctionHouseItemBuyFrameTemplate(Frame)
             Skin.UIPanelButtonTemplate(Frame.BackButton)
             Skin.AuctionHouseItemDisplayTemplate(Frame.ItemDisplay)
+
+            local nameBG = _G.CreateFrame("Frame", nil, Frame.ItemDisplay)
+            nameBG:SetPoint("TOPLEFT", Frame.ItemDisplay.ItemButton, "TOPRIGHT", 0, -3)
+            nameBG:SetPoint("BOTTOMRIGHT", -300, 17)
+            Base.SetBackdrop(nameBG, Color.frame)
+
             Skin.AuctionHouseBuyoutFrameTemplate(Frame.BuyoutFrame)
             Skin.AuctionHouseBidFrameTemplate(Frame.BidFrame)
             Skin.AuctionHouseItemListTemplate(Frame.ItemList)
@@ -269,6 +293,45 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseQuantityInputEditBoxTemplate(Frame.InputBox)
             Skin.UIPanelButtonTemplate(Frame.MaxButton)
         end
+        function Skin.AuctionHouseAlignedPriceInputFrameTemplate(Frame)
+            Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
+            Skin.LargeMoneyInputFrameTemplate(Frame.MoneyInputFrame)
+        end
+        function Skin.AuctionHouseAlignedDurationDropDownTemplate(Frame)
+            Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
+            Skin.LargeUIDropDownMenuTemplate(Frame.DropDown)
+        end
+        function Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame)
+            Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
+            --Skin.MoneyDisplayFrameTemplate(Frame.MoneyDisplayFrame)
+        end
+        function Skin.AuctionHouseSellFrameTemplate(Frame)
+            Skin.AuctionHouseBackgroundTemplate(Frame)
+
+            Frame.CreateAuctionTabLeft:Hide()
+            Frame.CreateAuctionTabMiddle:Hide()
+            Frame.CreateAuctionTabRight:Hide()
+
+            Skin.AuctionHouseInteractableItemDisplayTemplate(Frame.ItemDisplay)
+            local _, _, itemheaderframe = Frame.ItemDisplay:GetRegions()
+            itemheaderframe:Hide()
+
+            local nameBG = _G.CreateFrame("Frame", nil, Frame.ItemDisplay)
+            nameBG:SetPoint("TOPLEFT", Frame.ItemDisplay.ItemButton, "TOPRIGHT", 0, -4)
+            nameBG:SetPoint("BOTTOMRIGHT", -12, 12)
+            Base.SetBackdrop(nameBG, Color.frame)
+
+            Skin.AuctionHouseAlignedQuantityInputFrameTemplate(Frame.QuantityInput)
+            Skin.AuctionHouseAlignedPriceInputFrameTemplate(Frame.PriceInput)
+            Skin.AuctionHouseAlignedDurationDropDownTemplate(Frame.DurationDropDown)
+            Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame.Deposit)
+            Skin.UIPanelButtonTemplate(Frame.PostButton)
+        end
+    end
+    do --[[ Blizzard_AuctionHouseCommoditiesSellFrame ]]
+        function Skin.AuctionHouseCommoditiesSellFrameTemplate(Frame)
+            Skin.AuctionHouseSellFrameTemplate(Frame)
+        end
     end
     do --[[ Blizzard_AuctionHouseCommoditiesBuyFrame ]]
         function Skin.AuctionHouseCommoditiesBuyDisplayTemplate(Frame)
@@ -277,6 +340,11 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseItemDisplayTemplate(Frame.ItemDisplay)
             local _, _, itemheaderframe = Frame.ItemDisplay:GetRegions()
             itemheaderframe:Hide()
+
+            local nameBG = _G.CreateFrame("Frame", nil, Frame.ItemDisplay)
+            nameBG:SetPoint("TOPLEFT", Frame.ItemDisplay.ItemButton, "TOPRIGHT", 0, -3)
+            nameBG:SetPoint("BOTTOMRIGHT", -12, 12)
+            Base.SetBackdrop(nameBG, Color.frame)
 
             Skin.AuctionHouseAlignedQuantityInputFrameTemplate(Frame.QuantityInput)
             --Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame.UnitPrice)
@@ -287,6 +355,39 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.UIPanelButtonTemplate(Frame.BackButton)
             Skin.AuctionHouseCommoditiesBuyDisplayTemplate(Frame.BuyDisplay)
             Skin.AuctionHouseCommoditiesBuyListTemplate(Frame.ItemList)
+        end
+    end
+    do --[[ Blizzard_AuctionHouseItemSellFrame ]]
+        function Skin.AuctionHouseItemSellFrameTemplate(Frame)
+            Skin.AuctionHouseSellFrameTemplate(Frame)
+            Skin.UICheckButtonTemplate(Frame.BuyoutModeCheckButton)
+            Skin.AuctionHouseAlignedPriceInputFrameTemplate(Frame.SecondaryPriceInput)
+        end
+    end
+    do --[[ Blizzard_AuctionHouseAuctionsFrame ]]
+        function Skin.AuctionHouseAuctionsFrameTabTemplate(Button)
+            Skin.AuctionHouseFrameTopTabTemplate(Button)
+        end
+        function Skin.AuctionHouseAuctionsSummaryLineTemplate(Button)
+            Skin.ScrollListLineTextTemplate(Button)
+            Button.Icon._auroraIconBG = Base.CropIcon(Button.Icon, Button)
+        end
+        function Skin.AuctionHouseAuctionsFrameTemplate(Frame)
+            Skin.AuctionHouseAuctionsFrameTabTemplate(Frame.AuctionsTab)
+            Skin.AuctionHouseAuctionsFrameTabTemplate(Frame.BidsTab)
+            Skin.UIPanelButtonTemplate(Frame.CancelAuctionButton)
+            Skin.AuctionHouseBuyoutFrameTemplate(Frame.BuyoutFrame)
+            Skin.AuctionHouseBidFrameTemplate(Frame.BidFrame)
+            Skin.AuctionHouseBidFrameTemplate(Frame.BidFrame)
+
+            Skin.ScrollListTemplate(Frame.SummaryList)
+            Skin.AuctionHouseBackgroundTemplate(Frame.SummaryList)
+
+            Skin.AuctionHouseItemDisplayTemplate(Frame.ItemDisplay)
+            Skin.AuctionHouseItemListTemplate(Frame.AllAuctionsList)
+            Skin.AuctionHouseItemListTemplate(Frame.BidsList)
+            Skin.AuctionHouseItemListTemplate(Frame.ItemList)
+            Skin.AuctionHouseCommoditiesListTemplate(Frame.CommoditiesList)
         end
     end
     do --[[ Blizzard_AuctionHouseWoWTokenFrame ]]
@@ -321,9 +422,26 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.UIPanelButtonTemplate(Frame.Buyout)
             Skin.DummyScrollBarTemplate(Frame.DummyScrollBar)
         end
+        function Skin.WoWTokenSellFrameTemplate(Frame)
+            Skin.AuctionHouseBackgroundTemplate(Frame)
+
+            Skin.AuctionHouseInteractableItemDisplayTemplate(Frame.ItemDisplay)
+            local _, _, itemheaderframe = Frame.ItemDisplay:GetRegions()
+            itemheaderframe:Hide()
+
+            local nameBG = _G.CreateFrame("Frame", nil, Frame.ItemDisplay)
+            nameBG:SetPoint("TOPLEFT", Frame.ItemDisplay.ItemButton, "TOPRIGHT", 0, -4)
+            nameBG:SetPoint("BOTTOMRIGHT", -12, 12)
+            Base.SetBackdrop(nameBG, Color.frame)
+
+            Skin.UIPanelButtonTemplate(Frame.PostButton)
+            Skin.AuctionHouseBackgroundTemplate(Frame.DummyItemList)
+            Skin.DummyScrollBarTemplate(Frame.DummyItemList.DummyScrollBar)
+        end
     end
 end
 
+-- /run AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.WoWTokenSell)
 function private.AddOns.Blizzard_AuctionHouseUI()
     if not private.isPatch then return end
     ----====####$$$$%%%%$$$$####====----
@@ -408,6 +526,7 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_AuctionHouseAuctionsFrame --
     ----====####$$$$%%%%%%%%$$$$####====----
+    Util.Mixin(_G.AuctionHouseAuctionsSummaryLineMixin, Hook.AuctionHouseAuctionsSummaryLineMixin)
 
 
     ----====####$$$$%%%%%%%%$$$$####====----
@@ -442,13 +561,35 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     Skin.AuctionHouseFrameDisplayModeTabTemplate(AuctionHouseFrame.AuctionsTab)
     Util.PositionRelative("TOPLEFT", AuctionHouseFrame, "BOTTOMLEFT", 20, -1, 1, "Right", AuctionHouseFrame.Tabs)
 
+    ---------------------
+    -- Browsing frames --
+    ---------------------
     Skin.AuctionHouseSearchBarTemplate(AuctionHouseFrame.SearchBar)
     Skin.AuctionHouseCategoriesListTemplate(AuctionHouseFrame.CategoriesList)
     Skin.AuctionHouseBrowseResultsFrameTemplate(AuctionHouseFrame.BrowseResultsFrame)
     Skin.BrowseWowTokenResultsTemplate(AuctionHouseFrame.WoWTokenResults)
 
+    ----------------
+    -- Buy frames --
+    ----------------
     Skin.AuctionHouseCommoditiesBuyFrameTemplate(AuctionHouseFrame.CommoditiesBuyFrame)
     Skin.AuctionHouseItemBuyFrameTemplate(AuctionHouseFrame.ItemBuyFrame)
+
+    -----------------
+    -- Sell frames --
+    -----------------
+    Skin.AuctionHouseItemSellFrameTemplate(AuctionHouseFrame.ItemSellFrame)
+    Skin.AuctionHouseItemListTemplate(AuctionHouseFrame.ItemSellList)
+
+    Skin.AuctionHouseCommoditiesSellFrameTemplate(AuctionHouseFrame.CommoditiesSellFrame)
+    Skin.AuctionHouseCommoditiesSellListTemplate(AuctionHouseFrame.CommoditiesSellList)
+
+    Skin.WoWTokenSellFrameTemplate(AuctionHouseFrame.WoWTokenSellFrame)
+
+    ---------------------
+    -- Auctions frames --
+    ---------------------
+    Skin.AuctionHouseAuctionsFrameTemplate(AuctionHouseFrame.AuctionsFrame)
 end
 
 

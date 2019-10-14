@@ -46,6 +46,14 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
             end
         end
     end
+    function Skin.LargeMoneyInputBoxTemplate(Frame)
+        Skin.LargeInputBoxTemplate(Frame)
+    end
+    function Skin.LargeMoneyInputFrameTemplate(Frame)
+        Skin.LargeMoneyInputBoxTemplate(Frame.CopperBox)
+        Skin.LargeMoneyInputBoxTemplate(Frame.SilverBox)
+        Skin.LargeMoneyInputBoxTemplate(Frame.GoldBox)
+    end
 end
 
 --function private.FrameXML.MoneyInputFrame()
