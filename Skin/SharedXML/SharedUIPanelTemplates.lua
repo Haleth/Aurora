@@ -262,6 +262,16 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
                 Base.SetBackdropColor(tab, tab._returnColor)
             end
         end
+
+        Hook.SquareIconButtonMixin = {}
+        function Hook.SquareIconButtonMixin:OnMouseDown()
+            if self:IsEnabled() then
+                self.Icon:SetPoint("CENTER", -1, -1)
+            end
+        end
+        function Hook.SquareIconButtonMixin:OnMouseUp()
+            self.Icon:SetPoint("CENTER", 0, 0)
+        end
     end
 end
 
@@ -301,6 +311,20 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Button._auroraHighlight = cross
         Base.SetHighlight(Button, "texture")
+    end
+    function Skin.UIPanelGoldButtonTemplate(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 15,
+            right = 18,
+            top = 1,
+            bottom = 5,
+        })
+        Button:SetBackdropBorderColor(Color.yellow)
+
+        Button.Left:Hide()
+        Button.Right:Hide()
+        Button.Middle:Hide()
     end
     function Skin.UIPanelButtonTemplate(Button)
         Skin.UIPanelButtonNoTooltipTemplate(Button)
@@ -640,10 +664,32 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.Background:Hide()
         Frame.TopTileStreaks:Hide()
     end
-    function Skin.ColumnDisplayButtonTemplate(Button)
+    function Skin.ColumnDisplayButtonShortTemplate(Button)
         Button.Left:Hide()
         Button.Right:Hide()
         Button.Middle:Hide()
+    end
+    function Skin.ColumnDisplayButtonNoScriptsTemplate(Button)
+        Button.Left:Hide()
+        Button.Right:Hide()
+        Button.Middle:Hide()
+    end
+    function Skin.ColumnDisplayButtonTemplate(Button)
+        Skin.ColumnDisplayButtonNoScriptsTemplate(Button)
+    end
+    function Skin.SquareIconButtonTemplate(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
+
+        Button.Icon:SetPoint("CENTER", 0, 0)
+    end
+    function Skin.RefreshButtonTemplate(Button)
+        Skin.SquareIconButtonTemplate(Button)
     end
 end
 
@@ -653,4 +699,8 @@ function private.SharedXML.SharedUIPanelTemplates()
     _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)
+
+    if private.isPatch then
+        Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
+    end
 end

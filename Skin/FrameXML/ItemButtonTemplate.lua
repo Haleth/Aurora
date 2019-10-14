@@ -84,6 +84,21 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())
     end
+    function Skin.CircularGiantItemButtonTemplate(Button)
+        Base.CropIcon(Button.Icon)
+
+        Base.SetBackdrop(Button, Color.black, Color.frame.a)
+        Button:SetBackdropOption("offsets", {
+            left = 3,
+            right = 3,
+            top = 3,
+            bottom = 3,
+        })
+        Button._auroraIconBorder = Button
+
+        Button.CircleMask:Hide()
+        Button.IconOverlay:SetAlpha(0)
+    end
     function Skin.SimplePopupButtonTemplate(CheckButton)
         local name, bg = CheckButton:GetRegions()
         name:ClearAllPoints()

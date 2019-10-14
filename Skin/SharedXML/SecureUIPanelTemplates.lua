@@ -13,6 +13,20 @@ local Color = Aurora.Color
 --end
 
 do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
+    function Skin.LargeInputBoxTemplate(EditBox)
+        Skin.FrameTypeEditBox(EditBox)
+        EditBox:SetBackdropOption("offsets", {
+            left = 3,
+            right = 3,
+            top = 2,
+            bottom = 6,
+        })
+
+        EditBox.Left:Hide()
+        EditBox.Right:Hide()
+        EditBox.Middle:Hide()
+    end
+
     function Skin.InputBoxTemplate(EditBox)
         Skin.FrameTypeEditBox(EditBox)
 
