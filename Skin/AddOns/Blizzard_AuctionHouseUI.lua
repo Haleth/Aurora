@@ -231,9 +231,12 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         function Skin.AuctionHouseFavoritesSearchButtonTemplate(Button)
             Skin.SquareIconButtonTemplate(Button)
         end
+        function Skin.AuctionHouseLevelRangeEditBoxTemplate(EditBox)
+            Skin.InputBoxTemplate(EditBox)
+        end
         function Skin.AuctionHouseLevelRangeFrameTemplate(Frame)
-            Skin.InputBoxTemplate(Frame.MinLevel)
-            Skin.InputBoxTemplate(Frame.MaxLevel)
+            Skin.AuctionHouseLevelRangeEditBoxTemplate(Frame.MinLevel)
+            Skin.AuctionHouseLevelRangeEditBoxTemplate(Frame.MaxLevel)
         end
         function Skin.AuctionHouseFilterButtonTemplate(Button)
             Button.Icon:SetSize(5, 10)
@@ -406,24 +409,24 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.UIPanelGoldButtonTemplate(GameTimeTutorial.RightDisplay.StoreButton)
 
             Skin.MainHelpPlateButton(Frame.HelpButton)
-            do -- Token
-                local Token = Frame.Token
-                Token.ItemBorder:Hide()
+            Skin.AuctionHouseItemDisplayTemplate(Frame.TokenDisplay)
+            local _, _, itemheaderframe = Frame.TokenDisplay:GetRegions()
+            itemheaderframe:Hide()
 
-                local border = Base.CropIcon(Token.Icon, Token)
-                border:SetColorTexture(_G.HEIRLOOM_BLUE_COLOR:GetRGB())
+            local nameBG = _G.CreateFrame("Frame", nil, Frame.TokenDisplay)
+            nameBG:SetPoint("TOPLEFT", Frame.TokenDisplay.ItemButton, "TOPRIGHT", 0, -3)
+            nameBG:SetPoint("BOTTOMRIGHT", -12, 12)
+            Base.SetBackdrop(nameBG, Color.frame)
 
-                Token.IconBorder:Hide()
-                local nameBG = _G.CreateFrame("Frame", nil, Token)
-                nameBG:SetPoint("TOPLEFT", border, "TOPRIGHT", 1, 0)
-                nameBG:SetPoint("BOTTOMRIGHT", -3, 1)
-                Base.SetBackdrop(nameBG, Color.frame)
-            end
             Skin.UIPanelButtonTemplate(Frame.Buyout)
             Skin.DummyScrollBarTemplate(Frame.DummyScrollBar)
         end
         function Skin.WoWTokenSellFrameTemplate(Frame)
             Skin.AuctionHouseBackgroundTemplate(Frame)
+
+            Frame.CreateAuctionTabLeft:Hide()
+            Frame.CreateAuctionTabMiddle:Hide()
+            Frame.CreateAuctionTabRight:Hide()
 
             Skin.AuctionHouseInteractableItemDisplayTemplate(Frame.ItemDisplay)
             local _, _, itemheaderframe = Frame.ItemDisplay:GetRegions()
@@ -437,6 +440,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.UIPanelButtonTemplate(Frame.PostButton)
             Skin.AuctionHouseBackgroundTemplate(Frame.DummyItemList)
             Skin.DummyScrollBarTemplate(Frame.DummyItemList.DummyScrollBar)
+            Skin.RefreshButtonTemplate(Frame.DummyRefreshButton)
         end
     end
 end
@@ -550,8 +554,7 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     local AuctionHouseFrame = _G.AuctionHouseFrame
     Skin.PortraitFrameTemplate(AuctionHouseFrame)
 
-    local _, _, MoneyInsetFrame = AuctionHouseFrame:GetChildren()
-    Skin.InsetFrameTemplate(MoneyInsetFrame)
+    Skin.InsetFrameTemplate(AuctionHouseFrame.MoneyFrameInset)
     Skin.ThinGoldEdgeTemplate(AuctionHouseFrame.MoneyFrameBorder)
     local _, _, _, border = AuctionHouseFrame.MoneyFrameBorder:GetRegions()
     border:Hide()
