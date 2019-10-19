@@ -8,23 +8,23 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Color = Aurora.Color
 
-do -- arrows
-    local arrows = {}
-    _G.C_Timer.NewTicker(0, function(...)
-        --[[
-            This is primarily for dropdown menus, where the arrow texture
-            seems to not have a defined size at the original time of
-            skinning. Due to this, we add them to a queue and wait for them
-            to be visible, at which point it should have proper dimensions.
-        ]]
-        for texture, name in next, arrows do
-            if texture:IsVisible() then
-                Base.SetTexture(texture, name)
-                arrows[texture] = nil
-            end
+local textures = {}
+_G.C_Timer.NewTicker(0, function(...)
+    --[[
+        Newly created textures may not have a defined sized by the time
+        they are skinned. Due to this, we add them to a queue and wait
+        for them to be visible, at which point it should have proper
+        dimensions.
+    ]]
+    for texture, name in next, textures do
+        if texture:IsVisible() then
+            Base.SetTexture(texture, name)
+            textures[texture] = nil
         end
-    end)
+    end
+end)
 
+do -- arrows
     local function setup(frame, texture)
         texture:SetColorTexture(1, 1, 1)
 
@@ -37,7 +37,7 @@ do -- arrows
     local function GetOffset(texture, textureType, size)
         local offset = size / 2
         if offset < 1 then
-            arrows[texture] = textureType
+            textures[texture] = textureType
         else
             return offset
         end
@@ -208,6 +208,55 @@ do -- Icons
     end
 end
 
+do -- Shapes
+    local shapes = {}
+    Base.RegisterTexture("shapeStar", function(frame, texture)
+        local texture2
+        if shapes[texture] then
+            texture2 = shapes[texture]
+        else
+            local layer, subLevel = texture:GetDrawLayer()
+            texture2 = frame:CreateTexture(nil, layer, nil, subLevel)
+
+            _G.hooksecurefunc(texture, "SetVertexColor", function(self, ...)
+                texture2:SetVertexColor(...)
+            end)
+            _G.hooksecurefunc(texture, "SetColorTexture", function(self, ...)
+                texture2:SetColorTexture(...)
+            end)
+            _G.hooksecurefunc(texture, "SetDesaturated", function(self, ...)
+                texture2:SetDesaturated(...)
+            end)
+            _G.hooksecurefunc(texture, "SetAlpha", function(self, ...)
+                texture2:SetAlpha(...)
+            end)
+            _G.hooksecurefunc(texture, "SetBlendMode", function(self, ...)
+                texture2:SetBlendMode(...)
+            end)
+            shapes[texture] = texture2
+        end
+
+        local width, height = texture:GetSize()
+        if width == 0 or height == 0 then
+            textures[texture] = "shapeStar"
+            return
+        end
+
+        texture:SetColorTexture(Color.yellow:GetRGB())
+        texture:SetVertexOffset(1, width * 0.81, -(height * 0.95))
+        texture:SetVertexOffset(2, width * 0.5, height * 0.27)
+        texture:SetVertexOffset(3, -(width * 0.5), 0)
+        texture:SetVertexOffset(4, -(width * 0.81), height * 0.05)
+
+        texture2:SetColorTexture(Color.yellow:GetRGB())
+        texture2:SetAllPoints(texture)
+        texture2:SetVertexOffset(1, 0, -(height * 0.365))
+        texture2:SetVertexOffset(2, width * 0.5, height * 0.27)
+        texture2:SetVertexOffset(3, 0, -(height * 0.365))
+        texture2:SetVertexOffset(4, -(width * 0.5), height * 0.27)
+
+    end)
+end
 
 --[[
 Base.RegisterTexture("test", function(frame, texture)
@@ -230,9 +279,9 @@ end)
 
 local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")
 snapshot:SetPoint("CENTER")
-snapshot:SetSize(64, 64)
-Base.SetTexture(snapshot, "iconDEATHKNIGHT")
---Base.SetTexture(snapshot, "test")
+snapshot:SetSize(256, 256)
+Base.SetTexture(snapshot, "test")
+--Base.SetTexture(snapshot, "shapeStar")
 --Base.SetTexture(snapshot, "iconDAMAGER")
 --Base.SetTexture(snapshot, "gradientUp")
 --Base.SetTexture(snapshot, "arrowLeft")
