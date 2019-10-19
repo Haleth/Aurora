@@ -11,6 +11,35 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     do --[[ Blizzard_AuctionHouseTableBuilder ]]
+        Hook.AuctionHouseTableCellFavoriteButtonMixin = {}
+        function Hook.AuctionHouseTableCellFavoriteButtonMixin:SetFavoriteState(isFavorite)
+            if isFavorite then
+                Base.SetTexture(self.NormalTexture, "shapeStar")
+                self.NormalTexture:SetAlpha(1)
+
+                Base.SetTexture(self.HighlightTexture, "shapeStar")
+            else
+                self.NormalTexture:SetAlpha(0)
+
+                Base.SetTexture(self.HighlightTexture, "shapeStar")
+                self.HighlightTexture:SetColorTexture(Color.gray:GetRGB())
+                self.HighlightTexture:SetBlendMode("DISABLE")
+            end
+
+            self.HighlightTexture:SetAlpha(1)
+        end
+        function Hook.AuctionHouseTableCellFavoriteButtonMixin:LockTexture()
+            if not self:IsFavorite() then
+                Base.SetTexture(self.NormalTexture, "shapeStar")
+                self.NormalTexture:SetColorTexture(Color.grayDark:GetRGB())
+                self.NormalTexture:SetAlpha(1)
+            end
+        end
+        function Hook.AuctionHouseTableCellFavoriteButtonMixin:UnlockTexture()
+            if not self:IsFavorite() then
+                self.NormalTexture:SetAlpha(0)
+            end
+        end
         Hook.AuctionHouseTableHeaderStringMixin = {}
         function Hook.AuctionHouseTableHeaderStringMixin:SetArrowState(sortOrderState)
             self.Arrow:SetTexCoord(0, 1, 0, 1)
@@ -117,6 +146,18 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             end
         end
     end
+    do --[[ Blizzard_AuctionHouseSearchBar ]]
+        Hook.AuctionHouseFavoritesSearchButtonMixin = {}
+        function Hook.AuctionHouseFavoritesSearchButtonMixin:UpdateState()
+            self.Icon:SetDesaturated(false)
+
+            if _G.C_AuctionHouse.HasFavorites() then
+                self.Icon:SetColorTexture(Color.yellow:GetRGB())
+            else
+                self.Icon:SetColorTexture(Color.gray:GetRGB())
+            end
+        end
+    end
     do --[[ Blizzard_AuctionHouseAuctionsFrame ]]
         Hook.AuctionHouseAuctionsSummaryLineMixin = {}
         function Hook.AuctionHouseAuctionsSummaryLineMixin:UpdateDisplay()
@@ -127,6 +168,19 @@ end
 
 do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
     do --[[ Blizzard_AuctionHouseTableBuilder ]]
+        function Skin.AuctionHouseTableCellFavoriteTemplate(Frame)
+            local fWidth, fHeight = Frame:GetSize()
+            local bWidth, bHeight = Frame.FavoriteButton:GetSize()
+
+            local xOfs, yOfs = (fWidth / 2) - (bWidth / 2), (fHeight / 2) - (bHeight / 2)
+            Frame.FavoriteButton:ClearAllPoints()
+            Frame.FavoriteButton:SetPoint("TOPRIGHT", _G.Round(xOfs / 2), _G.Round(yOfs / 2))
+            --Util.Mixin(Frame.FavoriteButton, Hook.AuctionHouseTableCellFavoriteButtonMixin)
+
+            --Base.SetTexture(Frame.FavoriteButton.NormalTexture, "shapeStar")
+            --Base.SetTexture(Frame.FavoriteButton.HighlightTexture, "shapeStar")
+            --Frame.FavoriteButton.HighlightTexture:SetColorTexture(Color.gray:GetRGB())
+        end
         function Skin.AuctionHouseTableCellItemDisplayTemplate(Frame)
             Frame.Icon._auroraBG = Base.CropIcon(Frame.Icon, Frame)
             Frame.IconBorder:SetAlpha(0)
@@ -229,7 +283,10 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.SearchBoxTemplate(EditBox)
         end
         function Skin.AuctionHouseFavoritesSearchButtonTemplate(Button)
+            Util.Mixin(Button, Hook.AuctionHouseFavoritesSearchButtonMixin)
+
             Skin.SquareIconButtonTemplate(Button)
+            Base.SetTexture(Button.Icon, "shapeStar")
         end
         function Skin.AuctionHouseLevelRangeEditBoxTemplate(EditBox)
             Skin.InputBoxTemplate(EditBox)
@@ -461,6 +518,7 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_AuctionHouseTableBuilder --
     ----====####$$$$%%%%%%%$$$$####====----
+    Util.Mixin(_G.AuctionHouseTableCellFavoriteButtonMixin, Hook.AuctionHouseTableCellFavoriteButtonMixin)
     Util.Mixin(_G.AuctionHouseTableHeaderStringMixin, Hook.AuctionHouseTableHeaderStringMixin)
 
 
