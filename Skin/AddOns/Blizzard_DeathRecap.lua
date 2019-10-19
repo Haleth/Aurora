@@ -4,24 +4,52 @@ local _, private = ...
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+
+--do --[[ AddOns\Blizzard_DeathRecap.lua ]]
+--end
+
+do --[[ AddOns\Blizzard_DeathRecap.xml ]]
+    function Skin.DeathRecapEntryTemplate(Frame)
+        Base.CropIcon(Frame.SpellInfo.Icon, Frame)
+        Frame.SpellInfo.IconBorder:Hide()
+    end
+end
 
 function private.AddOns.Blizzard_DeathRecap()
     local DeathRecapFrame = _G.DeathRecapFrame
 
-    DeathRecapFrame:DisableDrawLayer("BORDER")
-    DeathRecapFrame.Background:Hide()
-    DeathRecapFrame.BackgroundInnerGlow:Hide()
+    Base.CreateBackdrop(DeathRecapFrame, private.backdrop, {
+        tl = _G.DeathRecapFrameBorderTopLeft,
+        tr = _G.DeathRecapFrameBorderTopRight,
+        bl = _G.DeathRecapFrameBorderBottomLeft,
+        br = _G.DeathRecapFrameBorderBottomRight,
+
+        t = _G.DeathRecapFrameBorderTop,
+        b = _G.DeathRecapFrameBorderBottom,
+        l = _G.DeathRecapFrameBorderLeft,
+        r = _G.DeathRecapFrameBorderRight,
+
+        bg = _G.DeathRecapFrame.Background,
+
+    })
+    Base.SetBackdrop(DeathRecapFrame)
+
+    local titleText = DeathRecapFrame.Title
+    titleText:ClearAllPoints()
+    titleText:SetPoint("TOPLEFT")
+    titleText:SetPoint("BOTTOMRIGHT", DeathRecapFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
     DeathRecapFrame.Divider:Hide()
 
-    F.CreateBD(DeathRecapFrame)
-    F.Reskin(_G.select(8, DeathRecapFrame:GetChildren())) -- bottom close button has no parentKey
-    F.ReskinClose(DeathRecapFrame.CloseXButton)
+    Skin.UIPanelCloseButton(DeathRecapFrame.CloseXButton)
+    DeathRecapFrame.CloseXButton:SetPoint("TOPRIGHT", 5, 5)
+    DeathRecapFrame.DragButton:SetAllPoints(titleText)
 
     for i = 1, _G.NUM_DEATH_RECAP_EVENTS do
-        local recap = DeathRecapFrame["Recap"..i].SpellInfo
-        recap.IconBorder:Hide()
-        recap.Icon:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBG(recap.Icon)
+        Skin.DeathRecapEntryTemplate(DeathRecapFrame.DeathRecapEntry[i])
     end
+    Skin.UIPanelButtonTemplate(DeathRecapFrame.CloseButton)
 end
