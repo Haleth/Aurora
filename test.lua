@@ -953,7 +953,7 @@ function commands.test()
                 test.args.skins = skins
             end
 
-            do -- Misc
+            do -- PvP
                 function _G.GetNumBattlefieldScores()
                     return 20
                 end
@@ -1054,6 +1054,62 @@ function commands.test()
                     return info
                 end
 
+                test.args.pvp = {
+                    name = "PvP Score",
+                    type = "group",
+                    args = {
+                        pvpScore = {
+                            name = "PvP scoreboard",
+                            desc = "PVPMatchScoreboard",
+                            type = "execute",
+                            func = function()
+                                _G.PVPMatchScoreboard:BeginShow()
+                            end,
+                        },
+                        pvpResults = {
+                            name = "PvP results",
+                            desc = "PVPMatchResults",
+                            type = "execute",
+                            func = function()
+                                _G.PVPMatchResults:BeginShow()
+                            end,
+                        },
+                        pvpTimer = {
+                            name = "PvP Start Timer",
+                            desc = "StartTimerBar",
+                            type = "execute",
+                            func = function()
+                                _G.TimerTracker_OnEvent(_G.TimerTracker, "START_TIMER", 1, 80, 80)
+                            end,
+                        },
+                    },
+                }
+            end
+
+            do -- Misc
+                local PartyPoseInfo = {
+                    partyPoseID = 6,
+                    mapID = 1898,
+                    widgetSetID = 3,
+                    victoryModelSceneID = 110,
+                    defeatModelSceneID = 229,
+                    victorySoundKitID = 118540,
+                    defeatSoundKitID = 118536,
+                }
+                function _G.C_PartyPose.GetPartyPoseInfoByMapID(mapID)
+                    return CopyTable(PartyPoseInfo)
+                end
+                function _G.GetLFGCompletionReward()
+                    --     name, typeID, subtypeID, iconTextureFile, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards
+                    return "name", 1,    1,         54343,           12345,     0,        54321,          0,             2,            1
+                end
+                function _G.GetLFGCompletionRewardItem(rewardIndex)
+                    --     texture, quantity, isBonus, bonusQuantity, name, quality, id, objectType
+                    return item.data.texture, 1, false,   1, item.data.name,  4, item.data.id, "item"
+                end
+                function _G.GetLFGCompletionRewardItemLink(rewardIndex)
+                    return item.data.link
+                end
                 local misc do
                     misc = {
                         name = "Misc. Frames",
@@ -1067,28 +1123,26 @@ function commands.test()
                                     _G.ItemTextFrame_OnEvent(_G.ItemTextFrame, "ITEM_TEXT_TRANSLATION", 5)
                                 end,
                             },
-                            pvpScore = {
-                                name = "PvP scoreboard",
-                                desc = "PVPMatchScoreboard",
+                            islandsScoreFrame = {
+                                name = "Islands Score Frame",
+                                desc = "IslandsPartyPoseFrame",
                                 type = "execute",
                                 func = function()
-                                    _G.PVPMatchScoreboard:BeginShow()
+                                    _G.IslandsPartyPose_LoadUI()
+                                    _G.IslandsPartyPoseFrame:LoadScreen(981, 1)
+                                    _G.IslandsPartyPoseFrame:SetRewards()
+                                    _G.ShowUIPanel(_G.IslandsPartyPoseFrame)
                                 end,
                             },
-                            pvpResults = {
-                                name = "PvP results",
-                                desc = "PVPMatchResults",
+                            warfrontScoreFrame = {
+                                name = "Warfront Score Frame",
+                                desc = "WarfrontsPartyPoseFrame",
                                 type = "execute",
                                 func = function()
-                                    _G.PVPMatchResults:BeginShow()
-                                end,
-                            },
-                            pvpTimer = {
-                                name = "PvP Start Timer",
-                                desc = "StartTimerBar",
-                                type = "execute",
-                                func = function()
-                                    _G.TimerTracker_OnEvent(_G.TimerTracker, "START_TIMER", 1, 80, 80)
+                                    _G.WarfrontsPartyPose_LoadUI()
+                                    _G.WarfrontsPartyPoseFrame:LoadScreen(1876, 1)
+                                    --_G.WarfrontsPartyPoseFrame:SetRewards()
+                                    _G.ShowUIPanel(_G.WarfrontsPartyPoseFrame)
                                 end,
                             },
                         },
