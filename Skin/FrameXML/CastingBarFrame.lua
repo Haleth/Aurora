@@ -19,6 +19,9 @@ do --[[ FrameXML\CastingBarFrame.xml ]]
         StatusBar.Text:ClearAllPoints()
         StatusBar.Text:SetPoint("CENTER")
         StatusBar.Spark:SetAlpha(0)
+
+        StatusBar.Flash:SetAllPoints(StatusBar)
+        StatusBar.Flash:SetColorTexture(1, 1, 1)
     end
     function Skin.SmallCastingBarFrameTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
@@ -28,6 +31,9 @@ do --[[ FrameXML\CastingBarFrame.xml ]]
         StatusBar.Text:ClearAllPoints()
         StatusBar.Text:SetPoint("CENTER")
         StatusBar.Spark:SetAlpha(0)
+
+        StatusBar.Flash:SetAllPoints(StatusBar)
+        StatusBar.Flash:SetColorTexture(1, 1, 1)
     end
 end
 
