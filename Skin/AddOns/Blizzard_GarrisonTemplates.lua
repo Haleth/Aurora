@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
     do --[[ Blizzard_GarrisonSharedTemplates.lua ]]
@@ -307,8 +307,6 @@ function private.AddOns.Blizzard_GarrisonTemplates()
     ----====####$$$$%%%%%%$$$$####====----
     _G.hooksecurefunc("GarrisonFollowerButton_SetCounterButton", Hook.GarrisonFollowerButton_SetCounterButton)
     _G.hooksecurefunc("GarrisonFollowerButton_AddAbility", Hook.GarrisonFollowerButton_AddAbility)
-
-    Util.Mixin(_G.GarrisonFollowerTabMixin, Hook.GarrisonFollowerTabMixin)
 
     -------------
     -- Section --
