@@ -32,6 +32,7 @@ local FrameXML = {
     "SharedXML.PixelUtil",
     "SharedXML.TableBuilder",
     "SharedXML.NewFeatureLabel",
+    "SharedXML.GlobalCallbackRegistry",
     "MixinUtil",
 
     -- intrinsics
@@ -69,7 +70,6 @@ local FrameXML = {
     "ObjectAPI_PlayerLocation",
 
     -- add new modules below here
-    "GlobalCallbackRegistry",
     "WorldFrame",
     "UIParent",
     "QuestUtils",

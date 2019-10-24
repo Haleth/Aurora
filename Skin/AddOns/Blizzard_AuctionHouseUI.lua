@@ -16,6 +16,9 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             if isFavorite then
                 Base.SetTexture(self.NormalTexture, "shapeStar")
                 self.NormalTexture:SetAlpha(1)
+                if self.textureLocked then
+                    self.NormalTexture:SetColorTexture(Color.grayDark:GetRGB())
+                end
 
                 Base.SetTexture(self.HighlightTexture, "shapeStar")
             else
