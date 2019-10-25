@@ -9,13 +9,17 @@ do --[[ SharedXML\Pools.lua ]]
     Hook.ObjectPoolMixin = {}
     function Hook.ObjectPoolMixin:Acquire()
         local template = self.frameTemplate or self.textureTemplate or self.fontStringTemplate or self.actorTemplate
-        if template and Skin[template] then
+        if not template then return end
+
+        if Skin[template] then
             for obj in self:EnumerateActive() do
                 if not obj._auroraSkinned then
                     Skin[template](obj)
                     obj._auroraSkinned = true
                 end
             end
+        elseif private.isDev then
+            _G.print("Missing template:", template)
         end
     end
 end

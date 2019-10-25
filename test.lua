@@ -3,7 +3,10 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals next table
 
---[[ Core ]]
+if private.Aurora then
+    private.isDev = true
+end
+
 local commands = private.commands
 local function CopyTable(oldTable)
     local newTable = {}
@@ -33,6 +36,8 @@ function commands.test()
     local Base = Aurora.Base
     local Skin = Aurora.Skin
     local Color = Aurora.Color
+
+    Aurora.isDev = true
 
     local AceConfig = _G.LibStub("AceConfig-3.0", true)
     if AceConfig then
