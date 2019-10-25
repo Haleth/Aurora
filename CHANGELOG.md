@@ -2,6 +2,7 @@
 ### Added ###
 
   * Skins for the Warfront and Islands end result frame
+  * Skin for the new RaF UI
 
 ### Changed ###
 
