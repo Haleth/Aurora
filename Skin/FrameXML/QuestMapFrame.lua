@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\QuestMapFrame.lua ]]
     -- /dump C_CampaignInfo.GetCampaignInfo(C_CampaignInfo.GetCurrentCampaignID())
@@ -47,6 +47,22 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
                 end
                 child._auroraSkinned = true
             end
+        end
+    end
+
+    local sessionCommandToButtonAtlas = {
+        [_G.Enum.QuestSessionCommand.Start] = "QuestSharing-DialogIcon",
+        [_G.Enum.QuestSessionCommand.Stop] = "QuestSharing-Stop-DialogIcon",
+    }
+    Hook.QuestSessionManagementMixin = {}
+    function Hook.QuestSessionManagementMixin:UpdateExecuteCommandAtlases(command)
+        self.ExecuteSessionCommand:SetNormalTexture("")
+        self.ExecuteSessionCommand:SetPushedTexture("")
+        self.ExecuteSessionCommand:SetDisabledTexture("")
+
+        local atlas = sessionCommandToButtonAtlas[command];
+        if atlas then
+            self.ExecuteSessionCommand._auroraIcon:SetAtlas(atlas)
         end
     end
 end
@@ -203,4 +219,19 @@ function private.FrameXML.QuestMapFrame()
     left:Hide()
     right:Hide()
     Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
+
+    do
+        local QuestSessionManagement = QuestMapFrame.QuestSessionManagement
+        Util.Mixin(QuestSessionManagement, Hook.QuestSessionManagementMixin)
+
+        local ExecuteSessionCommand = QuestSessionManagement.ExecuteSessionCommand
+        Skin.FrameTypeButton(ExecuteSessionCommand)
+        local icon = ExecuteSessionCommand:CreateTexture(nil, "ARTWORK")
+        icon:SetPoint("TOPLEFT", 0, 0)
+        icon:SetPoint("BOTTOMRIGHT", 0, 0)
+        ExecuteSessionCommand._auroraIcon = icon
+
+
+        QuestSessionManagement.BG:SetColorTexture(Color.frame.r, Color.frame.g, Color.frame.b, 0.5)
+    end
 end
