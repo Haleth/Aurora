@@ -430,7 +430,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Util.Mixin(Frame, Hook.PortraitFrameMixin)
 
-        Frame.TitleBg:Hide()
+        Frame.TitleBg:SetAlpha(0)
         Frame.portrait:SetAlpha(0)
 
         local titleText = Frame.TitleText
