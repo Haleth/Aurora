@@ -109,6 +109,17 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
 
             _G[self:GetName().."UnCheck"]:Hide()
         end
+
+        function Hook.UIDropDownMenu_SetWidth(frame, width, padding)
+            if frame.SetBackdropOption then
+                frame:SetBackdropOption("offsets", {
+                    left = 21,
+                    right = 20,
+                    top = 5,
+                    bottom = 9,
+                })
+            end
+        end
     end
 end
 
@@ -152,38 +163,40 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
         end
         function Skin.UIDropDownMenuTemplate(Frame)
+            local rightOfs = -105
+            if Frame:GetWidth() > 40 then
+                -- Adjust offset when the frame is wider than the default
+                rightOfs = 20
+            end
+
+            Base.SetBackdrop(Frame, Color.button)
+            Frame:SetBackdropOption("offsets", {
+                left = 21,
+                right = rightOfs,
+                top = 5,
+                bottom = 9,
+            })
+            Frame._auroraWidth = nil
+
             Frame.Left:SetAlpha(0)
             Frame.Middle:SetAlpha(0)
             Frame.Right:SetAlpha(0)
 
-            local button = Frame.Button
-            button:SetSize(20, 20)
-            button:ClearAllPoints()
-            button:SetPoint("TOPRIGHT", Frame.Right, -19, -21)
+            local Button = Frame.Button
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 2,
+                right = 4,
+                top = 4,
+                bottom = 2,
+            })
 
-            button.NormalTexture:SetTexture("")
-            button.PushedTexture:SetTexture("")
-            button.HighlightTexture:SetTexture("")
-
-            local disabled = button.DisabledTexture
-            disabled:SetAllPoints(button)
-            disabled:SetColorTexture(0, 0, 0, .3)
-            disabled:SetDrawLayer("OVERLAY")
-            Base.SetBackdrop(button, Color.button)
-
-            local arrow = button:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", 4, -7)
-            arrow:SetPoint("BOTTOMRIGHT", -4, 7)
+            local bg = Button:GetBackdropTexture("bg")
+            local arrow = Button:CreateTexture(nil, "ARTWORK")
+            arrow:SetPoint("TOPLEFT", bg, 3, -6)
+            arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
             Base.SetTexture(arrow, "arrowDown")
-
-            button._auroraHighlight = {arrow}
-            Base.SetHighlight(button, "texture")
-
-            local bg = _G.CreateFrame("Frame", nil, Frame)
-            bg:SetPoint("TOPLEFT", Frame.Left, 20, -21)
-            bg:SetPoint("BOTTOMRIGHT", Frame.Right, -19, 23)
-            bg:SetFrameLevel(Frame:GetFrameLevel())
-            Base.SetBackdrop(bg, Color.button)
+            Button._auroraTextures = {arrow}
         end
         function Skin.LargeUIDropDownMenuTemplate(Frame)
             Base.SetBackdrop(Frame, Color.frame)
@@ -208,6 +221,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             arrow:SetPoint("TOPLEFT", bg, 4, -8)
             arrow:SetPoint("BOTTOMRIGHT", bg, -4, 7)
             Base.SetTexture(arrow, "arrowDown")
+            Frame.Button._auroraTextures = {arrow}
 
             Frame.Left:Hide()
             Frame.Right:Hide()
@@ -220,6 +234,7 @@ function private.FrameXML.UIDropDownMenu()
     _G.hooksecurefunc("UIDropDownMenu_CreateFrames", Hook.UIDropDownMenu_CreateFrames)
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)
+    _G.hooksecurefunc("UIDropDownMenu_SetWidth", Hook.UIDropDownMenu_SetWidth)
 
     Skin.UIDropDownListTemplate(_G.DropDownList1)
     Skin.UIDropDownListTemplate(_G.DropDownList2)
