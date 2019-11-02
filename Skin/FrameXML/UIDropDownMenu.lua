@@ -164,7 +164,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         end
         function Skin.UIDropDownMenuTemplate(Frame)
             local rightOfs = -105
-            if Frame:GetWidth() > 40 then
+            if _G.Round(Frame:GetWidth()) > 40 then
                 -- Adjust offset when the frame is wider than the default
                 rightOfs = 20
             end
