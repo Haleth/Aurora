@@ -19,7 +19,7 @@ do --[[ SharedXML\Pools.lua ]]
                 end
             end
         elseif private.isDev then
-            _G.print("Missing template:", template)
+            private.debug("Missing template:", template)
         end
     end
 end
