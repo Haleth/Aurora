@@ -5,7 +5,8 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\PaperDollFrame.lua ]]
@@ -219,8 +220,8 @@ function private.FrameXML.PaperDollFrame()
             button:SetPoint("BOTTOMLEFT", 130, 8)
         end
 
+        _G.select(button:GetNumRegions(), button:GetRegions()):Hide()
         Skin.PaperDollItemSlotButtonBottomTemplate(button)
-        _G.select(15, button:GetRegions()):Hide()
     end
 
 
