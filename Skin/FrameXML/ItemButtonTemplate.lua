@@ -1,65 +1,164 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals tinsert
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\ItemButtonTemplate.lua ]]
-    local size = 6
-    local vertexOffsets = {
-        {"TOPLEFT", 4, -size},
-        {"BOTTOMLEFT", 3, -size},
-        {"TOPRIGHT", 2, size},
-        {"BOTTOMRIGHT", 1, size},
-    }
-    local function SetRelic(button, isRelic, color)
-        if isRelic then
-            if not button._auroraRelicTex then
-                local relic = _G.CreateFrame("Frame", nil, button)
-                relic:SetAllPoints(button._auroraIconBorder)
+    local size = 8
+    local function CreateOverlay(Button)
+        local iconOverlay = _G.CreateFrame("Frame", nil, Button)
+        iconOverlay:SetFrameLevel(Button:GetFrameLevel())
+        iconOverlay:SetAllPoints()
+        iconOverlay:Hide()
 
-                for i = 1, 4 do
-                    local tex = relic:CreateTexture(nil, "OVERLAY")
-                    tex:SetSize(size, size)
-
-                    local vertexInfo = vertexOffsets[i]
-                    tex:SetPoint(vertexInfo[1])
-                    tex:SetVertexOffset(vertexInfo[2], vertexInfo[3], 0)
-                    relic[i] = tex
-                end
-
-                button._auroraRelicTex = relic
-            end
-
-            for i = 1, #button._auroraRelicTex do
-                local tex = button._auroraRelicTex[i]
-                tex:SetColorTexture(color.r, color.g, color.b)
-            end
-            button._auroraRelicTex:Show()
-        elseif button._auroraRelicTex then
-            button._auroraRelicTex:Hide()
+        for i = 1, 4 do
+            local tex = iconOverlay:CreateTexture(nil, "OVERLAY")
+            tex:SetTexture([[Interface\Buttons\WHITE8x8]])
+            tex:SetSize(size, size)
+            tinsert(iconOverlay, tex)
         end
+        iconOverlay[1]:SetPoint("TOPLEFT")
+        iconOverlay[2]:SetPoint("BOTTOMLEFT")
+        iconOverlay[3]:SetPoint("TOPRIGHT")
+        iconOverlay[4]:SetPoint("BOTTOMRIGHT")
+
+        function iconOverlay:SetColor(r, g, b)
+            for i = 1, #self do
+                self[i]:SetVertexColor(r, g, b)
+            end
+        end
+
+        local function Reset(texture)
+            texture:SetVertexOffset(1, 0, 0)
+            texture:SetVertexOffset(2, 0, 0)
+            texture:SetVertexOffset(3, 0, 0)
+            texture:SetVertexOffset(4, 0, 0)
+            texture:Show()
+        end
+        function iconOverlay:SetVisual(visType)
+            for i = 1, #self do
+                Reset(self[i])
+            end
+
+            if visType == "corner" then
+                local offset = 2
+                self[1]:SetVertexOffset(2, 0, -offset)
+                self[1]:SetVertexOffset(3, offset, 0)
+                self[1]:SetVertexOffset(4, -offset, offset)
+
+                self[2]:Hide()
+                self[3]:Hide()
+                self[4]:Hide()
+            elseif visType == "socket" then
+                local offset = 3
+                self[1]:SetVertexOffset(2, 0, offset)
+                self[1]:SetVertexOffset(3, -offset, 0)
+
+                self[2]:SetVertexOffset(1, 0, -offset)
+                self[2]:SetVertexOffset(4, -offset, 0)
+
+                self[3]:SetVertexOffset(1, offset, 0)
+                self[3]:SetVertexOffset(4, 0, offset)
+
+                self[4]:SetVertexOffset(2, offset, 0)
+                self[4]:SetVertexOffset(3, 0, -offset)
+            elseif visType == "bracket" then
+                local offset = 2
+
+                self[1]:SetVertexOffset(2, 0, -offset)
+                self[1]:SetVertexOffset(3, offset, 0)
+                self[1]:SetVertexOffset(4, -offset, offset)
+
+                self[2]:SetVertexOffset(1, 0, offset)
+                self[2]:SetVertexOffset(3, -offset, -offset)
+                self[2]:SetVertexOffset(4, offset, 0)
+
+                self[3]:SetVertexOffset(1, -offset, 0)
+                self[3]:SetVertexOffset(2, offset, offset)
+                self[3]:SetVertexOffset(4, 0, -offset)
+
+                self[4]:SetVertexOffset(1, offset, -offset)
+                self[4]:SetVertexOffset(2, -offset, 0)
+                self[4]:SetVertexOffset(3, 0, offset)
+            end
+        end
+
+        Button._auroraIconOverlay = iconOverlay
     end
-    function Hook.SetItemButtonQuality(button, quality, itemIDOrLink)
+    function Hook.SetItemButtonQuality(button, quality, itemIDOrLink, suppressOverlays)
         if button._auroraIconBorder then
+            if not button._auroraIconOverlay then
+                CreateOverlay(button)
+            end
+            local iconOverlay = button._auroraIconOverlay
+            iconOverlay:Hide()
+
+            local overlay, overlay2, visual, isRelic
+            if itemIDOrLink then
+                if not suppressOverlays then
+                    if _G.C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(itemIDOrLink) then
+                        overlay = private.AZERITE_COLORS[1]
+                        overlay2 = private.AZERITE_COLORS[2]
+                        visual = "bracket"
+                    elseif private.isPatch and _G.IsCorruptedItem(itemIDOrLink) then
+                        overlay = private.AZERITE_COLORS[1]
+                        visual = "corner"
+                    end
+                end
+                isRelic = _G.IsArtifactRelicItem(itemIDOrLink)
+            end
+
             local color
             if quality and quality > _G.LE_ITEM_QUALITY_POOR then
                 color = _G.BAG_ITEM_QUALITY_COLORS[quality]
             end
 
-            if color then
-                local isRelic = (itemIDOrLink and _G.IsArtifactRelicItem(itemIDOrLink))
-                SetRelic(button, isRelic, color)
+            button.IconBorder:Hide()
+            if overlay then
+                if overlay2 then
+                    local r1, g1, b1 = overlay:GetRGB()
+                    local r2, g2, b2 = overlay2:GetRGB()
 
-                button._auroraIconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
-                button.IconBorder:Hide()
+                    local bd = button._auroraBackdrop
+                    bd.tl:SetVertexColor(r1, g1, b1)
+                    bd.t:SetVertexColor(r1, g1, b1)
+                    bd.tr:SetVertexColor(r1, g1, b1)
+                    iconOverlay[1]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                    iconOverlay[3]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+
+                    bd.l:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                    bd.r:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+
+                    bd.bl:SetVertexColor(r2, g2, b2)
+                    bd.b:SetVertexColor(r2, g2, b2)
+                    bd.br:SetVertexColor(r2, g2, b2)
+                    iconOverlay[2]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                    iconOverlay[4]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                else
+                    iconOverlay:SetColor(overlay:GetRGB())
+                    button._auroraIconBorder:SetBackdropBorderColor(overlay:GetRGB())
+                end
+
+                iconOverlay:Show()
+                iconOverlay:SetVisual(visual)
             else
-                SetRelic(button, false)
-                button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
+                if color then
+                    if isRelic then
+                        iconOverlay:SetColor(color:GetRGB())
+                        iconOverlay:SetVisual("socket")
+                        iconOverlay:Show()
+                    end
+
+                    button._auroraIconBorder:SetBackdropBorderColor(color:GetRGB())
+                else
+                    button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
+                end
             end
         end
     end
@@ -79,6 +178,7 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
             bottom = -1,
         })
         Button._auroraIconBorder = Button
+        Button.IconOverlay:SetAlpha(0)
 
         Button:SetNormalTexture("")
         Base.CropIcon(Button:GetPushedTexture())
