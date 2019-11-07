@@ -16,7 +16,11 @@ function private.FrameXML.HelpFrame()
     HelpFrame:DisableDrawLayer("BORDER")
     F.CreateBDFrame(HelpFrame)
 
-    HelpFrame.header:Hide()
+    if private.isPatch then
+        Skin.DialogHeaderTemplate(HelpFrame.Header)
+    else
+        HelpFrame.header:Hide()
+    end
     F.ReskinClose(_G.HelpFrameCloseButton)
 
     HelpFrame.leftInset:DisableDrawLayer("BACKGROUND")

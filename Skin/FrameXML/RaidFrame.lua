@@ -15,11 +15,15 @@ function private.FrameXML.RaidFrame()
     F.Reskin(_G.RaidFrameRaidInfoButton)
 
     Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame.Border)
+    if private.isPatch then
+        Skin.DialogHeaderTemplate(_G.RaidInfoFrame.Header)
+    else
+        _G.RaidInfoFrameHeader:Hide()
+    end
     _G.RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
     _G.RaidInfoDetailHeader:Hide()
     _G.RaidInfoDetailFooter:Hide()
     _G.RaidInfoDetailCorner:Hide()
-    _G.RaidInfoFrameHeader:Hide()
 
     _G.RaidInfoInstanceLabel:DisableDrawLayer("BACKGROUND")
     _G.RaidInfoIDLabel:DisableDrawLayer("BACKGROUND")

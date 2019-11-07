@@ -539,6 +539,35 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Base.SetBackdrop(Frame.OfficerNoteBackground)
         end
     end
+    do --[[ GuildNameChange ]]
+        function Skin.GuildNameChangeFrameTemplate(Frame)
+            Skin.UIPanelCloseButtonNoScripts(Frame.CloseButton)
+        end
+        function Skin.NameChangeEditBoxTemplate(Frame)
+            Skin.InputBoxTemplate(Frame)
+        end
+        function Skin.GuildNameChangeFrameTemplate(Frame)
+            Skin.ReportedGuildOrCommunityChangeTemplate(Frame)
+            Skin.NameChangeEditBoxTemplate(Frame.EditBox)
+            Skin.UIPanelButtonTemplate(Frame.Button)
+        end
+        function Skin.CommunityNameChangeFrameTemplate(Frame)
+            Skin.ReportedGuildOrCommunityChangeTemplate(Frame)
+            if not private.isPatch then
+                Skin.NameChangeEditBoxTemplate(Frame.EditBox)
+            end
+            Skin.UIPanelButtonTemplate(Frame.Button)
+        end
+
+        function Skin.GuildPostingChangeFrameTemplate(Frame)
+            Skin.ReportedGuildOrCommunityChangeTemplate(Frame)
+            Skin.UIPanelButtonTemplate(Frame.Button)
+        end
+        function Skin.CommunityPostingChangeFrameTemplate(Frame)
+            Skin.ReportedGuildOrCommunityChangeTemplate(Frame)
+            Skin.UIPanelButtonTemplate(Frame.Button)
+        end
+    end
     do --[[ CommunitiesFrame ]]
         function Skin.GuildBenefitsFrameTemplate(Frame)
             Skin.CommunitiesGuildPerksFrameTemplate(Frame.Perks)
@@ -745,6 +774,10 @@ function private.AddOns.Blizzard_Communities()
     Skin.CommunitiesTicketFrameTemplate(CommunitiesFrame.TicketFrame)
     Skin.GuildBenefitsFrameTemplate(CommunitiesFrame.GuildBenefitsFrame)
     Skin.GuildDetailsFrameTemplate(CommunitiesFrame.GuildDetailsFrame)
+    Skin.GuildNameChangeFrameTemplate(CommunitiesFrame.GuildNameChangeFrame)
+    Skin.CommunityNameChangeFrameTemplate(CommunitiesFrame.CommunityNameChangeFrame)
+    Skin.GuildPostingChangeFrameTemplate(CommunitiesFrame.GuildPostingChangeFrame)
+    Skin.CommunityPostingChangeFrameTemplate(CommunitiesFrame.CommunityPostingChangeFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
     Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)

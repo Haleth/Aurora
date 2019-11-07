@@ -26,10 +26,14 @@ function private.AddOns.Blizzard_BindingUI()
     local KeyBindingFrame = _G.KeyBindingFrame
 
     Skin.DialogBorderTemplate(KeyBindingFrame.BG)
-    KeyBindingFrame.header:DisableDrawLayer("BACKGROUND")
-    KeyBindingFrame.header:DisableDrawLayer("BORDER")
-    KeyBindingFrame.header.text:ClearAllPoints()
-    KeyBindingFrame.header.text:SetPoint("TOP", KeyBindingFrame, "TOP", 0, -8)
+    if private.isPatch then
+        Skin.DialogHeaderTemplate(KeyBindingFrame.Header)
+    else
+        KeyBindingFrame.header:DisableDrawLayer("BACKGROUND")
+        KeyBindingFrame.header:DisableDrawLayer("BORDER")
+        KeyBindingFrame.header.text:ClearAllPoints()
+        KeyBindingFrame.header.text:SetPoint("TOP", KeyBindingFrame, "TOP", 0, -8)
+    end
 
     Skin.UICheckButtonTemplate(KeyBindingFrame.characterSpecificButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.unbindButton)

@@ -421,6 +421,12 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame:SetBackdropColor(r, g, b, 1)
     end
 
+    function Skin.DialogHeaderTemplate(Frame)
+        Frame.LeftBG:Hide()
+        Frame.RightBG:Hide()
+        Frame.CenterBG:Hide()
+    end
+
     function Skin.SimplePanelTemplate(Frame)
         Skin.InsetFrameTemplate(Frame.Inset)
         Frame.NineSlice.Center = Frame.Bg

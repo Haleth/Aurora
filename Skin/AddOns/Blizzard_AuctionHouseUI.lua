@@ -412,7 +412,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseAlignedQuantityInputFrameTemplate(Frame.QuantityInput)
             --Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame.UnitPrice)
             --Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame.TotalPrice)
-            Skin.UIPanelButtonTemplate(_G.BuyButton)
+            Skin.UIPanelButtonTemplate(Frame.BuyButton)
         end
         function Skin.AuctionHouseCommoditiesBuyFrameTemplate(Frame)
             Skin.UIPanelButtonTemplate(Frame.BackButton)

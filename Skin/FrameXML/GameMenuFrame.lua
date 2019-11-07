@@ -9,12 +9,17 @@ local Skin = Aurora.Skin
 local F = _G.unpack(Aurora)
 
 function private.FrameXML.GameMenuFrame()
-    local header = _G.GameMenuFrameHeader
-    header:SetTexture("")
-    header:ClearAllPoints()
-    header:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
 
-    Skin.DialogBorderTemplate(_G.GameMenuFrame.Border)
+    local GameMenuFrame = _G.GameMenuFrame
+    Skin.DialogBorderTemplate(GameMenuFrame.Border)
+    if private.isPatch then
+        Skin.DialogHeaderTemplate(GameMenuFrame.Header)
+    else
+        local header = _G.GameMenuFrameHeader
+        header:SetTexture("")
+        header:ClearAllPoints()
+        header:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
+    end
 
     local buttons = {
         "Help",

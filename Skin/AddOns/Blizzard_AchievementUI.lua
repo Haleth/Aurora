@@ -601,19 +601,34 @@ function private.AddOns.Blizzard_AchievementUI()
     searchBox:SetPoint("TOPRIGHT", -148, 2)
 
     local prevContainer = AchievementFrame.searchPreviewContainer
-    prevContainer:DisableDrawLayer("OVERLAY")
+    prevContainer.background:Hide()
+    prevContainer.borderAnchor:Hide()
+    prevContainer.botRightCorner:Hide()
+    prevContainer.bottomBorder:Hide()
+    prevContainer.leftBorder:Hide()
+    prevContainer.rightBorder:Hide()
+    prevContainer.topBorder:Hide()
 
-    -- This needs to be a separate frame due to FrameLevel changes in Blizz's code
-    local prevContainerBG = _G.CreateFrame("Frame", nil, prevContainer)
-    prevContainerBG:SetPoint("TOPLEFT")
-    prevContainerBG:SetPoint("BOTTOMRIGHT", AchievementFrame.showAllSearchResults, 0, 0)
-    prevContainerBG:SetFrameLevel(prevContainer:GetFrameLevel() - 2)
-    Base.SetBackdrop(prevContainerBG)
+    if private.isPatch then
+        Base.SetBackdrop(prevContainer)
 
-    for i = 1, #AchievementFrame.searchPreview do
-        Skin.AchievementSearchPreviewButton(AchievementFrame.searchPreview[i])
+        for i = 1, #prevContainer.searchPreview do
+            Skin.AchievementSearchPreviewButton(prevContainer.searchPreviews[i])
+        end
+        SkinSearchButton(prevContainer.showAllSearchResults)
+    else
+        -- This needs to be a separate frame due to FrameLevel changes in Blizz's code
+        local prevContainerBG = _G.CreateFrame("Frame", nil, prevContainer)
+        prevContainerBG:SetPoint("TOPLEFT")
+        prevContainerBG:SetPoint("BOTTOMRIGHT", AchievementFrame.showAllSearchResults, 0, 0)
+        prevContainerBG:SetFrameLevel(prevContainer:GetFrameLevel() - 2)
+        Base.SetBackdrop(prevContainerBG)
+
+        for i = 1, #AchievementFrame.searchPreview do
+            Skin.AchievementSearchPreviewButton(AchievementFrame.searchPreview[i])
+        end
+        SkinSearchButton(AchievementFrame.showAllSearchResults)
     end
-    SkinSearchButton(AchievementFrame.showAllSearchResults)
 
     local searchResults = AchievementFrame.searchResults
     Base.SetBackdrop(searchResults)

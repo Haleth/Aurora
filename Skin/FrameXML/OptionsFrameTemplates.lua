@@ -33,11 +33,15 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
         Skin.ExpandOrCollapse(Button.toggle)
     end
     function Skin.OptionsFrameTemplate(Frame)
-        Skin.DialogBorderTemplate(Frame.Border)
-
         local name = Frame:GetName()
-        _G[name.."Header"]:SetTexture("")
-        _G[name.."HeaderText"]:SetPoint("TOP", 0, -10)
+
+        Skin.DialogBorderTemplate(Frame.Border)
+        if private.isPatch then
+            Skin.DialogHeaderTemplate(Frame.Header)
+        else
+            _G[name.."Header"]:SetTexture("")
+            _G[name.."HeaderText"]:SetPoint("TOP", 0, -10)
+        end
 
         Skin.OptionsFrameListTemplate(_G[name.."CategoryFrame"])
         Base.SetBackdrop(_G[name.."PanelContainer"], Color.frame)

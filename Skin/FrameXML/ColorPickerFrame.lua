@@ -9,11 +9,15 @@ local Skin = Aurora.Skin
 local F = _G.unpack(Aurora)
 
 function private.FrameXML.ColorPickerFrame()
-    _G.ColorPickerFrameHeader:Hide()
-    local header = select(3, _G.ColorPickerFrame:GetRegions())
-    header:SetPoint("TOP", _G.ColorPickerFrame, 0, -4)
 
     Skin.DialogBorderTemplate(_G.ColorPickerFrame.Border)
+    if private.isPatch then
+        Skin.DialogHeaderTemplate(_G.ColorPickerFrame.Header)
+    else
+        _G.ColorPickerFrameHeader:Hide()
+        local header = select(3, _G.ColorPickerFrame:GetRegions())
+        header:SetPoint("TOP", _G.ColorPickerFrame, 0, -4)
+    end
     F.Reskin(_G.ColorPickerCancelButton)
     _G.ColorPickerCancelButton:SetWidth(100)
 

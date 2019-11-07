@@ -178,12 +178,15 @@ function private.FrameXML.ChatConfigFrame()
     _G.hooksecurefunc("ChatConfig_CreateColorSwatches", Hook.ChatConfig_CreateColorSwatches)
 
     local ChatConfigFrame = _G.ChatConfigFrame
-    _G.ChatConfigFrameHeader:Hide()
-    _G.ChatConfigFrameHeaderText:ClearAllPoints()
-    _G.ChatConfigFrameHeaderText:SetPoint("TOPLEFT")
-    _G.ChatConfigFrameHeaderText:SetPoint("BOTTOMRIGHT", _G.ChatConfigFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
     Skin.DialogBorderTemplate(ChatConfigFrame.Border)
+    if private.isPatch then
+        Skin.DialogHeaderTemplate(ChatConfigFrame.Header)
+    else
+        _G.ChatConfigFrameHeader:Hide()
+        _G.ChatConfigFrameHeaderText:ClearAllPoints()
+        _G.ChatConfigFrameHeaderText:SetPoint("TOPLEFT")
+        _G.ChatConfigFrameHeaderText:SetPoint("BOTTOMRIGHT", _G.ChatConfigFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    end
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCategoryFrame)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton1)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton2)
