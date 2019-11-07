@@ -33,8 +33,8 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         -- This is a slightly fancy way of getting a consistent height from frames of variable height.
         local yOfs = floor(EditBox:GetHeight() / 2 + .5) - 10
         EditBox:SetBackdropOption("offsets", {
-            left = -4,
-            right = 1,
+            left = 0,
+            right = 0,
             top = yOfs,
             bottom = yOfs,
         })

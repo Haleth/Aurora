@@ -5,7 +5,8 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Skin = Aurora.Base, Aurora.Skin
+local Base = Aurora.Base
+local Skin = Aurora.Skin
 
 --do --[[ FrameXML\SharedBasicControls.lua ]]
 --end

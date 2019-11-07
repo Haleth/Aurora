@@ -597,6 +597,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.SearchBoxTemplate(EditBox)
         Skin.InputBoxInstructionsTemplate(EditBox)
+        EditBox.searchIcon:SetPoint("LEFT", 3, -1)
     end
     function Skin.TabButtonTemplate(Button)
         Button.LeftDisabled:SetAlpha(0)
