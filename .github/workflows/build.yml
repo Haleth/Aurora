@@ -29,6 +29,11 @@ jobs:
       if: github.event_name != 'tag'
       run: rm -f CHANGELOG.md
 
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.8'
+        architecture: 'x64'
+
     - name: Parse Docs
       run: |
         curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
