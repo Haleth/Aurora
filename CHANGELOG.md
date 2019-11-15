@@ -1,4 +1,22 @@
-﻿## [8.2.5.2] - 2019-10-24 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Garrison talents skin
+  * Azerite items have a new border overlay in bags
+
+### Changed ###
+
+  * Updates for 8.3.0
+  * Minor tweaks to the dropdown and editbox wigets
+
+### Fixed ###
+
+  * Custom class colors are now apppieed in chat
+  * The quest share buttons in the log are now skinned
+
+
+
+## [8.2.5.2] - 2019-10-24 ##
 ### Added ###
 
   * Skins for the Warfront and Islands end result frame
