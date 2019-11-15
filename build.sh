@@ -11,7 +11,7 @@ git clone "https://${GITHUB_OAUTH}@github.com/Haleth/Aurora.wiki.git" .wiki
 python parse.py -o ".wiki"
 
 # navigate to the output directory
-cd .wiki
+cd .wiki || exit
 
 # stage changes
 git add .

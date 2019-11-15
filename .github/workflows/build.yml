@@ -35,6 +35,7 @@ jobs:
         architecture: 'x64'
 
     - name: Parse Docs
+      continue-on-error: true
       run: |
         curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
         bash build.sh
