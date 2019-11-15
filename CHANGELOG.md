@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.2.5.3] - 2019-11-14 ##
 ### Added ###
 
   * Garrison talents skin
@@ -350,6 +350,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.2.5.3]: https://github.com/Haleth/Aurora/compare/8.2.5.2...8.2.5.3
 [8.2.5.2]: https://github.com/Haleth/Aurora/compare/8.2.5.1...8.2.5.2
 [8.2.5.1]: https://github.com/Haleth/Aurora/compare/8.2.5.0...8.2.5.1
 [8.2.5.0]: https://github.com/Haleth/Aurora/compare/8.2.0.2...8.2.5.0
