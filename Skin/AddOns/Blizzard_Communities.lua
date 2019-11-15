@@ -553,9 +553,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunityNameChangeFrameTemplate(Frame)
             Skin.ReportedGuildOrCommunityChangeTemplate(Frame)
-            if not private.isPatch then
-                Skin.NameChangeEditBoxTemplate(Frame.EditBox)
-            end
             Skin.UIPanelButtonTemplate(Frame.Button)
         end
 
