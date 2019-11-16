@@ -540,8 +540,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
     end
     do --[[ GuildNameChange ]]
-        function Skin.GuildNameChangeFrameTemplate(Frame)
-            Skin.UIPanelCloseButtonNoScripts(Frame.CloseButton)
+        function Skin.CommunitiesGuildNameChangeAlertFrameTemplate(Frame)
+            Skin.GlowBoxTemplate(Frame)
+        end
+        function Skin.ReportedGuildOrCommunityChangeTemplate(Frame)
+            Skin.UIPanelCloseButton(Frame.CloseButton)
         end
         function Skin.NameChangeEditBoxTemplate(Frame)
             Skin.InputBoxTemplate(Frame)
