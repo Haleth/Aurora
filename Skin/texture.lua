@@ -254,27 +254,26 @@ do -- Shapes
         texture2:SetVertexOffset(2, width * 0.5, height * 0.27)
         texture2:SetVertexOffset(3, 0, -(height * 0.365))
         texture2:SetVertexOffset(4, -(width * 0.5), height * 0.27)
+    end)
 
+    Base.RegisterTexture("shapeDiamond", function(frame, texture)
+        local width, height = texture:GetSize()
+        if width == 0 or height == 0 then
+            textures[texture] = "shapeDiamond"
+            return
+        end
+
+        texture:SetColorTexture(1, 1, 1)
+        texture:SetVertexOffset(1, 0, -(height / 2))
+        texture:SetVertexOffset(2, width / 2, 0)
+        texture:SetVertexOffset(3, -(width / 2), 0)
+        texture:SetVertexOffset(4, 0, height / 2)
     end)
 end
 
 --[[
 Base.RegisterTexture("test", function(frame, texture)
-    frame:SetSize(256, 256)
-
-    for i = 1, 2 do
-        local line = frame:CreateLine(nil, "BACKGROUND")
-        line:SetColorTexture(1, 1, 1)
-        line:SetThickness(10)
-        line:Show(1)
-        if i == 1 then
-            line:SetStartPoint("TOPLEFT")
-            line:SetEndPoint("BOTTOMRIGHT")
-        else
-            line:SetStartPoint("TOPRIGHT")
-            line:SetEndPoint("BOTTOMLEFT")
-        end
-    end
+    texture:SetColorTexture(Color.white:GetRGB())
 end)
 
 local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")

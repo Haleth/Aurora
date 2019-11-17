@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals floor
+-- luacheck: globals floor max
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -105,12 +105,12 @@ do --[[ FrameXML\ActionBarController.lua ]]
         function Hook.StatusTrackingManagerMixin:LayoutBar(bar, barWidth, isTopBar, isDouble)
             if isDouble then
                 if isTopBar then
-                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -7);
+                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -7)
                 else
-                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -18);
+                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -18)
                 end
             else
-                bar:SetPoint("BOTTOM", self:GetParent(), 0, -11);
+                bar:SetPoint("BOTTOM", self:GetParent(), 0, -11)
             end
 
             local numTicks = self.largeSize and 20 or 10
@@ -122,6 +122,31 @@ do --[[ FrameXML\ActionBarController.lua ]]
                 tick:SetPoint("BOTTOMLEFT", bar, floor(xpos), 0)
                 tick:Show()
                 xpos = xpos + divWidth
+            end
+        end
+    end
+    do --[[ ExpBar.xml ]]
+        Hook.ExhaustionTickMixin = {}
+        function Hook.ExhaustionTickMixin:UpdateTickPosition()
+            if self:IsShown() then
+                local playerCurrXP = _G.UnitXP("player")
+                local playerMaxXP = _G.UnitXPMax("player")
+                local exhaustionThreshold = _G.GetXPExhaustion()
+                local exhaustionStateID = _G.GetRestState()
+
+                local parent = self:GetParent()
+                if exhaustionStateID and exhaustionStateID >= 3 then
+                    self.Normal:SetPoint("LEFT", parent , "RIGHT", 0, 0)
+                end
+
+                if exhaustionThreshold then
+                    local parentWidth = parent:GetWidth()
+                    local exhaustionTickSet = max(((playerCurrXP + exhaustionThreshold) / playerMaxXP) * parentWidth, 0)
+                    exhaustionTickSet = _G.Round(exhaustionTickSet - 1)
+                    if exhaustionTickSet < parentWidth then
+                        self.Normal:SetPoint("LEFT", parent, "LEFT", exhaustionTickSet, 0)
+                    end
+                end
             end
         end
     end
@@ -164,7 +189,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Skin.GlowBoxArrowTemplate(Frame.Arrow)
         end
     end
-    do --[[ StatusTrackingBarTemplate.xml ]]
+    do --[[ StatusTrackingBar.xml ]]
         function Skin.StatusTrackingBarManagerTemplate(Frame)
             Util.Mixin(Frame, Hook.StatusTrackingManagerMixin)
             Frame.SingleBarLarge:SetAlpha(0)
@@ -193,19 +218,52 @@ do --[[ FrameXML\ActionBarController.xml ]]
             StatusBar.Underlay:Hide()
             StatusBar.Overlay:Hide()
         end
+    end
+    do --[[ ExpBar.xml ]]
+        function Skin.ExpStatusBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
+            Frame.ExhaustionLevelFillBar:SetPoint("BOTTOMLEFT")
+
+            --[[
+            ]]
+            local tick = Frame.ExhaustionTick
+            Util.Mixin(tick, Hook.ExhaustionTickMixin)
+            local texture = tick.Normal
+            texture:SetColorTexture(Color.white:GetRGB())
+            texture:ClearAllPoints()
+            texture:SetPoint("TOP", Frame)
+            texture:SetPoint("BOTTOM", Frame)
+            texture:SetWidth(2)
+
+            local diamond = tick:CreateTexture(nil, "BORDER")
+            diamond:SetPoint("BOTTOMLEFT", texture, "TOPLEFT", -3, -1)
+            diamond:SetSize(9, 9)
+            Base.SetTexture(diamond, "shapeDiamond")
+
+            local highlight = tick.Highlight
+            highlight:ClearAllPoints()
+            highlight:SetPoint("TOPLEFT", diamond, -2, 2)
+            highlight:SetPoint("BOTTOMRIGHT", diamond, 2, -2)
+            Base.SetTexture(highlight, "shapeDiamond")
+        end
+    end
+    do --[[ ReputationBar.xml ]]
         function Skin.ReputationStatusBarTemplate(Frame)
             Skin.StatusTrackingBarTemplate(Frame)
         end
-        function Skin.HonorStatusBarTemplate(Frame)
+    end
+    do --[[ AzeriteBar.xml ]]
+        function Skin.AzeriteBarTemplate(Frame)
             Skin.StatusTrackingBarTemplate(Frame)
         end
+    end
+    do --[[ ArtifactBar.xml ]]
         function Skin.ArtifactStatusBarTemplate(Frame)
             Skin.StatusTrackingBarTemplate(Frame)
         end
-        function Skin.ExpStatusBarTemplate(Frame)
-            Skin.StatusTrackingBarTemplate(Frame)
-        end
-        function Skin.AzeriteBarTemplate(Frame)
+    end
+    do --[[ HonorBar.xml ]]
+        function Skin.HonorStatusBarTemplate(Frame)
             Skin.StatusTrackingBarTemplate(Frame)
         end
     end
