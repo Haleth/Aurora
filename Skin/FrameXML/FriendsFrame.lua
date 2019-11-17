@@ -126,11 +126,12 @@ function private.FrameXML.FriendsFrame()
             bg = EditBox.MiddleBorder
         })
         Skin.FrameTypeEditBox(EditBox)
-
-        local bg = EditBox:GetBackdropTexture("bg")
-        bg:ClearAllPoints()
-        bg:SetPoint("TOPLEFT", -3, 2)
-        bg:SetPoint("BOTTOMRIGHT", 3, -2)
+        EditBox:SetBackdropOption("offsets", {
+            left = -7,
+            right = -5,
+            top = 0,
+            bottom = 0,
+        })
     end
 
 

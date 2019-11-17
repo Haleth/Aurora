@@ -183,6 +183,9 @@ function private.OnLoad()
         EditBox:ClearAllPoints()
         EditBox:SetSize(239, 25)
         EditBox:SetPoint("TOPLEFT", 57, -28)
+        EditBox:SetScript("OnEnterPressed", function()
+            BroadcastFrame:SetBroadcast()
+        end)
 
         _G.hooksecurefunc("FriendsFrame_Update", function()
             local selectedTab = _G.PanelTemplates_GetSelectedTab(_G.FriendsFrame) or _G.FRIEND_TAB_FRIENDS
