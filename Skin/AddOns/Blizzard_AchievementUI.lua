@@ -612,7 +612,7 @@ function private.AddOns.Blizzard_AchievementUI()
     if private.isPatch then
         Base.SetBackdrop(prevContainer)
 
-        for i = 1, #prevContainer.searchPreview do
+        for i = 1, #prevContainer.searchPreviews do
             Skin.AchievementSearchPreviewButton(prevContainer.searchPreviews[i])
         end
         SkinSearchButton(prevContainer.showAllSearchResults)

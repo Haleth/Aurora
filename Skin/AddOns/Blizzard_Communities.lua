@@ -295,6 +295,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.Cancel)
         end
         function Skin.ClubFinderGuildCardTemplate(Frame)
+            Base.SetBackdrop(Frame, Color.frame, 0.5)
+            Frame:SetBackdropBorderColor(Color.button)
+
+            Frame.CardBackground:Hide()
             Skin.UIPanelButtonTemplate(Frame.RequestJoin)
         end
         function Skin.ClubFinderFocusDropdownTemplate(Frame)

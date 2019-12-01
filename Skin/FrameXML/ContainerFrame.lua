@@ -9,6 +9,7 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\ContainerFrame.lua ]]
+    local NUM_BAG_FRAMES = 4
     local BAG_FILTER_ICONS = {
         ["bags-icon-equipment"] = [[Interface\Icons\INV_Chest_Chain]],
         ["bags-icon-consumables"] = [[Interface\Icons\INV_Potion_93]],
@@ -18,7 +19,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         self:SetTexture(BAG_FILTER_ICONS[atlas])
     end
     function Hook.ContainerFrame_GenerateFrame(frame, size, id)
-        if id > _G.NUM_BAG_FRAMES then
+        if id > NUM_BAG_FRAMES then
             -- bank bags
             local _, _, _, a = frame:GetBackdropColor()
             Base.SetBackdropColor(frame, Color.button, a)
