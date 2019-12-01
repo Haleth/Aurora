@@ -11,9 +11,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\PVEFrame.lua ]]
     function Hook.GroupFinderFrame_SelectGroupButton(index)
-        local self = _G.GroupFinderFrame
         for i = 1, 4 do
-            local button = self["groupButton"..i]
+            local button = _G.GroupFinderFrame["groupButton"..i]
             if i == index then
                 button.bg:Show()
             else
@@ -25,22 +24,19 @@ end
 
 do --[[ FrameXML\PVEFrame.xml ]]
     function Skin.GroupFinderGroupButtonTemplate(Button)
-        Base.SetBackdrop(Button, Color.button)
-        Button:SetBackdropBorderColor(Color.frame, 1)
+        Skin.FrameTypeButton(Button)
+
         local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", Button.icon, "TOPRIGHT", 0, 1)
+        bg:SetPoint("TOPLEFT", Button.icon, 0, 1)
         bg:SetPoint("BOTTOM", Button.icon, 0, -1)
         bg:SetPoint("RIGHT")
 
         Button.bg:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         Button.bg:SetAllPoints(bg)
         Button.bg:Hide()
-        Button.ring:Hide()
-        Base.CropIcon(Button.icon, Button)
 
-        local highlight = Button:GetHighlightTexture()
-        highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-        highlight:SetAllPoints(bg)
+        Button.ring:Hide()
+        Base.CropIcon(Button.icon)
     end
 end
 
@@ -85,10 +81,6 @@ function private.FrameXML.PVEFrame()
     GroupFinderFrame.groupButton3.icon:SetTexture([[Interface\Icons\INV_Helmet_06]])
     GroupFinderFrame.groupButton4.icon:SetTexture([[Interface\Icons\Achievement_General_StayClassy]])
 
+    _G.LFGListPVEStub:SetWidth(339)
     PVEFrame.shadows:SetAlpha(0)
-
-
-    -------------
-    -- Section --
-    -------------
 end
