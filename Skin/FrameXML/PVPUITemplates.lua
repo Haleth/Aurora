@@ -6,10 +6,19 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
---do --[[ FrameXML\PVPUITemplates.lua ]]
---end
+do --[[ FrameXML\PVPUITemplates.lua ]]
+    local factionIcon = _G.UnitFactionGroup("player") == "Horde" and [[Interface\Icons\UI_Horde_HonorboundMedal]] or [[Interface\Icons\UI_Alliance_7LegionMedal]]
+
+    Hook.PVPConquestRewardMixin = {}
+    function Hook.PVPConquestRewardMixin:SetTexture(texture, alpha)
+        if not texture then
+            self.Icon:SetTexture(factionIcon)
+        end
+    end
+end
 
 do --[[ FrameXML\PVPUITemplates.xml ]]
     function Skin.PVPConquestRewardButton(Button)
@@ -31,6 +40,7 @@ function private.FrameXML.PVPUITemplates()
     ----====####$$$$%%%%$$$$####====----
     --         PVPUITemplates         --
     ----====####$$$$%%%%$$$$####====----
+    Util.Mixin(_G.PVPConquestRewardMixin, Hook.PVPConquestRewardMixin)
 
     -------------
     -- Section --

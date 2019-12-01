@@ -120,19 +120,17 @@ do --[[ FrameXML\LFGList.xml ]]
         Skin.UIMenuButtonStretchTemplate(Button.InviteButton)
     end
     function Skin.LFGListCategoryTemplate(Button)
-        Base.SetBackdrop(Button, Color.button)
+        Skin.FrameTypeButton(Button)
+
         Button.Icon:ClearAllPoints()
         Button.Icon:SetPoint("TOPLEFT", 1, -1)
         Button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
         Button.Icon:SetTexCoord(0.06006, 0.95495, 0.15625, 0.61458)
         Button.Cover:Hide()
 
-
         local color = Color.highlight
         Button.SelectedTexture:SetColorTexture(color.r, color.g, color.b, Color.frame.a)
         Button.SelectedTexture:SetAllPoints()
-        Button.HighlightTexture:SetTexture("")
-        Base.SetHighlight(Button, "backdrop")
     end
     function Skin.LFGListMagicButtonTemplate(Button)
         Skin.MagicButtonTemplate(Button)
@@ -180,7 +178,9 @@ function private.FrameXML.LFGList()
     Skin.LFGListCategoryTemplate(CategorySelection.CategoryButtons[1])
 
     Skin.LFGListMagicButtonTemplate(CategorySelection.FindGroupButton)
+    CategorySelection.FindGroupButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.LFGListMagicButtonTemplate(CategorySelection.StartGroupButton)
+    CategorySelection.StartGroupButton:SetPoint("BOTTOMLEFT", 5, 5)
 
     -- NothingAvailable --
     local NothingAvailable = LFGListFrame.NothingAvailable
