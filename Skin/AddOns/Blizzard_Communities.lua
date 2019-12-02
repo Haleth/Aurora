@@ -13,7 +13,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesList ]]
         Hook.CommunitiesListEntryMixin = {}
         function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket, isInviteFromFinder)
-            if clubInfo and self._iconBorder then
+            if clubInfo and self._iconBG then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
                 if isGuild then
                     self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
@@ -21,22 +21,10 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                     self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
                 end
 
-                self.Name:SetPoint("LEFT", self._iconBorder, "RIGHT", 10, 0)
                 self.CircleMask:Hide()
                 Base.CropIcon(self.Icon)
-                self.Icon:ClearAllPoints()
-                self.Icon:SetPoint("CENTER", self._iconBorder)
-
-                if not isInvitation and not isGuild and not isTicket then
-                    if clubInfo.clubType == _G.Enum.ClubType.BattleNet then
-                        self._iconBorder:SetColorTexture(_G.FRIENDS_BNET_BACKGROUND_COLOR:GetRGB())
-                    else
-                        self._iconBorder:SetColorTexture(_G.FRIENDS_WOW_BACKGROUND_COLOR:GetRGB())
-                    end
-                    self._iconBorder:Show()
-                else
-                    self._iconBorder:Hide()
-                end
+                self.Icon:SetAllPoints(self._iconBG)
+                self._iconBG:Hide()
             end
         end
         function Hook.CommunitiesListEntryMixin:SetFindCommunity()
@@ -45,19 +33,22 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self.CircleMask:Hide()
             self.Icon:SetTexCoord(0, 1, 0, 1)
             self.Icon:ClearAllPoints()
-            self.Icon:SetPoint("CENTER", self._iconBorder)
+            self.Icon:SetSize(34, 34)
+            self.Icon:SetPoint("CENTER", self._iconBG)
+            self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
 
-            self._iconBorder:Show()
-            self._iconBorder:SetColorTexture(Color.black:GetRGB())
+            self._iconBG:Show()
+            self._iconBG:SetColorTexture(Color.black:GetRGB())
         end
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
-            self.Name:SetPoint("LEFT", self._iconBorder, "RIGHT", 10, 0)
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
             self.Icon:ClearAllPoints()
-            self.Icon:SetPoint("CENTER", self._iconBorder)
-            self._iconBorder:Show()
-            self._iconBorder:SetColorTexture(Color.black:GetRGB())
+            self.Icon:SetPoint("CENTER", self._iconBG)
+            self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
+
+            self._iconBG:Show()
+            self._iconBG:SetColorTexture(Color.black:GetRGB())
         end
         function Hook.CommunitiesListEntryMixin:SetGuildFinder()
             self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
@@ -65,9 +56,10 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self.CircleMask:Hide()
             self.Icon:SetTexCoord(0, 1, 0, 1)
             self.Icon:ClearAllPoints()
-            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 3)
+            self.Icon:SetSize(40, 40)
+            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
 
-            self._iconBorder:Hide()
+            self._iconBG:Hide()
         end
     end
     do --[[ CommunitiesSettings ]]
@@ -101,30 +93,34 @@ end
 do --[[ AddOns\Blizzard_Communities.xml ]]
     do --[[ CommunitiesList ]]
         function Skin.CommunitiesListEntryTemplate(Button)
-            Base.SetBackdrop(Button, Color.button)
-            local bg = Button:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 7, -16)
-            bg:SetPoint("BOTTOMRIGHT", -10, 12)
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 7,
+                right = 10,
+                top = 8,
+                bottom = 8,
+            })
 
+            local bg = Button:GetBackdropTexture("bg")
             Button.Background:Hide()
             Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             Button.Selection:SetAllPoints(bg)
 
-            Button.GuildTabardBackground:SetPoint("TOPLEFT", 6, -15)
-            Button.GuildTabardEmblem:SetPoint("TOPLEFT", 11, -15)
-            Button.GuildTabardBorder:SetPoint("TOPLEFT", 6, -15)
+            Button.GuildTabardBackground:SetSize(60, 60)
+            Button.GuildTabardBackground:SetPoint("TOPLEFT", bg, -1, 1)
+            Button.GuildTabardEmblem:SetSize(36 * 1.3, 42 * 1.3)
+            Button.GuildTabardEmblem:SetPoint("CENTER", Button.GuildTabardBackground, 0, 6)
+            Button.GuildTabardBorder:SetAllPoints(Button.GuildTabardBackground)
+
+            Button._iconBG = Button:CreateTexture(nil, "BACKGROUND", nil, 5)
+            Button._iconBG:SetPoint("TOPLEFT", bg, 1, -1)
+            Button._iconBG:SetPoint("BOTTOM", bg, 0, 1)
+            Button._iconBG:SetWidth(Button._iconBG:GetHeight())
 
             Button.CircleMask:Hide()
-            Button._iconBorder = Base.CropIcon(Button.Icon, Button)
-            Button._iconBorder:SetPoint("TOPLEFT", bg)
-            Button._iconBorder:SetPoint("BOTTOMRIGHT", bg, "BOTTOMLEFT", 40, 0)
             Button.IconRing:SetAlpha(0)
 
             Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-
-            local highlight = Button:GetHighlightTexture()
-            highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            highlight:SetAllPoints(bg)
         end
         function Skin.CommunitiesListFrameTemplate(Frame)
             Frame.Bg:Hide()
@@ -748,6 +744,9 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesFrame.PortraitOverlay:SetAlpha(0)
 
     Skin.MaximizeMinimizeButtonFrameTemplate(CommunitiesFrame.MaximizeMinimizeFrame)
+    _G.hooksecurefunc(CommunitiesFrame.MaximizeMinimizeFrame, "maximizedCallback", function(...)
+        CommunitiesFrame.Chat:SetPoint("BOTTOMRIGHT", CommunitiesFrame.MemberList, "BOTTOMLEFT", -32, 32)
+    end)
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
