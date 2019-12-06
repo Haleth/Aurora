@@ -26,8 +26,7 @@ jobs:
         /home/runner/.luarocks/bin/luacheck . --no-color -q
         
     - name: Alpha Changelog
-      if: github.event_name != 'tag'
-      run: rm -f CHANGELOG.md
+      run: echo github.event_name
 
     - uses: actions/setup-python@v1
       with:

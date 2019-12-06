@@ -119,7 +119,9 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                 color = _G.BAG_ITEM_QUALITY_COLORS[quality]
             end
 
-            button.IconBorder:Hide()
+            if button.IconBorder then
+                button.IconBorder:Hide()
+            end
             if overlay then
                 if overlay2 then
                     local r1, g1, b1 = overlay:GetRGB()

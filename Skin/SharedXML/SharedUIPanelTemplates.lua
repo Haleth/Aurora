@@ -24,40 +24,36 @@ do -- BlizzWTF: These are not templates, but they should be
 
             if texture and texture ~= "" then
                 if texture:find("Plus") then
-                    self._auroraBG.plus:Show()
+                    self._plus:Show()
                 elseif texture:find("Minus") then
-                    self._auroraBG.plus:Hide()
+                    self._plus:Hide()
                 end
-                self._auroraBG:Show()
+                self:SetBackdrop(true)
             else
-                self._auroraBG:Hide()
+                self:SetBackdrop(false)
             end
             self.settingTexture = nil
         end
         function Skin.ExpandOrCollapse(Button)
-            Button:SetHighlightTexture("")
-            Button:SetPushedTexture("")
+            Skin.FrameTypeButton(Button)
 
-            local bg = _G.CreateFrame("Frame", nil, Button)
-            bg:SetSize(13, 13)
-            bg:SetPoint("TOPLEFT", Button:GetNormalTexture(), 0, -2)
-            Base.SetBackdrop(bg, Color.button)
-            Button._auroraBG = bg
+            local bg = Button:GetBackdropTexture("bg")
+            local minus = Button:CreateTexture(nil, "OVERLAY")
+            minus:SetColorTexture(1, 1, 1)
+            minus:SetSize(9, 1)
+            minus:SetPoint("TOPLEFT", bg, 2, -6)
+            Button._minus = minus
 
-            Button._auroraHighlight = {}
-            bg.minus = bg:CreateTexture(nil, "OVERLAY")
-            bg.minus:SetPoint("TOPLEFT", 2, -6)
-            bg.minus:SetPoint("BOTTOMRIGHT", -2, 6)
-            bg.minus:SetColorTexture(1, 1, 1)
-            _G.tinsert(Button._auroraHighlight, bg.minus)
+            local plus = Button:CreateTexture(nil, "OVERLAY")
+            plus:SetColorTexture(1, 1, 1)
+            plus:SetSize(1, 9)
+            plus:SetPoint("TOPLEFT", bg, 6, -2)
+            Button._plus = plus
 
-            bg.plus = bg:CreateTexture(nil, "OVERLAY")
-            bg.plus:SetPoint("TOPLEFT", 6, -2)
-            bg.plus:SetPoint("BOTTOMRIGHT", -6, 2)
-            bg.plus:SetColorTexture(1, 1, 1)
-            _G.tinsert(Button._auroraHighlight, bg.plus)
-
-            Base.SetHighlight(Button, "texture")
+            Button._auroraTextures = {
+                minus,
+                plus
+            }
             _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
         end
     end
@@ -485,6 +481,14 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.UIMenuButtonStretchTemplate(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 2,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
+
         Button.TopLeft:Hide()
         Button.TopRight:Hide()
         Button.BottomLeft:Hide()
@@ -494,14 +498,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Button.MiddleRight:Hide()
         Button.BottomMiddle:Hide()
         Button.MiddleMiddle:Hide()
-        Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(Button, Color.button)
         local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 1, -1)
-        bg:SetPoint("BOTTOMRIGHT", -1, 1)
-        Base.SetBackdrop(Button, Color.button, 0.3)
-        Base.SetHighlight(Button, "backdrop")
+        Button.Text:SetPoint("CENTER", bg, 0, 0)
     end
 
     function Skin.HorizontalSliderTemplate(Slider)
@@ -593,10 +592,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         local bg = EditBox:GetBackdropTexture("bg")
         Base.SetTexture(Skin.SpinnerButton(EditBox.DecrementButton), "arrowLeft")
-        EditBox.DecrementButton:SetPoint("RIGHT", bg, "LEFT", -3, 0)
+        EditBox.DecrementButton:SetPoint("RIGHT", bg, "LEFT", 0, 0)
 
         Base.SetTexture(Skin.SpinnerButton(EditBox.IncrementButton), "arrowRight")
-        EditBox.IncrementButton:SetPoint("LEFT", bg, "RIGHT", 3, 0)
+        EditBox.IncrementButton:SetPoint("LEFT", bg, "RIGHT", 0, 0)
     end
     function Skin.InputBoxInstructionsTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)

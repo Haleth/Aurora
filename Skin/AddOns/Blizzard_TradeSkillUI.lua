@@ -5,87 +5,204 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
-local F, C = _G.unpack(Aurora)
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
--- TODO: FIXME
-function private.AddOns.Blizzard_TradeSkillUI()
-    local TradeSkillFrame = _G.TradeSkillFrame
-    F.ReskinPortraitFrame(TradeSkillFrame)
+do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
+    do --[[ Blizzard_TradeSkillRecipeButton ]]
+        Hook.TradeSkillRecipeButtonMixin = {}
+        function Hook.TradeSkillRecipeButtonMixin:SetUp(tradeSkillInfo)
+            if tradeSkillInfo.type == "header" or tradeSkillInfo.type == "subheader" then
+                self._minus:Show()
+                self:SetBackdrop(true)
 
-    local rankFrame = TradeSkillFrame.RankFrame
-    rankFrame.BorderLeft:Hide()
-    rankFrame.BorderRight:Hide()
-    rankFrame.BorderMid:Hide()
-    rankFrame.Background:SetColorTexture(0.1, 0.1, 0.75, 0.25)
-    rankFrame:SetStatusBarTexture(C.media.backdrop)
-    rankFrame.SetStatusBarColor = F.dummy
-    rankFrame:GetStatusBarTexture():SetGradient("VERTICAL", .1, .3, .9, .2, .4, 1)
-    F.CreateBDFrame(rankFrame)
+                if tradeSkillInfo.numIndents > 0 then
+                    self:SetBackdropOption("offsets", {
+                        left = 24,
+                        right = 263,
+                        top = 0,
+                        bottom = 3,
+                    })
+                else
+                    self:SetBackdropOption("offsets", {
+                        left = 4,
+                        right = 283,
+                        top = 0,
+                        bottom = 3,
+                    })
+                end
 
-    F.ReskinInput(TradeSkillFrame.SearchBox)
-    F.ReskinFilterButton(TradeSkillFrame.FilterButton)
-    TradeSkillFrame.FilterButton:SetPoint("TOPRIGHT", -7, -55)
-
-    F.ReskinArrow(TradeSkillFrame.LinkToButton, "Right")
-    TradeSkillFrame.LinkToButton:SetPoint("BOTTOMRIGHT", TradeSkillFrame.FilterButton, "TOPRIGHT", 0, 6)
-
-    --[[ Recipe List ]]--
-    local recipeInset = TradeSkillFrame.RecipeInset
-    recipeInset.Bg:Hide()
-    recipeInset:DisableDrawLayer("BORDER")
-    local recipeList = TradeSkillFrame.RecipeList
-    F.ReskinScroll(recipeList.scrollBar, "TradeSkillFrame")
-    for i = 1, #recipeList.Tabs do
-        local tab = recipeList.Tabs[i]
-        tab.LeftDisabled:SetAlpha(0)
-        tab.MiddleDisabled:SetAlpha(0)
-        tab.RightDisabled:SetAlpha(0)
-
-        tab.Left:SetAlpha(0)
-        tab.Middle:SetAlpha(0)
-        tab.Right:SetAlpha(0)
-    end
-
-    _G.hooksecurefunc(recipeList, "RefreshDisplay", function(self)
-        for i = 1, #self.buttons do
-            local tradeSkillButton = self.buttons[i]
-            if not tradeSkillButton._auroraSkinned then
-                F.ReskinExpandOrCollapse(tradeSkillButton)
-                tradeSkillButton._auroraSkinned = true
+                self.Highlight:SetTexture("")
+            else
+                self._minus:Hide()
+                self._plus:Hide()
+                self:SetBackdrop(false)
             end
-            tradeSkillButton:SetHighlightTexture("")
         end
-    end)
-
-    --[[ Recipe Details ]]--
-    local detailsInset = TradeSkillFrame.DetailsInset
-    detailsInset.Bg:Hide()
-    detailsInset:DisableDrawLayer("BORDER")
-    local detailsFrame = TradeSkillFrame.DetailsFrame
-    detailsFrame.Background:Hide()
-    F.ReskinScroll(detailsFrame.ScrollBar, "TradeSkillFrame")
-    F.Reskin(detailsFrame.CreateAllButton)
-    F.Reskin(detailsFrame.ViewGuildCraftersButton)
-    F.Reskin(detailsFrame.ExitButton)
-    F.Reskin(detailsFrame.CreateButton)
-    Skin.NumericInputSpinnerTemplate(detailsFrame.CreateMultipleInputBox)
-
-    local contents = detailsFrame.Contents
-    contents.ResultIcon.ResultBorder:Hide()
-    _G.hooksecurefunc(contents.ResultIcon, "SetNormalTexture", function(self)
-        if not self._auroraSkinned then
-            self._auroraIconBorder = F.ReskinIcon(self:GetNormalTexture())
-            self._auroraSkinned = true
+    end
+    do --[[ Blizzard_TradeSkillDetails ]]
+        Hook.TradeSkillDetailsMixin = {}
+        function Hook.TradeSkillDetailsMixin:RefreshDisplay()
+            local recipeInfo = self.selectedRecipeID and _G.C_TradeSkillUI.GetRecipeInfo(self.selectedRecipeID)
+            if recipeInfo then
+                local numReagents = _G.C_TradeSkillUI.GetRecipeNumReagents(self.selectedRecipeID)
+                for reagentIndex = 1, numReagents do
+                    local link = _G.C_TradeSkillUI.GetRecipeReagentItemLink(self.selectedRecipeID, reagentIndex)
+                    Hook.SetItemButtonQuality(self.Contents.Reagents[reagentIndex], _G.C_Item.GetItemQualityByID(link), link)
+                end
+            end
         end
-    end)
-    for i = 1, #contents.Reagents do
-        local reagent = contents.Reagents[i]
-        reagent.Icon:SetTexCoord(.08, .92, .08, .92)
-        F.CreateBDFrame(reagent.Icon)
-        reagent.NameFrame:Hide()
-        local bg = F.CreateBDFrame(reagent.NameFrame, .2)
-        bg:SetPoint("TOPLEFT", reagent.Icon, "TOPRIGHT", 2, 1)
-        bg:SetPoint("BOTTOMRIGHT", -4, 1)
+    end
+end
+
+do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
+    do --[[ Blizzard_TradeSkillRecipeButton ]]
+        function Skin.TradeSkillRowButtonTemplate(Button)
+            Util.Mixin(Button, Hook.TradeSkillRecipeButtonMixin)
+            Skin.ExpandOrCollapse(Button)
+
+            Skin.FrameTypeStatusBar(Button.SubSkillRankBar)
+            Button.SubSkillRankBar.BorderLeft:Hide()
+            Button.SubSkillRankBar.BorderRight:Hide()
+            Button.SubSkillRankBar.BorderMid:Hide()
+        end
+    end
+    do --[[ Blizzard_TradeSkillDetails ]]
+        Skin.TradeSkillReagentTemplate = Skin.LargeItemButtonTemplate
+        function Skin.TradeSkillDetailsFrameTemplate(ScrollFrame)
+            Util.Mixin(ScrollFrame, Hook.TradeSkillDetailsMixin)
+            ScrollFrame.Background:Hide()
+
+            Skin.UIPanelStretchableArtScrollBarTemplate(ScrollFrame.ScrollBar)
+            Skin.MagicButtonTemplate(ScrollFrame.CreateAllButton)
+            ScrollFrame.CreateAllButton:SetPoint("TOPLEFT", ScrollFrame, "BOTTOMLEFT", 1, -1)
+            Skin.MagicButtonTemplate(ScrollFrame.ViewGuildCraftersButton)
+            ScrollFrame.ViewGuildCraftersButton:SetPoint("TOPLEFT", ScrollFrame, "BOTTOMLEFT", 0, -1)
+            Skin.MagicButtonTemplate(ScrollFrame.ExitButton)
+            Skin.MagicButtonTemplate(ScrollFrame.CreateButton)
+
+            Util.PositionRelative("TOPRIGHT", ScrollFrame, "BOTTOMRIGHT", 27, -1, 5, "Left", {
+                ScrollFrame.ExitButton,
+                ScrollFrame.CreateButton,
+            })
+
+            Skin.NumericInputSpinnerTemplate(ScrollFrame.CreateMultipleInputBox)
+            ScrollFrame.CreateMultipleInputBox:ClearAllPoints()
+            ScrollFrame.CreateMultipleInputBox:SetPoint("TOPLEFT", ScrollFrame.CreateAllButton, "TOPRIGHT", 25, -1)
+
+            local GuildFrame = ScrollFrame.GuildFrame
+            Skin.TranslucentFrameTemplate(GuildFrame)
+            Skin.UIPanelCloseButton(GuildFrame.CloseButton)
+            GuildFrame.Container:SetBackdrop(nil)
+            Skin.HybridScrollBarTemplate(GuildFrame.Container.ScrollFrame.scrollBar)
+
+            local Contents = ScrollFrame.Contents
+            do -- ResultIcon
+                local Button = Contents.ResultIcon
+                Base.SetBackdrop(Button, Color.black, Color.frame.a)
+                Button:SetBackdropOption("offsets", {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                })
+                Button._auroraIconBorder = Button
+
+                Button.ResultBorder:SetAlpha(0)
+                Button.IconOverlay:SetAlpha(0)
+                Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
+
+                Button:SetNormalTexture([[Interface\GuildFrame\GuildEmblemsLG_01]])
+                Base.CropIcon(Button:GetNormalTexture())
+            end
+
+            for i = 1, #Contents.Reagents do
+                Skin.TradeSkillReagentTemplate(Contents.Reagents[i])
+            end
+        end
+    end
+    do --[[ Blizzard_TradeSkillRecipeList ]]
+        function Skin.TradeSkillRecipeListTemplate(ScrollFrame)
+            Skin.TabButtonTemplate(ScrollFrame.LearnedTab)
+            Skin.TabButtonTemplate(ScrollFrame.UnlearnedTab)
+
+            local _, _, _, scrollBar = ScrollFrame:GetChildren()
+            Skin.HybridScrollBarTemplate(scrollBar)
+
+            --Skin.UIDropDownMenuTemplate(ScrollFrame.RecipeOptionsMenu)
+        end
+    end
+end
+
+function private.AddOns.Blizzard_TradeSkillUI()
+    ----====####$$$$%%%%$$$$####====----
+    --    Blizzard_TradeSkillUtils    --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
+    -- Blizzard_TradeSkillRecipeButton --
+    ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%$$$$####====----
+    --   Blizzard_TradeSkillDetails   --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
+    --  Blizzard_TradeSkillRecipeList  --
+    ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
+    --      Blizzard_TradeSkillUI      --
+    ----====####$$$$%%%%%$$$$####====----
+    local TradeSkillFrame = _G.TradeSkillFrame
+    Skin.PortraitFrameTemplate(TradeSkillFrame)
+
+    TradeSkillFrame.TabardBackground:SetPoint("TOPLEFT", 0, 0)
+    TradeSkillFrame.TabardBackground:SetTexCoord(0, 1, 0, 1)
+    TradeSkillFrame.TabardBackground:SetAtlas("communities-guildbanner-background", true)
+    TradeSkillFrame.TabardEmblem:SetSize(56 * 1.2, 64 * 1.2)
+    TradeSkillFrame.TabardEmblem:SetPoint("CENTER", TradeSkillFrame.TabardBackground, 0, 8)
+    TradeSkillFrame.TabardBorder:SetPoint("TOPLEFT", 0, 0)
+    TradeSkillFrame.TabardBorder:SetTexCoord(0, 1, 0, 1)
+    TradeSkillFrame.TabardBorder:SetAtlas("communities-guildbanner-border", true)
+
+    Skin.InsetFrameTemplate(TradeSkillFrame.RecipeInset)
+    Skin.InsetFrameTemplate(TradeSkillFrame.DetailsInset)
+    Skin.TradeSkillRecipeListTemplate(TradeSkillFrame.RecipeList)
+    Skin.TradeSkillDetailsFrameTemplate(TradeSkillFrame.DetailsFrame)
+
+    local RankFrame = TradeSkillFrame.RankFrame
+    Skin.FrameTypeStatusBar(RankFrame)
+    RankFrame.BorderLeft:Hide()
+    RankFrame.BorderRight:Hide()
+    RankFrame.BorderMid:Hide()
+    RankFrame.Background:Hide()
+
+    Skin.SearchBoxTemplate(TradeSkillFrame.SearchBox)
+    Skin.UIMenuButtonStretchTemplate(TradeSkillFrame.FilterButton)
+    TradeSkillFrame.FilterButton.Icon:SetSize(5, 10)
+    Base.SetTexture(TradeSkillFrame.FilterButton.Icon, "arrowRight")
+
+    do -- LinkToButton
+        local LinkToButton = TradeSkillFrame.LinkToButton
+        Skin.FrameTypeButton(LinkToButton)
+        LinkToButton:SetBackdropOption("offsets", {
+            left = 4,
+            right = 5,
+            top = 8,
+            bottom = 5,
+        })
+
+        local bg = LinkToButton:GetBackdropTexture("bg")
+        local chatIcon = LinkToButton:CreateTexture(nil, "ARTWORK", nil, 1)
+        chatIcon:SetAtlas("transmog-icon-chat")
+        chatIcon:SetPoint("CENTER", bg, -2, -1)
+        chatIcon:SetSize(11, 11)
+
+        local arrow = LinkToButton:CreateTexture(nil, "ARTWORK", nil, 5)
+        arrow:SetPoint("TOPRIGHT", bg, -2, -4)
+        arrow:SetSize(5, 10)
+        Base.SetTexture(arrow, "arrowRight")
     end
 end
