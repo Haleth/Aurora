@@ -139,7 +139,6 @@ F.CreateGradient = function(f)
 end
 
 F.ReskinClose = function(f, a1, p, a2, x, y)
-    f:SetDisabledTexture(C.media.backdrop) -- some frames that use this don't have a disabled texture
     Skin.UIPanelCloseButton(f)
 
     if a1 then
@@ -149,21 +148,13 @@ F.ReskinClose = function(f, a1, p, a2, x, y)
 end
 
 F.Reskin = function(f, noHighlight)
-    f:SetNormalTexture("")
-    f:SetHighlightTexture("")
-    f:SetPushedTexture("")
-    f:SetDisabledTexture("")
+    Skin.FrameTypeButton(f)
 
     if f.Left then f.Left:SetAlpha(0) end
     if f.Middle then f.Middle:SetAlpha(0) end
     if f.Right then f.Right:SetAlpha(0) end
     if f.LeftSeparator then f.LeftSeparator:Hide() end
     if f.RightSeparator then f.RightSeparator:Hide() end
-
-    Base.SetBackdrop(f, Color.button)
-    if not noHighlight then
-        Base.SetHighlight(f, "backdrop")
-    end
 end
 
 F.ReskinTab = function(f, numTabs)
@@ -278,18 +269,11 @@ F.CreateArrow = function(f, direction)
     Base.SetTexture(arrow, "arrow"..direction)
 
     f._auroraArrow = arrow
-    f._auroraHighlight = {arrow}
-    Base.SetHighlight(f, "texture")
+    f._auroraTextures = {arrow}
 end
 F.ReskinArrow = function(f, direction)
     f:SetSize(18, 18)
-    F.Reskin(f, true)
-
-    f:SetDisabledTexture(C.media.backdrop)
-    local dis = f:GetDisabledTexture()
-    dis:SetVertexColor(0, 0, 0, .3)
-    dis:SetDrawLayer("OVERLAY")
-
+    F.Reskin(f)
     F.CreateArrow(f, direction)
 end
 
@@ -360,7 +344,6 @@ end
 
 F.ReskinPortraitFrame = function(f, isButtonFrame)
     if isButtonFrame then
-        f.CloseButton:SetDisabledTexture(C.media.backdrop) -- some frames that use this don't have a disabled texture
         Skin.ButtonFrameTemplate(f)
     else
         if f.CloseButton then

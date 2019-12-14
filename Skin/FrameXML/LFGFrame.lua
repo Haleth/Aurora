@@ -146,26 +146,7 @@ function private.FrameXML.LFGFrame()
     -- LFGDungeonReadyPopup --
     --------------------------
     Skin.DialogBorderTemplate(_G.LFGDungeonReadyStatus.Border)
-    do -- CloseButton
-        local close = _G.LFGDungeonReadyStatusCloseButton
-        Base.SetBackdrop(close, Color.button)
-        local bg = close:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 3, -10)
-        bg:SetPoint("BOTTOMRIGHT", -11, 4)
-
-        close:SetNormalTexture("")
-        close:SetHighlightTexture("")
-        close:SetPushedTexture("")
-
-        close._auroraHighlight = {}
-        local hline = close:CreateTexture()
-        hline:SetColorTexture(1, 1, 1)
-        hline:SetHeight(1)
-        hline:SetPoint("BOTTOMLEFT", bg, 4, 4)
-        hline:SetPoint("BOTTOMRIGHT", bg, -4, 4)
-        _G.tinsert(close._auroraHighlight, hline)
-        Base.SetHighlight(close, "texture")
-    end
+    Skin.MinimizeButton(_G.LFGDungeonReadyStatusCloseButton)
 
     local LFGDungeonReadyDialog = _G.LFGDungeonReadyDialog
     Skin.DialogBorderTemplate(LFGDungeonReadyDialog.Border)
@@ -177,27 +158,7 @@ function private.FrameXML.LFGFrame()
     LFGDungeonReadyDialog.filigree:Hide()
     LFGDungeonReadyDialog.bottomArt:Hide()
 
-    do -- CloseButton
-        local close = _G.LFGDungeonReadyDialogCloseButton
-        Base.SetBackdrop(close, Color.button)
-        local bg = close:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 3, -10)
-        bg:SetPoint("BOTTOMRIGHT", -11, 4)
-
-        close:SetNormalTexture("")
-        close:SetHighlightTexture("")
-        close:SetPushedTexture("")
-
-        close._auroraHighlight = {}
-        local hline = close:CreateTexture()
-        hline:SetColorTexture(1, 1, 1)
-        hline:SetHeight(1)
-        hline:SetPoint("BOTTOMLEFT", bg, 4, 4)
-        hline:SetPoint("BOTTOMRIGHT", bg, -4, 4)
-        _G.tinsert(close._auroraHighlight, hline)
-        Base.SetHighlight(close, "texture")
-    end
-
+    Skin.MinimizeButton(_G.LFGDungeonReadyDialogCloseButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.enterButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.leaveButton)
 

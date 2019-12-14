@@ -62,16 +62,13 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         highlight:SetSize(16, 16)
     end
     function Skin.UIPanelSquareButton(Button, direction)
-        Button:SetNormalTexture("")
-        Button:SetHighlightTexture("")
-        Button:SetPushedTexture("")
-
-        Base.SetBackdrop(Button, Color.button)
-        local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 2, -2)
-        bg:SetPoint("BOTTOMRIGHT", -2, 2)
-
-        Base.SetHighlight(Button, "backdrop")
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 2,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
 
         if direction then
             Hook.SquareButton_SetIcon(Button, direction)

@@ -95,6 +95,13 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
     function Skin.ChatConfigCheckBoxTemplate(Frame)
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.button)
+        Frame:SetBackdropOption("offsets", {
+            left = 3,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
+
         Skin.ChatConfigCheckButtonTemplate(Frame.CheckButton)
     end
     function Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
@@ -111,6 +118,13 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
     function Skin.ChatConfigSwatchTemplate(Frame)
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.button)
+        Frame:SetBackdropOption("offsets", {
+            left = 3,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
+
         Skin.ColorSwatch(_G[Frame:GetName().."ColorSwatch"])
     end
     function Skin.ChatConfigTabTemplate(Button)
@@ -131,39 +145,26 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
 
     -- not a template
     function Skin.ChatConfigMoveFilter(Button, direction)
-        local bg = _G.CreateFrame("Frame", nil, Button)
-        bg:SetPoint("TOPLEFT", 6, -7)
-        bg:SetPoint("BOTTOMRIGHT", -6, 7)
-        bg:SetFrameLevel(Button:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 6,
+            right = 6,
+            top = 7,
+            bottom = 7,
+        })
 
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetHighlightTexture("")
-
-        local disabled = Button:GetDisabledTexture()
-        disabled:SetVertexColor(0, 0, 0, .3)
-        disabled:SetDrawLayer("OVERLAY")
-        disabled:SetAllPoints(bg)
-
+        local bg = Button:GetBackdropTexture("bg")
         local arrow = Button:CreateTexture(nil, "ARTWORK")
-        if direction == "Up" then
-            arrow:SetPoint("TOPLEFT", bg, 2, -5)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -3, 4)
-        else
-            arrow:SetPoint("TOPLEFT", bg, 4, -4)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -4, 5)
-        end
-        Base.SetTexture(arrow, "arrow"..direction)
+        arrow:SetPoint("TOPLEFT", bg, 2, -4)
+        arrow:SetSize(10, 5)
 
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
+        Base.SetTexture(arrow, "arrow"..direction)
+        Button._auroraTextures = {arrow}
     end
     function Skin.ColorSwatch(Button)
         local bg = _G[Button:GetName().."SwatchBg"]
-        bg:SetColorTexture(0, 0, 0)
-        bg:SetPoint("TOPLEFT")
-        bg:SetPoint("BOTTOMRIGHT")
+        bg:SetColorTexture(Color.button:GetRGB())
+        bg:SetAllPoints()
 
         local texture = Button:GetNormalTexture()
         texture:SetColorTexture(1, 1, 1)
@@ -237,9 +238,13 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ChatConfigMoveFilter(_G.ChatConfigMoveFilterDownButton, "Down")
     _G.ChatConfigMoveFilterDownButton:SetPoint("LEFT", _G.ChatConfigMoveFilterUpButton, "RIGHT", -5, 0)
 
+    -- MessageSources --
     Skin.ChatConfigBoxWithHeaderTemplate(_G.CombatConfigMessageSourcesDoneBy)
     Skin.ChatConfigBoxWithHeaderTemplate(_G.CombatConfigMessageSourcesDoneTo)
 
+    -- MessageTypes --
+
+    -- Colors --
     Skin.ChatConfigBoxWithHeaderTemplate(_G.CombatConfigColorsUnitColors)
     _G.CombatConfigColorsHighlighting:SetBackdrop(nil)
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigColorsHighlightingLine)
@@ -264,6 +269,7 @@ function private.FrameXML.ChatConfigFrame()
     Skin.UIRadioButtonTemplate(_G.CombatConfigColorsColorizeEntireLineBySource)
     Skin.UIRadioButtonTemplate(_G.CombatConfigColorsColorizeEntireLineByTarget)
 
+    -- Formatting --
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowTimeStamp)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowBraces)
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingUnitNames)
@@ -271,6 +277,7 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingItemNames)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingFullText)
 
+    -- Settings --
     Skin.InputBoxTemplate(_G.CombatConfigSettingsNameEditBox)
     Skin.UIPanelButtonTemplate(_G.CombatConfigSettingsSaveButton)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigSettingsShowQuickButton)

@@ -75,23 +75,19 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
         function Hook.ObjectiveTracker_Collapse()
             local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-            local line, arrow = minimizeButton._auroraLine, minimizeButton._auroraArrow
-            line:SetPoint("TOPLEFT", minimizeButton, "BOTTOMLEFT", 3, 4)
-            line:SetPoint("BOTTOMRIGHT", -3, 3)
+            local bg = minimizeButton:GetBackdropTexture("bg")
 
-            arrow:SetPoint("TOPLEFT", 3, -3)
-            arrow:SetPoint("BOTTOMRIGHT", line, "TOPRIGHT", 0, 2)
-            Base.SetTexture(arrow, "arrowDown")
+            minimizeButton._auroraLine:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 2, 3)
+            minimizeButton._auroraArrow:SetPoint("TOPLEFT", bg, 2, -2)
+            Base.SetTexture(minimizeButton._auroraArrow, "arrowDown")
         end
         function Hook.ObjectiveTracker_Expand()
             local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-            local line, arrow = minimizeButton._auroraLine, minimizeButton._auroraArrow
-            line:SetPoint("TOPLEFT", 3, -3)
-            line:SetPoint("BOTTOMRIGHT", minimizeButton, "TOPRIGHT", -3, -4)
+            local bg = minimizeButton:GetBackdropTexture("bg")
 
-            arrow:SetPoint("TOPLEFT", line, 0, -2)
-            arrow:SetPoint("BOTTOMRIGHT", -3, 3)
-            Base.SetTexture(arrow, "arrowUp")
+            minimizeButton._auroraLine:SetPoint("TOPLEFT", bg, 2, -2)
+            minimizeButton._auroraArrow:SetPoint("TOPLEFT", bg, 2, -6)
+            Base.SetTexture(minimizeButton._auroraArrow, "arrowUp")
         end
     end
 
@@ -306,28 +302,32 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     _G.hooksecurefunc("ObjectiveTracker_Collapse", Hook.ObjectiveTracker_Collapse)
     _G.hooksecurefunc("ObjectiveTracker_Expand", Hook.ObjectiveTracker_Expand)
 
-    local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-    minimizeButton:SetNormalTexture("")
-    minimizeButton:SetHighlightTexture("")
-    minimizeButton:SetPushedTexture("")
-    minimizeButton:SetSize(12, 12)
-    minimizeButton:SetPoint("TOPRIGHT", -2, -6)
+    do -- MinimizeButton
+        local Button = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 1,
+            right = 2,
+            top = 2,
+            bottom = 1,
+        })
 
-    Base.SetBackdrop(minimizeButton, Color.button)
+        local line = Button:CreateTexture(nil, "OVERLAY")
+        line:SetColorTexture(1, 1, 1)
+        line:SetSize(9, 1)
+        Button._auroraLine = line
 
-    local line = minimizeButton:CreateTexture(nil, "OVERLAY")
-    line:SetColorTexture(1, 1, 1)
-    minimizeButton._auroraLine = line
-    local arrow = minimizeButton:CreateTexture(nil, "OVERLAY")
-    minimizeButton._auroraArrow = arrow
-    if _G.ObjectiveTrackerFrame.collapsed then
-        Hook.ObjectiveTracker_Collapse()
-    else
-        Hook.ObjectiveTracker_Expand()
+        local arrow = Button:CreateTexture(nil, "OVERLAY")
+        arrow:SetSize(10, 5)
+        Button._auroraArrow = arrow
+
+        Button._auroraTextures = {line, arrow}
+        if _G.ObjectiveTrackerFrame.collapsed then
+            Hook.ObjectiveTracker_Collapse()
+        else
+            Hook.ObjectiveTracker_Expand()
+        end
     end
-
-    minimizeButton._auroraHighlight = {line, arrow}
-    Base.SetHighlight(minimizeButton, "texture")
 
     for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
         Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])

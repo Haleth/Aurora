@@ -6,7 +6,6 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
 
 do --[[ FrameXML\PVPHelper.lua ]]
     function Hook.PVPReadyDialog_Display(self, index, displayName, isRated, queueType, gameType, role)
@@ -36,27 +35,7 @@ function private.FrameXML.PVPHelper()
     PVPReadyDialog.filigree:Hide()
     PVPReadyDialog.bottomArt:Hide()
 
-    do -- CloseButton
-        local close = _G.PVPReadyDialogCloseButton
-        Base.SetBackdrop(close, Color.button)
-        local bg = close:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 3, -10)
-        bg:SetPoint("BOTTOMRIGHT", -11, 4)
-
-        close:SetNormalTexture("")
-        close:SetHighlightTexture("")
-        close:SetPushedTexture("")
-
-        close._auroraHighlight = {}
-        local hline = close:CreateTexture()
-        hline:SetColorTexture(1, 1, 1)
-        hline:SetHeight(1)
-        hline:SetPoint("BOTTOMLEFT", bg, 4, 4)
-        hline:SetPoint("BOTTOMRIGHT", bg, -4, 4)
-        _G.tinsert(close._auroraHighlight, hline)
-        Base.SetHighlight(close, "texture")
-    end
-
+    Skin.MinimizeButton(_G.PVPReadyDialogCloseButton)
     Skin.UIPanelButtonTemplate(PVPReadyDialog.enterButton)
     Skin.UIPanelButtonTemplate(PVPReadyDialog.leaveButton)
 

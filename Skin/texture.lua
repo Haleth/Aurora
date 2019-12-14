@@ -85,13 +85,14 @@ do -- gradients
     local min, max = 0.3, 0.7
     local hookedTexture = {}
 
-    local function SetVertexColorMinMax(texture, r, g, b)
-        texture:SetGradient(hookedTexture[texture], r * min, g * min, b * min, r * max, g * max, b * max)
+    local function SetVertexColorMinMax(texture, r, g, b, a)
+        texture:SetGradientAlpha(hookedTexture[texture], r * min, g * min, b * min, a, r * max, g * max, b * max, a)
+
     end
     local function SetGradientMinMax(frame, texture, direction)
-        local r, g, b = texture:GetVertexColor()
+        local r, g, b, a = texture:GetVertexColor()
         if r and g and b then
-            texture:SetGradient(direction, r * min, g * min, b * min, r * max, g * max, b * max)
+            texture:SetGradientAlpha(direction, r * min, g * min, b * min, a, r * max, g * max, b * max, a)
         else
             texture:SetGradient(direction, min, min, min, max, max, max)
         end
@@ -102,13 +103,13 @@ do -- gradients
         end
     end
 
-    local function SetVertexColorMaxMin(texture, r, g, b)
-        texture:SetGradient(hookedTexture[texture], r * max, g * max, b * max, r * min, g * min, b * min)
+    local function SetVertexColorMaxMin(texture, r, g, b, a)
+        texture:SetGradientAlpha(hookedTexture[texture], r * max, g * max, b * max, a, r * min, g * min, b * min, a)
     end
     local function SetGradientMaxMin(frame, texture, direction)
-        local r, g, b = texture:GetVertexColor()
+        local r, g, b, a = texture:GetVertexColor()
         if r and g and b then
-            texture:SetGradient(direction, r * max, g * max, b * max, r * min, g * min, b * min)
+            texture:SetGradientAlpha(direction, r * max, g * max, b * max, a, r * min, g * min, b * min, a)
         else
             texture:SetGradient(direction, max, max, max, min, min, min)
         end

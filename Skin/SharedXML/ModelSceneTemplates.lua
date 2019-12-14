@@ -7,21 +7,19 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
 
 --do --[[ SharedXML\ModelSceneTemplates.lua ]]
 --end
 
 do --[[ SharedXML\ModelSceneTemplates.xml ]]
     function Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetHighlightTexture("")
-
-        Base.SetBackdrop(Button, Color.button)
-        local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 5, -5)
-        bg:SetPoint("BOTTOMRIGHT", -5, 5)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
     end
     function Skin.RotateOrbitCameraLeftButtonTemplate(Button)
         Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
@@ -32,8 +30,7 @@ do --[[ SharedXML\ModelSceneTemplates.xml ]]
         arrow:SetPoint("BOTTOMRIGHT", bg, -8, 4)
         Base.SetTexture(arrow, "arrowLeft")
 
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
+        Button._auroraTextures = {arrow}
     end
     function Skin.RotateOrbitCameraRightButtonTemplate(Button)
         Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
@@ -44,8 +41,7 @@ do --[[ SharedXML\ModelSceneTemplates.xml ]]
         arrow:SetPoint("BOTTOMRIGHT", bg, -8, 4)
         Base.SetTexture(arrow, "arrowRight")
 
-        Button._auroraHighlight = {arrow}
-        Base.SetHighlight(Button, "texture")
+        Button._auroraTextures = {arrow}
     end
 end
 

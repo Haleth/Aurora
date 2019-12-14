@@ -126,13 +126,32 @@ do -- BlizzWTF: These are not templates, but they should be
             Texture._auroraThumb = thumb
         end
     end
+
+    do -- MinimizeButton
+        function Skin.MinimizeButton(Button)
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 4,
+                right = 11,
+                top = 10,
+                bottom = 5,
+            })
+
+            local bg = Button:GetBackdropTexture("bg")
+            local hline = Button:CreateTexture()
+            hline:SetColorTexture(1, 1, 1)
+            hline:SetSize(11, 1)
+            hline:SetPoint("BOTTOMLEFT", bg, 3, 3)
+            Button._auroraTextures = {hline}
+        end
+    end
 end
 
 do -- Basic frame type skins
     do -- Button
         local disabledColor = Color.Lightness(Color.button, -0.3)
         local function Hook_Enable(self)
-            Base.SetBackdrop(self, Color.button)
+            Base.SetBackdropColor(self, self._enabledColor or Color.button)
             if self._auroraTextures then
                 for _, texture in next, self._auroraTextures do
                     texture:SetVertexColor(Color.white:GetRGB())
@@ -140,7 +159,7 @@ do -- Basic frame type skins
             end
         end
         local function Hook_Disable(self)
-            Base.SetBackdrop(self, disabledColor)
+            Base.SetBackdropColor(self, self._disabledColor or disabledColor)
             if self._auroraTextures then
                 for _, texture in next, self._auroraTextures do
                     texture:SetVertexColor(Color.gray:GetRGB())
@@ -155,6 +174,20 @@ do -- Basic frame type skins
             Button:SetPushedTexture("")
             Button:SetHighlightTexture("")
             Button:SetDisabledTexture("")
+
+            function Button:SetButtonColor(color)
+                self._enabledColor = color
+                self._disabledColor = Color.Lightness(color, -0.3)
+
+                if self:IsEnabled() then
+                    Base.SetBackdropColor(self, color)
+                else
+                    Base.SetBackdropColor(self, self._disabledColor)
+                end
+            end
+            function Button:GetButtonColor(color)
+                return self._enabledColor or Color.button, self._disabledColor or disabledColor
+            end
 
             Base.SetBackdrop(Button, Color.button)
             Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
@@ -273,22 +306,15 @@ end
 
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.UIPanelCloseButton(Button)
-        Base.SetBackdrop(Button, Color.button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 4,
+            right = 11,
+            top = 10,
+            bottom = 5,
+        })
+
         local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 3, -10)
-        bg:SetPoint("BOTTOMRIGHT", -11, 4)
-
-        Button:SetNormalTexture("")
-        Button:SetHighlightTexture("")
-        Button:SetPushedTexture("")
-
-        local dis = Button:GetDisabledTexture()
-        if dis then
-            dis:SetColorTexture(0, 0, 0, .4)
-            dis:SetDrawLayer("OVERLAY")
-            dis:SetAllPoints(bg)
-        end
-
         local cross = {}
         for i = 1, 2 do
             local line = Button:CreateLine(nil, "ARTWORK")
@@ -296,17 +322,16 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             line:SetThickness(1.2)
             line:Show()
             if i == 1 then
-                line:SetStartPoint("TOPLEFT", bg, 4.6, -4)
-                line:SetEndPoint("BOTTOMRIGHT", bg, -4, 4)
+                line:SetStartPoint("TOPLEFT", bg, 3.6, -3)
+                line:SetEndPoint("BOTTOMRIGHT", bg, -3, 3)
             else
-                line:SetStartPoint("TOPRIGHT", bg, -4, -4)
-                line:SetEndPoint("BOTTOMLEFT", bg, 4.6, 4)
+                line:SetStartPoint("TOPRIGHT", bg, -3, -3)
+                line:SetEndPoint("BOTTOMLEFT", bg, 3.6, 3)
             end
             tinsert(cross, line)
         end
 
-        Button._auroraHighlight = cross
-        Base.SetHighlight(Button, "texture")
+        Button._auroraTextures = cross
     end
     function Skin.UIPanelGoldButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
@@ -350,27 +375,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Base.SetHighlight(CheckButton, "backdrop")
     end
     function Skin.UICheckButtonTemplate(CheckButton)
-        CheckButton:SetNormalTexture("")
-        CheckButton:SetPushedTexture("")
-        CheckButton:SetHighlightTexture("")
-
-        Base.SetBackdrop(CheckButton, Color.frame)
-        CheckButton:SetBackdropBorderColor(Color.button)
-        local bg = CheckButton:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 6, -6)
-        bg:SetPoint("BOTTOMRIGHT", -6, 6)
-
-        local check = CheckButton:GetCheckedTexture()
-        check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", -1, 1)
-        check:SetPoint("BOTTOMRIGHT", 1, -1)
-        check:SetDesaturated(true)
-        check:SetVertexColor(Color.highlight:GetRGB())
-
-        local disabled = CheckButton:GetDisabledCheckedTexture()
-        disabled:SetAllPoints(check)
-
-        Base.SetHighlight(CheckButton, "backdrop")
+        Skin.FrameTypeCheckButton(CheckButton)
+        CheckButton:SetBackdropOption("offsets", {
+            left = 6,
+            right = 6,
+            top = 6,
+            bottom = 6,
+        })
     end
 
     function Skin.NineSlicePanelTemplate(Frame)
@@ -619,51 +630,43 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.MaximizeMinimizeButtonFrameTemplate(Frame)
         for _, name in next, {"MaximizeButton", "MinimizeButton"} do
             local Button = Frame[name]
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 4,
+                right = 11,
+                top = 10,
+                bottom = 5,
+            })
 
-            Base.SetBackdrop(Button, Color.button)
+
             local bg = Button:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 3, -10)
-            bg:SetPoint("BOTTOMRIGHT", -11, 4)
-            --bg:SetPoint("TOPLEFT", 17, -10)
-            --bg:SetPoint("BOTTOMRIGHT", 3, 4)
-
-            Button:SetNormalTexture("")
-            Button:SetPushedTexture("")
-            Button:SetHighlightTexture("")
-
-            local dis = Button:GetDisabledTexture()
-            dis:SetColorTexture(0, 0, 0, .4)
-            dis:SetDrawLayer("OVERLAY")
-            dis:SetAllPoints(bg)
-
-            Button._auroraHighlight = {}
-
             local line = Button:CreateLine()
             line:SetColorTexture(1, 1, 1)
             line:SetThickness(1.2)
-            line:SetStartPoint("TOPRIGHT", bg, -4, -4)
-            line:SetEndPoint("BOTTOMLEFT", bg, 4.6, 4)
-            tinsert(Button._auroraHighlight, line)
+            line:SetStartPoint("TOPRIGHT", bg, -3, -3)
+            line:SetEndPoint("BOTTOMLEFT", bg, 3.6, 3)
 
             local hline = Button:CreateTexture()
             hline:SetColorTexture(1, 1, 1)
             hline:SetSize(7, 1)
-            tinsert(Button._auroraHighlight, hline)
 
             local vline = Button:CreateTexture()
             vline:SetColorTexture(1, 1, 1)
             vline:SetSize(1, 7)
-            tinsert(Button._auroraHighlight, vline)
 
             if name == "MaximizeButton" then
-                hline:SetPoint("TOP", bg, 1, -4)
-                vline:SetPoint("RIGHT", bg, -4, 1)
+                hline:SetPoint("TOP", bg, 1, -3)
+                vline:SetPoint("RIGHT", bg, -3, 1)
             else
-                hline:SetPoint("BOTTOM", bg, -1, 4)
-                vline:SetPoint("LEFT", bg, 4, -1)
+                hline:SetPoint("BOTTOM", bg, -1, 3)
+                vline:SetPoint("LEFT", bg, 3, -1)
             end
 
-            Base.SetHighlight(Button, "texture")
+            Button._auroraTextures = {
+                line,
+                hline,
+                vline,
+            }
         end
     end
     function Skin.ColumnDisplayTemplate(Frame)

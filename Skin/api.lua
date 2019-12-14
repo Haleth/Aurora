@@ -463,6 +463,25 @@ addonName.
         end
         ]]
 
+        local function GetReturnColor(button, isBackdrop)
+            if isBackdrop then
+                local bdFrame = button._auroraBDFrame or button
+                if bdFrame.GetButtonColor then
+                    local enabled, disabled = bdFrame:GetButtonColor()
+                    if bdFrame:IsEnabled() then
+                        return enabled
+                    else
+                        return disabled
+                    end
+                else
+                    local _, _, _, a = bdFrame:GetBackdropColor()
+                    local r, g, b = bdFrame:GetBackdropBorderColor()
+                    return Color.Create(r, g, b, a)
+                end
+            else
+                return Color.Create(button._auroraHighlight[1]:GetVertexColor())
+            end
+        end
         local function ShowHighlight(button)
             if button._isHighlighted then
                 return button._lockHighlight
@@ -470,18 +489,23 @@ addonName.
                 return button:IsEnabled()
             end
         end
-        local function OnEnter(button, isBackground)
-            if isBackground then
-                local alpha = button._returnColor.a or Color.highlight.a
-                Base.SetBackdropColor(button._auroraBDFrame or button, Color.highlight, alpha)
+        local function OnEnter(button, isBackdrop)
+            local highlight = Color.highlight
+            if button.IsEnabled and not button:IsEnabled() then
+                highlight = highlight:Lightness(-0.3)
+            end
+
+            if isBackdrop then
+                local alpha = button._returnColor.a or highlight.a
+                Base.SetBackdropColor(button._auroraBDFrame or button, highlight, alpha)
             else
                 for _, texture in next, button._auroraHighlight do
                     texture:SetVertexColor(Color.highlight:GetRGBA())
                 end
             end
         end
-        local function OnLeave(button, isBackground)
-            if isBackground then
+        local function OnLeave(button, isBackdrop)
+            if isBackdrop then
                 Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             else
                 for _, texture in next, button._auroraHighlight do
@@ -491,28 +515,22 @@ addonName.
         end
         function Base.SetHighlight(button, highlightType, onenter, onleave)
             local isBackdrop = highlightType == "backdrop"
-            local r, g, b, a
-
-            if isBackdrop then
-                local bdFrame = button._auroraBDFrame or button
-                r, g, b = bdFrame:GetBackdropBorderColor()
-                _, _, _, a = bdFrame:GetBackdropColor()
-            else
-                r, g, b, a = button._auroraHighlight[1]:GetVertexColor()
-            end
-            button._returnColor = Color.Create(r, g, b, a)
+            button._returnColor = GetReturnColor(button, isBackdrop)
 
             local function enter(self)
-                if not ShowHighlight(button) then return end
-                (onenter or OnEnter)(self, isBackdrop)
-                button._isHighlighted = true
+                if ShowHighlight(button) then
+                    button._returnColor = GetReturnColor(self, isBackdrop);
+                    (onenter or OnEnter)(self, isBackdrop)
+                    button._isHighlighted = true
+                end
             end
             button:HookScript("OnEnter", enter)
 
             local function leave(self)
-                if ShowHighlight(button) then return end
-                (onleave or OnLeave)(self, isBackdrop)
-                button._isHighlighted = false
+                if not ShowHighlight(button) then
+                    (onleave or OnLeave)(self, isBackdrop)
+                    button._isHighlighted = false
+                end
             end
             button:HookScript("OnLeave", leave)
 

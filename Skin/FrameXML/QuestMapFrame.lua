@@ -74,6 +74,12 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
     end
     function Skin.QuestLogHeaderTemplate(Button)
         Skin.ExpandOrCollapse(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 1,
+            right = 2,
+            top = 1,
+            bottom = 2,
+        })
     end
     function Skin.QuestLogTitleTemplate(Button)
     end

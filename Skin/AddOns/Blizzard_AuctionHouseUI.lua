@@ -110,10 +110,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             end
         end
         function Hook.FilterButton_SetUp(button, info)
-            local bd = button:GetBackdrop()
-
             if info.type == "subSubCategory" then
-                button:SetBackdrop(nil)
+                button:SetBackdrop(false)
 
                 button.SelectedTexture:SetColorTexture(Color.highlight:GetRGB())
                 button.SelectedTexture:SetAlpha(0.5)
@@ -121,7 +119,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
                 button.HighlightTexture:SetColorTexture(Color.highlight:GetRGB())
                 button.HighlightTexture:SetAlpha(0.5)
             else
-                button:SetBackdrop(bd)
+                button:SetBackdrop(true)
                 button.HighlightTexture:SetAlpha(0)
                 button.SelectedTexture:SetAlpha(0)
 

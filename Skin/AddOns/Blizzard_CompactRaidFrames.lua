@@ -62,11 +62,10 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     toggleButton:SetScript("OnMouseUp", private.nop)
 
     local arrow = toggleButton:GetNormalTexture()
+    arrow:ClearAllPoints()
     arrow:SetPoint("TOPLEFT", 3, -5)
     arrow:SetPoint("BOTTOMRIGHT", -3, 5)
     Base.SetTexture(arrow, "arrowRight")
-    toggleButton._auroraHighlight = {arrow}
-    Base.SetHighlight(toggleButton, "texture")
 
     local displayFrame = CompactRaidFrameManager.displayFrame
     local displayFrameName = displayFrame:GetName()
