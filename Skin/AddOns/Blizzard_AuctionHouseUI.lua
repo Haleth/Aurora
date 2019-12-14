@@ -12,8 +12,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     do --[[ Blizzard_AuctionHouseTableBuilder ]]
         Hook.AuctionHouseTableCellFavoriteButtonMixin = {}
-        function Hook.AuctionHouseTableCellFavoriteButtonMixin:SetFavoriteState(isFavorite)
-            if isFavorite then
+        function Hook.AuctionHouseTableCellFavoriteButtonMixin:UpdateFavoriteState()
+            if self:IsFavorite() then
                 Base.SetTexture(self.NormalTexture, "shapeStar")
                 self.NormalTexture:SetAlpha(1)
                 if self.textureLocked then
@@ -163,6 +163,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
         Hook.AuctionHouseAuctionsSummaryLineMixin = {}
         function Hook.AuctionHouseAuctionsSummaryLineMixin:UpdateDisplay()
             self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
+            self.IconBorder:Hide()
         end
     end
 end

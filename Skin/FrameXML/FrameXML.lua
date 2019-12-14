@@ -272,7 +272,6 @@ local FrameXML = {
     "StaticPopupSpecial",
     "LossOfControlFrame",
     "PVPHelper",
-    "ProductChoice",
     "ZoneAbility",
     "ArtifactToasts",
     "AzeriteItemToasts",

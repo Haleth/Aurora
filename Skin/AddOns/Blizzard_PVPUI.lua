@@ -205,9 +205,15 @@ function private.AddOns.Blizzard_PVPUI()
     local RatedPanel = HonorInset.RatedPanel
     Skin.SeasonRewardFrameTemplate(RatedPanel.SeasonRewardFrame)
 
-    Skin.PVPSeasonChangesNoticeTemplate(PVPQueueFrame.NewSeasonPopup)
-    PVPQueueFrame.NewSeasonPopup:SetPoint("TOPLEFT", ConquestFrame, 4, -3)
-    PVPQueueFrame.NewSeasonPopup:SetPoint("BOTTOMRIGHT", 0, 0)
-    Skin.SeasonRewardFrameTemplate(_G.SeasonRewardFrame)
-    select(3, _G.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
+    local NewSeasonPopup = PVPQueueFrame.NewSeasonPopup
+    Skin.PVPSeasonChangesNoticeTemplate(NewSeasonPopup)
+    NewSeasonPopup:SetPoint("TOPLEFT", ConquestFrame, 4, -3)
+    NewSeasonPopup:SetPoint("BOTTOMRIGHT", 0, 0)
+    if private.isPatch then
+        Skin.SeasonRewardFrameTemplate(NewSeasonPopup.SeasonRewardFrame)
+        select(3, NewSeasonPopup.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
+    else
+        Skin.SeasonRewardFrameTemplate(_G.SeasonRewardFrame)
+        select(3, _G.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
+    end
 end
