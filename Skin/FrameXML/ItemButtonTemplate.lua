@@ -12,8 +12,10 @@ local Color = Aurora.Color
 do --[[ FrameXML\ItemButtonTemplate.lua ]]
     local size = 8
     local function CreateOverlay(Button)
-        local iconOverlay = _G.CreateFrame("Frame", nil, Button)
-        iconOverlay:SetFrameLevel(Button:GetFrameLevel())
+        local iconBorder = Button._auroraIconBorder
+
+        local iconOverlay = _G.CreateFrame("Frame", nil, iconBorder)
+        iconOverlay:SetFrameLevel(iconBorder:GetFrameLevel())
         iconOverlay:SetAllPoints()
         iconOverlay:Hide()
 
@@ -47,7 +49,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
             end
 
             if visType == "corner" then
-                local offset = 2
+                local offset = 6
                 self[1]:SetVertexOffset(2, 0, -offset)
                 self[1]:SetVertexOffset(3, offset, 0)
                 self[1]:SetVertexOffset(4, -offset, offset)
@@ -90,13 +92,15 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
         end
 
         Button._auroraIconOverlay = iconOverlay
+        return iconOverlay
     end
     function Hook.SetItemButtonQuality(button, quality, itemIDOrLink, suppressOverlays)
-        if button._auroraIconBorder then
-            if not button._auroraIconOverlay then
-                CreateOverlay(button)
-            end
+        local iconBorder = button._auroraIconBorder
+        if iconBorder then
             local iconOverlay = button._auroraIconOverlay
+            if not iconOverlay then
+                iconOverlay = CreateOverlay(button)
+            end
             iconOverlay:Hide()
 
             local overlay, overlay2, visual, isRelic
@@ -107,7 +111,8 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                         overlay2 = private.AZERITE_COLORS[2]
                         visual = "bracket"
                     elseif private.isPatch and _G.IsCorruptedItem(itemIDOrLink) then
-                        overlay = private.AZERITE_COLORS[1]
+                        overlay = Color.orange
+                        overlay2 = _G.CORRUPTION_COLOR
                         visual = "corner"
                     end
                 end
@@ -127,15 +132,26 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                     local r1, g1, b1 = overlay:GetRGB()
                     local r2, g2, b2 = overlay2:GetRGB()
 
-                    local bd = button._auroraBackdrop
-                    bd.tl:SetVertexColor(r1, g1, b1)
-                    bd.t:SetVertexColor(r1, g1, b1)
-                    bd.tr:SetVertexColor(r1, g1, b1)
-                    iconOverlay[1]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
-                    iconOverlay[3]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                    local bd = iconBorder._auroraBackdrop
+                    if visual == "corner" then
+                        bd.tl:SetVertexColor(r1, g1, b1)
+                        bd.t:SetGradient("HORIZONTAL", r1, g1, b1, r2, g2, b2)
+                        bd.tr:SetVertexColor(r2, g2, b2)
+                        iconOverlay[1]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
 
-                    bd.l:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
-                    bd.r:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        bd.l:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        bd.r:SetVertexColor(r2, g2, b2)
+                    else
+                        bd.tl:SetVertexColor(r1, g1, b1)
+                        bd.t:SetVertexColor(r1, g1, b1)
+                        bd.tr:SetVertexColor(r1, g1, b1)
+                        iconOverlay[1]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        iconOverlay[3]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+
+                        bd.l:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        bd.r:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                    end
+
 
                     bd.bl:SetVertexColor(r2, g2, b2)
                     bd.b:SetVertexColor(r2, g2, b2)
@@ -144,7 +160,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                     iconOverlay[4]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
                 else
                     iconOverlay:SetColor(overlay:GetRGB())
-                    button._auroraIconBorder:SetBackdropBorderColor(overlay:GetRGB())
+                    iconBorder:SetBackdropBorderColor(overlay:GetRGB())
                 end
 
                 iconOverlay:Show()
@@ -157,9 +173,9 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                         iconOverlay:Show()
                     end
 
-                    button._auroraIconBorder:SetBackdropBorderColor(color:GetRGB())
+                    iconBorder:SetBackdropBorderColor(color:GetRGB())
                 else
-                    button._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
+                    iconBorder:SetBackdropBorderColor(0, 0, 0)
                 end
             end
         end
@@ -181,6 +197,9 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         })
         Button._auroraIconBorder = Button
         Button.IconOverlay:SetAlpha(0)
+
+        Button.ItemContextOverlay:SetPoint("TOPLEFT", -1, 1)
+        Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
 
         Button:SetNormalTexture("")
         Base.CropIcon(Button:GetPushedTexture())
