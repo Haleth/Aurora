@@ -14,7 +14,7 @@ do --[[ FrameXML\EquipmentFlyout.lua ]]
         Skin.EquipmentFlyoutButtonTemplate(_G.EquipmentFlyoutFrame.buttons[#_G.EquipmentFlyoutFrame.buttons])
     end
     function Hook.EquipmentFlyoutPopoutButton_SetReversed(self, isReversed)
-        if self:GetParent().verticalFlyout then
+        if self._auroraArrow and self:GetParent().verticalFlyout then
             if isReversed then
                 Base.SetTexture(self._auroraArrow, "arrowUp")
             else
