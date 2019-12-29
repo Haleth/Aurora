@@ -73,6 +73,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
     end
     function Skin.BackpackTokenTemplate(Button)
         Base.CropIcon(Button.icon, Button)
+        Button.count:SetPoint("RIGHT", Button.icon, "LEFT", -2, 0)
     end
 end
 
