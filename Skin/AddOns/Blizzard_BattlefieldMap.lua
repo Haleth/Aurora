@@ -5,6 +5,7 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
@@ -25,28 +26,23 @@ function private.AddOns.Blizzard_BattlefieldMap()
     -------------------------
     -- BattlefieldMapFrame --
     -------------------------
-    _G.BattlefieldMapFrame.ScrollContainer:SetAllPoints()
+    local BattlefieldMapFrame = _G.BattlefieldMapFrame
+    BattlefieldMapFrame.ScrollContainer:SetAllPoints()
 
-    local r, g, b = Color.black:GetRGB()
-    local BorderFrame = _G.BattlefieldMapFrame.BorderFrame
+    local BorderFrame = BattlefieldMapFrame.BorderFrame
     BorderFrame.CloseButtonBorder:Hide()
+    Base.CreateBackdrop(BorderFrame, private.backdrop, {
+        tl = BorderFrame.TopLeft,
+        tr = BorderFrame.TopRight,
+        bl = BorderFrame.BottomLeft,
+        br = BorderFrame.BottomRight,
 
-    BorderFrame.TopLeft:SetColorTexture(r, g, b)
-    BorderFrame.TopLeft:SetPoint("TOPLEFT")
-    BorderFrame.TopLeft:SetSize(1, 1)
-    BorderFrame.TopRight:SetColorTexture(r, g, b)
-    BorderFrame.TopRight:SetPoint("TOPRIGHT")
-    BorderFrame.TopRight:SetSize(1, 1)
-    BorderFrame.BottomLeft:SetColorTexture(r, g, b)
-    BorderFrame.BottomLeft:SetPoint("BOTTOMLEFT")
-    BorderFrame.BottomLeft:SetSize(1, 1)
-    BorderFrame.BottomRight:SetColorTexture(r, g, b)
-    BorderFrame.BottomRight:SetPoint("BOTTOMRIGHT")
-    BorderFrame.BottomRight:SetSize(1, 1)
-    BorderFrame.Top:SetColorTexture(r, g, b)
-    BorderFrame.Bottom:SetColorTexture(r, g, b)
-    BorderFrame.Left:SetColorTexture(r, g, b)
-    BorderFrame.Right:SetColorTexture(r, g, b)
+        t = BorderFrame.Top,
+        b = BorderFrame.Bottom,
+        l = BorderFrame.Left,
+        r = BorderFrame.Right,
+    })
+    Base.SetBackdrop(BorderFrame, Color.frame, 0)
 
     Skin.UIPanelCloseButton(BorderFrame.CloseButton)
     BorderFrame.CloseButton:SetPoint("TOPRIGHT", 10, 9)
