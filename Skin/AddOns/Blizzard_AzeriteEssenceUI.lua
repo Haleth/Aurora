@@ -23,9 +23,9 @@ do --[[ AddOns\Blizzard_AzeriteEssenceUI.lua ]]
                 local essenceInfo = essences[index]
                 if not essenceInfo.isHeader then
                     if essenceInfo.unlocked then
-                        button:SetBackdropBorderColor(Color.highlight)
+                        button:LockHighlight()
                     else
-                        button:SetBackdropBorderColor(Color.button)
+                        button:UnlockHighlight()
                     end
                 end
             end
@@ -35,12 +35,10 @@ end
 
 do --[[ AddOns\Blizzard_AzeriteEssenceUI.xml ]]
     function Skin.AzeriteEssenceButtonTemplate(Button)
-        Base.SetBackdrop(Button, Color.button)
+        Skin.FrameTypeButton(Button)
         Base.CropIcon(Button.Icon, Button)
 
-        Button.PendingGlow:SetTexCoord(0.01123595505618, 0.98876404494382, 0.04878048780488, 0.92682926829268)
         Button.Background:SetAlpha(0)
-        Button:GetHighlightTexture():SetTexCoord(0.01123595505618, 0.98876404494382, 0.04878048780488, 0.92682926829268)
     end
 end
 
