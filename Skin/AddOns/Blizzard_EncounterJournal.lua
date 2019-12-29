@@ -136,6 +136,8 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
             end
 
             local _, _, itemQuality = _G.GetItemInfo(button.itemID)
+            itemQuality = itemQuality or _G.LE_ITEM_QUALITY_EPIC
+
             local color = _G.BAG_ITEM_QUALITY_COLORS[itemQuality]
             button._auroraIconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
         end
