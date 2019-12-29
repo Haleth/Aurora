@@ -25,6 +25,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_DeathRecap.lua"/>
     <Script file="Blizzard_DebugTools.lua"/>
     <Script file="Blizzard_EncounterJournal.lua"/>
+    <Script file="Blizzard_FlightMap.lua"/>
     <Script file="Blizzard_GarrisonTemplates.lua"/>
     <Script file="Blizzard_GarrisonUI.lua"/>
     <Script file="Blizzard_GMSurveyUI.lua"/>
