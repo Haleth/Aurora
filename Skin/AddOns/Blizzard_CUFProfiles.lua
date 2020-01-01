@@ -17,29 +17,7 @@ do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.xml ]]
         Skin.UIDropDownMenuTemplate(Frame)
     end
     function Skin.CompactUnitFrameProfilesCheckButtonTemplate(CheckButton)
-        CheckButton:SetNormalTexture("")
-        CheckButton:SetPushedTexture("")
-        CheckButton:SetHighlightTexture("")
-
-        local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetPoint("TOPLEFT", 6, -6)
-        bd:SetPoint("BOTTOMRIGHT", -6, 6)
-        bd:SetFrameLevel(CheckButton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.frame)
-        bd:SetBackdropBorderColor(Color.button)
-
-        local check = CheckButton:GetCheckedTexture()
-        check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", -1, 1)
-        check:SetPoint("BOTTOMRIGHT", 1, -1)
-        check:SetDesaturated(true)
-        check:SetVertexColor(Color.highlight:GetRGB())
-
-        local disabled = CheckButton:GetDisabledCheckedTexture()
-        disabled:SetAllPoints(check)
-
-        CheckButton._auroraBDFrame = bd
-        Base.SetHighlight(CheckButton, "backdrop")
+        Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
     end
     function Skin.CompactUnitFrameProfilesSliderTemplate(Slider)
         Skin.HorizontalSliderTemplate(Slider)

@@ -301,27 +301,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.ClubFinderCheckboxTemplate(CheckButton)
-            CheckButton:SetNormalTexture("")
-            CheckButton:SetPushedTexture("")
-            CheckButton:SetHighlightTexture("")
-
-            Base.SetBackdrop(CheckButton, Color.frame)
-            CheckButton:SetBackdropBorderColor(Color.button)
-            local bg = CheckButton:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 6, -6)
-            bg:SetPoint("BOTTOMRIGHT", -6, 6)
-
-            local check = CheckButton:GetCheckedTexture()
-            check:ClearAllPoints()
-            check:SetPoint("TOPLEFT", -1, 1)
-            check:SetPoint("BOTTOMRIGHT", 1, -1)
-            check:SetDesaturated(true)
-            check:SetVertexColor(Color.highlight:GetRGB())
-
-            local disabled = CheckButton:GetDisabledCheckedTexture()
-            disabled:SetAllPoints(check)
-
-            Base.SetHighlight(CheckButton, "backdrop")
+            Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
         end
         function Skin.ClubFinderGuildCardsFrameTemplate(Frame)
             Skin.ClubFinderGuildCardTemplate(Frame.FirstCard)
@@ -723,6 +703,12 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --            GuildInfo            --
     ----====####$$$$%%%%%$$$$####====----
+    Skin.TranslucentFrameTemplate(_G.CommunitiesGuildLogFrame)
+    local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
+    Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
+    container:SetBackdrop(nil)
+    Skin.MinimalScrollFrameTemplate(container.ScrollFrame)
+    Skin.UIPanelButtonTemplate(close2)
 
     ----====####$$$$%%%%%$$$$####====----
     --            GuildNews            --

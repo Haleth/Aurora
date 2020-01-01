@@ -187,23 +187,24 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         highlight:SetColorTexture(r, g, b, 0.2)
     end
     function Skin.AchievementCheckButtonTemplate(CheckButton)
-        CheckButton:SetSize(11, 11)
-
-        CheckButton:SetNormalTexture("")
-        CheckButton:SetPushedTexture("")
-        CheckButton:SetHighlightTexture("")
+        Skin.FrameTypeCheckButton(CheckButton)
+        CheckButton:SetBackdropOption("offsets", {
+            left = 2,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
 
         _G[CheckButton:GetName().."Text"]:SetPoint("LEFT", CheckButton, "RIGHT", 2, 0)
 
+
+        local bg = CheckButton:GetBackdropTexture("bg")
         local check = CheckButton:GetCheckedTexture()
-        check:SetSize(21, 21)
         check:ClearAllPoints()
-        check:SetPoint("CENTER")
+        check:SetPoint("TOPLEFT", bg, -6, 6)
+        check:SetPoint("BOTTOMRIGHT", bg, 6, -6)
         check:SetDesaturated(true)
         check:SetVertexColor(Color.highlight:GetRGB())
-
-        Base.SetBackdrop(CheckButton, Color.button, 0.3)
-        Base.SetHighlight(CheckButton, "backdrop")
     end
     function Skin.AchievementFrameTabButtonTemplate(Button)
         local name = Button:GetName()

@@ -193,6 +193,22 @@ do -- Basic frame type skins
             Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
         end
     end
+    do -- CheckButton
+        function Skin.FrameTypeCheckButton(CheckButton)
+            CheckButton:SetNormalTexture("")
+            CheckButton:SetPushedTexture("")
+            CheckButton:SetHighlightTexture("")
+
+            Base.SetBackdrop(CheckButton, Color.button, 0.3)
+            Base.SetHighlight(CheckButton, "backdrop")
+        end
+    end
+    do -- EditBox
+        function Skin.FrameTypeEditBox(EditBox)
+            Base.SetBackdrop(EditBox, Color.frame)
+            EditBox:SetBackdropBorderColor(Color.button)
+        end
+    end
     do -- StatusBar
         local atlasColors = {
             ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
@@ -247,12 +263,6 @@ do -- Basic frame type skins
             else
                 Hook_SetStatusBarColor(StatusBar, red, green, blue)
             end
-        end
-    end
-    do -- EditBox
-        function Skin.FrameTypeEditBox(EditBox)
-            Base.SetBackdrop(EditBox, Color.frame)
-            EditBox:SetBackdropBorderColor(Color.button)
         end
     end
 end
@@ -355,24 +365,20 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.UIRadioButtonTemplate(CheckButton)
-        local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetPoint("TOPLEFT", 4, -4)
-        bd:SetPoint("BOTTOMRIGHT", -4, 4)
-        bd:SetFrameLevel(CheckButton:GetFrameLevel())
-        Base.SetBackdrop(bd, Color.button, 0.3)
+        Skin.FrameTypeCheckButton(CheckButton)
+        CheckButton:SetBackdropOption("offsets", {
+            left = 4,
+            right = 4,
+            top = 4,
+            bottom = 4,
+        })
 
-        CheckButton:SetNormalTexture("")
-        CheckButton:SetPushedTexture("")
-        CheckButton:SetHighlightTexture("")
-
+        local bg = CheckButton:GetBackdropTexture("bg")
         local check = CheckButton:GetCheckedTexture()
-        check:SetColorTexture(Color.highlight:GetRGB())
         check:ClearAllPoints()
-        check:SetPoint("TOPLEFT", bd, 1, -1)
-        check:SetPoint("BOTTOMRIGHT", bd, -1, 1)
-
-        CheckButton._auroraBDFrame = bd
-        Base.SetHighlight(CheckButton, "backdrop")
+        check:SetPoint("TOPLEFT", bg, 1, -1)
+        check:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        check:SetColorTexture(Color.highlight:GetRGB())
     end
     function Skin.UICheckButtonTemplate(CheckButton)
         Skin.FrameTypeCheckButton(CheckButton)
@@ -382,6 +388,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             top = 6,
             bottom = 6,
         })
+
+        local bg = CheckButton:GetBackdropTexture("bg")
+        local check = CheckButton:GetCheckedTexture()
+        check:ClearAllPoints()
+        check:SetPoint("TOPLEFT", bg, -6, 6)
+        check:SetPoint("BOTTOMRIGHT", bg, 6, -6)
+        check:SetDesaturated(true)
+        check:SetVertexColor(Color.highlight:GetRGB())
+
+        local disabled = CheckButton:GetDisabledCheckedTexture()
+        disabled:SetAllPoints(check)
     end
 
     function Skin.NineSlicePanelTemplate(Frame)
