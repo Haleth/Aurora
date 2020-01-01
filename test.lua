@@ -912,20 +912,25 @@ function commands.test()
                 Dialog:SetPoint("TOPRIGHT", frame, "TOPLEFT", -10, 0)
                 Dialog:Hide()
 
-                local EditBox1 = _G.CreateFrame("EditBox", nil, Dialog, "InputBoxTemplate")
-                EditBox1:SetSize(50, 20)
-                EditBox1:SetPoint("TOPLEFT", 10, -10)
-                Skin.InputBoxTemplate(EditBox1)
+                local Button1 = _G.CreateFrame("Button", nil, Dialog, "UIPanelButtonTemplate")
+                Button1:SetSize(50, 20)
+                Button1:SetPoint("TOPLEFT", 10, -10)
+                Button1:LockHighlight()
+                Button1:UnlockHighlight()
+                --Button1:Disable()
 
-                local EditBox2 = _G.CreateFrame("EditBox", nil, Dialog, "InputBoxTemplate")
-                EditBox2:SetSize(50, 50)
-                EditBox2:SetPoint("TOPLEFT", 10, -40)
-                Skin.InputBoxTemplate(EditBox2)
+                local Button2 = _G.CreateFrame("Button", nil, Dialog, "UIPanelButtonTemplate")
+                Button2:SetSize(50, 50)
+                Button2:SetPoint("TOPLEFT", 10, -40)
+                Skin.UIPanelButtonTemplate(Button2)
+                Button2:LockHighlight()
+                Button2:UnlockHighlight()
+                --Button2:Disable()
 
-                local EditBox3 = _G.CreateFrame("EditBox", nil, Dialog, "InputBoxTemplate")
-                EditBox3:SetSize(100, 50)
-                EditBox3:SetPoint("TOPLEFT", 10, -100)
-                Skin.InputBoxTemplate(EditBox3)
+                local Button3 = _G.CreateFrame("Button", nil, Dialog, "UIPanelButtonTemplate")
+                Button3:SetSize(100, 50)
+                Button3:SetPoint("TOPLEFT", 10, -100)
+                Skin.UIPanelButtonTemplate(Button3)
 
                 local skins do
                     skins = {
@@ -1148,6 +1153,14 @@ function commands.test()
                                     _G.WarfrontsPartyPoseFrame:LoadScreen(1876, 1)
                                     --_G.WarfrontsPartyPoseFrame:SetRewards()
                                     _G.ShowUIPanel(_G.WarfrontsPartyPoseFrame)
+                                end,
+                            },
+                            compactRaidFrameManager = {
+                                name = "Compact Raid Frame Manager",
+                                desc = "CompactRaidFrameManager",
+                                type = "execute",
+                                func = function()
+                                    _G.CompactRaidFrameManager:Show()
                                 end,
                             },
                         },
