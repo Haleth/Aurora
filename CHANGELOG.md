@@ -1,4 +1,25 @@
-﻿## [8.2.5.3] - 2019-11-14 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Flight Map
+  * Item Interaction (used to clease Corrupted Items)
+
+### Changed ###
+
+  * Updates for 8.3.0
+  * Updated group finder skin
+  * Updated tradeskill skin
+  * Buttons with white textures now highlight from the background instead of the white texture (close, scroll bar)
+
+### Fixed ###
+
+  * Error when opening Communities
+  * BNet broadcast would not send
+  * Error when viewing sets in adventure journal
+
+
+
+## [8.2.5.3] - 2019-11-14 ##
 ### Added ###
 
   * Garrison talents skin
