@@ -449,6 +449,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.LeftBG:Hide()
         Frame.RightBG:Hide()
         Frame.CenterBG:Hide()
+
+        Frame.Text:SetPoint("TOP", 0, -12)
+        Frame.Text:SetPoint("BOTTOM")
     end
 
     function Skin.SimplePanelTemplate(Frame)
