@@ -214,6 +214,7 @@ do -- Basic frame type skins
             ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
             ["_islands-queue-progressbar-fill"] = private.AZERITE_COLORS[2],
             ["_islands-queue-progressbar-fill_2"] = private.AZERITE_COLORS[1],
+            ["_pvpqueue-conquestbar-fill-yellow"] = Color.Create(.9529, 0.7569, 0.1804),
             ["ChallengeMode-TimerFill"] = Color.Create(0.1490, 0.6196, 1.0),
             ["objectivewidget-bar-fill-left"] = Color.Create(0.1176, 0.2823, 0.7176),
             ["objectivewidget-bar-fill-neutral"] = Color.Create(0.3608, 0.2980, 0.0),

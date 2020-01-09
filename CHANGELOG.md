@@ -16,6 +16,7 @@
   * Error when opening Communities
   * BNet broadcast would not send
   * Error when viewing sets in adventure journal
+  * The conquest progress bar was not colored
 
 
 
