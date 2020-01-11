@@ -110,7 +110,6 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
                 Button._auroraIconBorder = Button
 
                 Button.ResultBorder:SetAlpha(0)
-                Button.IconOverlay:SetAlpha(0)
                 Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
                 Button:SetNormalTexture([[Interface\GuildFrame\GuildEmblemsLG_01]])

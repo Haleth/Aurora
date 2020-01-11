@@ -97,11 +97,19 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
     function Hook.SetItemButtonQuality(button, quality, itemIDOrLink, suppressOverlays)
         local iconBorder = button._auroraIconBorder
         if iconBorder then
-            local iconOverlay = button._auroraIconOverlay
-            if not iconOverlay then
-                iconOverlay = CreateOverlay(button)
+            if button.IconBorder then
+                button.IconBorder:Hide()
             end
-            iconOverlay:Hide()
+
+            local iconOverlay = button._auroraIconOverlay
+            if button.IconOverlay then
+                if not iconOverlay then
+                    iconOverlay = CreateOverlay(button)
+                end
+
+                button.IconOverlay:Hide()
+                iconOverlay:Hide()
+            end
 
             local overlay, overlay2, visual, isRelic
             if itemIDOrLink then
@@ -124,9 +132,6 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                 color = _G.BAG_ITEM_QUALITY_COLORS[quality]
             end
 
-            if button.IconBorder then
-                button.IconBorder:Hide()
-            end
             if overlay then
                 if overlay2 then
                     local r1, g1, b1 = overlay:GetRGB()
@@ -196,7 +201,6 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
             bottom = -1,
         })
         Button._auroraIconBorder = Button
-        Button.IconOverlay:SetAlpha(0)
 
         Button.ItemContextOverlay:SetPoint("TOPLEFT", -1, 1)
         Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
@@ -218,7 +222,6 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button._auroraIconBorder = Button
 
         Button.CircleMask:Hide()
-        Button.IconOverlay:SetAlpha(0)
     end
     function Skin.GiantItemButtonTemplate(Button)
         Button.EmptyBackground:Hide()
@@ -242,7 +245,6 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button:SetBackdropBorderColor(Color.frame, 1)
 
         Button.IconMask:Hide()
-        Button.IconOverlay:SetAlpha(0)
 
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())

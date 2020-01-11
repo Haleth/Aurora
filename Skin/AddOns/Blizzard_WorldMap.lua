@@ -36,7 +36,6 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
             shadow:SetPoint("TOPRIGHT", 4, 0)
 
             Button.Background:Hide()
-            Button.IconOverlay:SetAlpha(0)
             Button.Border:Hide()
 
             local tex = Button:GetHighlightTexture()
