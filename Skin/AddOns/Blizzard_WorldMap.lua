@@ -32,9 +32,6 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
             Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.WorldMapTrackingOptionsButtonTemplate(Button)
-            local shadow = Button:GetRegions()
-            shadow:SetPoint("TOPRIGHT", 4, 0)
-
             Button.Background:Hide()
             Button.Border:Hide()
 
@@ -103,6 +100,7 @@ function private.AddOns.Blizzard_WorldMap()
 
     Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
     Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
+    WorldMapFrame.overlayFrames[2]:SetPoint("TOPRIGHT", WorldMapFrame:GetCanvasContainer(), "TOPRIGHT", 0, 0)
     Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[3])
     Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[4])
     Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[5])
