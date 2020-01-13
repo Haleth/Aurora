@@ -95,6 +95,10 @@ do --[[ FrameXML\LFGList.lua ]]
             end
         end
     end
+    function Hook.LFGListInviteDialog_Show(self, resultID, kstringGroupName)
+        local _, _, _, _, role = _G.C_LFGList.GetApplicationInfo(resultID)
+        Base.SetTexture(self.RoleIcon, "icon"..role)
+    end
 end
 
 do --[[ FrameXML\LFGList.xml ]]
@@ -118,6 +122,11 @@ do --[[ FrameXML\LFGList.xml ]]
         Skin.LFGListApplicantMemberTemplate(Button.Member1)
         Skin.UIMenuButtonStretchTemplate(Button.DeclineButton)
         Skin.UIMenuButtonStretchTemplate(Button.InviteButton)
+    end
+    function Skin.LFGListRoleButtonTemplate(Button)
+        Button.cover:SetColorTexture(0, 0, 0, 0.75)
+        Base.SetTexture(Button:GetNormalTexture(), "icon"..Button.role)
+        Skin.UICheckButtonTemplate(Button.CheckButton)
     end
     function Skin.LFGListCategoryTemplate(Button)
         Skin.FrameTypeButton(Button)
@@ -299,4 +308,27 @@ function private.FrameXML.LFGList()
     Skin.LFGListOptionCheckButtonTemplate(EntryCreation.PrivateGroup)
     Skin.LFGListMagicButtonTemplate(EntryCreation.ListGroupButton)
     Skin.LFGListMagicButtonTemplate(EntryCreation.CancelButton)
+
+    ------------------------------
+    -- LFGListApplicationDialog --
+    ------------------------------
+    local LFGListApplicationDialog = _G.LFGListApplicationDialog
+    Skin.DialogBorderTemplate(LFGListApplicationDialog.Border)
+    Skin.LFGListRoleButtonTemplate(LFGListApplicationDialog.HealerButton)
+    Skin.LFGListRoleButtonTemplate(LFGListApplicationDialog.TankButton)
+    Skin.LFGListRoleButtonTemplate(LFGListApplicationDialog.DamagerButton)
+    Skin.InputScrollFrameTemplate(LFGListApplicationDialog.Description)
+    Skin.UIPanelButtonTemplate(LFGListApplicationDialog.SignUpButton)
+    Skin.UIPanelButtonTemplate(LFGListApplicationDialog.CancelButton)
+
+    -------------------------
+    -- LFGListInviteDialog --
+    -------------------------
+    _G.hooksecurefunc("LFGListInviteDialog_Show", Hook.LFGListInviteDialog_Show)
+
+    local LFGListInviteDialog = _G.LFGListInviteDialog
+    Skin.DialogBorderTemplate(LFGListInviteDialog.Border)
+    Skin.UIPanelButtonTemplate(LFGListInviteDialog.AcceptButton)
+    Skin.UIPanelButtonTemplate(LFGListInviteDialog.DeclineButton)
+    Skin.UIPanelButtonTemplate(LFGListInviteDialog.AcknowledgeButton)
 end

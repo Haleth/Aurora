@@ -714,6 +714,33 @@ function commands.test()
                         local member = members[index]
                         return false, member.role, 1, member.responded, member.accepted, "Name"
                     end
+
+                    local LfgSearchResultData = {
+                        searchResultID = dungeonId,
+                        activityID = dungeonId,
+                        leaderName = "leaderName",
+                        name = name,
+                        comment = "comment",
+                        voiceChat = "voiceChat",
+                        requiredItemLevel = 123,
+                        requiredHonorLevel = 456,
+                        numMembers = numMembers,
+                        numBNetFriends = 2,
+                        numCharFriends = 1,
+                        numGuildMates = 3,
+                        isDelisted = false,
+                        autoAccept = true,
+                        age = 0,
+                        questID = 65143,
+                    }
+                    function _G.C_LFGList.GetSearchResultInfo(searchResultID)
+                        local info = CopyTable(LfgSearchResultData)
+                        return info
+                    end
+                    function _G.C_LFGList.GetApplicationInfo(searchResultID)
+                        return dungeonId, "invited", nil, nil, "TANK"
+                    end
+
                     lfgPopups = {
                         name = "Group Finder Popups",
                         type = "group",
@@ -788,6 +815,26 @@ function commands.test()
                                 func = function()
                                     _G.LFGInvitePopup.timeOut = 1000000
                                     _G.StaticPopupSpecial_Show(_G.LFGInvitePopup)
+                                end,
+                                order = 3,
+                            },
+                            listApp = {
+                                name = "LFG List Application",
+                                desc = "LFGListApplicationDialog",
+                                type = "execute",
+                                func = function()
+                                    _G.LFGListApplicationDialog.timeOut = 1000000
+                                    _G.LFGListApplicationDialog_Show(_G.LFGListApplicationDialog, dungeonId)
+                                end,
+                                order = 3,
+                            },
+                            listInvite = {
+                                name = "LFG List Invite",
+                                desc = "LFGListInviteDialog",
+                                type = "execute",
+                                func = function()
+                                    _G.LFGListInviteDialog.timeOut = 1000000
+                                    _G.LFGListInviteDialog_Show(_G.LFGListInviteDialog, dungeonId)
                                 end,
                                 order = 3,
                             },
