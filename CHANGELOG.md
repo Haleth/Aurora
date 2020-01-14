@@ -2,7 +2,8 @@
 ### Added ###
 
   * Flight Map
-  * Item Interaction (used to clease Corrupted Items)
+  * Item Interaction (used to cleanse Corrupted Items)
+  * LFG invite popup
 
 ### Changed ###
 
@@ -10,6 +11,7 @@
   * Updated group finder skin
   * Updated tradeskill skin
   * Buttons with white textures now highlight from the background instead of the white texture (close, scroll bar)
+  * Tweak item scrapping UI
 
 ### Fixed ###
 
@@ -17,6 +19,7 @@
   * BNet broadcast would not send
   * Error when viewing sets in adventure journal
   * The conquest progress bar was not colored
+  * Error when opening azerite respec UI
 
 
 
