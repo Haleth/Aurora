@@ -469,8 +469,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         local titleText = Frame.TitleText
         titleText:ClearAllPoints()
-        titleText:SetPoint("TOPLEFT")
-        titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        titleText:SetPoint("TOPLEFT", Frame.Bg)
+        titleText:SetPoint("BOTTOMRIGHT", Frame.Bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
         Frame.TopTileStreaks:SetTexture("")
         Frame.NineSlice.Center = Frame.Bg
@@ -479,6 +479,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
+        Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
     end
     function Skin.ButtonFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
