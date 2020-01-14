@@ -1,8 +1,8 @@
-## Interface: 80205
+## Interface: 80300
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 8.2.5.3
+## Version: 8.3.0.0
 ## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack
 ## SavedVariables: AuroraConfig
