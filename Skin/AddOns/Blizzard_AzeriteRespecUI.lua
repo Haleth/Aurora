@@ -18,17 +18,38 @@ end ]]
 function private.AddOns.Blizzard_AzeriteRespecUI()
     local AzeriteRespecFrame = _G.AzeriteRespecFrame
     Skin.EtherealFrameTemplate(AzeriteRespecFrame)
-    AzeriteRespecFrame:SetClipsChildren(true)
     AzeriteRespecFrame.Background:Hide()
 
-    AzeriteRespecFrame.ItemSlot:SetSize(66, 66)
-    AzeriteRespecFrame.ItemSlot:SetPoint("CENTER", AzeriteRespecFrame)
-    AzeriteRespecFrame.ItemSlot.Icon:ClearAllPoints()
-    AzeriteRespecFrame.ItemSlot.Icon:SetPoint("TOPLEFT", 1, -1)
-    AzeriteRespecFrame.ItemSlot.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
-    AzeriteRespecFrame.ItemSlot.GlowOverlay:SetAlpha(0)
-    Base.SetBackdrop(AzeriteRespecFrame.ItemSlot, Color.violet, 0.5)
-    Base.CropIcon(AzeriteRespecFrame.ItemSlot.Icon)
+    do -- ItemSlot
+        local ItemSlot = AzeriteRespecFrame.ItemSlot
+        Base.CreateBackdrop(ItemSlot, {
+            bgFile = [[Interface\Icons\Spell_Frost_Stun]],
+            --bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            tile = false,
+            offsets = {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            }
+        })
+        local bg = ItemSlot:GetBackdropTexture("bg")
+        bg:SetDesaturated(true)
+        bg:SetBlendMode("ADD")
+        Base.CropIcon(bg)
+        Base.SetBackdropColor(ItemSlot, Color.violet, 0.8)
+
+        ItemSlot:SetSize(58, 58)
+        ItemSlot:ClearAllPoints()
+        ItemSlot:SetPoint("TOPLEFT", 143, -97)
+
+        ItemSlot.Icon:ClearAllPoints()
+        ItemSlot.Icon:SetPoint("TOPLEFT", 1, -1)
+        ItemSlot.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
+        Base.CropIcon(ItemSlot.Icon)
+
+        ItemSlot.GlowOverlay:SetAlpha(0)
+    end
 
     local ButtonFrame = AzeriteRespecFrame.ButtonFrame
     Skin.MagicButtonTemplate(ButtonFrame.AzeriteRespecButton)

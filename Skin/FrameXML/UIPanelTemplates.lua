@@ -255,10 +255,8 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         _G[name.."TopEdge"]:Hide()
         _G[name.."BottomEdge"]:Hide()
 
-        local bg = select(23, Frame:GetRegions())
-        bg:ClearAllPoints()
-        bg:SetPoint("TOPLEFT", -50, 25)
-        bg:SetPoint("BOTTOMRIGHT")
+        local bg = select(14, Frame:GetRegions())
+        bg:SetAllPoints()
         bg:SetTexture([[Interface\Transmogrify\EtherealLines]], true, true)
         bg:SetHorizTile(true)
         bg:SetVertTile(true)
