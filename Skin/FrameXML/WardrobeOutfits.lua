@@ -43,6 +43,13 @@ do --[[ FrameXML\WardrobeOutfits.xml ]]
     end
     function Skin.WardrobeOutfitDropDownTemplate(Frame)
         Skin.UIDropDownMenuTemplate(Frame)
+        local offsets = Frame:GetBackdropOption("offsets")
+        Frame:SetBackdropOption("offsets", {
+            left = offsets.left,
+            right = offsets.right,
+            top = offsets.top,
+            bottom = -1,
+        })
         Skin.UIPanelButtonTemplate(Frame.SaveButton)
     end
 end
