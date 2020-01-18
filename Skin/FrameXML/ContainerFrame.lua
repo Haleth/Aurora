@@ -64,7 +64,6 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     function Skin.ContainerFrameItemButtonTemplate(ItemButton)
         local name = ItemButton:GetName()
 
-        ItemButton.debug = "ItemButton"
         Base.CreateBackdrop(ItemButton, {
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false

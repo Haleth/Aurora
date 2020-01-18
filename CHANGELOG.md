@@ -1,4 +1,13 @@
-﻿## [8.3.0.0] - 2020-01-14 ##
+﻿## [8.3.0.1] - 2020-01-18 ##
+### Fixed ###
+
+  * Boss buttons in the Encounter Journal would not un-highlight
+  * Encounter Journal loot buttons had an out of bounds overlay
+  * The wardrobe outfits dropdown menu was too short
+
+
+
+## [8.3.0.0] - 2020-01-14 ##
 ### Added ###
 
   * Flight Map
@@ -375,6 +384,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.1]: https://github.com/Haleth/Aurora/compare/8.3.0.0...8.3.0.1
 [8.3.0.0]: https://github.com/Haleth/Aurora/compare/8.2.5.3...8.3.0.0
 [8.2.5.3]: https://github.com/Haleth/Aurora/compare/8.2.5.2...8.2.5.3
 [8.2.5.2]: https://github.com/Haleth/Aurora/compare/8.2.5.1...8.2.5.2
