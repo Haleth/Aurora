@@ -888,6 +888,14 @@ do -- Util API
         if not debugTools then
             debugTools = _G.UIParentLoadAddOn("Blizzard_DebugTools")
         end
+
+        if type(value) ~= "function" then
+            local v = value
+            value = function(...)
+                return v
+            end
+        end
+
         _G.DevTools_Dump({value()}, "value")
     end
 
