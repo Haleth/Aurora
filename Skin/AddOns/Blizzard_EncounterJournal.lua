@@ -199,15 +199,13 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
             Button:SetHighlightTexture("")
         end
         function Skin.EncounterBossButtonTemplate(Button)
-            Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
-
-            local creatureFrame = Button:GetChildren()
-            creatureFrame:SetPoint("TOPLEFT", -4, 8)
-
-            Button:SetNormalTexture("")
-            Button:SetPushedTexture("")
-            Button:SetHighlightTexture("")
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 0,
+                right = 0,
+                top = 5,
+                bottom = 5,
+            })
         end
         function Skin.EncounterTabTemplate(Button)
             Base.SetBackdrop(Button, Color.frame, 1)
@@ -290,12 +288,11 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
         end
         function Skin.EncounterItemTemplate(Button)
             Base.CropIcon(Button.icon)
-
-            Base.SetBackdrop(Button, Color.black, 0.3)
-            local bg = Button:GetBackdropTexture("bg")
+            local bg = _G.CreateFrame("Frame", nil, Button)
             bg:SetPoint("TOPLEFT", Button.icon, -1, 1)
             bg:SetPoint("BOTTOMRIGHT", Button.icon, 1, -1)
-            Button._auroraIconBorder = Button
+            Base.SetBackdrop(bg, Color.black, 0)
+            Button._auroraIconBorder = bg
 
             Button.armorType:SetTextColor(Color.gray:GetRGB())
             Button.slot:SetTextColor(Color.gray:GetRGB())
