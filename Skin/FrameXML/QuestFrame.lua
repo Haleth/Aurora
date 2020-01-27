@@ -109,6 +109,29 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
         Skin.LargeItemButtonTemplate(Button)
     end
     function Skin.QuestSpellTemplate(Button)
+        Base.SetBackdrop(Button, Color.black, Color.frame.a)
+        Button:SetBackdropOption("offsets", {
+            left = 9,
+            right = 107,
+            top = 1,
+            bottom = 14,
+        })
+        Button._auroraIconBorder = Button
+        Base.CropIcon(Button.Icon)
+
+        Button.NameFrame:SetAlpha(0)
+
+        local bg = Button:GetBackdropTexture("bg")
+        local nameBG = _G.CreateFrame("Frame", nil, Button)
+        nameBG:SetFrameLevel(Button:GetFrameLevel())
+        nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
+        nameBG:SetPoint("RIGHT", -3, 0)
+        nameBG:SetPoint("BOTTOM", bg)
+        Base.SetBackdrop(nameBG, Color.frame)
+        Button._auroraNameBG = nameBG
+
+        local _, _, spellBorder = Button:GetRegions()
+        spellBorder:Hide()
     end
     function Skin.QuestTitleButtonTemplate(Button)
     end

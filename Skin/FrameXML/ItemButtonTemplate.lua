@@ -281,39 +281,47 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Base.CropIcon(CheckButton:GetCheckedTexture())
     end
     function Skin.LargeItemButtonTemplate(Button)
+        Base.SetBackdrop(Button, Color.black, Color.frame.a)
+        Button:SetBackdropOption("offsets", {
+            left = -1,
+            right = 107,
+            top = -1,
+            bottom = 1,
+        })
+        Button._auroraIconBorder = Button
         Base.CropIcon(Button.Icon)
-
-        local iconBG = _G.CreateFrame("Frame", nil, Button)
-        iconBG:SetFrameLevel(Button:GetFrameLevel())
-        iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
-        iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
-        Base.SetBackdrop(iconBG, Color.frame)
-        Button._auroraIconBorder = iconBG
 
         Button.NameFrame:SetAlpha(0)
 
+        local bg = Button:GetBackdropTexture("bg")
         local nameBG = _G.CreateFrame("Frame", nil, Button)
-        nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
-        nameBG:SetPoint("BOTTOMRIGHT", -3, 1)
+        nameBG:SetFrameLevel(Button:GetFrameLevel())
+        nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
+        nameBG:SetPoint("RIGHT", -3, 0)
+        nameBG:SetPoint("BOTTOM", bg)
         Base.SetBackdrop(nameBG, Color.frame)
         Button._auroraNameBG = nameBG
     end
     function Skin.SmallItemButtonTemplate(Button)
-        Button.Icon:SetSize(29, 29)
+        Base.SetBackdrop(Button, Color.black, Color.frame.a)
+        Button:SetBackdropOption("offsets", {
+            left = -1,
+            right = 103,
+            top = -1,
+            bottom = -1,
+        })
+        Button._auroraIconBorder = Button
+        --Button.Icon:SetSize(29, 29)
         Base.CropIcon(Button.Icon)
-
-        local iconBG = _G.CreateFrame("Frame", nil, Button)
-        iconBG:SetFrameLevel(Button:GetFrameLevel())
-        iconBG:SetPoint("TOPLEFT", Button.Icon, -1, 1)
-        iconBG:SetPoint("BOTTOMRIGHT", Button.Icon, 1, -1)
-        Base.SetBackdrop(iconBG, Color.frame)
-        Button._auroraIconBorder = iconBG
 
         Button.NameFrame:SetAlpha(0)
 
+        local bg = Button:GetBackdropTexture("bg")
         local nameBG = _G.CreateFrame("Frame", nil, Button)
-        nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
-        nameBG:SetPoint("BOTTOMRIGHT", Button.NameFrame, 0, -1)
+        nameBG:SetFrameLevel(Button:GetFrameLevel())
+        nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
+        nameBG:SetPoint("RIGHT", -3, 0)
+        nameBG:SetPoint("BOTTOM", bg)
         Base.SetBackdrop(nameBG, Color.frame)
         Button._auroraNameBG = nameBG
     end
