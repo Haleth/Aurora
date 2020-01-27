@@ -423,6 +423,13 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------------
     local AchievementFrame = _G.AchievementFrame
     Base.SetBackdrop(AchievementFrame)
+    local bg = AchievementFrame:GetBackdropTexture("bg")
+    AchievementFrame:SetBackdropOption("offsets", {
+        left = 0,
+        right = 0,
+        top = -10,
+        bottom = 0,
+    })
 
     _G.AchievementFrameBackground:Hide()
 
@@ -452,6 +459,7 @@ function private.AddOns.Blizzard_AchievementUI()
     ------------
     -- Header --
     ------------
+    _G.AchievementFrameHeader:Hide()
     _G.AchievementFrameHeaderLeft:Hide()
     _G.AchievementFrameHeaderRight:Hide()
 
@@ -460,8 +468,10 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.AchievementFrameHeaderLeftDDLInset:SetAlpha(0)
     _G.AchievementFrameHeaderRightDDLInset:SetAlpha(0)
 
-    _G.AchievementFrameHeaderPoints:SetPoint("TOP", AchievementFrame)
-    _G.AchievementFrameHeaderPoints:SetPoint("BOTTOM", AchievementFrame, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
+    _G.AchievementFrameHeaderPoints:SetParent(AchievementFrame)
+    _G.AchievementFrameHeaderPoints:SetPoint("TOP", bg)
+    _G.AchievementFrameHeaderPoints:SetPoint("BOTTOM", bg, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
+    _G.AchievementFrameHeaderShield:SetParent(AchievementFrame)
 
 
 
@@ -470,8 +480,6 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------
     _G.AchievementFrameCategories:SetBackdrop(nil)
     Skin.HybridScrollBarTemplate(_G.AchievementFrameCategoriesContainerScrollBar)
-    _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameCategoriesContainer, "TOPRIGHT", 0, -12)
-    _G.AchievementFrameCategoriesContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameCategoriesContainer, "BOTTOMRIGHT", 0, 12)
 
 
 
@@ -482,8 +490,6 @@ function private.AddOns.Blizzard_AchievementUI()
     select(3, _G.AchievementFrameAchievements:GetRegions()):Hide()
 
     Skin.HybridScrollBarTemplate(_G.AchievementFrameAchievementsContainerScrollBar)
-    _G.AchievementFrameAchievementsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameAchievementsContainer, "TOPRIGHT", 0, -12)
-    _G.AchievementFrameAchievementsContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameAchievementsContainer, "BOTTOMRIGHT", 0, 12)
     select(2, _G.AchievementFrameAchievements:GetChildren()):Hide()
 
 
@@ -568,6 +574,7 @@ function private.AddOns.Blizzard_AchievementUI()
 
 
     Skin.UIPanelCloseButton(_G.AchievementFrameCloseButton)
+    _G.AchievementFrameCloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab1)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab2)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab3)
@@ -580,15 +587,12 @@ function private.AddOns.Blizzard_AchievementUI()
 
     Base.SetBackdrop(_G.AchievementFrameFilterDropDown, Color.button)
     local filterBG = _G.AchievementFrameFilterDropDown:GetBackdropTexture("bg")
-    filterBG:SetPoint("TOPLEFT", 0, -6)
-    filterBG:SetPoint("BOTTOMRIGHT", _G.AchievementFrameFilterDropDownButton, "BOTTOMLEFT", 1, 0)
 
-    _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", 148, 4)
+    _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", bg, 148, -6)
     _G.AchievementFrameFilterDropDown:SetHeight(16)
     _G.AchievementFrameFilterDropDownText:SetPoint("LEFT", filterBG, 5, 0)
 
     Skin.FrameTypeButton(_G.AchievementFrameFilterDropDownButton)
-    _G.AchievementFrameFilterDropDownButton:SetPoint("TOPRIGHT", 0, -6)
     _G.AchievementFrameFilterDropDownButton:SetSize(16, 16)
 
     local filterArrow = _G.AchievementFrameFilterDropDownButton:CreateTexture(nil, "ARTWORK")
@@ -599,7 +603,7 @@ function private.AddOns.Blizzard_AchievementUI()
     local searchBox = AchievementFrame.searchBox
     Skin.SearchBoxTemplate(searchBox)
     searchBox:ClearAllPoints()
-    searchBox:SetPoint("TOPRIGHT", -148, 2)
+    searchBox:SetPoint("TOPRIGHT", bg, -148, 0)
 
     local prevContainer = AchievementFrame.searchPreviewContainer
     prevContainer.background:Hide()
