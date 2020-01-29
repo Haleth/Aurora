@@ -33,8 +33,8 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         -- This is a slightly fancy way of getting a consistent height from frames of variable height.
         local yOfs = floor(EditBox:GetHeight() / 2 + .5) - 10
         EditBox:SetBackdropOption("offsets", {
-            left = 0,
-            right = 0,
+            left = -4,
+            right = 1,
             top = yOfs,
             bottom = yOfs,
         })
@@ -84,12 +84,14 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     end
     function Skin.InputScrollFrameTemplate(ScrollFrame)
         Skin.UIPanelScrollFrameTemplate(ScrollFrame)
-
-        local bg = _G.CreateFrame("Frame", nil, ScrollFrame)
-        bg:SetPoint("TOPLEFT", -4, 3)
-        bg:SetPoint("BOTTOMRIGHT", 4, -3)
-        bg:SetFrameLevel(ScrollFrame:GetFrameLevel())
-        Base.CreateBackdrop(bg, private.backdrop, {
+        Base.CreateBackdrop(ScrollFrame, {
+            offsets = {
+                left = -4,
+                right = -4,
+                top = -3,
+                bottom = -4,
+            }
+        }, {
             bg = ScrollFrame.MiddleTex,
 
             l = ScrollFrame.LeftTex,
@@ -105,7 +107,8 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
             borderLayer = "BACKGROUND",
             borderSublevel = -7,
         })
-        Base.SetBackdrop(bg, Color.frame)
+        Base.SetBackdrop(ScrollFrame, Color.frame)
+        ScrollFrame:SetBackdropBorderColor(Color.button)
     end
     function Skin.FauxScrollFrameTemplate(ScrollFrame)
         Skin.UIPanelScrollFrameTemplate(ScrollFrame)
