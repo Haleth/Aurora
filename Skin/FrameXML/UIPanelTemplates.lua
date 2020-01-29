@@ -40,6 +40,9 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
     function Skin.BagSearchBoxTemplate(EditBox)
         Skin.SearchBoxTemplate(EditBox)
     end
+    function Skin.GameMenuButtonTemplate(Button)
+        Skin.UIPanelButtonTemplate(Button)
+    end
     function Skin.UIServiceButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.button)
         Skin.SmallMoneyFrameTemplate(Button.money)

@@ -864,6 +864,69 @@ function commands.test()
                         },
                     }
                 end
+                local helpPopups do
+                    local ticketStatuses, ticketStatus = {
+                        "LE_TICKET_STATUS_OPEN",
+                        "LE_TICKET_STATUS_SURVEY",
+                        "LE_TICKET_STATUS_NMI",
+                        "LE_TICKET_STATUS_RESPONSE",
+                    }, 1
+
+                    local hasTicket = true
+                    local event = "UPDATE_WEB_TICKET"
+
+                    helpPopups = {
+                        name = "Help & Report Popups",
+                        type = "group",
+                        args = {
+                            header1 = {
+                                name = "Help",
+                                type = "header",
+                                order = 0,
+                            },
+                            ticketStatus = {
+                                name = "ticketStatus",
+                                type = "select",
+                                values = ticketStatuses,
+                                get = function()
+                                    return ticketStatus
+                                end,
+                                set = function(info, value)
+                                    ticketStatus = value
+                                end,
+                                order = 1,
+                            },
+                            ticket = {
+                                name = "Ticket Status",
+                                desc = "TicketStatusFrame",
+                                type = "execute",
+                                func = function()
+                                    _G.TicketStatusFrame:Show()
+                                    _G.TicketStatusFrame_OnEvent(_G.TicketStatusFrame, event, hasTicket, 1, ticketStatus, 1)
+                                end,
+                                order = 1,
+                            },
+                            header2 = {
+                                name = "Report",
+                                type = "header",
+                                order = 10,
+                            },
+                            proposal = {
+                                name = "Report Cheating",
+                                desc = "ReportCheatingDialog",
+                                type = "execute",
+                                func = function()
+                                    --_G.HelpFrame_ShowReportCheatingDialog(playerLocation)
+                                    local frame = _G.ReportCheatingDialog
+                                    frame.CommentFrame.EditBox:SetText("")
+                                    frame.CommentFrame.EditBox.InformationText:Show()
+                                    _G.StaticPopupSpecial_Show(frame)
+                                end,
+                                order = 11,
+                            },
+                        },
+                    }
+                end
 
                 test.args.popup = {
                     name = "Popup Frames",
@@ -872,6 +935,7 @@ function commands.test()
                         helpTips = helpTips,
                         staticPopups = staticPopups,
                         lfgPopups = lfgPopups,
+                        helpPopups = helpPopups,
                     }
                 }
             end
