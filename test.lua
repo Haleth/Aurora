@@ -43,7 +43,7 @@ function commands.test()
     if AceConfig then
         if not test then
             container = _G.LibStub("AceGUI-3.0"):Create("Frame")
-            local frame = container.frame
+            local optionsFrame = container.frame
             test = {
                 type = "group",
                 args = {}
@@ -593,10 +593,10 @@ function commands.test()
                                 type = "execute",
                                 func = function(self, ...)
                                     local text = textFormat:format(targetPointType[infoTable.targetPoint], alignmentType[infoTable.alignment], buttonStyleType[infoTable.buttonStyle])
-                                    if not _G.HelpTip:IsShowing(frame, text) then
+                                    if not _G.HelpTip:IsShowing(optionsFrame, text) then
                                         local info = CopyTable(infoTable)
                                         info.text = text
-                                        _G.HelpTip:Show(frame, info)
+                                        _G.HelpTip:Show(optionsFrame, info)
                                     end
                                 end,
                             }
@@ -933,30 +933,30 @@ function commands.test()
 
                     backdropColor = Color.green,
                     backdropBorderColor = Color.red,
-                };
+                }
 
-                local blizzBDFrame = _G.CreateFrame("Frame", nil, frame)
+                local blizzBDFrame = _G.CreateFrame("Frame", nil, optionsFrame)
                 blizzBDFrame:SetBackdrop(bdOptions)
                 blizzBDFrame:SetSize(100, 100)
-                blizzBDFrame:SetPoint("BOTTOMRIGHT", frame, "TOP", -5, 0)
+                blizzBDFrame:SetPoint("BOTTOMRIGHT", optionsFrame, "TOP", -5, 0)
                 blizzBDFrame:Hide()
                 --blizzBDFrame:SetBackdropColor(bdOptions.backdropColor:GetRGB())
                 --blizzBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
 
-                local auroraBDFrame = _G.CreateFrame("Frame", nil, frame)
+                local auroraBDFrame = _G.CreateFrame("Frame", nil, optionsFrame)
                 Base.CreateBackdrop(auroraBDFrame, bdOptions)
                 auroraBDFrame:SetSize(100, 100)
-                auroraBDFrame:SetPoint("BOTTOMLEFT", frame, "TOP", 5, 0)
+                auroraBDFrame:SetPoint("BOTTOMLEFT", optionsFrame, "TOP", 5, 0)
                 auroraBDFrame:Hide()
                 --auroraBDFrame:SetBackdropColor(bdOptions.backdropColor:GetRGB())
                 --auroraBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
 
 
-                local Dialog = _G.CreateFrame("Frame", nil, frame, "DialogBorderTemplate")
+                local Dialog = _G.CreateFrame("Frame", nil, optionsFrame, "DialogBorderTemplate")
                 Skin.DialogBorderTemplate(Dialog)
                 Dialog:SetSize(300, 300)
                 Dialog:ClearAllPoints()
-                Dialog:SetPoint("TOPRIGHT", frame, "TOPLEFT", -10, 0)
+                Dialog:SetPoint("TOPRIGHT", optionsFrame, "TOPLEFT", -10, 0)
                 Dialog:Hide()
 
                 local Button1 = _G.CreateFrame("Button", nil, Dialog, "UIPanelButtonTemplate")
@@ -1256,7 +1256,7 @@ function commands.profile()
                 width = 0,
                 attribute = "num",
             },
-        };
+        }
 
         function Aurora.Skin.FriendsFrameWhoButtonTemplate(Button)
             local name, variable, level, class = Button:GetRegions()
