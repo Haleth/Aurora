@@ -502,6 +502,20 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.RefreshButtonTemplate(Frame.DummyRefreshButton)
         end
     end
+    do --[[ Blizzard_AuctionHouseBuyDialog ]]
+        function Skin.AuctionHouseBuyDialogNotificationFrameTemplate(Frame)
+        end
+        function Skin.AuctionHouseDialogButtonTemplate(Button)
+            Skin.UIPanelButtonTemplate(Button)
+        end
+        function Skin.AuctionHouseBuyDialogTemplate(Frame)
+            Skin.DialogBorderDarkTemplate(Frame.Border)
+            Skin.AuctionHouseDialogButtonTemplate(Frame.BuyNowButton)
+            Skin.AuctionHouseDialogButtonTemplate(Frame.CancelButton)
+            Skin.AuctionHouseDialogButtonTemplate(Frame.OkayButton)
+            Skin.AuctionHouseBuyDialogNotificationFrameTemplate(Frame.Notification)
+        end
+    end
 end
 
 -- /run AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.WoWTokenSell)
@@ -653,6 +667,11 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     -- Auctions frames --
     ---------------------
     Skin.AuctionHouseAuctionsFrameTemplate(AuctionHouseFrame.AuctionsFrame)
+
+    -------------
+    -- Dialogs --
+    -------------
+    Skin.AuctionHouseBuyDialogTemplate(AuctionHouseFrame.BuyDialog)
 end
 
 
