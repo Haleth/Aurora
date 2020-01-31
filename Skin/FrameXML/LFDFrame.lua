@@ -5,11 +5,20 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
---do --[[ FrameXML\LFDFrame.lua ]]
---end
+do --[[ FrameXML\LFDFrame.lua ]]
+    function Hook.LFDQueueFrameRandomCooldownFrame_Update()
+        for i = 1, _G.GetNumSubgroupMembers() do
+            local nameLabel = _G["LFDQueueFrameCooldownFrameName"..i]
+
+            local _, classFilename = _G.UnitClass("party"..i)
+            local classColor = classFilename and _G.CUSTOM_CLASS_COLORS[classFilename] or _G.NORMAL_FONT_COLOR
+            nameLabel:SetFormattedText("|cff%.2x%.2x%.2x%s|r", classColor.r * 255, classColor.g * 255, classColor.b * 255, _G.GetUnitName("party"..i, true))
+        end
+    end
+end
 
 do --[[ FrameXML\LFDFrame.xml ]]
     function Skin.LFDRoleButtonTemplate(Button)
@@ -24,6 +33,8 @@ do --[[ FrameXML\LFDFrame.xml ]]
 end
 
 function private.FrameXML.LFDFrame()
+    _G.hooksecurefunc("LFDQueueFrameRandomCooldownFrame_Update", Hook.LFDQueueFrameRandomCooldownFrame_Update)
+
     -----------------------
     -- LFDRoleCheckPopup --
     -----------------------

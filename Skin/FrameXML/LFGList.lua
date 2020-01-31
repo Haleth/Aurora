@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals bit math
+-- luacheck: globals bit math strfind
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -95,6 +95,61 @@ do --[[ FrameXML\LFGList.lua ]]
             end
         end
     end
+
+    local grayedOutStatus = {
+        failed = true,
+        cancelled = true,
+        declined = true,
+        declined_full = true,
+        declined_delisted = true,
+        invitedeclined = true,
+        timedout = true,
+    }
+    function Hook.LFGListApplicationViewer_UpdateApplicantMember(member, appID, memberIdx, status, pendingStatus)
+        if not pendingStatus and grayedOutStatus[status] then
+            -- grayedOut
+            return
+        end
+
+        local name, classToken = _G.C_LFGList.GetApplicantMemberInfo(appID, memberIdx)
+        local classColor = name and classToken and _G.CUSTOM_CLASS_COLORS[classToken]
+        if classColor then
+            member.Name:SetTextColor(classColor.r, classColor.g, classColor.b)
+        end
+    end
+    function Hook.LFGListApplicantMember_OnEnter(self)
+        local applicantID = self:GetParent().applicantID
+        local memberIdx = self.memberIdx
+        local name, classToken = _G.C_LFGList.GetApplicantMemberInfo(applicantID, memberIdx)
+        local classColor = name and classToken and _G.CUSTOM_CLASS_COLORS[classToken]
+        if classColor then
+            _G.GameTooltipTextLeft1:SetTextColor(classColor.r, classColor.g, classColor.b)
+        end
+    end
+    function Hook.LFGListUtil_SetSearchEntryTooltip(tooltip, resultID, autoAcceptOption)
+        local searchResultInfo = _G.C_LFGList.GetSearchResultInfo(resultID)
+        local _, _, _, _, _, _, _, _, displayType = _G.C_LFGList.GetActivityInfo(searchResultInfo.activityID)
+        if displayType ~= _G.LE_LFG_LIST_DISPLAY_TYPE_CLASS_ENUMERATE then return end
+
+        local name = tooltip:GetName() .. "TextLeft"
+        local start
+        for i = 4, tooltip:NumLines() do
+            if strfind(_G[name..i]:GetText(), _G.LFG_LIST_TOOLTIP_MEMBERS_SIMPLE) then
+                start = i
+                break
+            end
+        end
+
+        if start then
+            for i = 1, searchResultInfo.numMembers do
+                local _, classToken = _G.C_LFGList.GetSearchResultMemberInfo(resultID, i)
+                local classColor = classToken and _G.CUSTOM_CLASS_COLORS[classToken]
+                if classColor then
+                    _G[name..(start+i)]:SetTextColor(classColor.r, classColor.g, classColor.b)
+                end
+            end
+        end
+    end
     function Hook.LFGListInviteDialog_Show(self, resultID, kstringGroupName)
         local _, _, _, _, role = _G.C_LFGList.GetApplicationInfo(resultID)
         Base.SetTexture(self.RoleIcon, "icon"..role)
@@ -170,6 +225,9 @@ function private.FrameXML.LFGList()
     _G.hooksecurefunc("LFGListCategorySelection_AddButton", Hook.LFGListCategorySelection_AddButton)
     _G.hooksecurefunc("LFGListGroupDataDisplayEnumerate_Update", Hook.LFGListGroupDataDisplayEnumerate_Update)
     _G.hooksecurefunc("LFGListApplicationViewer_UpdateRoleIcons", Hook.LFGListApplicationViewer_UpdateRoleIcons)
+    _G.hooksecurefunc("LFGListApplicationViewer_UpdateApplicantMember", Hook.LFGListApplicationViewer_UpdateApplicantMember)
+    _G.hooksecurefunc("LFGListApplicantMember_OnEnter", Hook.LFGListApplicantMember_OnEnter)
+    _G.hooksecurefunc("LFGListUtil_SetSearchEntryTooltip", Hook.LFGListUtil_SetSearchEntryTooltip)
 
     ------------------
     -- LFGListFrame --

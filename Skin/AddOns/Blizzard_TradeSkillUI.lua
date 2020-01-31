@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals ipairs
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -53,6 +53,26 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                 end
             end
         end
+        Hook.TradeSkillGuildListingMixin = {}
+        function Hook.TradeSkillGuildListingMixin:Refresh()
+            local offset = _G.HybridScrollFrame_GetOffset(self.Container.ScrollFrame)
+
+            for i, craftersButton in ipairs(self.Container.ScrollFrame.buttons) do
+                if craftersButton:IsShown() then
+                    local dataIndex = offset + i
+                    local displayName, fullName, classFileName, online = _G.GetGuildRecipeMember(dataIndex)
+                    craftersButton:SetText(displayName)
+                    if online then
+                        craftersButton:Enable()
+                        craftersButton.fullName = fullName
+                        local classColor = _G.CUSTOM_CLASS_COLORS[classFileName]
+                        if classColor then
+                            craftersButton.Text:SetTextColor(classColor.r, classColor.g, classColor.b)
+                        end
+                    end
+                end
+            end
+        end
     end
 end
 
@@ -92,6 +112,8 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
             ScrollFrame.CreateMultipleInputBox:SetPoint("TOPLEFT", ScrollFrame.CreateAllButton, "TOPRIGHT", 25, -1)
 
             local GuildFrame = ScrollFrame.GuildFrame
+            GuildFrame:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 33, 19)
+            Util.Mixin(GuildFrame, Hook.TradeSkillGuildListingMixin)
             Skin.TranslucentFrameTemplate(GuildFrame)
             Skin.UIPanelCloseButton(GuildFrame.CloseButton)
             GuildFrame.Container:SetBackdrop(nil)

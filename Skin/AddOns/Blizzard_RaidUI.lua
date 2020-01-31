@@ -1,15 +1,30 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals min
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Skin = Aurora.Base, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
---do --[[ AddOns\Blizzard_RaidUI.lua ]]
---end
+do --[[ AddOns\Blizzard_RaidUI.lua ]]
+    function Hook.RaidGroupFrame_Update()
+        local isRaid = _G.IsInRaid()
+        if not isRaid then return end
+        for i = 1, min(_G.GetNumGroupMembers(), _G.MAX_RAID_MEMBERS) do
+            local _, _, subgroup, _, _, class, _, online, dead = _G.GetRaidRosterInfo(i)
+            local color = online and not dead and _G["RaidGroup"..subgroup].nextIndex <= _G.MEMBERS_PER_RAID_GROUP and class and _G.CUSTOM_CLASS_COLORS[class]
+            if color then
+                local button = _G["RaidGroupButton"..i]
+                button.subframes.name:SetTextColor(color.r, color.g, color.b)
+                button.subframes.class:SetTextColor(color.r, color.g, color.b)
+                button.subframes.level:SetTextColor(color.r, color.g, color.b)
+            end
+        end
+    end
+end
 
 do --[[ AddOns\Blizzard_RaidUI.xml ]]
     function Skin.RaidGroupButtonTemplate(Button)
@@ -46,6 +61,8 @@ do --[[ AddOns\Blizzard_RaidUI.xml ]]
 end
 
 function private.AddOns.Blizzard_RaidUI()
+    _G.hooksecurefunc("RaidGroupFrame_Update", Hook.RaidGroupFrame_Update)
+
     _G.RaidGroup1:SetPoint("TOPLEFT", 5, -58)
     _G.RaidGroup2:SetPoint("LEFT", _G.RaidGroup1, "RIGHT", 4, 0)
     for groupID = 1, _G.NUM_RAID_GROUPS do

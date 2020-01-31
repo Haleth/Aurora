@@ -61,6 +61,32 @@ do --[[ FrameXML\LFGFrame.lua ]]
             frame._auroraIconBorder:SetBackdropBorderColor(Color.yellow)
         end
     end
+    function Hook.LFGCooldownCover_Update(self)
+        local nextIndex, numPlayers, prefix = 1
+        if _G.IsInRaid() then
+            numPlayers = _G.GetNumGroupMembers()
+            prefix = "raid"
+        else
+            numPlayers = _G.GetNumSubgroupMembers()
+            prefix = "party"
+        end
+
+        for i = 1, numPlayers do
+            if nextIndex > #self.Names then
+                break
+            end
+
+            local unit = prefix..i
+            if _G.UnitHasLFGDeserter(unit) or (self.showCooldown and _G.UnitHasLFGRandomCooldown(unit)) or self.showAll then
+                local _, classToken = _G.UnitName(unit)
+                local classColor = classToken and _G.CUSTOM_CLASS_COLORS[classToken]
+                if classColor then
+                    self.Names[nextIndex]:SetFormattedText("|c%s%s|r", classColor.colorStr, _G.GetUnitName(unit, true))
+                end
+                nextIndex = nextIndex + 1
+            end
+        end
+    end
 end
 
 do --[[ FrameXML\LFGFrame.xml ]]
@@ -140,6 +166,7 @@ function private.FrameXML.LFGFrame()
     _G.hooksecurefunc("LFGDungeonReadyPopup_Update", Hook.LFGDungeonReadyPopup_Update)
     _G.hooksecurefunc("LFGDungeonReadyStatusIndividual_UpdateIcon", Hook.LFGDungeonReadyStatusIndividual_UpdateIcon)
     _G.hooksecurefunc("LFGRewardsFrame_SetItemButton", Hook.LFGRewardsFrame_SetItemButton)
+    _G.hooksecurefunc("LFGCooldownCover_Update", Hook.LFGCooldownCover_Update)
 
 
     --------------------------

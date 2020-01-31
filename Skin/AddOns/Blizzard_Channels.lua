@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_Channels.lua ]]
     do --[[ ChannelButton.lua ]]
@@ -25,6 +25,18 @@ do --[[ AddOns\Blizzard_Channels.lua ]]
                 self.Collapsed.minus:Hide()
                 self.Collapsed.plus:Hide()
             end
+        end
+    end
+    do --[[ RosterButton.lua ]]
+        Hook.ChannelRosterButtonMixin = {}
+        function Hook.ChannelRosterButtonMixin:Update()
+            if self:IsConnected() ~= false and self.playerLocation then
+                local _, classToken = _G.C_PlayerInfo.GetClass(self.playerLocation)
+                if classToken then
+                    self.Name:SetTextColor(_G.CUSTOM_CLASS_COLORS[classToken]:GetRGB())
+                end
+            end
+
         end
     end
 end
@@ -69,6 +81,9 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ RosterButton.xml ]]
         Skin.ChannelRosterButtonTemplate = private.nop
+        function Skin.ChannelRosterButtonTemplate(Button)
+            Util.Mixin(Button, Hook.ChannelRosterButtonMixin)
+        end
     end
     do --[[ CreateChannelPopup.xml ]]
         function Skin.CreateChannelPopupEditBoxTemplate(EditBox)

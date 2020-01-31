@@ -62,6 +62,23 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self._iconBG:Hide()
         end
     end
+    do --[[ CommunitiesMemberList ]]
+        Hook.CommunitiesMemberListEntryMixin = {}
+        function Hook.CommunitiesMemberListEntryMixin:UpdatePresence()
+            local memberInfo = self:GetMemberInfo();
+            if memberInfo then
+                if memberInfo.presence ~= _G.Enum.ClubMemberPresence.Offline then
+                    if memberInfo.classID then
+                        local classInfo = _G.C_CreatureInfo.GetClassInfo(memberInfo.classID);
+                        local color = (classInfo and _G.CUSTOM_CLASS_COLORS[classInfo.classFile]) or _G.NORMAL_FONT_COLOR;
+                        self.NameFrame.Name:SetTextColor(color.r, color.g, color.b);
+                    else
+                        self.NameFrame.Name:SetTextColor(_G.BATTLENET_FONT_COLOR:GetRGB());
+                    end
+                end
+            end
+        end
+    end
     do --[[ CommunitiesSettings ]]
         Hook.CommunitiesSettingsDialogMixin = {}
         function Hook.CommunitiesSettingsDialogMixin:SetClubId(clubId)
@@ -137,6 +154,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
     end
     do --[[ CommunitiesMemberList ]]
+        function Skin.CommunitiesMemberListEntryTemplate(Button)
+            Util.Mixin(Button, Hook.CommunitiesMemberListEntryMixin)
+        end
         function Skin.CommunitiesMemberListFrameTemplate(Frame)
             Skin.UICheckButtonTemplate(Frame.ShowOfflineButton)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
@@ -597,6 +617,7 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --      CommunitiesMemberList      --
     ----====####$$$$%%%%%$$$$####====----
+    Util.Mixin(_G.CommunitiesMemberListEntryMixin, Hook.CommunitiesMemberListEntryMixin)
 
     ----====####$$$$%%%%$$$$####====----
     --      CommunitiesChatFrame      --

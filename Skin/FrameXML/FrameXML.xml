@@ -19,6 +19,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="ChatFrame.lua"/>
     <Script file="CinematicFrame.lua"/>
     <Script file="ColorPickerFrame.lua"/>
+    <Script file="CompactUnitFrame.lua"/>
     <Script file="Constants.lua"/>
     <Script file="ContainerFrame.lua"/>
     <Script file="DressUpFrames.lua"/>

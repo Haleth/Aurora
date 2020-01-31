@@ -2,7 +2,8 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\LevelUpDisplay.lua ]]
     function Hook.LevelUpDisplaySide_OnShow(self)
@@ -20,6 +21,9 @@ do --[[ FrameXML\LevelUpDisplay.lua ]]
             prev = frame
         end
     end
+    function Hook.BossBanner_ConfigureLootFrame(lootFrame, data)
+        lootFrame.PlayerName:SetTextColor(_G.CUSTOM_CLASS_COLORS[data.className]:GetRGB())
+    end
 end
 
 do --[[ FrameXML\LevelUpDisplay.xml ]]
@@ -30,6 +34,7 @@ end
 
 function private.FrameXML.LevelUpDisplay()
     _G.LevelUpDisplaySide:HookScript("OnShow", Hook.LevelUpDisplaySide_OnShow)
+    _G.hooksecurefunc("BossBanner_ConfigureLootFrame", Hook.BossBanner_ConfigureLootFrame)
 
     _G.LevelUpDisplaySideUnlockFrame1:SetPoint("TOP", _G.LevelUpDisplaySide.goldBG, "BOTTOM", 0, -10)
 end

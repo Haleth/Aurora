@@ -90,7 +90,31 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
         end
     end
     do --[[ Blizzard_HeirloomCollection ]]
+        local NO_CLASS_FILTER = 0
+        local NO_SPEC_FILTER = 0
+
         Hook.HeirloomsMixin = {}
+        function Hook.HeirloomsMixin:UpdateClassFilterDropDownText()
+            local text
+            local classFilter, specFilter = _G.C_Heirloom.GetClassAndSpecFilters()
+            if classFilter == NO_CLASS_FILTER then
+                text = _G.ALL_CLASSES
+            else
+                local classInfo = _G.C_CreatureInfo.GetClassInfo(classFilter)
+                if not classInfo then
+                    return
+                end
+
+                local classColorStr = _G.CUSTOM_CLASS_COLORS[classInfo.classFile].colorStr
+                if specFilter == NO_SPEC_FILTER then
+                    text = _G.HEIRLOOMS_CLASS_FILTER_FORMAT:format(classColorStr, classInfo.className)
+                else
+                    local specName = _G.GetSpecializationNameForSpecID(specFilter)
+                    text = _G.HEIRLOOMS_CLASS_SPEC_FILTER_FORMAT:format(classColorStr, classInfo.className, specName)
+                end
+            end
+            _G.UIDropDownMenu_SetText(self.classDropDown, text)
+        end
         function Hook.HeirloomsMixin:UpdateButton(button)
             if not button._auroraSkinned then
                 Skin.HeirloomSpellButtonTemplate(button)

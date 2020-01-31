@@ -2,10 +2,35 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
---do --[[ FrameXML\RaidFinder.lua ]]
---end
+do --[[ FrameXML\RaidFinder.lua ]]
+    function Hook.RaidFinderQueueFrameCooldownFrame_Update()
+        local numPlayers, prefix
+        if _G.IsInRaid() then
+            numPlayers = _G.GetNumGroupMembers()
+            prefix = "raid"
+        else
+            numPlayers = _G.GetNumSubgroupMembers()
+            prefix = "party"
+        end
+
+        local cooldowns = 0
+        for i = 1, numPlayers do
+            local unit = prefix .. i
+            if _G.UnitHasLFGDeserter(unit) and not _G.UnitIsUnit(unit, "player") then
+                cooldowns = cooldowns + 1
+                if cooldowns <= _G.MAX_RAID_FINDER_COOLDOWN_NAMES then
+                    local _, classToken = _G.UnitClass(unit)
+                    local classColor = classToken and _G.CUSTOM_CLASS_COLORS[classToken]
+                    if classColor then
+                        _G["RaidFinderQueueFrameCooldownFrameName" .. cooldowns]:SetFormattedText("|c%s%s|r", classColor.colorStr, _G.UnitName(unit))
+                    end
+                end
+            end
+        end
+    end
+end
 
 do --[[ FrameXML\RaidFinder.xml ]]
     function Skin.RaidFinderRoleButtonTemplate(Button)
@@ -14,6 +39,8 @@ do --[[ FrameXML\RaidFinder.xml ]]
 end
 
 function private.FrameXML.RaidFinder()
+    _G.hooksecurefunc("RaidFinderQueueFrameCooldownFrame_Update", Hook.RaidFinderQueueFrameCooldownFrame_Update)
+
     local RaidFinderFrame = _G.RaidFinderFrame
     _G.RaidFinderFrameRoleBackground:Hide()
 

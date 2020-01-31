@@ -22,6 +22,20 @@ do --[[ FrameXML\FriendsFrame.lua ]]
         local gameIcon = button.gameIcon
         gameIcon._bg:SetShown(gameIcon:IsShown())
     end
+    function Hook.WhoList_Update()
+        local buttons = _G.WhoListScrollFrame.buttons
+        local numButtons = #buttons
+
+        for i = 1, numButtons do
+            local button = buttons[i]
+            if button.index then
+                local info = _G.C_FriendList.GetWhoInfo(button.index)
+                if info.filename then
+                    button.Class:SetTextColor(_G.CUSTOM_CLASS_COLORS[info.filename]:GetRGB())
+                end
+            end
+        end
+    end
 end
 
 do --[[ FrameXML\FriendsFrame.xml ]]
@@ -71,6 +85,7 @@ end
 
 function private.FrameXML.FriendsFrame()
     _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", Hook.FriendsFrame_UpdateFriendButton)
+    _G.hooksecurefunc("WhoList_Update", Hook.WhoList_Update)
 
     local FriendsFrame = _G.FriendsFrame
     Skin.ButtonFrameTemplate(FriendsFrame)
