@@ -39,7 +39,7 @@ function private.FrameXML.RaidFrame()
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoInstanceLabel)
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoIDLabel)
 
-    Skin.UIPanelCloseButton(_G.RaidFrameRaidInfoButton)
+    Skin.UIPanelCloseButton(_G.RaidInfoCloseButton)
     Skin.HybridScrollBarTemplate(_G.RaidInfoScrollFrame.scrollBar)
     Skin.UIPanelButtonTemplate(_G.RaidInfoExtendButton)
     Skin.UIPanelButtonTemplate(_G.RaidInfoCancelButton)
