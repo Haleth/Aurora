@@ -48,9 +48,7 @@ do --[[ AddOns\Blizzard_OrderHallUI.lua ]]
             for talentFrame in self.buttonPool:EnumerateActive() do
                 if not talentFrame.talent.prerequisiteTalentID then
                     local _, _, _, xOffset, yOffset = talentFrame:GetPoint()
-                    if private.isPatch then
-                        xOffset = xOffset + 149
-                    end
+                    xOffset = xOffset + 149
                     talentFrame:SetPoint("TOPLEFT", _G.Round(xOffset), yOffset)
                 end
 
@@ -72,13 +70,11 @@ do --[[ AddOns\Blizzard_OrderHallUI.lua ]]
         end
 
         Hook.GarrisonTalentButtonMixin = {}
-        if private.isPatch then
-            function Hook.GarrisonTalentButtonMixin:SetBorder(borderAtlas)
-                if borderAtlas then
-                    self._auroraIconBorder:SetColorTexture(Color.yellow:GetRGB())
-                else
-                    self._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
-                end
+        function Hook.GarrisonTalentButtonMixin:SetBorder(borderAtlas)
+            if borderAtlas then
+                self._auroraIconBorder:SetColorTexture(Color.yellow:GetRGB())
+            else
+                self._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
             end
         end
     end
@@ -97,11 +93,7 @@ do --[[ AddOns\Blizzard_OrderHallUI.xml ]]
             Base.CropIcon(Button.Highlight)
 
             Button.Cooldown:SetSwipeTexture([[Interface\Buttons\WHITE8x8]])
-            if private.isPatch then
-                Button.Cooldown:SetSwipeColor(Color.green.r, Color.green.g, Color.green.b, 0.5)
-            else
-                Button.Cooldown:SetSwipeColor(Color.green.r, Color.green.g, Color.green.b, 0.25)
-            end
+            Button.Cooldown:SetSwipeColor(Color.green.r, Color.green.g, Color.green.b, 0.5)
         end
         function Skin.GarrisonTalentChoiceTemplate(Texture)
             local parent = Texture:GetParent()

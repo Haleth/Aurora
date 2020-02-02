@@ -17,12 +17,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 function private.FrameXML.InterfaceOptionsFrame()
     Skin.DialogBorderTemplate(_G.InterfaceOptionsFrame.Border)
-    if private.isPatch then
-        Skin.DialogHeaderTemplate(_G.InterfaceOptionsFrame.Header)
-    else
-        _G.InterfaceOptionsFrameHeader:SetTexture("")
-        _G.InterfaceOptionsFrameHeaderText:SetPoint("TOP", 0, -10)
-    end
+    Skin.DialogHeaderTemplate(_G.InterfaceOptionsFrame.Header)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameCancel)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsFrameOkay)
     Util.PositionRelative("BOTTOMRIGHT", _G.InterfaceOptionsFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {

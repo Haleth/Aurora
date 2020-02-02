@@ -12,14 +12,7 @@ function private.FrameXML.GameMenuFrame()
 
     local GameMenuFrame = _G.GameMenuFrame
     Skin.DialogBorderTemplate(GameMenuFrame.Border)
-    if private.isPatch then
-        Skin.DialogHeaderTemplate(GameMenuFrame.Header)
-    else
-        local header = _G.GameMenuFrameHeader
-        header:SetTexture("")
-        header:ClearAllPoints()
-        header:SetPoint("TOP", _G.GameMenuFrame, 0, 7)
-    end
+    Skin.DialogHeaderTemplate(GameMenuFrame.Header)
 
     local buttons = {
         "Help",

@@ -731,7 +731,5 @@ function private.SharedXML.SharedUIPanelTemplates()
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)
 
-    if private.isPatch then
-        Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
-    end
+    Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
 end

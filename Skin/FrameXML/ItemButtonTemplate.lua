@@ -118,7 +118,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                         overlay = private.AZERITE_COLORS[1]
                         overlay2 = private.AZERITE_COLORS[2]
                         visual = "bracket"
-                    elseif private.isPatch and _G.IsCorruptedItem(itemIDOrLink) then
+                    elseif _G.IsCorruptedItem(itemIDOrLink) then
                         overlay = Color.orange
                         overlay2 = _G.CORRUPTION_COLOR
                         visual = "corner"

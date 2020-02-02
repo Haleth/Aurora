@@ -21,13 +21,7 @@ function private.AddOns.Blizzard_GMSurveyUI()
     for i = 1, 12 do
         _G.select(i, _G.GMSurveyFrame:GetRegions()):Hide()
     end
-    if private.isPatch then
-        Skin.DialogHeaderTemplate(_G.GMSurveyFrame.Header)
-    else
-        _G.GMSurveyHeaderLeft:Hide()
-        _G.GMSurveyHeaderRight:Hide()
-        _G.GMSurveyHeaderCenter:Hide()
-    end
+    Skin.DialogHeaderTemplate(_G.GMSurveyFrame.Header)
     _G.GMSurveyScrollFrameTop:SetAlpha(0)
     _G.GMSurveyScrollFrameMiddle:SetAlpha(0)
     _G.GMSurveyScrollFrameBottom:SetAlpha(0)

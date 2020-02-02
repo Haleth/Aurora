@@ -614,26 +614,12 @@ function private.AddOns.Blizzard_AchievementUI()
     prevContainer.rightBorder:Hide()
     prevContainer.topBorder:Hide()
 
-    if private.isPatch then
-        Base.SetBackdrop(prevContainer)
+    Base.SetBackdrop(prevContainer)
 
-        for i = 1, #prevContainer.searchPreviews do
-            Skin.AchievementSearchPreviewButton(prevContainer.searchPreviews[i])
-        end
-        SkinSearchButton(prevContainer.showAllSearchResults)
-    else
-        -- This needs to be a separate frame due to FrameLevel changes in Blizz's code
-        local prevContainerBG = _G.CreateFrame("Frame", nil, prevContainer)
-        prevContainerBG:SetPoint("TOPLEFT")
-        prevContainerBG:SetPoint("BOTTOMRIGHT", AchievementFrame.showAllSearchResults, 0, 0)
-        prevContainerBG:SetFrameLevel(prevContainer:GetFrameLevel() - 2)
-        Base.SetBackdrop(prevContainerBG)
-
-        for i = 1, #AchievementFrame.searchPreview do
-            Skin.AchievementSearchPreviewButton(AchievementFrame.searchPreview[i])
-        end
-        SkinSearchButton(AchievementFrame.showAllSearchResults)
+    for i = 1, #prevContainer.searchPreviews do
+        Skin.AchievementSearchPreviewButton(prevContainer.searchPreviews[i])
     end
+    SkinSearchButton(prevContainer.showAllSearchResults)
 
     local searchResults = AchievementFrame.searchResults
     Base.SetBackdrop(searchResults)

@@ -36,12 +36,7 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
         local name = Frame:GetName()
 
         Skin.DialogBorderTemplate(Frame.Border)
-        if private.isPatch then
-            Skin.DialogHeaderTemplate(Frame.Header)
-        else
-            _G[name.."Header"]:SetTexture("")
-            _G[name.."HeaderText"]:SetPoint("TOP", 0, -10)
-        end
+        Skin.DialogHeaderTemplate(Frame.Header)
 
         Skin.OptionsFrameListTemplate(_G[name.."CategoryFrame"])
         Base.SetBackdrop(_G[name.."PanelContainer"], Color.frame)

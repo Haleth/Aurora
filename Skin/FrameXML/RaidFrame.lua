@@ -30,11 +30,7 @@ function private.FrameXML.RaidFrame()
     _G.RaidInfoDetailCorner:Hide()
 
     Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame.Border)
-    if private.isPatch then
-        Skin.DialogHeaderTemplate(_G.RaidInfoFrame.Header)
-    else
-        _G.RaidInfoFrameHeader:Hide()
-    end
+    Skin.DialogHeaderTemplate(_G.RaidInfoFrame.Header)
 
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoInstanceLabel)
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoIDLabel)

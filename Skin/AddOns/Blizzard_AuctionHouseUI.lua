@@ -520,7 +520,6 @@ end
 
 -- /run AuctionHouseFrame:SetDisplayMode(AuctionHouseFrameDisplayMode.WoWTokenSell)
 function private.AddOns.Blizzard_AuctionHouseUI()
-    if not private.isPatch then return end
     ----====####$$$$%%%%$$$$####====----
     --      Blizzard_AuctionData      --
     ----====####$$$$%%%%$$$$####====----
@@ -676,7 +675,6 @@ end
 
 
 function private.AddOns.Blizzard_AuctionUI()
-    if private.isPatch then return end
     local F, C = _G.unpack(Aurora)
 
     F.SetBD(_G.AuctionFrame, 11, -12, -1, 10)

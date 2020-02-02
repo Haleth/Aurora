@@ -209,11 +209,6 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.PVPSeasonChangesNoticeTemplate(NewSeasonPopup)
     NewSeasonPopup:SetPoint("TOPLEFT", ConquestFrame, 4, -3)
     NewSeasonPopup:SetPoint("BOTTOMRIGHT", 0, 0)
-    if private.isPatch then
-        Skin.SeasonRewardFrameTemplate(NewSeasonPopup.SeasonRewardFrame)
-        select(3, NewSeasonPopup.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
-    else
-        Skin.SeasonRewardFrameTemplate(_G.SeasonRewardFrame)
-        select(3, _G.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
-    end
+    Skin.SeasonRewardFrameTemplate(NewSeasonPopup.SeasonRewardFrame)
+    select(3, NewSeasonPopup.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
 end

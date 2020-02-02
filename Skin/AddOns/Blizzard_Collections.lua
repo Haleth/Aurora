@@ -809,12 +809,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
     Skin.GlowBoxFrame(WardrobeTransmogFrame.OutfitHelpBox, "Left")
 
-    local ModelScene
-    if private.isPatch then
-        ModelScene = WardrobeTransmogFrame.ModelScene
-    else
-        ModelScene = WardrobeTransmogFrame.Model
-    end
+    local ModelScene = WardrobeTransmogFrame.ModelScene
     Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
     for i = 1, #ModelScene.SlotButtons do
         if i > 13 then
