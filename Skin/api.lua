@@ -738,12 +738,27 @@ do -- Color API
             end
         end
 
+        local colorCache
         function meta:NotifyChanges()
-            --print("CUSTOM_CLASS_COLORS:NotifyChanges", private.classColorsHaveChanged)
-            if not private.classColorsHaveChanged then
-                -- We can't determine if the colors have changed, dispatch just in case.
-                DispatchCallbacks()
-            elseif private.classColorsHaveChanged() then
+            --print("CUSTOM_CLASS_COLORS:NotifyChanges", colorCache)
+            local hasChanged = false
+            if colorCache then
+                for i = 1, #_G.CLASS_SORT_ORDER do
+                    local classToken = _G.CLASS_SORT_ORDER[i]
+                    local color = _G.CUSTOM_CLASS_COLORS[classToken]
+                    local cache = colorCache[classToken]
+
+                    if not color:IsEqualTo(cache) then
+                        --print("Change found in", classToken)
+                        color:SetRGB(cache.r, cache.g, cache.b)
+                        hasChanged = true
+                    end
+                end
+            end
+
+            if hasChanged then
+                private.updateHighlightColor()
+
                 DispatchCallbacks()
             end
         end
@@ -759,6 +774,9 @@ do -- Color API
             return className and classTokens[className]
         end
 
+        function private.setColorCache(cache)
+            colorCache = cache
+        end
         function private.classColorsReset(colors, noMeta)
             local colorTable = colors or _G.CUSTOM_CLASS_COLORS
             for class, color in next, _G.RAID_CLASS_COLORS do

@@ -33,7 +33,5 @@ end
 function private.SharedXML.Util()
     _G.hooksecurefunc("TriStateCheckbox_SetState", Hook.TriStateCheckbox_SetState)
 
-    if private.classColorsInit then
-        private.classColorsInit()
-    end
+    _G.CUSTOM_CLASS_COLORS:NotifyChanges()
 end

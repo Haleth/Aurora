@@ -81,6 +81,7 @@ function private.OnLoad()
         private.classColorsReset(customClassColors, true)
     end
 
+    private.setColorCache(customClassColors)
     function private.updateHighlightColor()
         local r, g, b
         if AuroraConfig.customHighlight.enabled then
@@ -92,26 +93,7 @@ function private.OnLoad()
         C.r, C.g, C.b = r, g, b -- deprecated
         Color.highlight:SetRGB(r, g, b)
     end
-    function private.classColorsHaveChanged()
-        local hasChanged = false
-        for i = 1, #_G.CLASS_SORT_ORDER do
-            local classToken = _G.CLASS_SORT_ORDER[i]
-            local color = _G.CUSTOM_CLASS_COLORS[classToken]
-            local cache = customClassColors[classToken]
 
-            if not color:IsEqualTo(cache) then
-                --print("Change found in", classToken)
-                color:SetRGB(cache.r, cache.g, cache.b)
-                hasChanged = true
-            end
-        end
-        return hasChanged
-    end
-    function private.classColorsInit()
-        if private.classColorsHaveChanged() or AuroraConfig.customHighlight.enabled then
-            private.updateHighlightColor()
-        end
-    end
     _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
         for classToken, color in next, _G.CUSTOM_CLASS_COLORS do
             local ccc = customClassColors[classToken]
@@ -122,7 +104,6 @@ function private.OnLoad()
         end
 
         _G.AuroraOptions.refresh()
-        private.updateHighlightColor()
     end)
 
     if AuroraConfig.buttonsHaveGradient then
