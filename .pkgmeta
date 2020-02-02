@@ -5,6 +5,9 @@ ignore:
     - *.bat
     - test.lua
 
+    # Classic files
+    - AddOns/Blizzard_AuctionUI.lua
+
 manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown

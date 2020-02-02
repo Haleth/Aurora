@@ -1,5 +1,5 @@
---Blizzard_PVPMatch
 local _, private = ...
+if private.isClassic then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals
