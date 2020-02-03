@@ -1,4 +1,5 @@
 local _, private = ...
+if private.isClassic then return end
 
 -- [[ Core ]]
 local Aurora = private.Aurora
