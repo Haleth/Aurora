@@ -1,4 +1,22 @@
-﻿## [8.3.0.1] - 2020-01-18 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * AH buy dialog
+  * Classic support
+
+### Changed ###
+
+  * More custom class color overrides across the UI
+  * Various minor tweaks
+
+### Fixed ###
+
+  * World Quest tracker heading wasn't skinned
+  * Callbacks were not always called when class colors were changed
+
+
+
+## [8.3.0.1] - 2020-01-18 ##
 ### Fixed ###
 
   * Boss buttons in the Encounter Journal would not un-highlight
