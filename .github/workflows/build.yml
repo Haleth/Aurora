@@ -26,7 +26,7 @@ jobs:
         /home/runner/.luarocks/bin/luacheck . --no-color -q
         
     - name: Alpha Changelog
-      run: echo github.event_name
+      run: echo event_name $github.event_name
 
     - uses: actions/setup-python@v1
       with:

@@ -7,10 +7,444 @@ if private.isRetail then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Color = Aurora.Color
-local F, C = _G.unpack(Aurora)
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
+
+do --[[ AddOns\Blizzard_AuctionUI.lua ]]
+    function Hook.FilterButton_SetUp(button, info)
+        button:SetNormalTexture("")
+
+        local highlight = button:GetHighlightTexture()
+        if info.type == "subSubCategory" then
+            button:SetBackdrop(false)
+
+            highlight:SetColorTexture(Color.highlight:GetRGB())
+            highlight:SetAlpha(0.5)
+        else
+            button:SetBackdrop(true)
+            highlight:SetAlpha(0)
+
+            if info.type == "category" then
+                button:SetBackdropOption("offsets", {
+                    left = -1,
+                    right = 1,
+                    top = 1,
+                    bottom = 1,
+                })
+            elseif info.type == "subCategory" then
+                button:SetBackdropOption("offsets", {
+                    left = 8,
+                    right = 1,
+                    top = 1,
+                    bottom = 1,
+                })
+            end
+        end
+    end
+    function Hook.AuctionFrameBrowse_Update()
+        local offset = _G.FauxScrollFrame_GetOffset(_G.BrowseScrollFrame)
+        local button, quality, itemID, _
+
+        for i = 1, _G.NUM_BROWSE_TO_DISPLAY do
+            button = _G["BrowseButton"..i]
+            if button:IsShown() then
+                _, _, _, quality, _, _, _, _, _, _, _, _, _, _, _, _, itemID =  _G.GetAuctionItemInfo("list", offset + i);
+                Hook.SetItemButtonQuality(button._item, quality, itemID)
+            end
+        end
+    end
+    function Hook.AuctionFrameBid_Update()
+        local offset = _G.FauxScrollFrame_GetOffset(_G.BidScrollFrame)
+        local button, quality, itemID, _
+
+        for i = 1, _G.NUM_BIDS_TO_DISPLAY do
+            button = _G["BidButton"..i]
+            if button:IsShown() then
+                _, _, _, quality, _, _, _, _, _, _, _, _, _, _, _, _, itemID =  _G.GetAuctionItemInfo("bidder", offset + i);
+                Hook.SetItemButtonQuality(button._item, quality, itemID)
+            end
+        end
+    end
+    function Hook.AuctionFrameAuctions_Update()
+        local offset = _G.FauxScrollFrame_GetOffset(_G.BidScrollFrame)
+        local button, quality, itemID, _
+
+        for i = 1, _G.NUM_AUCTIONS_TO_DISPLAY do
+            button = _G["AuctionsButton"..i]
+            if button:IsShown() then
+                _, _, _, quality, _, _, _, _, _, _, _, _, _, _, _, _, itemID =  _G.GetAuctionItemInfo("owner", offset + i);
+                Hook.SetItemButtonQuality(button._item, quality, itemID)
+            end
+        end
+    end
+    function Hook.AuctionSellItemButton_OnEvent(self, event, ...)
+        local _, texture, _, quality, _, _, _, _, _, itemID = _G.GetAuctionSellItemInfo()
+        Hook.SetItemButtonQuality(self, quality, itemID)
+        if texture then
+            Base.CropIcon(self:GetNormalTexture())
+        end
+    end
+    function Hook.SortButton_UpdateArrow(button, type, sort)
+        local primaryColumn, reversed = _G.GetAuctionSort(type, 1)
+        button.Arrow:SetTexCoord(0, 1, 0, 1)
+        if sort == primaryColumn then
+            if reversed then
+                Base.SetTexture(button.Arrow, "arrowUp")
+            else
+                Base.SetTexture(button.Arrow, "arrowDown")
+            end
+        end
+    end
+end
+
+do --[[ AddOns\Blizzard_AuctionUITemplates.xml ]]
+    function Skin.AuctionRadioButtonTemplate(CheckButton)
+        Skin.FrameTypeCheckButton(CheckButton)
+        CheckButton:SetBackdropOption("offsets", {
+            left = 4,
+            right = 4,
+            top = 4,
+            bottom = 4,
+        })
+
+        local bg = CheckButton:GetBackdropTexture("bg")
+        local check = CheckButton:GetCheckedTexture()
+        check:ClearAllPoints()
+        check:SetPoint("TOPLEFT", bg, 1, -1)
+        check:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        check:SetColorTexture(Color.highlight:GetRGB())
+    end
+    function Skin.AuctionClassButtonTemplate(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = -1,
+            right = 1,
+            top = 1,
+            bottom = 1,
+        })
+
+        Button:GetRegions():SetTexture("") -- lines
+        Button:SetNormalTexture("")
+
+        local highlight = Button:GetHighlightTexture()
+        highlight:ClearAllPoints()
+        highlight:SetPoint("TOPLEFT", 15, -1)
+        highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+        highlight:SetColorTexture(Color.highlight:GetRGB())
+    end
+    function Skin.AuctionSortButtonTemplate(Button)
+        local name = Button:GetName()
+        _G[name.."Left"]:Hide()
+        _G[name.."Right"]:Hide()
+        _G[name.."Middle"]:Hide()
+
+        local texture = Button:GetNormalTexture()
+        texture:SetSize(10, 5)
+    end
+    function Skin.BrowseButtonTemplate(Button)
+        local name = Button:GetName()
+        local _, _, left, right, mid = Button:GetRegions()
+        left:Hide()
+        right:Hide()
+        mid:Hide()
+
+        local item = _G[name.."Item"]
+        item.Count = _G[name.."ItemCount"]
+        _G[name.."ItemStock"]:SetPoint("TOPLEFT", 2, -2)
+        item.icon = _G[name.."ItemIconTexture"]
+        item.icon:SetTexture([[Interface\Buttons\WHITE8x8]])
+        Skin.FrameTypeItemButton(item)
+        Button._item = item
+
+        local highlight = Button:GetHighlightTexture()
+        highlight:ClearAllPoints()
+        highlight:SetPoint("TOPLEFT", item, "TOPRIGHT", 2, 0)
+        highlight:SetPoint("BOTTOMLEFT", item, "BOTTOMRIGHT", 2, 0)
+        highlight:SetPoint("RIGHT", 0, 0)
+        highlight:SetColorTexture(Color.highlight:GetRGB())
+        highlight:SetAlpha(0.25)
+    end
+    function Skin.BidButtonTemplate(Button)
+        local name = Button:GetName()
+        local _, _, _, left, right, mid = Button:GetRegions()
+        left:Hide()
+        right:Hide()
+        mid:Hide()
+
+        local item = _G[name.."Item"]
+        item.Count = _G[name.."ItemCount"]
+        _G[name.."ItemStock"]:SetPoint("TOPLEFT", 2, -2)
+        item.icon = _G[name.."ItemIconTexture"]
+        item.icon:SetTexture([[Interface\Buttons\WHITE8x8]])
+        Skin.FrameTypeItemButton(item)
+        Button._item = item
+
+        local highlight = Button:GetHighlightTexture()
+        highlight:ClearAllPoints()
+        highlight:SetPoint("TOPLEFT", item, "TOPRIGHT", 2, 0)
+        highlight:SetPoint("BOTTOMLEFT", item, "BOTTOMRIGHT", 2, 0)
+        highlight:SetPoint("RIGHT", 0, 0)
+        highlight:SetColorTexture(Color.highlight:GetRGB())
+        highlight:SetAlpha(0.25)
+    end
+    function Skin.AuctionsButtonTemplate(Button)
+        local name = Button:GetName()
+        local _, left, right, mid = Button:GetRegions()
+        left:Hide()
+        right:Hide()
+        mid:Hide()
+
+        local item = _G[name.."Item"]
+        item.Count = _G[name.."ItemCount"]
+        _G[name.."ItemStock"]:SetPoint("TOPLEFT", 2, -2)
+        item.icon = _G[name.."ItemIconTexture"]
+        item.icon:SetTexture([[Interface\Buttons\WHITE8x8]])
+        Skin.FrameTypeItemButton(item)
+        Button._item = item
+
+        local highlight = Button:GetHighlightTexture()
+        highlight:ClearAllPoints()
+        highlight:SetPoint("TOPLEFT", item, "TOPRIGHT", 2, 0)
+        highlight:SetPoint("BOTTOMLEFT", item, "BOTTOMRIGHT", 2, 0)
+        highlight:SetPoint("RIGHT", 0, 0)
+        highlight:SetColorTexture(Color.highlight:GetRGB())
+        highlight:SetAlpha(0.25)
+    end
+    function Skin.AuctionTabTemplate(Button)
+        Skin.CharacterFrameTabButtonTemplate(Button)
+    end
+end
 
 function private.AddOns.Blizzard_AuctionUI()
+    _G.hooksecurefunc("FilterButton_SetUp", Hook.FilterButton_SetUp)
+    _G.hooksecurefunc("AuctionFrameBrowse_Update", Hook.AuctionFrameBrowse_Update)
+    _G.hooksecurefunc("AuctionFrameBid_Update", Hook.AuctionFrameBid_Update)
+    _G.hooksecurefunc("AuctionFrameAuctions_Update", Hook.AuctionFrameAuctions_Update)
+    _G.hooksecurefunc("SortButton_UpdateArrow", Hook.SortButton_UpdateArrow)
+
+    local AuctionFrame = _G.AuctionFrame
+    Base.SetBackdrop(AuctionFrame)
+    AuctionFrame:SetBackdropOption("offsets", {
+        left = 12,
+        right = 2,
+        top = 13,
+        bottom = 11,
+    })
+
+    _G.AuctionPortraitTexture:Hide()
+    _G.AuctionFrameTopLeft:Hide()
+    _G.AuctionFrameTop:Hide()
+    _G.AuctionFrameTopRight:Hide()
+    _G.AuctionFrameBotLeft:Hide()
+    _G.AuctionFrameBot:Hide()
+    _G.AuctionFrameBotRight:Hide()
+
+    local auctionBg = AuctionFrame:GetBackdropTexture("bg")
+    Skin.AuctionTabTemplate(_G.AuctionFrameTab1)
+    Skin.AuctionTabTemplate(_G.AuctionFrameTab2)
+    Skin.AuctionTabTemplate(_G.AuctionFrameTab3)
+    Util.PositionRelative("TOPLEFT", auctionBg, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.AuctionFrameTab1,
+        _G.AuctionFrameTab2,
+        _G.AuctionFrameTab3,
+    })
+
+    Skin.SmallMoneyFrameTemplate(_G.AuctionFrameMoneyFrame)
+    local moneyBG = _G.CreateFrame("Frame", nil, _G.AuctionFrame)
+    Base.SetBackdrop(moneyBG, Color.frame)
+    moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+    moneyBG:SetPoint("BOTTOMLEFT", auctionBg, 5, 5)
+    moneyBG:SetPoint("TOPRIGHT", _G.AuctionFrameMoneyFrame, -8, 2)
+
+    Skin.UIPanelCloseButton(_G.AuctionFrameCloseButton)
+
+
+    ------------
+    -- Browse --
+    ------------
+    local AuctionFrameBrowse = _G.AuctionFrameBrowse
+    _G.BrowseTitle:ClearAllPoints()
+    _G.BrowseTitle:SetPoint("TOPLEFT", auctionBg)
+    _G.BrowseTitle:SetPoint("BOTTOMRIGHT", auctionBg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    --[[ Browse Categories ]]--
+    for i = 1, _G.NUM_FILTERS_TO_DISPLAY do
+        Skin.AuctionClassButtonTemplate(AuctionFrameBrowse.FilterButtons[i])
+    end
+
+    Skin.FauxScrollFrameTemplate(_G.BrowseFilterScrollFrame)
+    local top, bottom = _G.BrowseFilterScrollFrame:GetRegions()
+    top:Hide()
+    bottom:Hide()
+
+    Skin.FauxScrollFrameTemplate(_G.BrowseScrollFrame)
+    top, bottom = _G.BrowseScrollFrame:GetRegions()
+    top:Hide()
+    bottom:Hide()
+
+    --[[ WoW Token ]]--
+    -- BrowseWowTokenResults is not accessable
+
+    --[[ Browse List ]]--
+    Skin.AuctionSortButtonTemplate(_G.BrowseQualitySort)
+    Skin.AuctionSortButtonTemplate(_G.BrowseLevelSort)
+    Skin.AuctionSortButtonTemplate(_G.BrowseDurationSort)
+    Skin.AuctionSortButtonTemplate(_G.BrowseHighBidderSort)
+    Skin.AuctionSortButtonTemplate(_G.BrowseCurrentBidSort)
+    for i = 1, _G.NUM_BROWSE_TO_DISPLAY do
+        Skin.BrowseButtonTemplate(_G["BrowseButton"..i])
+    end
+
+    Skin.NavButtonPrevious(_G.BrowsePrevPageButton)
+    Skin.NavButtonNext(_G.BrowseNextPageButton)
+
+    --[[ Browse Header ]]--
+    Skin.InputBoxInstructionsTemplate(_G.BrowseName)
+    Skin.InputBoxTemplate(_G.BrowseMinLevel)
+    Skin.InputBoxTemplate(_G.BrowseMaxLevel)
+    Skin.UIDropDownMenuTemplate(_G.BrowseDropDown)
+    Skin.UICheckButtonTemplate(_G.IsUsableCheckButton)
+    Skin.UICheckButtonTemplate(_G.ShowOnPlayerCheckButton)
+    Skin.UIPanelButtonTemplate(_G.BrowseSearchButton)
+
+    --[[ Browse Footer ]]--
+    Skin.UIPanelButtonTemplate(_G.BrowseCloseButton)
+    select(6, _G.BrowseCloseButton:GetRegions()):Hide()
+    Skin.UIPanelButtonTemplate(_G.BrowseBuyoutButton)
+    select(6, _G.BrowseBuyoutButton:GetRegions()):Hide()
+    Skin.UIPanelButtonTemplate(_G.BrowseBidButton)
+    select(6, _G.BrowseBidButton:GetRegions()):Hide()
+    Util.PositionRelative("BOTTOMRIGHT", auctionBg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+        _G.BrowseCloseButton,
+        _G.BrowseBuyoutButton,
+        _G.BrowseBidButton,
+    })
+
+    Skin.MoneyInputFrameTemplate(_G.BrowseBidPrice)
+
+    ---------
+    -- Bid --
+    ---------
+    --local AuctionFrameBid = _G.AuctionFrameBid
+    _G.BidTitle:ClearAllPoints()
+    _G.BidTitle:SetPoint("TOPLEFT", auctionBg)
+    _G.BidTitle:SetPoint("BOTTOMRIGHT", auctionBg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    --[[ Bid List ]]--
+    Skin.AuctionSortButtonTemplate(_G.BidQualitySort)
+    Skin.AuctionSortButtonTemplate(_G.BidLevelSort)
+    Skin.AuctionSortButtonTemplate(_G.BidDurationSort)
+    Skin.AuctionSortButtonTemplate(_G.BidBuyoutSort)
+    Skin.AuctionSortButtonTemplate(_G.BidStatusSort)
+    Skin.AuctionSortButtonTemplate(_G.BidBidSort)
+
+    Skin.FauxScrollFrameTemplate(_G.BidScrollFrame)
+    top, bottom = _G.BidScrollFrame:GetRegions()
+    top:Hide()
+    bottom:Hide()
+
+    for i = 1, _G.NUM_BIDS_TO_DISPLAY do
+        Skin.BidButtonTemplate(_G["BidButton"..i])
+    end
+
+    --[[ Bid Footer ]]--
+    Skin.MoneyInputFrameTemplate(_G.BidBidPrice)
+
+    Skin.UIPanelButtonTemplate(_G.BidCloseButton)
+    select(6, _G.BidCloseButton:GetRegions()):Hide()
+    Skin.UIPanelButtonTemplate(_G.BidBuyoutButton)
+    select(6, _G.BidBuyoutButton:GetRegions()):Hide()
+    Skin.UIPanelButtonTemplate(_G.BidBidButton)
+    select(6, _G.BidBidButton:GetRegions()):Hide()
+    Util.PositionRelative("BOTTOMRIGHT", auctionBg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+        _G.BidCloseButton,
+        _G.BidBuyoutButton,
+        _G.BidBidButton,
+    })
+
+
+
+    --------------
+    -- Auctions --
+    --------------
+    --local AuctionFrameAuctions = _G.AuctionFrameAuctions
+    _G.AuctionsTitle:ClearAllPoints()
+    _G.AuctionsTitle:SetPoint("TOPLEFT", auctionBg)
+    _G.AuctionsTitle:SetPoint("BOTTOMRIGHT", auctionBg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    --[[ Auctions List ]]--
+    Skin.AuctionSortButtonTemplate(_G.AuctionsQualitySort)
+    Skin.AuctionSortButtonTemplate(_G.AuctionsDurationSort)
+    Skin.AuctionSortButtonTemplate(_G.AuctionsHighBidderSort)
+    Skin.AuctionSortButtonTemplate(_G.AuctionsBidSort)
+
+    Skin.FauxScrollFrameTemplate(_G.AuctionsScrollFrame)
+    top, bottom = _G.AuctionsScrollFrame:GetRegions()
+    top:Hide()
+    bottom:Hide()
+
+    for i = 1, _G.NUM_AUCTIONS_TO_DISPLAY do
+        Skin.AuctionsButtonTemplate(_G["AuctionsButton"..i])
+    end
+
+    --[[ Auction Create ]]--
+    do -- AuctionsItemButton
+        local item = _G.AuctionsItemButton
+        Base.CreateBackdrop(item, {
+            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            tile = false,
+            offsets = {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            }
+        })
+        Base.CropIcon(item:GetBackdropTexture("bg"))
+        Base.SetBackdrop(item, Color.black, Color.frame.a)
+        item._auroraIconBorder = item
+
+        item:SetBackdropColor(1, 1, 1, 0.75)
+        item:SetBackdropBorderColor(Color.frame, 1)
+
+        item:HookScript("OnEvent", Hook.AuctionSellItemButton_OnEvent)
+    end
+    do -- AuctionsStackSizeEntry
+        local EditBox = _G.AuctionsStackSizeEntry
+        EditBox.Left = _G.AuctionsStackSizeEntryLeft
+        EditBox.Right = _G.AuctionsStackSizeEntryRight
+        EditBox.Middle = _G.AuctionsStackSizeEntryMiddle
+        Skin.InputBoxTemplate(EditBox)
+    end
+    Skin.UIPanelButtonTemplate(_G.AuctionsStackSizeMaxButton)
+
+    do -- AuctionsNumStacksEntry
+        local EditBox = _G.AuctionsNumStacksEntry
+        EditBox.Left = _G.AuctionsStackSizeEntryLeft
+        EditBox.Right = _G.AuctionsStackSizeEntryRight
+        EditBox.Middle = _G.AuctionsStackSizeEntryMiddle
+        Skin.InputBoxTemplate(EditBox)
+    end
+    Skin.UIPanelButtonTemplate(_G.AuctionsNumStacksMaxButton)
+
+    Skin.UIDropDownMenuTemplate(_G.PriceDropDown)
+    Skin.MoneyInputFrameTemplate(_G.StartPrice)
+    Skin.AuctionRadioButtonTemplate(_G.AuctionsShortAuctionButton)
+    Skin.AuctionRadioButtonTemplate(_G.AuctionsMediumAuctionButton)
+    Skin.AuctionRadioButtonTemplate(_G.AuctionsLongAuctionButton)
+    Skin.MoneyInputFrameTemplate(_G.BuyoutPrice)
+    Skin.UIPanelButtonTemplate(_G.AuctionsCreateAuctionButton)
+
+    --[[ Auctions Footer ]]--
+    Skin.UIPanelButtonTemplate(_G.AuctionsCloseButton)
+    Skin.UIPanelButtonTemplate(_G.AuctionsCancelAuctionButton)
+    Util.PositionRelative("BOTTOMRIGHT", auctionBg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+        _G.AuctionsCloseButton,
+        _G.AuctionsCancelAuctionButton,
+    })
+
+
+    --[=[
     F.SetBD(_G.AuctionFrame, 11, -12, -1, 10)
     _G.AuctionPortraitTexture:Hide()
     _G.AuctionFrame:DisableDrawLayer("ARTWORK")
@@ -198,4 +632,5 @@ function private.AddOns.Blizzard_AuctionUI()
     AuctionProgressBar.Icon:ClearAllPoints()
     AuctionProgressBar.Icon:SetPoint("TOPRIGHT", AuctionProgressBar, "TOPLEFT", -10, 5)
     F.ReskinClose(_G.AuctionProgressFrameCancelButton, "TOPLEFT", AuctionProgressBar, "TOPRIGHT", 11, 2)
+    ]=]
 end
