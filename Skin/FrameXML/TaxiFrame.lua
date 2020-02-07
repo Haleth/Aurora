@@ -26,10 +26,10 @@ function private.FrameXML.TaxiFrame()
     else
         Base.SetBackdrop(TaxiFrame)
         TaxiFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 34,
-            top = 14,
-            bottom = 75,
+            left = 20,
+            right = 46,
+            top = 74,
+            bottom = 84,
         })
 
         local portrait, tl, tr, bl, br = TaxiFrame:GetRegions()
@@ -43,7 +43,9 @@ function private.FrameXML.TaxiFrame()
         _G.TaxiMerchant:ClearAllPoints()
         _G.TaxiMerchant:SetPoint("TOPLEFT", bg)
         _G.TaxiMerchant:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        _G.TaxiMerchant:SetDrawLayer("OVERLAY", 5)
 
         Skin.UIPanelCloseButton(_G.TaxiCloseButton)
+        _G.TaxiCloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
     end
 end
