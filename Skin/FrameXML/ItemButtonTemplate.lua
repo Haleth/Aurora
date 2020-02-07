@@ -112,7 +112,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
             end
 
             local overlay, overlay2, visual, isRelic
-            if itemIDOrLink then
+            if private.isRetail and itemIDOrLink then
                 if not suppressOverlays then
                     if _G.C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(itemIDOrLink) then
                         overlay = private.AZERITE_COLORS[1]
@@ -178,7 +178,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                         iconOverlay:Show()
                     end
 
-                    iconBorder:SetBackdropBorderColor(color:GetRGB())
+                    iconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
                 else
                     iconBorder:SetBackdropBorderColor(0, 0, 0)
                 end
@@ -202,8 +202,10 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         })
         Button._auroraIconBorder = Button
 
-        Button.ItemContextOverlay:SetPoint("TOPLEFT", -1, 1)
-        Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
+        if private.isRetail then
+            Button.ItemContextOverlay:SetPoint("TOPLEFT", -1, 1)
+            Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
+        end
 
         Button:SetNormalTexture("")
         Base.CropIcon(Button:GetPushedTexture())

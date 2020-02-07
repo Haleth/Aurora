@@ -9,6 +9,11 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\MoneyFrame.lua ]]
+    function Hook.MerchantFrameItem_UpdateQuality(self, link)
+        local quality = link and select(3, _G.GetItemInfo(link)) or nil
+        Hook.SetItemButtonQuality(self.ItemButton, quality, link)
+    end
+
     local numCurrencies = 0
     function Hook.MerchantFrame_UpdateCurrencies()
         for i = numCurrencies + 1, _G.MAX_MERCHANT_CURRENCIES do
@@ -42,6 +47,9 @@ do --[[ FrameXML\MerchantFrame.xml ]]
 end
 
 function private.FrameXML.MerchantFrame()
+    if private.isClassic then
+        _G.hooksecurefunc("MerchantFrameItem_UpdateQuality", Hook.MerchantFrameItem_UpdateQuality)
+    end
     _G.hooksecurefunc("MerchantFrame_UpdateCurrencies", Hook.MerchantFrame_UpdateCurrencies)
 
     Skin.ButtonFrameTemplate(_G.MerchantFrame)
@@ -90,8 +98,10 @@ function private.FrameXML.MerchantFrame()
         _G[name.."MoneyFrame"]:SetPoint("BOTTOMLEFT", bg, 1, 1)
     end
 
-    _G.MerchantExtraCurrencyInset:SetAlpha(0)
-    Skin.ThinGoldEdgeTemplate(_G.MerchantExtraCurrencyBg, true)
+    if private.isRetail then
+        _G.MerchantExtraCurrencyInset:SetAlpha(0)
+        Skin.ThinGoldEdgeTemplate(_G.MerchantExtraCurrencyBg, true)
+    end
     _G.MerchantMoneyInset:Hide()
     Skin.ThinGoldEdgeTemplate(_G.MerchantMoneyBg, true)
 
@@ -119,5 +129,7 @@ function private.FrameXML.MerchantFrame()
         _G.MerchantFrameTab2,
     })
 
-    Skin.UIDropDownMenuTemplate(_G.MerchantFrame.lootFilter)
+    if private.isRetail then
+        Skin.UIDropDownMenuTemplate(_G.MerchantFrame.lootFilter)
+    end
 end

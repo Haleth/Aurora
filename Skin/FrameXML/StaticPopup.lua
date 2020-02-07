@@ -46,7 +46,11 @@ do --[[ FrameXML\StaticPopup.xml ]]
     end
     function Skin.StaticPopupTemplate(Frame)
         local name = Frame:GetName()
-        Skin.DialogBorderTemplate(Frame.Border)
+        if private.isRetail then
+            Skin.DialogBorderTemplate(Frame.Border)
+        else
+            Skin.DialogBorderTemplate(Frame)
+        end
 
         do -- CloseButton
             local close = _G[name .. "CloseButton"]

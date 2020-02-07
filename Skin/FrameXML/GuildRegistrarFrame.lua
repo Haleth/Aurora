@@ -15,17 +15,42 @@ local Color = Aurora.Color
 --end
 
 function private.FrameXML.GuildRegistrarFrame()
-    Skin.ButtonFrameTemplate(_G.GuildRegistrarFrame)
+    if private.isRetail then
+        Skin.ButtonFrameTemplate(_G.GuildRegistrarFrame)
 
-    _G.GuildRegistrarFrameTop:Hide()
-    _G.GuildRegistrarFrameBottom:Hide()
-    _G.GuildRegistrarFrameMiddle:Hide()
+        _G.GuildRegistrarFrameTop:Hide()
+        _G.GuildRegistrarFrameBottom:Hide()
+        _G.GuildRegistrarFrameMiddle:Hide()
 
-    -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-    _G.select(7, _G.GuildRegistrarFrame:GetRegions()):Hide() -- GuildRegistrarFrameBg
+        -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
+        _G.select(7, _G.GuildRegistrarFrame:GetRegions()):Hide() -- GuildRegistrarFrameBg
 
-    -- BlizzWTF: This should use the title text included in the template
-    _G.GuildRegistrarFrameNpcNameText:SetAllPoints(_G.GuildRegistrarFrame.TitleText)
+        -- BlizzWTF: This should use the title text included in the template
+        _G.GuildRegistrarFrameNpcNameText:SetAllPoints(_G.GuildRegistrarFrame.TitleText)
+    else
+        local GuildRegistrarFrame = _G.GuildRegistrarFrame
+        Base.SetBackdrop(GuildRegistrarFrame)
+        GuildRegistrarFrame:SetBackdropOption("offsets", {
+            left = 14,
+            right = 34,
+            top = 14,
+            bottom = 75,
+        })
+
+        local portrait, tl, tr, bl, br = GuildRegistrarFrame:GetRegions()
+        portrait:Hide()
+        tl:Hide()
+        tr:Hide()
+        bl:Hide()
+        br:Hide()
+
+        local bg = GuildRegistrarFrame:GetBackdropTexture("bg")
+        _G.GuildRegistrarFrameNpcNameText:ClearAllPoints()
+        _G.GuildRegistrarFrameNpcNameText:SetPoint("TOPLEFT", bg)
+        _G.GuildRegistrarFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        Skin.UIPanelButtonTemplate(_G.GuildRegistrarFrameGoodbyeButton)
+    end
 
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFrameCancelButton)
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFramePurchaseButton)

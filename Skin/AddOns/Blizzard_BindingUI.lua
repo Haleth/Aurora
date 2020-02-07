@@ -25,8 +25,20 @@ end
 function private.AddOns.Blizzard_BindingUI()
     local KeyBindingFrame = _G.KeyBindingFrame
 
-    Skin.DialogBorderTemplate(KeyBindingFrame.BG)
-    Skin.DialogHeaderTemplate(KeyBindingFrame.Header)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(KeyBindingFrame.BG)
+        Skin.DialogHeaderTemplate(KeyBindingFrame.Header)
+    else
+        Skin.DialogBorderTemplate(KeyBindingFrame)
+
+        local header = KeyBindingFrame.header
+        header:SetAlpha(0)
+        header:GetRegions():Hide()
+        header.text:SetParent(KeyBindingFrame)
+        header.text:ClearAllPoints()
+        header.text:SetPoint("TOPLEFT")
+        header.text:SetPoint("BOTTOMRIGHT", KeyBindingFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    end
 
     Skin.UICheckButtonTemplate(KeyBindingFrame.characterSpecificButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.unbindButton)

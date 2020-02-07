@@ -8,7 +8,7 @@ local Aurora = private.Aurora
 local F, C = _G.unpack(Aurora)
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\LootFrame.lua ]]
     function Hook.BonusRollFrame_OnShow(self)
@@ -65,25 +65,37 @@ end
 
 function private.FrameXML.LootFrame()
     --[[ LootFrame ]]--
+    local LootFrame = _G.LootFrame
+    Skin.ButtonFrameTemplate(LootFrame)
     _G.LootFramePortraitOverlay:Hide()
-    select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
+
+    if private.isRetail then
+        select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
+    else
+        select(19, LootFrame:GetRegions()):SetAllPoints(LootFrame.TitleText) -- Items text
+    end
 
     for index = 1, 4 do
-        local item = _G["LootButton"..index]
-        local icon = _G["LootButton"..index.."IconTexture"]
-        item._auroraIconBorder = F.ReskinIcon(icon)
+        local Button = _G["LootButton"..index]
+        Skin.FrameTypeItemButton(Button)
 
-        _G["LootButton"..index.."IconQuestTexture"]:SetTexCoord(.08, .92, .08, .92)
         local nameFrame = _G["LootButton"..index.."NameFrame"]
         nameFrame:Hide()
 
         local bg = F.CreateBDFrame(nameFrame, .2)
-        bg:SetPoint("TOPLEFT", icon, "TOPRIGHT", 3, 1)
+        bg:SetPoint("TOPLEFT", Button.icon, "TOPRIGHT", 3, 1)
         bg:SetPoint("BOTTOMRIGHT", nameFrame, -5, 11)
 
-        item:SetNormalTexture("")
-        item:SetPushedTexture("")
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
     end
+
+    Util.PositionRelative("TOPLEFT", LootFrame, "TOPLEFT", 9, -(private.FRAME_TITLE_HEIGHT + 5), 10, "Down", {
+        _G.LootButton1,
+        _G.LootButton2,
+        _G.LootButton3,
+        _G.LootButton4,
+    })
 
     _G.hooksecurefunc("LootFrame_UpdateButton", function(index)
         if _G["LootButton"..index.."IconQuestTexture"]:IsShown() then
@@ -98,12 +110,13 @@ function private.FrameXML.LootFrame()
     _G.LootFrameNext:ClearAllPoints()
     _G.LootFrameNext:SetPoint("RIGHT", _G.LootFrameDownButton, "LEFT", -4, 0)
 
-    F.ReskinPortraitFrame(_G.LootFrame, true)
     F.ReskinArrow(_G.LootFrameUpButton, "Up")
     F.ReskinArrow(_G.LootFrameDownButton, "Down")
 
     --[[ BonusRollFrame ]]--
-    Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
+    if private.isRetail then
+        Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
+    end
 
     --[[ MasterLooterFrame ]]--
     local MasterLooterFrame = _G.MasterLooterFrame

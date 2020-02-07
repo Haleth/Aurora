@@ -32,7 +32,9 @@ do --[[ FrameXML\QuestInfo.lua ]]
         rewardsFrame.ItemChooseText:SetTextColor(textR, textG, textB)
         rewardsFrame.ItemReceiveText:SetTextColor(textR, textG, textB)
         rewardsFrame.PlayerTitleText:SetTextColor(textR, textG, textB)
-        rewardsFrame.QuestSessionBonusReward:SetTextColor(textR, textG, textB)
+        if private.isRetail then
+            rewardsFrame.QuestSessionBonusReward:SetTextColor(textR, textG, textB)
+        end
         if not mapView then
             rewardsFrame.XPFrame.ReceiveText:SetTextColor(textR, textG, textB)
         end
@@ -55,7 +57,7 @@ do --[[ FrameXML\QuestInfo.lua ]]
                     objective:SetTextColor(1, 1, 1)
                 else
                     local _, _, finished = _G.GetQuestLogLeaderBoard(i)
-                    if ( finished ) then
+                    if finished then
                         objective:SetTextColor(0.6, 0.6, 0.6)
                     else
                         objective:SetTextColor(0.9, 0.9, 0.9)
@@ -131,11 +133,13 @@ function private.FrameXML.QuestInfo()
     -- QuestInfoRewardsFrame --
     ---------------------------
     local QuestInfoRewardsFrame = _G.QuestInfoRewardsFrame
-    Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.HonorFrame)
-    Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.SkillPointFrame)
-    Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.ArtifactXPFrame)
-    Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.WarModeBonusFrame)
-    Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.HonorFrame)
+    if private.isRetail then
+        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.HonorFrame)
+        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.SkillPointFrame)
+        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.ArtifactXPFrame)
+        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.WarModeBonusFrame)
+        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.HonorFrame)
+    end
 
     local TitleFrame = QuestInfoRewardsFrame.TitleFrame
     Base.CropIcon(TitleFrame.Icon)
@@ -165,35 +169,39 @@ function private.FrameXML.QuestInfo()
     ------------------------------
     -- MapQuestInfoRewardsFrame --
     ------------------------------
-    local MapQuestInfoRewardsFrame = _G.MapQuestInfoRewardsFrame
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.XPFrame)
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.HonorFrame)
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.ArtifactXPFrame)
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.WarModeBonusFrame)
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.MoneyFrame)
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.SkillPointFrame)
-    Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.TitleFrame)
+    if private.isRetail then
+        local MapQuestInfoRewardsFrame = _G.MapQuestInfoRewardsFrame
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.XPFrame)
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.HonorFrame)
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.ArtifactXPFrame)
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.WarModeBonusFrame)
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.MoneyFrame)
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.SkillPointFrame)
+        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.TitleFrame)
 
-    Util.Mixin(MapQuestInfoRewardsFrame.spellRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(MapQuestInfoRewardsFrame.followerRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(MapQuestInfoRewardsFrame.spellHeaderPool, Hook.ObjectPoolMixin)
+        Util.Mixin(MapQuestInfoRewardsFrame.spellRewardPool, Hook.ObjectPoolMixin)
+        Util.Mixin(MapQuestInfoRewardsFrame.followerRewardPool, Hook.ObjectPoolMixin)
+        Util.Mixin(MapQuestInfoRewardsFrame.spellHeaderPool, Hook.ObjectPoolMixin)
+    end
 
     --------------------
     -- QuestInfoFrame --
     --------------------
 
     -- QuestInfoSealFrame --
-    local mask = _G.QuestInfoSealFrame:CreateMaskTexture(nil, "BACKGROUND")
-    mask:SetTexture([[Interface/SpellBook/UI-SpellbookPanel-Tab-Highlight]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-    mask:SetTexCoord(0, 0.5, 0, 0.5)
-    mask:SetPoint("TOPLEFT", _G.QuestInfoSealFrame.Text, -44, 46)
-    mask:SetPoint("BOTTOMRIGHT", _G.QuestInfoSealFrame.Text, 30, -50)
+    if private.isRetail then
+        local mask = _G.QuestInfoSealFrame:CreateMaskTexture(nil, "BACKGROUND")
+        mask:SetTexture([[Interface/SpellBook/UI-SpellbookPanel-Tab-Highlight]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetTexCoord(0, 0.5, 0, 0.5)
+        mask:SetPoint("TOPLEFT", _G.QuestInfoSealFrame.Text, -44, 46)
+        mask:SetPoint("BOTTOMRIGHT", _G.QuestInfoSealFrame.Text, 30, -50)
 
-    local bg = _G.QuestInfoSealFrame:CreateTexture(nil, "BACKGROUND")
-    bg:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.25)
-    bg:SetAllPoints(mask)
-    bg:AddMaskTexture(mask)
+        local bg = _G.QuestInfoSealFrame:CreateTexture(nil, "BACKGROUND")
+        bg:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.25)
+        bg:SetAllPoints(mask)
+        bg:AddMaskTexture(mask)
 
-    _G.QuestInfoSealFrame.Text:SetShadowColor(Color.grayDark:GetRGB())
-    _G.QuestInfoSealFrame.Text:SetShadowOffset(0.6, -0.6)
+        _G.QuestInfoSealFrame.Text:SetShadowColor(Color.grayDark:GetRGB())
+        _G.QuestInfoSealFrame.Text:SetShadowOffset(0.6, -0.6)
+    end
 end

@@ -134,7 +134,6 @@ function private.AddOns.Blizzard_AuctionUI()
     F.ReskinDropDown(_G.BrowseDropDown)
     F.ReskinCheck(_G.IsUsableCheckButton)
     F.ReskinCheck(_G.ShowOnPlayerCheckButton)
-    F.Reskin(_G.BrowseResetButton)
     F.Reskin(_G.BrowseSearchButton)
 
     F.ReskinArrow(_G.BrowsePrevPageButton, "Left")
@@ -144,7 +143,6 @@ function private.AddOns.Blizzard_AuctionUI()
 
     SkinButtons({_G.BrowseCloseButton, _G.BrowseBuyoutButton, _G.BrowseBidButton}, true)
     F.ReskinMoneyInput(_G.BrowseBidPrice)
-    F.ReskinCheck(_G.ExactMatchCheckButton)
 
     --[[ Bid ]]--
     SkinSort({"BidQualitySort", "BidLevelSort", "BidDurationSort", "BidBuyoutSort", "BidStatusSort", "BidBidSort"})
@@ -178,7 +176,6 @@ function private.AddOns.Blizzard_AuctionUI()
     F.ReskinDropDown(_G.PriceDropDown)
     F.ReskinMoneyInput(_G.StartPrice)
     F.ReskinMoneyInput(_G.BuyoutPrice)
-    F.ReskinDropDown(_G.DurationDropDown)
     SkinButtons({_G.AuctionsCloseButton, _G.AuctionsCancelAuctionButton})
     F.Reskin(_G.AuctionsCreateAuctionButton)
 

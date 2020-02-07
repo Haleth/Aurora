@@ -207,7 +207,11 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.MailFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    _G.select(6, _G.MailFrame:GetRegions()):Hide()
+    if private.isRetail then
+        _G.select(6, _G.MailFrame:GetRegions()):Hide()
+    else
+        _G.select(18, _G.MailFrame:GetRegions()):Hide()
+    end
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)

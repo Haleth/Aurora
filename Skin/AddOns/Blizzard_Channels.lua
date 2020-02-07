@@ -137,7 +137,11 @@ function private.AddOns.Blizzard_Channels()
     CreateChannelPopup.Titlebar:Hide()
     CreateChannelPopup.Corner:Hide()
 
-    Skin.DialogBorderTemplate(CreateChannelPopup.BG)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(CreateChannelPopup.BG)
+    else
+        Skin.DialogBorderTemplate(CreateChannelPopup)
+    end
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Name)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Password)
     Skin.UICheckButtonTemplate(CreateChannelPopup.UseVoiceChat)

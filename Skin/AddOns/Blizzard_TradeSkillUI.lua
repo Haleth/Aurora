@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals ipairs
+-- luacheck: globals pcall ipairs select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -71,6 +71,30 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                         end
                     end
                 end
+            end
+        end
+    end
+    if private.isClassic then
+        function Hook.TradeSkillFrame_Update(id)
+            for i = 1, _G.TRADE_SKILLS_DISPLAYED do
+                local skillButton = _G["TradeSkillSkill"..i]
+                local _, skillType = _G.GetTradeSkillInfo(skillButton:GetID())
+
+                if skillType == "header" then
+                    skillButton._minus:Show()
+                    skillButton:GetHighlightTexture():SetTexture("")
+                else
+                    skillButton._minus:Hide()
+                    skillButton._plus:Hide()
+                end
+            end
+        end
+        function Hook.TradeSkillFrame_SetSelection(id)
+            if not _G.TradeSkillSkillIcon._auroraSkinned then
+                local skinned = pcall(Base.CropIcon, _G.TradeSkillSkillIcon:GetNormalTexture(), _G.TradeSkillSkillIcon)
+                _G.TradeSkillSkillIcon._auroraSkinned = skinned
+            else
+                pcall(Base.CropIcon, _G.TradeSkillSkillIcon:GetNormalTexture())
             end
         end
     end
@@ -154,6 +178,20 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
             --Skin.UIDropDownMenuTemplate(ScrollFrame.RecipeOptionsMenu)
         end
     end
+    if private.isClassic then
+        function Skin.TradeSkillSkillButtonTemplate(Frame)
+            Skin.ClassTrainerSkillButtonTemplate(Frame)
+            Frame:SetBackdropOption("offsets", {
+                left = 3,
+                right = 307,
+                top = 0,
+                bottom = 3,
+            })
+        end
+        function Skin.TradeSkillItemTemplate(Frame)
+            Skin.QuestItemTemplate(Frame)
+        end
+    end
 end
 
 function private.AddOns.Blizzard_TradeSkillUI()
@@ -177,53 +215,150 @@ function private.AddOns.Blizzard_TradeSkillUI()
     --      Blizzard_TradeSkillUI      --
     ----====####$$$$%%%%%$$$$####====----
     local TradeSkillFrame = _G.TradeSkillFrame
-    Skin.PortraitFrameTemplate(TradeSkillFrame)
+    if private.isRetail then
+        Skin.PortraitFrameTemplate(TradeSkillFrame)
 
-    TradeSkillFrame.TabardBackground:SetPoint("TOPLEFT", 0, 0)
-    TradeSkillFrame.TabardBackground:SetTexCoord(0, 1, 0, 1)
-    TradeSkillFrame.TabardBackground:SetAtlas("communities-guildbanner-background", true)
-    TradeSkillFrame.TabardEmblem:SetSize(56 * 1.2, 64 * 1.2)
-    TradeSkillFrame.TabardEmblem:SetPoint("CENTER", TradeSkillFrame.TabardBackground, 0, 8)
-    TradeSkillFrame.TabardBorder:SetPoint("TOPLEFT", 0, 0)
-    TradeSkillFrame.TabardBorder:SetTexCoord(0, 1, 0, 1)
-    TradeSkillFrame.TabardBorder:SetAtlas("communities-guildbanner-border", true)
+        TradeSkillFrame.TabardBackground:SetPoint("TOPLEFT", 0, 0)
+        TradeSkillFrame.TabardBackground:SetTexCoord(0, 1, 0, 1)
+        TradeSkillFrame.TabardBackground:SetAtlas("communities-guildbanner-background", true)
+        TradeSkillFrame.TabardEmblem:SetSize(56 * 1.2, 64 * 1.2)
+        TradeSkillFrame.TabardEmblem:SetPoint("CENTER", TradeSkillFrame.TabardBackground, 0, 8)
+        TradeSkillFrame.TabardBorder:SetPoint("TOPLEFT", 0, 0)
+        TradeSkillFrame.TabardBorder:SetTexCoord(0, 1, 0, 1)
+        TradeSkillFrame.TabardBorder:SetAtlas("communities-guildbanner-border", true)
 
-    Skin.InsetFrameTemplate(TradeSkillFrame.RecipeInset)
-    Skin.InsetFrameTemplate(TradeSkillFrame.DetailsInset)
-    Skin.TradeSkillRecipeListTemplate(TradeSkillFrame.RecipeList)
-    Skin.TradeSkillDetailsFrameTemplate(TradeSkillFrame.DetailsFrame)
+        Skin.InsetFrameTemplate(TradeSkillFrame.RecipeInset)
+        Skin.InsetFrameTemplate(TradeSkillFrame.DetailsInset)
+        Skin.TradeSkillRecipeListTemplate(TradeSkillFrame.RecipeList)
+        Skin.TradeSkillDetailsFrameTemplate(TradeSkillFrame.DetailsFrame)
 
-    local RankFrame = TradeSkillFrame.RankFrame
-    Skin.FrameTypeStatusBar(RankFrame)
-    RankFrame.BorderLeft:Hide()
-    RankFrame.BorderRight:Hide()
-    RankFrame.BorderMid:Hide()
-    RankFrame.Background:Hide()
+        local RankFrame = TradeSkillFrame.RankFrame
+        Skin.FrameTypeStatusBar(RankFrame)
+        RankFrame.BorderLeft:Hide()
+        RankFrame.BorderRight:Hide()
+        RankFrame.BorderMid:Hide()
+        RankFrame.Background:Hide()
 
-    Skin.SearchBoxTemplate(TradeSkillFrame.SearchBox)
-    Skin.UIMenuButtonStretchTemplate(TradeSkillFrame.FilterButton)
-    TradeSkillFrame.FilterButton.Icon:SetSize(5, 10)
-    Base.SetTexture(TradeSkillFrame.FilterButton.Icon, "arrowRight")
+        Skin.SearchBoxTemplate(TradeSkillFrame.SearchBox)
+        Skin.UIMenuButtonStretchTemplate(TradeSkillFrame.FilterButton)
+        TradeSkillFrame.FilterButton.Icon:SetSize(5, 10)
+        Base.SetTexture(TradeSkillFrame.FilterButton.Icon, "arrowRight")
 
-    do -- LinkToButton
-        local LinkToButton = TradeSkillFrame.LinkToButton
-        Skin.FrameTypeButton(LinkToButton)
-        LinkToButton:SetBackdropOption("offsets", {
-            left = 4,
-            right = 5,
-            top = 8,
-            bottom = 5,
+        do -- LinkToButton
+            local LinkToButton = TradeSkillFrame.LinkToButton
+            Skin.FrameTypeButton(LinkToButton)
+            LinkToButton:SetBackdropOption("offsets", {
+                left = 4,
+                right = 5,
+                top = 8,
+                bottom = 5,
+            })
+
+            local bg = LinkToButton:GetBackdropTexture("bg")
+            local chatIcon = LinkToButton:CreateTexture(nil, "ARTWORK", nil, 1)
+            chatIcon:SetAtlas("transmog-icon-chat")
+            chatIcon:SetPoint("CENTER", bg, -2, -1)
+            chatIcon:SetSize(11, 11)
+
+            local arrow = LinkToButton:CreateTexture(nil, "ARTWORK", nil, 5)
+            arrow:SetPoint("TOPRIGHT", bg, -2, -4)
+            arrow:SetSize(5, 10)
+            Base.SetTexture(arrow, "arrowRight")
+        end
+    else
+        _G.hooksecurefunc("TradeSkillFrame_Update", Hook.TradeSkillFrame_Update)
+        _G.hooksecurefunc("TradeSkillFrame_SetSelection", Hook.TradeSkillFrame_SetSelection)
+
+        Base.SetBackdrop(TradeSkillFrame)
+        TradeSkillFrame:SetBackdropOption("offsets", {
+            left = 14,
+            right = 34,
+            top = 14,
+            bottom = 75,
         })
 
-        local bg = LinkToButton:GetBackdropTexture("bg")
-        local chatIcon = LinkToButton:CreateTexture(nil, "ARTWORK", nil, 1)
-        chatIcon:SetAtlas("transmog-icon-chat")
-        chatIcon:SetPoint("CENTER", bg, -2, -1)
-        chatIcon:SetSize(11, 11)
+        local tradeSkillBg = TradeSkillFrame:GetBackdropTexture("bg")
+        local portrait, tl, tr, bl, br = TradeSkillFrame:GetRegions()
+        portrait:Hide()
+        tl:Hide()
+        tr:Hide()
+        bl:Hide()
+        br:Hide()
 
-        local arrow = LinkToButton:CreateTexture(nil, "ARTWORK", nil, 5)
-        arrow:SetPoint("TOPRIGHT", bg, -2, -4)
-        arrow:SetSize(5, 10)
-        Base.SetTexture(arrow, "arrowRight")
+        local titleText = _G.TradeSkillFrameTitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT", tradeSkillBg)
+        titleText:SetPoint("BOTTOMRIGHT", tradeSkillBg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        local borderLeft, borderRight = select(7, TradeSkillFrame:GetRegions())
+        borderLeft:Hide()
+        borderRight:Hide()
+
+        local barLeft, barRight = select(9, TradeSkillFrame:GetRegions())
+        barLeft:SetColorTexture(Color.gray:GetRGB())
+        barLeft:SetPoint("TOPLEFT", tradeSkillBg, 10, -210)
+        barLeft:SetPoint("BOTTOMRIGHT", tradeSkillBg, "TOPRIGHT", -10, -211)
+        barRight:Hide()
+
+        Skin.FrameTypeStatusBar(_G.TradeSkillRankFrame)
+        _G.TradeSkillRankFrame:SetPoint("TOPLEFT", tradeSkillBg, 20, -30)
+        _G.TradeSkillRankFrame:SetPoint("TOPRIGHT", tradeSkillBg, -20, -30)
+        _G.TradeSkillRankFrameSkillName:SetPoint("LEFT", 6, 0)
+        _G.TradeSkillRankFrameBackground:Hide()
+        _G.TradeSkillRankFrameBorder:Hide()
+
+        local left, middle, right = _G.TradeSkillExpandButtonFrame:GetRegions()
+        left:Hide()
+        middle:Hide()
+        right:Hide()
+        Skin.ClassTrainerSkillButtonTemplate(_G.TradeSkillCollapseAllButton)
+        _G.TradeSkillCollapseAllButton:SetBackdropOption("offsets", {
+            left = 3,
+            right = 24,
+            top = 0,
+            bottom = 9,
+        })
+
+        Skin.UIDropDownMenuTemplate(_G.TradeSkillInvSlotDropDown)
+        Skin.UIDropDownMenuTemplate(_G.TradeSkillSubClassDropDown)
+
+        for i = 1, _G.TRADE_SKILLS_DISPLAYED do
+            Skin.TradeSkillSkillButtonTemplate(_G["TradeSkillSkill"..i])
+        end
+
+        Skin.ClassTrainerListScrollFrameTemplate(_G.TradeSkillListScrollFrame)
+        Skin.ClassTrainerDetailScrollFrameTemplate(_G.TradeSkillDetailScrollFrame)
+        local headerLeft, headerRight = select(5, _G.TradeSkillDetailScrollChildFrame:GetRegions())
+        headerLeft:Hide()
+        headerRight:Hide()
+
+        for i = 1, _G.MAX_TRADE_SKILL_REAGENTS do
+            Skin.TradeSkillItemTemplate(_G["TradeSkillReagent"..i])
+        end
+
+        Skin.UIPanelButtonTemplate(_G.TradeSkillCreateButton)
+        Skin.UIPanelButtonTemplate(_G.TradeSkillCancelButton)
+        Skin.UIPanelButtonTemplate(_G.TradeSkillCreateAllButton)
+
+        do -- NumericInputSpinner
+            Skin.FrameTypeEditBox(_G.TradeSkillInputBox)
+            _G.TradeSkillInputBoxLeft:Hide()
+            _G.TradeSkillInputBoxRight:Hide()
+            _G.TradeSkillInputBoxMiddle:Hide()
+            _G.TradeSkillInputBox:SetBackdropOption("offsets", {
+                left = -4,
+                right = 1,
+                top = 0,
+                bottom = 0,
+            })
+
+            Skin.SpinnerButton(_G.TradeSkillDecrementButton)
+            Base.SetTexture(_G.TradeSkillDecrementButton._auroraTextures[1], "arrowLeft")
+
+            Skin.SpinnerButton(_G.TradeSkillIncrementButton)
+            Base.SetTexture(_G.TradeSkillIncrementButton._auroraTextures[1], "arrowRight")
+        end
+
+        Skin.UIPanelCloseButton(_G.TradeSkillFrameCloseButton)
     end
 end

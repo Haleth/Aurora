@@ -79,8 +79,11 @@ function private.FrameXML.TradeFrame()
         end
     end
 
-    F.ReskinPortraitFrame(_G.TradeFrame, true)
+    Skin.ButtonFrameTemplate(_G.TradeFrame)
 
+    if private.isClassic then
+        _G.TradeFramePlayerPortrait:Hide()
+    end
     _G.TradeFrameTradeButton:SetPoint("BOTTOMRIGHT", -84, 4)
     F.Reskin(_G.TradeFrameTradeButton)
     F.Reskin(_G.TradeFrameCancelButton)
@@ -90,15 +93,20 @@ function private.FrameXML.TradeFrame()
     _G.TradeFramePlayerNameText:SetPoint("BOTTOMRIGHT", _G.TradeFrame, "TOPLEFT", 172, -29)
 
     Skin.InsetFrameTemplate(_G.TradePlayerInputMoneyInset)
-    F.ReskinMoneyInput(_G.TradePlayerInputMoneyFrame)
+    Skin.MoneyInputFrameTemplate(_G.TradePlayerInputMoneyFrame)
     _G.TradePlayerInputMoneyFrame:SetPoint("TOPLEFT", 15, -(private.FRAME_TITLE_HEIGHT + 13))
 
     SkinHighlightFrames("Player")
     SkinTradeItems("Player")
 
     --[[ Recipient ]]--
-    _G.TradeFrame.RecipientOverlay.portrait:Hide()
-    _G.TradeFrame.RecipientOverlay.portraitFrame:Hide()
+    if private.isRetail then
+        _G.TradeFrame.RecipientOverlay.portrait:Hide()
+        _G.TradeFrame.RecipientOverlay.portraitFrame:Hide()
+    else
+        _G.TradeFrameRecipientPortrait:Hide()
+        _G.TradeRecipientPortraitFrame:Hide()
+    end
     _G.TradeRecipientBotLeftCorner:Hide()
     _G.TradeRecipientLeftBorder:Hide()
 

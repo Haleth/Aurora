@@ -26,6 +26,19 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
     end
     function Skin.OptionsFrameListTemplate(Frame)
         local name = Frame:GetName()
+        if private.isClassic then
+            Base.CreateBackdrop(Frame, private.backdrop, {
+                tl = _G[name.."TopLeft"],
+                bl = _G[name.."BottomLeft"],
+                br = _G[name.."BottomRight"],
+                tr = _G[name.."TopRight"],
+
+                l = _G[name.."Left"],
+                r = _G[name.."Right"],
+                b = _G[name.."Bottom"],
+            })
+            _G[name.."Top"]:Hide()
+        end
         Base.SetBackdrop(Frame, Color.frame)
         Skin.UIPanelScrollBarTemplate(_G[name.."ListScrollBar"])
     end
@@ -35,8 +48,18 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
     function Skin.OptionsFrameTemplate(Frame)
         local name = Frame:GetName()
 
-        Skin.DialogBorderTemplate(Frame.Border)
-        Skin.DialogHeaderTemplate(Frame.Header)
+        if private.isRetail then
+            Skin.DialogBorderTemplate(Frame.Border)
+            Skin.DialogHeaderTemplate(Frame.Header)
+        else
+            Skin.DialogBorderTemplate(Frame)
+
+            local header, text = Frame:GetRegions()
+            header:Hide()
+            text:ClearAllPoints()
+            text:SetPoint("TOPLEFT")
+            text:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        end
 
         Skin.OptionsFrameListTemplate(_G[name.."CategoryFrame"])
         Base.SetBackdrop(_G[name.."PanelContainer"], Color.frame)

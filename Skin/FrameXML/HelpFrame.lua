@@ -60,7 +60,19 @@ function private.FrameXML.HelpFrame()
     local streaks, buttonDiv, vertDivTop, vertDivBottom, vertDivMiddle = select(10, HelpFrame:GetRegions())
     streaks:Hide()
 
-    Skin.DialogHeaderTemplate(HelpFrame.Header)
+    if private.isRetail then
+        Skin.DialogHeaderTemplate(HelpFrame.Header)
+    else
+        local header = HelpFrame.header
+        header:SetAlpha(0)
+
+        local text = header:GetRegions()
+        text:SetParent(HelpFrame)
+        text:ClearAllPoints()
+        text:SetPoint("TOPLEFT")
+        text:SetPoint("BOTTOMRIGHT", HelpFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    end
+
     Skin.UIPanelCloseButton(_G.HelpFrameCloseButton)
 
     Skin.InsetFrameTemplate(HelpFrame.leftInset)
@@ -132,7 +144,11 @@ function private.FrameXML.HelpFrame()
     -- ReportCheatingDialog --
     --------------------------
     local ReportCheatingDialog = _G.ReportCheatingDialog
-    Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
+    else
+        Skin.DialogBorderTemplate(ReportCheatingDialog)
+    end
     Base.CreateBackdrop(ReportCheatingDialog.CommentFrame, private.backdrop, {
         bg = _G.ReportCheatingDialogCommentFrameMiddle,
 

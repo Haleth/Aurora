@@ -8,7 +8,13 @@ local F = _G.unpack(private.Aurora)
 local Skin = private.Aurora.Skin
 
 function private.FrameXML.TabardFrame()
-    F.ReskinPortraitFrame(_G.TabardFrame, true)
+    if private.isRetail then
+        F.ReskinPortraitFrame(_G.TabardFrame, true)
+    else
+        for i = 1, 6 do -- portrait and background
+            _G.select(i, _G.TabardFrame:GetRegions()):Hide()
+        end
+    end
 
     for i = 7, 16 do -- OuterFrame textures
         _G.select(i, _G.TabardFrame:GetRegions()):Hide()
@@ -28,6 +34,9 @@ function private.FrameXML.TabardFrame()
     _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 
     _G.TabardFrameCostFrame:SetBackdrop(nil)
+    if private.isClassic then
+        Skin.SmallMoneyFrameTemplate(_G.TabardFrameCostMoneyFrame)
+    end
 
     _G.TabardFrameCustomizationBorder:Hide()
     _G.TabardFrameCustomization1:ClearAllPoints()
@@ -40,9 +49,16 @@ function private.FrameXML.TabardFrame()
         F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "Right")
     end
 
-    Skin.InsetFrameTemplate(_G.TabardFrameMoneyInset)
-    Skin.ThinGoldEdgeTemplate(_G.TabardFrameMoneyBg)
+    if private.isRetail then
+        Skin.InsetFrameTemplate(_G.TabardFrameMoneyInset)
+        Skin.ThinGoldEdgeTemplate(_G.TabardFrameMoneyBg)
+    else
+        Skin.SmallMoneyFrameTemplate(_G.TabardFrameMoneyFrame)
+    end
 
     F.Reskin(_G.TabardFrameAcceptButton)
     F.Reskin(_G.TabardFrameCancelButton)
+    if private.isClassic then
+        Skin.UIPanelCloseButton(_G.TabardFrameCloseButton)
+    end
 end

@@ -67,9 +67,11 @@ do --[[ FrameXML\ChatFrame.xml ]]
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
         _G[name.."Mid"]:Hide()
-        EditBox.focusLeft:SetAlpha(0)
-        EditBox.focusRight:SetAlpha(0)
-        EditBox.focusMid:SetAlpha(0)
+        if private.isRetail then
+            EditBox.focusLeft:SetAlpha(0)
+            EditBox.focusRight:SetAlpha(0)
+            EditBox.focusMid:SetAlpha(0)
+        end
         EditBox.header:SetPoint("LEFT", 10, 0)
     end
 end

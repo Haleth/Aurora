@@ -157,15 +157,18 @@ function private.FrameXML.ChatConfigFrame()
     _G.hooksecurefunc("ChatConfig_CreateColorSwatches", Hook.ChatConfig_CreateColorSwatches)
 
     local ChatConfigFrame = _G.ChatConfigFrame
-    Skin.DialogBorderTemplate(ChatConfigFrame.Border)
-    if private.isPatch then
+    if private.isRetail then
+        Skin.DialogBorderTemplate(ChatConfigFrame.Border)
         Skin.DialogHeaderTemplate(ChatConfigFrame.Header)
     else
+        Skin.DialogBorderTemplate(ChatConfigFrame)
+
         _G.ChatConfigFrameHeader:Hide()
         _G.ChatConfigFrameHeaderText:ClearAllPoints()
         _G.ChatConfigFrameHeaderText:SetPoint("TOPLEFT")
         _G.ChatConfigFrameHeaderText:SetPoint("BOTTOMRIGHT", _G.ChatConfigFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
+
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCategoryFrame)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton1)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton2)
@@ -249,10 +252,12 @@ function private.FrameXML.ChatConfigFrame()
 
     -- Formatting --
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowTimeStamp)
-    Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowBraces)
-    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingUnitNames)
-    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingSpellNames)
-    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingItemNames)
+    if private.isRetail then
+        Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowBraces)
+        Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingUnitNames)
+        Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingSpellNames)
+        Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingItemNames)
+    end
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingFullText)
 
     -- Settings --

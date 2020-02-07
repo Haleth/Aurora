@@ -26,10 +26,10 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         end
     end
     function Hook.ContainerFrame_Update(self)
-        local id = self:GetID()
+        local bagID = self:GetID()
         local name = self:GetName()
 
-        if id == 0 then
+        if private.isRetail and bagID == 0 then
             _G.BagItemSearchBox:ClearAllPoints()
             _G.BagItemSearchBox:SetPoint("TOPLEFT", self, 20, -35)
             _G.BagItemAutoSortButton:ClearAllPoints()
@@ -38,19 +38,21 @@ do --[[ FrameXML\ContainerFrame.lua ]]
 
         for i = 1, self.size do
             local itemButton = _G[name.."Item"..i]
-            if not itemButton._auroraIconBorder then
-                local container = itemButton:GetParent():GetID()
-                local buttonID = itemButton:GetID()
+            local slotID = itemButton:GetID()
+            local _, _, _, quality, _, _, link = _G.GetContainerItemInfo(bagID, slotID)
 
+            if not itemButton._auroraIconBorder then
                 Skin.ContainerFrameItemButtonTemplate(itemButton)
 
-                local _, _, _, quality, _, _, _, _, _, itemID = _G.GetContainerItemInfo(container, buttonID)
-                Hook.SetItemButtonQuality(itemButton, quality, itemID)
+                Hook.SetItemButtonQuality(itemButton, quality, link)
             end
 
-            local questTexture = _G[name.."Item"..i.."IconQuestTexture"]
-            if questTexture:IsShown() then
-                itemButton._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
+            if link then
+                local _, _, _, _, _, _, _, _, _, _, _, itemClassID = _G.GetItemInfo(link)
+                if itemClassID == _G.LE_ITEM_CLASS_QUESTITEM then
+                    itemButton._questTexture:Show()
+                    itemButton._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
+                end
             end
         end
     end
@@ -72,20 +74,29 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         ItemButton:SetBackdropColor(1, 1, 1, 0.75)
         Base.CropIcon(ItemButton:GetBackdropTexture("bg"))
 
-        Base.CropIcon(_G[name.."IconQuestTexture"])
+        ItemButton._questTexture = _G[name.."IconQuestTexture"]
+        if private.isClassic then
+            ItemButton._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
+        end
+        Base.CropIcon(ItemButton._questTexture)
         Base.CropIcon(ItemButton.NewItemTexture)
         ItemButton.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
         ItemButton.BattlepayItemTexture:SetAllPoints()
     end
     function Skin.ContainerFrameTemplate(Frame)
-        _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
+        if private.isRetail then
+            _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
+        end
+
         Base.SetBackdrop(Frame)
-        local bg = Frame:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 11, 0)
-        bg:SetPoint("BOTTOMRIGHT", -6, 3)
+        Frame:SetBackdropOption("offsets", {
+            left = 11,
+            right = 6,
+            top = 0,
+            bottom = 3,
+        })
 
         local name = Frame:GetName()
-
         Frame.Portrait:Hide()
         _G[name.."BackgroundTop"]:SetAlpha(0)
         _G[name.."BackgroundMiddle1"]:SetAlpha(0)
@@ -99,6 +110,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
 
 
+        local bg = Frame:GetBackdropTexture("bg")
         local moneyFrame = _G[name.."MoneyFrame"]
         local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
         Base.SetBackdrop(moneyBG, Color.frame)
@@ -109,25 +121,27 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         moneyBG:SetPoint("RIGHT", bg, -3, 0)
 
         Frame.PortraitButton:Hide()
-        Frame.FilterIcon:ClearAllPoints()
-        Frame.FilterIcon:SetPoint("TOPLEFT", bg, 5, -5)
-        Frame.FilterIcon:SetSize(17, 17)
-        Frame.FilterIcon.Icon:SetAllPoints()
+        if private.isRetail then
+            Frame.FilterIcon:ClearAllPoints()
+            Frame.FilterIcon:SetPoint("TOPLEFT", bg, 5, -5)
+            Frame.FilterIcon:SetSize(17, 17)
+            Frame.FilterIcon.Icon:SetAllPoints()
 
-        Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
+            Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
 
-        do -- ExtraBagSlotsHelpBox
-            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-            local HelpBox = Frame.ExtraBagSlotsHelpBox
+            do -- ExtraBagSlotsHelpBox
+                -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+                local HelpBox = Frame.ExtraBagSlotsHelpBox
 
-            local Arrow = _G.CreateFrame("Frame", nil, HelpBox)
-            Arrow.Arrow = HelpBox.Arrow
-            Arrow.Arrow:SetParent(Arrow)
-            Arrow.Glow = HelpBox.ArrowGlow
-            Arrow.Glow:SetParent(Arrow)
-            HelpBox.Arrow = Arrow
+                local Arrow = _G.CreateFrame("Frame", nil, HelpBox)
+                Arrow.Arrow = HelpBox.Arrow
+                Arrow.Arrow:SetParent(Arrow)
+                Arrow.Glow = HelpBox.ArrowGlow
+                Arrow.Glow:SetParent(Arrow)
+                HelpBox.Arrow = Arrow
 
-            Skin.GlowBoxFrame(HelpBox, "Right")
+                Skin.GlowBoxFrame(HelpBox, "Right")
+            end
         end
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])
         _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
@@ -150,21 +164,23 @@ function private.FrameXML.ContainerFrame()
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])
     end
 
-    Skin.BagSearchBoxTemplate(_G.BagItemSearchBox)
-    _G.BagItemSearchBox:SetWidth(120)
+    if private.isRetail then
+        Skin.BagSearchBoxTemplate(_G.BagItemSearchBox)
+        _G.BagItemSearchBox:SetWidth(120)
 
-    local autoSort = _G.BagItemAutoSortButton
-    autoSort:SetSize(26, 26)
-    autoSort:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
-    autoSort:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
+        local autoSort = _G.BagItemAutoSortButton
+        autoSort:SetSize(26, 26)
+        autoSort:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
+        autoSort:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
 
-    autoSort:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
-    autoSort:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
+        autoSort:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
+        autoSort:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
 
-    local iconBorder = autoSort:CreateTexture(nil, "BACKGROUND")
-    iconBorder:SetPoint("TOPLEFT", autoSort, -1, 1)
-    iconBorder:SetPoint("BOTTOMRIGHT", autoSort, 1, -1)
-    iconBorder:SetColorTexture(0, 0, 0)
+        local iconBorder = autoSort:CreateTexture(nil, "BACKGROUND")
+        iconBorder:SetPoint("TOPLEFT", autoSort, -1, 1)
+        iconBorder:SetPoint("BOTTOMRIGHT", autoSort, 1, -1)
+        iconBorder:SetColorTexture(0, 0, 0)
+    end
 
     Skin.GlowBoxFrame(_G.BagHelpBox, "Right")
 end

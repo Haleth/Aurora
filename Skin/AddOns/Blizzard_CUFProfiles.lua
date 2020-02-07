@@ -23,7 +23,11 @@ do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.xml ]]
         Skin.HorizontalSliderTemplate(Slider)
     end
     function Skin.CompactUnitFrameProfileDialogWithCoverTemplate(Frame)
-        Skin.DialogBorderDarkTemplate(Frame.Border)
+        if private.isRetail then
+            Skin.DialogBorderDarkTemplate(Frame.Border)
+        else
+            Skin.DialogBorderDarkTemplate(Frame)
+        end
     end
 end
 
@@ -65,9 +69,13 @@ function private.AddOns.Blizzard_CUFProfiles()
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameKeepGroupsTogether)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameHorizontalGroups)
     Skin.CompactUnitFrameProfilesDropdownTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameSortByDropdown)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayIncomingHeals)
+    if private.isRetail then
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayIncomingHeals)
+    end
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayPowerBar)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayAggroHighlight)
+    if private.isRetail then
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayAggroHighlight)
+    end
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameUseClassColors)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayPets)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameDisplayMainTankAndAssist)
@@ -83,13 +91,19 @@ function private.AddOns.Blizzard_CUFProfiles()
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(optionsFrame.autoActivate5Players)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate10Players)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate15Players)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate25Players)
+    if private.isRetail then
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate25Players)
+    else
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate20Players)
+    end
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivate40Players)
 
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec1)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec2)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec3)
-    Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec4)
+    if private.isRetail then
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec1)
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec2)
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec3)
+        Skin.CompactUnitFrameProfilesCheckButtonTemplate(_G.CompactUnitFrameProfilesGeneralOptionsFrameAutoActivateSpec4)
+    end
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(optionsFrame.AutoActivatePvP)
     Skin.CompactUnitFrameProfilesCheckButtonTemplate(optionsFrame.AutoActivatePvE)
 

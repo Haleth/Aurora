@@ -69,7 +69,9 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ProjectedTexturesDropDown)
 
     -- Environment
-    Skin.VideoOptionsSliderTemplate(_G.Graphics_ViewDistanceSlider)
+    if private.isRetail then
+        Skin.VideoOptionsSliderTemplate(_G.Graphics_ViewDistanceSlider)
+    end
     Skin.VideoOptionsSliderTemplate(_G.Graphics_EnvironmentalDetailSlider)
     Skin.VideoOptionsSliderTemplate(_G.Graphics_GroundClutterSlider)
 
@@ -79,8 +81,10 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SunshaftsDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SSAODropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_DepthEffectsDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_OutlineModeDropDown)
+    if private.isRetail then
+        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_DepthEffectsDropDown)
+        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_OutlineModeDropDown)
+    end
 
     ----------------
     -- Raid Panel --
@@ -95,7 +99,9 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ProjectedTexturesDropDown)
 
     -- Environment
-    Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_ViewDistanceSlider)
+    if private.isRetail then
+        Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_ViewDistanceSlider)
+    end
     Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_EnvironmentalDetailSlider)
     Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_GroundClutterSlider)
 
@@ -105,8 +111,10 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SunshaftsDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ParticleDensityDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SSAODropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_DepthEffectsDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_OutlineModeDropDown)
+    if private.isRetail then
+        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_DepthEffectsDropDown)
+        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_OutlineModeDropDown)
+    end
 
 
     Skin.TabButtonTemplate(_G.GraphicsButton)
@@ -117,12 +125,17 @@ function private.SharedXML.VideoOptionsPanels()
     --------------------
     -- Column A
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_BufferingDropDown)
+    if private.isClassic then
+        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
+    end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_ResampleQualityDropDown)
-    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
-    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PhysicsInteractionDropDown)
+    if private.isRetail then
+        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
+        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PhysicsInteractionDropDown)
+    end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
 
     Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)

@@ -72,6 +72,7 @@ do -- BlizzWTF: These are not templates, but they should be
             local arrow = Button:CreateTexture(nil, "ARTWORK")
             arrow:SetPoint("TOPLEFT", bg, 8, -5)
             arrow:SetPoint("BOTTOMRIGHT", bg, -8, 5)
+            Button._auroraTextures = {arrow}
 
             return arrow
         end
@@ -410,8 +411,22 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         end
     end
     function Skin.InsetFrameTemplate(Frame)
-        Frame.NineSlice.Center = Frame.Bg
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+        if private.isRetail then
+            Frame.NineSlice.Center = Frame.Bg
+            Skin.NineSlicePanelTemplate(Frame.NineSlice)
+        else
+            Frame.Bg:Hide()
+
+            Frame.InsetBorderTopLeft:Hide()
+            Frame.InsetBorderTopRight:Hide()
+            Frame.InsetBorderBottomLeft:Hide()
+            Frame.InsetBorderBottomRight:Hide()
+
+            Frame.InsetBorderTop:Hide()
+            Frame.InsetBorderBottom:Hide()
+            Frame.InsetBorderLeft:Hide()
+            Frame.InsetBorderRight:Hide()
+        end
     end
     function Skin.DialogBorderNoCenterTemplate(Frame)
         Skin.NineSlicePanelTemplate(Frame)
@@ -420,27 +435,42 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame:SetBackdropColor(r, g, b, 0)
     end
     function Skin.DialogBorderTemplate(Frame)
-        Frame.Center = Frame.Bg
-        Skin.DialogBorderNoCenterTemplate(Frame)
+        if private.isRetail then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+        end
+
         Base.SetBackdrop(Frame)
     end
     function Skin.DialogBorderDarkTemplate(Frame)
-        Frame.Center = Frame.Bg
-        Skin.DialogBorderNoCenterTemplate(Frame)
+        if private.isRetail then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+        else
+            Base.SetBackdrop(Frame)
+        end
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 0.87)
     end
     function Skin.DialogBorderTranslucentTemplate(Frame)
-        Frame.Center = Frame.Bg
-        Skin.DialogBorderNoCenterTemplate(Frame)
+        if private.isRetail then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+        else
+            Base.SetBackdrop(Frame)
+        end
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 0.8)
     end
     function Skin.DialogBorderOpaqueTemplate(Frame)
-        Frame.Center = Frame.Bg
-        Skin.DialogBorderNoCenterTemplate(Frame)
+        if private.isRetail then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+        else
+            Base.SetBackdrop(Frame)
+        end
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 1)
@@ -462,27 +492,68 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        Util.Mixin(Frame, Hook.PortraitFrameMixin)
+        if private.isRetail then
+            Util.Mixin(Frame, Hook.PortraitFrameMixin)
 
-        Frame.TitleBg:SetAlpha(0)
-        Frame.portrait:SetAlpha(0)
 
-        local titleText = Frame.TitleText
-        titleText:ClearAllPoints()
-        titleText:SetPoint("TOPLEFT", Frame.Bg)
-        titleText:SetPoint("BOTTOMRIGHT", Frame.Bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+            Frame.TitleBg:SetAlpha(0)
+            Frame.portrait:SetAlpha(0)
 
-        Frame.TopTileStreaks:SetTexture("")
-        Frame.NineSlice.Center = Frame.Bg
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+            local titleText = Frame.TitleText
+            titleText:ClearAllPoints()
+            titleText:SetPoint("TOPLEFT", Frame.Bg)
+            titleText:SetPoint("BOTTOMRIGHT", Frame.Bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+            Frame.TopTileStreaks:SetTexture("")
+
+            Frame.NineSlice.Center = Frame.Bg
+            Skin.NineSlicePanelTemplate(Frame.NineSlice)
+        else
+            Frame.Bg:Hide()
+
+            Frame.TitleBg:Hide()
+            Frame.portrait:SetAlpha(0)
+            Frame.PortraitFrame:SetTexture("")
+            Frame.TopRightCorner:Hide()
+            Frame.TopLeftCorner:SetTexture("")
+            Frame.TopBorder:SetTexture("")
+
+            local titleText = Frame.TitleText
+            titleText:ClearAllPoints()
+            titleText:SetPoint("TOPLEFT")
+            titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+            Frame.TopTileStreaks:SetTexture("")
+            Frame.BotLeftCorner:Hide()
+            Frame.BotRightCorner:Hide()
+            Frame.BottomBorder:Hide()
+            Frame.LeftBorder:Hide()
+            Frame.RightBorder:Hide()
+
+            Base.SetBackdrop(Frame)
+        end
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
-        Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
+
+        if private.isRetail then
+            Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
+        else
+            local bg = Frame:GetBackdropTexture("bg")
+            Frame.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
+        end
     end
     function Skin.ButtonFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
+
+        if private.isClassic then
+            local name = Frame:GetName()
+            _G[name.."BtnCornerLeft"]:SetAlpha(0)
+            _G[name.."BtnCornerRight"]:SetAlpha(0)
+            _G[name.."ButtonBottomBorder"]:SetAlpha(0)
+        end
+
         Skin.InsetFrameTemplate(Frame.Inset)
     end
 
@@ -612,7 +683,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local arrow = Button:CreateTexture(nil, "ARTWORK")
         arrow:SetPoint("TOPLEFT", buttonBG, 6, -3)
         arrow:SetPoint("BOTTOMRIGHT", buttonBG, -6, 3)
-        return arrow
+        Button._auroraTextures = {arrow}
     end
     function Skin.NumericInputSpinnerTemplate(EditBox)
         Skin.InputBoxTemplate(EditBox)
@@ -624,10 +695,14 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         mid:Hide()
 
         local bg = EditBox:GetBackdropTexture("bg")
-        Base.SetTexture(Skin.SpinnerButton(EditBox.DecrementButton), "arrowLeft")
+        Skin.SpinnerButton(EditBox.DecrementButton)
+        Base.SetTexture(EditBox.DecrementButton._auroraTextures[1], "arrowLeft")
+        EditBox.DecrementButton:ClearAllPoints()
         EditBox.DecrementButton:SetPoint("RIGHT", bg, "LEFT", 0, 0)
 
-        Base.SetTexture(Skin.SpinnerButton(EditBox.IncrementButton), "arrowRight")
+        Skin.SpinnerButton(EditBox.IncrementButton)
+        Base.SetTexture(EditBox.IncrementButton._auroraTextures[1], "arrowRight")
+        EditBox.IncrementButton:ClearAllPoints()
         EditBox.IncrementButton:SetPoint("LEFT", bg, "RIGHT", 0, 0)
     end
     function Skin.InputBoxInstructionsTemplate(EditBox)
@@ -725,11 +800,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
-    _G.hooksecurefunc("UIPanelCloseButton_SetBorderAtlas", Hook.UIPanelCloseButton_SetBorderAtlas)
+    if private.isRetail then
+        _G.hooksecurefunc("UIPanelCloseButton_SetBorderAtlas", Hook.UIPanelCloseButton_SetBorderAtlas)
+
+        Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
+    end
 
     _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)
-
-    Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
 end

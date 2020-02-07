@@ -118,6 +118,7 @@ function private.OnLoad()
     -- Create API hooks
     local Base = Aurora.Base
     local Hook = Aurora.Hook
+    local Skin = Aurora.Skin
     function Hook.GameTooltip_SetBackdropStyle(self, style)
         if not self.IsEmbedded then
             Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
@@ -142,6 +143,8 @@ function private.OnLoad()
         Base.SetBackdropColor(frame, color, alpha)
     end
     _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
+        if private.isClassic then return end
+
         _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
         _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
         _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
@@ -159,14 +162,38 @@ function private.OnLoad()
         BNetFrame.Tag:SetAllPoints(_G.FriendsFrame.TitleText)
 
         local BroadcastFrame = BNetFrame.BroadcastFrame
-        local EditBox = BroadcastFrame.EditBox
-        EditBox:SetParent(_G.FriendsFrame)
-        EditBox:ClearAllPoints()
-        EditBox:SetSize(239, 25)
-        EditBox:SetPoint("TOPLEFT", 57, -28)
-        EditBox:SetScript("OnEnterPressed", function()
-            BroadcastFrame:SetBroadcast()
-        end)
+        local EditBox
+        if private.isRetail then
+            EditBox = BroadcastFrame.EditBox
+            EditBox:SetParent(_G.FriendsFrame)
+            EditBox:ClearAllPoints()
+            EditBox:SetSize(239, 25)
+            EditBox:SetPoint("TOPLEFT", 57, -28)
+            EditBox:SetScript("OnEnterPressed", function()
+                BroadcastFrame:SetBroadcast()
+            end)
+        else
+            EditBox = _G.FriendsFrameBroadcastInput
+            Skin.FrameTypeEditBox(EditBox)
+
+            EditBox:ClearAllPoints()
+            EditBox:SetSize(245, 29)
+            EditBox:SetPoint("TOPLEFT", 54, -26)
+
+            _G.FriendsFrameBroadcastInputLeft:Hide()
+            _G.FriendsFrameBroadcastInputRight:Hide()
+            _G.FriendsFrameBroadcastInputMiddle:Hide()
+            _G.FriendsFrameBroadcastInputFill:SetPoint("LEFT", 20, 0)
+            EditBox.icon:SetPoint("LEFT", 3, 0)
+
+            local stop
+            _G.hooksecurefunc(EditBox, "SetTextInsets", function(self, left, right, top, bottom)
+                if stop then return end
+                stop = true
+                self:SetTextInsets(20, right, 0, 0)
+                stop = nil
+            end)
+        end
 
         _G.hooksecurefunc("FriendsFrame_Update", function()
             local selectedTab = _G.PanelTemplates_GetSelectedTab(_G.FriendsFrame) or _G.FRIEND_TAB_FRIENDS
@@ -181,7 +208,11 @@ function private.OnLoad()
                 if _G.BNConnected() then
                     BNetFrame:Hide()
                     EditBox:Show()
-                    BroadcastFrame:UpdateBroadcast()
+                    if private.isRetail then
+                        BroadcastFrame:UpdateBroadcast()
+                    else
+                        _G.FriendsFrameBroadcastInput_UpdateDisplay()
+                    end
                 else
                     EditBox:Hide()
                 end

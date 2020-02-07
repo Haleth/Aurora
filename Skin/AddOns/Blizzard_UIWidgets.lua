@@ -27,18 +27,26 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         end
 
         Hook.UIWidgetManagerMixin = {}
-        function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
-            local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
-            local widgetID, widgetType, widgetTypeInfo, widgetVisInfo
-            for _, widgetInfo in next, setWidgets do
-                widgetID, widgetType = widgetInfo.widgetID, widgetInfo.widgetType
-                widgetTypeInfo = _G.UIWidgetManager:GetWidgetTypeInfo(widgetType)
-                widgetVisInfo = widgetTypeInfo.visInfoDataFunction(widgetID)
+        if private.isRetail then
+            function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
+                local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
+                local widgetID, widgetType, widgetTypeInfo, widgetVisInfo
+                for _, widgetInfo in next, setWidgets do
+                    widgetID, widgetType = widgetInfo.widgetID, widgetInfo.widgetType
+                    widgetTypeInfo = _G.UIWidgetManager:GetWidgetTypeInfo(widgetType)
+                    widgetVisInfo = widgetTypeInfo.visInfoDataFunction(widgetID)
 
-                Hook.UIWidgetContainerMixin.CreateWidget(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetVisInfo)
+                    Hook.UIWidgetContainerMixin.CreateWidget(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetVisInfo)
+                end
+
+                Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
             end
-
-            Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
+        else
+            function Hook.UIWidgetManagerMixin:CreateWidget(widgetID, widgetSetID, widgetType)
+                if self.widgetVisTypeInfo[widgetType] then
+                    Hook.UIWidgetContainerMixin.CreateWidget(self, widgetID, widgetType, self.widgetVisTypeInfo[widgetType])
+                end
+            end
         end
     end
 end
@@ -207,13 +215,17 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_UIWidgetTopCenterFrame --
     ----====####$$$$%%%%%$$$$####====----
-    Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
+    if private.isRetail then
+        Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
+    end
 
 
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_UIWidgetBelowMinimapFrame --
     ----====####$$$$%%%%%%%%$$$$####====----
-    Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
+    if private.isRetail then
+        Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
+    end
 
 
     ----====####$$$$%%%%$$$$####====----

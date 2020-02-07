@@ -122,4 +122,12 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\Util.lua"/>
     <Script file="..\SharedXML\VideoOptionsPanels.lua"/>
+
+    <!--Classic Only-->
+    <Script file="ClassTrainerFrameTemplates.lua"/>
+    <Script file="PetActionBarFrame.lua"/>
+    <Script file="PetPaperDollFrame.lua"/>
+    <Script file="QuestLogFrame.lua"/>
+    <Script file="QuestTimerFrame.lua"/>
+    <Script file="SkillFrame.lua"/>
 </Ui>

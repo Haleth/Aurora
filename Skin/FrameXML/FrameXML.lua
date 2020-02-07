@@ -183,8 +183,12 @@ local FrameXML = {
     "SpellBookFrame",
     "CharacterFrame",
     "PaperDollFrame",
+    "PetPaperDollFrame", -- isClassic
+    "SkillFrame", -- isClassic
     "ReputationFrame",
     "QuestFrame",
+    "QuestLogFrame", -- isClassic
+    "QuestTimerFrame", -- isClassic
     "QuestPOI",
     "QuestInfo",
     "MerchantFrame",
@@ -277,6 +281,7 @@ local FrameXML = {
     "AzeriteItemToasts",
     "AzeriteIslandsToast",
     "SharedXML.ModelPreviewFrame",
+    "ClassTrainerFrameTemplates", -- isClassic
     "SplashFrame",
     "QuestChoiceFrameMixin",
     "AzeriteEmpoweredItemDataSource",

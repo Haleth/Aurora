@@ -1,22 +1,55 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GossipFrame.lua ]]
-    Hook.GossipTitleButtonMixin = {}
-    function Hook.GossipTitleButtonMixin:UpdateTitleForQuest(questID, titleText, isIgnored, isTrivial)
-        if isIgnored then
-            self:SetFormattedText(private.IGNORED_QUEST_DISPLAY, titleText)
-        elseif isTrivial then
-            self:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
-        else
-            self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+    if private.isRetail then
+        Hook.GossipTitleButtonMixin = {}
+        function Hook.GossipTitleButtonMixin:UpdateTitleForQuest(questID, titleText, isIgnored, isTrivial)
+            if isIgnored then
+                self:SetFormattedText(private.IGNORED_QUEST_DISPLAY, titleText)
+            elseif isTrivial then
+                self:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+            else
+                self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+            end
+        end
+    else
+        local availDataPerQuest, activeDataPerQuest = 7, 6
+        function Hook.GossipFrameAvailableQuestsUpdate(...)
+            local numAvailQuestsData = _G.select("#", ...)
+            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numAvailQuestsData / availDataPerQuest)
+            for i = 1, numAvailQuestsData, availDataPerQuest do
+                local titleText, _, isTrivial = _G.select(i, ...)
+                local titleButton = _G["GossipTitleButton" .. buttonIndex]
+                if isTrivial then
+                    titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+                else
+                    titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+                end
+                buttonIndex = buttonIndex + 1
+            end
+        end
+        function Hook.GossipFrameActiveQuestsUpdate(...)
+            local numActiveQuestsData = _G.select("#", ...)
+            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numActiveQuestsData / activeDataPerQuest)
+            for i = 1, numActiveQuestsData, activeDataPerQuest do
+                local titleText, _, isTrivial = _G.select(i, ...)
+                local titleButton = _G["GossipTitleButton" .. buttonIndex]
+                if isTrivial then
+                    titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+                else
+                    titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
+                end
+                buttonIndex = buttonIndex + 1
+            end
         end
     end
 
@@ -39,16 +72,29 @@ end
 
 do --[[ FrameXML\GossipFrame.xml ]]
     function Skin.GossipFramePanelTemplate(Frame)
-        local name = Frame:GetName()
-        Frame:SetPoint("BOTTOMRIGHT")
+        if private.isRetail then
+            Frame:SetPoint("BOTTOMRIGHT")
+        else
+            local bg = Frame:GetParent():GetBackdropTexture("bg")
+            Frame:SetAllPoints(bg)
 
+            local top, bottom, left, right = Frame:GetRegions()
+            top:Hide()
+            bottom:Hide()
+            left:Hide()
+            right:Hide()
+        end
+
+        local name = Frame:GetName()
         _G[name.."MaterialTopLeft"]:SetAlpha(0)
         _G[name.."MaterialTopRight"]:SetAlpha(0)
         _G[name.."MaterialBotLeft"]:SetAlpha(0)
         _G[name.."MaterialBotRight"]:SetAlpha(0)
     end
     function Skin.GossipTitleButtonTemplate(Button)
-        Util.Mixin(Button, Hook.GossipTitleButtonMixin)
+        if private.isRetail then
+            Util.Mixin(Button, Hook.GossipTitleButtonMixin)
+        end
 
         local highlight = Button:GetHighlightTexture()
         local r, g, b = Color.highlight:GetRGB()
@@ -62,21 +108,49 @@ function private.FrameXML.GossipFrame()
     -----------------
     -- GossipFrame --
     -----------------
-    Skin.ButtonFrameTemplate(_G.GossipFrame)
+    local GossipFrame = _G.GossipFrame
+    if private.isRetail then
+        Skin.ButtonFrameTemplate(GossipFrame)
 
-    -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-    _G.select(7, _G.GossipFrame:GetRegions()):Hide() -- GossipFrameBg
+        -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
+        select(7, GossipFrame:GetRegions()):Hide() -- GossipFrameBg
 
-    -- BlizzWTF: This should use the title text included in the template
-    _G.GossipFrameNpcNameText:SetAllPoints(_G.GossipFrame.TitleText)
+        -- BlizzWTF: This should use the title text included in the template
+        _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
+    else
+        Base.SetBackdrop(GossipFrame)
+        GossipFrame:SetBackdropOption("offsets", {
+            left = 14,
+            right = 34,
+            top = 14,
+            bottom = 75,
+        })
+
+        local bg = GossipFrame:GetBackdropTexture("bg")
+        _G.GossipFramePortrait:Hide()
+        _G.GossipFrameNpcNameText:ClearAllPoints()
+        _G.GossipFrameNpcNameText:SetPoint("TOPLEFT", bg)
+        _G.GossipFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        Skin.UIPanelCloseButton(_G.GossipFrameCloseButton)
+    end
 
     Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
+    if private.isClassic then
+        select(9, _G.GossipFrameGreetingPanel:GetRegions()):Hide() -- patch
+    end
     Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
     _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
 
     Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
-    _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
-    _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", _G.GossipFrame, -23, 30)
+    if private.isRetail then
+        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
+        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", GossipFrame, -23, 30)
+    else
+        local bg = GossipFrame:GetBackdropTexture("bg")
+        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
+        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
+    end
 
     _G.GossipGreetingScrollFrameTop:Hide()
     _G.GossipGreetingScrollFrameBottom:Hide()
@@ -89,15 +163,17 @@ function private.FrameXML.GossipFrame()
     ----------------------------
     -- NPCFriendshipStatusBar --
     ----------------------------
-    _G.NPCFriendshipStatusBar:GetRegions():Hide()
-    _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
-    for i = 1, 4 do
-        local notch = _G["NPCFriendshipStatusBarNotch"..i]
-        notch:SetColorTexture(0, 0, 0)
-        notch:SetSize(1, 16)
-    end
+    if private.isRetail then
+        _G.NPCFriendshipStatusBar:GetRegions():Hide()
+        _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
+        for i = 1, 4 do
+            local notch = _G["NPCFriendshipStatusBarNotch"..i]
+            notch:SetColorTexture(0, 0, 0)
+            notch:SetSize(1, 16)
+        end
 
-    local bg = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
-    bg:SetPoint("TOPLEFT", -1, 1)
-    bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        local bg = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
+        bg:SetPoint("TOPLEFT", -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+    end
 end

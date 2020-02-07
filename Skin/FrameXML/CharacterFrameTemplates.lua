@@ -24,6 +24,7 @@ do --[[ FrameXML\CharacterFrameTemplates.xml ]]
 
         Base.SetBackdrop(Button)
         Base.SetHighlight(Button, "backdrop")
+        Button._auroraTabResize = true
     end
 end
 

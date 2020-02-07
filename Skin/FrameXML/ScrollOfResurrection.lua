@@ -10,7 +10,11 @@ local F = _G.unpack(Aurora)
 
 function private.FrameXML.ScrollOfResurrection()
     local ScrollOfResurrectionSelectionFrame = _G.ScrollOfResurrectionSelectionFrame
-    Skin.DialogBorderTemplate(ScrollOfResurrectionSelectionFrame.Border)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(ScrollOfResurrectionSelectionFrame.Border)
+    else
+        Skin.DialogBorderTemplate(ScrollOfResurrectionSelectionFrame)
+    end
     F.ReskinInput(ScrollOfResurrectionSelectionFrame.targetEditBox)
 
     F.CreateBD(ScrollOfResurrectionSelectionFrame.list, .25)
@@ -20,7 +24,11 @@ function private.FrameXML.ScrollOfResurrection()
     F.Reskin(_G.ScrollOfResurrectionSelectionFrameCancelButton)
 
     local ScrollOfResurrectionFrame = _G.ScrollOfResurrectionFrame
-    Skin.DialogBorderTemplate(ScrollOfResurrectionFrame.Border)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(ScrollOfResurrectionFrame.Border)
+    else
+        Skin.DialogBorderTemplate(ScrollOfResurrectionFrame)
+    end
     F.ReskinInput(ScrollOfResurrectionFrame.targetEditBox)
     for i = 1, 9 do
         select(i, ScrollOfResurrectionFrame.noteFrame:GetRegions()):Hide()

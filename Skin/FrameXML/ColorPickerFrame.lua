@@ -9,9 +9,21 @@ local Skin = Aurora.Skin
 local F = _G.unpack(Aurora)
 
 function private.FrameXML.ColorPickerFrame()
+    local ColorPickerFrame = _G.ColorPickerFrame
 
-    Skin.DialogBorderTemplate(_G.ColorPickerFrame.Border)
-    Skin.DialogHeaderTemplate(_G.ColorPickerFrame.Header)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(ColorPickerFrame.Border)
+        Skin.DialogHeaderTemplate(ColorPickerFrame.Header)
+    else
+        Skin.DialogBorderTemplate(ColorPickerFrame)
+
+        local _, header, text = ColorPickerFrame:GetRegions()
+        header:Hide()
+        text:ClearAllPoints()
+        text:SetPoint("TOPLEFT")
+        text:SetPoint("BOTTOMRIGHT", ColorPickerFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    end
+
     F.Reskin(_G.ColorPickerCancelButton)
     _G.ColorPickerCancelButton:SetWidth(100)
 
@@ -25,12 +37,12 @@ function private.FrameXML.ColorPickerFrame()
 
     _G.ColorPickerWheel:SetPoint("TOPLEFT", 10, -30)
 
-    local ColorValue = _G.ColorPickerFrame:GetColorValueTexture()
+    local ColorValue = ColorPickerFrame:GetColorValueTexture()
     ColorValue:SetPoint("LEFT", _G.ColorPickerWheel, "RIGHT", 13, 0)
 
     _G.ColorSwatch:SetPoint("TOPLEFT", 205, -30)
 
-    _G.ColorPickerFrame:HookScript("OnShow", function(self)
+    ColorPickerFrame:HookScript("OnShow", function(self)
         if self.hasOpacity then
             self:SetWidth(300)
         else
@@ -38,6 +50,10 @@ function private.FrameXML.ColorPickerFrame()
         end
     end)
 
-    Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
+    if private.isRetail then
+        Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
+    else
+        Skin.DialogBorderTemplate(_G.OpacityFrame)
+    end
     F.ReskinSlider(_G.OpacityFrameSlider, true)
 end
