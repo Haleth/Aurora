@@ -5,9 +5,6 @@ ignore:
     - *.bat
     - test.lua
 
-    # Mainline files
-    - Skin/AddOns/Blizzard_AuctionHouseUI.lua
-
 manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown

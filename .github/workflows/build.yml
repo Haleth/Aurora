@@ -39,7 +39,12 @@ jobs:
         curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/master/parse.py -o parse.py
         bash build.sh
 
-    - name: Create Package
+    - name: Create Mainline Package
       run: |
         sudo apt-get install pandoc
         curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+
+    - name: Create Classic Package
+      run: |
+        sudo apt-get install pandoc
+        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -g 1.13.3 -m .pkgmeta-classic
