@@ -4,68 +4,120 @@ local _, private = ...
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
-local Skin = private.Aurora.Skin
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
+
+--do --[[ FrameXML\TabardFrame.lua ]]
+--end
+
+do --[[ FrameXML\TabardFrame.xml ]]
+    function Skin.TabardFrameCustomizeTemplate(Frame)
+        local name = Frame:GetName()
+        _G[name.."Left"]:Hide()
+        _G[name.."Middle"]:Hide()
+        _G[name.."Right"]:Hide()
+        Skin.NavButtonPrevious(_G[name.."LeftButton"])
+        Skin.NavButtonNext(_G[name.."RightButton"])
+    end
+end
 
 function private.FrameXML.TabardFrame()
+    local TabardFrame = _G.TabardFrame
     if private.isRetail then
-        F.ReskinPortraitFrame(_G.TabardFrame, true)
-    else
-        for i = 1, 6 do -- portrait and background
-            _G.select(i, _G.TabardFrame:GetRegions()):Hide()
+        Skin.ButtonFrameTemplate(TabardFrame)
+
+        for i = 7, 16 do -- OuterFrame textures
+            _G.select(i, TabardFrame:GetRegions()):Hide()
         end
-    end
 
-    for i = 7, 16 do -- OuterFrame textures
-        _G.select(i, _G.TabardFrame:GetRegions()):Hide()
-    end
-    _G.TabardFrameEmblemTopRight:SetPoint("TOPRIGHT", 15, -50)
+        _G.TabardFrameEmblemTopRight:SetPoint("TOPRIGHT", 15, -50)
 
-    _G.TabardFrameNameText:ClearAllPoints()
-    _G.TabardFrameNameText:SetPoint("TOPLEFT")
-    _G.TabardFrameNameText:SetPoint("BOTTOMRIGHT", _G.TabardFrame, "TOPRIGHT", 0, -29)
+        _G.TabardFrameNameText:ClearAllPoints()
+        _G.TabardFrameNameText:SetPoint("TOPLEFT")
+        _G.TabardFrameNameText:SetPoint("BOTTOMRIGHT", TabardFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    _G.TabardFrameGreetingText:ClearAllPoints()
-    _G.TabardFrameGreetingText:SetPoint("TOPLEFT", 50, -30)
-    _G.TabardFrameGreetingText:SetPoint("BOTTOMRIGHT", _G.TabardFrame, "TOPRIGHT", -50, -69)
+        _G.TabardFrameGreetingText:ClearAllPoints()
+        _G.TabardFrameGreetingText:SetPoint("TOPLEFT", 50, -private.FRAME_TITLE_HEIGHT)
+        _G.TabardFrameGreetingText:SetPoint("BOTTOMRIGHT", TabardFrame, "TOPRIGHT", -50, -(private.FRAME_TITLE_HEIGHT + 40))
 
-    F.ReskinArrow(_G.TabardCharacterModelRotateLeftButton, "Left")
-    F.ReskinArrow(_G.TabardCharacterModelRotateRightButton, "Right")
-    _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
+        Skin.NavButtonPrevious(_G.TabardCharacterModelRotateLeftButton)
+        Skin.NavButtonNext(_G.TabardCharacterModelRotateRightButton)
+        _G.TabardCharacterModelRotateRightButton:SetPoint("TOPLEFT", _G.TabardCharacterModelRotateLeftButton, "TOPRIGHT", 1, 0)
 
-    _G.TabardFrameCostFrame:SetBackdrop(nil)
-    if private.isClassic then
+        _G.TabardFrameCostFrame:SetBackdrop(nil)
         Skin.SmallMoneyFrameTemplate(_G.TabardFrameCostMoneyFrame)
-    end
 
-    _G.TabardFrameCustomizationBorder:Hide()
-    _G.TabardFrameCustomization1:ClearAllPoints()
-    _G.TabardFrameCustomization1:SetPoint("BOTTOMRIGHT", _G.TabardFrame, -3, 140)
-    for i = 1, 5 do
-        _G["TabardFrameCustomization"..i.."Left"]:Hide()
-        _G["TabardFrameCustomization"..i.."Middle"]:Hide()
-        _G["TabardFrameCustomization"..i.."Right"]:Hide()
-        F.ReskinArrow(_G["TabardFrameCustomization"..i.."LeftButton"], "Left")
-        F.ReskinArrow(_G["TabardFrameCustomization"..i.."RightButton"], "Right")
-    end
+        _G.TabardFrameCustomizationBorder:Hide()
+        _G.TabardFrameCustomization1:ClearAllPoints()
+        _G.TabardFrameCustomization1:SetPoint("BOTTOMRIGHT", TabardFrame, -3, 140)
+        for i = 1, 5 do
+            Skin.TabardFrameCustomizeTemplate(_G["TabardFrameCustomization"..i])
+        end
 
-    if private.isRetail then
         Skin.InsetFrameTemplate(_G.TabardFrameMoneyInset)
         Skin.ThinGoldEdgeTemplate(_G.TabardFrameMoneyBg)
+
+        Skin.UIPanelButtonTemplate(_G.TabardFrameAcceptButton)
+        Skin.UIPanelButtonTemplate(_G.TabardFrameCancelButton)
+        Util.PositionRelative("BOTTOMRIGHT", TabardFrame, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+            _G.TabardFrameAcceptButton,
+            _G.TabardFrameCancelButton,
+        })
     else
-        local bg = _G.TabardFrame:GetBackdropTexture("bg")
-        local moneyBG = _G.CreateFrame("Frame", nil, _G.TabardFrame)
+        Base.SetBackdrop(TabardFrame)
+        TabardFrame:SetBackdropOption("offsets", {
+            left = 14,
+            right = 34,
+            top = 14,
+            bottom = 75,
+        })
+
+        for i = 1, 6 do -- portrait and background
+            _G.select(i, TabardFrame:GetRegions()):Hide()
+        end
+        for i = 7, 16 do -- OuterFrame textures
+            _G.select(i, TabardFrame:GetRegions()):Hide()
+        end
+
+        local bg = TabardFrame:GetBackdropTexture("bg")
+        _G.TabardFrameNameText:ClearAllPoints()
+        _G.TabardFrameNameText:SetPoint("TOPLEFT", bg)
+        _G.TabardFrameNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        _G.TabardFrameGreetingText:ClearAllPoints()
+        _G.TabardFrameGreetingText:SetPoint("TOPLEFT", bg, 50, -private.FRAME_TITLE_HEIGHT)
+        _G.TabardFrameGreetingText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", -50, -(private.FRAME_TITLE_HEIGHT + 40))
+
+        Skin.NavButtonPrevious(_G.TabardCharacterModelRotateLeftButton)
+        Skin.NavButtonNext(_G.TabardCharacterModelRotateRightButton)
+
+        _G.TabardFrameCostFrame:SetBackdrop(nil)
+        Skin.SmallMoneyFrameTemplate(_G.TabardFrameCostMoneyFrame)
+
+        _G.TabardFrameCustomizationBorder:Hide()
+        _G.TabardFrameCustomization1:ClearAllPoints()
+        _G.TabardFrameCustomization1:SetPoint("BOTTOMRIGHT", bg, -3, 140)
+        for i = 1, 5 do
+            Skin.TabardFrameCustomizeTemplate(_G["TabardFrameCustomization"..i])
+        end
+
+        local moneyBG = _G.CreateFrame("Frame", nil, TabardFrame)
         Base.SetBackdrop(moneyBG, Color.frame)
         moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
         moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
         moneyBG:SetSize(160, 22)
         Skin.SmallMoneyFrameTemplate(_G.TabardFrameMoneyFrame)
         _G.TabardFrameMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
-    end
 
-    F.Reskin(_G.TabardFrameAcceptButton)
-    F.Reskin(_G.TabardFrameCancelButton)
-    if private.isClassic then
+        Skin.UIPanelButtonTemplate(_G.TabardFrameAcceptButton)
+        Skin.UIPanelButtonTemplate(_G.TabardFrameCancelButton)
+        Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+            _G.TabardFrameAcceptButton,
+            _G.TabardFrameCancelButton,
+        })
+
         Skin.UIPanelCloseButton(_G.TabardFrameCloseButton)
     end
 end
