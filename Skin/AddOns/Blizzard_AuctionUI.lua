@@ -43,37 +43,37 @@ do --[[ AddOns\Blizzard_AuctionUI.lua ]]
     end
     function Hook.AuctionFrameBrowse_Update()
         local offset = _G.FauxScrollFrame_GetOffset(_G.BrowseScrollFrame)
-        local button, quality, itemID, _
+        local button, quality, _
 
         for i = 1, _G.NUM_BROWSE_TO_DISPLAY do
             button = _G["BrowseButton"..i]
             if button:IsShown() then
-                _, _, _, quality, _, _, _, _, _, _, _, _, _, _, _, _, itemID =  _G.GetAuctionItemInfo("list", offset + i);
-                Hook.SetItemButtonQuality(button._item, quality, itemID)
+                _, _, _, quality =  _G.GetAuctionItemInfo("list", offset + i);
+                Hook.SetItemButtonQuality(button._item, quality)
             end
         end
     end
     function Hook.AuctionFrameBid_Update()
         local offset = _G.FauxScrollFrame_GetOffset(_G.BidScrollFrame)
-        local button, quality, itemID, _
+        local button, quality, _
 
         for i = 1, _G.NUM_BIDS_TO_DISPLAY do
             button = _G["BidButton"..i]
             if button:IsShown() then
-                _, _, _, quality, _, _, _, _, _, _, _, _, _, _, _, _, itemID =  _G.GetAuctionItemInfo("bidder", offset + i);
-                Hook.SetItemButtonQuality(button._item, quality, itemID)
+                _, _, _, quality =  _G.GetAuctionItemInfo("bidder", offset + i);
+                Hook.SetItemButtonQuality(button._item, quality)
             end
         end
     end
     function Hook.AuctionFrameAuctions_Update()
         local offset = _G.FauxScrollFrame_GetOffset(_G.BidScrollFrame)
-        local button, quality, itemID, _
+        local button, quality, _
 
         for i = 1, _G.NUM_AUCTIONS_TO_DISPLAY do
             button = _G["AuctionsButton"..i]
             if button:IsShown() then
-                _, _, _, quality, _, _, _, _, _, _, _, _, _, _, _, _, itemID =  _G.GetAuctionItemInfo("owner", offset + i);
-                Hook.SetItemButtonQuality(button._item, quality, itemID)
+                _, _, _, quality =  _G.GetAuctionItemInfo("owner", offset + i);
+                Hook.SetItemButtonQuality(button._item, quality)
             end
         end
     end

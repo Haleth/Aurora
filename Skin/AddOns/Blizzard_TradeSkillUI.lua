@@ -90,11 +90,23 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
             end
         end
         function Hook.TradeSkillFrame_SetSelection(id)
-            if not _G.TradeSkillSkillIcon._auroraSkinned then
-                local skinned = pcall(Base.CropIcon, _G.TradeSkillSkillIcon:GetNormalTexture(), _G.TradeSkillSkillIcon)
-                _G.TradeSkillSkillIcon._auroraSkinned = skinned
-            else
-                pcall(Base.CropIcon, _G.TradeSkillSkillIcon:GetNormalTexture())
+            local _, skillType = _G.GetTradeSkillInfo(id)
+            if skillType == "header" then return end
+
+            if not skillType then
+                return Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, 0)
+            end
+
+            local link = _G.GetTradeSkillItemLink(id)
+            local _, _, quality = _G.GetItemInfo(link)
+            Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, quality, link)
+            Base.CropIcon(_G.TradeSkillSkillIcon:GetNormalTexture())
+
+            local numReagents = _G.GetTradeSkillNumReagents(id)
+            for i = 1, numReagents do
+                link = _G.GetTradeSkillReagentItemLink(id, i)
+                _, _, quality = _G.GetItemInfo(link)
+                Hook.SetItemButtonQuality(_G["TradeSkillReagent"..i], quality, link)
             end
         end
     end
@@ -181,12 +193,6 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
     if private.isClassic then
         function Skin.TradeSkillSkillButtonTemplate(Frame)
             Skin.ClassTrainerSkillButtonTemplate(Frame)
-            Frame:SetBackdropOption("offsets", {
-                left = 3,
-                right = 307,
-                top = 0,
-                bottom = 3,
-            })
         end
         function Skin.TradeSkillItemTemplate(Frame)
             Skin.QuestItemTemplate(Frame)
@@ -332,6 +338,27 @@ function private.AddOns.Blizzard_TradeSkillUI()
         headerLeft:Hide()
         headerRight:Hide()
 
+        do -- TradeSkillSkillIcon
+            local item = _G.TradeSkillSkillIcon
+            Base.CreateBackdrop(item, {
+                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
+            })
+            Base.CropIcon(item:GetBackdropTexture("bg"))
+            Base.SetBackdrop(item, Color.black, Color.frame.a)
+            item._auroraIconBorder = item
+
+            item:SetBackdropColor(1, 1, 1, 0.75)
+            item:SetBackdropBorderColor(Color.frame, 1)
+
+            item:HookScript("OnEvent", Hook.AuctionSellItemButton_OnEvent)
+        end
         for i = 1, _G.MAX_TRADE_SKILL_REAGENTS do
             Skin.TradeSkillItemTemplate(_G["TradeSkillReagent"..i])
         end
