@@ -1,7 +1,6 @@
 ﻿## [Unreleased] ##
 ### Added ###
 
-  * AH buy dialog
   * Classic support
 
 ### Changed ###
@@ -11,6 +10,7 @@
 
 ### Fixed ###
 
+  * Auction House buy dialog wasn't skinned
   * World Quest tracker heading wasn't skinned
   * Callbacks were not always called when class colors were changed
 
