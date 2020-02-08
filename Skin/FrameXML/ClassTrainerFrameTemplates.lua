@@ -14,6 +14,12 @@ local Skin = Aurora.Skin
 do --[[ FrameXML\ClassTrainerFrameTemplates.xml ]]
     function Skin.ClassTrainerSkillButtonTemplate(Button)
         Skin.ExpandOrCollapse(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 3,
+            right = 307,
+            top = 0,
+            bottom = 3,
+        })
     end
     function Skin.ClassTrainerDetailScrollFrameTemplate(ScrollFrame)
         Skin.UIPanelScrollFrameTemplate(ScrollFrame)

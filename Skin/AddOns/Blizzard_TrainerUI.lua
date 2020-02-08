@@ -7,13 +7,30 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_TrainerUI.lua ]]
-    local iconSkinned = false
+    function Hook.ClassTrainerFrame_Update(id)
+        for i = 1, _G.CLASS_TRAINER_SKILLS_DISPLAYED do
+            local skillButton = _G["ClassTrainerSkill"..i]
+            local _, _, serviceType = _G.GetTrainerServiceInfo(skillButton:GetID())
+
+            if serviceType == "header" then
+                skillButton._minus:Show()
+                skillButton:GetHighlightTexture():SetTexture("")
+            else
+                skillButton._minus:Hide()
+                skillButton._plus:Hide()
+            end
+        end
+    end
     function Hook.ClassTrainer_SetSelection(id)
-        if not iconSkinned then
-            Base.CropIcon(_G.ClassTrainerSkillIcon:GetNormalTexture(), _G.ClassTrainerSkillIcon)
+        if not id then return end
+
+        local link = _G.GetTrainerServiceItemLink(id)
+        if link then
+            local _, _, quality = _G.GetItemInfo(link)
+            Hook.SetItemButtonQuality(_G.ClassTrainerSkillIcon, quality, link)
         end
     end
     function Hook.ClassTrainer_SetToTradeSkillTrainer(id)
@@ -29,11 +46,9 @@ do --[[ AddOns\Blizzard_TrainerUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_TrainerUI.xml ]]
-    function Skin.ClassTrainerSkillButtonTemplate(Button)
-        if private.isRetail then
+    if private.isRetail then
+        function Skin.ClassTrainerSkillButtonTemplate(Button)
             Skin.UIServiceButtonTemplate(Button)
-        else
-            Skin.ExpandOrCollapse(Button)
         end
     end
 end
@@ -69,6 +84,7 @@ function private.AddOns.Blizzard_TrainerUI()
         Skin.HybridScrollBarTemplate(_G.ClassTrainerScrollFrameScrollBar)
         Skin.InsetFrameTemplate(ClassTrainerFrame.bottomInset)
     else
+        _G.hooksecurefunc("ClassTrainerFrame_Update", Hook.ClassTrainerFrame_Update)
         _G.hooksecurefunc("ClassTrainer_SetSelection", Hook.ClassTrainer_SetSelection)
         _G.hooksecurefunc("ClassTrainer_SetToTradeSkillTrainer", Hook.ClassTrainer_SetToTradeSkillTrainer)
         _G.hooksecurefunc("ClassTrainer_SetToClassTrainer", Hook.ClassTrainer_SetToClassTrainer)
@@ -106,7 +122,14 @@ function private.AddOns.Blizzard_TrainerUI()
         left:Hide()
         middle:Hide()
         right:Hide()
+
         Skin.ClassTrainerSkillButtonTemplate(_G.ClassTrainerCollapseAllButton)
+        _G.ClassTrainerCollapseAllButton:SetBackdropOption("offsets", {
+            left = 3,
+            right = 24,
+            top = 2,
+            bottom = 7,
+        })
         Skin.UIDropDownMenuTemplate(_G.ClassTrainerFrameFilterDropDown)
 
         _G.ClassTrainerSkillHighlight:SetColorTexture(1, 1, 1, 0.5)
@@ -115,15 +138,29 @@ function private.AddOns.Blizzard_TrainerUI()
         end
 
         Skin.ClassTrainerListScrollFrameTemplate(_G.ClassTrainerListScrollFrame)
+
+        local moneyBG = _G.CreateFrame("Frame", nil, ClassTrainerFrame)
+        Base.SetBackdrop(moneyBG, Color.frame)
+        moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
+        moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMLEFT", 165, 27)
         Skin.SmallMoneyFrameTemplate(_G.ClassTrainerMoneyFrame)
+        _G.ClassTrainerMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
+
         Skin.ClassTrainerDetailScrollFrameTemplate(_G.ClassTrainerDetailScrollFrame)
 
         _G.ClassTrainerSkillIcon:GetRegions():Hide()
+        _G.ClassTrainerSkillIcon:SetNormalTexture([[Interface\Buttons\WHITE8x8]])
+        Base.CropIcon(_G.ClassTrainerSkillIcon:GetNormalTexture(), _G.ClassTrainerSkillIcon)
         Skin.SmallMoneyFrameTemplate(_G.ClassTrainerDetailMoneyFrame)
-
 
         Skin.UIPanelButtonTemplate(_G.ClassTrainerTrainButton)
         Skin.UIPanelButtonTemplate(_G.ClassTrainerCancelButton)
+        Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+            _G.ClassTrainerCancelButton,
+            _G.ClassTrainerTrainButton,
+        })
+
         Skin.UIPanelCloseButton(_G.ClassTrainerFrameCloseButton)
     end
 end
