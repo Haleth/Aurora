@@ -249,12 +249,13 @@ function private.AddOns.Blizzard_AuctionUI()
         _G.AuctionFrameTab3,
     })
 
-    Skin.SmallMoneyFrameTemplate(_G.AuctionFrameMoneyFrame)
     local moneyBG = _G.CreateFrame("Frame", nil, _G.AuctionFrame)
     Base.SetBackdrop(moneyBG, Color.frame)
     moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
     moneyBG:SetPoint("BOTTOMLEFT", auctionBg, 5, 5)
-    moneyBG:SetPoint("TOPRIGHT", _G.AuctionFrameMoneyFrame, -8, 2)
+    moneyBG:SetSize(160, 22)
+    Skin.SmallMoneyFrameTemplate(_G.AuctionFrameMoneyFrame)
+    _G.AuctionFrameMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
 
     Skin.UIPanelCloseButton(_G.AuctionFrameCloseButton)
 

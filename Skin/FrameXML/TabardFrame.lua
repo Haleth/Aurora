@@ -53,7 +53,14 @@ function private.FrameXML.TabardFrame()
         Skin.InsetFrameTemplate(_G.TabardFrameMoneyInset)
         Skin.ThinGoldEdgeTemplate(_G.TabardFrameMoneyBg)
     else
+        local bg = _G.TabardFrame:GetBackdropTexture("bg")
+        local moneyBG = _G.CreateFrame("Frame", nil, _G.TabardFrame)
+        Base.SetBackdrop(moneyBG, Color.frame)
+        moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
+        moneyBG:SetSize(160, 22)
         Skin.SmallMoneyFrameTemplate(_G.TabardFrameMoneyFrame)
+        _G.TabardFrameMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
     end
 
     F.Reskin(_G.TabardFrameAcceptButton)

@@ -141,7 +141,15 @@ function private.FrameXML.PetStable()
         Skin.PetStableSlotTemplate(_G.PetStableStabledPet2)
 
         Skin.UIPanelButtonTemplate(_G.PetStablePurchaseButton)
+
+        local moneyBG = _G.CreateFrame("Frame", nil, PetStableFrame)
+        Base.SetBackdrop(moneyBG, Color.frame)
+        moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
+        moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 27)
         Skin.SmallMoneyFrameTemplate(_G.PetStableMoneyFrame)
+        _G.PetStableMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
+
         Skin.SmallMoneyFrameTemplate(_G.PetStableCostMoneyFrame)
         Skin.UIPanelCloseButton(_G.PetStableFrameCloseButton)
     end

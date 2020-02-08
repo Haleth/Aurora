@@ -117,8 +117,9 @@ function private.FrameXML.TradeFrame()
 
     Skin.InsetFrameTemplate(_G.TradeRecipientMoneyInset)
     Skin.ThinGoldEdgeTemplate(_G.TradeRecipientMoneyBg)
-    _G.TradeRecipientMoneyBg:SetPoint("TOPRIGHT", -6, -(private.FRAME_TITLE_HEIGHT + 13))
-    _G.TradeRecipientMoneyBg:SetPoint("BOTTOMLEFT", _G.TradeFrame, "TOPRIGHT", -168, -(private.FRAME_TITLE_HEIGHT + 33))
+    _G.TradeRecipientMoneyBg:ClearAllPoints()
+    _G.TradeRecipientMoneyBg:SetPoint("TOPRIGHT", -5, -(private.FRAME_TITLE_HEIGHT + 13))
+    _G.TradeRecipientMoneyBg:SetSize(160, 22)
 
     SkinHighlightFrames("Recipient")
     SkinTradeItems("Recipient")

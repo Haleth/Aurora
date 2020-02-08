@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Util = Aurora.Util
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\BankFrame.lua ]]
     function Hook.BankFrameItemButton_Update(button)
@@ -116,10 +116,10 @@ function private.FrameXML.BankFrame()
     else
         Base.SetBackdrop(BankFrame)
         BankFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 34,
-            top = 14,
-            bottom = 75,
+            left = 12,
+            right = 35,
+            top = 13,
+            bottom = 94,
         })
 
         local portrait, bankBG = BankFrame:GetRegions()
@@ -148,7 +148,14 @@ function private.FrameXML.BankFrame()
 
         Skin.UIPanelButtonTemplate(_G.BankFramePurchaseButton)
         Skin.SmallMoneyFrameTemplate(_G.BankFrameDetailMoneyFrame)
+
+        local moneyBG = _G.CreateFrame("Frame", nil, BankFrame)
+        Base.SetBackdrop(moneyBG, Color.frame)
+        moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
+        moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 27)
         Skin.SmallMoneyFrameTemplate(_G.BankFrameMoneyFrame)
+        _G.BankFrameMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
     end
 
 

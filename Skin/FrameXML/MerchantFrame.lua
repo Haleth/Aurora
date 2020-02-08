@@ -100,10 +100,15 @@ function private.FrameXML.MerchantFrame()
 
     if private.isRetail then
         _G.MerchantExtraCurrencyInset:SetAlpha(0)
-        Skin.ThinGoldEdgeTemplate(_G.MerchantExtraCurrencyBg, true)
+        Skin.ThinGoldEdgeTemplate(_G.MerchantExtraCurrencyBg)
     end
     _G.MerchantMoneyInset:Hide()
-    Skin.ThinGoldEdgeTemplate(_G.MerchantMoneyBg, true)
+    Skin.ThinGoldEdgeTemplate(_G.MerchantMoneyBg)
+    _G.MerchantMoneyBg:ClearAllPoints()
+    _G.MerchantMoneyBg:SetPoint("BOTTOMRIGHT", _G.MerchantFrame, -5, 5)
+    _G.MerchantMoneyBg:SetSize(160, 22)
+    Skin.SmallMoneyFrameTemplate(_G.MerchantMoneyFrame)
+    _G.MerchantMoneyFrame:SetPoint("BOTTOMRIGHT", _G.MerchantMoneyBg, 7, 5)
 
     for i, delta in _G.next, {"PrevPageButton", "NextPageButton"} do
         local button = _G["Merchant"..delta]
