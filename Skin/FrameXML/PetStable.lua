@@ -7,6 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\PetStable.lua ]]
     function Hook.PetStable_SetSelectedPetInfo(icon, name, level, family, talent)
@@ -14,6 +15,18 @@ do --[[ FrameXML\PetStable.lua ]]
             _G.PetStableTypeText:SetText(family)
         else
             _G.PetStableTypeText:SetText("")
+        end
+    end
+    function Hook.PetStable_Update()
+        for i = 1, _G.NUM_PET_STABLE_SLOTS do
+            local button = _G["PetStableStabledPet"..i]
+            if i <= _G.GetNumStableSlots() then
+                button:SetBackdropColor(Color.white, 0.75)
+                button:SetBackdropBorderColor(Color.frame, 1)
+            else
+                button:SetBackdropColor(Color.red, 0.75)
+                button:SetBackdropBorderColor(Color.red, 1)
+            end
         end
     end
 end
@@ -40,13 +53,31 @@ do --[[ FrameXML\PetStable.xml ]]
         end
     else
         function Skin.PetStableSlotTemplate(CheckButton)
-            local name = CheckButton:GetName()
+            Base.CreateBackdrop(CheckButton, {
+                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
+            })
+            Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
+            Base.SetBackdrop(CheckButton, Color.black, Color.frame.a)
+            CheckButton._auroraIconBorder = CheckButton
 
-            Base.CropIcon(_G[name.."IconTexture"], CheckButton)
-            Base.CropIcon(_G[name.."Background"])
-            Base.CropIcon(CheckButton:GetNormalTexture())
+            CheckButton:SetBackdropColor(1, 1, 1, 0.75)
+            CheckButton:SetBackdropBorderColor(Color.frame, 1)
+
+            local name = CheckButton:GetName()
+            Base.CropIcon(_G[name.."IconTexture"])
+            _G[name.."Background"]:Hide()
+
+            CheckButton:SetNormalTexture("")
             Base.CropIcon(CheckButton:GetPushedTexture())
             Base.CropIcon(CheckButton:GetHighlightTexture())
+            Base.CropIcon(CheckButton:GetCheckedTexture())
         end
     end
 end
@@ -54,6 +85,8 @@ end
 function private.FrameXML.PetStable()
     if private.isRetail then
         _G.hooksecurefunc("PetStable_SetSelectedPetInfo", Hook.PetStable_SetSelectedPetInfo)
+    else
+        _G.hooksecurefunc("PetStable_Update", Hook.PetStable_Update)
     end
 
     local PetStableFrame = _G.PetStableFrame
@@ -121,6 +154,7 @@ function private.FrameXML.PetStable()
             bottom = 75,
         })
 
+        local bg = PetStableFrame:GetBackdropTexture("bg")
         local portrait, tl, tr, bl, br = PetStableFrame:GetRegions()
         portrait:Hide()
         tl:Hide()
@@ -128,13 +162,17 @@ function private.FrameXML.PetStable()
         bl:Hide()
         br:Hide()
 
-        _G.PetStableModel:SetPoint("TOPLEFT", PetStableFrame.Inset)
-        _G.PetStableModel:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset)
+        _G.PetStableTitleLabel:ClearAllPoints()
+        _G.PetStableTitleLabel:SetPoint("TOPLEFT", bg)
+        _G.PetStableTitleLabel:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        --_G.PetStableModel:SetPoint("TOPLEFT", PetStableFrame.Inset)
+        --_G.PetStableModel:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset)
         _G.PetStableModelRotateLeftButton:Hide()
         _G.PetStableModelRotateRightButton:Hide()
 
-        _G.PetStablePetInfo:SetPoint("TOPLEFT", PetStableFrame.Inset)
-        _G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)
+        --_G.PetStablePetInfo:SetPoint("TOPLEFT", PetStableFrame.Inset)
+        --_G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)
 
         Skin.PetStableSlotTemplate(_G.PetStableCurrentPet)
         Skin.PetStableSlotTemplate(_G.PetStableStabledPet1)
