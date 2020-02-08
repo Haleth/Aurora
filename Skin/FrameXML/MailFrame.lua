@@ -328,7 +328,11 @@ function private.FrameXML.MailFrame()
     _G.OpenMailTitleText:ClearAllPoints()
     _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
     _G.OpenMailHorizontalBarLeft:Hide()
-    select(13, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    if private.isRetail then
+        select(13, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    else
+        select(25, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    end
 
     Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 
