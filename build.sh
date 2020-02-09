@@ -20,4 +20,4 @@ git add .
 git commit -m "$GITHUB_SHA"
 
 # push the wiki repo
-git push --set-upstream "https://${GITHUB_OAUTH}@github.com/$GITHUB_REPOSITORY.wiki.git" master
+git push "https://${GITHUB_OAUTH}@github.com/$GITHUB_REPOSITORY.wiki.git" master
