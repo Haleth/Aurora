@@ -1,6 +1,6 @@
 local ADDON_NAME, private = ...
 
--- luacheck: globals select tostring tonumber math
+-- luacheck: globals select tostring tonumber math floor
 -- luacheck: globals setmetatable rawset debugprofilestop type tinsert
 
 private.API_MAJOR, private.API_MINOR = 0, 5
@@ -21,11 +21,36 @@ private.disabled = {
     pixelScale = true
 }
 
+local pixelScale, uiScaleChanging = false
+function private.UpdateUIScale()
+    if uiScaleChanging then return end
+    local _, pysHeight = _G.GetPhysicalScreenSize()
 
-local classLocale, class, classID = _G.UnitClass("player")
+    if not private.disabled.pixelScale then
+        -- Calculate current UI scale
+        pixelScale = 768 / pysHeight
+        local cvarScale, parentScale = _G.tonumber(_G.GetCVar("uiscale")), floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
+        private.debug("scale", pixelScale, cvarScale, parentScale)
+
+        uiScaleChanging = true
+        -- Set Scale (WoW CVar can't go below .64)
+        if cvarScale ~= pixelScale then
+            --[[ Setting the `uiScale` cvar will taint the ObjectiveTracker, and by extention the
+                WorldMap and map action button. As such, we only use that if we absolutly have to.]]
+            _G.SetCVar("uiScale", _G.max(pixelScale, 0.64))
+        end
+        if parentScale ~= pixelScale then
+            _G.UIParent:SetScale(pixelScale)
+        end
+        uiScaleChanging = false
+    end
+end
+
+
+local classLocale, classToken, classID = _G.UnitClass("player")
 private.charClass = {
     locale = classLocale,
-    token = class,
+    token = classToken,
     id = classID,
 }
 
