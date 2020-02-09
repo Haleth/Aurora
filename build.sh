@@ -5,7 +5,7 @@ git config user.email "actions@github.com"
 git config user.name "${GITHUB_ACTOR:-Github Actions}"
 
 # clone the wiki repo
-git pull "https://${GITHUB_OAUTH}@github.com/$OWNER/$REPO_NAME.wiki.git" .wiki
+git clone "https://${GITHUB_OAUTH}@github.com/$OWNER/$REPO_NAME.wiki.git" .wiki
 
 # run the python script
 python parse.py -o ".wiki"
