@@ -26,7 +26,8 @@ jobs:
         /home/runner/.luarocks/bin/luacheck . --no-color -q
         
     - name: Alpha Changelog
-      run: echo "$GITHUB_REF"
+      if: contains($GITHUB_REF, 'tags') != true
+      run: rm -f CHANGELOG.md
 
     - uses: actions/setup-python@v1
       with:
