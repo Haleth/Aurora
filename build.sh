@@ -7,13 +7,17 @@ git config --global user.name "${GITHUB_ACTOR:-Github Actions}"
 # clone the wiki repo
 git clone "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.wiki.git" wiki
 
+echo List
 ls
 
 # run the python script
-python parse.py -o "wiki"
+# python parse.py -o "wiki"
 
 # navigate to the output directory
 cd wiki || exit
+
+echo wiki
+ls
 
 # stage changes
 git add .
