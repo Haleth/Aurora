@@ -28,7 +28,7 @@ The public API is housed in the global variable `Aurora`.
 --]]
 
 
---[[ **Base.AddSkin(_addonName, func_)**
+--[[ Base.AddSkin(_addonName, func_)
 Allows an external addon to add a skinning function for the specified
 AddOn. `func` will run when the `ADDON_LOADED` event is triggered for
 addonName.
@@ -47,7 +47,7 @@ function Base.AddSkin(addonName, func)
     end
 end
 
---[[ **Base.GetSkinList()**
+--[[ Base.GetSkinList()
 Returns a list of all non-Blizzard AddOn skins.
 
 **Returns:**
@@ -65,7 +65,7 @@ function Base.GetSkinList()
     return _G.CopyTable(skinList)
 end
 
---[[ **Base.CropIcon(_texture[, parent]_)**
+--[[ Base.CropIcon(_texture[, parent]_)
 Sets tex coords to just inside a square icon's built-in border. If the
 optional secon argument is provided, an other texture will be created
 at a black background for the icon.

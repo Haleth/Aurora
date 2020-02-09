@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Util = Aurora.Util
 
---[[ **Util.GetName(_widget_)**
+--[[ Util.GetName(_widget_)
 Iterates through the widget hierarchy, starting with the given widget,
 until a viable global name is found. This is primarily useful when the
 template for a widget that assumes it has a global name, when it

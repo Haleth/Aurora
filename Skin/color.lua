@@ -10,7 +10,7 @@ local Color = Aurora.Color
 local colorSelect = _G.CreateFrame("ColorSelect")
 local Clamp = _G.Clamp
 
---[[ **Color.Hue(_color, delta_)**
+--[[ Color.Hue(_color, delta_)
 Create a new color where the hue is offset by a percentage from the
 given color. `color` can be a ColorMixin or a table with `r`, `g`, and
 `b` keys.
