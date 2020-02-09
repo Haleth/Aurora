@@ -43,9 +43,9 @@ jobs:
     - name: Create Mainline Package
       run: |
         sudo apt-get install pandoc
-        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d
 
     - name: Create Classic Package
       run: |
         sudo apt-get install pandoc
-        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -g 1.13.3 -m .pkgmeta-classic
+        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d -g 1.13.3 -m .pkgmeta-classic
