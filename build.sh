@@ -7,6 +7,8 @@ git config --global user.name "${GITHUB_ACTOR:-Github Actions}"
 # clone the wiki repo
 git clone "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.wiki.git" .wiki
 
+ls
+
 # run the python script
 python parse.py -o ".wiki"
 
