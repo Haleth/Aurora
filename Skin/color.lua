@@ -7,18 +7,16 @@ local _, private = ...
 local Aurora = private.Aurora
 local Color = Aurora.Color
 
---[[ Color:header
-A rainbow of predefined colors as well as a few color modification
-functions. These all use a custom [ColorMixin] when manipulating colors.
-Contains predefined colors as well as a few methods to create or modify
-colors.
-
-[ColorMixin]: https://github.com/Haleth/Aurora/wiki/Color#colormixin
---]]
-
 local colorMeta
 local colorSelect = _G.CreateFrame("ColorSelect")
 local Clamp = _G.Clamp
+
+--[=[ Color:header
+A rainbow of predefined colors as well as a few color modification
+functions. These all use a custom [[ColorMixin]] when manipulating
+colors. Contains predefined colors as well as a few methods to create
+or modify colors.
+--]=]
 
 --[[ Color.Create(_r, g, b[, a]_)
 Create a new color with the given color values. If `a` is not provided,
@@ -231,7 +229,7 @@ Color.button = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b
 Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
 
 
---[[ ColorMixin
+--[[ ColorMixin:header
 This is based on Blizzard's own [ColorMixin], with a few extentions.
 
 [ColorMixin]: https://github.com/Gethe/wow-ui-source/blob/live/SharedXML/Util.lua#L683
