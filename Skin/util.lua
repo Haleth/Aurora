@@ -7,6 +7,10 @@ local _, private = ...
 local Aurora = private.Aurora
 local Util = Aurora.Util
 
+--[[ Util:header
+Helpful functions mostly for debugging.
+--]]
+
 --[[ Util.GetName(_widget_)
 Iterates through the widget hierarchy, starting with the given widget,
 until a viable global name is found. This is primarily useful when the

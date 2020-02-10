@@ -7,6 +7,15 @@ local _, private = ...
 local Aurora = private.Aurora
 local Color = Aurora.Color
 
+--[[ Color:header
+A rainbow of predefined colors as well as a few color modification
+functions. These all use a custom [ColorMixin] when manipulating colors.
+Contains predefined colors as well as a few methods to create or modify
+colors.
+
+[ColorMixin]: https://github.com/Haleth/Aurora/wiki/Color#colormixin
+--]]
+
 local colorSelect = _G.CreateFrame("ColorSelect")
 local Clamp = _G.Clamp
 
@@ -55,6 +64,11 @@ function Color.Lightness(color, delta)
 end
 
 
+--[[ ColorMixin
+This is based on Blizzard's own [ColorMixin], with a few extentions.
+
+[ColorMixin]: https://github.com/Gethe/wow-ui-source/blob/live/SharedXML/Util.lua#L683
+--]]
 local colorMeta = _G.CreateFromMixins(_G.ColorMixin)
 function colorMeta:Hue(delta)
     return Color.Hue(self, delta)

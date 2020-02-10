@@ -23,8 +23,8 @@ Aurora.classIcons = { -- adjusted for borderless icons
     ["DEMONHUNTER"] = {0.76171875, 0.97265625, 0.51953125, 0.734375},
 }
 
---[[ Public-API:header
-The public API is housed in the global variable `Aurora`.
+--[[ Base:header
+These are most basic skinning functions and are the foundation of every skin in Aurora.
 --]]
 
 
