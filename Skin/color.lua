@@ -16,8 +16,28 @@ colors.
 [ColorMixin]: https://github.com/Haleth/Aurora/wiki/Color#colormixin
 --]]
 
+local colorMeta
 local colorSelect = _G.CreateFrame("ColorSelect")
 local Clamp = _G.Clamp
+
+--[[ Color.Create(_r, g, b[, a]_)
+Create a new color with the given color values. If `a` is not provided,
+it defaults to `1`.
+
+**Args:**
+* `r` - red value between 0 and 1 _(number)_
+* `g` - green value between 0 and 1 _(number)_
+* `b` - blue value between 0 and 1 _(number)_
+* `a` - _optional_ alpha value between 0 and 1 _(number)_
+
+**Returns:**
+* `color` - a new color object _(ColorMixin)_
+--]]
+function Color.Create(r, g, b, a)
+    local color = _G.CreateFromMixins(colorMeta)
+    color:OnLoad(r, g, b, a)
+    return color
+end
 
 --[[ Color.Hue(_color, delta_)
 Create a new color where the hue is offset by a percentage from the
@@ -63,51 +83,6 @@ function Color.Lightness(color, delta)
     return Color.Create(colorSelect:GetColorRGB())
 end
 
-
---[[ ColorMixin
-This is based on Blizzard's own [ColorMixin], with a few extentions.
-
-[ColorMixin]: https://github.com/Gethe/wow-ui-source/blob/live/SharedXML/Util.lua#L683
---]]
-local colorMeta = _G.CreateFromMixins(_G.ColorMixin)
-function colorMeta:Hue(delta)
-    return Color.Hue(self, delta)
-end
-function colorMeta:Saturation(delta)
-    return Color.Saturation(self, delta)
-end
-function colorMeta:Lightness(delta)
-    return Color.Lightness(self, delta)
-end
-function colorMeta:SetRGBA(r, g, b, a)
-    self.r = r
-    self.g = g
-    self.b = b
-    self.a = a
-    self.colorStr = self:GenerateHexColor()
-
-    self.isAchromatic = (r == g) and (g == b)
-end
-function colorMeta:IsEqualTo(r, g, b, a)
-    if type(r) == "table" then
-        return self.r == r.r
-            and self.g == r.g
-            and self.b == r.b
-            and self.a == r.a
-    else
-        return self.r == r
-            and self.g == g
-            and self.b == b
-            and self.a == a
-    end
-end
-
-
-function Color.Create(r, g, b, a)
-    local color = _G.CreateFromMixins(colorMeta)
-    color:OnLoad(r, g, b, a)
-    return color
-end
 
 Color.red = Color.Create(0.8, 0.2, 0.2)
 Color.orange = Color.Create(0.8, 0.5, 0.2)
@@ -254,3 +229,42 @@ local color = _G.CUSTOM_CLASS_COLORS[private.charClass.token]
 Color.highlight = Color.Create(color.r, color.g, color.b)
 Color.button = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b)
 Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
+
+
+--[[ ColorMixin
+This is based on Blizzard's own [ColorMixin], with a few extentions.
+
+[ColorMixin]: https://github.com/Gethe/wow-ui-source/blob/live/SharedXML/Util.lua#L683
+--]]
+colorMeta = _G.CreateFromMixins(_G.ColorMixin)
+function colorMeta:Hue(delta)
+    return Color.Hue(self, delta)
+end
+function colorMeta:Saturation(delta)
+    return Color.Saturation(self, delta)
+end
+function colorMeta:Lightness(delta)
+    return Color.Lightness(self, delta)
+end
+function colorMeta:SetRGBA(r, g, b, a)
+    self.r = r
+    self.g = g
+    self.b = b
+    self.a = a
+    self.colorStr = self:GenerateHexColor()
+
+    self.isAchromatic = (r == g) and (g == b)
+end
+function colorMeta:IsEqualTo(r, g, b, a)
+    if type(r) == "table" then
+        return self.r == r.r
+            and self.g == r.g
+            and self.b == r.b
+            and self.a == r.a
+    else
+        return self.r == r
+            and self.g == g
+            and self.b == b
+            and self.a == a
+    end
+end
