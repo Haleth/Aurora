@@ -78,7 +78,7 @@ function private.OnLoad()
     local Color = Aurora.Color
     local customClassColors = AuroraConfig.customClassColors
     if not customClassColors[private.charClass.token] then
-        private.classColorsReset(customClassColors, true)
+        private.classColorsReset(customClassColors, _G.RAID_CLASS_COLORS)
     end
 
     private.setColorCache(customClassColors)
@@ -95,14 +95,6 @@ function private.OnLoad()
     end
 
     _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
-        for classToken, color in next, _G.CUSTOM_CLASS_COLORS do
-            local ccc = customClassColors[classToken]
-            ccc.r = color.r
-            ccc.g = color.g
-            ccc.b = color.b
-            ccc.colorStr = color.colorStr
-        end
-
         _G.AuroraOptions.refresh()
     end)
 

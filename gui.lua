@@ -119,7 +119,7 @@ local createColorSwatch do
         local r, g, b = _G.ColorPickerFrame:GetColorRGB()
         local value = _G.AuroraConfig[swatch.value]
         if swatch.class then
-            value = value[swatch.class]
+            value = _G.CUSTOM_CLASS_COLORS[swatch.class]
         end
         value.r, value.g, value.b = r, g, b
         swatch:SetBackdropColor(r, g, b)
@@ -134,7 +134,7 @@ local createColorSwatch do
     function info.cancelFunc(restore)
         local value = _G.AuroraConfig[swatch.value]
         if swatch.class then
-            value = value[swatch.class]
+            value = _G.CUSTOM_CLASS_COLORS[swatch.class]
         end
         value.r, value.g, value.b = restore.r, restore.g, restore.b
         swatch:SetBackdropColor(restore.r, restore.g, restore.b)
@@ -149,7 +149,7 @@ local createColorSwatch do
     local function OnClick(self)
         local value = _G.AuroraConfig[self.value]
         if self.class then
-            value = value[self.class]
+            value = _G.CUSTOM_CLASS_COLORS[self.class]
         end
         swatch = self
         info.r, info.g, info.b = value.r, value.g, value.b
@@ -314,9 +314,9 @@ reloadButton:SetPoint("BOTTOMRIGHT", -20, 20)
 
 
 local classColors = {}
-for i, class in ipairs(_G.CLASS_SORT_ORDER) do
-    local classColor = createColorSwatch(gui, "customClassColors", class)
-    classColor.class = class
+for i, classToken in ipairs(_G.CLASS_SORT_ORDER) do
+    local classColor = createColorSwatch(gui, "customClassColors", classToken)
+    classColor.class = classToken
     classColors[i] = classColor
 
     if i == 1 then
@@ -326,7 +326,9 @@ for i, class in ipairs(_G.CLASS_SORT_ORDER) do
     end
 end
 
-local resetButton = createButton(gui, private.classColorsReset, _G.RESET)
+local resetButton = createButton(gui, function()
+    private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
+end, _G.RESET)
 resetButton:SetPoint("RIGHT", classColors[1], "LEFT", -10, 0)
 resetButton:SetWidth(50)
 
@@ -348,8 +350,8 @@ gui.refresh = function()
 
     for i, classColor in ipairs(classColors) do
         local color = _G.AuroraConfig.customClassColors[classColor.class]
-        local class = _G.LOCALIZED_CLASS_NAMES_MALE[classColor.class]
-        classColor:SetFormattedText("|c%s%s|r", color.colorStr, class)
+        local className = _G.LOCALIZED_CLASS_NAMES_MALE[classColor.class]
+        classColor:SetFormattedText("|c%s%s|r", color.colorStr, className)
         classColor:SetBackdropColor(color.r, color.g, color.b)
     end
 end

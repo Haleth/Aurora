@@ -252,14 +252,14 @@ or
 --]]
 local callbacks, numCallbacks = {}, 0
 function meta:RegisterCallback(method, handler)
-        --print("CUSTOM_CLASS_COLORS:RegisterCallback", method, handler)
-        assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :RegisterCallback (string or function expected)")
-        if type(method) == "string" then
-            assert(type(handler) == "table", "Bad argument #2 to :RegisterCallback (table expected)")
-            assert(type(handler[method]) == "function", "Bad argument #1 to :RegisterCallback (method \"" .. method .. "\" not found)")
-            method = handler[method]
-        end
-        -- assert(not callbacks[method] "Callback already registered!")
+    --print("CUSTOM_CLASS_COLORS:RegisterCallback", method, handler)
+    assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :RegisterCallback (string or function expected)")
+    if type(method) == "string" then
+        assert(type(handler) == "table", "Bad argument #2 to :RegisterCallback (table expected)")
+        assert(type(handler[method]) == "function", "Bad argument #1 to :RegisterCallback (method \"" .. method .. "\" not found)")
+        method = handler[method]
+    end
+    -- assert(not callbacks[method] "Callback already registered!")
     callbacks[method] = handler or true
     numCallbacks = numCallbacks + 1
 end
@@ -279,114 +279,135 @@ or
 --]]
 function meta:UnregisterCallback(method, handler)
     --print("CUSTOM_CLASS_COLORS:UnregisterCallback", method, handler)
-        assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :UnregisterCallback (string or function expected)")
-        if type(method) == "string" then
-            assert(type(handler) == "table", "Bad argument #2 to :UnregisterCallback (table expected)")
-            assert(type(handler[method]) == "function", "Bad argument #1 to :UnregisterCallback (method \"" .. method .. "\" not found)")
-            method = handler[method]
-        end
-        -- assert(callbacks[method], "Callback not registered!")
-        callbacks[method] = nil
-        numCallbacks = numCallbacks - 1
+    assert(type(method) == "string" or type(method) == "function", "Bad argument #1 to :UnregisterCallback (string or function expected)")
+    if type(method) == "string" then
+        assert(type(handler) == "table", "Bad argument #2 to :UnregisterCallback (table expected)")
+        assert(type(handler[method]) == "function", "Bad argument #1 to :UnregisterCallback (method \"" .. method .. "\" not found)")
+        method = handler[method]
     end
-    local function DispatchCallbacks()
-        if numCallbacks < 1 then return end
-        --print("CUSTOM_CLASS_COLORS:DispatchCallbacks")
-        for method, handler in next, callbacks do
-            local ok, err = pcall(method, handler ~= true and handler or nil)
-            if not ok then
-                _G.print("ERROR:", err)
-            end
+    -- assert(callbacks[method], "Callback not registered!")
+    callbacks[method] = nil
+    numCallbacks = numCallbacks - 1
+end
+local function DispatchCallbacks()
+    if numCallbacks < 1 then return end
+    --print("CUSTOM_CLASS_COLORS:DispatchCallbacks")
+    for method, handler in next, callbacks do
+        local ok, err = pcall(method, handler ~= true and handler or nil)
+        if not ok then
+            _G.print("ERROR:", err)
         end
     end
+end
 
 
 --[[ CUSTOM_CLASS_COLORS:NotifyChanges()
 Notifies other addons that class colors have changed.
 --]]
-    local colorCache
-    function meta:NotifyChanges()
-        --print("CUSTOM_CLASS_COLORS:NotifyChanges", colorCache)
-        local hasChanged = false
-        if colorCache then
-            for i = 1, #_G.CLASS_SORT_ORDER do
-                local classToken = _G.CLASS_SORT_ORDER[i]
-                local color = _G.CUSTOM_CLASS_COLORS[classToken]
-                local cache = colorCache[classToken]
+local colorCache
+function meta:NotifyChanges()
+    --print("CUSTOM_CLASS_COLORS:NotifyChanges", colorCache)
+    local hasChanged = false
+    if colorCache then
+        for i = 1, #_G.CLASS_SORT_ORDER do
+            local classToken = _G.CLASS_SORT_ORDER[i]
+            local color = self[classToken]
+            local cache = colorCache[classToken]
 
-                if not color:IsEqualTo(cache) then
-                    --print("Change found in", classToken)
-                    color:SetRGB(cache.r, cache.g, cache.b)
-                    hasChanged = true
-                end
+            if not color:IsEqualTo(cache) then
+                --print("Change found in", classToken)
+                cache.r = color.r
+                cache.g = color.g
+                cache.b = color.b
+                cache.colorStr = color.colorStr
+
+                hasChanged = true
             end
         end
-
-        if hasChanged then
-            private.updateHighlightColor()
-
-            DispatchCallbacks()
-        end
     end
 
-    local classTokens = {}
-    for token, class in next, _G.LOCALIZED_CLASS_NAMES_MALE do
-        classTokens[class] = token
+    if hasChanged then
+        DispatchCallbacks()
     end
-    for token, class in next, _G.LOCALIZED_CLASS_NAMES_FEMALE do
-        classTokens[class] = token
-    end
+end
+
+local classTokens = {}
+for classToken, className in next, _G.LOCALIZED_CLASS_NAMES_MALE do
+    classTokens[className] = classToken
+end
+for classToken, className in next, _G.LOCALIZED_CLASS_NAMES_FEMALE do
+    classTokens[className] = classToken
+end
 
 --[[ CUSTOM_CLASS_COLORS:GetClassToken(_className_)
 Returns the locale-independent token (eg. "WARLOCK") for the specified
 localized class name (eg. "Warlock" or "Hexenmeister").
 --]]
-    function meta:GetClassToken(className)
-        return className and classTokens[className]
+function meta:GetClassToken(className)
+    return className and classTokens[className]
+end
+
+
+function private.setColorCache(newCache)
+    if colorCache then return end
+    --print("setColorCache", newCache)
+
+    colorCache = newCache
+    private.classColorsReset(_G.CUSTOM_CLASS_COLORS, newCache)
+end
+function private.classColorsReset(oldColors, newColors)
+    local classToken, oldColor, newColor
+
+    local isCCC
+    if oldColors == _G.CUSTOM_CLASS_COLORS then
+        isCCC = true
     end
 
-    function private.setColorCache(cache)
-        colorCache = cache
-    end
-    function private.classColorsReset(colors, noMeta)
-        local colorTable = colors or _G.CUSTOM_CLASS_COLORS
-        for class, color in next, _G.RAID_CLASS_COLORS do
-            if colorTable[class] then
-                if noMeta then
-                    colorTable[class].r = color.r
-                    colorTable[class].g = color.g
-                    colorTable[class].b = color.b
-                    colorTable[class].colorStr = color.colorStr
-                else
-                    colorTable[class]:SetRGB(color.r, color.g, color.b)
-                end
+    --print("classColorsReset", oldColors, newColors, isCCC)
+    for i = 1, #_G.CLASS_SORT_ORDER do
+        classToken = _G.CLASS_SORT_ORDER[i]
+        newColor = newColors[classToken]
+        oldColor = oldColors[classToken]
+
+        if oldColor then
+            if isCCC then
+                oldColor:SetRGB(newColor.r, newColor.g, newColor.b)
             else
-                colorTable[class] = {
-                    r = color.r,
-                    g = color.g,
-                    b = color.b,
-                    colorStr = color.colorStr
+                oldColor.r = newColor.r
+                oldColor.g = newColor.g
+                oldColor.b = newColor.b
+                oldColor.colorStr = newColor.colorStr
+            end
+        else
+            if isCCC then
+                oldColors[classToken] = Color.Create(newColor.r, newColor.g, newColor.b)
+            else
+                oldColors[classToken] = {
+                    r = newColor.r,
+                    g = newColor.g,
+                    b = newColor.b,
+                    colorStr = newColor.colorStr
                 }
-                if not noMeta then
-                    colorTable[class] = _G.setmetatable(colorTable[class], {
-                        __index = _G.CreateFromMixins(_G.ColorMixin, colorMeta)
-                    })
-                end
             end
         end
-
-        if colors then
-            meta:NotifyChanges()
-        else
-            DispatchCallbacks()
-        end
-    end
-    function private.updateHighlightColor()
-        Color.highlight:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
     end
 
-    _G.CUSTOM_CLASS_COLORS = {}
-    private.classColorsReset()
+    if isCCC then
+        DispatchCallbacks()
+    else
+        _G.CUSTOM_CLASS_COLORS:NotifyChanges()
+    end
+end
+function private.updateHighlightColor()
+    --print("updateHighlightColor")
+    Color.highlight:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
+end
 
-    _G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = meta})
 
+_G.CUSTOM_CLASS_COLORS = {}
+private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
+_G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = meta})
+
+_G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
+    private.updateHighlightColor()
+end)
