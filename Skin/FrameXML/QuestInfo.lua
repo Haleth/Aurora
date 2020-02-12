@@ -15,6 +15,11 @@ do --[[ FrameXML\QuestInfo.lua ]]
         local headerR, headerG, headerB = 1, 1, 1
         local textR, textG, textB = 0.8, 0.8, 0.8
 
+        if template.canHaveSealMaterial then
+            local questFrame = parentFrame:GetParent():GetParent()
+            questFrame.SealMaterialBG:Hide()
+        end
+
         -- headers
         _G.QuestInfoTitleHeader:SetTextColor(headerR, headerG, headerB)
         _G.QuestInfoDescriptionHeader:SetTextColor(headerR, headerG, headerB)
