@@ -290,6 +290,12 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.LeftBorder:Hide()
         Frame.RightBorder:Hide()
         Base.SetBackdrop(Frame)
+        Frame:SetBackdropOption("offsets", {
+            left = 7,
+            right = 7,
+            top = 7,
+            bottom = 7,
+        })
     end
     function Skin.ThinGoldEdgeTemplate(Frame)
         local name = Util.GetName(Frame)

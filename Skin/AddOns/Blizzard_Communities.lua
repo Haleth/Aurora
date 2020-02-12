@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals select
+-- luacheck: globals select next
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -490,6 +490,29 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
     end
     do --[[ GuildNews ]]
+        function Skin.CommunitiesGuildNewsCheckButtonTemplate(CheckButton)
+            Skin.FrameTypeCheckButton(CheckButton)
+            CheckButton:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
+
+            local bg = CheckButton:GetBackdropTexture("bg")
+            local check = CheckButton:GetCheckedTexture()
+            check:ClearAllPoints()
+            check:SetPoint("TOPLEFT", bg, -5, 5)
+            check:SetPoint("BOTTOMRIGHT", bg, 5, -5)
+            check:SetDesaturated(true)
+            check:SetVertexColor(Color.highlight:GetRGB())
+
+            local disabled = CheckButton:GetDisabledCheckedTexture()
+            disabled:SetAllPoints(check)
+        end
+        function Skin.CommunitiesGuildNewsButtonTemplate(Button)
+            Button.header:SetTexture("")
+        end
         function Skin.CommunitiesGuildNewsBossModelTemplate(PlayerModel)
             local modelBackground = _G.CreateFrame("Frame", nil, PlayerModel)
             modelBackground:SetPoint("TOPLEFT", -1, 1)
@@ -755,6 +778,14 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --            GuildNews            --
     ----====####$$$$%%%%%$$$$####====----
+    if private.isRetail then
+        local CommunitiesGuildNewsFiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
+        Skin.TranslucentFrameTemplate(CommunitiesGuildNewsFiltersFrame)
+        Skin.UIPanelCloseButton(CommunitiesGuildNewsFiltersFrame.CloseButton)
+        for i, CheckButton in next, CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons do
+            Skin.CommunitiesGuildNewsCheckButtonTemplate(CheckButton)
+        end
+    end
 
     ----====####$$$$%%%%%$$$$####====----
     --           GuildRoster           --
