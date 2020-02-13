@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.3.0.2] - 2020-02-12 ##
 ### Added ###
 
   * Classic support
@@ -403,6 +403,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.2]: https://github.com/Haleth/Aurora/compare/8.3.0.1...8.3.0.2
 [8.3.0.1]: https://github.com/Haleth/Aurora/compare/8.3.0.0...8.3.0.1
 [8.3.0.0]: https://github.com/Haleth/Aurora/compare/8.2.5.3...8.3.0.0
 [8.2.5.3]: https://github.com/Haleth/Aurora/compare/8.2.5.2...8.2.5.3
