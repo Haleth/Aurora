@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REFS: ${{ GITHUB_REF }}
+      REFS: ${{ github.ref }}
 
     steps:
     - uses: actions/checkout@v1
