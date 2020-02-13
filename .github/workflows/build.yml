@@ -11,9 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      REFS: ${{ github.ref }}
-
     steps:
     - uses: actions/checkout@v1
 
@@ -24,9 +21,9 @@ jobs:
         /home/runner/.luarocks/bin/luacheck . --no-color -q
         
     - name: Alpha Changelog
-      if: contains($REFS, 'tags') != true
+      if: contains(github.ref, 'tags') != true
       run: |
-        echo $REFS
+        echo $GITHUB_REF
         rm -f CHANGELOG.md
 
     - uses: actions/setup-python@v1
