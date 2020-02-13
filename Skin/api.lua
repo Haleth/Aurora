@@ -66,9 +66,9 @@ function Base.GetSkinList()
 end
 
 --[[ Base.CropIcon(_texture[, parent]_)
-Sets tex coords to just inside a square icon's built-in border. If the
-optional secon argument is provided, an other texture will be created
-at a black background for the icon.
+Sets texture coordinates to just inside a square icon's built-in border.
+If the optional second argument is provided, an other texture will be
+created at a black background for the icon.
 
 **Args:**
 * `texture` - the texture to be cropped _(Texture)_

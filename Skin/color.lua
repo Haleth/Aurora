@@ -11,7 +11,7 @@ local colorSelect = _G.CreateFrame("ColorSelect")
 local Clamp = _G.Clamp
 
 --[=[ ColorMixin:header
-This is an extention of Blizzard's own [ColorMixin]. Created using
+This is an extension of Blizzard's own [ColorMixin]. Created using
 [Color.Create].
 
 [ColorMixin]: https://github.com/Gethe/wow-ui-source/blob/live/SharedXML/Util.lua#L683
@@ -23,7 +23,7 @@ local colorMeta = _G.CreateFromMixins(_G.ColorMixin)
 This extends the original method by adding two additional properties,
 `self.colorStr` and `self.isAchromatic`.
 
-* `colorStr` - the hex representaion of the color _(string)_
+* `colorStr` - the hex representation of the color _(string)_
 * `isAchromatic` - weather or not the color is gray-scale _(boolean)_
 --]]
 function colorMeta:SetRGBA(r, g, b, a)
@@ -196,7 +196,7 @@ are in red, green, blue order.
 * `Color.white` - 1, 1, 1
 
 
-These colors are used extensivly in the UI skins.
+These colors are used extensively in the UI skins.
 
 * `Color.highlight` - defaults to the player's class color
 * `Color.button` - defaults to `Color.grayDark`
@@ -228,9 +228,11 @@ Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
 
 if _G.CUSTOM_CLASS_COLORS then return end
 --[[ CUSTOM_CLASS_COLORS:header
-This is a community created standard to allow for changing the in-game
-class colors without tainting Blizzard's code. [ClassColors], created
-by Phanx, was the original implementaion of this idea.
+This is a community developed standard, and is intended to be a drop-in
+replacement for Blizzard's RAID_CLASS_COLORS. It's purpose is to allow
+the user to change the in-game class colors without tainting the
+default UI. [ClassColors], created by Phanx, was the original
+implementation of this idea.
 
 [ClassColors]: https://github.com/phanx-wow/ClassColors
 --]]
