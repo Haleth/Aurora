@@ -46,7 +46,7 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
       run: |
         sudo apt-get install pandoc
-        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d
+        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
 
     - name: Create Classic Package
       env:
@@ -55,4 +55,4 @@ jobs:
         GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
       run: |
         sudo apt-get install pandoc
-        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -d -g 1.13.3 -m .pkgmeta-classic
+        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -g 1.13.3 -m .pkgmeta-classic
