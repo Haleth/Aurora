@@ -10,9 +10,10 @@
 
 ### Fixed ###
 
+  * Guild news filter options weren't skinned
   * Auction House buy dialog wasn't skinned
   * World Quest tracker heading wasn't skinned
-  * Callbacks were not always called when class colors were changed
+  * CUSTOM_CLASS_COLORS callbacks were not always called when changed
 
 
 

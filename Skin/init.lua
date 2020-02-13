@@ -3,7 +3,7 @@ local ADDON_NAME, private = ...
 -- luacheck: globals select tostring tonumber math floor
 -- luacheck: globals setmetatable rawset debugprofilestop type tinsert
 
-private.API_MAJOR, private.API_MINOR = 0, 5
+private.API_MAJOR, private.API_MINOR = 0, 6
 
 local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
 private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
