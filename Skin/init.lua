@@ -5,8 +5,7 @@ local ADDON_NAME, private = ...
 
 private.API_MAJOR, private.API_MINOR = 0, 6
 
-local xpac, major, minor = _G.strsplit(".", _G.GetBuildInfo())
-private.isPatch = tonumber(xpac) == 8 and (tonumber(major) >= 3 and tonumber(minor) >= 0)
+private.isPatch = select(4, _G.GetBuildInfo()) >= 80300
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 
