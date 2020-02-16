@@ -93,6 +93,7 @@ function private.OnLoad()
         C.r, C.g, C.b = r, g, b -- deprecated
         Color.highlight:SetRGB(r, g, b)
     end
+    private.updateHighlightColor()
 
     _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
         _G.AuroraOptions.refresh()
