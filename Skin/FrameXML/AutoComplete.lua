@@ -4,24 +4,33 @@ local _, private = ...
 -- luacheck: globals
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Skin = Aurora.Skin
+local Color = Aurora.Color
+
+--do --[[ FrameXML\AutoComplete.lua ]]
+--end
+
+do --[[ FrameXML\AutoComplete.xml ]]
+    function Skin.AutoCompleteButtonTemplate(Button)
+        local highlight = Button:GetHighlightTexture()
+        highlight:ClearAllPoints()
+        highlight:SetPoint("LEFT", _G.AutoCompleteBox, 1, 0)
+        highlight:SetPoint("RIGHT", _G.AutoCompleteBox, -1, 0)
+        highlight:SetPoint("TOP", 0, 0)
+        highlight:SetPoint("BOTTOM", 0, 0)
+        highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
+    end
+end
 
 function private.FrameXML.AutoComplete()
-    local r, g, b = C.r, C.g, C.b
-    F.CreateBD(_G.AutoCompleteBox)
+    local AutoCompleteBox = _G.AutoCompleteBox
+    Base.SetBackdrop(AutoCompleteBox)
 
-    _G.hooksecurefunc("AutoComplete_Update", function()
-        if not _G.AutoCompleteBox._skinned then
-            for i = 1, 5 do
-                local btn = _G["AutoCompleteButton"..i]
-
-                local hl = btn:GetHighlightTexture()
-                hl:SetPoint("TOPLEFT", 1, 0)
-                hl:SetPoint("BOTTOM", 0, 0)
-                hl:SetPoint("RIGHT", _G.AutoCompleteBox, -1, 0)
-                hl:SetColorTexture(r, g, b, .2)
-            end
-            _G.AutoCompleteBox._skinned = true
-        end
-    end)
+    Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton1)
+    Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton2)
+    Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton3)
+    Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton4)
+    Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton5)
 end
