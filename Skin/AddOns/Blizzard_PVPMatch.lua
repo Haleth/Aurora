@@ -17,17 +17,17 @@ do --[[ AddOns\Blizzard_PVPMatch.xml ]]
         function Skin.PVPTableRowTemplate(Frame)
             Frame.backgroundLeft:ClearAllPoints()
             Frame.backgroundLeft:SetPoint("TOPLEFT")
-            Frame.backgroundLeft:SetTexture([[Interface\Buttons\WHITE8x8]])
+            Frame.backgroundLeft:SetTexture(private.textures.plain)
             Frame.backgroundLeft:SetHeight(15)
             Frame.backgroundLeft:SetAlpha(0.5)
 
             Frame.backgroundRight:ClearAllPoints()
             Frame.backgroundRight:SetPoint("TOPRIGHT")
-            Frame.backgroundRight:SetTexture([[Interface\Buttons\WHITE8x8]])
+            Frame.backgroundRight:SetTexture(private.textures.plain)
             Frame.backgroundRight:SetHeight(15)
             Frame.backgroundRight:SetAlpha(0.5)
 
-            Frame.backgroundCenter:SetTexture([[Interface\Buttons\WHITE8x8]])
+            Frame.backgroundCenter:SetTexture(private.textures.plain)
             Frame.backgroundCenter:SetHeight(15)
             Frame.backgroundCenter:SetAlpha(0.5)
         end

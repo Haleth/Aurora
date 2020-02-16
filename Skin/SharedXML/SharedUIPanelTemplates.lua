@@ -228,7 +228,7 @@ do -- Basic frame type skins
         local function Hook_SetStatusBarAtlas(self, atlas)
             if atlasColors[atlas] then
                 local texture = self:GetStatusBarTexture()
-                texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+                texture:SetTexture(private.textures.plain)
                 if atlasColors[atlas.."_2"] then
                     local r, g, b = atlasColors[atlas]:GetRGB()
                     local r2, g2, b2 = atlasColors[atlas.."_2"]:GetRGB()
@@ -256,7 +256,7 @@ do -- Basic frame type skins
             local red, green, blue = StatusBar:GetStatusBarColor()
 
             if not StatusBar:GetStatusBarTexture() then
-                StatusBar:SetStatusBarTexture([[Interface\Buttons\WHITE8x8]])
+                StatusBar:SetStatusBarTexture(private.textures.plain)
             end
             Base.SetTexture(StatusBar:GetStatusBarTexture(), "gradientUp")
 

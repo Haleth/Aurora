@@ -152,7 +152,7 @@ do --[[ AddOns\Blizzard_AuctionUITemplates.xml ]]
         item.Count = _G[name.."ItemCount"]
         _G[name.."ItemStock"]:SetPoint("TOPLEFT", 2, -2)
         item.icon = _G[name.."ItemIconTexture"]
-        item.icon:SetTexture([[Interface\Buttons\WHITE8x8]])
+        item.icon:SetTexture(private.textures.plain)
         Skin.FrameTypeItemButton(item)
         Button._item = item
 
@@ -175,7 +175,7 @@ do --[[ AddOns\Blizzard_AuctionUITemplates.xml ]]
         item.Count = _G[name.."ItemCount"]
         _G[name.."ItemStock"]:SetPoint("TOPLEFT", 2, -2)
         item.icon = _G[name.."ItemIconTexture"]
-        item.icon:SetTexture([[Interface\Buttons\WHITE8x8]])
+        item.icon:SetTexture(private.textures.plain)
         Skin.FrameTypeItemButton(item)
         Button._item = item
 
@@ -198,7 +198,7 @@ do --[[ AddOns\Blizzard_AuctionUITemplates.xml ]]
         item.Count = _G[name.."ItemCount"]
         _G[name.."ItemStock"]:SetPoint("TOPLEFT", 2, -2)
         item.icon = _G[name.."ItemIconTexture"]
-        item.icon:SetTexture([[Interface\Buttons\WHITE8x8]])
+        item.icon:SetTexture(private.textures.plain)
         Skin.FrameTypeItemButton(item)
         Button._item = item
 

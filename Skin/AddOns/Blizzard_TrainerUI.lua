@@ -150,7 +150,7 @@ function private.AddOns.Blizzard_TrainerUI()
         Skin.ClassTrainerDetailScrollFrameTemplate(_G.ClassTrainerDetailScrollFrame)
 
         _G.ClassTrainerSkillIcon:GetRegions():Hide()
-        _G.ClassTrainerSkillIcon:SetNormalTexture([[Interface\Buttons\WHITE8x8]])
+        _G.ClassTrainerSkillIcon:SetNormalTexture(private.textures.plain)
         Base.CropIcon(_G.ClassTrainerSkillIcon:GetNormalTexture(), _G.ClassTrainerSkillIcon)
         Skin.SmallMoneyFrameTemplate(_G.ClassTrainerDetailMoneyFrame)
 

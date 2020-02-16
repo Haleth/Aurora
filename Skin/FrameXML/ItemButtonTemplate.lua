@@ -21,7 +21,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
 
         for i = 1, 4 do
             local tex = iconOverlay:CreateTexture(nil, "OVERLAY")
-            tex:SetTexture([[Interface\Buttons\WHITE8x8]])
+            tex:SetTexture(private.textures.plain)
             tex:SetSize(size, size)
             tinsert(iconOverlay, tex)
         end

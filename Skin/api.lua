@@ -92,7 +92,7 @@ end
 do -- Base.SetBackdrop
     local backdrop = {
         -- Blizzard options
-        bgFile = [[Interface\Buttons\WHITE8x8]],
+        bgFile = private.textures.plain,
         tile = true,
         insets = {
             left = 0,
@@ -100,7 +100,7 @@ do -- Base.SetBackdrop
             top = 0,
             bottom = 0,
         },
-        edgeFile = [[Interface\Buttons\WHITE8x8]],
+        edgeFile = private.textures.plain,
         edgeSize = 1,
 
         -- Custom options

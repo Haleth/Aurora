@@ -93,7 +93,7 @@ do --[[ AddOns\Blizzard_OrderHallUI.xml ]]
             Button.Border:SetAlpha(0)
             Base.CropIcon(Button.Highlight)
 
-            Button.Cooldown:SetSwipeTexture([[Interface\Buttons\WHITE8x8]])
+            Button.Cooldown:SetSwipeTexture(private.textures.plain)
             Button.Cooldown:SetSwipeColor(Color.green.r, Color.green.g, Color.green.b, 0.5)
         end
         function Skin.GarrisonTalentChoiceTemplate(Texture)

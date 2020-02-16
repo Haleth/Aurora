@@ -18,7 +18,7 @@ do --[[ SharedXML\AddonList.lua ]]
 
             checkBox:SetSize(8, 8)
             checkBox:SetPoint("LEFT", 4, 0)
-            check:SetTexture([[Interface\Buttons\WHITE8x8]])
+            check:SetTexture(private.textures.plain)
             check:SetSize(6, 6)
             check:SetAlpha(0.6)
 

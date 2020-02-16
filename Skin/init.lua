@@ -19,6 +19,9 @@ private.disabled = {
     uiScale = true,
     pixelScale = true
 }
+private.textures = {
+    plain = [[Interface\Buttons\WHITE8x8]],
+}
 
 local pixelScale, uiScaleChanging = false
 function private.UpdateUIScale()

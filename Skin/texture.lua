@@ -121,19 +121,19 @@ do -- gradients
     end
 
     Base.RegisterTexture("gradientUp", function(frame, texture)
-        texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+        texture:SetTexture(private.textures.plain)
         SetGradientMinMax(frame, texture, "VERTICAL")
     end)
     Base.RegisterTexture("gradientDown", function(frame, texture)
-        texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+        texture:SetTexture(private.textures.plain)
         SetGradientMaxMin(frame, texture, "VERTICAL")
     end)
     Base.RegisterTexture("gradientLeft", function(frame, texture)
-        texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+        texture:SetTexture(private.textures.plain)
         SetGradientMaxMin(frame, texture, "HORIZONTAL")
     end)
     Base.RegisterTexture("gradientRight", function(frame, texture)
-        texture:SetTexture([[Interface\Buttons\WHITE8x8]])
+        texture:SetTexture(private.textures.plain)
         SetGradientMinMax(frame, texture, "HORIZONTAL")
     end)
 end
