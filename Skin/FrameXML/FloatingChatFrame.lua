@@ -79,16 +79,17 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
 
             local minimizeButton = buttonFrame.minimizeButton
             Skin.ChatFrameButton(minimizeButton)
+            local bg = minimizeButton:GetBackdropTexture("bg")
             minimizeButton:SetPoint("TOP", buttonFrame, 0, -3)
             local line = minimizeButton:CreateTexture(nil, "ARTWORK")
-            line:SetPoint("TOPLEFT", minimizeButton, "BOTTOMLEFT", 3, 6)
-            line:SetPoint("BOTTOMRIGHT", -3, 3)
+            line:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 3, 6)
+            line:SetPoint("BOTTOMRIGHT", bg, -3, 3)
             line:SetColorTexture(1, 1, 1)
 
             local bottomButton = ScrollingMessageFrame.ScrollToBottomButton
             bottomButton:SetPoint("BOTTOMRIGHT", ScrollingMessageFrame.ResizeButton, "TOPRIGHT", -5, 0)
             Skin.ChatFrameButton(bottomButton)
-            local bg = bottomButton:GetBackdropTexture("bg")
+            bg = bottomButton:GetBackdropTexture("bg")
             local arrow = bottomButton:CreateTexture(nil, "ARTWORK")
             arrow:SetPoint("TOPLEFT", bg, 3, -3)
             arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
