@@ -1,4 +1,16 @@
-﻿## [8.3.0.2] - 2020-02-12 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * Improved auto complete skin
+
+### Fixed ###
+
+  * Chat minimize button had wrong offsets
+  * Error with some older skins
+
+
+
+## [8.3.0.2] - 2020-02-12 ##
 ### Added ###
 
   * Classic support
