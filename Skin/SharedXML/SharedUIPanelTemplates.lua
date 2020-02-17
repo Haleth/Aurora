@@ -430,6 +430,12 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.DialogBorderNoCenterTemplate(Frame)
         Skin.NineSlicePanelTemplate(Frame)
+        Frame:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 0)
@@ -481,8 +487,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.RightBG:Hide()
         Frame.CenterBG:Hide()
 
-        Frame.Text:SetPoint("TOP", 0, -12)
-        Frame.Text:SetPoint("BOTTOM")
+        Frame.Text:SetPoint("TOP", 0, -17)
+        Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
     end
 
     function Skin.SimplePanelTemplate(Frame)
@@ -494,7 +500,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
         if private.isRetail then
             Util.Mixin(Frame, Hook.PortraitFrameMixin)
-
 
             Frame.TitleBg:SetAlpha(0)
             Frame.portrait:SetAlpha(0)
@@ -608,19 +613,20 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.HorizontalSliderTemplate(Slider)
-        Slider:SetBackdrop(nil)
-
-        local bg = _G.CreateFrame("Frame", nil, Slider)
-        bg:SetPoint("TOPLEFT", Slider, 5, -5)
-        bg:SetPoint("BOTTOMRIGHT", Slider, -5, 5)
-        bg:SetFrameLevel(Slider:GetFrameLevel())
-        Base.SetBackdrop(bg, Color.button, 0.3)
+        Base.SetBackdrop(Slider, Color.frame)
+        Slider:SetBackdropBorderColor(Color.button)
+        Slider:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
 
         local thumbTexture = Slider:GetThumbTexture()
         thumbTexture:SetAlpha(0)
         thumbTexture:SetSize(8, 16)
 
-        local thumb = _G.CreateFrame("Frame", nil, bg)
+        local thumb = _G.CreateFrame("Frame", nil, Slider)
         thumb:SetPoint("TOPLEFT", thumbTexture, 0, 0)
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
         Base.SetBackdrop(thumb, Color.button)
