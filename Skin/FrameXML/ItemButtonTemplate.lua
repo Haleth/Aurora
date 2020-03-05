@@ -233,10 +233,10 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false,
             offsets = {
-                left = 3,
-                right = 4,
-                top = 4,
-                bottom = 3,
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
             }
         })
         Base.CropIcon(Button:GetBackdropTexture("bg"))

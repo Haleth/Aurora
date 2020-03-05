@@ -380,8 +380,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             itemheaderframe:Hide()
 
             local nameBG = _G.CreateFrame("Frame", nil, Frame.ItemDisplay)
-            nameBG:SetPoint("TOPLEFT", Frame.ItemDisplay.ItemButton, "TOPRIGHT", 0, -4)
-            nameBG:SetPoint("BOTTOMRIGHT", -12, 12)
+            nameBG:SetPoint("TOPLEFT", Frame.ItemDisplay.ItemButton, "TOPRIGHT", 0, -1)
+            nameBG:SetPoint("BOTTOMRIGHT", -12, 10)
             Base.SetBackdrop(nameBG, Color.frame)
 
             Skin.AuctionHouseAlignedQuantityInputFrameTemplate(Frame.QuantityInput)
