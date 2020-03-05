@@ -8,8 +8,8 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
+local keyColor = Color.Create(0.7254, 0.5490, 0.2235, 0.75)
 do --[[ FrameXML\ContainerFrame.lua ]]
-    local NUM_BAG_FRAMES = 4
     local BAG_FILTER_ICONS = {
         ["bags-icon-equipment"] = [[Interface\Icons\INV_Chest_Chain]],
         ["bags-icon-consumables"] = [[Interface\Icons\INV_Potion_93]],
@@ -19,10 +19,14 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         self:SetTexture(BAG_FILTER_ICONS[atlas])
     end
     function Hook.ContainerFrame_GenerateFrame(frame, size, id)
-        if id > NUM_BAG_FRAMES then
+        if id > _G.NUM_BAG_FRAMES then
             -- bank bags
             local _, _, _, a = frame:GetBackdropColor()
-            Base.SetBackdropColor(frame, Color.button, a)
+            Base.SetBackdropColor(frame, Color.grayLight, a)
+        elseif id == _G.KEYRING_CONTAINER then
+            -- key ring
+            local _, _, _, a = frame:GetBackdropColor()
+            Base.SetBackdropColor(frame, keyColor, a)
         end
     end
     function Hook.ContainerFrame_Update(self)
@@ -42,6 +46,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
             local _, _, _, quality, _, _, link = _G.GetContainerItemInfo(bagID, slotID)
 
             if not itemButton._auroraIconBorder then
+                itemButton._isKey = bagID == _G.KEYRING_CONTAINER
                 Skin.ContainerFrameItemButtonTemplate(itemButton)
 
                 Hook.SetItemButtonQuality(itemButton, quality, link)
@@ -67,12 +72,19 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         local name = ItemButton:GetName()
 
         Base.CreateBackdrop(ItemButton, {
-            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            bgFile = ItemButton._isKey and [[Interface\ContainerFrame\KeyRing-Bag-Icon]] or [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false
         })
         Skin.FrameTypeItemButton(ItemButton)
-        ItemButton:SetBackdropColor(1, 1, 1, 0.75)
-        Base.CropIcon(ItemButton:GetBackdropTexture("bg"))
+        local bg = ItemButton:GetBackdropTexture("bg")
+        Base.CropIcon(bg)
+
+        if ItemButton._isKey then
+            bg:SetDesaturated(true)
+            ItemButton:SetBackdropColor(keyColor:GetRGBA())
+        else
+            ItemButton:SetBackdropColor(1, 1, 1, 0.75)
+        end
 
         ItemButton._questTexture = _G[name.."IconQuestTexture"]
         if private.isClassic then
