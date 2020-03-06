@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.3.0.4] - 2020-03-06 ##
 ### Changed ###
 
   * `classic` Improved keyring skin
@@ -428,6 +428,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.4]: https://github.com/Haleth/Aurora/compare/8.3.0.3...8.3.0.4
 [8.3.0.3]: https://github.com/Haleth/Aurora/compare/8.3.0.2...8.3.0.3
 [8.3.0.2]: https://github.com/Haleth/Aurora/compare/8.3.0.1...8.3.0.2
 [8.3.0.1]: https://github.com/Haleth/Aurora/compare/8.3.0.0...8.3.0.1
