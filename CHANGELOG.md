@@ -1,4 +1,17 @@
-﻿## [8.3.0.3] - 2020-02-17 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * `classic` Improved keyring skin
+
+### Fixed ###
+
+  * Error in raid UI
+  * Error when using nameplates in a raid
+  * AH sell item did not have a border
+
+
+
+## [8.3.0.3] - 2020-02-17 ##
 ### Changed ###
 
   * Improved auto complete skin
