@@ -9,6 +9,8 @@ local Hook = Aurora.Hook
 
 do --[[ FrameXML\CompactUnitFrame.lua ]]
     function Hook.CompactUnitFrame_UpdateHealthColor(frame)
+        if frame:IsForbidden() then return end
+
         if _G.UnitIsConnected(frame.unit) then
             local opts = frame.optionTable
             if not opts.healthBarColorOverride then
