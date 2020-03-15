@@ -303,8 +303,8 @@ function private.FrameXML.MailFrame()
 
     Skin.InsetFrameTemplate(_G.SendMailMoneyInset)
     Skin.ThinGoldEdgeTemplate(_G.SendMailMoneyBg)
+    _G.SendMailMoneyBg:SetPoint("TOPRIGHT", _G.SendMailFrame, "BOTTOMLEFT", 165, 27)
     _G.SendMailMoneyBg:SetPoint("BOTTOMLEFT", 5, 5)
-    _G.SendMailMoneyBg:SetSize(160, 22)
     Skin.SmallMoneyFrameTemplate(_G.SendMailMoneyFrame)
     _G.SendMailMoneyFrame:SetPoint("BOTTOMRIGHT", _G.SendMailMoneyBg, 7, 5)
 
