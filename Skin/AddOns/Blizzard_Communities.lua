@@ -327,7 +327,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.CardBackground:Hide()
             Skin.UIPanelButtonTemplate(Frame.RequestJoin)
         end
-        function Skin.ClubFinderFocusDropdownTemplate(Frame)
+        function Skin.ClubFinderFilterDropdownTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.ClubFinderCheckboxTemplate(CheckButton)
@@ -367,7 +367,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ListScrollFrame.scrollBar:SetPoint("BOTTOMLEFT", Frame.ListScrollFrame, "BOTTOMRIGHT", 15, 15)
         end
         function Skin.ClubFinderOptionsTemplate(Frame)
-            Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
+            Skin.ClubFinderFilterDropdownTemplate(Frame.ClubFilterDropdown)
             Skin.UIDropDownMenuTemplate(Frame.ClubSizeDropdown)
             Skin.UIDropDownMenuTemplate(Frame.SortByDropdown)
             Skin.ClubFinderRoleTemplate(Frame.TankRoleFrame)
