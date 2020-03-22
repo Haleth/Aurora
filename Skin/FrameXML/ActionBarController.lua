@@ -342,6 +342,75 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
         end
     end
+    do --[[ MultiActionBars.xml ]]
+        function Skin.MultiBarButtonTemplate(CheckButton)
+            Skin.ActionButtonTemplate(CheckButton)
+            Base.SetBackdrop(CheckButton, Color.frame, 0.2)
+            CheckButton:SetBackdropOption("offsets", {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            })
+
+            _G[CheckButton:GetName().."FloatingBG"]:SetTexture("")
+        end
+        Skin.MultiBar1ButtonTemplate = Skin.MultiBarButtonTemplate
+        Skin.MultiBar2ButtonTemplate = Skin.MultiBarButtonTemplate
+        function Skin.MultiBar2ButtonNoBackgroundTemplate(CheckButton)
+            Skin.ActionButtonTemplate(CheckButton)
+
+            Base.CreateBackdrop(CheckButton, {
+                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
+            })
+            CheckButton:SetBackdropColor(1, 1, 1, 0.75)
+            CheckButton:SetBackdropBorderColor(Color.frame:GetRGB())
+            Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
+        end
+        Skin.MultiBar3ButtonTemplate = Skin.MultiBarButtonTemplate
+        Skin.MultiBar4ButtonTemplate = Skin.MultiBarButtonTemplate
+
+        function Skin.HorizontalMultiBar1(Frame)
+            local name = Frame:GetName().."Button"
+            for i = 1, 12 do
+                Skin.MultiBar1ButtonTemplate(_G[name..i])
+            end
+        end
+        function Skin.HorizontalMultiBar2(Frame)
+            local name = Frame:GetName().."Button"
+            if private.isRetail then
+                for i = 1, 6 do
+                    Skin.MultiBar2ButtonNoBackgroundTemplate(_G[name..i])
+                end
+                for i = 7, 12 do
+                    Skin.MultiBar2ButtonTemplate(_G[name..i])
+                end
+            else
+                for i = 1, 12 do
+                    Skin.MultiBar2ButtonTemplate(_G[name..i])
+                end
+            end
+        end
+        function Skin.VerticalMultiBar3(Frame)
+            local name = Frame:GetName().."Button"
+            for i = 1, 12 do
+                Skin.MultiBar3ButtonTemplate(_G[name..i])
+            end
+        end
+        function Skin.VerticalMultiBar4(Frame)
+            local name = Frame:GetName().."Button"
+            for i = 1, 12 do
+                Skin.MultiBar4ButtonTemplate(_G[name..i])
+            end
+        end
+    end
     do --[[ StanceBar.xml ]]
         function Skin.StanceButtonTemplate(CheckButton)
             Skin.ActionButtonTemplate(CheckButton)
@@ -656,6 +725,12 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --         MultiActionBars         --
     ----====####$$$$%%%%%$$$$####====----
+    if not private.disabled.mainmenubar then
+        Skin.HorizontalMultiBar1(_G.MultiBarBottomLeft)
+        Skin.HorizontalMultiBar2(_G.MultiBarBottomRight)
+        Skin.VerticalMultiBar3(_G.MultiBarRight)
+        Skin.VerticalMultiBar4(_G.MultiBarLeft)
+    end
 
     ----====####$$$$%%%%%$$$$####====----
     --        OverrideActionBar        --
