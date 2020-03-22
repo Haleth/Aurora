@@ -295,26 +295,52 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.ClubsRecruitmentDialogTemplate(Frame)
+            Skin.DialogBorderDarkTemplate(Frame.BG)
+
+            Skin.ClubFinderCheckboxTemplate(Frame.ShouldListClub.Button)
+            Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
+            Skin.UIDropDownMenuTemplate(Frame.LookingForDropdown)
+            Skin.UIDropDownMenuTemplate(Frame.LanguageDropdown)
+
+            -- BlizzWTF: RecruitmentMessageFrame.RecruitmentMessageInput already has a border via InputScrollFrameTemplate
+            local EditBox = Frame.RecruitmentMessageFrame
+            EditBox.TopLeft:Hide()
+            EditBox.TopRight:Hide()
+            EditBox.Top:Hide()
+            EditBox.BottomLeft:Hide()
+            EditBox.BottomRight:Hide()
+            EditBox.Bottom:Hide()
+            EditBox.Left:Hide()
+            EditBox.Right:Hide()
+            EditBox.Middle:Hide()
+            Skin.ClubFinderEditBoxScrollFrameTemplate(EditBox.RecruitmentMessageInput)
+
+            Skin.ClubFinderCheckboxTemplate(Frame.MaxLevelOnly.Button)
+            Skin.ClubFinderCheckboxTemplate(Frame.MinIlvlOnly.Button)
+            Skin.InputBoxTemplate(Frame.MinIlvlOnly.EditBox)
+            Skin.UIPanelButtonTemplate(Frame.Accept)
+            Skin.UIPanelButtonTemplate(Frame.Cancel)
+        end
+        function Skin.ClubFinderBigSpecializationCheckBoxTemplate(Frame)
+            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
+        end
+        function Skin.ClubFinderLittleSpecializationCheckBoxTemplate(Frame)
+            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
         end
         function Skin.ClubFinderRequestToJoinTemplate(Frame)
             Skin.DialogBorderDarkTemplate(Frame.BG)
 
+            -- BlizzWTF: MessageFrame.MessageScroll already has a border via InputScrollFrameTemplate
             local EditBox = Frame.MessageFrame
-            Base.CreateBackdrop(EditBox, private.backdrop, {
-                tl = EditBox.TopLeft,
-                tr = EditBox.TopRight,
-                t = EditBox.Top,
-
-                bl = EditBox.BottomLeft,
-                br = EditBox.BottomRight,
-                b = EditBox.Bottom,
-
-                l = EditBox.Left,
-                r = EditBox.Right,
-
-                bg = EditBox.Middle
-            })
-            Skin.FrameTypeEditBox(EditBox)
+            EditBox.TopLeft:Hide()
+            EditBox.TopRight:Hide()
+            EditBox.Top:Hide()
+            EditBox.BottomLeft:Hide()
+            EditBox.BottomRight:Hide()
+            EditBox.Bottom:Hide()
+            EditBox.Left:Hide()
+            EditBox.Right:Hide()
+            EditBox.Middle:Hide()
             Skin.ClubFinderEditBoxScrollFrameTemplate(EditBox.MessageScroll)
 
             Skin.UIPanelButtonTemplate(Frame.Apply)
@@ -326,6 +352,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Frame.CardBackground:Hide()
             Skin.UIPanelButtonTemplate(Frame.RequestJoin)
+        end
+        function Skin.ClubFinderFocusDropdownTemplate(Frame)
+            Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.ClubFinderFilterDropdownTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
