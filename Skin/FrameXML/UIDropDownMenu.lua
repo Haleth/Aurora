@@ -120,6 +120,14 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                 })
             end
         end
+
+        local disabledColor = Color.Lightness(Color.button, -0.3)
+        function Hook.UIDropDownMenu_DisableDropDown(dropDown)
+            Base.SetBackdropColor(dropDown, disabledColor)
+        end
+        function Hook.UIDropDownMenu_EnableDropDown(dropDown)
+            Base.SetBackdropColor(dropDown, Color.button)
+        end
     end
 end
 
@@ -239,6 +247,8 @@ function private.FrameXML.UIDropDownMenu()
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)
     _G.hooksecurefunc("UIDropDownMenu_SetWidth", Hook.UIDropDownMenu_SetWidth)
+    _G.hooksecurefunc("UIDropDownMenu_DisableDropDown", Hook.UIDropDownMenu_DisableDropDown)
+    _G.hooksecurefunc("UIDropDownMenu_EnableDropDown", Hook.UIDropDownMenu_EnableDropDown)
 
     Skin.UIDropDownListTemplate(_G.DropDownList1)
     Skin.UIDropDownListTemplate(_G.DropDownList2)
