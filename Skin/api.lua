@@ -491,11 +491,13 @@ do -- Base.SetHighlight
         end
     end
     local function ShowHighlight(button)
-        if button._isHighlighted then
-            return button._lockHighlight
-        else
-            return button:IsEnabled()
+        if button:IsEnabled() then
+            if not button._isHighlightLocked then
+                return not button._isHighlighted
+            end
         end
+
+        return button._isHighlightLocked
     end
     local function OnEnter(button, isBackdrop)
         local highlight = Color.highlight
@@ -526,7 +528,7 @@ do -- Base.SetHighlight
         button._returnColor = GetReturnColor(button, isBackdrop)
 
         local function enter(self)
-            if ShowHighlight(button) then
+            if ShowHighlight(button) and not button._isHighlighted then
                 button._returnColor = GetReturnColor(self, isBackdrop);
                 (onenter or OnEnter)(self, isBackdrop)
                 button._isHighlighted = true
@@ -535,7 +537,7 @@ do -- Base.SetHighlight
         button:HookScript("OnEnter", enter)
 
         local function leave(self)
-            if not ShowHighlight(button) then
+            if not ShowHighlight(button) and button._isHighlighted then
                 (onleave or OnLeave)(self, isBackdrop)
                 button._isHighlighted = false
             end
@@ -544,11 +546,11 @@ do -- Base.SetHighlight
 
         if button.LockHighlight then
             _G.hooksecurefunc(button, "LockHighlight", function(self, ...)
-                button._lockHighlight = true
+                button._isHighlightLocked = true
                 enter(self)
             end)
             _G.hooksecurefunc(button, "UnlockHighlight", function(self, ...)
-                button._lockHighlight = nil
+                button._isHighlightLocked = nil
                 leave(self)
             end)
         end
