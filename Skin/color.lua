@@ -202,24 +202,24 @@ These colors are used extensively in the UI skins.
 * `Color.button` - defaults to `Color.grayDark`
 * `Color.frame` - defaults to `Color.black`
 --]]
-Color.red = Color.Create(0.8, 0.2, 0.2)
-Color.orange = Color.Create(0.8, 0.5, 0.2)
-Color.yellow = Color.Create(0.8, 0.8, 0.2)
-Color.lime = Color.Create(0.5, 0.8, 0.2)
-Color.green = Color.Create(0.2, 0.8, 0.2)
-Color.jade = Color.Create(0.2, 0.8, 0.5)
-Color.cyan = Color.Create(0.2, 0.8, 0.8)
-Color.marine = Color.Create(0.2, 0.5, 0.8)
-Color.blue = Color.Create(0.2, 0.2, 0.8)
-Color.violet = Color.Create(0.5, 0.2, 0.8)
-Color.magenta = Color.Create(0.8, 0.2, 0.8)
-Color.ruby = Color.Create(0.8, 0.2, 0.5)
+Color.red = Color.Create(0.8, 0.2, 0.2) -- CC3333
+Color.orange = Color.Create(0.8, 0.5, 0.2) -- CC8033
+Color.yellow = Color.Create(0.8, 0.8, 0.2) -- CCCC33
+Color.lime = Color.Create(0.5, 0.8, 0.2) -- 80CC33
+Color.green = Color.Create(0.2, 0.8, 0.2) -- 33CC33
+Color.jade = Color.Create(0.2, 0.8, 0.5) -- 33CC80
+Color.cyan = Color.Create(0.2, 0.8, 0.8) -- 33CCCC
+Color.marine = Color.Create(0.2, 0.5, 0.8) -- 3380CC
+Color.blue = Color.Create(0.2, 0.2, 0.8) -- 3333CC
+Color.violet = Color.Create(0.5, 0.2, 0.8) -- 8033CC
+Color.magenta = Color.Create(0.8, 0.2, 0.8) -- CC33CC
+Color.ruby = Color.Create(0.8, 0.2, 0.5) -- CC3380
 
-Color.black = Color.Create(0, 0, 0)
-Color.grayDark = Color.Create(0.25, 0.25, 0.25)
-Color.gray = Color.Create(0.5, 0.5, 0.5)
-Color.grayLight = Color.Create(0.75, 0.75, 0.75)
-Color.white = Color.Create(1, 1, 1)
+Color.black = Color.Create(0, 0, 0) -- 000000
+Color.grayDark = Color.Create(0.25, 0.25, 0.25) -- 404040
+Color.gray = Color.Create(0.5, 0.5, 0.5) -- 808080
+Color.grayLight = Color.Create(0.75, 0.75, 0.75) -- BFBFBF
+Color.white = Color.Create(1, 1, 1) -- FFFFFF
 
 Color.highlight = Color.Create(Color.white.r, Color.white.g, Color.white.b)
 Color.button = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b)
