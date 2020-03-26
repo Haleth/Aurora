@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.3.0.5] - 2020-03-26 ##
 ### Added ###
 
   * Community invite skin
@@ -443,6 +443,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.5]: https://github.com/Haleth/Aurora/compare/8.3.0.4...8.3.0.5
 [8.3.0.4]: https://github.com/Haleth/Aurora/compare/8.3.0.3...8.3.0.4
 [8.3.0.3]: https://github.com/Haleth/Aurora/compare/8.3.0.2...8.3.0.3
 [8.3.0.2]: https://github.com/Haleth/Aurora/compare/8.3.0.1...8.3.0.2
