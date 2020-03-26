@@ -1,4 +1,19 @@
-﻿## [8.3.0.4] - 2020-03-06 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Community invite skin
+  * Additional action bars
+
+### Fixed ###
+
+  * Error when opening commuities UI
+  * Display bug with the send mail money border
+  * Button highlights when disabled
+  * Friends tooltip is now skinned again
+
+
+
+## [8.3.0.4] - 2020-03-06 ##
 ### Changed ###
 
   * `classic` Improved keyring skin
