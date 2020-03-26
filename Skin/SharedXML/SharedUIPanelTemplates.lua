@@ -248,9 +248,12 @@ do -- Basic frame type skins
             _G.hooksecurefunc(StatusBar, "SetStatusBarColor", Hook_SetStatusBarColor)
 
             Base.SetBackdrop(StatusBar, Color.button, Color.frame.a)
-            local bg = StatusBar:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", -1, 1)
-            bg:SetPoint("BOTTOMRIGHT", 1, -1)
+            StatusBar:SetBackdropOption("offsets", {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            })
 
             local atlas = StatusBar:GetStatusBarAtlas()
             local red, green, blue = StatusBar:GetStatusBarColor()
