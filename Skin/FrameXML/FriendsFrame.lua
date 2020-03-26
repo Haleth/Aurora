@@ -129,24 +129,26 @@ function private.FrameXML.FriendsFrame()
 
     do -- BNetFrame.BroadcastButton
         local Button = BNetFrame.BroadcastButton
+        Skin.FrameTypeButton(Button)
         Button:GetNormalTexture():SetAlpha(0)
         Button:GetPushedTexture():SetAlpha(0)
-        Button:SetHighlightTexture("")
+        Button:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
+
         local icon = Button:CreateTexture(nil, "ARTWORK")
         icon:SetTexture([[Interface\FriendsFrame\BroadcastIcon]])
         icon:SetSize(16, 16)
         icon:SetPoint("CENTER")
-
-        Base.SetBackdrop(Button, Color.button)
-        local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 5, -5)
-        bg:SetPoint("BOTTOMRIGHT", -5, 5)
-        Base.SetHighlight(Button, "backdrop")
     end
 
     Skin.UIPanelInfoButton(BNetFrame.UnavailableInfoButton)
 
     local BroadcastFrame = BNetFrame.BroadcastFrame
+    Util.Mixin(BroadcastFrame, Hook.FriendsBroadcastFrameMixin)
     if private.isRetail then
         Skin.DialogBorderOpaqueTemplate(BroadcastFrame.Border)
     else
