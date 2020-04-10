@@ -24,7 +24,7 @@ C.defaults = {
         chatBubbleNames = true,
 
     buttonsHaveGradient = true,
-    customHighlight = {enabled = false, r = 1, g = 1, b = 1},
+    customHighlight = {enabled = false, r = 0.243, g = 0.570, b = 1},
     alpha = 0.5,
 
     --[[

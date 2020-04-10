@@ -221,7 +221,7 @@ Color.gray = Color.Create(0.5, 0.5, 0.5) -- 808080
 Color.grayLight = Color.Create(0.75, 0.75, 0.75) -- BFBFBF
 Color.white = Color.Create(1, 1, 1) -- FFFFFF
 
-Color.highlight = Color.Create(Color.white.r, Color.white.g, Color.white.b)
+Color.highlight = Color.Create(0.243, 0.570, 1)
 Color.button = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b)
 Color.frame = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
 
