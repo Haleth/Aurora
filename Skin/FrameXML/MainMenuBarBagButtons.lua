@@ -43,7 +43,9 @@ function private.FrameXML.MainMenuBarBagButtons()
         _G.CharacterBag2Slot:SetPoint("RIGHT", _G.CharacterBag1Slot, "LEFT", -4, 0)
         _G.CharacterBag3Slot:SetPoint("RIGHT", _G.CharacterBag2Slot, "LEFT", -4, 0)
 
-        Skin.GlowBoxFrame(_G.AzeriteInBagsHelpBox)
+        if not private.isPatch then
+            Skin.GlowBoxFrame(_G.AzeriteInBagsHelpBox)
+        end
     else
         local KeyRingButton = _G.KeyRingButton
         Base.SetBackdrop(KeyRingButton, Color.frame)

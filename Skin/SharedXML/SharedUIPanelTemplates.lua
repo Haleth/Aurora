@@ -250,7 +250,7 @@ do -- Basic frame type skins
             Base.SetBackdrop(StatusBar, Color.button, Color.frame.a)
             StatusBar:SetBackdropOption("offsets", {
                 left = -1,
-                right = -1,
+                right = -2,
                 top = -1,
                 bottom = -1,
             })
@@ -290,7 +290,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
             if not tab._auroraTabResize or resizing then return end
 
             resizing = true
-            local left = tab.Left or tab.leftTexture or _G[tab:GetName().."Left"];
+            local left = tab.Left or tab.leftTexture or _G[tab:GetName().."Left"]
             left:SetWidth(10)
             _G.PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
             resizing = false
@@ -315,6 +315,13 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         end
         function Hook.SquareIconButtonMixin:OnMouseUp()
             self.Icon:SetPoint("CENTER", 0, 0)
+        end
+
+        Hook.ThreeSliceButtonMixin = {}
+        function Hook.ThreeSliceButtonMixin:UpdateButton(buttonState)
+            self.Left:SetTexture("")
+            self.Center:SetTexture("")
+            self.Right:SetTexture("")
         end
     end
 end
@@ -408,7 +415,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.NineSlicePanelTemplate(Frame)
         Frame._auroraNineSlice = true
-        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType());
+        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
         if layout then
             Hook.NineSliceUtil.ApplyLayout(Frame, layout)
         end
@@ -805,6 +812,26 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.RefreshButtonTemplate(Button)
         Skin.SquareIconButtonTemplate(Button)
+    end
+
+    function Skin.ThreeSliceButtonTemplate(Button)
+        Util.Mixin(Button, Hook.ThreeSliceButtonMixin)
+        Button:HookScript("OnShow", function()
+            -- Textures re-appear when "OnShow" fires, so wait a frame after to hide them again
+            _G.C_Timer.After(0, function()
+                Hook.ThreeSliceButtonMixin.UpdateButton(Button, "OnShow")
+            end)
+        end)
+        Skin.FrameTypeButton(Button)
+    end
+    function Skin.BigRedThreeSliceButtonTemplate(Button)
+        Skin.ThreeSliceButtonTemplate(Button)
+    end
+    function Skin.SharedButtonTemplate(Button)
+        Skin.BigRedThreeSliceButtonTemplate(Button)
+    end
+    function Skin.SharedButtonSmallTemplate(Button)
+        Skin.BigRedThreeSliceButtonTemplate(Button)
     end
 end
 

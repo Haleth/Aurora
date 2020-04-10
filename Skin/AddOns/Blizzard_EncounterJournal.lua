@@ -137,7 +137,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
             end
 
             local _, _, itemQuality = _G.GetItemInfo(button.itemID)
-            itemQuality = itemQuality or _G.LE_ITEM_QUALITY_EPIC
+            itemQuality = itemQuality or private.Enum.ItemQuality.Epic
 
             local color = _G.BAG_ITEM_QUALITY_COLORS[itemQuality]
             button._auroraIconBorder:SetBackdropBorderColor(color.r, color.g, color.b)
@@ -420,7 +420,9 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.EncounterTierTabTemplate(instanceSelect.suggestTab)
     Skin.EncounterTierTabTemplate(instanceSelect.dungeonsTab)
     Skin.EncounterTierTabTemplate(instanceSelect.raidsTab)
-    Skin.EncounterTierTabTemplate(instanceSelect.LootJournalTab)
+    if not private.isPatch then
+        Skin.EncounterTierTabTemplate(instanceSelect.LootJournalTab)
+    end
     Skin.UIDropDownMenuTemplate(instanceSelect.tierDropDown)
     Skin.MinimalScrollBarTemplate(instanceSelect.scroll.ScrollBar)
 
@@ -571,11 +573,13 @@ function private.AddOns.Blizzard_EncounterJournal()
     ----====####$$$$%%%%$$$$####====----
     --      Blizzard_LootJournal      --
     ----====####$$$$%%%%$$$$####====----
-    local LootJournal = EncounterJournal.LootJournal
+    if not private.isPatch then
+        local LootJournal = EncounterJournal.LootJournal
 
-    LootJournal:GetRegions():Hide()
+        LootJournal:GetRegions():Hide()
 
-    Util.Mixin(LootJournal.ItemSetsFrame, Hook.LootJournalItemSetsMixin)
-    Skin.MinimalHybridScrollFrameTemplate(LootJournal.ItemSetsFrame)
-    Skin.EJButtonTemplate(LootJournal.ItemSetsFrame.ClassButton)
+        Util.Mixin(LootJournal.ItemSetsFrame, Hook.LootJournalItemSetsMixin)
+        Skin.MinimalHybridScrollFrameTemplate(LootJournal.ItemSetsFrame)
+        Skin.EJButtonTemplate(LootJournal.ItemSetsFrame.ClassButton)
+    end
 end

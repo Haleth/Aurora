@@ -18,22 +18,23 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         [262] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
     }
     function Hook.QuestLogQuests_Update(poiTable)
-        local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
-        local warCampaignShown = false
 
-        if warCampaignID then
-            local warCampaignInfo = _G.C_CampaignInfo.GetCampaignInfo(warCampaignID)
-            if warCampaignInfo and warCampaignInfo.visibilityConditionMatched then
-                local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits[0]
-                _G.QuestScrollFrame.Contents.WarCampaignHeader.Background:SetColorTexture(kit.color:GetRGB())
-                _G.QuestScrollFrame.Contents.WarCampaignHeader._auroraOverlay:SetTexture(kit.overlay)
-                warCampaignShown = true
+        if not private.isPatch then
+            local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
+            if warCampaignID then
+                local warCampaignInfo = _G.C_CampaignInfo.GetCampaignInfo(warCampaignID)
+                if warCampaignInfo and warCampaignInfo.visibilityConditionMatched then
+                    local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits[0]
+                    _G.QuestScrollFrame.Contents.WarCampaignHeader.Background:SetColorTexture(kit.color:GetRGB())
+                    _G.QuestScrollFrame.Contents.WarCampaignHeader._auroraOverlay:SetTexture(kit.overlay)
+                end
             end
         end
 
-        if warCampaignShown then
-            _G.QuestScrollFrame.Contents.Separator.Divider:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.5)
-            _G.QuestScrollFrame.Contents.Separator.Divider:SetSize(200, 1)
+        local separator = _G.QuestScrollFrame.Contents.Separator
+        if separator:IsShown() then
+            separator.Divider:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.5)
+            separator.Divider:SetSize(200, 1)
         end
 
         for i = 6, _G.QuestMapFrame.QuestsFrame.Contents:GetNumChildren() do
@@ -138,12 +139,18 @@ function private.FrameXML.QuestMapFrame()
     _G.hooksecurefunc("QuestLogQuests_Update", Hook.QuestLogQuests_Update)
 
     local QuestMapFrame = _G.QuestMapFrame
+    if private.isPatch then
+        QuestMapFrame.Background:Hide()
+    end
     QuestMapFrame.VerticalSeparator:Hide()
 
-    local QuestsFrame = QuestMapFrame.QuestsFrame
-    QuestsFrame.Background:Hide()
 
-    do -- WarCampaignHeader
+    local QuestsFrame = QuestMapFrame.QuestsFrame
+    if not private.isPatch then
+        QuestsFrame.Background:Hide()
+    end
+
+    if not private.isPatch then -- WarCampaignHeader
         local WarCampaignHeader = QuestsFrame.Contents.WarCampaignHeader
 
         local clipFrame = _G.CreateFrame("Frame", nil, WarCampaignHeader)
@@ -188,15 +195,17 @@ function private.FrameXML.QuestMapFrame()
     QuestsFrame.DetailFrame.TopDetail:Hide()
 
     Skin.UIPanelScrollBarTemplate(QuestsFrame.ScrollBar)
-    scrollName = QuestsFrame.ScrollBar:GetName()
-    _G[scrollName.."Top"]:Hide()
-    _G[scrollName.."Bottom"]:Hide()
-    _G[scrollName.."Middle"]:Hide()
+    local _, top, bottom, middle = QuestsFrame.ScrollBar:GetRegions()
+    top:Hide()
+    bottom:Hide()
+    middle:Hide()
     QuestsFrame.ScrollBar:SetPoint("TOPLEFT", QuestsFrame, "TOPRIGHT", 2, -17)
     QuestsFrame.ScrollBar:SetPoint("BOTTOMLEFT", QuestsFrame, "BOTTOMRIGHT", 2, 17)
 
     Base.SetBackdrop(QuestsFrame.StoryTooltip)
-    Skin.WarCampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
+    if not private.isPatch then
+        Skin.WarCampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
+    end
 
 
     local DetailsFrame = QuestMapFrame.DetailsFrame

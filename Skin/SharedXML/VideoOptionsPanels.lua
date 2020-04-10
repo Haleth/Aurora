@@ -48,6 +48,11 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_ResolutionDropDown)
     Skin.VideoOptionsSliderTemplate(_G.Display_RenderScaleSlider)
 
+    if private.isPatch then
+        Skin.VideoOptionsSliderTemplate(_G.Display_UIScaleSlider)
+        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Display_UseUIScale)
+    end
+
     -- Column B
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_PrimaryMonitorDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_AntiAliasingDropDown)
@@ -65,7 +70,11 @@ function private.SharedXML.VideoOptionsPanels()
 
     -- Textures
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_TextureResolutionDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_FilteringDropDown)
+    if private.isPatch then
+        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_SpellDensityDropDown)
+    else
+        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_FilteringDropDown)
+    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ProjectedTexturesDropDown)
 
     -- Environment
@@ -95,7 +104,11 @@ function private.SharedXML.VideoOptionsPanels()
 
     -- Textures
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_TextureResolutionDropDown)
-    Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_FilteringDropDown)
+    if private.isPatch then
+        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SpellDensityDropDown)
+    else
+        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_FilteringDropDown)
+    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ProjectedTexturesDropDown)
 
     -- Environment
@@ -128,6 +141,9 @@ function private.SharedXML.VideoOptionsPanels()
     if private.isClassic then
         Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
     end
+    if private.isPatch then
+        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_FilteringDropDown)
+    end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
@@ -138,14 +154,20 @@ function private.SharedXML.VideoOptionsPanels()
     end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
 
-    Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)
-    Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_UseUIScale)
+    if not private.isPatch then
+        Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)
+        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_UseUIScale)
+    end
 
     -- Column B
     Skin.VideoOptionsSliderTemplate(_G.Advanced_MaxFPSSlider)
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_MaxFPSCheckBox)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_MaxFPSBKSlider)
     Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_MaxFPSBKCheckBox)
+    if private.isPatch then
+        Skin.VideoOptionsSliderTemplate(_G.Advanced_TargetFPSSlider)
+        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Advanced_TargetFPSCheckBox)
+    end
     Skin.VideoOptionsSliderTemplate(_G.Advanced_ContrastSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_BrightnessSlider)
     Skin.VideoOptionsSliderTemplate(_G.Advanced_GammaSlider)

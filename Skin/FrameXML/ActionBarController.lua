@@ -539,7 +539,7 @@ function private.FrameXML.ActionBarController()
         end
     end
 
-    if private.isRetail then
+    if private.isRetail and not private.isPatch then
         Skin.MicroButtonAlertTemplate(_G.CharacterMicroButtonAlert)
         Skin.MicroButtonAlertTemplate(_G.TalentMicroButtonAlert)
         Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)

@@ -87,7 +87,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
             local bg = minimizeButton:GetBackdropTexture("bg")
 
             minimizeButton._auroraLine:SetPoint("TOPLEFT", bg, 2, -2)
-            minimizeButton._auroraArrow:SetPoint("TOPLEFT", bg, 2, -6)
+            minimizeButton._auroraArrow:SetPoint("TOPLEFT", bg, 2.4, -6)
             Base.SetTexture(minimizeButton._auroraArrow, "arrowUp")
         end
     end
@@ -319,7 +319,7 @@ function private.AddOns.Blizzard_ObjectiveTracker()
         Button._auroraLine = line
 
         local arrow = Button:CreateTexture(nil, "OVERLAY")
-        arrow:SetSize(10, 5)
+        arrow:SetSize(9, 4.5)
         Button._auroraArrow = arrow
 
         Button._auroraTextures = {line, arrow}

@@ -92,7 +92,11 @@ end
 function private.FrameXML.GameTooltip()
     if private.disabled.tooltips then return end
 
-    _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
+    if private.isPatch then
+        _G.hooksecurefunc("SharedTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
+    else
+        _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
+    end
     _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)

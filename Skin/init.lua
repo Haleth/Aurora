@@ -5,9 +5,9 @@ local ADDON_NAME, private = ...
 
 private.API_MAJOR, private.API_MINOR = 0, 6
 
-private.isPatch = select(4, _G.GetBuildInfo()) >= 80300
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
+private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90001
 
 private.uiScale = 1
 private.disabled = {
