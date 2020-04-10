@@ -40,6 +40,7 @@ function private.AddOns.Blizzard_PVPMatch()
     ----====####$$$$%%%%%$$$$####====----
     local PVPMatchResults = _G.PVPMatchResults
     Skin.UIPanelCloseButton(PVPMatchResults.CloseButton)
+    PVPMatchResults.CloseButton.Border:Hide()
 
     local resultsContent = PVPMatchResults.content
     resultsContent.background:Hide()
