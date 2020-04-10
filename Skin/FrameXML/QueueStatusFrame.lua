@@ -38,6 +38,11 @@ do --[[ FrameXML\QueueStatusFrame.lua ]]
                 icon._auroraBG:Hide()
             end
         end
+
+        if entry.HealersFound:IsShown() then
+            local point, anchor, relPoint, x, y = entry.HealersFound:GetPoint()
+            entry.HealersFound:SetPoint(point, anchor, relPoint, x + 0.5, y)
+        end
     end
 end
 
@@ -55,6 +60,12 @@ do --[[ FrameXML\QueueStatusFrame.xml ]]
         Frame.Cover:SetColorTexture(0, 0, 0)
     end
     function Skin.QueueStatusEntryTemplate(Frame)
+        Util.PositionRelative("TOPRIGHT", Frame, "TOPRIGHT", -5, -5, 3, "Left", {
+            Frame.RoleIcon1,
+            Frame.RoleIcon2,
+            Frame.RoleIcon3,
+        })
+
         Frame.EntrySeparator:SetHeight(1)
         Skin.QueueStatusRoleCountTemplate(Frame.HealersFound)
         Skin.QueueStatusRoleCountTemplate(Frame.TanksFound)
