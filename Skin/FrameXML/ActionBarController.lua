@@ -234,7 +234,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
 
             local tickPool = _G.CreateObjectPool(function(pool)
                 local tick = Frame:CreateTexture(nil, "ARTWORK")
-                tick:SetColorTexture(Color.button:GetRGB())
+                tick:SetColorTexture(Color.frame:GetRGB())
                 tick:SetSize(1, Frame:GetInitialBarHeight())
                 return tick
             end, function(pool, tick)
@@ -248,6 +248,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
         function Skin.StatusTrackingBarTemplate(Frame)
             local StatusBar = Frame.StatusBar
             Skin.FrameTypeStatusBar(StatusBar)
+            Base.SetBackdropColor(StatusBar, Color.frame)
 
             StatusBar.Background:Hide()
             StatusBar.Underlay:Hide()

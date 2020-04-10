@@ -5,7 +5,9 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 --do --[[ FrameXML\CastingBarFrame.lua ]]
 --end
@@ -13,6 +15,7 @@ local Skin = Aurora.Skin
 do --[[ FrameXML\CastingBarFrame.xml ]]
     function Skin.CastingBarFrameTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
+        Base.SetBackdropColor(StatusBar, Color.frame)
 
         StatusBar:GetRegions():Hide()
         StatusBar.Border:Hide()
