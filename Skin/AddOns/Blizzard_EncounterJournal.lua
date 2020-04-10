@@ -209,12 +209,13 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
             })
         end
         function Skin.EncounterTabTemplate(Button)
-            Base.SetBackdrop(Button, Color.frame, 1)
+            -- BlizzWTF: this doesn't use CheckButton like other side tabs, so we have to do custom.
             Button:SetSize(34, 34)
             Button:SetPushedTexture("")
             Button:SetDisabledTexture("")
 
             local normal = Button:GetNormalTexture()
+            Base.CropIcon(normal, Button)
             normal:SetTexture(Button.selected:GetTexture())
             normal:SetTexCoord(Button.selected:GetTexCoord())
             normal:SetAllPoints()
@@ -467,7 +468,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.EncounterTabTemplate(info.lootTab)
     Skin.EncounterTabTemplate(info.bossTab)
     Skin.EncounterTabTemplate(info.modelTab)
-    Util.PositionRelative("TOPLEFT", info, "TOPRIGHT", 9, -40, 5, "Down", {
+    Util.PositionRelative("TOPLEFT", info, "TOPRIGHT", 10, -40, 5, "Down", {
         info.overviewTab,
         info.lootTab,
         info.bossTab,
