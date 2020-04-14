@@ -112,7 +112,7 @@ function private.OnLoad()
     local Base = Aurora.Base
     local Hook = Aurora.Hook
     local Skin = Aurora.Skin
-    function Hook.GameTooltip_SetBackdropStyle(self, style)
+    function Hook.SharedTooltip_SetBackdropStyle(self, style)
         if not self.IsEmbedded then
             Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
         end

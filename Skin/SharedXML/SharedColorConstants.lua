@@ -6,9 +6,9 @@ local _, private = ...
 --[[ Core ]]
 --local Aurora = private.Aurora
 
---do --[[ SharedXML\Util.lua ]]
+--do --[[ SharedXML\SharedColorConstants.lua ]]
 --end
 
-function private.SharedXML.Util()
+function private.SharedXML.SharedColorConstants()
     _G.CUSTOM_CLASS_COLORS:NotifyChanges()
 end

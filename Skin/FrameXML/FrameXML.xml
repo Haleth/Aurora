@@ -119,8 +119,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="..\SharedXML\ScrollList.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
+    <Script file="..\SharedXML\SharedColorConstants.lua"/>
+    <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
-    <Script file="..\SharedXML\Util.lua"/>
     <Script file="..\SharedXML\VideoOptionsPanels.lua"/>
 
     <!--Classic Only-->
