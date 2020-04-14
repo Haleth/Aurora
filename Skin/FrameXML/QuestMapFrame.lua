@@ -18,7 +18,6 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         [262] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
     }
     function Hook.QuestLogQuests_Update(poiTable)
-
         if not private.isPatch then
             local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
             if warCampaignID then
@@ -35,20 +34,6 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         if separator:IsShown() then
             separator.Divider:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.5)
             separator.Divider:SetSize(200, 1)
-        end
-
-        for i = 6, _G.QuestMapFrame.QuestsFrame.Contents:GetNumChildren() do
-            local child = select(i, _G.QuestMapFrame.QuestsFrame.Contents:GetChildren())
-            if not child._auroraSkinned then
-                if child.TaskIcon then
-                    Skin.QuestLogTitleTemplate(child)
-                elseif child.ButtonText then
-                    Skin.QuestLogHeaderTemplate(child)
-                else
-                    Skin.QuestLogObjectiveTemplate(child)
-                end
-                child._auroraSkinned = true
-            end
         end
     end
 
@@ -146,11 +131,20 @@ function private.FrameXML.QuestMapFrame()
 
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
-    if not private.isPatch then
-        QuestsFrame.Background:Hide()
+    Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
+    if private.isPatch then
+        Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
     end
 
-    if not private.isPatch then -- WarCampaignHeader
+    if private.isPatch then
+        QuestsFrame.Contents.Separator:SetSize(260, 10)
+        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
+    else
+        QuestsFrame.Background:Hide()
+
+        -- WarCampaignHeader
         local WarCampaignHeader = QuestsFrame.Contents.WarCampaignHeader
 
         local clipFrame = _G.CreateFrame("Frame", nil, WarCampaignHeader)
@@ -168,9 +162,9 @@ function private.FrameXML.QuestMapFrame()
         WarCampaignHeader.Background:SetAllPoints(clipFrame)
         WarCampaignHeader.HighlightTexture:SetAllPoints(clipFrame)
         WarCampaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
-    end
 
-    QuestsFrame.Contents.Separator:SetSize(260, 10)
+        QuestsFrame.Contents.Separator:SetSize(260, 10)
+    end
 
     do -- StoryHeader
         local StoryHeader = QuestsFrame.Contents.StoryHeader
