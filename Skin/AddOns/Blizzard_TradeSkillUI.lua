@@ -32,8 +32,6 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                         bottom = 3,
                     })
                 end
-
-                self.Highlight:SetTexture("")
             else
                 self._minus:Hide()
                 self._plus:Hide()

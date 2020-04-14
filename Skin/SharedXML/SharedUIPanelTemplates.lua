@@ -11,6 +11,12 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do -- BlizzWTF: These are not templates, but they should be
     do -- ExpandOrCollapse
+        local function Hook_SetHighlightTexture(self, texture)
+            if self.settingHighlight then return end
+            self.settingHighlight = true
+            self:SetHighlightTexture("")
+            self.settingHighlight = nil
+        end
         local function Hook_SetNormalTexture(self, texture)
             if self.settingTexture then return end
             self.settingTexture = true
@@ -55,6 +61,7 @@ do -- BlizzWTF: These are not templates, but they should be
                 plus
             }
             _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
+            _G.hooksecurefunc(Button, "SetHighlightTexture", Hook_SetHighlightTexture)
         end
     end
 
