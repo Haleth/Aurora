@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Color = Aurora.Color
 
 do --[[ FrameXML\SharedTooltipTemplates.lua ]]
     function Hook.SharedTooltip_SetBackdropStyle(self, style)
