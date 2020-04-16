@@ -25,9 +25,9 @@ end
 do --[[ FrameXML\ScrollList.xml ]]
     function Skin.ScrollListLineTemplate(Button)
         -- AuctionHouseAuctionsSummaryLineTemplate sets NormalTexture to nil
-        --local normal = Button:GetNormalTexture()
+        local normal = Button:GetNormalTexture()
         --normal:SetColorTexture(Color.highlight:GetRGB())
-        --normal:SetAlpha(0.5)
+        normal:SetAlpha(0)
 
         Button:GetHighlightTexture():SetColorTexture(Color.highlight:GetRGB())
         Button:GetHighlightTexture():SetAlpha(0.5)

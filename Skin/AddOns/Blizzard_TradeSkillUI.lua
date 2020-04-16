@@ -32,6 +32,9 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                         bottom = 3,
                     })
                 end
+
+                -- Blizz doesn't call SetHighlightTexture, so we have to fix it here.
+                self.Highlight:SetTexture("")
             else
                 self._minus:Hide()
                 self._plus:Hide()
@@ -48,6 +51,27 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                 for reagentIndex = 1, numReagents do
                     local link = _G.C_TradeSkillUI.GetRecipeReagentItemLink(self.selectedRecipeID, reagentIndex)
                     Hook.SetItemButtonQuality(self.Contents.Reagents[reagentIndex], _G.C_Item.GetItemQualityByID(link), link)
+                end
+
+                if private.isPatch then
+                    local optionalReagentSlots, bonusText, reagentTexture, reagentCount, playerReagentCount = _G.C_TradeSkillUI.GetOptionalReagentInfo(self.selectedRecipeID)
+                    for optionalReagentIndex = 1, #optionalReagentSlots do
+                        local reagentButton = self.Contents.OptionalReagents[optionalReagentIndex]
+                        local reagentName = self:GetOptionalReagent(optionalReagentIndex)
+
+                        local hasReagent = reagentName ~= nil;
+                        if playerReagentCount == 0 then
+                            hasReagent = false;
+                        end
+
+                        if hasReagent then
+                            Base.SetBackdrop(reagentButton, Color.black, Color.frame.a)
+                            Base.CropIcon(reagentButton.Icon)
+                        else
+                            reagentButton:SetBackdrop(nil)
+                            reagentButton.Icon:SetTexCoord(0, 1, 0, 1)
+                        end
+                    end
                 end
             end
         end
@@ -111,6 +135,9 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
+    do --[[ Blizzard_TradeSkillTemplates ]]
+        Skin.OptionalReagentButtonTemplate = Skin.LargeItemButtonTemplate
+    end
     do --[[ Blizzard_TradeSkillRecipeButton ]]
         function Skin.TradeSkillRowButtonTemplate(Button)
             Util.Mixin(Button, Hook.TradeSkillRecipeButtonMixin)
@@ -124,6 +151,7 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
     end
     do --[[ Blizzard_TradeSkillDetails ]]
         Skin.TradeSkillReagentTemplate = Skin.LargeItemButtonTemplate
+        Skin.TradeSkillOptionalReagentTemplate = Skin.OptionalReagentButtonTemplate
         function Skin.TradeSkillDetailsFrameTemplate(ScrollFrame)
             Util.Mixin(ScrollFrame, Hook.TradeSkillDetailsMixin)
             ScrollFrame.Background:Hide()
@@ -175,6 +203,12 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
             for i = 1, #Contents.Reagents do
                 Skin.TradeSkillReagentTemplate(Contents.Reagents[i])
             end
+
+            if private.isPatch then
+                for i = 1, #Contents.OptionalReagents do
+                    Skin.TradeSkillOptionalReagentTemplate(Contents.OptionalReagents[i])
+                end
+            end
         end
     end
     do --[[ Blizzard_TradeSkillRecipeList ]]
@@ -186,6 +220,18 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
             Skin.HybridScrollBarTemplate(scrollBar)
 
             --Skin.UIDropDownMenuTemplate(ScrollFrame.RecipeOptionsMenu)
+        end
+    end
+    do --[[ Blizzard_TradeSkillOptionalReagentList ]]
+        function Skin.OptionalReagentListLineTemplate(Frame)
+            Skin.ScrollListLineTemplate(Frame)
+            Skin.OptionalReagentButtonTemplate(Frame)
+        end
+        function Skin.OptionalReagentListTemplate(Frame)
+            Skin.SimplePanelTemplate(Frame)
+            Skin.UICheckButtonTemplate(Frame.HideUnownedButton)
+            Skin.UIPanelButtonTemplate(Frame.CloseButton)
+            Skin.ScrollListTemplate(Frame.ScrollList)
         end
     end
     if private.isClassic then
@@ -203,6 +249,10 @@ function private.AddOns.Blizzard_TradeSkillUI()
     --    Blizzard_TradeSkillUtils    --
     ----====####$$$$%%%%$$$$####====----
 
+    ----====####$$$$%%%%$$$$####====----
+    --  Blizzard_TradeSkillTemplates  --
+    ----====####$$$$%%%%$$$$####====----
+
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_TradeSkillRecipeButton --
     ----====####$$$$%%%%%$$$$####====----
@@ -214,6 +264,10 @@ function private.AddOns.Blizzard_TradeSkillUI()
     ----====####$$$$%%%%%$$$$####====----
     --  Blizzard_TradeSkillRecipeList  --
     ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_TradeSkillOptionalReagentList --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --      Blizzard_TradeSkillUI      --
@@ -268,6 +322,10 @@ function private.AddOns.Blizzard_TradeSkillUI()
             arrow:SetPoint("TOPRIGHT", bg, -2, -4)
             arrow:SetSize(5, 10)
             Base.SetTexture(arrow, "arrowRight")
+        end
+
+        if private.isPatch then
+            Skin.OptionalReagentListTemplate(TradeSkillFrame.OptionalReagentList)
         end
     else
         _G.hooksecurefunc("TradeSkillFrame_Update", Hook.TradeSkillFrame_Update)
