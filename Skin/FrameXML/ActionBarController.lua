@@ -572,7 +572,7 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --        StatusTrackingBar        --
     ----====####$$$$%%%%%$$$$####====----
-    if private.isRetail then
+    if not private.disabled.mainmenubar and private.isRetail then
         Skin.StatusTrackingBarManagerTemplate(_G.StatusTrackingBarManager)
     end
 
