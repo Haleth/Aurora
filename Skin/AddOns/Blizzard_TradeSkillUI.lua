@@ -54,7 +54,7 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                 end
 
                 if private.isPatch then
-                    local optionalReagentSlots, bonusText, reagentTexture, reagentCount, playerReagentCount = _G.C_TradeSkillUI.GetOptionalReagentInfo(self.selectedRecipeID)
+                    local optionalReagentSlots, _, _, _, playerReagentCount = _G.C_TradeSkillUI.GetOptionalReagentInfo(self.selectedRecipeID)
                     for optionalReagentIndex = 1, #optionalReagentSlots do
                         local reagentButton = self.Contents.OptionalReagents[optionalReagentIndex]
                         local reagentName = self:GetOptionalReagent(optionalReagentIndex)
