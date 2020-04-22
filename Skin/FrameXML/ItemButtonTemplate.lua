@@ -189,22 +189,19 @@ end
 
 do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.FrameTypeItemButton(Button)
-        Base.CropIcon(Button.icon)
-
         Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
         Base.SetBackdrop(Button, Color.black, Color.frame.a)
-        Button:SetBackdropOption("offsets", {
-            left = -1,
-            right = -1,
-            top = -1,
-            bottom = -1,
-        })
         Button._auroraIconBorder = Button
 
+        local bg = Button:GetBackdropTexture("bg")
+        Base.CropIcon(Button.icon)
+        Button.icon:SetPoint("TOPLEFT", bg, 1, -1)
+        Button.icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
         if private.isRetail then
-            Button.ItemContextOverlay:SetPoint("TOPLEFT", -1, 1)
-            Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", 1, -1)
+            Button.ItemContextOverlay:SetPoint("TOPLEFT", Button.icon)
+            Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", Button.icon)
         end
 
         Button:SetNormalTexture("")
@@ -285,17 +282,21 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.LargeItemButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.black, Color.frame.a)
         Button:SetBackdropOption("offsets", {
-            left = -1,
-            right = 107,
-            top = -1,
-            bottom = 1,
+            left = 0,
+            right = 108,
+            top = 0,
+            bottom = 2,
         })
         Button._auroraIconBorder = Button
-        Base.CropIcon(Button.Icon)
-
-        Button.NameFrame:SetAlpha(0)
 
         local bg = Button:GetBackdropTexture("bg")
+        Base.CropIcon(Button.Icon)
+        Button.Icon:SetPoint("TOPLEFT", bg, 1, -1)
+        Button.Icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
+        Button.NameFrame:SetAlpha(0)
+        Button.NameFrame:SetTexture("")
+
         local nameBG = _G.CreateFrame("Frame", nil, Button)
         nameBG:SetFrameLevel(Button:GetFrameLevel())
         nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
@@ -307,18 +308,20 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.SmallItemButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.black, Color.frame.a)
         Button:SetBackdropOption("offsets", {
-            left = -1,
-            right = 103,
-            top = -1,
-            bottom = -1,
+            left = 0,
+            right = 104,
+            top = 0,
+            bottom = 0,
         })
         Button._auroraIconBorder = Button
-        --Button.Icon:SetSize(29, 29)
+
+        local bg = Button:GetBackdropTexture("bg")
         Base.CropIcon(Button.Icon)
+        Button.Icon:SetPoint("TOPLEFT", bg, 1, -1)
+        Button.Icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
         Button.NameFrame:SetAlpha(0)
 
-        local bg = Button:GetBackdropTexture("bg")
         local nameBG = _G.CreateFrame("Frame", nil, Button)
         nameBG:SetFrameLevel(Button:GetFrameLevel())
         nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
