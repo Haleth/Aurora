@@ -14,9 +14,11 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
     local function CreateOverlay(Button)
         local iconBorder = Button._auroraIconBorder
 
+        local bg = iconBorder:GetBackdropTexture("bg")
         local iconOverlay = _G.CreateFrame("Frame", nil, iconBorder)
         iconOverlay:SetFrameLevel(iconBorder:GetFrameLevel())
-        iconOverlay:SetAllPoints()
+        iconOverlay:SetPoint("TOPLEFT", bg)
+        iconOverlay:SetPoint("BOTTOMRIGHT", bg)
         iconOverlay:Hide()
 
         for i = 1, 4 do
