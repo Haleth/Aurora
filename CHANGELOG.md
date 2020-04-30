@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.3.0.6] - 2020-04-30 ##
 ### Changed ###
 
   * The default highlight color is now blue
@@ -460,6 +460,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.6]: https://github.com/Haleth/Aurora/compare/8.3.0.5...8.3.0.6
 [8.3.0.5]: https://github.com/Haleth/Aurora/compare/8.3.0.4...8.3.0.5
 [8.3.0.4]: https://github.com/Haleth/Aurora/compare/8.3.0.3...8.3.0.4
 [8.3.0.3]: https://github.com/Haleth/Aurora/compare/8.3.0.2...8.3.0.3
