@@ -1,4 +1,21 @@
-﻿## [8.3.0.5] - 2020-03-26 ##
+﻿## [Unreleased] ##
+### Changed ###
+
+  * The default highlight color is now blue
+  * Darkened the cast bar and main menu tracking bars
+  * Minor tweak to item button borders
+
+### Fixed ###
+
+  * PvP results frame sill had a border around the "X" button
+  * Queue status role icons were not spaced out well
+  * Highlight textures for some expand buttons would still show
+  * Tracking bars were still skinned if the main menu skin is disabled
+  * `classic` Errors when opening the friends frame
+
+
+
+## [8.3.0.5] - 2020-03-26 ##
 ### Added ###
 
   * Community invite skin
