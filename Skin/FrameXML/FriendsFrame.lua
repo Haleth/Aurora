@@ -20,7 +20,9 @@ do --[[ FrameXML\FriendsFrame.lua ]]
 
     function Hook.FriendsFrame_UpdateFriendButton(button)
         local gameIcon = button.gameIcon
-        gameIcon._bg:SetShown(gameIcon:IsShown())
+        if gameIcon._bg then
+            gameIcon._bg:SetShown(gameIcon:IsShown())
+        end
     end
     function Hook.WhoList_Update()
         if private.isRetail then
@@ -148,16 +150,13 @@ function private.FrameXML.FriendsFrame()
     Skin.UIPanelInfoButton(BNetFrame.UnavailableInfoButton)
 
     local BroadcastFrame = BNetFrame.BroadcastFrame
-    Util.Mixin(BroadcastFrame, Hook.FriendsBroadcastFrameMixin)
-    if private.isRetail then
-        Skin.DialogBorderOpaqueTemplate(BroadcastFrame.Border)
-    else
-        Skin.DialogBorderOpaqueTemplate(BroadcastFrame)
-    end
     BroadcastFrame:SetPoint("TOPLEFT", -55, -24)
 
-    do -- BroadcastFrame.EditBox
-        local EditBox = private.isRetail and BroadcastFrame.EditBox or BroadcastFrame.ScrollFrame
+    if private.isRetail then
+        Util.Mixin(BroadcastFrame, Hook.FriendsBroadcastFrameMixin)
+        Skin.DialogBorderOpaqueTemplate(BroadcastFrame.Border)
+
+        local EditBox = BroadcastFrame.EditBox
         Base.CreateBackdrop(EditBox, private.backdrop, {
             tl = EditBox.TopLeftBorder,
             tr = EditBox.TopRightBorder,
@@ -179,11 +178,37 @@ function private.FrameXML.FriendsFrame()
             top = 0,
             bottom = 0,
         })
-    end
 
-    if private.isRetail then
         Skin.FriendsFrameButtonTemplate(BroadcastFrame.UpdateButton)
         Skin.FriendsFrameButtonTemplate(BroadcastFrame.CancelButton)
+    else
+        Skin.DialogBorderOpaqueTemplate(BroadcastFrame)
+
+        local ScrollFrame = BroadcastFrame.ScrollFrame
+        Base.CreateBackdrop(ScrollFrame, private.backdrop, {
+            tl = ScrollFrame.TopLeftBorder,
+            tr = ScrollFrame.TopRightBorder,
+            t = ScrollFrame.TopBorder,
+
+            bl = ScrollFrame.BottomLeftBorder,
+            br = ScrollFrame.BottomRightBorder,
+            b = ScrollFrame.BottomBorder,
+
+            l = ScrollFrame.LeftBorder,
+            r = ScrollFrame.RightBorder,
+
+            bg = ScrollFrame.MiddleBorder
+        })
+        Skin.FrameTypeEditBox(ScrollFrame)
+        ScrollFrame:SetBackdropOption("offsets", {
+            left = -3,
+            right = -3,
+            top = -2,
+            bottom = -2,
+        })
+
+        Skin.FriendsFrameButtonTemplate(ScrollFrame.UpdateButton)
+        Skin.FriendsFrameButtonTemplate(ScrollFrame.CancelButton)
     end
 
     Skin.DialogBorderTemplate(BNetFrame.UnavailableInfoFrame)
