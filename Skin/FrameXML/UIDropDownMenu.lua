@@ -158,7 +158,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             checkBox.check = check
 
             local arrow = _G[name.."ExpandArrow"]
-            arrow:SetSize(7, 8)
+            arrow:SetSize(5, 10)
             arrow:SetPoint("RIGHT", -2, 0)
             Base.SetTexture(arrow:GetNormalTexture(), "arrowRight")
 
