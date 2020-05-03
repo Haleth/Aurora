@@ -29,18 +29,12 @@ do --[[ SharedXML\AddonList.lua ]]
         end
     end
     function Hook.AddonList_Update()
-        local character = _G.UIDropDownMenu_GetSelectedValue(_G.AddonCharacterDropDown);
-        if character == true then
-            character = nil
-        end
-
         local entry, checkbox
         for i = 1, _G.MAX_ADDONS_DISPLAYED do
             entry = _G["AddonListEntry"..i]
             if entry:IsShown() then
                 checkbox = _G["AddonListEntry"..i.."Enabled"]
-                local checkboxState = _G.GetAddOnEnableState(character, entry:GetID())
-                Hook.TriStateCheckbox_SetState(checkboxState, checkbox)
+                Hook.TriStateCheckbox_SetState(checkbox.state, checkbox)
             end
         end
     end
@@ -78,6 +72,8 @@ do --[[ SharedXML\AddonList.xml ]]
 end
 
 function private.SharedXML.AddonList()
+    _G.hooksecurefunc("AddonList_Update", Hook.AddonList_Update)
+
     local AddonList = _G.AddonList
     Skin.ButtonFrameTemplate(AddonList)
     Skin.UICheckButtonTemplate(_G.AddonListForceLoad) -- BlizzWTF: Doesn't use a template, but it should
