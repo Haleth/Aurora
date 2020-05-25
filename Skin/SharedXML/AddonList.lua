@@ -18,13 +18,12 @@ do --[[ SharedXML\AddonList.lua ]]
             checkedTexture:SetDesaturated(true)
             checkButton:SetChecked(true)
 
-            local red, green, blue = Color.highlight:GetRGB()
             if checked == 2 then
                 -- 2 is a normal check
-                checkedTexture:SetVertexColor(red, green, blue)
+                checkedTexture:SetVertexColor(Color.highlight:GetRGB())
             else
                 -- 1 is a dark check
-                checkedTexture:SetVertexColor(red * 0.5, green * 0.5, blue * 0.5)
+                checkedTexture:SetVertexColor(Color.gray:GetRGB())
             end
         end
     end

@@ -193,7 +193,7 @@ do -- Basic frame type skins
                     Base.SetBackdropColor(self, self._disabledColor)
                 end
             end
-            function Button:GetButtonColor(color)
+            function Button:GetButtonColor()
                 return self._enabledColor or Color.button, self._disabledColor or disabledColor
             end
 
