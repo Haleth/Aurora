@@ -249,8 +249,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.Cancel)
         end
         function Skin.CommunitiesNotificationSettingsDialogTemplate(Frame)
+            Base.CreateBackdrop(Frame, private.backdrop, {
+                bg = Frame.BG
+            })
             Skin.SelectionFrameTemplate(Frame)
-            Frame.BG:Hide()
 
             Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropDownMenu)
             Skin.UIPanelStretchableArtScrollBarTemplate(Frame.ScrollFrame.ScrollBar)
@@ -264,6 +266,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.StreamDropDownMenuTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
+        end
+    end
+    do --[[ CommunitiesAvatarPickerDialog ]]
+        function Skin.AvatarButtonTemplate(Button)
         end
     end
     do --[[ CommunitiesTabs ]]
@@ -705,6 +711,12 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --  CommunitiesAvatarPickerDialog  --
     ----====####$$$$%%%%%$$$$####====----
+    local CommunitiesAvatarPickerDialog = _G.CommunitiesAvatarPickerDialog
+    Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
+        bg = select(9, CommunitiesAvatarPickerDialog:GetRegions())
+    })
+    Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog)
+    Skin.ListScrollFrameTemplate(CommunitiesAvatarPickerDialog.ScrollFrame)
 
     ----====####$$$$%%%%$$$$####====----
     --  CommunitiesAddDialogInsecure  --
@@ -749,6 +761,17 @@ function private.AddOns.Blizzard_Communities()
     Skin.InputBoxTemplate(CommunitiesSettingsDialog.ShortNameEdit)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.ChangeAvatarButton)
     Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.MessageOfTheDay)
+
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
+    Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
+
+    Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
+    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
+    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
+
     Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Delete)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Accept)

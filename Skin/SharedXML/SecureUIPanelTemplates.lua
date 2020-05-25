@@ -115,10 +115,11 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     end
     function Skin.ListScrollFrameTemplate(ScrollFrame)
         Skin.FauxScrollFrameTemplate(ScrollFrame)
-        local name = ScrollFrame:GetName()
-        _G[name.."Top"]:Hide()
-        _G[name.."Bottom"]:Hide()
-        _G[name.."Middle"]:Hide()
+        ScrollFrame.ScrollBarTop:Hide()
+        ScrollFrame.ScrollBarBottom:Hide()
+
+        local _, _, middle = ScrollFrame:GetRegions()
+        middle:Hide()
     end
     function Skin.UIPanelButtonNoTooltipTemplate(Button)
         Skin.FrameTypeButton(Button)
