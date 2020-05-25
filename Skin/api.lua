@@ -27,7 +27,6 @@ Aurora.classIcons = { -- adjusted for borderless icons
 These are most basic skinning functions and are the foundation of every skin in Aurora.
 --]]
 
-
 --[[ Base.AddSkin(_addonName, func_)
 Allows an external addon to add a skinning function for the specified
 AddOn. `func` will run when the `ADDON_LOADED` event is triggered for
@@ -37,33 +36,32 @@ addonName.
 * `addonName` - the name of the AddOn to be skinned _(string)_
 * `func`      - used to skin the AddOn _(function)_
 --]]
-local skinList
 function Base.AddSkin(addonName, func)
     assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
-
     private.AddOns[addonName] = func
-    if skinList then
-        tinsert(skinList, addonName)
+
+    if _G.IsAddOnLoaded(addonName) then
+        func()
     end
 end
 
---[[ Base.GetSkinList()
+
+--[[ Base.GetAddonSkins()
 Returns a list of all non-Blizzard AddOn skins.
 
 **Returns:**
 * `skinList` - an indexed list of addon names _(table)_
 --]]
-function Base.GetSkinList()
-    if not skinList then
-        skinList = {}
-        for name in next, private.AddOns do
-            if not name:find("Blizzard") then
-                tinsert(skinList, name)
-            end
+function Base.GetAddonSkins()
+    local skinList = {}
+    for name in next, private.AddOns do
+        if not name:find("Blizzard") then
+            tinsert(skinList, name)
         end
     end
-    return _G.CopyTable(skinList)
+    return skinList
 end
+
 
 --[[ Base.CropIcon(_texture[, parent]_)
 Sets texture coordinates to just inside a square icon's built-in border.
@@ -180,22 +178,22 @@ do -- Base.SetBackdrop
         if options then
             if not frame._auroraBackdrop then
                 local bd = textures or {}
-                bd.borderLayer = textures and textures.borderLayer or "BACKGROUND"
-                bd.borderSublevel = textures and textures.borderSublevel or -7
+                bd.layer = textures and textures.layer or "BACKGROUND"
+                bd.sublevel = textures and textures.sublevel or -8
 
                 for name in next, bgTextures do
                     if bd[name] then
                         bd[name]:ClearAllPoints()
                         if name == "bg" then
-                            bd[name]:SetDrawLayer("BACKGROUND", -8)
+                            bd[name]:SetDrawLayer(bd.layer, bd.sublevel)
                         else
-                            bd[name]:SetDrawLayer(bd.borderLayer, bd.borderSublevel)
+                            bd[name]:SetDrawLayer(bd.layer, bd.sublevel + 1)
                         end
                     else
                         if name == "bg" then
-                            bd[name] = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
+                            bd[name] = frame:CreateTexture(nil, bd.layer, nil, bd.sublevel)
                         else
-                            bd[name] = frame:CreateTexture(nil, bd.borderLayer, nil, bd.borderSublevel)
+                            bd[name] = frame:CreateTexture(nil, bd.layer, nil, bd.sublevel + 1)
                         end
                     end
 
@@ -360,8 +358,11 @@ do -- Base.SetBackdrop
     end
 
     -- Custom Methods
-    function BackdropMixin.SetBackdropBorderLayer(frame, layer, sublevel)
+    function BackdropMixin.SetBackdropLayer(frame, layer, sublevel)
         local bd = frame._auroraBackdrop
+        bd.bg:SetDrawLayer(layer, sublevel)
+
+        sublevel = sublevel + 1
         bd.l:SetDrawLayer(layer, sublevel)
         bd.r:SetDrawLayer(layer, sublevel)
         bd.t:SetDrawLayer(layer, sublevel)
@@ -372,12 +373,12 @@ do -- Base.SetBackdrop
         bd.bl:SetDrawLayer(layer, sublevel)
         bd.br:SetDrawLayer(layer, sublevel)
 
-        bd.borderLayer = layer
-        bd.borderSublevel = sublevel
+        bd.layer = layer
+        bd.sublevel = sublevel
     end
-    function BackdropMixin.GetBackdropBorderLayer(frame)
+    function BackdropMixin.GetBackdropLayer(frame)
         if frame._auroraBackdrop then
-            return frame._auroraBackdrop.borderLayer, frame._auroraBackdrop.borderSublevel
+            return frame._auroraBackdrop.layer, frame._auroraBackdrop.sublevel
         end
     end
     function BackdropMixin.GetBackdropTexture(frame, texture)
