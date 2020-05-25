@@ -7,14 +7,20 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_MacroUI.lua ]]
     function Hook.MacroFrame_OnShow(self)
         --_G.MacroPopupButton1:SetPoint("TOPLEFT", 25, -30)
-        _G.MacroPopupButton1:SetPoint("TOPLEFT", _G.MacroPopupEditBox, "BOTTOMLEFT", 5, -20)
+        _G.MacroPopupButton1:SetPoint("TOPLEFT", _G.MacroPopupScrollFrame, 0, -1)
     end
 end
+
+--[[
+Your addon Aurora if i have the opacity to high the macro icons when making a new
+one are gone you cant see them unless i make it more transparent only happens on
+that screen as far i can tell any help would be greatly appreciated
+]]
 
 do --[[ AddOns\Blizzard_MacroUI.xml ]]
     function Skin.MacroButtonTemplate(CheckButton)
@@ -23,8 +29,11 @@ do --[[ AddOns\Blizzard_MacroUI.xml ]]
     function Skin.MacroPopupButtonTemplate(CheckButton)
         Skin.SimplePopupButtonTemplate(CheckButton)
 
+        local bg = CheckButton:GetBackdropTexture("bg")
         local icon = _G[CheckButton:GetName().."Icon"]
         icon:SetAllPoints()
+        icon:SetPoint("TOPLEFT", bg, 1, -1)
+        icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
         Base.CropIcon(icon)
 
         Base.CropIcon(CheckButton:GetHighlightTexture())
@@ -36,17 +45,19 @@ function private.AddOns.Blizzard_MacroUI()
     ----------------
     -- MacroFrame --
     ----------------
-    _G.MacroFrame:HookScript("OnShow", Hook.MacroFrame_OnShow)
+    local MacroFrame = _G.MacroFrame
+    MacroFrame:HookScript("OnShow", Hook.MacroFrame_OnShow)
 
-    Skin.ButtonFrameTemplate(_G.MacroFrame)
+    Skin.ButtonFrameTemplate(MacroFrame)
+    local bg = MacroFrame.NineSlice:GetBackdropTexture("bg")
 
     -- BlizzWTF: These should use the widgets included in the template
-    local portrait, title = select(6, _G.MacroFrame:GetRegions())
+    local portrait, title = select(6, MacroFrame:GetRegions())
     portrait:Hide()
-    title:SetAllPoints(_G.MacroFrame.TitleText)
+    title:SetAllPoints(MacroFrame.TitleText)
 
     _G.MacroHorizontalBarLeft:Hide()
-    select(9, _G.MacroFrame:GetRegions()):Hide()
+    select(9, MacroFrame:GetRegions()):Hide()
 
     _G.MacroFrameSelectedMacroBackground:SetAlpha(0)
     _G.MacroFrameSelectedMacroName:SetPoint("TOPLEFT", _G.MacroFrameSelectedMacroButton, "TOPRIGHT", 9, 5)
@@ -81,7 +92,7 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroCancelButton:SetPoint("BOTTOMRIGHT", _G.MacroFrameScrollFrame, "TOPRIGHT", 23, 10)
     Skin.UIPanelButtonTemplate(_G.MacroSaveButton)
 
-    Base.SetBackdrop(_G.MacroFrameTextBackground)
+    Skin.FrameTypeEditBox(_G.MacroFrameTextBackground)
     _G.MacroFrameTextBackground:SetPoint("TOPLEFT", _G.MacroFrameScrollFrame, -2, 2)
     _G.MacroFrameTextBackground:SetPoint("BOTTOMRIGHT", _G.MacroFrameScrollFrame, 20, -2)
 
@@ -93,33 +104,45 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroFrameTab2:SetPoint("BOTTOMLEFT", _G.MacroFrameTab1, "BOTTOMRIGHT", 10, 0)
 
     Skin.UIPanelButtonTemplate(_G.MacroDeleteButton)
-    _G.MacroDeleteButton:SetPoint("BOTTOMLEFT", 5, 5)
+    _G.MacroDeleteButton:SetPoint("BOTTOMLEFT", bg, 5, 5)
+
     Skin.UIPanelButtonTemplate(_G.MacroNewButton)
-    _G.MacroNewButton:SetPoint("BOTTOMRIGHT", _G.MacroExitButton, "BOTTOMLEFT", -2, 0)
     Skin.UIPanelButtonTemplate(_G.MacroExitButton)
-    _G.MacroExitButton:SetPoint("BOTTOMRIGHT", -5, 5)
+    Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 5, "Left", {
+        _G.MacroExitButton,
+        _G.MacroNewButton,
+    })
 
     ---------------------
     -- MacroPopupFrame --
     ---------------------
-    _G.MacroPopupFrame:SetSize(490, 471)
-    _G.MacroPopupFrame:SetPoint("TOPLEFT", _G.MacroFrame, "TOPRIGHT", 5, 0)
-    _G.MacroPopupFrame.BG:Hide()
+    local MacroPopupFrame = _G.MacroPopupFrame
 
-    Skin.SelectionFrameTemplate(_G.MacroPopupFrame.BorderBox)
+    local BorderBox = MacroPopupFrame.BorderBox
+    Base.CreateBackdrop(BorderBox, private.backdrop, {
+        bg = MacroPopupFrame.BG
+    })
+    Skin.SelectionFrameTemplate(BorderBox)
+    BorderBox:SetBackdropOption("offsets", {
+        left = 5,
+        right = 5,
+        top = 5,
+        bottom = 5,
+    })
 
-    local chooseIconLabel = select(9, _G.MacroPopupFrame.BorderBox:GetRegions())
+    bg = BorderBox:GetBackdropTexture("bg")
+    local chooseIconLabel = select(9, BorderBox:GetRegions())
     chooseIconLabel:ClearAllPoints()
-    chooseIconLabel:SetPoint("BOTTOMLEFT", _G.MacroPopupScrollFrame, "TOPLEFT", 0, 1)
+    chooseIconLabel:SetPoint("BOTTOMLEFT", _G.MacroPopupScrollFrame, "TOPLEFT", -1, 1)
 
-    _G.MacroPopupEditBox:SetPoint("TOPLEFT", 10, -10)
-    Base.SetBackdrop(_G.MacroPopupEditBox, Color.frame)
+    Skin.FrameTypeEditBox(_G.MacroPopupEditBox)
+    _G.MacroPopupEditBox:SetPoint("TOPLEFT", bg, 20, -20)
     _G.MacroPopupNameLeft:Hide()
     _G.MacroPopupNameMiddle:Hide()
     _G.MacroPopupNameRight:Hide()
 
     Skin.ListScrollFrameTemplate(_G.MacroPopupScrollFrame)
     _G.MacroPopupScrollFrame:ClearAllPoints()
-    _G.MacroPopupScrollFrame:SetPoint("TOPLEFT", _G.MacroPopupEditBox, "BOTTOMLEFT", 5, -20)
-    _G.MacroPopupScrollFrame:SetPoint("BOTTOMRIGHT", -23, 33)
+    _G.MacroPopupScrollFrame:SetPoint("TOPLEFT", bg, 25, -60)
+    _G.MacroPopupScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 33)
 end

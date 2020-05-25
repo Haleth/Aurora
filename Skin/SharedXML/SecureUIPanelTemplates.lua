@@ -7,7 +7,7 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 --do --[[ FrameXML\SecureUIPanelTemplates.lua ]]
 --end
@@ -137,8 +137,13 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         Frame.BottomRight:ClearAllPoints()
 
         Skin.UIPanelButtonTemplate(Frame.CancelButton)
-        Frame.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
         Skin.UIPanelButtonTemplate(Frame.OkayButton)
+
+        local bg = Frame:GetBackdropTexture("bg")
+        Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 5, "Left", {
+            Frame.CancelButton,
+            Frame.OkayButton,
+        })
     end
     function Skin.SecureDialogBorderNoCenterTemplate(Frame)
         Base.CreateBackdrop(Frame, private.backdrop, {

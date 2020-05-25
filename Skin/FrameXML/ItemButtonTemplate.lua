@@ -257,25 +257,28 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         name:SetPoint("BOTTOMRIGHT")
         bg:Hide()
 
-        local bd = _G.CreateFrame("Frame", nil, CheckButton)
-        bd:SetFrameLevel(CheckButton:GetFrameLevel())
-        bd:SetPoint("TOPLEFT", -1, 1)
-        bd:SetPoint("BOTTOMRIGHT", 1, -1)
-
-        Base.CreateBackdrop(bd, {
-            edgeSize = 1,
+        Base.CreateBackdrop(CheckButton, {
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-            insets = {left = 1, right = 1, top = 1, bottom = 1}
+            tile = false,
+            offsets = {
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
+            }
         })
-        Base.CropIcon(bd:GetBackdropTexture("bg"))
-        bd:SetBackdropColor(1, 1, 1, 0.75)
-        bd:SetBackdropBorderColor(Color.frame, 1)
+        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
+        CheckButton:SetBackdropColor(1, 1, 1, 0.75)
+        CheckButton:SetBackdropBorderColor(Color.frame, 1)
     end
     function Skin.PopupButtonTemplate(CheckButton)
         Skin.SimplePopupButtonTemplate(CheckButton)
 
+        local bg = CheckButton:GetBackdropTexture("bg")
         local icon = _G[CheckButton:GetName().."Icon"]
         icon:SetAllPoints()
+        icon:SetPoint("TOPLEFT", bg, 1, -1)
+        icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
         Base.CropIcon(icon)
 
         Base.CropIcon(CheckButton:GetHighlightTexture())
