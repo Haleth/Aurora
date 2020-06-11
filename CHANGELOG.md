@@ -1,4 +1,13 @@
-﻿## [8.3.0.6] - 2020-04-30 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * Macro icon picker would obscure icons if too opaque
+  * Addon list check boxes were not shaded properly
+  * A few frames for the club finder were not skinned
+
+
+
+## [8.3.0.6] - 2020-04-30 ##
 ### Changed ###
 
   * The default highlight color is now blue
