@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.3.0.7] - 2020-06-10 ##
 ### Fixed ###
 
   * Macro icon picker would obscure icons if too opaque
@@ -469,6 +469,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.7]: https://github.com/Haleth/Aurora/compare/8.3.0.6...8.3.0.7
 [8.3.0.6]: https://github.com/Haleth/Aurora/compare/8.3.0.5...8.3.0.6
 [8.3.0.5]: https://github.com/Haleth/Aurora/compare/8.3.0.4...8.3.0.5
 [8.3.0.4]: https://github.com/Haleth/Aurora/compare/8.3.0.3...8.3.0.4
