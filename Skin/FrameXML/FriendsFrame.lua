@@ -262,6 +262,10 @@ function private.FrameXML.FriendsFrame()
     if private.isRetail then
         Skin.FriendsFrameScrollFrame(_G.IgnoreListFrameScrollFrame)
     else
+        _G.IgnoreListFrameTop:Hide()
+        _G.IgnoreListFrameBottom:Hide()
+        _G.IgnoreListFrameMiddle:Hide()
+
         Skin.FauxScrollFrameTemplate(_G.FriendsFrameIgnoreScrollFrame)
     end
 
@@ -284,6 +288,9 @@ function private.FrameXML.FriendsFrame()
         Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
     else
         Skin.FauxScrollFrameTemplate(_G.WhoListScrollFrame)
+        local top, bottom = _G.WhoListScrollFrame:GetRegions()
+        top:Hide()
+        bottom:Hide()
     end
 
 
