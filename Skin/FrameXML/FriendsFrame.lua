@@ -280,10 +280,30 @@ function private.FrameXML.FriendsFrame()
     _G.WhoFrameDropDownHighlightTexture:SetAlpha(0)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader3)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader4)
+
     Skin.FriendsFrameButtonTemplate(_G.WhoFrameGroupInviteButton)
     Skin.UIPanelButtonTemplate(_G.WhoFrameAddFriendButton)
     Skin.UIPanelButtonTemplate(_G.WhoFrameWhoButton)
+
+    _G.WhoFrameGroupInviteButton:SetPoint("BOTTOMRIGHT", -5, 5)
+    _G.WhoFrameWhoButton:ClearAllPoints()
+    _G.WhoFrameWhoButton:SetPoint("BOTTOMLEFT", 5, 5)
+    _G.WhoFrameAddFriendButton:ClearAllPoints()
+    _G.WhoFrameAddFriendButton:SetPoint("BOTTOMLEFT", _G.WhoFrameWhoButton, "BOTTOMRIGHT", 1, 0)
+    _G.WhoFrameAddFriendButton:SetPoint("BOTTOMRIGHT", _G.WhoFrameGroupInviteButton, "BOTTOMLEFT", -1, 0)
+
     Skin.InsetFrameTemplate(_G.WhoFrameEditBoxInset)
+    Skin.FrameTypeEditBox(_G.WhoFrameEditBox)
+    _G.WhoFrameEditBox:ClearAllPoints()
+    _G.WhoFrameEditBox:SetPoint("BOTTOMLEFT", _G.WhoFrameWhoButton, "TOPLEFT", 2, -2)
+    _G.WhoFrameEditBox:SetPoint("BOTTOMRIGHT", _G.WhoFrameGroupInviteButton, "TOPRIGHT", -2, -2)
+    _G.WhoFrameEditBox:SetBackdropOption("offsets", {
+        left = -2,
+        right = -2,
+        top = 7,
+        bottom = 7,
+    })
+
     if private.isRetail then
         Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
     else
