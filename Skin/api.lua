@@ -141,6 +141,20 @@ do -- Base.SetBackdrop
         }
     end
 
+    local function SanitizeTable(optionDB, parentDB)
+        for option, value in next, parentDB do
+            if type(value) == "table" then
+                optionDB[option] = SanitizeTable(optionDB[option] or {}, value)
+            else
+                if optionDB[option] == nil then
+                    optionDB[option] = parentDB[option]
+                end
+            end
+        end
+
+        return optionDB
+    end
+
     local bgTextures = {
         bg = true,
 
@@ -155,16 +169,16 @@ do -- Base.SetBackdrop
         br = true,
     }
     local sides = {
-        l = {l=0, r=0.125, t=0, b=1, tileV = true},
-        r = {l=0.125, r=0.25, t=0, b=1, tileV = true},
-        t = {l=0.25, r=0.375, t=0, b=1, tileH = true},
-        b = {l=0.375, r=0.5, t=0, b=1, tileH = true},
+        l = {l=0, r=0.125, t=0, b=1, tileV = true, left="tl", right="bl"},
+        r = {l=0.125, r=0.25, t=0, b=1, tileV = true, left="tr", right="br"},
+        t = {l=0.25, r=0.375, t=0, b=1, tileH = true, left="tl", right="tr"},
+        b = {l=0.375, r=0.5, t=0, b=1, tileH = true, left="bl", right="br"},
     }
     local corners = {
-        tl = {l=0.5, r=0.625, t=0, b=1, point = "TOPLEFT"},
-        tr = {l=0.625, r=0.75, t=0, b=1, point = "TOPRIGHT"},
-        bl = {l=0.75, r=0.875, t=0, b=1, point = "BOTTOMLEFT"},
-        br = {l=0.875, r=1, t=0, b=1, point = "BOTTOMRIGHT"},
+        tl = {l=0.5, r=0.625, t=0, b=1, point = "TOPLEFT", x="left", y="top"},
+        tr = {l=0.625, r=0.75, t=0, b=1, point = "TOPRIGHT", x="right", y="top"},
+        bl = {l=0.75, r=0.875, t=0, b=1, point = "BOTTOMLEFT", x="left", y="bottom"},
+        br = {l=0.875, r=1, t=0, b=1, point = "BOTTOMRIGHT", x="right", y="bottom"},
     }
 
     local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
@@ -204,18 +218,13 @@ do -- Base.SetBackdrop
                 frame._auroraBackdrop = bd
             end
             local bd = frame._auroraBackdrop
-            options = bd.options or options
+            options = SanitizeTable(bd.options or options, backdrop)
 
             --[[ The tile size is fixed at the original texture size, so this option is DOA.
             if options.tileSize then
                 bd.bg:SetSize(options.tileSize, options.tileSize)
             end]]
             bd.bg:Show()
-            options.bgFile = options.bgFile or backdrop.bgFile
-            if options.tile == nil then
-                options.tile = backdrop.tile
-            end
-
             if Base.IsTextureRegistered(options.bgFile) then
                 Base.SetTexture(bd.bg, options.bgFile)
                 if bd.bgRed then
@@ -227,32 +236,38 @@ do -- Base.SetBackdrop
                 bd.bg:SetVertTile(options.tile)
             end
 
-            options.insets = options.insets or backdrop.insets
-            options.offsets = options.offsets or backdrop.offsets
 
             local insets = options.insets
             local offsets = options.offsets
-            if insets then
-                bd.bg:SetPoint("TOPLEFT", frame, (insets.left + offsets.left), -(insets.top + offsets.top))
-                bd.bg:SetPoint("BOTTOMRIGHT", frame, -(insets.right + offsets.right), (insets.bottom + offsets.bottom))
+            bd.bg:SetPoint("TOPLEFT", frame, (insets.left + offsets.left), -(insets.top + offsets.top))
+            bd.bg:SetPoint("BOTTOMRIGHT", frame, -(insets.right + offsets.right), (insets.bottom + offsets.bottom))
+
+
+            local corner, side
+            for tag, info in next, corners do
+                corner = bd[tag]
+                corner:Show()
+                corner:SetTexture(options.edgeFile)
+                corner:SetTexCoord(info.l, info.r, info.t, info.b)
+                corner:SetSize(options.edgeSize, options.edgeSize)
+                corner:SetPoint(info.point, bd.bg, -insets[info.x], insets[info.y])
             end
 
 
-            options.edgeFile = options.edgeFile or backdrop.edgeFile
-            for side, info in next, sides do
-                bd[side]:Show()
-                bd[side]:SetTexture(options.edgeFile)
+            for tag, info in next, sides do
+                side = bd[tag]
+                side:Show()
+                side:SetTexture(options.edgeFile)
                 if info.tileH then
-                    bd[side]:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
+                    side:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
+                    side:SetPoint("TOPLEFT", bd[info.left], "TOPRIGHT")
+                    side:SetPoint("BOTTOMRIGHT", bd[info.right], "BOTTOMLEFT")
                 else
-                    bd[side]:SetTexCoord(info.l, info.r, info.t, info.b)
+                    side:SetTexCoord(info.l, info.r, info.t, info.b)
+                    side:SetPoint("TOPLEFT", bd[info.left], "BOTTOMLEFT")
+                    side:SetPoint("BOTTOMRIGHT", bd[info.right], "TOPRIGHT")
                 end
-            end
 
-            for corner, info in next, corners do
-                bd[corner]:Show()
-                bd[corner]:SetTexture(options.edgeFile)
-                bd[corner]:SetTexCoord(info.l, info.r, info.t, info.b)
             end
 
             bd.l:SetPoint("TOPLEFT", bd.tl, "BOTTOMLEFT")
@@ -267,25 +282,10 @@ do -- Base.SetBackdrop
             bd.b:SetPoint("TOPLEFT", bd.bl, "TOPRIGHT")
             bd.b:SetPoint("BOTTOMRIGHT", bd.br, "BOTTOMLEFT")
 
-            options.edgeSize = options.edgeSize or backdrop.edgeSize
-            for corner, info in next, corners do
-                bd[corner]:SetSize(options.edgeSize, options.edgeSize)
-                if insets then
-                    if info.point == "TOPLEFT" then
-                        bd[corner]:SetPoint(info.point, bd.bg, -insets.left, insets.top)
-                    elseif info.point == "TOPRIGHT" then
-                        bd[corner]:SetPoint(info.point, bd.bg, insets.right, insets.top)
-                    elseif info.point == "BOTTOMLEFT" then
-                        bd[corner]:SetPoint(info.point, bd.bg, -insets.left, -insets.bottom)
-                    elseif info.point == "BOTTOMRIGHT" then
-                        bd[corner]:SetPoint(info.point, bd.bg, insets.left, -insets.bottom)
-                    end
-                else
-                    bd[corner]:SetPoint(info.point, bd.bg)
-                end
-            end
 
-            bd.options = CopyBackdrop(options)
+            if not bd.options then
+                bd.options = CopyBackdrop(options)
+            end
         else
             if frame._auroraBackdrop then
                 local bd = frame._auroraBackdrop
