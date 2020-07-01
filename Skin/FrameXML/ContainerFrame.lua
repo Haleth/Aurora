@@ -125,9 +125,17 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
         Base.SetBackdrop(moneyBG, Color.frame)
         moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
-        moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 23)
-        _G[name.."MoneyFrame"]:SetPoint("BOTTOMRIGHT", moneyBG, 7, 3)
+        local moneyFrame = _G[name.."MoneyFrame"]
+        if private.isRetail then
+            moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
+            moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)
+            moneyBG:SetPoint("LEFT", bg, 3, 0)
+            moneyBG:SetPoint("RIGHT", bg, -3, 0)
+        else
+            moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
+            moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 23)
+            moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 3)
+        end
 
         Frame.PortraitButton:Hide()
         if private.isRetail then
