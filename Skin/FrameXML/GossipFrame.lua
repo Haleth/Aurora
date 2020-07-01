@@ -118,6 +118,9 @@ function private.FrameXML.GossipFrame()
         -- BlizzWTF: This should use the title text included in the template
         _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
     else
+        _G.hooksecurefunc("GossipFrameAvailableQuestsUpdate", Hook.GossipFrameAvailableQuestsUpdate)
+        _G.hooksecurefunc("GossipFrameActiveQuestsUpdate", Hook.GossipFrameActiveQuestsUpdate)
+
         Base.SetBackdrop(GossipFrame)
         GossipFrame:SetBackdropOption("offsets", {
             left = 14,
