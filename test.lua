@@ -50,10 +50,18 @@ function commands.test()
             }
 
             do -- Alert Frames
-                local achievementAlerts do
+                test.args.alert = {
+                    name = "Alert Frames",
+                    type = "group",
+                    args = {
+                    }
+                }
+                local alertArgs = test.args.alert.args
+
+                if private.isRetail then -- achievementAlerts
                     local guild, toon = 4989, 6348
                     local achievementID, isGuild, isEarned = toon, false, false
-                    achievementAlerts = {
+                    alertArgs.achievementAlerts = {
                         name = "Achievement Alerts",
                         type = "group",
                         args = {
@@ -98,8 +106,8 @@ function commands.test()
                         },
                     }
                 end
-                local lfgAlerts do
-                    lfgAlerts = {
+                if private.isRetail then -- lfgAlerts
+                    alertArgs.lfgAlerts = {
                         name = "LFG Alerts",
                         type = "group",
                         args = {
@@ -135,7 +143,7 @@ function commands.test()
                         },
                     }
                 end
-                local lootAlerts do
+                do -- lootAlerts
                     -- _G.LootAlertSystem:AddAlert(itemLink, quantity, rollType, roll, specID, isCurrency, showFactionBG, lootSource, lessAwesome, isUpgraded)
                     -- _G.LootUpgradeAlertSystem:AddAlert(itemLink, quantity, specID, baseQuality)
                     -- _G.MoneyWonAlertSystem:AddAlert(amount)
@@ -150,7 +158,7 @@ function commands.test()
                         "money",
                         "artifact_power",
                     }
-                    lootAlerts = {
+                    alertArgs.lootAlerts = {
                         name = "Loot Alerts",
                         type = "group",
                         args = {
@@ -309,7 +317,7 @@ function commands.test()
                         },
                     }
                 end
-                local garrisonAlerts do
+                if private.isRetail then -- garrisonAlerts
                     local isUpgraded, talentID = false, 370 --[[ Hunter: Long Range ]]
                     local function hasGarrison()
                         return _G.C_Garrison.GetLandingPageGarrisonType() > 0
@@ -317,7 +325,7 @@ function commands.test()
                     local function isDraenorGarrison()
                         return _G.C_Garrison.GetLandingPageGarrisonType() == _G.LE_GARRISON_TYPE_6_0
                     end
-                    garrisonAlerts = {
+                    alertArgs.garrisonAlerts = {
                         name = "Garrison Alerts",
                         disabled = not hasGarrison(),
                         type = "group",
@@ -419,7 +427,7 @@ function commands.test()
                         },
                     }
                 end
-                local bnetAlerts do
+                do -- bnetAlerts
                     local toastType, toastInfo = 1
                     local toastTypes = {
                         "online",
@@ -428,7 +436,7 @@ function commands.test()
                         "pending",
                         "new",
                     }
-                    bnetAlerts = {
+                    alertArgs.bnetAlerts = {
                         name = "Battle.net Alerts",
                         type = "group",
                         args = {
@@ -465,9 +473,9 @@ function commands.test()
                         },
                     }
                 end
-                local miscAlerts do
+                do -- miscAlerts
                     local recipeID, questID, archRace = 42141 --[[]], 42114 --[[]], 1 --[[ Dwarf ]]
-                    miscAlerts = {
+                    alertArgs.miscAlerts = {
                         name = "Misc Alerts",
                         type = "group",
                         args = {
@@ -499,23 +507,18 @@ function commands.test()
                     }
                 end
 
-                test.args.alert = {
-                    name = "Alert Frames",
-                    type = "group",
-                    args = {
-                        achievementAlerts = achievementAlerts,
-                        lfgAlerts = lfgAlerts,
-                        lootAlerts = lootAlerts,
-                        garrisonAlerts = garrisonAlerts,
-                        bnetAlerts = bnetAlerts,
-                        miscAlerts = miscAlerts,
-                    }
-                }
             end
 
             do -- Popup Frames
-                local helpTips
-                if _G.HelpTip then
+                test.args.popup = {
+                    name = "Popup Frames",
+                    type = "group",
+                    args = {
+                    }
+                }
+                local popupArgs = test.args.popup.args
+
+                if private.isRetail then -- helpTips
                     local buttonStyleType do
                         buttonStyleType = {}
                         for name, index in next, _G.HelpTip.ButtonStyle do
@@ -547,7 +550,7 @@ function commands.test()
                         offsetX = 0,
                         offsetY = 0,
                     }
-                    helpTips = {
+                    popupArgs.helpTips = {
                         name = "Help Tips",
                         type = "group",
                         args = {
@@ -603,7 +606,7 @@ function commands.test()
                         }
                     }
                 end
-                local staticPopups do
+                do -- staticPopups
                     local addedFrameType, addedFrame = {
                         "none",
                         "hasEditBox",
@@ -626,7 +629,7 @@ function commands.test()
                         end,
                     }
 
-                    staticPopups = {
+                    popupArgs.staticPopups = {
                         name = "Static Popups",
                         type = "group",
                         args = {
@@ -679,7 +682,7 @@ function commands.test()
                         },
                     }
                 end
-                local lfgPopups do
+                if private.isRetail then -- lfgPopups
                     local dungeonId, hasResponded, totalEncounters, completedEncounters, numMembers = 1778, true, 4, 2, 5
                     local name = "Some Dungeon"
 
@@ -741,7 +744,7 @@ function commands.test()
                         return dungeonId, "invited", nil, nil, "TANK"
                     end
 
-                    lfgPopups = {
+                    popupArgs.lfgPopups = {
                         name = "Group Finder Popups",
                         type = "group",
                         args = {
@@ -864,7 +867,7 @@ function commands.test()
                         },
                     }
                 end
-                local helpPopups do
+                do -- helpPopups
                     local ticketStatuses, ticketStatus = {
                         "LE_TICKET_STATUS_OPEN",
                         "LE_TICKET_STATUS_SURVEY",
@@ -875,7 +878,7 @@ function commands.test()
                     local hasTicket = true
                     local event = "UPDATE_WEB_TICKET"
 
-                    helpPopups = {
+                    popupArgs.helpPopups = {
                         name = "Help & Report Popups",
                         type = "group",
                         args = {
@@ -927,17 +930,6 @@ function commands.test()
                         },
                     }
                 end
-
-                test.args.popup = {
-                    name = "Popup Frames",
-                    type = "group",
-                    args = {
-                        helpTips = helpTips,
-                        staticPopups = staticPopups,
-                        lfgPopups = lfgPopups,
-                        helpPopups = helpPopups,
-                    }
-                }
             end
 
             do -- Battle.net
@@ -1016,7 +1008,7 @@ function commands.test()
                 --auroraBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
 
 
-                local Dialog = _G.CreateFrame("Frame", nil, optionsFrame, "DialogBorderTemplate")
+                local Dialog = _G.CreateFrame("Frame", nil, optionsFrame, "UIPanelDialogTemplate")
                 Skin.DialogBorderTemplate(Dialog)
                 Dialog:SetSize(300, 300)
                 Dialog:ClearAllPoints()
@@ -1043,38 +1035,34 @@ function commands.test()
                 Button3:SetPoint("TOPLEFT", 10, -100)
                 Skin.UIPanelButtonTemplate(Button3)
 
-                local skins do
-                    skins = {
-                        name = "Skins",
-                        type = "group",
-                        args = {
-                            backdrop = {
-                                name = "Show backdrop tests",
-                                type = "toggle",
-                                get = function() return auroraBDFrame:IsShown() end,
-                                set = function(info, value)
-                                    blizzBDFrame:SetShown(value)
-                                    auroraBDFrame:SetShown(value)
-                                end,
-                                order = 1,
-                            },
-                            dialog = {
-                                name = "Show widget tests",
-                                type = "toggle",
-                                get = function() return Dialog:IsShown() end,
-                                set = function(info, value)
-                                    Dialog:SetShown(value)
-                                end,
-                                order = 1,
-                            },
+                test.args.skins = {
+                    name = "Skins",
+                    type = "group",
+                    args = {
+                        backdrop = {
+                            name = "Show backdrop tests",
+                            type = "toggle",
+                            get = function() return auroraBDFrame:IsShown() end,
+                            set = function(info, value)
+                                blizzBDFrame:SetShown(value)
+                                auroraBDFrame:SetShown(value)
+                            end,
+                            order = 1,
                         },
-                    }
-                end
-
-                test.args.skins = skins
+                        dialog = {
+                            name = "Show widget tests",
+                            type = "toggle",
+                            get = function() return Dialog:IsShown() end,
+                            set = function(info, value)
+                                Dialog:SetShown(value)
+                            end,
+                            order = 1,
+                        },
+                    },
+                }
             end
 
-            do -- PvP
+            if private.isRetail then -- PvP
                 function _G.GetNumBattlefieldScores()
                     return 20
                 end
@@ -1208,77 +1196,79 @@ function commands.test()
             end
 
             do -- Misc
-                local PartyPoseInfo = {
-                    partyPoseID = 6,
-                    mapID = 1898,
-                    widgetSetID = 3,
-                    victoryModelSceneID = 110,
-                    defeatModelSceneID = 229,
-                    victorySoundKitID = 118540,
-                    defeatSoundKitID = 118536,
-                }
-                function _G.C_PartyPose.GetPartyPoseInfoByMapID(mapID)
-                    return CopyTable(PartyPoseInfo)
-                end
-                function _G.GetLFGCompletionReward()
-                    --     name, typeID, subtypeID, iconTextureFile, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards
-                    return "name", 1,    1,         54343,           12345,     0,        54321,          0,             2,            1
-                end
-                function _G.GetLFGCompletionRewardItem(rewardIndex)
-                    --     texture, quantity, isBonus, bonusQuantity, name, quality, id, objectType
-                    return item.data.texture, 1, false,   1, item.data.name,  4, item.data.id, "item"
-                end
-                function _G.GetLFGCompletionRewardItemLink(rewardIndex)
-                    return item.data.link
-                end
-                local misc do
-                    misc = {
-                        name = "Misc. Frames",
-                        type = "group",
-                        args = {
-                            itemTextStatusBar = {
-                                name = "TextFrame loading bar",
-                                desc = "ItemTextStatusBar",
-                                type = "execute",
-                                func = function()
-                                    _G.ItemTextFrame_OnEvent(_G.ItemTextFrame, "ITEM_TEXT_TRANSLATION", 5)
-                                end,
-                            },
-                            islandsScoreFrame = {
-                                name = "Islands Score Frame",
-                                desc = "IslandsPartyPoseFrame",
-                                type = "execute",
-                                func = function()
-                                    _G.IslandsPartyPose_LoadUI()
-                                    _G.IslandsPartyPoseFrame:LoadScreen(981, 1)
-                                    _G.IslandsPartyPoseFrame:SetRewards()
-                                    _G.ShowUIPanel(_G.IslandsPartyPoseFrame)
-                                end,
-                            },
-                            warfrontScoreFrame = {
-                                name = "Warfront Score Frame",
-                                desc = "WarfrontsPartyPoseFrame",
-                                type = "execute",
-                                func = function()
-                                    _G.WarfrontsPartyPose_LoadUI()
-                                    _G.WarfrontsPartyPoseFrame:LoadScreen(1876, 1)
-                                    --_G.WarfrontsPartyPoseFrame:SetRewards()
-                                    _G.ShowUIPanel(_G.WarfrontsPartyPoseFrame)
-                                end,
-                            },
-                            compactRaidFrameManager = {
-                                name = "Compact Raid Frame Manager",
-                                desc = "CompactRaidFrameManager",
-                                type = "execute",
-                                func = function()
-                                    _G.CompactRaidFrameManager:Show()
-                                end,
-                            },
-                        },
+                if private.isRetail then
+                    local PartyPoseInfo = {
+                        partyPoseID = 6,
+                        mapID = 1898,
+                        widgetSetID = 3,
+                        victoryModelSceneID = 110,
+                        defeatModelSceneID = 229,
+                        victorySoundKitID = 118540,
+                        defeatSoundKitID = 118536,
                     }
+                    function _G.C_PartyPose.GetPartyPoseInfoByMapID(mapID)
+                        return CopyTable(PartyPoseInfo)
+                    end
+                    function _G.GetLFGCompletionReward()
+                        --     name, typeID, subtypeID, iconTextureFile, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards
+                        return "name", 1,    1,         54343,           12345,     0,        54321,          0,             2,            1
+                    end
+                    function _G.GetLFGCompletionRewardItem(rewardIndex)
+                        --     texture, quantity, isBonus, bonusQuantity, name, quality, id, objectType
+                        return item.data.texture, 1, false,   1, item.data.name,  4, item.data.id, "item"
+                    end
+                    function _G.GetLFGCompletionRewardItemLink(rewardIndex)
+                        return item.data.link
+                    end
                 end
 
-                test.args.misc = misc
+                test.args.misc = {
+                    name = "Misc. Frames",
+                    type = "group",
+                    args = {
+                        itemTextStatusBar = {
+                            name = "TextFrame loading bar",
+                            desc = "ItemTextStatusBar",
+                            type = "execute",
+                            func = function()
+                                _G.ItemTextFrame_OnEvent(_G.ItemTextFrame, "ITEM_TEXT_TRANSLATION", 5)
+                            end,
+                        },
+                        islandsScoreFrame = {
+                            name = "Islands Score Frame",
+                            desc = "IslandsPartyPoseFrame",
+                            hidden = private.isClassic,
+                            type = "execute",
+                            func = function()
+                                _G.IslandsPartyPose_LoadUI()
+                                _G.IslandsPartyPoseFrame:LoadScreen(981, 1)
+                                _G.IslandsPartyPoseFrame:SetRewards()
+                                _G.ShowUIPanel(_G.IslandsPartyPoseFrame)
+                            end,
+                        },
+                        warfrontScoreFrame = {
+                            name = "Warfront Score Frame",
+                            desc = "WarfrontsPartyPoseFrame",
+                            hidden = private.isClassic,
+                            type = "execute",
+                            func = function()
+                                _G.WarfrontsPartyPose_LoadUI()
+                                _G.WarfrontsPartyPoseFrame:LoadScreen(1876, 1)
+                                --_G.WarfrontsPartyPoseFrame:SetRewards()
+                                _G.ShowUIPanel(_G.WarfrontsPartyPoseFrame)
+                            end,
+                        },
+                        compactRaidFrameManager = {
+                            name = "Compact Raid Frame Manager",
+                            desc = "CompactRaidFrameManager",
+                            type = "execute",
+                            func = function()
+                                _G.CompactRaidFrameManager:Show()
+                            end,
+                        },
+                    },
+                }
+
             end
 
             AceConfig:RegisterOptionsTable("test", test)
