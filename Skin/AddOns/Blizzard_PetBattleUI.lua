@@ -8,7 +8,7 @@ if private.isClassic then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Skin
 
 do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
     function Hook.PetBattleUnitFrame_UpdateDisplay(self)
@@ -58,13 +58,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
     function Hook.PetBattleFrame_UpdateActionBarLayout(self)
         _G.C_Timer.After(0, function()
             -- wait 1 frame to allow xpBar to update its size
-            local xpBar = self.BottomFrame.xpBar
-            local divWidth = xpBar:GetWidth() / 7
-            local xpos = divWidth
-            for i = 1, #xpBar._auroraDivs do
-                xpBar._auroraDivs[i]:SetPoint("LEFT", floor(xpos), 0)
-                xpos = xpos + divWidth
-            end
+            Util.PositionBarTicks(self.BottomFrame.xpBar, 7)
         end)
     end
     function Hook.PetBattleAuraHolder_Update(self)
@@ -273,15 +267,6 @@ function private.AddOns.Blizzard_PetBattleUI()
     xpLeft:Hide()
     xpRight:Hide()
     xpMid:Hide()
-
-    xpBar._auroraDivs = {}
-    for i = 1, 6 do
-        local texture
-        texture = _G["PetBattleXPBarDiv"..i]
-        texture:SetColorTexture(Color.button:GetRGB())
-        texture:SetSize(1, 10)
-        xpBar._auroraDivs[i] = texture
-    end
 
     local TurnTimer = BottomFrame.TurnTimer
     TurnTimer.TimerBG:SetColorTexture(0, 0, 0, 0.5)

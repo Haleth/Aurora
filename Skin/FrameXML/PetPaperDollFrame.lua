@@ -7,7 +7,7 @@ if private.isRetail then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Util = Aurora.Util
 
 do --[[ FrameXML\PetPaperDollFrame.lua ]]
     function Hook.PetTab_Update(self)
@@ -39,18 +39,7 @@ function private.FrameXML.PetPaperDollFrame()
     local left, right = _G.PetPaperDollFrameExpBar:GetRegions()
     left:Hide()
     right:Hide()
-    do
-        local divWidth = _G.PetPaperDollFrameExpBar:GetWidth() / 6
-        local xpos = divWidth
-        for i = 1, 5 do
-            local texture = _G.PetPaperDollFrameExpBar:CreateTexture(nil, "ARTWORK")
-            texture:SetColorTexture(Color.button:GetRGB())
-            texture:SetSize(1, 11)
-
-            texture:SetPoint("LEFT", floor(xpos), 0)
-            xpos = xpos + divWidth
-        end
-    end
+    Util.PositionBarTicks(_G.PetPaperDollFrameExpBar, 6)
 
     Skin.NavButtonNext(_G.PetModelFrameRotateRightButton)
     Skin.NavButtonPrevious(_G.PetModelFrameRotateLeftButton)

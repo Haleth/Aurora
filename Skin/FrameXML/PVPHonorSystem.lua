@@ -6,8 +6,9 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ FrameXML\PVPHonorSystem.lua ]]
     function Hook.PVPHonorXPBar_Update(self)
@@ -29,16 +30,7 @@ do --[[ FrameXML\PVPHonorSystem.xml ]]
         local bar = Frame.Bar
         Skin.FrameTypeStatusBar(bar)
         bar.Background:Hide()
-
-        local divWidth = bar:GetWidth() / 5
-        local xpos = divWidth
-        for i = 1, 4 do
-            local texture = bar:CreateTexture(nil, "ARTWORK")
-            texture:SetColorTexture(Color.button:GetRGB())
-            texture:SetSize(1, 17)
-            texture:SetPoint("LEFT", xpos, 0)
-            xpos = xpos + divWidth
-        end
+        Util.PositionBarTicks(bar, 5)
 
         Frame.NextAvailable.Frame:SetAlpha(0)
         Base.CropIcon(Frame.NextAvailable.Icon, Frame.NextAvailable)

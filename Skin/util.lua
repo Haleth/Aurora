@@ -1,10 +1,11 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals wipe select next type
+-- luacheck: globals wipe select next type floor tinsert
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Color = Aurora.Color
 local Util = Aurora.Util
 
 --[[ Util:header
@@ -59,6 +60,49 @@ function Util.PositionRelative(point, anchor, relPoint, x, y, gap, direction, wi
         widgets[i]:ClearAllPoints()
         widgets[i]:SetPoint(point, widgets[i - 1], relPoint, x, y)
     end
+end
+
+local anchors = {}
+local tickPool = _G.CreateObjectPool(function(pool)
+    local tick = _G.UIParent:CreateTexture(nil, "ARTWORK")
+    tick:SetSize(1, 1)
+    return tick
+end, function(pool, tick)
+    tick:ClearAllPoints()
+    tick:Hide()
+end)
+function Util.PositionBarTicks(anchor, numSegments, color)
+    color = color or Color.button
+    if not anchors[anchor] then
+        anchors[anchor] = {}
+    end
+
+    if numSegments ~= #anchors[anchor] then
+        Util.ReleaseBarTicks(anchor)
+
+        local divWidth = anchor:GetWidth() / numSegments
+        local xpos = divWidth
+        for i = 1, numSegments - 1 do
+            local tick = tickPool:Acquire()
+            tick:SetParent(anchor)
+            tick:SetColorTexture(color:GetRGB())
+            tick:SetPoint("TOPLEFT", anchor, floor(xpos), 0)
+            tick:SetPoint("BOTTOMLEFT", anchor, floor(xpos), 0)
+            tick:Show()
+            xpos = xpos + divWidth
+
+            tinsert(anchors[anchor], tick)
+        end
+    end
+end
+function Util.ReleaseBarTicks(anchor)
+    if not anchors[anchor] then return end
+
+    for i = 1, #anchors[anchor] do
+        tickPool:Release(anchors[anchor][i])
+    end
+
+    wipe(anchors[anchor])
 end
 
 function Util.FindUsage(table, func)

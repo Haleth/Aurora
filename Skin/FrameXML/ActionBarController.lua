@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals floor max
+-- luacheck: globals floor max ipairs
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -94,7 +94,9 @@ do --[[ FrameXML\ActionBarController.lua ]]
             Skin[template](self.bars[#self.bars])
         end
         function Hook.StatusTrackingManagerMixin:HideStatusBars()
-            self._auroraTickPool:ReleaseAll()
+            for i, bar in ipairs(self.bars) do
+                Util.ReleaseBarTicks(bar)
+            end
         end
         function Hook.StatusTrackingManagerMixin:SetDoubleBarSize(bar, width)
             local barHeight = 8
@@ -117,16 +119,7 @@ do --[[ FrameXML\ActionBarController.lua ]]
                 bar:SetPoint("BOTTOM", self:GetParent(), 0, -11)
             end
 
-            local numTicks = self.largeSize and 20 or 10
-            local divWidth = bar:GetWidth() / numTicks
-            local xpos = divWidth
-            for i = 1, numTicks - 1 do
-                local tick = self._auroraTickPool:Acquire()
-                tick:SetPoint("TOPLEFT", bar, floor(xpos), 0)
-                tick:SetPoint("BOTTOMLEFT", bar, floor(xpos), 0)
-                tick:Show()
-                xpos = xpos + divWidth
-            end
+            Util.PositionBarTicks(bar, self.largeSize and 20 or 10, Color.frame)
         end
     end
     do --[[ ExpBar.xml ]]
@@ -209,18 +202,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
             StatusBar.XPBarTexture2:SetAlpha(0)
             StatusBar.XPBarTexture3:SetAlpha(0)
 
-            do
-                local divWidth = 1024 / 20
-                local xpos = divWidth
-                for i = 1, 19 do
-                    local texture = StatusBar:CreateTexture(nil, "ARTWORK")
-                    texture:SetColorTexture(Color.button:GetRGB())
-                    texture:SetSize(1, 9)
-                    texture:SetPoint("LEFT", floor(xpos), 0)
-                    xpos = xpos + divWidth
-                end
-            end
-
+            Util.PositionBarTicks(StatusBar, 20)
             Frame.OverlayFrame.Text:SetPoint("CENTER")
         end
     end
@@ -231,17 +213,6 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Frame.SingleBarLargeUpper:SetAlpha(0)
             Frame.SingleBarSmall:SetAlpha(0)
             Frame.SingleBarSmallUpper:SetAlpha(0)
-
-            local tickPool = _G.CreateObjectPool(function(pool)
-                local tick = Frame:CreateTexture(nil, "ARTWORK")
-                tick:SetColorTexture(Color.frame:GetRGB())
-                tick:SetSize(1, Frame:GetInitialBarHeight())
-                return tick
-            end, function(pool, tick)
-                tick:ClearAllPoints()
-                tick:Hide()
-            end)
-            Frame._auroraTickPool = tickPool
         end
     end
     do --[[ StatusTrackingBarTemplate.xml ]]
@@ -592,18 +563,7 @@ function private.FrameXML.ActionBarController()
             Skin.FrameTypeStatusBar(_G.MainMenuExpBar)
             _G.MainMenuExpBar:SetHeight(9)
             _G.MainMenuExpBar:SetPoint("TOP", 0, 0)
-
-            do
-                local divWidth = 1024 / 20
-                local xpos = divWidth
-                for i = 1, 19 do
-                    local texture = _G.MainMenuExpBar:CreateTexture(nil, "ARTWORK")
-                    texture:SetColorTexture(Color.button:GetRGB())
-                    texture:SetSize(1, 9)
-                    texture:SetPoint("LEFT", floor(xpos), 0)
-                    xpos = xpos + divWidth
-                end
-            end
+            Util.PositionBarTicks(_G.MainMenuExpBar, 20)
             _G.ExhaustionLevelFillBar:SetHeight(9)
 
             -- MainMenuBarArtFrame
@@ -636,17 +596,17 @@ function private.FrameXML.ActionBarController()
             PerformanceBar:ClearAllPoints()
             PerformanceBar:SetPoint("TOPLEFT", bg, 1, -1)
             PerformanceBar:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-            do
-                local tickSize = PerformanceBar:GetWidth()
-                local divWidth = PerformanceBar:GetHeight() / 3
-                local xpos = divWidth
+            do -- Vertical status bar
+                local divHeight = PerformanceBar:GetHeight() / 3
+                local ypos = divHeight
                 for i = 1, 2 do
                     local texture = PerformanceBarFrame:CreateTexture(nil, "ARTWORK")
                     texture:SetColorTexture(Color.button:GetRGB())
-                    texture:SetSize(tickSize, 1)
+                    texture:SetSize(1, 1)
 
-                    texture:SetPoint("BOTTOM", bg, 0, floor(xpos))
-                    xpos = xpos + divWidth
+                    texture:SetPoint("BOTTOMLEFT", bg, 0, floor(ypos))
+                    texture:SetPoint("BOTTOMRIGHT", bg, 0, floor(ypos))
+                    ypos = ypos + divHeight
                 end
             end
         end

@@ -8,13 +8,19 @@ if private.isClassic then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 local r, g, b = Color.grayLight:GetRGB()
 
 do --[[ AddOns\Blizzard_ArchaeologyUI.lua ]]
     function Hook.RaceFilter_OnHide(self)
         _G.ArchaeologyFrame.rankBar:SetPoint("TOP", 0, -60)
+    end
+    function Hook.ArcheologyDigsiteProgressBar_OnEvent(self, event, ...)
+        if event == "ARCHAEOLOGY_SURVEY_CAST" then
+            local _, totalFinds = ...
+            Util.PositionBarTicks(self.FillBar, totalFinds)
+        end
     end
 end
 
@@ -198,7 +204,10 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ArchaeologyProgressBar --
     ----====####$$$$%%%%%$$$$####====----
+    _G.hooksecurefunc("ArcheologyDigsiteProgressBar_OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
+
     local ArcheologyDigsiteProgressBar = _G.ArcheologyDigsiteProgressBar
+    ArcheologyDigsiteProgressBar:HookScript("OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
     ArcheologyDigsiteProgressBar.Shadow:Hide()
     ArcheologyDigsiteProgressBar.BarBackground:Hide()
     ArcheologyDigsiteProgressBar.BarBorderAndOverlay:Hide()
@@ -208,14 +217,4 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     FillBar:ClearAllPoints()
     FillBar:SetPoint("BOTTOM", 0, 7)
     FillBar:SetStatusBarColor(Color.yellow:Hue(-0.08):GetRGB())
-
-    local divWidth = FillBar:GetWidth() / 6
-    local xpos = divWidth
-    for i = 1, 5 do
-        local texture = FillBar:CreateTexture(nil, "ARTWORK")
-        texture:SetColorTexture(Color.button:GetRGB())
-        texture:SetSize(1, 10)
-        texture:SetPoint("LEFT", floor(xpos), 0)
-        xpos = xpos + divWidth
-    end
 end
