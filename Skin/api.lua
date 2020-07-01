@@ -427,11 +427,7 @@ function Base.SetFont(fontObj, fontPath, fontSize, fontStyle, fontColor, shadowC
     if _G.type(fontObj) == "string" then fontObj = _G[fontObj] end
     if not fontObj then return end
 
-    if fontPath then
-        if private.disabled.fonts then
-            fontPath = fontObj:GetFont()
-        end
-
+    if fontPath and not private.disabled.fonts then
         fontObj:SetFont(fontPath, fontSize, fontStyle)
     end
 
