@@ -13,15 +13,21 @@ do --[[ AddOns\Blizzard_RaidUI.lua ]]
     function Hook.RaidGroupFrame_Update()
         if not _G.IsInRaid() then return end
 
+        local button, subframes
         for i = 1, _G.MAX_RAID_MEMBERS do
-            local button = _G["RaidGroupButton"..i]
+            button = _G["RaidGroupButton"..i]
             if button:IsShown() then
+                subframes = button.subframes
                 local _, _, _, _, className, classToken, _, online, dead = _G.GetRaidRosterInfo(i)
                 if (online and not dead) and className then
                     local color = _G.CUSTOM_CLASS_COLORS[classToken]
-                    button.subframes.name:SetTextColor(color.r, color.g, color.b)
-                    button.subframes.class:SetTextColor(color.r, color.g, color.b)
-                    button.subframes.level:SetTextColor(color.r, color.g, color.b)
+                    subframes.name:SetTextColor(color.r, color.g, color.b)
+                    subframes.level:SetTextColor(color.r, color.g, color.b)
+                    if private.isRetail then
+                        subframes.class:SetTextColor(color.r, color.g, color.b)
+                    else
+                        subframes.class.text:SetTextColor(color.r, color.g, color.b)
+                    end
                 end
             end
         end

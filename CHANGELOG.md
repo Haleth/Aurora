@@ -13,6 +13,7 @@
   * [classic] Fixed errors when the loot frame shows
   * [classic] Gossip frame options had the wrong colors
   * [classic] Missed some textures in the friends frame
+  * [classic] SetTextColor error when in a raid
   * Error with some dropdown frames
   * Scroll list error in AH
   * Tooltip skin toggle didn't work
