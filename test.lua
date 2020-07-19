@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals next table
+-- luacheck: globals next table unpack random
 
 if private.Aurora then
     private.isDev = true
@@ -15,21 +15,39 @@ local function CopyTable(oldTable)
     end
     return newTable
 end
+local function GetItem(itemID, isCurrency)
+    local data
+    if isCurrency then
+        data = {
+            id = itemID,
+            isCurrency = true,
+        }
+    else
+        local item = _G.Item:CreateFromItemID(itemID)
+        item:ContinueOnItemLoad(function(...)
+            local itemName, itemLink, itemRarity, _, _, _, _, itemStackCount, _, itemIcon, _, itemClassID = _G.GetItemInfo(itemID)
+            data = {
+                id = itemID,
+                link = itemLink,
+                name = itemName,
+                texture = itemIcon,
+                quality = itemRarity,
+                isQuestItem = itemClassID == _G.LE_ITEM_CLASS_QUESTITEM,
+                locked = false,
+                count = random(1, itemStackCount),
+            }
+            data.isQuestActive = data.isQuestItem and (itemID % 2) == 1
+        end)
+    end
 
+    return data
+end
 
-local item = _G.Item:CreateFromItemID(14551)
-item:ContinueOnItemLoad(function(...)
-    local color = item:GetItemQualityColor()
-    item.data = {
-        id = item:GetItemID(),
-        link = item:GetItemLink(),
-        name = item:GetItemName(),
-        color = {color.r, color.g, color.b},
-        texture = item:GetItemIcon(),
-        count = 1,
-    }
-end)
+local function GetBoolen()
+    return random(1, 10) > 5
+end
 
+local testItem = GetItem(14551)
 local test, container
 function commands.test()
     local Aurora = _G.Aurora
@@ -172,7 +190,7 @@ function commands.test()
                                 desc = "LootAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.LootAlertSystem:AddAlert(item.data.id, 1, rollType, 98, lootSpec)
+                                    _G.LootAlertSystem:AddAlert(testItem.id, 1, rollType, 98, lootSpec)
                                 end,
                                 order = 1,
                             },
@@ -181,7 +199,7 @@ function commands.test()
                                 desc = "LootAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.LootAlertSystem:AddAlert(item.data.id, 1, rollType, 98, lootSpec, nil, nil, nil, nil, true)
+                                    _G.LootAlertSystem:AddAlert(testItem.id, 1, rollType, 98, lootSpec, nil, nil, nil, nil, true)
                                 end,
                                 order = 1,
                             },
@@ -190,7 +208,7 @@ function commands.test()
                                 desc = "LootAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.LootAlertSystem:AddAlert(item.data.id, 1, nil, nil, lootSpec, nil, nil, nil, true)
+                                    _G.LootAlertSystem:AddAlert(testItem.id, 1, nil, nil, lootSpec, nil, nil, nil, true)
                                 end,
                                 order = 1,
                             },
@@ -199,7 +217,7 @@ function commands.test()
                                 desc = "LootUpgradeAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.LootUpgradeAlertSystem:AddAlert(item.data.id, 1, lootSpec, 3)
+                                    _G.LootUpgradeAlertSystem:AddAlert(testItem.id, 1, lootSpec, 3)
                                 end,
                                 order = 1,
                             },
@@ -255,7 +273,7 @@ function commands.test()
                                 desc = "LootAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.BonusRollFrame_OnEvent(_G.BonusRollFrame, "BONUS_ROLL_RESULT", rewardType, item.data.link, rewardQuantity, lootSpec)
+                                    _G.BonusRollFrame_OnEvent(_G.BonusRollFrame, "BONUS_ROLL_RESULT", rewardType, testItem.link, rewardQuantity, lootSpec)
                                 end,
                                 order = 3,
                             },
@@ -301,7 +319,7 @@ function commands.test()
                                 desc = "StorePurchaseAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.StorePurchaseAlertSystem:AddAlert(item.data.texture, item.data.name, item.data.id)
+                                    _G.StorePurchaseAlertSystem:AddAlert(testItem.texture, testItem.name, testItem.id)
                                 end,
                                 order = 7,
                             },
@@ -310,7 +328,7 @@ function commands.test()
                                 desc = "LegendaryItemAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.LegendaryItemAlertSystem:AddAlert(item.data.id)
+                                    _G.LegendaryItemAlertSystem:AddAlert(testItem.id)
                                 end,
                                 order = 7,
                             },
@@ -506,7 +524,6 @@ function commands.test()
                         },
                     }
                 end
-
             end
 
             do -- Popup Frames
@@ -676,7 +693,7 @@ function commands.test()
                                 desc = "LFGDungeonReadyDialog",
                                 type = "execute",
                                 func = function()
-                                    _G.StaticPopup_Show("TESTPOPUP1", "Text Arg1", "Text Arg2", item.data)
+                                    _G.StaticPopup_Show("TESTPOPUP1", "Text Arg1", "Text Arg2", testItem)
                                 end,
                             },
                         },
@@ -972,6 +989,110 @@ function commands.test()
                 }
             end
 
+            do -- Loot
+                local numLootItems = 1
+                function _G.GetNumLootItems()
+                    return numLootItems
+                end
+
+                local lootInfo = {
+                    -- lootIcon, lootName, lootQuantity, currencyID, lootQuality, locked, isQuestItem, questID, isActive
+                    GetItem(24282),
+                    GetItem(13422),
+                    GetItem(16252),
+                    GetItem(11815),
+                    GetItem(14551),
+                    GetItem(17771),
+
+                    GetItem(18492),
+                    GetItem(22727),
+
+                    GetItem(401, true),
+                    GetItem(1534, true),
+                }
+                function _G.GetLootSlotInfo(slot)
+                    local item = lootInfo[slot]
+                    return item.texture, item.name, item.count, item.currencyID, item.quality, item.locked, item.isQuestItem, item.questId, item.isActive
+                end
+                function _G.GetLootSlotType(slot)
+                    return lootInfo[slot].currencyID and _G.LOOT_SLOT_CURRENCY or _G.LOOT_SLOT_ITEM
+                end
+                function _G.LootSlotHasItem(slot)
+                    return not not lootInfo[slot]
+                end
+                function _G.RollOnLoot(rollID, buttonID)
+                    if buttonID == 0 then
+                        local frame
+                        for idx, frm in next, _G.GroupLootContainer.rollFrames do
+                            if rollID == frm.rollID then
+                                frame = frm
+                                break
+                            end
+                        end
+
+                        _G.GroupLootContainer_RemoveFrame(_G.GroupLootContainer, frame)
+                    end
+                end
+                function _G.GetLootRollItemInfo(rollID)
+                    local canNeed, canGreed, canDisenchant = GetBoolen(), GetBoolen(), GetBoolen()
+
+                    local reasonNeed, reasonGreed, reasonDisenchant, deSkillRequired
+                    if not canNeed then
+                        reasonNeed = 5
+                    end
+                    if not canGreed then
+                        reasonGreed = 2
+                    end
+                    if not canDisenchant then
+                        deSkillRequired = 100
+                        reasonDisenchant = 4
+                    end
+
+                    local info = lootInfo[rollID]                           -- bindOnPickUp
+                    return info.texture, info.item, info.quantity, info.quality, false, canNeed, canGreed, canDisenchant, reasonNeed, reasonGreed, reasonDisenchant, deSkillRequired
+                end
+
+                test.args.loot = {
+                    name = "Loot",
+                    type = "group",
+                    args = {
+                        numLootItems = {
+                            name = "numLootItems",
+                            desc = "GetNumLootItems",
+                            type = "range",
+                            min = 1, max = #lootInfo, step = 1,
+                            get = function() return numLootItems end,
+                            set = function(info, value)
+                                numLootItems = value
+                                if _G.LootFrame:IsShown() then
+                                    _G.LootFrame_Show(_G.LootFrame)
+                                end
+                            end,
+                            order = 1,
+                        },
+                        show = {
+                            name = "Show Loot",
+                            desc = "LootFrame_Show",
+                            type = "execute",
+                            func = function(info, value)
+                                _G.LootFrame.page = 1
+                                _G.LootFrame_Show(_G.LootFrame)
+                            end,
+                            order = 1,
+                        },
+                        roll = {
+                            name = "Roll Loot",
+                            desc = "GroupLootFrame_OpenNewFrame",
+                            type = "execute",
+                            func = function(info, value)
+                                _G.GroupLootFrame_OpenNewFrame(random(1, #lootInfo), 20)
+                            end,
+                            order = 1,
+                        },
+                    }
+                }
+            end
+
             do -- Skins
                 local bdOptions = {
                     bgFile = "Interface/Tooltips/UI-Tooltip-Background",
@@ -1008,8 +1129,8 @@ function commands.test()
                 --auroraBDFrame:SetBackdropBorderColor(bdOptions.backdropBorderColor:GetRGB())
 
 
-                local Dialog = _G.CreateFrame("Frame", nil, optionsFrame, "UIPanelDialogTemplate")
-                Skin.DialogBorderTemplate(Dialog)
+                local Dialog = _G.CreateFrame("Frame", "AuroraTestFrame", optionsFrame, "UIPanelDialogTemplate")
+                Skin.UIPanelDialogTemplate(Dialog)
                 Dialog:SetSize(300, 300)
                 Dialog:ClearAllPoints()
                 Dialog:SetPoint("TOPRIGHT", optionsFrame, "TOPLEFT", -10, 0)
@@ -1215,10 +1336,10 @@ function commands.test()
                     end
                     function _G.GetLFGCompletionRewardItem(rewardIndex)
                         --     texture, quantity, isBonus, bonusQuantity, name, quality, id, objectType
-                        return item.data.texture, 1, false,   1, item.data.name,  4, item.data.id, "item"
+                        return testItem.texture, 1, false,   1, testItem.name,  4, testItem.id, "item"
                     end
                     function _G.GetLFGCompletionRewardItemLink(rewardIndex)
-                        return item.data.link
+                        return testItem.link
                     end
                 end
 
