@@ -1,4 +1,27 @@
-﻿## [8.3.0.7] - 2020-06-10 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Basic compatibility for Shadowlands
+
+### Changed ###
+
+  * Who list search box is now more visible
+  * The archeology progress bar now has dynamic ticks
+
+### Fixed ###
+
+  * [classic] Fixed errors when the loot frame shows
+  * [classic] Gossip frame options had the wrong colors
+  * [classic] Missed some textures in the friends frame
+  * Error with some dropdown frames
+  * Scroll list error in AH
+  * Tooltip skin toggle didn't work
+  * Font size was still set even when the font skin is disabled
+  * Backpack money frame border was postioned wrong
+
+
+
+## [8.3.0.7] - 2020-06-10 ##
 ### Fixed ###
 
   * Macro icon picker would obscure icons if too opaque
