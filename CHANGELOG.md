@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [8.3.0.8] - 2020-07-18 ##
 ### Added ###
 
   * Basic compatibility for Shadowlands
@@ -493,6 +493,7 @@
   * API Pre and Post hooks have been deprecated. Hooks should be created manually by the layout.
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[8.3.0.8]: https://github.com/Haleth/Aurora/compare/8.3.0.7...8.3.0.8
 [8.3.0.7]: https://github.com/Haleth/Aurora/compare/8.3.0.6...8.3.0.7
 [8.3.0.6]: https://github.com/Haleth/Aurora/compare/8.3.0.5...8.3.0.6
 [8.3.0.5]: https://github.com/Haleth/Aurora/compare/8.3.0.4...8.3.0.5
