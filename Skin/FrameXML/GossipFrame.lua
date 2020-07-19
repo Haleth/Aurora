@@ -60,7 +60,7 @@ do --[[ FrameXML\GossipFrame.lua ]]
                 local gossipText = gossipOptions[button:GetID()].name
                 local color = gossipText:match("|c(%x+)%(")
                 if color then
-                    print("GossipFrameOptionsUpdate Found gossip color")
+                    --print("GossipFrameOptionsUpdate Found gossip color")
                     button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
                 end
             end

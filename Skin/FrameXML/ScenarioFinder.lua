@@ -6,8 +6,7 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 
 --do --[[ FrameXML\ScenarioFinder.lua ]]
 --end
