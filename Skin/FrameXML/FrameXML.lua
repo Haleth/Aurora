@@ -100,12 +100,16 @@ local FrameXML = {
     "ObjectAPI_Campaign",
     "ObjectAPI_Quest",
     "ObjectAPI_UiMapPoint",
+    "ObjectAPI_CovenantCalling",
 
     -- add new modules below here
+    "SharedXML.Backdrop",
     "WorldFrame",
     "UIParent",
+    "PartyUtil",
     "QuestUtils",
     "AchievementUtil",
+    "AchievementDisplayFrame",
     "MapUtil",
     "AzeriteUtil",
     "AzeriteEssenceUtil",
@@ -113,6 +117,7 @@ local FrameXML = {
     "CalendarUtil",
     "CommunitiesUtil",
     "ItemUtil",
+    "PVPUtil",
     "TransmogUtil",
     "ItemDisplay",
     "HelpTip",
@@ -133,7 +138,7 @@ local FrameXML = {
     "GarrisonFollowerTooltip",
     "GameTooltip",
     "UIMenu",
-    "UIDropDownMenu",
+    "SharedXML.UIDropDownMenu",
     "UIPanelTemplates",
     "SecureTemplates",
     "SecureHandlerTemplates",
@@ -320,6 +325,7 @@ local FrameXML = {
     "AzeriteEmpoweredItemDataSource",
     "GuildUtil",
     "QuestSession",
+    "ActionStatus",
 
     -- Save off whatever we need available unmodified.
     "SecureCapsule",

@@ -164,8 +164,10 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
             topFiligree:Hide()
             bottomFilligree:Hide()
 
-            Skin.MainHelpPlateButton(Frame.MainHelpButton)
-            Frame.MainHelpButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -15, 15)
+            if not private.isPatch then
+                Skin.MainHelpPlateButton(Frame.MainHelpButton)
+                Frame.MainHelpButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -15, 15)
+            end
             Skin.MagicButtonTemplate(Frame.learnButton)
             Frame.learnButton.Flash:SetAtlas("GarrMission_FollowerListButton-Select")
             Frame.learnButton.Flash:SetAllPoints()

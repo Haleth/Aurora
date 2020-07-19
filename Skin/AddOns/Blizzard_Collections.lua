@@ -709,9 +709,11 @@ function private.AddOns.Blizzard_Collections()
     Skin.SearchBoxTemplate(ToyBox.searchBox)
     Skin.UIMenuButtonStretchTemplate(_G.ToyBoxFilterButton)
 
-    Skin.GlowBoxFrame(ToyBox.favoriteHelpBox, "Up")
-    Skin.GlowBoxTemplate(ToyBox.mousewheelPagingHelpBox)
-    Skin.UIPanelCloseButton(ToyBox.mousewheelPagingHelpBox.CloseButton)
+    if not private.isPatch then
+        Skin.GlowBoxFrame(ToyBox.favoriteHelpBox, "Up")
+        Skin.GlowBoxTemplate(ToyBox.mousewheelPagingHelpBox)
+        Skin.UIPanelCloseButton(ToyBox.mousewheelPagingHelpBox.CloseButton)
+    end
 
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)
@@ -754,7 +756,9 @@ function private.AddOns.Blizzard_Collections()
     Skin.TabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
     Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
 
-    Skin.GlowBoxFrame(WardrobeCollectionFrame.SetsTabHelpBox, "Up")
+    if not private.isPatch then
+        Skin.GlowBoxFrame(WardrobeCollectionFrame.SetsTabHelpBox, "Up")
+    end
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
     Skin.UIMenuButtonStretchTemplate(WardrobeCollectionFrame.FilterButton)
@@ -772,7 +776,9 @@ function private.AddOns.Blizzard_Collections()
         Skin.WardrobeItemsModelTemplate(Models[i])
     end
 
-    Skin.GlowBoxFrame(ItemsCollectionFrame.HelpBox, "Up")
+    if not private.isPatch then
+        Skin.GlowBoxFrame(ItemsCollectionFrame.HelpBox, "Up")
+    end
 
 
     -- Sets
@@ -808,7 +814,9 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
     WardrobeTransmogFrame.Inset.BG:Hide()
     Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
-    Skin.GlowBoxFrame(WardrobeTransmogFrame.OutfitHelpBox, "Left")
+    if not private.isPatch then
+        Skin.GlowBoxFrame(WardrobeTransmogFrame.OutfitHelpBox, "Left")
+    end
 
     local ModelScene = WardrobeTransmogFrame.ModelScene
     Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
@@ -823,5 +831,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
     Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
     Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
-    Skin.GlowBoxFrame(WardrobeTransmogFrame.SpecHelpBox, "Up")
+    if not private.isPatch then
+        Skin.GlowBoxFrame(WardrobeTransmogFrame.SpecHelpBox, "Up")
+    end
 end

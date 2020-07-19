@@ -146,7 +146,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
             Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
 
-            do -- ExtraBagSlotsHelpBox
+            if not private.isPatch then -- ExtraBagSlotsHelpBox
                 -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
                 local HelpBox = Frame.ExtraBagSlotsHelpBox
 
@@ -174,8 +174,10 @@ function private.FrameXML.ContainerFrame()
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
     _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
 
-    Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
-    Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
+    if not private.isPatch then
+        Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
+        Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
+    end
 
     for i = 1, 12 do
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])
@@ -199,5 +201,7 @@ function private.FrameXML.ContainerFrame()
         iconBorder:SetColorTexture(0, 0, 0)
     end
 
-    Skin.GlowBoxFrame(_G.BagHelpBox, "Right")
+    if not private.isPatch then
+        Skin.GlowBoxFrame(_G.BagHelpBox, "Right")
+    end
 end

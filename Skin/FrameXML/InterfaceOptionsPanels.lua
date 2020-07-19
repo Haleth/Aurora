@@ -89,6 +89,9 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelRotateMinimap)
     if private.isRetail then
         Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAJAlerts)
+        if private.isPatch then
+            Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowInGameNavigation)
+        end
     else
         Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowMinimapClock)
         Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowDetailedTooltips)
@@ -212,6 +215,9 @@ function private.FrameXML.InterfaceOptionsPanels()
     local Accessibility = _G.InterfaceOptionsAccessibilityPanel
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.MovePad)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelCinematicSubtitles)
+    if private.isPatch then
+        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
+    end
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
 
     local FilterExamples = Accessibility.ColorblindFilterExamples

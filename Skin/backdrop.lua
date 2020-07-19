@@ -101,15 +101,15 @@ local corners = {
     br = {l=0.875, r=1, t=0, b=1, point = "BOTTOMRIGHT", x="right", y="bottom"},
 }
 
-local old_SetBackdrop
-if private.isPatch then
-    old_SetBackdrop = function(frame)
-        if frame.SetBackdrop then
-            frame:SetBackdrop()
+local old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
+local function ClearBackdrop(frame)
+    if private.isPatch then
+        if frame.ClearBackdrop then
+            frame:ClearBackdrop()
         end
+    else
+        old_SetBackdrop(frame, nil)
     end
-else
-    old_SetBackdrop = _G.getmetatable(_G.UIParent).__index.SetBackdrop
 end
 
 -- Blizzard methods
@@ -117,7 +117,7 @@ local BackdropMixin = {}
 function BackdropMixin:SetBackdrop(options, textures)
     if self.settingBD then return end
     self.settingBD = true
-    old_SetBackdrop(self, nil)
+    ClearBackdrop(self)
     if options then
         if not self._auroraBackdrop then
             local bd = textures or {}

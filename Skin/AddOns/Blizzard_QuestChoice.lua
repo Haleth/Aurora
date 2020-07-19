@@ -1,5 +1,6 @@
 local _, private = ...
 if private.isClassic then return end
+if private.isPatch then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals

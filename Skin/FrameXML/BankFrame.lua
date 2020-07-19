@@ -101,7 +101,9 @@ function private.FrameXML.BankFrame()
             _G.BankFrameTab2,
         })
 
-        Skin.GlowBoxFrame(BankFrame.GlowBox, "Left")
+        if not private.isPatch then
+            Skin.GlowBoxFrame(BankFrame.GlowBox, "Left")
+        end
         Skin.BagSearchBoxTemplate(_G.BankItemSearchBox)
         Skin.BankAutoSortButtonTemplate(_G.BankItemAutoSortButton)
 

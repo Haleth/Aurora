@@ -246,7 +246,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
     end
 end
 
-function private.FrameXML.UIDropDownMenu()
+function private.SharedXML.UIDropDownMenu()
     _G.hooksecurefunc("UIDropDownMenu_CreateFrames", Hook.UIDropDownMenu_CreateFrames)
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)

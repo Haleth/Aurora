@@ -396,7 +396,9 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.cyan:GetRGB())
 
     -- ScenarioProvingGroundsBlock
-    Skin.GlowBoxFrame(_G.ScenarioBlocksFrame.WarfrontHelpBox, "Right")
+    if not private.isPatch then
+        Skin.GlowBoxFrame(_G.ScenarioBlocksFrame.WarfrontHelpBox, "Right")
+    end
 
 
     ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----

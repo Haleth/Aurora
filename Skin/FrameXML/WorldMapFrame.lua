@@ -32,7 +32,9 @@ end
 do --[[ FrameXML\WorldMapFrame.xml ]]
     do --[[ FrameXML\WorldMapFrameTemplates.xml ]]
         function Skin.WorldMapBountyBoardTemplate(Frame)
-            Skin.GlowBoxFrame(Frame.TutorialBox, "Right")
+            if not private.isPatch then
+                Skin.GlowBoxFrame(Frame.TutorialBox, "Right")
+            end
         end
         function Skin.WorldMapActionButtonTemplate(Frame)
         end

@@ -102,7 +102,7 @@ function private.SharedXML.VideoOptionsPanels()
 
     Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_Quality)
 
-    -- Textures
+    -- General
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_TextureResolutionDropDown)
     if private.isPatch then
         Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_SpellDensityDropDown)
@@ -143,6 +143,7 @@ function private.SharedXML.VideoOptionsPanels()
     end
     if private.isPatch then
         Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_FilteringDropDown)
+        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_RTShadowQualityDropDown)
     end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)

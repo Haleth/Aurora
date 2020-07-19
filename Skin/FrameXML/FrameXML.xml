@@ -95,7 +95,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Timer.lua"/>
     <Script file="TradeFrame.lua"/>
     <Script file="TutorialFrame.lua"/>
-    <Script file="UIDropDownMenu.lua"/>
     <Script file="UIMenu.lua"/>
     <Script file="UIOptions.lua"/>
     <Script file="UIPanelTemplates.lua"/>
@@ -122,6 +121,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="..\SharedXML\SharedColorConstants.lua"/>
     <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
+    <Script file="..\SharedXML\UIDropDownMenu.lua"/>
     <Script file="..\SharedXML\VideoOptionsPanels.lua"/>
 
     <!--Classic Only-->

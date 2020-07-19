@@ -5,23 +5,37 @@ if private.isClassic then return end
 -- luacheck: globals
 
 --[[ Core ]]
-local F = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+
+--do --[[ FrameXML\ScenarioFinder.lua ]]
+--end
+
+do --[[ FrameXML\ScenarioFinder.xml ]]
+    Skin.ScenarioSpecificChoiceTemplate = Skin.LFGSpecificChoiceTemplate
+end
 
 function private.FrameXML.ScenarioFinder()
-    _G.ScenarioFinderFrameInset:DisableDrawLayer("BORDER")
+    local ScenarioFinderFrame = _G.ScenarioFinderFrame
+    Skin.InsetFrameTemplate(ScenarioFinderFrame.Inset)
+
+    local Queue = ScenarioFinderFrame.Queue
+    Queue.Bg:Hide()
+    Skin.UIDropDownMenuTemplate(Queue.Dropdown)
+
+    local Random = Queue.Random
+    Skin.UIPanelScrollFrameTemplate(Random.ScrollFrame)
+    Skin.LFGRewardFrameTemplate(Random.ScrollFrame.Child)
     _G.ScenarioQueueFrameRandomScrollFrameScrollBackground:Hide()
     _G.ScenarioQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
     _G.ScenarioQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
+
+    local Specific = Queue.Specific
+    Skin.ScenarioSpecificChoiceTemplate(Specific.Button1)
+    Skin.FauxScrollFrameTemplate(Specific.ScrollFrame)
     _G.ScenarioQueueFrameSpecificScrollFrameScrollBackgroundTopLeft:Hide()
     _G.ScenarioQueueFrameSpecificScrollFrameScrollBackgroundBottomRight:Hide()
-    _G.ScenarioQueueFrame.Bg:Hide()
-    _G.ScenarioFinderFrameInset:GetRegions():Hide()
 
-    _G.ScenarioQueueFrameRandomScrollFrame:SetWidth(304)
-
-    F.Reskin(_G.ScenarioQueueFrameFindGroupButton)
-    F.Reskin(_G.ScenarioQueueFrameRandomScrollFrameChildFrame.bonusRepFrame.ChooseButton)
-    F.ReskinDropDown(_G.ScenarioQueueFrameTypeDropDown)
-    F.ReskinScroll(_G.ScenarioQueueFrameRandomScrollFrameScrollBar)
-    F.ReskinScroll(_G.ScenarioQueueFrameSpecificScrollFrameScrollBar)
+    Skin.MagicButtonTemplate(_G.ScenarioQueueFrameFindGroupButton)
 end

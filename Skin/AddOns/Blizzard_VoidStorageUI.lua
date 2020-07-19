@@ -130,9 +130,11 @@ function private.AddOns.Blizzard_VoidStorageUI()
     Base.SetBackdrop(_G.VoidStoragePurchaseFrame)
 
     Skin.UIPanelButtonTemplate(_G.VoidStoragePurchaseButton)
-    Skin.GlowBoxTemplate(_G.VoidStorageHelpBox)
-    Skin.GlowBoxArrowTemplate(_G.VoidStorageHelpBoxArrow)
-    Skin.UIPanelButtonTemplate(_G.VoidStorageHelpBoxButton)
+    if not private.isPatch then
+        Skin.GlowBoxTemplate(_G.VoidStorageHelpBox)
+        Skin.GlowBoxArrowTemplate(_G.VoidStorageHelpBoxArrow)
+        Skin.UIPanelButtonTemplate(_G.VoidStorageHelpBoxButton)
+    end
 
     Skin.BagSearchBoxTemplate(_G.VoidItemSearchBox)
 end

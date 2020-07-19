@@ -479,7 +479,7 @@ function private.FrameXML.FriendsFrame()
         private.isClassic and _G.FriendsFrameTab5 or nil,
     })
 
-    if private.isRetail then
+    if private.isRetail and not private.isPatch then
         Skin.GlowBoxTemplate(FriendsFrame.FriendsFrameQuickJoinHelpTip)
     end
     if not private.disabled.tooltips then

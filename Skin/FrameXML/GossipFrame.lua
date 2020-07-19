@@ -53,21 +53,36 @@ do --[[ FrameXML\GossipFrame.lua ]]
         end
     end
 
-    local gossipDataPerOption = 2
-    function Hook.GossipFrameOptionsUpdate(...)
-        local numGossipOptions = _G.select("#", ...)
-        local buttonIndex = _G.GossipFrame.buttonIndex - (numGossipOptions / gossipDataPerOption)
-        for i = 1, numGossipOptions, gossipDataPerOption do
-            local gossipText = _G.select(i, ...)
-            local titleButton = _G["GossipTitleButton" .. buttonIndex]
-            local color = gossipText:match("|c(%x+)%(")
-            if color then
-                private.debug("GossipFrameOptionsUpdate", color)
-                titleButton:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+    if private.isPatch then
+        function Hook.GossipFrameOptionsUpdate()
+            local gossipOptions = _G.C_GossipInfo.GetOptions()
+            for button in _G.GossipFrame.titleButtonPool:EnumerateActive() do
+                local gossipText = gossipOptions[button:GetID()].name
+                local color = gossipText:match("|c(%x+)%(")
+                if color then
+                    print("GossipFrameOptionsUpdate Found gossip color")
+                    button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+                end
             end
-            buttonIndex = buttonIndex + 1
+        end
+    else
+        local gossipDataPerOption = 2
+        function Hook.GossipFrameOptionsUpdate(...)
+            local numGossipOptions = _G.select("#", ...)
+            local buttonIndex = _G.GossipFrame.buttonIndex - (numGossipOptions / gossipDataPerOption)
+            for i = 1, numGossipOptions, gossipDataPerOption do
+                local gossipText = _G.select(i, ...)
+                local titleButton = _G["GossipTitleButton" .. buttonIndex]
+                local color = gossipText:match("|c(%x+)%(")
+                if color then
+                    private.debug("GossipFrameOptionsUpdate", color)
+                    titleButton:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+                end
+                buttonIndex = buttonIndex + 1
+            end
         end
     end
+
 end
 
 do --[[ FrameXML\GossipFrame.xml ]]
@@ -159,8 +174,10 @@ function private.FrameXML.GossipFrame()
     _G.GossipGreetingScrollFrameBottom:Hide()
     _G.GossipGreetingScrollFrameMiddle:Hide()
 
-    for i = 1, _G.NUMGOSSIPBUTTONS do
-        Skin.GossipTitleButtonTemplate(_G["GossipTitleButton"..i])
+    if not private.isPatch then
+        for i = 1, _G.NUMGOSSIPBUTTONS do
+            Skin.GossipTitleButtonTemplate(_G["GossipTitleButton"..i])
+        end
     end
 
     ----------------------------
