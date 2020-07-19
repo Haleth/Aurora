@@ -5,6 +5,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="util.lua"/>
     <Script file="color.lua"/>
     <Script file="api.lua"/>
+    <Script file="backdrop.lua"/>
     <Script file="texture.lua"/>
     <Script file="deprecated.lua"/>
 
