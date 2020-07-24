@@ -14,13 +14,7 @@ local Color = Aurora.Color
 
 do --[[ FrameXML\StaticPopup.xml ]]
     function Skin.StaticPopupButtonTemplate(Button)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetDisabledTexture("")
-        Button:SetHighlightTexture("")
-
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop")
+        Skin.FrameTypeButton(Button)
     end
 
     local function CloseButton_SetNormalTexture(Button, texture)

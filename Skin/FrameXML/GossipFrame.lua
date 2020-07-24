@@ -56,12 +56,17 @@ do --[[ FrameXML\GossipFrame.lua ]]
     if private.isPatch then
         function Hook.GossipFrameOptionsUpdate()
             local gossipOptions = _G.C_GossipInfo.GetOptions()
+            if #gossipOptions == 0 then return end
+            private.debug("GossipFrameOptionsUpdate", #gossipOptions)
+
             for button in _G.GossipFrame.titleButtonPool:EnumerateActive() do
-                local gossipText = gossipOptions[button:GetID()].name
-                local color = gossipText:match("|c(%x+)%(")
-                if color then
-                    --print("GossipFrameOptionsUpdate Found gossip color")
-                    button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+                if button.type == "Gossip" then
+                    local gossipText = gossipOptions[button:GetID()].name
+                    local color = gossipText:match("|c(%x+)%(")
+                    if color then
+                        _G.print("GossipFrameOptionsUpdate", button:GetID(), ("|"):split(gossipText))
+                        button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+                    end
                 end
             end
         end
@@ -72,11 +77,13 @@ do --[[ FrameXML\GossipFrame.lua ]]
             local buttonIndex = _G.GossipFrame.buttonIndex - (numGossipOptions / gossipDataPerOption)
             for i = 1, numGossipOptions, gossipDataPerOption do
                 local gossipText = _G.select(i, ...)
-                local titleButton = _G["GossipTitleButton" .. buttonIndex]
+                local button = _G["GossipTitleButton" .. buttonIndex]
                 local color = gossipText:match("|c(%x+)%(")
                 if color then
-                    private.debug("GossipFrameOptionsUpdate", color)
-                    titleButton:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
+                    -- This is for BfA war campaign related gossip options
+                    -- Alliance: FF0000FF
+                    private.debug("GossipFrameOptionsUpdate", button:GetID(), color, ("|"):split(gossipText))
+                    button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
                 end
                 buttonIndex = buttonIndex + 1
             end
@@ -126,6 +133,9 @@ function private.FrameXML.GossipFrame()
     local GossipFrame = _G.GossipFrame
     if private.isRetail then
         Skin.ButtonFrameTemplate(GossipFrame)
+        if private.isPatch then
+            Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
+        end
 
         -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
         select(7, GossipFrame:GetRegions()):Hide() -- GossipFrameBg

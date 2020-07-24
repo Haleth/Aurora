@@ -26,12 +26,14 @@ end
 do --[[ FrameXML\PVEFrame.xml ]]
     function Skin.GroupFinderGroupButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 2,
+            right = 0,
+            top = -3,
+            bottom = -5,
+        })
 
         local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", Button.icon, 0, 1)
-        bg:SetPoint("BOTTOM", Button.icon, 0, -1)
-        bg:SetPoint("RIGHT")
-
         Button.bg:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         Button.bg:SetAllPoints(bg)
         Button.bg:Hide()

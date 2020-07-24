@@ -46,6 +46,8 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
     function Hook.PlayerTalentFrame_UpdateSpecFrame(self, spec)
         local playerTalentSpec = _G.GetSpecialization(nil, self.isPet)
         local shownSpec = spec or playerTalentSpec or 1
+
+        local petNotActive = self.isPet and not _G.IsPetActive()
         local sex = self.isPet and _G.UnitSex("pet") or _G.UnitSex("player")
 
         local scrollChild = self.spellsScroll.child
@@ -56,6 +58,8 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
         if role then
             Base.SetTexture(scrollChild.roleIcon, "icon"..role)
         end
+
+        local disable = (playerTalentSpec and shownSpec ~= playerTalentSpec) or petNotActive
 
         local index = 1
         local bonuses
@@ -83,6 +87,17 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
 
                 local _, spellIcon = _G.GetSpellTexture(bonuses[i])
                 frame.icon:SetTexture(spellIcon)
+
+                local isKnown = _G.IsSpellKnownOrOverridesKnown(bonuses[i])
+                if ( not isKnown and _G.IsCharacterNewlyBoosted() and not disable ) then
+                    frame.subText:SetTextColor(Color.grayLight:GetRGB())
+                else
+                    if disable then
+                        frame.subText:SetTextColor(Color.gray:GetRGB())
+                    else
+                        frame.subText:SetTextColor(Color.grayLight:GetRGB())
+                    end
+                end
                 index = index + 1
             end
         end
@@ -128,28 +143,23 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
             Skin.TalentRowGlowFrameTemplate(Frame.GlowFrame)
         end
         function Skin.PlayerSpecButtonTemplate(Button)
-            local bd = _G.CreateFrame("Frame", nil, Button)
-            Base.SetBackdrop(bd, Color.button)
-            bd:SetBackdropBorderColor(Color.frame, 1)
-            bd:SetFrameLevel(Button:GetFrameLevel())
-            bd:SetPoint("TOPLEFT", Button.specIcon, "TOPRIGHT", 0, 1)
-            bd:SetPoint("BOTTOM", Button.specIcon, 0, -1)
-            bd:SetPoint("RIGHT")
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 2,
+                right = 0,
+                top = -3,
+                bottom = -5,
+            })
 
+            local bg = Button:GetBackdropTexture("bg")
             Button.bg:Hide()
             Button.ring:Hide()
             Button.selectedTex:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             Button.selectedTex:ClearAllPoints()
-            Button.selectedTex:SetPoint("TOPLEFT", bd)
-            Button.selectedTex:SetPoint("BOTTOMRIGHT", bd)
-            Base.CropIcon(Button.specIcon, Button)
+            Button.selectedTex:SetPoint("TOPLEFT", bg)
+            Button.selectedTex:SetPoint("BOTTOMRIGHT", bg)
+            Base.CropIcon(Button.specIcon)
             Button.learnedTex:SetTexture("")
-
-            local highlight = Button:GetHighlightTexture()
-            highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            highlight:ClearAllPoints()
-            highlight:SetPoint("TOPLEFT", bd)
-            highlight:SetPoint("BOTTOMRIGHT", bd)
         end
         function Skin.PlayerTalentTabTemplate(Button)
             Skin.CharacterFrameTabButtonTemplate(Button)
@@ -279,7 +289,9 @@ function private.AddOns.Blizzard_TalentUI()
         PvpTalentFrame.Ring:Hide()
         select(13, PvpTalentFrame:GetRegions()):Hide() -- firecover
 
-        Skin.PvpTalentTrinketSlotTemplate(PvpTalentFrame.TrinketSlot)
+        if not private.isPatch then
+            Skin.PvpTalentTrinketSlotTemplate(PvpTalentFrame.TrinketSlot)
+        end
         Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot1)
         Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot2)
         Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot3)

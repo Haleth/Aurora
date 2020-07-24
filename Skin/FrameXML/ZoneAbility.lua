@@ -7,7 +7,8 @@ if private.isClassic then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 --do --[[ FrameXML\ZoneAbility.lua ]]
 --end
@@ -15,17 +16,19 @@ local Skin = Aurora.Skin
 do --[[ FrameXML\ZoneAbility.xml ]]
     function Skin.ZoneAbilityFrameTemplate(Frame)
         Frame.Style:Hide()
+        Util.Mixin(Frame.SpellButtonContainer.contentFramePool, Hook.ObjectPoolMixin)
     end
     function Skin.ZoneAbilityFrameSpellButtonTemplate(Button)
+        --Button.Icon:SetTexture(private.textures.plain)
         Base.CropIcon(Button.Icon, Button)
 
         Button.Count:SetPoint("TOPLEFT", -5, 5)
         Button.Cooldown:SetPoint("TOPLEFT")
         Button.Cooldown:SetPoint("BOTTOMRIGHT")
 
-        Base.CropIcon(Button:GetNormalTexture())
+        Button.NormalTexture:SetTexture("")
         Base.CropIcon(Button:GetHighlightTexture())
-        Base.CropIcon(Button:GetCheckedTexture())
+        --Base.CropIcon(Button:GetCheckedTexture())
     end
 end
 

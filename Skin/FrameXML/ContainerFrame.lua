@@ -69,23 +69,17 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     end
 
     function Skin.ContainerFrameItemButtonTemplate(ItemButton)
-        local name = ItemButton:GetName()
-
-        Base.CreateBackdrop(ItemButton, {
+        Skin.FrameTypeItemButton(ItemButton)
+        ItemButton:SetBackdropColor(1, 1, 1, 0.75)
+        ItemButton:SetBackdropOptions({
             bgFile = ItemButton._isKey and [[Interface\ContainerFrame\KeyRing-Bag-Icon]] or [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false
         })
-        Skin.FrameTypeItemButton(ItemButton)
         local bg = ItemButton:GetBackdropTexture("bg")
+        bg:SetDesaturated(ItemButton._isKey)
         Base.CropIcon(bg)
 
-        if ItemButton._isKey then
-            bg:SetDesaturated(true)
-            ItemButton:SetBackdropColor(keyColor:GetRGBA())
-        else
-            ItemButton:SetBackdropColor(1, 1, 1, 0.75)
-        end
-
+        local name = ItemButton:GetName()
         ItemButton._questTexture = _G[name.."IconQuestTexture"]
         if private.isClassic then
             ItemButton._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
