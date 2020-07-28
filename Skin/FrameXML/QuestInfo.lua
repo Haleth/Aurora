@@ -107,6 +107,79 @@ do --[[ FrameXML\QuestInfo.xml ]]
     function Skin.LargeQuestRewardItemButtonTemplate(Button)
         Skin.LargeItemButtonTemplate(Button)
     end
+    function Skin.LargeQuestInfoRewardFollowerTemplate(Button)
+        Base.SetBackdrop(Button, Color.frame)
+        Button:SetBackdropOptions({
+            offsets = {
+                left = 41,
+                right = 0,
+                top = 8,
+                bottom = 8,
+            },
+        })
+
+        Button.BG:SetAlpha(0)
+        Button.BG:SetTexture("")
+
+        local bg = Button:GetBackdropTexture("bg")
+        Button.Class:SetPoint("TOPRIGHT", bg, -1, -1)
+        Button.Class:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
+        local PortraitFrame = Button.PortraitFrame
+        Skin.GarrisonFollowerPortraitTemplate(PortraitFrame)
+        PortraitFrame:SetScale(1)
+        PortraitFrame:SetSize(41.6, 48)
+        PortraitFrame:SetBackdropOptions({
+            offsets = {
+                left = 3,
+                right = 4,
+                top = 4,
+                bottom = 10,
+            },
+        })
+
+        local portraitBG = PortraitFrame:GetBackdropTexture("bg")
+        local lvlBG = PortraitFrame._auroraLvlBG
+        lvlBG:SetPoint("TOPLEFT", portraitBG, "BOTTOMLEFT", 0, 2)
+        PortraitFrame.Level:SetScale(0.8)
+    end
+    function Skin.SmallQuestInfoRewardFollowerTemplate(Button)
+        Base.SetBackdrop(Button, Color.frame)
+        Button:SetBackdropOptions({
+            offsets = {
+                left = 33,
+                right = 0,
+                top = -1,
+                bottom = -2,
+            },
+        })
+
+        Button.BG:SetAlpha(0)
+        Button.BG:SetTexture("")
+
+        local bg = Button:GetBackdropTexture("bg")
+        Button.Class:SetPoint("TOPRIGHT", bg, -1, -1)
+        Button.Class:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+
+        local PortraitFrame = Button.PortraitFrame
+        Skin.GarrisonFollowerPortraitTemplate(PortraitFrame)
+        PortraitFrame:SetScale(1)
+        PortraitFrame:SetSize(33.8, 39)
+        PortraitFrame:SetBackdropOptions({
+            offsets = {
+                left = 1,
+                right = 4,
+                top = 3,
+                bottom = 7,
+            },
+        })
+
+        local portraitBG = PortraitFrame:GetBackdropTexture("bg")
+        local lvlBG = PortraitFrame._auroraLvlBG
+        lvlBG:SetPoint("TOPLEFT", portraitBG, "BOTTOMLEFT", 0, 3)
+        lvlBG:SetPoint("BOTTOMRIGHT", portraitBG, 0, -6)
+        PortraitFrame.Level:SetScale(0.65)
+    end
     function Skin.QuestInfoSpellHeaderTemplate(FontString)
         FontString:SetTextColor(0.8, 0.8, 0.8)
     end

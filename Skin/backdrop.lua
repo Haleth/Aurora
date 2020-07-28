@@ -191,24 +191,28 @@ if private.isPatch then
         local userLayout = GetNineSliceLayout(self)
         _G.NineSliceUtil.ApplyLayout(self, userLayout)
         for _, pieceName in next, bgTextures do
+            local pieceLayout = self._userLayout[pieceName]
+
+            self[pieceName]:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
             self[pieceName]:SetTexelSnappingBias(0.0)
             self[pieceName]:SetSnapToPixelGrid(false)
         end
 
-        if Base.IsTextureRegistered(self.backdropInfo.bgFile) then
-            Base.SetTexture(self.Center, self.backdropInfo.bgFile)
+        local backdropInfo = self.backdropInfo
+        if Base.IsTextureRegistered(backdropInfo.bgFile) then
+            Base.SetTexture(self.Center, backdropInfo.bgFile)
         end
 
         local r, g, b, a = 1, 1, 1, 1
-        if self.backdropInfo.backdropColor then
-            r, g, b, a = self.backdropInfo.backdropColor:GetRGBA()
+        if backdropInfo.backdropColor then
+            r, g, b, a = backdropInfo.backdropColor:GetRGBA()
         end
         self:SetBackdropColor(r, g, b, a)
 
 
         r, g, b, a = 1, 1, 1, 1
-        if self.backdropInfo.backdropBorderColor then
-            r, g, b, a = self.backdropInfo.backdropBorderColor:GetRGBA()
+        if backdropInfo.backdropBorderColor then
+            r, g, b, a = backdropInfo.backdropBorderColor:GetRGBA()
         end
         self:SetBackdropBorderColor(r, g, b, a)
 
@@ -302,23 +306,11 @@ else
         if options then
             if not self._auroraBackdrop then
                 local bd = textures or {}
-                bd.layer = textures and textures.layer or "BACKGROUND"
-                bd.sublevel = textures and textures.sublevel or -8
-
                 for name in next, bgTextures do
                     if bd[name] then
                         bd[name]:ClearAllPoints()
-                        if name == "bg" then
-                            bd[name]:SetDrawLayer(bd.layer, bd.sublevel)
-                        else
-                            bd[name]:SetDrawLayer(bd.layer, bd.sublevel + 1)
-                        end
                     else
-                        if name == "bg" then
-                            bd[name] = self:CreateTexture(nil, bd.layer, nil, bd.sublevel)
-                        else
-                            bd[name] = self:CreateTexture(nil, bd.layer, nil, bd.sublevel + 1)
-                        end
+                        bd[name] = self:CreateTexture()
                     end
 
                     bd[name]:SetTexelSnappingBias(0.0)
@@ -328,13 +320,28 @@ else
                 self._auroraBackdrop = bd
             end
             local bd = self._auroraBackdrop
-            options = SanitizeTable(bd.options or options, backdrop)
+            options = bd.options or options
+
+            -- Convert old options
+            if bd.layer then
+                options.backdropLayer = bd.layer
+                options.backdropBorderLayer = bd.layer
+                bd.layer = nil
+            end
+            if bd.sublevel then
+                options.backdropSubLevel = bd.sublevel
+                options.backdropBorderSubLevel = bd.sublevel + 1
+                bd.sublevel = nil
+            end
+
+            options = SanitizeTable(options, backdrop)
 
             --[[ The tile size is fixed at the original texture size, so this option is DOA.
             if options.tileSize then
                 bd.bg:SetSize(options.tileSize, options.tileSize)
             end]]
             bd.bg:Show()
+            bd.bg:SetDrawLayer(options.backdropLayer, options.backdropSubLevel)
             if Base.IsTextureRegistered(options.bgFile) then
                 Base.SetTexture(bd.bg, options.bgFile)
                 if bd.backdropColor then
@@ -352,12 +359,12 @@ else
             bd.bg:SetPoint("TOPLEFT", self, (insets.left + offsets.left), -(insets.top + offsets.top))
             bd.bg:SetPoint("BOTTOMRIGHT", self, -(insets.right + offsets.right), (insets.bottom + offsets.bottom))
 
-
             local corner, side
             for tag, info in next, corners do
                 corner = bd[tag]
                 corner:Show()
                 corner:SetTexture(options.edgeFile)
+                corner:SetDrawLayer(options.backdropBorderLayer, options.backdropBorderSubLevel)
                 corner:SetTexCoord(info.l, info.r, info.t, info.b)
                 corner:SetSize(options.edgeSize, options.edgeSize)
                 corner:SetPoint(info.point, bd.bg, -insets[info.x], insets[info.y])
@@ -368,6 +375,7 @@ else
                 side = bd[tag]
                 side:Show()
                 side:SetTexture(options.edgeFile)
+                side:SetDrawLayer(options.backdropBorderLayer, options.backdropBorderSubLevel)
                 if info.tileH then
                     side:SetTexCoord(info.l, info.b, info.r, info.b, info.l, info.t, info.r, info.t)
                     side:SetPoint("TOPLEFT", bd[info.left], "TOPRIGHT")

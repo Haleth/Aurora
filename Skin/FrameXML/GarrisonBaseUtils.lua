@@ -32,32 +32,44 @@ do --[[ FrameXML\GarrisonBaseUtils.lua ]]
 end
 
 do --[[ FrameXML\GarrisonBaseUtils.xml ]]
+    local portraitBGColor = Color.Create(0.02, 0.05, 0.11)
     function Skin.PositionGarrisonAbiltyBorder(border, icon)
         border:ClearAllPoints()
         border:SetPoint("TOPLEFT", icon, -8, 8)
         border:SetPoint("BOTTOMRIGHT", icon, 8, -8)
     end
     function Skin.GarrisonFollowerPortraitTemplate(Frame)
+        Base.SetBackdrop(Frame, portraitBGColor, 1)
+        Frame:SetBackdropOptions({
+            offsets = {
+                left = 4,
+                right = 4,
+                top = 4,
+                bottom = 12,
+            },
+
+            backdropBorderLayer = "BORDER",
+            backdropBorderSubLevel = 1
+        })
+        Frame._auroraPortraitBG = Frame
+
         Frame.PortraitRing:Hide()
-        Frame.Portrait:SetPoint("CENTER", 0, 4)
         Frame.PortraitRingQuality:SetTexture("")
 
-        local portraitBG = _G.CreateFrame("Frame", nil, Frame)
-        portraitBG:SetFrameLevel(Frame:GetFrameLevel())
-        portraitBG:SetPoint("TOPLEFT", Frame.Portrait, -1, 1)
-        portraitBG:SetPoint("BOTTOMRIGHT", Frame.Portrait, 1, -1)
-        Base.SetBackdrop(portraitBG, Color.frame, 1)
-        Frame._auroraPortraitBG = portraitBG
+        local bg = Frame:GetBackdropTexture("bg")
+        Frame.Portrait:ClearAllPoints()
+        Frame.Portrait:SetPoint("TOPLEFT", bg)
+        Frame.Portrait:SetPoint("BOTTOMRIGHT", bg)
 
         Frame.LevelBorder:SetAlpha(0)
         local lvlBG = _G.CreateFrame("Frame", nil, Frame)
-        lvlBG:SetPoint("TOPLEFT", portraitBG, "BOTTOMLEFT", 0, 6)
-        lvlBG:SetPoint("BOTTOMRIGHT", portraitBG, 0, -10)
+        lvlBG:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 0, 4)
+        lvlBG:SetPoint("BOTTOMRIGHT", bg, 0, -9)
         Base.SetBackdrop(lvlBG, Color.frame, 1)
         Frame._auroraLvlBG = lvlBG
 
         Frame.Level:SetParent(lvlBG)
-        Frame.Level:SetPoint("CENTER", lvlBG)
+        Frame.Level:SetAllPoints()
 
         Frame.PortraitRingCover:SetTexture("")
     end
