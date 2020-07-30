@@ -32,6 +32,7 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
             Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.WorldMapTrackingOptionsButtonTemplate(Button)
+            Button:GetRegions():SetPoint("TOPRIGHT")
             Button.Background:Hide()
             Button.Border:Hide()
 

@@ -10,6 +10,13 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\FloatingChatFrame.lua ]]
+    function Hook.FloatingChatFrame_UpdateBackgroundAnchors(self)
+        local bg, tl, bl, tr, br = self:GetRegions()
+        tl:SetPoint("TOPLEFT", bg)
+        bl:SetPoint("BOTTOMLEFT", bg)
+        tr:SetPoint("TOPRIGHT", bg)
+        br:SetPoint("BOTTOMRIGHT", bg)
+    end
     function Hook.FCF_SetWindowColor(frame, r, g, b, doNotSave)
         frame:SetBackdropColor(r, g, b)
         frame:SetBackdropBorderColor(r, g, b)
@@ -75,7 +82,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         local buttonFrame = ScrollingMessageFrame.buttonFrame
 
         if private.isRetail then
-            Skin.FloatingBorderedFrame(ScrollingMessageFrame.buttonFrame)
+            Skin.FloatingBorderedFrame(buttonFrame)
 
             local minimizeButton = buttonFrame.minimizeButton
             Skin.ChatFrameButton(minimizeButton)
@@ -195,6 +202,7 @@ end
 function private.FrameXML.FloatingChatFrame()
     if private.disabled.chat then return end
 
+    _G.hooksecurefunc("FloatingChatFrame_UpdateBackgroundAnchors", Hook.FloatingChatFrame_UpdateBackgroundAnchors)
     _G.hooksecurefunc("FCF_SetWindowColor", Hook.FCF_SetWindowColor)
     _G.hooksecurefunc("FCF_SetButtonSide", Hook.FCF_SetButtonSide)
     _G.hooksecurefunc("FCF_CreateMinimizedFrame", Hook.FCF_CreateMinimizedFrame)

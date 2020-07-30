@@ -27,10 +27,11 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
                     button.stripe:Hide()
                     button.icon.bg:Hide()
                 else
-                    button:SetBackdrop(nil)
+                    button:SetBackdrop(false)
 
                     local r, g, b = Color.highlight:GetRGB()
-                    button.highlight:SetColorTexture(r, g, b, 0.2)
+                    button.highlight:SetColorTexture(r, g, b)
+                    button.highlight:SetAlpha(0.2)
                     button.highlight:SetPoint("TOPLEFT", 1, 0)
                     button.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 

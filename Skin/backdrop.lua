@@ -95,6 +95,10 @@ local bgTextures = {
     bl = "BottomLeftCorner",
     br = "BottomRightCorner",
 }
+local nineSlice = {}
+for old, new in next, bgTextures do
+    nineSlice[new] = old
+end
 local sides = {
     l = {l=0, r=0.125, t=0, b=1, tileV = true, left="tl", right="bl"},
     r = {l=0.125, r=0.25, t=0, b=1, tileV = true, left="tr", right="br"},
@@ -112,6 +116,19 @@ local corners = {
 local BackdropMixin
 if private.isPatch then
     BackdropMixin = _G.Mixin({}, _G.BackdropTemplateMixin)
+    local function GetNineSlicePiece(container, pieceName, old)
+        if container.GetNineSlicePiece then
+            local piece = container:GetNineSlicePiece(pieceName)
+            if piece then
+                return piece, true
+            end
+        end
+
+        local piece = container[pieceName]
+        if piece then
+            return piece, true
+        end
+    end
     local function GetNineSliceLayout(frame)
         local backdropInfo = frame.backdropInfo
 
@@ -190,12 +207,15 @@ if private.isPatch then
     function BackdropMixin:ApplyBackdrop()
         local userLayout = GetNineSliceLayout(self)
         _G.NineSliceUtil.ApplyLayout(self, userLayout)
-        for _, pieceName in next, bgTextures do
-            local pieceLayout = self._userLayout[pieceName]
+        for old, pieceName in next, bgTextures do
+            local pieceLayout = userLayout[pieceName]
+            local piece = GetNineSlicePiece(self, pieceName, old)
 
-            self[pieceName]:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
-            self[pieceName]:SetTexelSnappingBias(0.0)
-            self[pieceName]:SetSnapToPixelGrid(false)
+            if pieceLayout.layer then
+                piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
+            end
+            piece:SetTexelSnappingBias(0.0)
+            piece:SetSnapToPixelGrid(false)
         end
 
         local backdropInfo = self.backdropInfo
@@ -223,9 +243,27 @@ if private.isPatch then
 
 
     function BackdropMixin:SetBackdrop(backdropInfo, textures)
-        if backdropInfo == true and self.backdropInfo then
-            backdropInfo = self.backdropInfo
+        if backdropInfo == true then
+            if self._backdropInfo then
+                backdropInfo = self._backdropInfo
+            else
+                return
+            end
         end
+        if not backdropInfo and self.backdropInfo then
+            self._backdropInfo = self.backdropInfo
+        end
+
+        if textures and backdropInfo then
+            self._textures = textures
+            function self:GetNineSlicePiece(pieceName)
+                local piece = self._textures[nineSlice[pieceName]]
+                if piece then
+                    return piece, true
+                end
+            end
+        end
+
         return _G.BackdropTemplateMixin.SetBackdrop(self, backdropInfo)
     end
     function BackdropMixin:SetBackdropColor(red, green, blue, alpha)
@@ -239,8 +277,9 @@ if private.isPatch then
         return self.backdropInfo.backdropColor:GetRGBA()
     end
     function BackdropMixin:SetBackdropBorderColor(red, green, blue, alpha)
-        self.backdropInfo.backdropBorderColor = GetColor(red, green, blue, alpha)
+        if not self.backdropInfo then return end
 
+        self.backdropInfo.backdropBorderColor = GetColor(red, green, blue, alpha)
         return _G.BackdropTemplateMixin.SetBackdropBorderColor(self, self.backdropInfo.backdropBorderColor:GetRGBA())
     end
     function BackdropMixin:GetBackdropBorderColor()
