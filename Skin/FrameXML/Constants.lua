@@ -18,6 +18,11 @@ private.COVENANT_COLORS = {
     NightFae = Color.Create(0.2, 0.3, 0.4),
     Necrolord = Color.Create(0.1, 0.2, 0.15),
 }
+private.FACTION_COLORS = {
+    Horde = Color.Create(0.5, 0.0, 0.0),
+    Alliance = Color.Create(0.2, 0.1, 0.1),
+}
+
 local Enum = {}
 Enum.ItemQuality = {
     Poor = _G.LE_ITEM_QUALITY_POOR or _G.Enum.ItemQuality.Poor,

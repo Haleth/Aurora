@@ -13,19 +13,45 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\QuestMapFrame.lua ]]
     -- /dump C_CampaignInfo.GetCampaignInfo(C_CampaignInfo.GetCurrentCampaignID())
     local uiTextureKits = {
-        [0] = {color = Color.button, overlay = ""},
-        [261] = {color = Color.blue:Lightness(-0.3), overlay = [[Interface\Timer\Alliance-Logo]]},
-        [262] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
+        Normal = {color = Color.button, overlay = ""},
+        Alliance = {color = private.FACTION_COLORS.Alliance, texture = [[Interface\Timer\Alliance-Logo]]},
+        horde = {color = private.FACTION_COLORS.Horde, texture = [[Interface\Timer\Horde-Logo]]},
+        Fey = {color = private.COVENANT_COLORS.NightFae, atlas = "CovenantChoice-Offering-Sigil-NightFae"},
     }
+
+    uiTextureKits[261] = uiTextureKits.Alliance
+    uiTextureKits[262] = uiTextureKits.horde
     function Hook.QuestLogQuests_Update(poiTable)
-        if not private.isPatch then
+        if private.isPatch then
+            for campaignHeader in _G.QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
+                local campaign = campaignHeader:GetCampaign()
+                if campaign then
+                    local kit = uiTextureKits[campaign.uiTextureKit] or uiTextureKits.Normal
+                    campaignHeader.Background:SetTexture("")
+                    campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
+                    if kit.texture then
+                        campaignHeader._auroraOverlay:SetTexture(kit.texture)
+                        campaignHeader._auroraOverlay:SetSize(130, 130)
+                        campaignHeader._auroraOverlay:SetScale(1)
+                        campaignHeader._auroraOverlay:SetPoint("RIGHT", 20, -10)
+                        campaignHeader._auroraOverlay:SetVertexColor(0, 0, 0, 0.2)
+                    else
+                        campaignHeader._auroraOverlay:SetAtlas(kit.atlas, true)
+                        campaignHeader._auroraOverlay:SetScale(0.5)
+                        campaignHeader._auroraOverlay:SetPoint("RIGHT", -38, 0)
+                        campaignHeader._auroraOverlay:SetVertexColor(1, 1, 1, 0.2)
+                    end
+                    campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+                end
+            end
+        else
             local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
             if warCampaignID then
                 local warCampaignInfo = _G.C_CampaignInfo.GetCampaignInfo(warCampaignID)
                 if warCampaignInfo and warCampaignInfo.visibilityConditionMatched then
-                    local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits[0]
+                    local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits.Normal
                     _G.QuestScrollFrame.Contents.WarCampaignHeader.Background:SetColorTexture(kit.color:GetRGB())
-                    _G.QuestScrollFrame.Contents.WarCampaignHeader._auroraOverlay:SetTexture(kit.overlay)
+                    _G.QuestScrollFrame.Contents.WarCampaignHeader._auroraOverlay:SetTexture(kit.texture)
                 end
             end
         end
@@ -55,10 +81,6 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
 end
 
 do --[[ FrameXML\QuestMapFrame.xml ]]
-    function Skin.WarCampaignTooltipTemplate(Frame)
-        Base.SetBackdrop(Frame)
-        Skin.InternalEmbeddedItemTooltipTemplate(Frame.ItemTooltip)
-    end
     function Skin.QuestLogHeaderTemplate(Button)
         Skin.ExpandOrCollapse(Button)
         Button:SetBackdropOption("offsets", {
@@ -140,7 +162,7 @@ function private.FrameXML.QuestMapFrame()
 
     if private.isPatch then
         QuestsFrame.Contents.Separator:SetSize(260, 10)
-        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
+        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, -10)
     else
         QuestsFrame.Background:Hide()
 
@@ -153,10 +175,10 @@ function private.FrameXML.QuestMapFrame()
         clipFrame:SetClipsChildren(true)
 
         local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
-        overlay:SetSize(142, 142)
-        overlay:SetPoint("TOPRIGHT", 16, 38)
-        overlay:SetAlpha(0.2)
+        overlay:SetSize(130, 130)
+        overlay:SetPoint("RIGHT", 20, -10)
         overlay:SetDesaturated(true)
+        overlay:SetVertexColor(0, 0, 0, 0.2)
         WarCampaignHeader._auroraOverlay = overlay
 
         WarCampaignHeader.Background:SetAllPoints(clipFrame)
@@ -198,7 +220,7 @@ function private.FrameXML.QuestMapFrame()
 
     Base.SetBackdrop(QuestsFrame.StoryTooltip)
     if not private.isPatch then
-        Skin.WarCampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
+        Skin.CampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
     end
 
 
