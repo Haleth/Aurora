@@ -381,6 +381,9 @@ function private.AddOns.Blizzard_GarrisonUI()
     ----====####$$$$%%%%$$$$####====----
     Skin.GarrisonFollowerPortraitTemplate(_G.GarrisonFollowerPlacer)
 
+    -- BlizzWTF: This should be flagged as hidden in XML
+    _G.GarrisonMissionListTooltipThreatsFrame:Hide()
+
     -------------
     -- Section --
     -------------

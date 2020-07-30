@@ -12,6 +12,12 @@ private.AZERITE_COLORS = {
     Color.Create(0.7098, 0.5019, 0.1725),
 }
 
+private.COVENANT_COLORS = {
+    Kyrian = Color.Create(0.1, 0.1, 0.2),
+    Venthyr = Color.Create(0.2, 0.1, 0.1),
+    NightFae = Color.Create(0.2, 0.3, 0.4),
+    Necrolord = Color.Create(0.1, 0.2, 0.15),
+}
 local Enum = {}
 Enum.ItemQuality = {
     Poor = _G.LE_ITEM_QUALITY_POOR or _G.Enum.ItemQuality.Poor,
