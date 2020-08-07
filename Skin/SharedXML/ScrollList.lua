@@ -10,17 +10,8 @@ local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ FrameXML\ScrollList.lua ]]
-    Hook.ScrollListMixin = {}
-    function Hook.ScrollListMixin:UpdatedSelectedHighlight()
-        local selectedHighlight = self:GetSelectedHighlight()
-        if selectedHighlight:IsShown() then
-            local _, button = selectedHighlight:GetPoint()
-            selectedHighlight:ClearAllPoints()
-            selectedHighlight:SetAllPoints(button)
-        end
-    end
-end
+--do --[[ FrameXML\ScrollList.lua ]]
+--end
 
 do --[[ FrameXML\ScrollList.xml ]]
     function Skin.ScrollListLineTemplate(Button)
@@ -38,10 +29,7 @@ do --[[ FrameXML\ScrollList.xml ]]
         Skin.ScrollListLineTemplate(Button)
     end
     function Skin.ScrollListTemplate(Frame)
-        local selectedHighlight = Frame:GetSelectedHighlight()
-        selectedHighlight:SetColorTexture(Color.highlight:GetRGB())
-        selectedHighlight:SetAlpha(0.5)
-
+        Skin.TemplatedListTemplate(Frame)
         Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
         Frame.ScrollFrame.scrollBar.Background:Hide()
         Skin.InsetFrameTemplate(Frame.InsetFrame)
@@ -49,5 +37,7 @@ do --[[ FrameXML\ScrollList.xml ]]
 end
 
 function private.SharedXML.ScrollList()
-    Util.Mixin(_G.ScrollListMixin, Hook.ScrollListMixin)
+    if not private.isPatch then
+        Util.Mixin(_G.ScrollListMixin, Hook.TemplatedListMixin)
+    end
 end

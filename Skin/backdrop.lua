@@ -309,7 +309,7 @@ if private.isPatch then
             texture = bgTextures[texture]
         end
 
-        return self[texture]
+        return self[texture] or self:GetNineSlicePiece(texture)
     end
     function BackdropMixin:SetBackdropOption(optionKey, optionValue)
         if self.backdropInfo then
