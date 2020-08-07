@@ -48,10 +48,18 @@ function private.AddOns.Blizzard_CovenantPreviewUI()
     Base.SetBackdrop(CovenantPreviewFrame)
 
     CovenantPreviewFrame.ModelSceneContainer.Background:SetTexCoord(0.00970873786408, 0.99029126213592, 0.0092807424594, 0.9907192575406)
-    CovenantPreviewFrame.InfoPanel.Description:SetTextColor(Color.grayLight:GetRGB())
-    CovenantPreviewFrame.InfoPanel.AbilitiesLabel:SetTextColor(Color.grayLight:GetRGB())
 
-    local bgCrest = CovenantPreviewFrame.InfoPanel:CreateTexture(nil, "ARTWORK")
+    local InfoPanel = CovenantPreviewFrame.InfoPanel
+    InfoPanel.Description:SetTextColor(Color.grayLight:GetRGB())
+    InfoPanel.AbilitiesLabel:SetTextColor(Color.grayLight:GetRGB())
+
+    local divider = InfoPanel:CreateTexture(nil, "ARTWORK")
+    divider:SetColorTexture(1, 1, 1, 0.5)
+    divider:SetHeight(1)
+    divider:SetPoint("BOTTOMLEFT", InfoPanel.Description, "TOPLEFT", 30, 15)
+    divider:SetPoint("BOTTOMRIGHT", InfoPanel.Description, "TOPRIGHT", -30, 15)
+
+    local bgCrest = InfoPanel:CreateTexture(nil, "ARTWORK")
     bgCrest:SetPoint("BOTTOMRIGHT", -10, 10)
     bgCrest:SetScale(2)
     bgCrest:SetAlpha(0.1)
