@@ -327,8 +327,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         Hook.ThreeSliceButtonMixin = {}
         function Hook.ThreeSliceButtonMixin:UpdateButton(buttonState)
             self.Left:SetTexture("")
-            self.Center:SetTexture("")
+            self.Center:SetTexture(private.textures.plain) -- this is used in the backdrop
             self.Right:SetTexture("")
+
+            self:SetButtonColor(self:GetButtonColor())
         end
     end
 end
