@@ -14,18 +14,18 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     do --[[ Blizzard_AuctionHouseTableBuilder ]]
         Hook.AuctionHouseTableCellFavoriteButtonMixin = {}
         function Hook.AuctionHouseTableCellFavoriteButtonMixin:UpdateFavoriteState()
+            Base.SetTexture(self.NormalTexture, "shapeStar")
+            Base.SetTexture(self.HighlightTexture, "shapeStar")
+
             if self:IsFavorite() then
-                Base.SetTexture(self.NormalTexture, "shapeStar")
                 self.NormalTexture:SetAlpha(1)
+            else
                 if self.textureLocked then
                     self.NormalTexture:SetColorTexture(Color.grayDark:GetRGB())
+                else
+                    self.NormalTexture:SetAlpha(0)
                 end
 
-                Base.SetTexture(self.HighlightTexture, "shapeStar")
-            else
-                self.NormalTexture:SetAlpha(0)
-
-                Base.SetTexture(self.HighlightTexture, "shapeStar")
                 self.HighlightTexture:SetColorTexture(Color.gray:GetRGB())
                 self.HighlightTexture:SetBlendMode("DISABLE")
             end
