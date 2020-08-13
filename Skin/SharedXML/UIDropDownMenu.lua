@@ -137,6 +137,21 @@ end
 
 do --[[ FrameXML\UIDropDownMenu.xml ]]
     do --[[ UIDropDownMenuTemplates.xml ]]
+        function Skin.ColorSwatchTemplate(Button)
+            if Button.SwatchBg then
+                Button.SwatchBg:Hide()
+                Button.InnerBorder:SetColorTexture(Color.button:GetRGB())
+            else
+                local bg = _G[Button:GetName().."SwatchBg"]
+                bg:SetColorTexture(Color.button:GetRGB())
+                bg:SetAllPoints()
+
+                local texture = Button:GetNormalTexture()
+                texture:SetColorTexture(1, 1, 1)
+                texture:SetPoint("TOPLEFT", bg, 1, -1)
+                texture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+            end
+        end
         function Skin.UIDropDownMenuButtonTemplate(Button)
             local listFrame = Button:GetParent()
             local name = Button:GetName()
@@ -160,6 +175,8 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             check:ClearAllPoints()
             check:SetPoint("CENTER", checkBox)
             checkBox.check = check
+
+            --Skin.ColorSwatchTemplate(_G[name.."ColorSwatch"])
 
             local arrow = _G[name.."ExpandArrow"]
             arrow:SetSize(5, 10)

@@ -84,7 +84,7 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
     end
     function Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
         Skin.ChatConfigCheckBoxTemplate(Frame)
-        Skin.ColorSwatch(Frame.ColorSwatch)
+        Skin.ColorSwatchTemplate(Frame.ColorSwatch)
     end
     function Skin.ChatConfigWideCheckBoxWithSwatchTemplate(Frame)
         Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
@@ -103,7 +103,7 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
             bottom = 2,
         })
 
-        Skin.ColorSwatch(_G[Frame:GetName().."ColorSwatch"])
+        Skin.ColorSwatchTemplate(_G[Frame:GetName().."ColorSwatch"])
     end
     function Skin.ChatConfigTabTemplate(Button)
         local name = Button:GetName()
@@ -138,16 +138,6 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
 
         Base.SetTexture(arrow, "arrow"..direction)
         Button._auroraTextures = {arrow}
-    end
-    function Skin.ColorSwatch(Button)
-        local bg = _G[Button:GetName().."SwatchBg"]
-        bg:SetColorTexture(Color.button:GetRGB())
-        bg:SetAllPoints()
-
-        local texture = Button:GetNormalTexture()
-        texture:SetColorTexture(1, 1, 1)
-        texture:SetPoint("TOPLEFT", bg, 1, -1)
-        texture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
     end
 end
 
@@ -238,11 +228,11 @@ function private.FrameXML.ChatConfigFrame()
     _G.CombatConfigColorsColorizeSpellNames:SetBackdrop(nil)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeSpellNamesCheck)
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigColorsColorizeSpellNamesSchoolColoring)
-    Skin.ColorSwatch(_G.CombatConfigColorsColorizeSpellNamesColorSwatch)
+    Skin.ColorSwatchTemplate(_G.CombatConfigColorsColorizeSpellNamesColorSwatch)
     _G.CombatConfigColorsColorizeDamageNumber:SetBackdrop(nil)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeDamageNumberCheck)
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigColorsColorizeDamageNumberSchoolColoring)
-    Skin.ColorSwatch(_G.CombatConfigColorsColorizeDamageNumberColorSwatch)
+    Skin.ColorSwatchTemplate(_G.CombatConfigColorsColorizeDamageNumberColorSwatch)
     _G.CombatConfigColorsColorizeDamageSchool:SetBackdrop(nil)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeDamageSchoolCheck)
     _G.CombatConfigColorsColorizeEntireLine:SetBackdrop(nil)

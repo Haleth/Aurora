@@ -68,7 +68,11 @@ function private.FrameXML.EquipmentFlyout()
     Base.SetBackdrop(NavigationFrame)
     NavigationFrame:SetPoint("TOPLEFT", bd, "BOTTOMLEFT", 0, 1)
     NavigationFrame:SetPoint("TOPRIGHT", bd, "BOTTOMRIGHT", 0, 1)
-    _G.Test2:Hide() -- BlizzWTF: seriously? This is not a test, it's the BG texture
+    if private.isPatch then
+        NavigationFrame.BottomBackground:Hide()
+    else
+        _G.Test2:Hide() -- BlizzWTF: seriously? This is not a test, it's the BG texture
+    end
     Skin.NavButtonPrevious(NavigationFrame.PrevButton)
     Skin.NavButtonNext(NavigationFrame.NextButton)
 end
