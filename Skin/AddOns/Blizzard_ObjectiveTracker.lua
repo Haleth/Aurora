@@ -74,21 +74,23 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
             Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
             Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
         end
-        function Hook.ObjectiveTracker_Collapse()
-            local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-            local bg = minimizeButton:GetBackdropTexture("bg")
 
-            minimizeButton._auroraLine:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 2, 3)
-            minimizeButton._auroraArrow:SetPoint("TOPLEFT", bg, 2, -2)
-            Base.SetTexture(minimizeButton._auroraArrow, "arrowDown")
+        Hook.ObjectiveTrackerMinimizeButtonMixin = {}
+        function Hook.ObjectiveTrackerMinimizeButtonMixin:SetCollapsed(collapsed)
+            if collapsed then
+                Base.SetTexture(self._auroraArrow, "arrowDown")
+            else
+                Base.SetTexture(self._auroraArrow, "arrowUp")
+            end
+
+            self:SetNormalTexture("")
+            self:SetPushedTexture("")
+        end
+        function Hook.ObjectiveTracker_Collapse()
+            Hook.ObjectiveTrackerMinimizeButtonMixin.SetCollapsed(_G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton, true)
         end
         function Hook.ObjectiveTracker_Expand()
-            local minimizeButton = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-            local bg = minimizeButton:GetBackdropTexture("bg")
-
-            minimizeButton._auroraLine:SetPoint("TOPLEFT", bg, 2, -2)
-            minimizeButton._auroraArrow:SetPoint("TOPLEFT", bg, 2.4, -6)
-            Base.SetTexture(minimizeButton._auroraArrow, "arrowUp")
+            Hook.ObjectiveTrackerMinimizeButtonMixin.SetCollapsed(_G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton, false)
         end
     end
 
@@ -202,6 +204,28 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     -- Blizzard_ObjectiveTracker --
     ----====####$$$$$$$####====----
     Skin.ObjectiveTrackerBlockTemplate = private.nop
+    function Skin.ObjectiveTrackerMinimizeButtonTemplate(Button)
+        if private.isPatch then
+            Util.Mixin(Button, Hook.ObjectiveTrackerMinimizeButtonMixin)
+        end
+
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 1,
+            right = 2,
+            top = 2,
+            bottom = 1,
+        })
+
+        local bg = Button:GetBackdropTexture("bg")
+        local arrow = Button:CreateTexture(nil, "OVERLAY")
+        arrow:SetPoint("TOPLEFT", bg, 2, -4)
+        arrow:SetSize(9, 4.5)
+        Button._auroraArrow = arrow
+        Button._auroraTextures = {arrow}
+
+        Hook.ObjectiveTrackerMinimizeButtonMixin.SetCollapsed(Button, false)
+    end
     function Skin.ObjectiveTrackerHeaderTemplate(Frame)
         Frame.Background:Hide()
 
@@ -211,6 +235,10 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bg:SetVertexColor(Color.highlight.r * 0.7, Color.highlight.g * 0.7, Color.highlight.b * 0.7)
         bg:SetPoint("BOTTOMLEFT", -30, -4)
         bg:SetSize(210, 30)
+
+        if private.isPatch then
+            Skin.ObjectiveTrackerMinimizeButtonTemplate(Frame.MinimizeButton)
+        end
     end
     Skin.ObjectiveTrackerLineTemplate = private.nop
     Skin.ObjectiveTrackerCheckLineTemplate = private.nop
@@ -245,7 +273,31 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_AutoQuestPopUpTracker --
     ----====####$$$$%%%%$$$$####====----
-    Skin.AutoQuestPopUpBlockTemplate = private.nop
+    function Skin.AutoQuestPopUpBlockTemplate(ScrollFrame)
+        local ScrollChild = ScrollFrame.ScrollChild
+        Base.CreateBackdrop(ScrollChild, private.backdrop, {
+            tl = ScrollChild.BorderTopLeft,
+            tr = ScrollChild.BorderTopRight,
+            bl = ScrollChild.BorderBotLeft,
+            br = ScrollChild.BorderBotRight,
+
+            t = ScrollChild.BorderTop,
+            b = ScrollChild.BorderBottom,
+            l = ScrollChild.BorderLeft,
+            r = ScrollChild.BorderRight,
+
+            bg = ScrollChild.Bg
+        })
+
+        Base.SetBackdrop(ScrollChild)
+        ScrollChild:SetBackdropBorderColor(Color.yellow:GetRGB())
+        ScrollChild:SetBackdropOption("offsets", {
+            left = 35,
+            right = -1,
+            top = 3,
+            bottom = 3
+        })
+    end
 
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_BonusObjectiveTracker --
@@ -300,39 +352,19 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     -- Blizzard_ObjectiveTracker --
     ----====####$$$$$$$####====----
     _G.hooksecurefunc("ObjectiveTracker_Initialize", Hook.ObjectiveTracker_Initialize)
-    _G.hooksecurefunc("ObjectiveTracker_Collapse", Hook.ObjectiveTracker_Collapse)
-    _G.hooksecurefunc("ObjectiveTracker_Expand", Hook.ObjectiveTracker_Expand)
-
-    do -- MinimizeButton
-        local Button = _G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-        Skin.FrameTypeButton(Button)
-        Button:SetBackdropOption("offsets", {
-            left = 1,
-            right = 2,
-            top = 2,
-            bottom = 1,
-        })
-
-        local line = Button:CreateTexture(nil, "OVERLAY")
-        line:SetColorTexture(1, 1, 1)
-        line:SetSize(9, 1)
-        Button._auroraLine = line
-
-        local arrow = Button:CreateTexture(nil, "OVERLAY")
-        arrow:SetSize(9, 4.5)
-        Button._auroraArrow = arrow
-
-        Button._auroraTextures = {line, arrow}
-        if _G.ObjectiveTrackerFrame.collapsed then
-            Hook.ObjectiveTracker_Collapse()
-        else
-            Hook.ObjectiveTracker_Expand()
-        end
+    if not private.isPatch then
+        _G.hooksecurefunc("ObjectiveTracker_Collapse", Hook.ObjectiveTracker_Collapse)
+        _G.hooksecurefunc("ObjectiveTracker_Expand", Hook.ObjectiveTracker_Expand)
     end
 
+    if private.isPatch then
+        Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame.CampaignQuestHeader)
+    end
     for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
         Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
     end
+
+    Skin.ObjectiveTrackerMinimizeButtonTemplate(_G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton)
 
     ----====####$$$$%$$$$####====----
     -- Blizzard_QuestSuperTracking --
