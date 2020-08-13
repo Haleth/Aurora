@@ -257,10 +257,7 @@ if private.isPatch then
         if textures and backdropInfo then
             self._textures = textures
             function self:GetNineSlicePiece(pieceName)
-                local piece = self._textures[nineSlice[pieceName]]
-                if piece then
-                    return piece, true
-                end
+                return self._textures[nineSlice[pieceName]]
             end
         end
 
@@ -270,7 +267,11 @@ if private.isPatch then
         if not self.backdropInfo then return end
 
         self.backdropInfo.backdropColor = GetColor(red, green, blue, alpha)
-        return _G.BackdropTemplateMixin.SetBackdropColor(self, self.backdropInfo.backdropColor:GetRGBA())
+        local center = GetNineSlicePiece(self, "Center")
+        if center then
+            center:SetVertexColor(self.backdropInfo.backdropColor:GetRGBA())
+        end
+        --return _G.BackdropTemplateMixin.SetBackdropColor(self, self.backdropInfo.backdropColor:GetRGBA())
     end
     function BackdropMixin:GetBackdropColor()
         if not self.backdropInfo then return end
@@ -279,8 +280,18 @@ if private.isPatch then
     function BackdropMixin:SetBackdropBorderColor(red, green, blue, alpha)
         if not self.backdropInfo then return end
 
-        self.backdropInfo.backdropBorderColor = GetColor(red, green, blue, alpha)
-        return _G.BackdropTemplateMixin.SetBackdropBorderColor(self, self.backdropInfo.backdropBorderColor:GetRGBA())
+        local backdropBorderColor = GetColor(red, green, blue, alpha)
+        for _, pieceName in next, bgTextures do
+            if pieceName ~= "Center" then
+                local region = GetNineSlicePiece(self, pieceName)
+                if region then
+                    region:SetVertexColor(backdropBorderColor:GetRGBA());
+                end
+            end
+        end
+
+        self.backdropInfo.backdropBorderColor = backdropBorderColor
+        --return _G.BackdropTemplateMixin.SetBackdropBorderColor(self, self.backdropInfo.backdropBorderColor:GetRGBA())
     end
     function BackdropMixin:GetBackdropBorderColor()
         if not self.backdropInfo then return end
@@ -309,7 +320,7 @@ if private.isPatch then
             texture = bgTextures[texture]
         end
 
-        return self[texture] or self:GetNineSlicePiece(texture)
+        return (GetNineSlicePiece(self, texture))
     end
     function BackdropMixin:SetBackdropOption(optionKey, optionValue)
         if self.backdropInfo then
@@ -562,7 +573,12 @@ function Base.CreateBackdrop(frame, options, textures)
         frame[name] = func
     end
 
-    local backdropInfo = CopyBackdrop(SanitizeTable(options, backdrop))
+    local backdropInfo
+    if options == backdrop then
+        backdropInfo = CopyBackdrop(options)
+    else
+        backdropInfo = SanitizeTable(options, backdrop)
+    end
     frame:SetBackdrop(backdropInfo, textures)
 end
 

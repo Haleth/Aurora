@@ -139,30 +139,29 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                     local r1, g1, b1 = overlay:GetRGB()
                     local r2, g2, b2 = overlay2:GetRGB()
 
-                    local bd = iconBorder._auroraBackdrop
                     if visual == "corner" then
-                        bd.tl:SetVertexColor(r1, g1, b1)
-                        bd.t:SetGradient("HORIZONTAL", r1, g1, b1, r2, g2, b2)
-                        bd.tr:SetVertexColor(r2, g2, b2)
+                        iconBorder:GetBackdropTexture("tl"):SetVertexColor(r1, g1, b1)
+                        iconBorder:GetBackdropTexture("t"):SetGradient("HORIZONTAL", r1, g1, b1, r2, g2, b2)
+                        iconBorder:GetBackdropTexture("tr"):SetVertexColor(r2, g2, b2)
                         iconOverlay[1]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
 
-                        bd.l:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
-                        bd.r:SetVertexColor(r2, g2, b2)
+                        iconBorder:GetBackdropTexture("l"):SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        iconBorder:GetBackdropTexture("r"):SetVertexColor(r2, g2, b2)
                     else
-                        bd.tl:SetVertexColor(r1, g1, b1)
-                        bd.t:SetVertexColor(r1, g1, b1)
-                        bd.tr:SetVertexColor(r1, g1, b1)
+                        iconBorder:GetBackdropTexture("tl"):SetVertexColor(r1, g1, b1)
+                        iconBorder:GetBackdropTexture("t"):SetVertexColor(r1, g1, b1)
+                        iconBorder:GetBackdropTexture("tr"):SetVertexColor(r1, g1, b1)
                         iconOverlay[1]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
                         iconOverlay[3]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
 
-                        bd.l:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
-                        bd.r:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        iconBorder:GetBackdropTexture("l"):SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
+                        iconBorder:GetBackdropTexture("r"):SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
                     end
 
 
-                    bd.bl:SetVertexColor(r2, g2, b2)
-                    bd.b:SetVertexColor(r2, g2, b2)
-                    bd.br:SetVertexColor(r2, g2, b2)
+                    iconBorder:GetBackdropTexture("bl"):SetVertexColor(r2, g2, b2)
+                    iconBorder:GetBackdropTexture("b"):SetVertexColor(r2, g2, b2)
+                    iconBorder:GetBackdropTexture("br"):SetVertexColor(r2, g2, b2)
                     iconOverlay[2]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
                     iconOverlay[4]:SetGradient("VERTICAL", r2, g2, b2, r1, g1, b1)
                 else
