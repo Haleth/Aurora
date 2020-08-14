@@ -172,7 +172,7 @@ function private.FrameXML.QuestMapFrame()
 
     if private.isPatch then
         QuestsFrame.Contents.Separator:SetSize(260, 10)
-        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, -5)
+        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
     else
         QuestsFrame.Background:Hide()
 
