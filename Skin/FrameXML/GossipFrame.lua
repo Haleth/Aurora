@@ -21,6 +21,16 @@ do --[[ FrameXML\GossipFrame.lua ]]
                 self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
             end
         end
+
+        function Hook.NPCFriendshipStatusBar_Update(frame, factionID)
+            local statusBar = _G.NPCFriendshipStatusBar
+            local id = statusBar.friendshipFactionID
+            if id and id > 0 then
+                _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 45))
+            else
+                _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 5))
+            end
+        end
     else
         local availDataPerQuest, activeDataPerQuest = 7, 6
         function Hook.GossipFrameAvailableQuestsUpdate(...)
@@ -89,7 +99,6 @@ do --[[ FrameXML\GossipFrame.lua ]]
             end
         end
     end
-
 end
 
 do --[[ FrameXML\GossipFrame.xml ]]
@@ -131,11 +140,16 @@ function private.FrameXML.GossipFrame()
     -- GossipFrame --
     -----------------
     local GossipFrame = _G.GossipFrame
+    local bg
+
     if private.isRetail then
+        _G.hooksecurefunc("NPCFriendshipStatusBar_Update", Hook.NPCFriendshipStatusBar_Update)
+
         Skin.ButtonFrameTemplate(GossipFrame)
         if private.isPatch then
             Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
         end
+        bg = GossipFrame.NineSlice:GetBackdropTexture("bg")
 
         -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
         select(7, GossipFrame:GetRegions()):Hide() -- GossipFrameBg
@@ -154,7 +168,7 @@ function private.FrameXML.GossipFrame()
             bottom = 75,
         })
 
-        local bg = GossipFrame:GetBackdropTexture("bg")
+        bg = GossipFrame:GetBackdropTexture("bg")
         _G.GossipFramePortrait:Hide()
         _G.GossipFrameNpcNameText:ClearAllPoints()
         _G.GossipFrameNpcNameText:SetPoint("TOPLEFT", bg)
@@ -171,14 +185,8 @@ function private.FrameXML.GossipFrame()
     _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
 
     Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
-    if private.isRetail then
-        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
-        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", GossipFrame, -23, 30)
-    else
-        local bg = GossipFrame:GetBackdropTexture("bg")
-        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
-    end
+    _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
+    _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
 
     _G.GossipGreetingScrollFrameTop:Hide()
     _G.GossipGreetingScrollFrameBottom:Hide()
@@ -202,8 +210,8 @@ function private.FrameXML.GossipFrame()
             notch:SetSize(1, 16)
         end
 
-        local bg = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
+        local barFillBG = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
+        barFillBG:SetPoint("TOPLEFT", -1, 1)
+        barFillBG:SetPoint("BOTTOMRIGHT", 1, -1)
     end
 end
