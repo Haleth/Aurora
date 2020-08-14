@@ -95,7 +95,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     end
 
     do --[[ Blizzard_QuestObjectiveTracker.lua ]]
-        local coords = _G.UnitFactionGroup("player") == "Horde" and _G.QUEST_TAG_TCOORDS.HORDE or _G.QUEST_TAG_TCOORDS.ALLIANCE
+        local coords = _G.QUEST_TAG_TCOORDS[_G.UnitFactionGroup("player"):upper()]
         local factionIcon = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16,
                 coords[1], coords[2], coords[3], coords[4], 0, 2)
 
