@@ -6,8 +6,7 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Skin = Aurora.Skin
 
 --do --[[ AddOns\Blizzard_Soulbinds.lua ]]
 --end
