@@ -118,14 +118,13 @@ function private.OnLoad()
         end
     end
 
-    local gradientBackdrop = {
-        bgFile = "gradientUp",
-    }
     function Base.SetBackdrop(frame, color, alpha)
         local backdrop = private.backdrop
         if not alpha then
             if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
-                backdrop = gradientBackdrop
+                backdrop = {
+                    bgFile = "gradientUp",
+                }
             elseif not color then
                 color, alpha = Color.frame, AuroraConfig.alpha
                 _G.tinsert(C.frames, frame)
