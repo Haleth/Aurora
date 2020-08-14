@@ -42,12 +42,11 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
 
         local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
         overlay:SetDesaturated(true)
-        overlay:SetAlpha(0.6)
+        overlay:SetAlpha(0.3)
         Frame._auroraOverlay = overlay
 
         Frame.TopFiligree:Hide()
         --Frame.Text:SetPoint("BOTTOMLEFT", Frame.Background, "LEFT", 43, 0)
-
         Frame.HighlightTexture:SetAllPoints(clipFrame)
     end
     function Skin.CampaignHeaderTemplate(Frame)
