@@ -7,7 +7,7 @@ if private.isClassic then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook = Aurora.Hook
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\TalentFrameBase.lua ]]
     function Hook.TalentFrame_Update(TalentFrame, talentUnit)
@@ -41,11 +41,12 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
             end
         end
     end
-    function Hook.PvpTalentSlotMixin_Update(self)
+    Hook.PvpTalentSlotMixin = {}
+    function Hook.PvpTalentSlotMixin:Update()
         if not self._auroraBG then return end
         local slotInfo = _G.C_SpecializationInfo.GetPvpTalentSlotInfo(self.slotIndex)
 
-        local selectedTalentID = self.predictedSetting:Get()
+        local selectedTalentID = self:GetSelectedTalent()
         if selectedTalentID then
             local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
             self.Texture:SetTexture(texture)
@@ -65,5 +66,5 @@ end
 
 function private.FrameXML.TalentFrameBase()
     _G.hooksecurefunc("TalentFrame_Update", Hook.TalentFrame_Update)
-    _G.hooksecurefunc(_G.PvpTalentSlotMixin, "Update", Hook.PvpTalentSlotMixin_Update)
+    Util.Mixin(_G.PvpTalentSlotMixin, Hook.PvpTalentSlotMixin)
 end

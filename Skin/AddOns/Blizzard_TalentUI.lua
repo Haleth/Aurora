@@ -163,7 +163,6 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         end
         function Skin.PlayerTalentTabTemplate(Button)
             Skin.CharacterFrameTabButtonTemplate(Button)
-            Button._auroraTabResize = true
         end
         function Skin.SpecializationFrameTemplate(Frame)
             local leftBG, rightBG, tlCorner, topBorder, topFiligree, bottomFilligree = Frame:GetRegions()
