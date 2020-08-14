@@ -14,13 +14,20 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
     -- /dump C_CampaignInfo.GetCampaignInfo(C_CampaignInfo.GetCurrentCampaignID())
     local uiTextureKits = {
         Normal = {color = Color.button, overlay = ""},
-        Alliance = {color = private.FACTION_COLORS.Alliance, texture = [[Interface\Timer\Alliance-Logo]]},
-        horde = {color = private.FACTION_COLORS.Horde, texture = [[Interface\Timer\Horde-Logo]]},
-        Fey = {color = private.COVENANT_COLORS.NightFae, atlas = "CovenantChoice-Offering-Sigil-NightFae"},
+        alliance = {color = private.FACTION_COLORS.Alliance, atlas = "BfAMissionsLandingPage-Background-Alliance"},
+        horde = {color = private.FACTION_COLORS.Horde, atlas = "BfAMissionsLandingPage-Background-Horde"},
+
+        Fey = {color = private.COVENANT_COLORS.NightFae, atlas = "ShadowlandsMissionsLandingPage-Background-NightFae"},
+        Necrolord = {color = private.COVENANT_COLORS.Necrolord, atlas = "ShadowlandsMissionsLandingPage-Background-Necrolord"},
+        Kyrian = {color = private.COVENANT_COLORS.Kyrian, atlas = "ShadowlandsMissionsLandingPage-Background-Kyrian"},
+        Revendreth = {color = private.COVENANT_COLORS.Venthyr, atlas = "ShadowlandsMissionsLandingPage-Background-Venthyr"},
     }
 
-    uiTextureKits[261] = uiTextureKits.Alliance
-    uiTextureKits[262] = uiTextureKits.horde
+    uiTextureKits.Oribos = uiTextureKits[_G.UnitFactionGroup("player"):lower()]
+    if not private.isPatch then
+        uiTextureKits[261] = uiTextureKits.alliance
+        uiTextureKits[262] = uiTextureKits.horde
+    end
     function Hook.QuestLogQuests_Update(poiTable)
         if private.isPatch then
             for campaignHeader in _G.QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
@@ -29,17 +36,20 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
                     local kit = uiTextureKits[campaign.uiTextureKit] or uiTextureKits.Normal
                     campaignHeader.Background:SetTexture("")
                     campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
+                    campaignHeader._auroraOverlay:SetBlendMode("ADD")
                     if kit.texture then
                         campaignHeader._auroraOverlay:SetTexture(kit.texture)
                         campaignHeader._auroraOverlay:SetSize(130, 130)
                         campaignHeader._auroraOverlay:SetScale(1)
+
+                        campaignHeader._auroraOverlay:ClearAllPoints()
                         campaignHeader._auroraOverlay:SetPoint("RIGHT", 20, -10)
-                        campaignHeader._auroraOverlay:SetVertexColor(0, 0, 0, 0.2)
                     else
                         campaignHeader._auroraOverlay:SetAtlas(kit.atlas, true)
                         campaignHeader._auroraOverlay:SetScale(0.5)
-                        campaignHeader._auroraOverlay:SetPoint("RIGHT", -38, 0)
-                        campaignHeader._auroraOverlay:SetVertexColor(1, 1, 1, 0.2)
+
+                        campaignHeader._auroraOverlay:ClearAllPoints()
+                        campaignHeader._auroraOverlay:SetPoint("CENTER", campaignHeader, "RIGHT", -100, 0)
                     end
                     campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
                 end
@@ -162,7 +172,7 @@ function private.FrameXML.QuestMapFrame()
 
     if private.isPatch then
         QuestsFrame.Contents.Separator:SetSize(260, 10)
-        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, -10)
+        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, -5)
     else
         QuestsFrame.Background:Hide()
 

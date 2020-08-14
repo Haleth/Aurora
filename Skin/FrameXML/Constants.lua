@@ -13,14 +13,14 @@ private.AZERITE_COLORS = {
 }
 
 private.COVENANT_COLORS = {
-    Kyrian = Color.Create(0.1, 0.1, 0.2),
-    Venthyr = Color.Create(0.2, 0.1, 0.1),
+    Kyrian = Color.Create(0.5, 0.45, 0.45),
+    Venthyr = Color.Create(0.4, 0.0, 0.0),
     NightFae = Color.Create(0.2, 0.3, 0.4),
-    Necrolord = Color.Create(0.1, 0.2, 0.15),
+    Necrolord = Color.Create(0.1, 0.4, 0.15),
 }
 private.FACTION_COLORS = {
+    Alliance = Color.Create(0.0, 0.2, 0.6),
     Horde = Color.Create(0.5, 0.0, 0.0),
-    Alliance = Color.Create(0.2, 0.1, 0.1),
 }
 
 local Enum = {}

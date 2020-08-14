@@ -42,6 +42,7 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
 
         local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
         overlay:SetDesaturated(true)
+        overlay:SetAlpha(0.6)
         Frame._auroraOverlay = overlay
 
         Frame.TopFiligree:Hide()
