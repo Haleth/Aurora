@@ -14,10 +14,10 @@ do --[[ FrameXML\ReputationFrame.lua ]]
         _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -49)
     end
     function Hook.ReputationFrame_SetRowType(factionRow, isChild, isHeader, hasRep)
-        for _, texture in next, factionRow._auroraBackdrop do
-            if type(texture) == "table" and texture.SetShown then
-                texture:SetShown(not isHeader)
-            end
+        if isHeader then
+            factionRow:SetBackdrop(false)
+        else
+            factionRow:SetBackdrop(true)
         end
     end
     function Hook.ReputationFrame_Update(self)
@@ -71,7 +71,7 @@ do --[[ FrameXML\ReputationFrame.xml ]]
             local statusBar = _G[statusName]
             Skin.FrameTypeStatusBar(statusBar)
             statusBar:ClearAllPoints()
-            statusBar:SetPoint("TOPRIGHT", -2, -2)
+            statusBar:SetPoint("TOPRIGHT", -3, -2)
             statusBar:SetPoint("BOTTOMLEFT", Button, "BOTTOMRIGHT", -102, 2)
 
             _G[statusName.."LeftTexture"]:Hide()
