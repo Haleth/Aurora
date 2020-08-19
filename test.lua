@@ -77,7 +77,7 @@ function commands.test()
                 local alertArgs = test.args.alert.args
 
                 if private.isRetail then -- achievementAlerts
-                    local guild, toon = 4989, 6348
+                    local guild, toon = 4989, 7520
                     local achievementID, isGuild, isEarned = toon, false, false
                     alertArgs.achievementAlerts = {
                         name = "Achievement Alerts",
@@ -89,7 +89,11 @@ function commands.test()
                                 get = function() return isGuild end,
                                 set = function(info, value)
                                     isGuild = value
-                                    achievementID = isGuild and guild or toon
+                                    if isGuild then
+                                        achievementID = guild
+                                    else
+                                        achievementID = toon
+                                    end
                                 end,
                                 order = 10,
                             },
@@ -453,7 +457,30 @@ function commands.test()
                         "broadcast",
                         "pending",
                         "new",
+                        --"club invite",
+                        --"finder invite",
                     }
+                    local BNetAccountInfo = {
+                        bnetAccountID = "number",
+                        accountName = "string",
+                        battleTag = "string",
+                        isFriend = GetBoolen(),
+                        isBattleTagFriend = GetBoolen(),
+                        lastOnlineTime = "number",
+                        isAFK = GetBoolen(),
+                        isDND = GetBoolen(),
+                        isFavorite = GetBoolen(),
+                        appearOffline = GetBoolen(),
+                        customMessage = "string",
+                        customMessageTime = "number",
+                        note = "string",
+                        rafLinkType = "RafLinkType",
+                        gameAccountInfo = "BNetGameAccountInfo",
+                    }
+                    function _G.C_BattleNet.GetAccountInfoByID(bnetAccountID, wowAccountGUID)
+                        local info = CopyTable(BNetAccountInfo)
+                        return info
+                    end
                     alertArgs.bnetAlerts = {
                         name = "Battle.net Alerts",
                         type = "group",
@@ -485,7 +512,7 @@ function commands.test()
                                 desc = "BNToastFrame_Show",
                                 type = "execute",
                                 func = function()
-                                    _G.BNToastFrame_AddToast(toastType, toastInfo)
+                                    _G.BNToastFrame:AddToast(toastType, toastInfo)
                                 end,
                             },
                         },
@@ -1112,7 +1139,7 @@ function commands.test()
                     backdropBorderColor = Color.red,
                 }
 
-                local blizzBDFrame = _G.CreateFrame("Frame", nil, optionsFrame)
+                local blizzBDFrame = _G.CreateFrame("Frame", nil, optionsFrame, _G.BackdropTemplateMixin and "BackdropTemplate" or nil)
                 blizzBDFrame:SetBackdrop(bdOptions)
                 blizzBDFrame:SetSize(100, 100)
                 blizzBDFrame:SetPoint("BOTTOMRIGHT", optionsFrame, "TOP", -5, 0)

@@ -108,8 +108,6 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             Base.SetBackdrop(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon.Texture, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -7, 15)
             ContainedAlertFrame._auroraBG = bg
 
             ContainedAlertFrame.Background:Hide()
@@ -146,13 +144,23 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame.glow:SetAtlas("Toast-Flash")
             ContainedAlertFrame.glow:SetTexCoord(0, 1, 0, 1)
             if ContainedAlertFrame.guildDisplay then
-                ContainedAlertFrame._auroraBG:SetPoint("TOPLEFT", 6, -29)
+                ContainedAlertFrame:SetBackdropOption("offsets", {
+                    left = 6,
+                    right = 6,
+                    top = 29,
+                    bottom = 15,
+                })
                 ContainedAlertFrame._auroraGuildBG:Show()
 
                 ContainedAlertFrame.Icon:SetPoint("TOPLEFT", -26, 0)
                 ContainedAlertFrame.shine:SetTexCoord(0.75195313, 0.91601563, 0.25, 0.3359375)
             else
-                ContainedAlertFrame._auroraBG:SetPoint("TOPLEFT", 6, -13)
+                ContainedAlertFrame:SetBackdropOption("offsets", {
+                    left = 6,
+                    right = 6,
+                    top = 13,
+                    bottom = 15,
+                })
                 ContainedAlertFrame._auroraGuildBG:Hide()
 
                 ContainedAlertFrame.shine:SetTexCoord(0.78125, 0.912109375, 0.06640625, 0.23046875)
@@ -169,28 +177,25 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.CriteriaAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             Base.SetBackdrop(ContainedAlertFrame)
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 0,
+                right = 0,
+                top = 2,
+                bottom = 8,
+            })
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon.Texture, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", 16, 4)
-            ContainedAlertFrame._auroraBG = bg
 
             ContainedAlertFrame.Background:Hide()
-            ContainedAlertFrame.Unlocked:SetPoint("TOP", bg, 0, -13)
-            ContainedAlertFrame.Unlocked:SetPoint("LEFT", ContainedAlertFrame.Icon.Texture, "RIGHT", 5, 0)
-            ContainedAlertFrame.Unlocked:SetPoint("RIGHT", bg, -5, 0)
-            ContainedAlertFrame.Unlocked:SetTextColor(1, 1, 1)
-
-            ContainedAlertFrame.Name:SetPoint("TOP", ContainedAlertFrame.Unlocked, "BOTTOM", 0, -2)
-            ContainedAlertFrame.Name:SetPoint("LEFT", ContainedAlertFrame.Icon.Texture, "RIGHT", 5, 0)
-            ContainedAlertFrame.Name:SetPoint("RIGHT", bg, -5, 0)
+            ContainedAlertFrame.Unlocked:SetTextColor(Color.white:GetRGB())
+            ContainedAlertFrame.Name:SetTextColor(Color.grayLight:GetRGB())
 
             ContainedAlertFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
             ContainedAlertFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
             ContainedAlertFrame.glow:SetAtlas("Toast-Flash")
             ContainedAlertFrame.glow:SetTexCoord(0, 1, 0, 1)
-            ContainedAlertFrame.shine:SetTexCoord(0.78125, 0.912109375, 0.06640625, 0.23046875)
-            ContainedAlertFrame.shine:SetPoint("TOPLEFT", 18, 2)
-            ContainedAlertFrame.shine:SetHeight(50)
+            ContainedAlertFrame.shine:SetTexCoord(0.78125, 0.912109375, 0.0703125, 0.2265625)
+            ContainedAlertFrame.shine:SetPoint("TOPLEFT", 18, -3)
+            ContainedAlertFrame.shine:SetHeight(40)
 
             Base.CropIcon(ContainedAlertFrame.Icon.Texture, ContainedAlertFrame)
             ContainedAlertFrame.Icon.Texture:SetSize(40, 40)
