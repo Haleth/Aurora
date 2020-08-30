@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -11,10 +11,38 @@ local Skin = Aurora.Skin
 --do --[[ AddOns\Blizzard_Soulbinds.lua ]]
 --end
 
---do --[[ AddOns\Blizzard_Soulbinds.xml ]]
---end
+do --[[ AddOns\Blizzard_Soulbinds.xml ]]
+    do --[[ Blizzard_SoulbindsConduitList.lua ]]
+        function Skin.ConduitListSectionTemplate(Frame)
+            Skin.FrameTypeButton(Frame.CategoryButton)
+            local bg1, bg2 = Frame.CategoryButton.Container:GetRegions()
+            bg1:SetAlpha(0)
+            bg2:SetAlpha(0)
+        end
+        function Skin.ConduitListTemplate(Frame)
+            --Skin.ScrollBarTemplate(Frame.ScrollBar)
+            Frame.ScrollBar.Track:Hide()
+            Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Decrease)
+            Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Increase)
+            Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Thumb)
+
+            --Skin.ScrollBoxTemplate(Frame.ScrollBox)
+            for i = 1, #Frame.ScrollBox.ScrollTarget.Lists do
+                Skin.ConduitListSectionTemplate(Frame.ScrollBox.ScrollTarget.Lists[i])
+            end
+            local _, strataFrame = Frame.ScrollBox:GetChildren()
+            strataFrame:Hide()
+        end
+    end
+
+end
 
 function private.AddOns.Blizzard_Soulbinds()
+    ----====####$$$$%%%%$$$$####====----
+    --     Blizzard_SoulbindsUtil     --
+    ----====####$$$$%%%%$$$$####====----
+
+
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_SoulbindsTemplates   --
     ----====####$$$$%%%%%$$$$####====----
@@ -32,6 +60,11 @@ function private.AddOns.Blizzard_Soulbinds()
 
     ----====####$$$$%%%%%$$$$####====----
     --    Blizzard_SoulbindsConduit    --
+    ----====####$$$$%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%$$$$####====----
+    --  Blizzard_SoulbindsConduitList  --
     ----====####$$$$%%%%%$$$$####====----
 
 
@@ -63,11 +96,17 @@ function private.AddOns.Blizzard_Soulbinds()
     SoulbindViewer.ShadowLeft:Hide()
     SoulbindViewer.ShadowRight:Hide()
 
+    local scrollBG = select("8", SoulbindViewer:GetRegions())
+    scrollBG:Hide()
+
+    SoulbindViewer.Border:Hide()
     Skin.UIPanelCloseButton(SoulbindViewer.CloseButton)
     --Skin.SoulbindSelectGroupTemplate(SoulbindViewer.SelectGroup)
     --Skin.SoulbindTreeTemplate(SoulbindViewer.Tree)
-    Skin.UIPanelButtonTemplate(SoulbindViewer.ActivateButton)
-    --Skin.SoulbindsUndoButtonTemplate(SoulbindViewer.ResetButton)
+    Skin.ConduitListTemplate(SoulbindViewer.ConduitList)
+    Skin.UIPanelButtonTemplate(SoulbindViewer.ActivateSoulbindButton)
+    Skin.UIPanelButtonTemplate(SoulbindViewer.CommitConduitsButton)
+    --Skin.SoulbindsUndoButtonTemplate(SoulbindViewer.ResetConduitsButton)
 
 
     ----====####$$$$%%%%$$$$####====----
