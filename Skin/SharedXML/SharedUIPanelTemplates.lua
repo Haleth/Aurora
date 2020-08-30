@@ -435,6 +435,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
         if layout then
             Hook.NineSliceUtil.ApplyLayout(Frame, layout)
+        --else
+            --print("no layout", Frame:GetDebugName())
         end
     end
     function Skin.InsetFrameTemplate(Frame)

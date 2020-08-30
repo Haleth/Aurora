@@ -47,6 +47,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_OrderHallUI.lua"/>
     <Script file="Blizzard_PartyPoseUI.lua"/>
     <Script file="Blizzard_PetBattleUI.lua"/>
+    <Script file="Blizzard_PlayerChoiceUI.lua"/>
     <Script file="Blizzard_PVPMatch.lua"/>
     <Script file="Blizzard_PVPUI.lua"/>
     <Script file="Blizzard_QuestChoice.lua"/>

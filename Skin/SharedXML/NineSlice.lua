@@ -66,21 +66,29 @@ do --[[ SharedXML\NineSlice.lua ]]
         end,
         BFAMissionHorde = BasicSkin,
         BFAMissionAlliance = BasicSkin,
-        BFAMissionNeutral = BasicSkin,
+        GenericMetal = BasicSkin,
         Dialog = BasicSkin,
+        WoodenNeutralFrameTemplate = BasicSkin,
+        Runeforge = BasicSkin,
+        AdventuresMissionComplete = BasicSkin,
+        CharacterCreateDropdown = BasicSkin,
+        UniqueCornersLayout = BasicSkin,
+        IdenticalCornersLayout = BasicSkin,
 
-        -- Blizzard_OrderHallUI
+        -- Blizzard_OrderHallTalents
         BFAOrderTalentHorde = BasicSkin,
         BFAOrderTalentAlliance = BasicSkin,
 
         -- Blizzard_PartyPoseUI
         PartyPoseFrameTemplate = BasicSkin,
         PartyPoseKit = BasicSkin,
-
-        -- Blizzard_WarboardUI
-        WarboardTextureKit = BasicSkin,
-        WarboardTextureKit_FourCorners = BasicSkin,
     }
+
+    if not private.isPatch then
+        layouts.BFAMissionNeutral = BasicSkin
+        layouts.WarboardTextureKit = BasicSkin
+        layouts.WarboardTextureKit_FourCorners = BasicSkin
+    end
 
     local layoutMap = {}
     for layoutName in next, layouts do
@@ -103,6 +111,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         if not container._auroraNineSlice then return end
 
         local layoutName = layoutMap[userLayout]
+        --print("ApplyLayout", container, layoutName, textureKit)
         if layouts[layoutName] then
             layouts[layoutName](container)
         else
