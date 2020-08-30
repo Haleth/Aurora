@@ -68,7 +68,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
         function Hook.ObjectiveTracker_Initialize(self)
             Util.Mixin(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
-            Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.QUEST_TRACKER_MODULE)
+            --Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.QUEST_TRACKER_MODULE)
             Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
@@ -91,20 +91,6 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
         function Hook.ObjectiveTracker_Expand()
             Hook.ObjectiveTrackerMinimizeButtonMixin.SetCollapsed(_G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton, false)
-        end
-    end
-
-    do --[[ Blizzard_QuestObjectiveTracker.lua ]]
-        local coords = _G.QUEST_TAG_TCOORDS[_G.UnitFactionGroup("player"):upper()]
-        local factionIcon = _G.CreateTextureMarkup(_G.QUEST_ICONS_FILE, _G.QUEST_ICONS_FILE_WIDTH, _G.QUEST_ICONS_FILE_HEIGHT, 16, 16,
-                coords[1], coords[2], coords[3], coords[4], 0, 2)
-
-        Hook.QUEST_TRACKER_MODULE = {}
-        function Hook.QUEST_TRACKER_MODULE:SetBlockHeader(block, text, questLogIndex, isQuestComplete, questID)
-            if _G.C_CampaignInfo.IsCampaignQuest(questID) then
-                text = text..factionIcon
-                block.HeaderText:SetText(text)
-            end
         end
     end
 

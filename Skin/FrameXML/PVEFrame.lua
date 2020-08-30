@@ -73,16 +73,21 @@ function private.FrameXML.PVEFrame()
 
     local GroupFinderFrame = _G.GroupFinderFrame
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton1)
+    GroupFinderFrame.groupButton1.icon:SetTexture([[Interface\Icons\INV_Helmet_08]])
+
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton2)
     GroupFinderFrame.groupButton2:SetPoint("LEFT", GroupFinderFrame.groupButton1)
+    GroupFinderFrame.groupButton2.icon:SetTexture([[Interface\Icons\Icon_Scenarios]])
+
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton3)
     GroupFinderFrame.groupButton3:SetPoint("LEFT", GroupFinderFrame.groupButton2)
-    Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton4)
-    GroupFinderFrame.groupButton4:SetPoint("LEFT", GroupFinderFrame.groupButton3)
-    GroupFinderFrame.groupButton1.icon:SetTexture([[Interface\Icons\INV_Helmet_08]])
-    GroupFinderFrame.groupButton2.icon:SetTexture([[Interface\Icons\Icon_Scenarios]])
     GroupFinderFrame.groupButton3.icon:SetTexture([[Interface\Icons\INV_Helmet_06]])
-    GroupFinderFrame.groupButton4.icon:SetTexture([[Interface\Icons\Achievement_General_StayClassy]])
+
+    if not private.isPatch then
+        Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton4)
+        GroupFinderFrame.groupButton4:SetPoint("LEFT", GroupFinderFrame.groupButton3)
+        GroupFinderFrame.groupButton4.icon:SetTexture([[Interface\Icons\Achievement_General_StayClassy]])
+    end
 
     _G.LFGListPVEStub:SetWidth(339)
     PVEFrame.shadows:SetAlpha(0)

@@ -48,17 +48,16 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
                     campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
 
                     overlay = campaignHeader._auroraOverlay
+                    overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -50, -5)
                     if kit.texture then
                         overlay:SetTexture(kit.texture)
                         overlay:SetSize(130, 130)
-                        overlay:SetPoint("CENTER", campaignHeader, "RIGHT", -50, -5)
 
                         overlay:SetBlendMode("ADD")
                         overlay:SetVertexColor(1, 1, 1)
                     else
                         overlay:SetAtlas(kit.atlas)
                         overlay:SetSize(100, 116)
-                        overlay:SetPoint("CENTER", campaignHeader, "RIGHT", -50, 0)
 
                         overlay:SetBlendMode("BLEND")
                         overlay:SetVertexColor(0, 0, 0)
