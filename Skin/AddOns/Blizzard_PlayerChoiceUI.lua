@@ -70,7 +70,6 @@ do --[[ AddOns\Blizzard_PlayerChoiceUI.lua ]]
     Hook.PlayerChoiceOptionFrameMixin = {}
     function Hook.PlayerChoiceOptionFrameMixin:SetupArtworkForOption()
         local optionLayout = self:GetOptionLayoutInfo();
-        print("SetupArtworkForOption", optionLayout.usesVariedBackgrounds)
         if optionLayout.combineHeaderWithOption then
             self._auroraBG:Show()
         else
