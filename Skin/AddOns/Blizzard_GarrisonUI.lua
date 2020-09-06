@@ -12,12 +12,20 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
     do --[[ Blizzard_OrderHallMissionUI ]]
-        function Hook.OrderHallMission_SetupTabs(self)
+        Hook.OrderHallMission = {}
+        function Hook.OrderHallMission:SetupTabs()
             Util.PositionRelative("TOPLEFT", self, "BOTTOMLEFT", 20, -1, 1, "Right", {
                 self.Tab1,
                 self.Tab2,
                 self.Tab3,
             })
+        end
+    end
+    do --[[ Blizzard_CovenantMissionUI ]]
+        Hook.CovenantMission = {}
+        Hook.CovenantMission.SetupTabs = Hook.OrderHallMission.SetupTabs
+        function Hook.CovenantMission:SelectTab(id)
+            self.MapTab:SetShown(id == 3)
         end
     end
 end
@@ -362,6 +370,35 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Button._auroraTabResize = true
         end
     end
+    do --[[ Blizzard_AdventuresCombatLog ]]
+        function Skin.CombatLogTemplate(Frame)
+            Skin.GarrisonMissionBaseFrameTemplate(Frame)
+            Skin.HybridScrollBarBackgroundTemplate(Frame.CombatLogMessageFrame.ScrollBar)
+            Skin.UIPanelScrollUpButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollUp)
+            Skin.UIPanelScrollDownButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollDown)
+        end
+    end
+    do --[[ Blizzard_AdventuresCompleteScreen ]]
+        function Skin.AdventuresCompleteScreenTemplate(Frame)
+            Skin.NineSlicePanelTemplate(Frame.NineSlice)
+            --Skin.AdventuresRewardsScreenTemplate(Frame.RewardsScreen)
+            Skin.CombatLogTemplate(Frame.AdventuresCombatLog)
+            Skin.UIPanelButtonTemplate(Frame.CompleteFrame.ContinueButton)
+            Skin.UIPanelButtonTemplate(Frame.CompleteFrame.SpeedButton)
+        end
+    end
+    do --[[ Blizzard_AdventuresRewardsScreen ]]
+        function Skin.AdventuresRewardsScreenTemplate(Frame)
+            Skin.UIPanelButtonTemplate(Frame.FinalRewardsPanel.ContinueButton)
+        end
+    end
+    do --[[ Blizzard_CovenantMissionUI ]]
+        function Skin.CovenantMissionPageTemplate(Frame)
+            Skin.NineSlicePanelTemplate(Frame.NineSlice)
+            Skin.GarrisonMissionPageCloseButtonTemplate(Frame.CloseButton)
+            Skin.StartMissionButtonTemplate(Frame.StartMissionButton)
+        end
+    end
 end
 
 function private.AddOns.Blizzard_GarrisonUI()
@@ -508,7 +545,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     --   Blizzard_OrderHallMissionUI   --
     ----====####$$$$%%%%%$$$$####====----
     local OrderHallMissionFrame = _G.OrderHallMissionFrame
-    _G.hooksecurefunc(OrderHallMissionFrame, "SetupTabs", Hook.OrderHallMission_SetupTabs)
+    Util.Mixin(OrderHallMissionFrame, Hook.OrderHallMission)
     Skin.GarrisonMissionFrameTemplate(OrderHallMissionFrame)
     Skin.GarrisonUITemplate(OrderHallMissionFrame)
 
@@ -609,7 +646,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     --      Blizzard_BFAMissionUI      --
     ----====####$$$$%%%%%$$$$####====----
     local BFAMissionFrame = _G.BFAMissionFrame
-    _G.hooksecurefunc(BFAMissionFrame, "SetupTabs", Hook.OrderHallMission_SetupTabs)
+    Util.Mixin(BFAMissionFrame, Hook.OrderHallMission)
     Skin.GarrisonMissionFrameTemplate(BFAMissionFrame)
     Skin.GarrisonUITemplate(BFAMissionFrame)
     BFAMissionFrame.OverlayElements.CloseButtonBorder:Hide()
@@ -662,7 +699,76 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonFollowerMissionRewardsFrameTemplate(BFAMissionComplete.BonusRewards)
     Skin.GarrisonMissionBonusRewardsTemplate(BFAMissionComplete.BonusRewards)
 
-    -------------
-    -- Section --
-    -------------
+
+    ----====####$$$$%%%%$$$$####====----
+    --  Blizzard_AdventuresCombatLog  --
+    ----====####$$$$%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%$$$$####====----
+    -- Blizzard_AdventuresCompleteScreen --
+    ----====####$$$$%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%$$$$####====----
+    --     Blizzard_AdventuresPuck     --
+    ----====####$$$$%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%$$$$####====----
+    --    Blizzard_AdventuresBoard    --
+    ----====####$$$$%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%$$$$####====----
+    -- Blizzard_AdventuresRewardsScreen --
+    ----====####$$$$%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%$$$$####====----
+    --   Blizzard_CovenantMissionUI   --
+    ----====####$$$$%%%%$$$$####====----
+    local CovenantMissionFrame = _G.CovenantMissionFrame
+    Util.Mixin(CovenantMissionFrame, Hook.CovenantMission)
+    Skin.GarrisonMissionFrameTemplate(CovenantMissionFrame)
+    Skin.GarrisonUITemplate(CovenantMissionFrame)
+
+    CovenantMissionFrame.OverlayElements.CloseButtonBorder:Hide()
+    Skin.OrderHallFrameTabButtonTemplate(CovenantMissionFrame.Tab1)
+    Skin.OrderHallFrameTabButtonTemplate(CovenantMissionFrame.Tab2)
+    Skin.OrderHallFrameTabButtonTemplate(CovenantMissionFrame.Tab3)
+
+    ------------------
+    -- FollowerList --
+    ------------------
+    local CovenantFollowerList = CovenantMissionFrame.FollowerList
+    Skin.GarrisonListTemplate(CovenantFollowerList)
+    Skin.MaterialFrameTemplate(CovenantFollowerList.MaterialFrame)
+    CovenantFollowerList.MaterialFrame:SetPoint("TOPLEFT", CovenantFollowerList, "BOTTOMLEFT", 0, -2)
+    CovenantFollowerList.MaterialFrame:SetPoint("BOTTOMRIGHT", 0, -30)
+
+    ------------
+    -- MapTab --
+    ------------
+
+    ----------------
+    -- MissionTab --
+    ----------------
+    local CovenantMissionTab = CovenantMissionFrame.MissionTab
+    Skin.CovenantMissionListTemplate(CovenantMissionTab.MissionList)
+    Skin.CovenantMissionPageTemplate(CovenantMissionTab.MissionPage)
+
+    -----------------
+    -- FollowerTab --
+    -----------------
+    local CovenantFollowerTab = CovenantMissionFrame.FollowerTab
+    Skin.CovenantFollowerTabTemplate(CovenantFollowerTab)
+
+    -----------------
+    -- FollowerTab --
+    -----------------
+    local CovenantMissionComplete = CovenantMissionFrame.MissionComplete
+    Skin.AdventuresCompleteScreenTemplate(CovenantMissionComplete)
+
+
 end

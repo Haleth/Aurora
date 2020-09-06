@@ -4,6 +4,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="FrameXML.lua"/>
 
     <Script file="ActionBarController.lua"/>
+    <Script file="AdventuresFollowerTooltip.lua"/>
     <Script file="AlertFrames.lua"/>
     <Script file="AlertFrameSystems.lua"/>
     <Script file="AudioOptionsPanels.lua"/>

@@ -11,7 +11,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
-    do --[[ Blizzard_GarrisonSharedTemplates.lua ]]
+    do --[[ Blizzard_GarrisonSharedTemplates ]]
         function Hook.GarrisonFollowerButton_SetCounterButton(button, followerID, index, info, lastUpdate, followerTypeID)
             local counter = button.Counters[index]
             if not counter._auroraSkinned then
@@ -34,7 +34,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
             end
         end
     end
-    do --[[ Blizzard_GarrisonMissionTemplates.lua ]]
+    do --[[ Blizzard_GarrisonMissionTemplates ]]
         function Hook.GarrisonMission_RemoveFollowerFromMission(self, frame, updateValues)
             if frame.PortraitFrame then
                 -- Ship followers have frame.Portrait instead
@@ -49,7 +49,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
 end
 
 do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
-    do --[[ Blizzard_GarrisonSharedTemplates.xml ]]
+    do --[[ Blizzard_GarrisonSharedTemplates ]]
         function Skin.GarrisonUITemplate(Frame)
             Base.CreateBackdrop(Frame, private.backdrop, {
                 bg = Frame.BackgroundTile,
@@ -170,7 +170,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Base.CropIcon(Button.Icon)
         end
     end
-    do --[[ Blizzard_GarrisonMissionTemplates.lua ]]
+    do --[[ Blizzard_GarrisonMissionTemplates ]]
         function Skin.GarrisonMissionRewardEffectsTemplate(Frame)
             Base.CropIcon(Frame.Icon)
 
@@ -298,6 +298,86 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         function Skin.GarrisonFollowerXPGainTemplate(Frame)
         end
         function Skin.GarrisonFollowerLevelUpTemplate(Frame)
+        end
+    end
+    do --[[ Blizzard_CovenantMissionTemplates ]]
+        function Skin.CovenantMissionBaseFrameTemplate(Frame)
+            Base.CreateBackdrop(Frame, private.backdrop, {
+                bg = Frame.BaseFrameBackground,
+
+                l = Frame.RaisedFrameEdges.BaseFrameLeftEdge,
+                r = Frame.RaisedFrameEdges.BaseFrameRightEdge,
+                t = Frame.RaisedFrameEdges.BaseFrameTopEdge,
+                b = Frame.RaisedFrameEdges.BaseFrameBottomEdge,
+
+                tl = Frame.RaisedFrameEdges.BaseFrameTopLeftCorner,
+                tr = Frame.RaisedFrameEdges.BaseFrameTopRightCorner,
+                bl = Frame.RaisedFrameEdges.BaseFrameBottomLeftCorner,
+                br = Frame.RaisedFrameEdges.BaseFrameBottomRightCorner,
+            })
+
+            Frame.BaseFrameTop:Hide()
+            Frame.BaseFrameBottom:Hide()
+            Frame.BaseFrameLeft:Hide()
+            Frame.BaseFrameRight:Hide()
+            Frame.BoardDropShadow:Hide()
+
+            Frame.BaseFrameTopLeft:Hide()
+            Frame.BaseFrameTopRight:Hide()
+            Frame.BaseFrameBottomLeft:Hide()
+            Frame.BaseFrameBottomRight:Hide()
+
+            Base.SetBackdrop(Frame, Color.frame)
+        end
+        function Skin.CovenantFollowerTabTemplate(Frame)
+            Skin.CovenantMissionBaseFrameTemplate(Frame)
+        end
+        function Skin.CovenantListTemplate(Frame)
+            Skin.CovenantMissionBaseFrameTemplate(Frame)
+
+            Frame.listScroll:SetPoint("TOPLEFT", 2, -2)
+            Frame.listScroll:SetPoint("BOTTOMRIGHT", -20, 2)
+            Skin.HybridScrollBarTrimTemplate(Frame.listScroll.scrollBar)
+        end
+        function Skin.CovenantMissionListTemplate(Frame)
+            Skin.CovenantListTemplate(Frame)
+            Skin.MaterialFrameTemplate(Frame.MaterialFrame)
+            Frame.MaterialFrame:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", -9, 9)
+            Frame.MaterialFrame:SetPoint("TOPLEFT", Frame, "TOPRIGHT", -307, 34)
+        end
+        function Skin.CovenantMissionListButtonTemplate(Button)
+            local bg, l, r, t, b, _, t2, b2, tl, tr, bl, br = Button:GetRegions()
+            Base.CreateBackdrop(Button, private.backdrop, {
+                bg = bg,
+
+                l = l,
+                r = r,
+                t = t,
+                b = b,
+
+                tl = tl,
+                tr = tr,
+                bl = bl,
+                br = br,
+
+                borderLayer = "BACKGROUND",
+                borderSublevel = -7,
+            })
+            Base.SetBackdrop(Button, Color.button)
+            t2:Hide()
+            b2:Hide()
+
+            Button.HighlightT:SetTexture("")
+            Button.HighlightB:SetTexture("")
+            Button.HighlightTL:SetTexture("")
+            Button.HighlightTR:SetTexture("")
+            Button.HighlightBL:SetTexture("")
+            Button.HighlightBR:SetTexture("")
+            Button.Highlight:SetTexture("")
+            Button:DisableDrawLayer("HIGHLIGHT")
+            Base.SetHighlight(Button, "backdrop")
+
+            Skin.GarrisonMissionListButtonRewardTemplate(Button.Rewards[1])
         end
     end
 end

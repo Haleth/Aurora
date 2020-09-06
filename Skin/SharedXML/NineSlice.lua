@@ -23,7 +23,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         "Center",
     }
 
-    local function BasicSkin(Frame)
+    local function BasicFrame(Frame)
         Base.CreateBackdrop(Frame, private.backdrop, {
             tl = Frame.TopLeftCorner,
             tr = Frame.TopRightCorner,
@@ -40,54 +40,73 @@ do --[[ SharedXML\NineSlice.lua ]]
         Base.SetBackdrop(Frame)
     end
 
+    local function InsetFrame(Frame)
+        Base.CreateBackdrop(Frame, private.backdrop, {
+            tl = Frame.TopLeftCorner,
+            tr = Frame.TopRightCorner,
+            bl = Frame.BottomLeftCorner,
+            br = Frame.BottomRightCorner,
+
+            t = Frame.TopEdge,
+            b = Frame.BottomEdge,
+            l = Frame.LeftEdge,
+            r = Frame.RightEdge,
+
+            bg = Frame.Center,
+        })
+        Base.SetBackdrop(Frame, Color.frame)
+    end
+
+    local function HideFrame(Frame)
+        Base.CreateBackdrop(Frame, private.backdrop, {
+            tl = Frame.TopLeftCorner,
+            tr = Frame.TopRightCorner,
+            bl = Frame.BottomLeftCorner,
+            br = Frame.BottomRightCorner,
+
+            t = Frame.TopEdge,
+            b = Frame.BottomEdge,
+            l = Frame.LeftEdge,
+            r = Frame.RightEdge,
+
+            bg = Frame.Center,
+        })
+
+        Frame:SetBackdropColor(Color.frame, 0)
+        Frame:SetBackdropBorderColor(Color.frame, 0)
+    end
+
     local layouts = {
-        SimplePanelTemplate = BasicSkin,
-        PortraitFrameTemplate = BasicSkin,
-        PortraitFrameTemplateMinimizable = BasicSkin,
-        ButtonFrameTemplateNoPortrait = BasicSkin,
-        ButtonFrameTemplateNoPortraitMinimizable = BasicSkin,
-        InsetFrameTemplate = function(Frame)
-            Base.CreateBackdrop(Frame, private.backdrop, {
-                tl = Frame.TopLeftCorner,
-                tr = Frame.TopRightCorner,
-                bl = Frame.BottomLeftCorner,
-                br = Frame.BottomRightCorner,
-
-                t = Frame.TopEdge,
-                b = Frame.BottomEdge,
-                l = Frame.LeftEdge,
-                r = Frame.RightEdge,
-
-                bg = Frame.Center,
-            })
-
-            Frame:SetBackdropColor(Color.frame, 0)
-            Frame:SetBackdropBorderColor(Color.frame, 0)
-        end,
-        BFAMissionHorde = BasicSkin,
-        BFAMissionAlliance = BasicSkin,
-        GenericMetal = BasicSkin,
-        Dialog = BasicSkin,
-        WoodenNeutralFrameTemplate = BasicSkin,
-        Runeforge = BasicSkin,
-        AdventuresMissionComplete = BasicSkin,
-        CharacterCreateDropdown = BasicSkin,
-        UniqueCornersLayout = BasicSkin,
-        IdenticalCornersLayout = BasicSkin,
+        SimplePanelTemplate = BasicFrame,
+        PortraitFrameTemplate = BasicFrame,
+        PortraitFrameTemplateMinimizable = BasicFrame,
+        ButtonFrameTemplateNoPortrait = BasicFrame,
+        ButtonFrameTemplateNoPortraitMinimizable = BasicFrame,
+        InsetFrameTemplate = HideFrame,
+        BFAMissionHorde = BasicFrame,
+        BFAMissionAlliance = BasicFrame,
+        GenericMetal = BasicFrame,
+        Dialog = BasicFrame,
+        WoodenNeutralFrameTemplate = BasicFrame,
+        Runeforge = BasicFrame,
+        AdventuresMissionComplete = InsetFrame,
+        CharacterCreateDropdown = BasicFrame,
+        UniqueCornersLayout = BasicFrame,
+        IdenticalCornersLayout = BasicFrame,
 
         -- Blizzard_OrderHallTalents
-        BFAOrderTalentHorde = BasicSkin,
-        BFAOrderTalentAlliance = BasicSkin,
+        BFAOrderTalentHorde = BasicFrame,
+        BFAOrderTalentAlliance = BasicFrame,
 
         -- Blizzard_PartyPoseUI
-        PartyPoseFrameTemplate = BasicSkin,
-        PartyPoseKit = BasicSkin,
+        PartyPoseFrameTemplate = BasicFrame,
+        PartyPoseKit = BasicFrame,
     }
 
     if not private.isPatch then
-        layouts.BFAMissionNeutral = BasicSkin
-        layouts.WarboardTextureKit = BasicSkin
-        layouts.WarboardTextureKit_FourCorners = BasicSkin
+        layouts.BFAMissionNeutral = BasicFrame
+        layouts.WarboardTextureKit = BasicFrame
+        layouts.WarboardTextureKit_FourCorners = BasicFrame
     end
 
     local layoutMap = {}
