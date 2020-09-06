@@ -332,15 +332,27 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         function Skin.CovenantFollowerTabTemplate(Frame)
             Skin.CovenantMissionBaseFrameTemplate(Frame)
         end
-        function Skin.CovenantListTemplate(Frame)
+        function Skin.OribosScrollUpButtonTemplate(Button)
+        end
+        function Skin.OribosScrollDownButtonTemplate(Button)
+        end
+        function Skin.OribosScrollBarTemplate(Button)
+        end
+        function Skin.CovenantListWideFrameTemplate(Frame)
             Skin.CovenantMissionBaseFrameTemplate(Frame)
 
             Frame.listScroll:SetPoint("TOPLEFT", 2, -2)
             Frame.listScroll:SetPoint("BOTTOMRIGHT", -20, 2)
-            Skin.HybridScrollBarTrimTemplate(Frame.listScroll.scrollBar)
+            Skin.OribosScrollBarTemplate(Frame.listScroll.scrollBar)
+        end
+        function Skin.CovenantFollowerListTemplate(Frame)
+            Frame.listScroll:SetPoint("TOPLEFT", 2, -2)
+            Frame.listScroll:SetPoint("BOTTOMRIGHT", -20, 2)
+            Skin.OribosScrollBarTemplate(Frame.listScroll.scrollBar)
+            Frame.ElevatedFrame:Hide()
         end
         function Skin.CovenantMissionListTemplate(Frame)
-            Skin.CovenantListTemplate(Frame)
+            Skin.CovenantListWideFrameTemplate(Frame)
             Skin.MaterialFrameTemplate(Frame.MaterialFrame)
             Frame.MaterialFrame:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", -9, 9)
             Frame.MaterialFrame:SetPoint("TOPLEFT", Frame, "TOPRIGHT", -307, 34)

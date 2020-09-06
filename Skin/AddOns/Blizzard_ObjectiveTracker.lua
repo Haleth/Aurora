@@ -72,7 +72,9 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
             Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
-            Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
+            if not private.isPatch then
+                Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
+            end
         end
 
         Hook.ObjectiveTrackerMinimizeButtonMixin = {}

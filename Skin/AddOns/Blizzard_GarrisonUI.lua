@@ -372,10 +372,12 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
     end
     do --[[ Blizzard_AdventuresCombatLog ]]
         function Skin.CombatLogTemplate(Frame)
-            Skin.GarrisonMissionBaseFrameTemplate(Frame)
+            Frame:GetRegions():Hide() -- bg
             Skin.HybridScrollBarBackgroundTemplate(Frame.CombatLogMessageFrame.ScrollBar)
-            Skin.UIPanelScrollUpButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollUp)
-            Skin.UIPanelScrollDownButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollDown)
+            Skin.OribosScrollUpButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollUp)
+            Skin.OribosScrollDownButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollDown)
+            --Skin.HybridScrollBarButton(Frame.CombatLogMessageFrame.thumbTexture)
+            Frame.ElevatedFrame:Hide()
         end
     end
     do --[[ Blizzard_AdventuresCompleteScreen ]]
@@ -396,7 +398,9 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
         function Skin.CovenantMissionPageTemplate(Frame)
             Skin.NineSlicePanelTemplate(Frame.NineSlice)
             Skin.GarrisonMissionPageCloseButtonTemplate(Frame.CloseButton)
+            Frame.CloseButton.CloseButtonBorder:Hide()
             Skin.StartMissionButtonTemplate(Frame.StartMissionButton)
+            Skin.GarrisonMissionPageCostFrameTemplate(Frame.CostFrame)
         end
     end
 end
@@ -742,7 +746,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     -- FollowerList --
     ------------------
     local CovenantFollowerList = CovenantMissionFrame.FollowerList
-    Skin.GarrisonListTemplate(CovenantFollowerList)
+    Skin.CovenantFollowerListTemplate(CovenantFollowerList)
     Skin.MaterialFrameTemplate(CovenantFollowerList.MaterialFrame)
     CovenantFollowerList.MaterialFrame:SetPoint("TOPLEFT", CovenantFollowerList, "BOTTOMLEFT", 0, -2)
     CovenantFollowerList.MaterialFrame:SetPoint("BOTTOMRIGHT", 0, -30)
