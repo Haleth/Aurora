@@ -125,11 +125,11 @@ do --[[ FrameXML\QuestInfo.xml ]]
         Button.Class:SetPoint("TOPRIGHT", bg, -1, -1)
         Button.Class:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
-        local PortraitFrame = Button.PortraitFrame
-        Skin.GarrisonFollowerPortraitTemplate(PortraitFrame)
-        PortraitFrame:SetScale(1)
-        PortraitFrame:SetSize(41.6, 48)
-        PortraitFrame:SetBackdropOptions({
+        local GarrisonPortrait = Button.PortraitFrame
+        Skin.GarrisonFollowerPortraitTemplate(GarrisonPortrait)
+        GarrisonPortrait:SetScale(1)
+        GarrisonPortrait:SetSize(41.6, 48)
+        GarrisonPortrait:SetBackdropOptions({
             offsets = {
                 left = 3,
                 right = 4,
@@ -138,10 +138,30 @@ do --[[ FrameXML\QuestInfo.xml ]]
             },
         })
 
-        local portraitBG = PortraitFrame:GetBackdropTexture("bg")
-        local lvlBG = PortraitFrame._auroraLvlBG
-        lvlBG:SetPoint("TOPLEFT", portraitBG, "BOTTOMLEFT", 0, 2)
-        PortraitFrame.Level:SetScale(0.8)
+        local garrisonBG = GarrisonPortrait:GetBackdropTexture("bg")
+        local garrisonLvlBG = GarrisonPortrait._auroraLvlBG
+        garrisonLvlBG:SetPoint("TOPLEFT", garrisonBG, "BOTTOMLEFT", 0, 2)
+        GarrisonPortrait.Level:SetScale(0.8)
+
+        if private.isPatch then
+            local AdventuresPortrait = Button.AdventuresFollowerPortraitFrame
+            Skin.AdventuresLevelPortraitTemplate(AdventuresPortrait)
+            AdventuresPortrait:SetScale(1)
+            AdventuresPortrait:SetSize(43.2, 43.2)
+            AdventuresPortrait:SetBackdropOptions({
+                offsets = {
+                    left = 4,
+                    right = 6,
+                    top = 3,
+                    bottom = 7,
+                },
+            })
+
+            local adventuresBG = AdventuresPortrait:GetBackdropTexture("bg")
+            local adventuresLvlBG = AdventuresPortrait._auroraLvlBG
+            adventuresLvlBG:SetPoint("TOPLEFT", adventuresBG, "BOTTOMLEFT", 0, 2)
+            AdventuresPortrait.LevelDisplayFrame.LevelText:SetScale(0.8)
+        end
     end
     function Skin.SmallQuestInfoRewardFollowerTemplate(Button)
         Base.SetBackdrop(Button, Color.frame)
