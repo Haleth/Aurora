@@ -331,23 +331,37 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         end
         function Skin.CovenantFollowerTabTemplate(Frame)
             Skin.CovenantMissionBaseFrameTemplate(Frame)
+            Skin.UIPanelButtonTemplate(Frame.HealFollowerFrame.HealFollowerButton)
+            Skin.GarrisonMissionPageCostFrameTemplate(Frame.HealFollowerFrame.CostFrame)
         end
         function Skin.OribosScrollUpButtonTemplate(Button)
+            Skin.UIPanelScrollBarButton(Button)
+            Button:SetSize(18, 16)
+
+            local arrow = Button._auroraTextures[1]
+            Base.SetTexture(arrow, "arrowUp")
         end
         function Skin.OribosScrollDownButtonTemplate(Button)
+            Skin.UIPanelScrollBarButton(Button)
+            Button:SetSize(18, 16)
+
+            local arrow = Button._auroraTextures[1]
+            Base.SetTexture(arrow, "arrowDown")
         end
-        function Skin.OribosScrollBarTemplate(Button)
+        function Skin.OribosScrollBarTemplate(Slider)
+            local trackBG, trackBackplate = Slider:GetRegions()
+            trackBG:Hide()
+            trackBackplate:Hide()
+
+            Skin.OribosScrollUpButtonTemplate(Slider.UpButton)
+            Skin.OribosScrollDownButtonTemplate(Slider.DownButton)
+            Skin.HybridScrollBarButton(Slider.thumbTexture)
         end
         function Skin.CovenantListWideFrameTemplate(Frame)
             Skin.CovenantMissionBaseFrameTemplate(Frame)
-
-            Frame.listScroll:SetPoint("TOPLEFT", 2, -2)
-            Frame.listScroll:SetPoint("BOTTOMRIGHT", -20, 2)
             Skin.OribosScrollBarTemplate(Frame.listScroll.scrollBar)
         end
         function Skin.CovenantFollowerListTemplate(Frame)
-            Frame.listScroll:SetPoint("TOPLEFT", 2, -2)
-            Frame.listScroll:SetPoint("BOTTOMRIGHT", -20, 2)
             Skin.OribosScrollBarTemplate(Frame.listScroll.scrollBar)
             Frame.ElevatedFrame:Hide()
         end
@@ -356,37 +370,13 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Skin.MaterialFrameTemplate(Frame.MaterialFrame)
             Frame.MaterialFrame:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", -9, 9)
             Frame.MaterialFrame:SetPoint("TOPLEFT", Frame, "TOPRIGHT", -307, 34)
+            Frame.MaterialFrame.LeftFiligree:Hide()
+            Frame.MaterialFrame.RightFiligree:Hide()
         end
         function Skin.CovenantMissionListButtonTemplate(Button)
-            local bg, l, r, t, b, _, t2, b2, tl, tr, bl, br = Button:GetRegions()
-            Base.CreateBackdrop(Button, private.backdrop, {
-                bg = bg,
-
-                l = l,
-                r = r,
-                t = t,
-                b = b,
-
-                tl = tl,
-                tr = tr,
-                bl = bl,
-                br = br,
-
-                borderLayer = "BACKGROUND",
-                borderSublevel = -7,
-            })
-            Base.SetBackdrop(Button, Color.button)
-            t2:Hide()
-            b2:Hide()
-
-            Button.HighlightT:SetTexture("")
-            Button.HighlightB:SetTexture("")
-            Button.HighlightTL:SetTexture("")
-            Button.HighlightTR:SetTexture("")
-            Button.HighlightBL:SetTexture("")
-            Button.HighlightBR:SetTexture("")
+            Button.ButtonBG:SetTexture("")
             Button.Highlight:SetTexture("")
-            Button:DisableDrawLayer("HIGHLIGHT")
+            Base.SetBackdrop(Button, Color.button)
             Base.SetHighlight(Button, "backdrop")
 
             Skin.GarrisonMissionListButtonRewardTemplate(Button.Rewards[1])

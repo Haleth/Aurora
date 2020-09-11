@@ -23,6 +23,8 @@ do --[[ SharedXML\HybridScrollFrame.lua ]]
 end
 
 do --[[ SharedXML\HybridScrollFrame.xml ]]
+    Skin.HybridScrollBarButton = Skin.ScrollBarThumb
+
     function Skin.HybridScrollBarBackgroundTemplate(Slider)
         local parent = Slider:GetParent()
         Slider:SetPoint("TOPLEFT", parent, "TOPRIGHT", 0, -17)

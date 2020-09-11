@@ -109,6 +109,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="WorldMapFrame.lua"/>
     <Script file="ZoneAbility.lua"/>
 
+    <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\AddonList.lua"/>
     <Script file="..\SharedXML\HybridScrollFrame.lua"/>
     <Script file="..\SharedXML\ModelPreviewFrame.lua"/>
@@ -124,7 +125,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
     <Script file="..\SharedXML\SharedColorConstants.lua"/>
     <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
-    <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\TemplatedList.lua"/>
     <Script file="..\SharedXML\UIDropDownMenu.lua"/>
     <Script file="..\SharedXML\VideoOptionsPanels.lua"/>

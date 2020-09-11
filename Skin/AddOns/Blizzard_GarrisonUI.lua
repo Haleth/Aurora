@@ -373,7 +373,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
     do --[[ Blizzard_AdventuresCombatLog ]]
         function Skin.CombatLogTemplate(Frame)
             Frame:GetRegions():Hide() -- bg
-            Skin.HybridScrollBarBackgroundTemplate(Frame.CombatLogMessageFrame.ScrollBar)
             Skin.OribosScrollUpButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollUp)
             Skin.OribosScrollDownButtonTemplate(Frame.CombatLogMessageFrame.ScrollBar.ScrollDown)
             --Skin.HybridScrollBarButton(Frame.CombatLogMessageFrame.thumbTexture)
