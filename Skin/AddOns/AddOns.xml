@@ -18,6 +18,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_Calendar.lua"/>
     <Script file="Blizzard_ChallengesUI.lua"/>
     <Script file="Blizzard_Channels.lua"/>
+    <Script file="Blizzard_ChromieTimeUI.lua"/>
     <Script file="Blizzard_Collections.lua"/>
     <Script file="Blizzard_Communities.lua"/>
     <Script file="Blizzard_CompactRaidFrames.lua"/>
