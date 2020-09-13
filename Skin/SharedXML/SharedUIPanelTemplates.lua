@@ -17,30 +17,37 @@ do -- BlizzWTF: These are not templates, but they should be
             self:SetHighlightTexture("")
             self.settingHighlight = nil
         end
+        local function Hook_SetPushedTexture(self, texture)
+            self:GetPushedTexture():SetAlpha(0)
+        end
         local function Hook_SetNormalTexture(self, texture)
-            if self.settingTexture then return end
-            self.settingTexture = true
-            self:SetNormalTexture("")
+            self:GetNormalTexture():SetAlpha(0)
 
-            if texture == 130838 then
-                texture = "Plus"
-            elseif texture == 130821 then
-                texture = "Minus"
+            if type(texture) == "string" then
+                texture = texture:lower()
+            else
+                if texture == 130838 then
+                    texture = "plus"
+                elseif texture == 130821 then
+                    texture = "minus"
+                end
             end
 
             if texture and texture ~= "" then
-                if texture:find("Plus") then
+                if texture:find("plus") or texture:find("closed") then
                     self._plus:Show()
-                elseif texture:find("Minus") then
+                elseif texture:find("minus") or texture:find("open") then
                     self._plus:Hide()
                 end
                 self:SetBackdrop(true)
             else
                 self:SetBackdrop(false)
             end
-            self.settingTexture = nil
         end
         function Skin.ExpandOrCollapse(Button)
+            if Button:GetNormalTexture() then
+                Button:GetNormalTexture():SetAlpha(0)
+            end
             Skin.FrameTypeButton(Button)
 
             local bg = Button:GetBackdropTexture("bg")
@@ -61,6 +68,8 @@ do -- BlizzWTF: These are not templates, but they should be
                 plus
             }
             _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
+            _G.hooksecurefunc(Button, "SetNormalAtlas", Hook_SetNormalTexture)
+            _G.hooksecurefunc(Button, "SetPushedAtlas", Hook_SetPushedTexture)
             _G.hooksecurefunc(Button, "SetHighlightTexture", Hook_SetHighlightTexture)
         end
     end
