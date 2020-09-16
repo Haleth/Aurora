@@ -55,14 +55,16 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 progressBar._auroraSkinned = true
             end
         end
-        function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:GetBlock(id)
-            local block = self.usedBlocks[id]
-            if not block._auroraSkinned then
-                if Skin[self.blockTemplate] then
-                    Skin[self.blockTemplate](block)
-                    block._auroraSkinned = true
-                else
-                    private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock:", self.blockTemplate, "does not exist.")
+        if not private.isPatch then
+            function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:GetBlock(id)
+                local block = self.usedBlocks[id]
+                if not block._auroraSkinned then
+                    if Skin[self.blockTemplate] then
+                        Skin[self.blockTemplate](block)
+                        block._auroraSkinned = true
+                    else
+                        private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock:", self.blockTemplate, "does not exist.")
+                    end
                 end
             end
         end
@@ -128,18 +130,25 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 progressBar._auroraSkinned = true
             end
         end
-        Hook.SCENARIO_TRACKER_MODULE.GetBlock = private.nop
+        if not private.isPatch then
+            Hook.SCENARIO_TRACKER_MODULE.GetBlock = private.nop
+        end
 
         -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
         local uiTextureKits = {
-            [0] = {color = Color.button, overlay = ""},
-            [261] = {color = Color.blue:Lightness(-0.3), overlay = [[Interface\Timer\Alliance-Logo]]},
-            [5117] = {color = Color.red:Lightness(-0.3), overlay = [[Interface\Timer\Horde-Logo]]},
-            ["legion"] = {color = Color.green:Lightness(-0.3), overlay = ""},
+            Default = {color = Color.button, texture = ""},
+            alliance = {color = private.FACTION_COLORS.Alliance, texture = [[Interface\Timer\Alliance-Logo]]},
+            horde = {color = private.FACTION_COLORS.Horde, texture = [[Interface\Timer\Horde-Logo]]},
+            legion = {color = Color.green:Lightness(-0.3), texture = ""},
         }
-        function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKitID)
+
+        if not private.isPatch then
+            uiTextureKits[261] = uiTextureKits.alliance
+            uiTextureKits[5117] = uiTextureKits.horde
+        end
+        function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKit)
             -- /dump GetUITextureKitInfo(5117)
-            private.debug("ScenarioStage_CustomizeBlock", scenarioType, widgetSetID, textureKitID)
+            private.debug("ScenarioStage_CustomizeBlock", scenarioType, widgetSetID, textureKit)
 
             if widgetSetID then
                 stageBlock._auroraOverlay:Hide()
@@ -147,16 +156,19 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 stageBlock._auroraOverlay:Show()
 
                 local kit
-                if textureKitID then
-                    kit = uiTextureKits[textureKitID] or uiTextureKits[0]
+                if textureKit then
+                    kit = uiTextureKits[textureKit]
                 elseif scenarioType == _G.LE_SCENARIO_TYPE_LEGION_INVASION then
-                    kit = uiTextureKits["legion"]
-                else
-                    kit = uiTextureKits[0]
+                    kit = uiTextureKits.legion
+                end
+
+                if not kit then
+                    kit = uiTextureKits.Default
+                    private.debug("missing scenario block", textureKit)
                 end
 
                 Base.SetBackdropColor(stageBlock._auroraBG, kit.color, 0.75)
-                stageBlock._auroraOverlay:SetTexture(kit.overlay)
+                stageBlock._auroraOverlay:SetTexture(kit.texture)
             end
         end
     end
