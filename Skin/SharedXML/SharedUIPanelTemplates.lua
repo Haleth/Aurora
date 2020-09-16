@@ -200,14 +200,14 @@ do -- Basic frame type skins
             Button:SetHighlightTexture("")
             Button:SetDisabledTexture("")
 
-            function Button:SetButtonColor(color)
+            function Button:SetButtonColor(color, a)
                 self._enabledColor = color
                 self._disabledColor = Color.Lightness(color, -0.3)
 
                 if self:IsEnabled() then
-                    Base.SetBackdropColor(self, color)
+                    Base.SetBackdropColor(self, color, a)
                 else
-                    Base.SetBackdropColor(self, self._disabledColor)
+                    Base.SetBackdropColor(self, self._disabledColor, a)
                 end
             end
             function Button:GetButtonColor()
@@ -441,11 +441,24 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.NineSlicePanelTemplate(Frame)
         Frame._auroraNineSlice = true
+        Base.CreateBackdrop(Frame, private.backdrop, {
+            tl = Frame.TopLeftCorner,
+            tr = Frame.TopRightCorner,
+            bl = Frame.BottomLeftCorner,
+            br = Frame.BottomRightCorner,
+
+            t = Frame.TopEdge,
+            b = Frame.BottomEdge,
+            l = Frame.LeftEdge,
+            r = Frame.RightEdge,
+
+            bg = Frame.Center,
+        })
+
         local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
+        --print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
         if layout then
             Hook.NineSliceUtil.ApplyLayout(Frame, layout)
-        --else
-            --print("no layout", Frame:GetDebugName())
         end
     end
     function Skin.InsetFrameTemplate(Frame)

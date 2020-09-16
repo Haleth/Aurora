@@ -24,54 +24,14 @@ do --[[ SharedXML\NineSlice.lua ]]
     }
 
     local function BasicFrame(Frame)
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
-
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Center,
-        })
         Base.SetBackdrop(Frame)
     end
 
     local function InsetFrame(Frame)
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
-
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Center,
-        })
         Base.SetBackdrop(Frame, Color.frame)
     end
 
     local function HideFrame(Frame)
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
-
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Center,
-        })
-
         Frame:SetBackdropColor(Color.frame, 0)
         Frame:SetBackdropBorderColor(Color.frame, 0)
     end

@@ -5,10 +5,14 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Skin = Aurora.Base, Aurora.Skin
+local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\CharacterFrameTemplates.xml ]]
     function Skin.CharacterFrameTabButtonTemplate(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetButtonColor(Color.frame)
+
         local name = Button:GetName()
         Button:SetHeight(28)
 
@@ -19,11 +23,8 @@ do --[[ FrameXML\CharacterFrameTemplates.xml ]]
         _G[name.."Middle"]:SetTexture("")
         _G[name.."Right"]:SetTexture("")
         _G[name.."Text"]:SetPoint("CENTER", Button, "CENTER")
-
         Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(Button)
-        Base.SetHighlight(Button, "backdrop")
         Button._auroraTabResize = true
     end
 end
