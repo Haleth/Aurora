@@ -394,7 +394,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.CircleMask:Hide()
 
             Button.HighlightBackground:SetAlpha(0)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
         end
         function Skin.ClubFinderCommunitiesCardFrameTemplate(Frame)
             Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.scrollBar)

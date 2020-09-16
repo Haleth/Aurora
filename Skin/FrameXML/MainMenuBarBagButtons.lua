@@ -49,7 +49,7 @@ function private.FrameXML.MainMenuBarBagButtons()
     else
         local KeyRingButton = _G.KeyRingButton
         Base.SetBackdrop(KeyRingButton, Color.frame)
-        Base.SetHighlight(KeyRingButton, "backdrop")
+        Base.SetHighlight(KeyRingButton)
 
         local normal = KeyRingButton:GetNormalTexture()
         normal:SetTexture([[Interface\Icons\Inv_Misc_Key_13]])

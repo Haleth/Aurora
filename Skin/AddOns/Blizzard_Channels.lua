@@ -51,7 +51,7 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
             Button:SetNormalTexture("")
             Button:SetHighlightTexture("")
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
 
             Button.Collapsed:SetAlpha(0)
             local minus = Button:CreateTexture(nil, "OVERLAY")

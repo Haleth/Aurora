@@ -149,7 +149,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
     do --[[ Blizzard_EncounterJournal ]]
         function Skin.EJButtonTemplate(Button)
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
 
             Button.UpLeft:SetTexture("")
             Button.UpRight:SetTexture("")
@@ -164,7 +164,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
         end
         function Skin.EncounterInstanceButtonTemplate(Button)
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
 
             Button.bgImage:SetAlpha(0.6)
             Button.bgImage:SetTexCoord(0.01953125, 0.66015625, 0.0390625, 0.7109375)
@@ -241,7 +241,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
         function Skin.EncounterInfoTemplate(Frame)
             local button = Frame.button
             Base.SetBackdrop(button, Color.button)
-            Base.SetHighlight(button, "backdrop")
+            Base.SetHighlight(button)
             button._abilityIconBG = Base.CropIcon(button.abilityIcon, button)
 
             button.eLeftUp:SetTexture("")
@@ -481,7 +481,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.EJButtonTemplate(info.difficulty)
 
     Base.SetBackdrop(info.reset, Color.button)
-    Base.SetHighlight(info.reset, "backdrop")
+    Base.SetHighlight(info.reset)
     info.reset:SetNormalTexture("")
     info.reset:SetPushedTexture("")
     info.reset:SetHighlightTexture("")

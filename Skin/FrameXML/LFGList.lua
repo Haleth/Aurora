@@ -290,7 +290,7 @@ function private.FrameXML.LFGList()
         bg:SetPoint("TOPLEFT", 4, -5)
         bg:SetPoint("BOTTOMRIGHT", -5, 5)
 
-        Base.SetHighlight(RefreshButton, "backdrop")
+        Base.SetHighlight(RefreshButton)
     end
 
     Skin.InsetFrameTemplate(SearchPanel.ResultsInset)
@@ -329,7 +329,7 @@ function private.FrameXML.LFGList()
         bg:SetPoint("TOPLEFT", 4, -5)
         bg:SetPoint("BOTTOMRIGHT", -5, 5)
 
-        Base.SetHighlight(RefreshButton, "backdrop")
+        Base.SetHighlight(RefreshButton)
     end
 
     Skin.HybridScrollBarTemplate(ApplicationViewer.ScrollFrame.scrollBar)

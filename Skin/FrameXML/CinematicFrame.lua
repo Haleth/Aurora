@@ -23,7 +23,7 @@ do --[[ FrameXML\CinematicFrame.xml ]]
         Button:SetHighlightTexture("")
 
         Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop")
+        Base.SetHighlight(Button)
     end
 end
 

@@ -132,23 +132,19 @@ do -- Base.SetHighlight
     end
     ]]
 
-    local function GetReturnColor(button, isBackdrop)
-        if isBackdrop then
-            local bdFrame = button._auroraBDFrame or button
-            if bdFrame.GetButtonColor then
-                local enabled, disabled = bdFrame:GetButtonColor()
-                if bdFrame:IsEnabled() then
-                    return enabled
-                else
-                    return disabled
-                end
+    local function GetReturnColor(button)
+        local bdFrame = button._auroraBDFrame or button
+        if bdFrame.GetButtonColor then
+            local enabled, disabled = bdFrame:GetButtonColor()
+            if bdFrame:IsEnabled() then
+                return enabled
             else
-                local _, _, _, a = bdFrame:GetBackdropColor()
-                local r, g, b = bdFrame:GetBackdropBorderColor()
-                return Color.Create(r, g, b, a)
+                return disabled
             end
         else
-            return Color.Create(button._auroraHighlight[1]:GetVertexColor())
+            local _, _, _, a = bdFrame:GetBackdropColor()
+            local r, g, b = bdFrame:GetBackdropBorderColor()
+            return Color.Create(r, g, b, a)
         end
     end
     local function ShowHighlight(button)
@@ -160,59 +156,49 @@ do -- Base.SetHighlight
 
         return button._isHighlightLocked
     end
-    local function OnEnter(button, isBackdrop)
-        local highlight = Color.highlight
-        if button.IsEnabled and not button:IsEnabled() then
-            highlight = highlight:Lightness(-0.3)
-        end
+    local function OnEnter(button)
+        if ShowHighlight(button) and not button._isHighlighted then
+            button._returnColor = GetReturnColor(button)
+            if button._onEnter then
+                button:_onEnter()
+            else
+                local highlight = Color.highlight
+                if button.IsEnabled and not button:IsEnabled() then
+                    highlight = highlight:Lightness(-0.3)
+                end
 
-        if isBackdrop then
-            local alpha = button._returnColor.a or highlight.a
-            Base.SetBackdropColor(button._auroraBDFrame or button, highlight, alpha)
-        else
-            for _, texture in next, button._auroraHighlight do
-                texture:SetVertexColor(Color.highlight:GetRGBA())
+                local alpha = button._returnColor.a or highlight.a
+                Base.SetBackdropColor(button._auroraBDFrame or button, highlight, alpha)
             end
+            button._isHighlighted = true
         end
     end
-    local function OnLeave(button, isBackdrop)
-        if isBackdrop then
-            Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
-        else
-            for _, texture in next, button._auroraHighlight do
-                texture:SetVertexColor(button._returnColor:GetRGBA())
+    local function OnLeave(button)
+        if not ShowHighlight(button) and button._isHighlighted then
+            if button._onLeave then
+                button:_onLeave()
+            else
+                Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
             end
+            button._isHighlighted = false
         end
     end
-    function Base.SetHighlight(button, highlightType, onenter, onleave)
-        local isBackdrop = highlightType == "backdrop"
-        button._returnColor = GetReturnColor(button, isBackdrop)
+    function Base.SetHighlight(button, onEnter, onLeave)
+        button._returnColor = GetReturnColor(button)
+        button._onEnter = onEnter
+        button._onLeave = onLeave
 
-        local function enter(self)
-            if ShowHighlight(button) and not button._isHighlighted then
-                button._returnColor = GetReturnColor(self, isBackdrop);
-                (onenter or OnEnter)(self, isBackdrop)
-                button._isHighlighted = true
-            end
-        end
-        button:HookScript("OnEnter", enter)
-
-        local function leave(self)
-            if not ShowHighlight(button) and button._isHighlighted then
-                (onleave or OnLeave)(self, isBackdrop)
-                button._isHighlighted = false
-            end
-        end
-        button:HookScript("OnLeave", leave)
+        button:HookScript("OnEnter", OnEnter)
+        button:HookScript("OnLeave", OnLeave)
 
         if button.LockHighlight then
             _G.hooksecurefunc(button, "LockHighlight", function(self, ...)
                 button._isHighlightLocked = true
-                enter(self)
+                OnEnter(button)
             end)
             _G.hooksecurefunc(button, "UnlockHighlight", function(self, ...)
                 button._isHighlightLocked = nil
-                leave(self)
+                OnLeave(button)
             end)
         end
     end

@@ -16,7 +16,7 @@ local Color = Aurora.Color
 do --[[ FrameXML\SkillFrame.xml ]]
     function Skin.SkillStatusBarTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
-        Base.SetHighlight(StatusBar, "backdrop")
+        Base.SetHighlight(StatusBar)
 
         local name = StatusBar:GetName()
         Base.SetTexture(_G[name.."FillBar"], "gradientUp")

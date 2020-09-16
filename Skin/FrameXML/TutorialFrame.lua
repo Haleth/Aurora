@@ -127,7 +127,7 @@ function private.FrameXML.TutorialFrame()
     _G.TutorialFrameOkayButton:SetPushedTexture("")
     _G.TutorialFrameOkayButton:SetHighlightTexture("")
     Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button)
-    Base.SetHighlight(_G.TutorialFrameOkayButton, "backdrop")
+    Base.SetHighlight(_G.TutorialFrameOkayButton)
 
     if private.isRetail then
         Skin.NavButtonPrevious(_G.TutorialFramePrevButton)

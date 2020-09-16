@@ -180,7 +180,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Button.Flash:SetPoint("BOTTOMRIGHT", -1, 1)
             Button.Flash:SetTexCoord(.1818, .7879, .175, .875)
 
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
         end
         function Skin.MicroButtonAlertTemplate(Frame)
             Skin.GlowBoxTemplate(Frame)

@@ -120,7 +120,7 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
             Button.Highlight:SetTexture("")
 
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
         end
 
         function Skin.MagicResistanceFrameTemplate(Frame)

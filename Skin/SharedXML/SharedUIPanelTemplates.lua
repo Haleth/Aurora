@@ -215,7 +215,7 @@ do -- Basic frame type skins
             end
 
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop", OnEnter, OnLeave)
+            Base.SetHighlight(Button, OnEnter, OnLeave)
         end
     end
     do -- CheckButton
@@ -225,7 +225,7 @@ do -- Basic frame type skins
             CheckButton:SetHighlightTexture("")
 
             Base.SetBackdrop(CheckButton, Color.button, 0.3)
-            Base.SetHighlight(CheckButton, "backdrop")
+            Base.SetHighlight(CheckButton)
         end
     end
     do -- EditBox

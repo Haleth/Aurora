@@ -192,7 +192,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         Base.SetBackdrop(bdFrame, Color.button)
 
         Button._auroraBDFrame = bdFrame
-        Base.SetHighlight(Button, "backdrop")
+        Base.SetHighlight(Button)
 
         Button:SetNormalTexture("")
         Button:SetPushedTexture("")

@@ -175,7 +175,7 @@ F.ReskinTab = function(f, numTabs)
         Base.SetBackdrop(bg)
 
         f._auroraBDFrame = bg
-        Base.SetHighlight(f, "backdrop")
+        Base.SetHighlight(f)
     end
 end
 

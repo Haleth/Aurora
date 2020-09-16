@@ -86,7 +86,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
             _G.select(i, Button:GetRegions()):Hide()
         end
         Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button, "backdrop")
+        Base.SetHighlight(Button)
     end
 
     function Skin.RoleCountNoScriptsTemplate(Frame)

@@ -151,7 +151,7 @@ function private.FrameXML.QuestMapFrame()
     ShowMapButton:ClearAllPoints()
     ShowMapButton:SetPoint("TOPRIGHT", -30, -5)
     Base.SetBackdrop(ShowMapButton, Color.button)
-    Base.SetHighlight(ShowMapButton, "backdrop")
+    Base.SetHighlight(ShowMapButton)
 
     Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.AbandonButton)
     QuestLogPopupDetailFrame.AbandonButton:SetPoint("BOTTOMLEFT", 5, 5)

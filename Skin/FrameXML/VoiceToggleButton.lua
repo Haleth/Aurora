@@ -30,7 +30,7 @@ do --[[ FrameXML\VoiceToggleButton.xml ]]
         Button.Icon:SetPoint("CENTER", 0, 1)
 
         Base.SetBackdrop(Button, Color.button, 0.3)
-        Base.SetHighlight(Button, "backdrop")
+        Base.SetHighlight(Button)
     end
     function Skin.ToggleVoiceDeafenButtonTemplate(Button)
         Skin.VoiceToggleButtonTemplate(Button)

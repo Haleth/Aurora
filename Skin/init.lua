@@ -3,7 +3,7 @@ local ADDON_NAME, private = ...
 -- luacheck: globals select tostring tonumber math floor
 -- luacheck: globals setmetatable rawset debugprofilestop type tinsert
 
-private.API_MAJOR, private.API_MINOR = 0, 7
+private.API_MAJOR, private.API_MINOR = 0, 8
 
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE

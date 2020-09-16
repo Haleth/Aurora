@@ -201,7 +201,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Button.HighlightBR:SetTexture("")
             Button.Highlight:SetTexture("")
             Button:DisableDrawLayer("HIGHLIGHT")
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
             Skin.GarrisonMissionListButtonRewardTemplate(Button.Rewards[1])
         end
         function Skin.GarrisonFollowerMissionRewardsFrameTemplate(Frame)

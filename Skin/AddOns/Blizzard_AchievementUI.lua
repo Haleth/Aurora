@@ -222,7 +222,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."RightHighlight"]:SetTexture("")
 
         Base.SetBackdrop(Button)
-        Base.SetHighlight(Button, "backdrop")
+        Base.SetHighlight(Button)
         Button._auroraTabResize = true
     end
     function Skin.MiniAchievementTemplate(Frame)

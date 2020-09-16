@@ -377,7 +377,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Button.ButtonBG:SetTexture("")
             Button.Highlight:SetTexture("")
             Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
 
             Skin.GarrisonMissionListButtonRewardTemplate(Button.Rewards[1])
         end

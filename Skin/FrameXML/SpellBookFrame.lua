@@ -114,7 +114,7 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
             Button:SetHighlightTexture("")
 
             Base.SetBackdrop(Button)
-            Base.SetHighlight(Button, "backdrop")
+            Base.SetHighlight(Button)
         end
     end
     function Skin.SpellButtonTemplate(CheckButton)
