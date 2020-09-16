@@ -265,8 +265,8 @@ if private.isPatch then
     end
     function BackdropMixin:SetBackdropColor(red, green, blue, alpha)
         if not self.backdropInfo then return end
-
         self.backdropInfo.backdropColor = GetColor(red, green, blue, alpha)
+
         local center = GetNineSlicePiece(self, "Center")
         if center then
             center:SetVertexColor(self.backdropInfo.backdropColor:GetRGBA())

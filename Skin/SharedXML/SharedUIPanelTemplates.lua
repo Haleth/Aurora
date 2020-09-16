@@ -166,9 +166,9 @@ end
 
 do -- Basic frame type skins
     do -- Button
-        local disabledColor = Color.Lightness(Color.button, -0.3)
+        local DISABLED_COLOR = Color.Lightness(Color.button, -0.3)
         local function Hook_Enable(self)
-            Base.SetBackdropColor(self, self._enabledColor or Color.button)
+            Base.SetBackdropColor(self, self._enabledColor)
             if self._auroraTextures then
                 for _, texture in next, self._auroraTextures do
                     texture:SetVertexColor(Color.white:GetRGB())
@@ -176,15 +176,15 @@ do -- Basic frame type skins
             end
         end
         local function Hook_Disable(self)
-            Base.SetBackdropColor(self, self._disabledColor or disabledColor)
+            Base.SetBackdropColor(self, self._disabledColor)
             if self._auroraTextures then
                 for _, texture in next, self._auroraTextures do
                     texture:SetVertexColor(Color.gray:GetRGB())
                 end
             end
         end
-        local function Hook_SetEnabled(self, IsEnabled)
-            if IsEnabled then
+        local function Hook_SetEnabled(self, enabledState)
+            if enabledState then
                 Hook_Enable(self)
             else
                 Hook_Disable(self)
@@ -200,21 +200,31 @@ do -- Basic frame type skins
             Button:SetHighlightTexture("")
             Button:SetDisabledTexture("")
 
-            function Button:SetButtonColor(color, a)
-                self._enabledColor = color
-                self._disabledColor = Color.Lightness(color, -0.3)
+            function Button:SetButtonColor(color, alpha, disabledColor)
+                Base.SetBackdrop(self, color, alpha)
 
-                if self:IsEnabled() then
-                    Base.SetBackdropColor(self, color, a)
+                local _, _, _, a = self:GetBackdropColor()
+                local r, g, b = self:GetBackdropBorderColor()
+
+                self._enabledColor = Color.Create(r, g, b, alpha or a)
+
+                if disabledColor == false then
+                    self._disabledColor = self._enabledColor
                 else
-                    Base.SetBackdropColor(self, self._disabledColor, a)
+                    if disabledColor then
+                        self._disabledColor = disabledColor
+                    else
+                        self._disabledColor = Color.Lightness(self._enabledColor, -0.3)
+                    end
                 end
+
+                Hook_SetEnabled(self, self:IsEnabled())
             end
             function Button:GetButtonColor()
-                return self._enabledColor or Color.button, self._disabledColor or disabledColor
+                return self._enabledColor, self._disabledColor
             end
 
-            Base.SetBackdrop(Button, Color.button)
+            Button:SetButtonColor(Color.button, nil, DISABLED_COLOR)
             Base.SetHighlight(Button, OnEnter, OnLeave)
         end
     end
@@ -326,9 +336,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         function Hook.PanelTemplates_SelectTab(tab)
             local text = tab.Text or _G[tab:GetName().."Text"]
             text:SetPoint("CENTER", tab, "CENTER")
-            if tab._returnColor then
-                Base.SetBackdropColor(tab, tab._returnColor)
-            end
         end
 
         Hook.SquareIconButtonMixin = {}

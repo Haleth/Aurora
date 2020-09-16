@@ -6,12 +6,11 @@ local _, private = ...
 --[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
-local Color = Aurora.Color
 
 do --[[ FrameXML\CharacterFrameTemplates.xml ]]
     function Skin.CharacterFrameTabButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
-        Button:SetButtonColor(Color.frame)
+        Button:SetButtonColor(nil, nil, false)
 
         local name = Button:GetName()
         Button:SetHeight(28)
