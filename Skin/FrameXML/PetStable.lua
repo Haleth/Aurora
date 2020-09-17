@@ -34,12 +34,23 @@ end
 do --[[ FrameXML\PetStable.xml ]]
     if private.isRetail then
         function Skin.PetStableSlotTemplate(Button)
-            local name = Button:GetName()
+            Base.CreateBackdrop(Button, {
+                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
+            })
 
-            Base.CropIcon(_G[name.."IconTexture"])
-            Button.Background:SetColorTexture(0, 0, 0, 1)
-            Button.Background:SetPoint("TOPLEFT", Button, -1, 1)
-            Button.Background:SetPoint("BOTTOMRIGHT", Button, 1, -1)
+            Button:SetBackdropColor(1, 1, 1, 0.75)
+            Button:SetBackdropBorderColor(Color.frame:GetRGB())
+            Base.CropIcon(Button:GetBackdropTexture("bg"))
+
+            Base.CropIcon(_G[Button:GetName().."IconTexture"])
+            Button.Background:Hide()
             Base.CropIcon(Button.Checked)
             Base.CropIcon(Button:GetPushedTexture())
             Base.CropIcon(Button:GetHighlightTexture())
