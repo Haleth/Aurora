@@ -8,52 +8,15 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
---[[ ALPHA 0.4 ]]--
-Skin.ItemButtonTemplate = Skin.FrameTypeItemButton
-
---[[ ALPHA 0.3 ]]--
-Aurora.Scale = {}
-
---[[ ALPHA 0.2 ]]--
-do -- private.CreateAPI
-    local function CreateAPI(api)
-        api.Pre = {}
-        api.Post = {}
-        return api
-    end
-    private.CreateAPI = CreateAPI
-    Aurora.Base = CreateAPI(Aurora.Base)
-    Aurora.Scale = CreateAPI(Aurora.Scale)
-    Aurora.Hook = CreateAPI(Aurora.Hook)
-    Aurora.Skin = CreateAPI(Aurora.Skin)
-    Aurora.Color = CreateAPI(Aurora.Color)
-end
-
-local newSetBackdrop = Base.SetBackdrop
-Base.SetBackdrop = nil
-function Base.SetBackdrop(frame, red, green, blue, alpha)
-    if red == nil or type(red) == "table" then
-        return newSetBackdrop(frame, red, green)
+--[[ ALPHA 0.7 ]]--
+local origBase_SetHighlight = Base.SetHighlight
+function Base.SetHighlight(button, option, onEnter, onLeave)
+    if type(option) == "string" then
+        origBase_SetHighlight(button, onEnter, onLeave)
     else
-        newSetBackdrop(frame, Color.Create(red, green, blue), alpha)
+        origBase_SetHighlight(button, option, onEnter)
     end
 end
-
-local newSetBackdropColor = Base.SetBackdropColor
-Base.SetBackdropColor = nil
-function Base.SetBackdropColor(frame, red, green, blue, alpha)
-    if red == nil or type(red) == "table" then
-        return newSetBackdropColor(frame, red, green)
-    else
-        newSetBackdropColor(frame, Color.Create(red, green, blue), alpha)
-    end
-end
-
---[[ ALPHA 0.1 ]]--
-Base.CreateColor = Color.Create
-Aurora.highlightColor = Color.highlight
-Aurora.buttonColor = Color.button
-Aurora.frameColor = Color.frame
 
 --[[ Legacy API ]]--
 local F, C = {}, {}

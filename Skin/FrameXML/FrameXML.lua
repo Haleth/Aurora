@@ -352,8 +352,8 @@ local FrameXML = {
     "LocalizationPost",
 }
 
-private.FrameXML = private.CreateAPI(FrameXML)
-private.SharedXML = private.CreateAPI({})
+private.FrameXML = FrameXML
+private.SharedXML = {}
 
 --[==[ Some boilerplate stuff for new files
 local _, private = ...
