@@ -77,7 +77,11 @@ function private.FrameXML.QueueStatusFrame()
      _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", Hook.QueueStatusEntry_SetFullDisplay)
 
     local QueueStatusFrame = _G.QueueStatusFrame
-    Skin.TooltipBorderedFrameTemplate(QueueStatusFrame)
+    if private.isPatch then
+        Skin.TooltipBackdropTemplate(QueueStatusFrame)
+    else
+        Skin.TooltipBorderedFrameTemplate(QueueStatusFrame)
+    end
 
     Util.Mixin(QueueStatusFrame.statusEntriesPool, Hook.ObjectPoolMixin)
 end

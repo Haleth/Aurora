@@ -57,6 +57,7 @@ local FrameXML = {
     "SharedXML.GlobalCallbackRegistry",
     "SharedXML.SelectableButton",
     "SharedXML.ButtonGroup",
+    "SharedXML.EventButton",
     "SharedXML.ScrollController",
     "SharedXML.ScrollBox",
     "SharedXML.ScrollBar",
