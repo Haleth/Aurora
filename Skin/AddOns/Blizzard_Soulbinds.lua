@@ -96,7 +96,7 @@ function private.AddOns.Blizzard_Soulbinds()
     SoulbindViewer.ShadowLeft:Hide()
     SoulbindViewer.ShadowRight:Hide()
 
-    local scrollBG = select("8", SoulbindViewer:GetRegions())
+    local scrollBG = select("9", SoulbindViewer:GetRegions())
     scrollBG:Hide()
 
     SoulbindViewer.Border:Hide()
