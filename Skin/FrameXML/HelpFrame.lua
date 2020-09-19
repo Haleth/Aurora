@@ -61,8 +61,6 @@ do --[[ FrameXML\HelpFrame.xml ]]
 end
 
 function private.FrameXML.HelpFrame()
-
-
     ---------------
     -- HelpFrame --
     ---------------
@@ -86,7 +84,7 @@ function private.FrameXML.HelpFrame()
             local header = HelpFrame.header
             header:SetAlpha(0)
 
-            local text = header:GetRegions()
+            local text = select(10, header:GetRegions())
             text:SetParent(HelpFrame)
             text:ClearAllPoints()
             text:SetPoint("TOPLEFT")
@@ -96,7 +94,12 @@ function private.FrameXML.HelpFrame()
         Skin.UIPanelCloseButton(_G.HelpFrameCloseButton)
 
         Skin.InsetFrameTemplate(HelpFrame.leftInset)
-        local LeftShadow, RightShadow, TopShadow, BottomShadow = select(2, HelpFrame.leftInset:GetRegions())
+        local LeftShadow, RightShadow, TopShadow, BottomShadow
+        if private.isRetail then
+            LeftShadow, RightShadow, TopShadow, BottomShadow = select(2, HelpFrame.leftInset:GetRegions())
+        else
+            LeftShadow, RightShadow, TopShadow, BottomShadow = select(10, HelpFrame.leftInset:GetRegions())
+        end
         LeftShadow:Hide()
         RightShadow:Hide()
         TopShadow:Hide()

@@ -762,15 +762,17 @@ function private.AddOns.Blizzard_Communities()
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.ChangeAvatarButton)
     Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.MessageOfTheDay)
 
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
-    Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
+    if private.isRetail then
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
+        Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
 
-    Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
-    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
-    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
+        Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
+        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
+        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
+    end
 
     Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Delete)
