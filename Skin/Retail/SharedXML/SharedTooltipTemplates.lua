@@ -19,9 +19,7 @@ do --[[ FrameXML\SharedTooltipTemplates.lua ]]
 end
 
 do --[[ FrameXML\SharedTooltipTemplates.xml ]]
-    function Skin.SharedTooltipTemplate(GameTooltip)
-        Base.SetBackdrop(GameTooltip)
-    end
+    Skin.SharedTooltipTemplate = Base.SetBackdrop
     Skin.SharedNoHeaderTooltipTemplate = Skin.SharedTooltipTemplate
 end
 

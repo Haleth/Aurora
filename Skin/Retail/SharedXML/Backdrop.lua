@@ -87,9 +87,7 @@ do --[[ FrameXML\Backdrop.lua ]]
 end
 
 do --[[ FrameXML\Backdrop.xml ]]
-    function Skin.TooltipBackdropTemplate(Frame)
-        Base.SetBackdrop(Frame)
-    end
+    Skin.TooltipBackdropTemplate = Base.SetBackdrop
     function Skin.TooltipBorderBackdropTemplate(Frame)
         Base.SetBackdrop(Frame)
         Frame:SetBackdropColor(Color.frame, 0)

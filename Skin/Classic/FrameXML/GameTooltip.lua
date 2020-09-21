@@ -26,58 +26,60 @@ do --[[ FrameXML\GameTooltip.lua ]]
 end
 
 do --[[ FrameXML\GameTooltip.xml ]]
-    function Skin.GameTooltipTemplate(GameTooltip)
-        Skin.SharedTooltipTemplate(GameTooltip)
+    do --[[ GameTooltipTemplate ]]
+        function Skin.GameTooltipTemplate(GameTooltip)
+            Base.SetBackdrop(GameTooltip)
 
-        local statusBar = _G[GameTooltip:GetName().."StatusBar"]
-        Skin.FrameTypeStatusBar(statusBar)
-        Base.SetBackdropColor(statusBar, Color.frame)
+            local statusBar = _G[GameTooltip:GetName().."StatusBar"]
+            Skin.FrameTypeStatusBar(statusBar)
+            Base.SetBackdropColor(statusBar, Color.frame)
 
-        statusBar:SetHeight(4)
-        statusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
-        statusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
-    end
-    function Skin.InternalEmbeddedItemTooltipTemplate(Frame)
-        Base.CropIcon(Frame.Icon)
-        local bg = _G.CreateFrame("Frame", nil, Frame)
-        bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
-        Base.SetBackdrop(bg, Color.black, 0)
-        Frame._auroraIconBorder = bg
+            statusBar:SetHeight(4)
+            statusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
+            statusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
+        end
+        Skin.ShoppingTooltipTemplate = Base.SetBackdrop
+        function Skin.TooltipStatusBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
+            local _, border = StatusBar:GetRegions()
+            border:Hide()
+        end
+        function Skin.TooltipProgressBarTemplate(Frame)
+            local bar = Frame.Bar
+            Skin.FrameTypeStatusBar(bar)
 
-        if private.isRetail then
-            Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
-            Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
+            bar:GetStatusBarTexture():SetDrawLayer("BORDER")
+            bar.BorderLeft:Hide()
+            bar.BorderRight:Hide()
+            bar.BorderMid:Hide()
+
+            local LeftDivider = bar.LeftDivider
+            LeftDivider:SetColorTexture(Color.button:GetRGB())
+            LeftDivider:SetSize(1, 15)
+            LeftDivider:SetPoint("LEFT", 73, 0)
+
+            local RightDivider = bar.RightDivider
+            RightDivider:SetColorTexture(Color.button:GetRGB())
+            RightDivider:SetSize(1, 15)
+            RightDivider:SetPoint("RIGHT", -73, 0)
+
+            _G.select(7, bar:GetRegions()):Hide()
         end
     end
-    function Skin.ShoppingTooltipTemplate(GameTooltip)
-        Skin.SharedTooltipTemplate(GameTooltip)
-    end
-    function Skin.TooltipStatusBarTemplate(StatusBar)
-        Skin.FrameTypeStatusBar(StatusBar)
-        local _, border = StatusBar:GetRegions()
-        border:Hide()
-    end
-    function Skin.TooltipProgressBarTemplate(Frame)
-        local bar = Frame.Bar
-        Skin.FrameTypeStatusBar(bar)
+    do --[[ GameTooltip ]]
+        function Skin.InternalEmbeddedItemTooltipTemplate(Frame)
+            Base.CropIcon(Frame.Icon)
+            local bg = _G.CreateFrame("Frame", nil, Frame)
+            bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+            bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+            Base.SetBackdrop(bg, Color.black, 0)
+            Frame._auroraIconBorder = bg
 
-        bar:GetStatusBarTexture():SetDrawLayer("BORDER")
-        bar.BorderLeft:Hide()
-        bar.BorderRight:Hide()
-        bar.BorderMid:Hide()
-
-        local LeftDivider = bar.LeftDivider
-        LeftDivider:SetColorTexture(Color.button:GetRGB())
-        LeftDivider:SetSize(1, 15)
-        LeftDivider:SetPoint("LEFT", 73, 0)
-
-        local RightDivider = bar.RightDivider
-        RightDivider:SetColorTexture(Color.button:GetRGB())
-        RightDivider:SetSize(1, 15)
-        RightDivider:SetPoint("RIGHT", -73, 0)
-
-        _G.select(7, bar:GetRegions()):Hide()
+            if private.isRetail then
+                Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
+                Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
+            end
+        end
     end
 end
 
