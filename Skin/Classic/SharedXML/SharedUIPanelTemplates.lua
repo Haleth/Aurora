@@ -470,75 +470,53 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         end
     end
     function Skin.InsetFrameTemplate(Frame)
-        if private.isRetail then
-            Frame.NineSlice.Center = Frame.Bg
-            Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        else
-            Frame.Bg:Hide()
+        Frame.Bg:Hide()
 
-            Frame.InsetBorderTopLeft:Hide()
-            Frame.InsetBorderTopRight:Hide()
-            Frame.InsetBorderBottomLeft:Hide()
-            Frame.InsetBorderBottomRight:Hide()
+        Frame.InsetBorderTopLeft:Hide()
+        Frame.InsetBorderTopRight:Hide()
+        Frame.InsetBorderBottomLeft:Hide()
+        Frame.InsetBorderBottomRight:Hide()
 
-            Frame.InsetBorderTop:Hide()
-            Frame.InsetBorderBottom:Hide()
-            Frame.InsetBorderLeft:Hide()
-            Frame.InsetBorderRight:Hide()
-        end
+        Frame.InsetBorderTop:Hide()
+        Frame.InsetBorderBottom:Hide()
+        Frame.InsetBorderLeft:Hide()
+        Frame.InsetBorderRight:Hide()
     end
-    function Skin.DialogBorderNoCenterTemplate(Frame)
-        Skin.NineSlicePanelTemplate(Frame)
+    function Skin.DialogBorderTemplate(Frame)
+        Base.SetBackdrop(Frame)
         Frame:SetBackdropOption("offsets", {
             left = 5,
             right = 5,
             top = 5,
             bottom = 5,
         })
-
-        local r, g, b = Frame:GetBackdropColor()
-        Frame:SetBackdropColor(r, g, b, 0)
-    end
-    function Skin.DialogBorderTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        end
-
-        Base.SetBackdrop(Frame)
     end
     function Skin.DialogBorderDarkTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        else
-            Base.SetBackdrop(Frame)
-        end
-
-        local r, g, b = Frame:GetBackdropColor()
-        Frame:SetBackdropColor(r, g, b, 0.87)
+        Base.SetBackdrop(Frame, Color.frame, 0.87)
+        Frame:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
     end
     function Skin.DialogBorderTranslucentTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        else
-            Base.SetBackdrop(Frame)
-        end
-
-        local r, g, b = Frame:GetBackdropColor()
-        Frame:SetBackdropColor(r, g, b, 0.8)
+        Base.SetBackdrop(Frame, Color.frame, 0.8)
+        Frame:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
     end
     function Skin.DialogBorderOpaqueTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        else
-            Base.SetBackdrop(Frame)
-        end
-
-        local r, g, b = Frame:GetBackdropColor()
-        Frame:SetBackdropColor(r, g, b, 1)
+        Base.SetBackdrop(Frame, Color.frame, 1)
+        Frame:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
+        })
     end
 
     function Skin.DialogHeaderTemplate(Frame)
