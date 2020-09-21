@@ -155,12 +155,13 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         end
         function Skin.UIDropDownMenuButtonTemplate(Button)
             local listFrame = Button:GetParent()
+            local listBG = listFrame.Border:GetBackdropTexture("bg")
             local name = Button:GetName()
 
             local highlight = _G[name.."Highlight"]
             highlight:ClearAllPoints()
-            highlight:SetPoint("LEFT", listFrame, 1, 0)
-            highlight:SetPoint("RIGHT", listFrame, -1, 0)
+            highlight:SetPoint("LEFT", listBG, 1, 0)
+            highlight:SetPoint("RIGHT", listBG, -1, 0)
             highlight:SetPoint("TOP", 0, 0)
             highlight:SetPoint("BOTTOM", 0, 0)
             highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
@@ -188,12 +189,8 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         end
         function Skin.UIDropDownListTemplate(Button)
             local name = Button:GetName()
-            if private.isRetail then
-                Skin.DialogBorderDarkTemplate(Button.Border)
-            else
-                Skin.DialogBorderDarkTemplate(_G[name.."Backdrop"])
-            end
-            Base.SetBackdrop(_G[name.."MenuBackdrop"])
+            Skin.DialogBorderDarkTemplate(Button.Border)
+            Skin.TooltipBackdropTemplate(_G[name.."MenuBackdrop"])
             Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
         end
         function Skin.UIDropDownMenuTemplate(Frame)

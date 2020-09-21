@@ -42,6 +42,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             local menuButtonName = listFrameName.."Button"..index
             local menuButton = _G[menuButtonName]
 
+            local normalText = _G[menuButtonName.."NormalText"]
             local checkBox = menuButton._auroraCheckBox
             if not checkBox then return end
 
@@ -73,10 +74,11 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
                     check:SetAlpha(1)
                 else
                     checkBox:SetSize(8, 8)
-                    checkBox:SetPoint("LEFT", 4, 0)
+                    checkBox:SetPoint("LEFT", 2, 0)
                     check:SetTexture(private.textures.plain)
                     check:SetSize(6, 6)
                     check:SetAlpha(0.6)
+                    normalText:SetPoint("LEFT", 15, 0)
                 end
 
                 local checked = info.checked
@@ -155,12 +157,13 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         end
         function Skin.UIDropDownMenuButtonTemplate(Button)
             local listFrame = Button:GetParent()
+            local listBG = _G[listFrame:GetName().."Backdrop"]:GetBackdropTexture("bg")
             local name = Button:GetName()
 
             local highlight = _G[name.."Highlight"]
             highlight:ClearAllPoints()
-            highlight:SetPoint("LEFT", listFrame, 1, 0)
-            highlight:SetPoint("RIGHT", listFrame, -1, 0)
+            highlight:SetPoint("LEFT", listBG, 1, 0)
+            highlight:SetPoint("RIGHT", listBG, -1, 0)
             highlight:SetPoint("TOP", 0, 0)
             highlight:SetPoint("BOTTOM", 0, 0)
             highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
@@ -188,11 +191,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         end
         function Skin.UIDropDownListTemplate(Button)
             local name = Button:GetName()
-            if private.isRetail then
-                Skin.DialogBorderDarkTemplate(Button.Border)
-            else
-                Skin.DialogBorderDarkTemplate(_G[name.."Backdrop"])
-            end
+            Skin.DialogBorderDarkTemplate(_G[name.."Backdrop"])
             Base.SetBackdrop(_G[name.."MenuBackdrop"])
             Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
         end
@@ -264,7 +263,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
     end
 end
 
-function private.SharedXML.UIDropDownMenu()
+function private.FrameXML.UIDropDownMenu()
     _G.hooksecurefunc("UIDropDownMenu_CreateFrames", Hook.UIDropDownMenu_CreateFrames)
     _G.hooksecurefunc("UIDropDownMenu_AddButton", Hook.UIDropDownMenu_AddButton)
     _G.hooksecurefunc("UIDropDownMenu_SetIconImage", Hook.UIDropDownMenu_SetIconImage)
