@@ -1,4 +1,10 @@
 local _, private = ...
+if private.isClassic then return end
+
+--[[ Lua Globals ]]
+-- luacheck: globals
+
+--[[ Core ]]
 local Color = private.Aurora.Color
 
 private.NORMAL_QUEST_DISPLAY = _G.NORMAL_QUEST_DISPLAY:gsub("ff000000", Color.white.colorStr)

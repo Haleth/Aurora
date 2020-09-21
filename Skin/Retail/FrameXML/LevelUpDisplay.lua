@@ -1,6 +1,9 @@
 local _, private = ...
 if private.isClassic then return end
 
+--[[ Lua Globals ]]
+-- luacheck: globals
+
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base

@@ -8,6 +8,7 @@ private.API_MAJOR, private.API_MINOR = 0, 8
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90001
+private.isBeta = private.isRetail and select(4, _G.GetBuildInfo()) >= 90002
 
 private.uiScale = 1
 private.disabled = {
@@ -221,16 +222,9 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
             end
 
             -- Skin FrameXML
-            for i = 1, #private.FrameXML do
-                local file, isShared = _G.strsplit(".", private.FrameXML[i])
-                local fileList = private.FrameXML
-                if isShared then
-                    file = isShared
-                    fileList = private.SharedXML
-                end
-                if fileList[file] then
-                    fileList[file]()
-                end
+            for i = 1, #private.fileOrder do
+                local file = private.fileOrder[i]
+                file.list[file.name]()
             end
 
             --if not private.isPatch then

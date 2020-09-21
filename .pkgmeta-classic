@@ -4,13 +4,13 @@ ignore:
     - *.sublime*
     - *.bat
     - test.lua
-    - Retail
+    - Skin/Retail
 
 manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown
 
 move-folders:
-    Aurora/Skin/Classic/AddOns: Skin/AddOns
-    Aurora/Skin/Classic/FrameXML: Skin/FrameXML
-    Aurora/Skin/Classic/SharedXML: Skin/SharedXML
+    Aurora/Skin/Classic/AddOns: Aurora/Skin/AddOns
+    Aurora/Skin/Classic/FrameXML: Aurora/Skin/FrameXML
+    Aurora/Skin/Classic/SharedXML: Aurora/Skin/SharedXML

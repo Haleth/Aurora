@@ -1,4 +1,5 @@
 local _, private = ...
+if private.isClassic then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals select next
@@ -23,7 +24,7 @@ do --[[ FrameXML\HelpFrame.lua ]]
 end
 
 do --[[ FrameXML\HelpFrame.xml ]]
-    if private.isPatch then
+    if private.isBeta then
         function Skin.HelpFrameContainerFrameTemplate(Frame)
             Skin.TooltipBackdropTemplate(Frame)
         end
@@ -65,7 +66,7 @@ function private.FrameXML.HelpFrame()
     -- HelpFrame --
     ---------------
     local HelpFrame = _G.HelpFrame
-    if private.isPatch then
+    if private.isBeta then
         Skin.ButtonFrameTemplate(HelpFrame)
 
         Skin.BrowserTemplate(HelpFrame.Browser)

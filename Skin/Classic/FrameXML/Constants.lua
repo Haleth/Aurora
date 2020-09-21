@@ -1,4 +1,6 @@
 local _, private = ...
+if private.isRetail then return end
+
 local Color = private.Aurora.Color
 
 private.NORMAL_QUEST_DISPLAY = _G.NORMAL_QUEST_DISPLAY:gsub("ff000000", Color.white.colorStr)
