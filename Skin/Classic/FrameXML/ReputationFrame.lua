@@ -14,13 +14,6 @@ do --[[ FrameXML\ReputationFrame.lua ]]
         -- The TOPRIGHT anchor for ReputationBar1 is set in C code
         _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -49)
     end
-    function Hook.ReputationFrame_SetRowType(factionRow, isChild, isHeader, hasRep)
-        if isHeader then
-            factionRow:SetBackdrop(false)
-        else
-            factionRow:SetBackdrop(true)
-        end
-    end
     function Hook.ReputationFrame_Update(self)
         for i = 1, _G.NUM_FACTIONS_DISPLAYED do
             local factionRow = _G["ReputationBar"..i]
