@@ -9,7 +9,7 @@ local Color = Aurora.Color
 local Util = Aurora.Util
 
 --[[ Util:header
-Helpful functions mostly for debugging.
+Helpful functions for layout, widget info, and debugging.
 --]]
 
 --[[ Util.GetName(_widget_)
