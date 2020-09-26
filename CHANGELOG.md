@@ -1,4 +1,26 @@
-﻿## [8.3.0.8] - 2020-07-18 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * [classic] CraftUI skin
+  * [classic] Honor frame skin
+  * [retail] Auto-quest objective popups skin
+
+### Changed ###
+
+  * [retail] Updated inspect frame
+  * [retail] Tweaked hunter pet stable
+
+### Fixed ###
+
+  * [classic] Display bugs dropdown menu
+  * [retail] Display bugs with the AH favorite button
+  * [retail] Error with rep frame
+  * [retail] Gossip text overlapping friendship bar
+  * [retail] Display bugs with acheivement alert
+
+
+
+## [8.3.0.8] - 2020-07-18 ##
 ### Added ###
 
   * Basic compatibility for Shadowlands
