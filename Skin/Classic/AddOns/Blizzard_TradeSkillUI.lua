@@ -11,7 +11,11 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
+    local hadScroll = false
     function Hook.TradeSkillFrame_Update(id)
+        local hasScroll = _G.TradeSkillListScrollFrame:IsVisible()
+        local updateBackdrops = hadScroll ~= hasScroll
+
         for i = 1, _G.TRADE_SKILLS_DISPLAYED do
             local skillButton = _G["TradeSkillSkill"..i]
             local _, skillType = _G.GetTradeSkillInfo(skillButton:GetID())
@@ -23,7 +27,26 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                 skillButton._minus:Hide()
                 skillButton._plus:Hide()
             end
+
+            if updateBackdrops then
+                if hasScroll then
+                    skillButton:SetBackdropOption("offsets", {
+                        left = 3,
+                        right = 277,
+                        top = 0,
+                        bottom = 3,
+                    })
+                else
+                    skillButton:SetBackdropOption("offsets", {
+                        left = 3,
+                        right = 307,
+                        top = 0,
+                        bottom = 3,
+                    })
+                end
+            end
         end
+        hadScroll = hasScroll
     end
     function Hook.TradeSkillFrame_SetSelection(id)
         local _, skillType = _G.GetTradeSkillInfo(id)
@@ -48,12 +71,8 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
-    function Skin.TradeSkillSkillButtonTemplate(Frame)
-        Skin.ClassTrainerSkillButtonTemplate(Frame)
-    end
-    function Skin.TradeSkillItemTemplate(Frame)
-        Skin.QuestItemTemplate(Frame)
-    end
+    Skin.TradeSkillSkillButtonTemplate = Skin.ClassTrainerSkillButtonTemplate
+    Skin.TradeSkillItemTemplate = Skin.QuestItemTemplate
 end
 
 function private.AddOns.Blizzard_TradeSkillUI()
@@ -69,7 +88,7 @@ function private.AddOns.Blizzard_TradeSkillUI()
         bottom = 75,
     })
 
-    local tradeSkillBg = TradeSkillFrame:GetBackdropTexture("bg")
+    local tradeSkillBG = TradeSkillFrame:GetBackdropTexture("bg")
     local portrait, tl, tr, bl, br = TradeSkillFrame:GetRegions()
     portrait:Hide()
     tl:Hide()
@@ -79,8 +98,8 @@ function private.AddOns.Blizzard_TradeSkillUI()
 
     local titleText = _G.TradeSkillFrameTitleText
     titleText:ClearAllPoints()
-    titleText:SetPoint("TOPLEFT", tradeSkillBg)
-    titleText:SetPoint("BOTTOMRIGHT", tradeSkillBg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    titleText:SetPoint("TOPLEFT", tradeSkillBG)
+    titleText:SetPoint("BOTTOMRIGHT", tradeSkillBG, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
     local borderLeft, borderRight = select(7, TradeSkillFrame:GetRegions())
     borderLeft:Hide()
@@ -88,13 +107,13 @@ function private.AddOns.Blizzard_TradeSkillUI()
 
     local barLeft, barRight = select(9, TradeSkillFrame:GetRegions())
     barLeft:SetColorTexture(Color.gray:GetRGB())
-    barLeft:SetPoint("TOPLEFT", tradeSkillBg, 10, -210)
-    barLeft:SetPoint("BOTTOMRIGHT", tradeSkillBg, "TOPRIGHT", -10, -211)
+    barLeft:SetPoint("TOPLEFT", tradeSkillBG, 10, -210)
+    barLeft:SetPoint("BOTTOMRIGHT", tradeSkillBG, "TOPRIGHT", -10, -211)
     barRight:Hide()
 
     Skin.FrameTypeStatusBar(_G.TradeSkillRankFrame)
-    _G.TradeSkillRankFrame:SetPoint("TOPLEFT", tradeSkillBg, 20, -30)
-    _G.TradeSkillRankFrame:SetPoint("TOPRIGHT", tradeSkillBg, -20, -30)
+    _G.TradeSkillRankFrame:SetPoint("TOPLEFT", tradeSkillBG, 20, -30)
+    _G.TradeSkillRankFrame:SetPoint("TOPRIGHT", tradeSkillBG, -20, -30)
     _G.TradeSkillRankFrameSkillName:SetPoint("LEFT", 6, 0)
     _G.TradeSkillRankFrameBackground:Hide()
     _G.TradeSkillRankFrameBorder:Hide()
@@ -142,8 +161,6 @@ function private.AddOns.Blizzard_TradeSkillUI()
 
         item:SetBackdropColor(1, 1, 1, 0.75)
         item:SetBackdropBorderColor(Color.frame, 1)
-
-        item:HookScript("OnEvent", Hook.AuctionSellItemButton_OnEvent)
     end
     for i = 1, _G.MAX_TRADE_SKILL_REAGENTS do
         Skin.TradeSkillItemTemplate(_G["TradeSkillReagent"..i])
@@ -151,7 +168,13 @@ function private.AddOns.Blizzard_TradeSkillUI()
 
     Skin.UIPanelButtonTemplate(_G.TradeSkillCreateButton)
     Skin.UIPanelButtonTemplate(_G.TradeSkillCancelButton)
+    Util.PositionRelative("BOTTOMRIGHT", tradeSkillBG, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+        _G.TradeSkillCancelButton,
+        _G.TradeSkillCreateButton,
+    })
     Skin.UIPanelButtonTemplate(_G.TradeSkillCreateAllButton)
+    _G.TradeSkillCreateAllButton:ClearAllPoints()
+    _G.TradeSkillCreateAllButton:SetPoint("BOTTOMLEFT", tradeSkillBG, 5, 5)
 
     do -- NumericInputSpinner
         Skin.FrameTypeEditBox(_G.TradeSkillInputBox)

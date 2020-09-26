@@ -11,7 +11,11 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_TrainerUI.lua ]]
+    local hadScroll = false
     function Hook.ClassTrainerFrame_Update(id)
+        local hasScroll = _G.ClassTrainerListScrollFrame:IsVisible()
+        local updateBackdrops = hadScroll ~= hasScroll
+
         for i = 1, _G.CLASS_TRAINER_SKILLS_DISPLAYED do
             local skillButton = _G["ClassTrainerSkill"..i]
             local _, _, serviceType = _G.GetTrainerServiceInfo(skillButton:GetID())
@@ -23,7 +27,26 @@ do --[[ AddOns\Blizzard_TrainerUI.lua ]]
                 skillButton._minus:Hide()
                 skillButton._plus:Hide()
             end
+
+            if updateBackdrops then
+                if hasScroll then
+                    skillButton:SetBackdropOption("offsets", {
+                        left = 3,
+                        right = 277,
+                        top = 0,
+                        bottom = 3,
+                    })
+                else
+                    skillButton:SetBackdropOption("offsets", {
+                        left = 3,
+                        right = 307,
+                        top = 0,
+                        bottom = 3,
+                    })
+                end
+            end
         end
+        hadScroll = hasScroll
     end
     function Hook.ClassTrainer_SetSelection(id)
         if not id then return end
@@ -64,6 +87,7 @@ function private.AddOns.Blizzard_TrainerUI()
         bottom = 75,
     })
 
+    local trainerBG = ClassTrainerFrame:GetBackdropTexture("bg")
     local portrait, tl, tr, bl, br = ClassTrainerFrame:GetRegions()
     portrait:Hide()
     tl:Hide()
@@ -71,15 +95,15 @@ function private.AddOns.Blizzard_TrainerUI()
     bl:Hide()
     br:Hide()
 
-    local bg = ClassTrainerFrame:GetBackdropTexture("bg")
-    _G.ClassTrainerNameText:ClearAllPoints()
-    _G.ClassTrainerNameText:SetPoint("TOPLEFT", bg)
-    _G.ClassTrainerNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    local titleText = _G.ClassTrainerNameText
+    titleText:ClearAllPoints()
+    titleText:SetPoint("TOPLEFT", trainerBG)
+    titleText:SetPoint("BOTTOMRIGHT", trainerBG, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
     local barLeft, barRight = select(8, ClassTrainerFrame:GetRegions())
     barLeft:SetColorTexture(Color.gray:GetRGB())
-    barLeft:SetPoint("TOPLEFT", bg, 10, -270)
-    barLeft:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", -10, -271)
+    barLeft:SetPoint("TOPLEFT", trainerBG, 10, -270)
+    barLeft:SetPoint("BOTTOMRIGHT", trainerBG, "TOPRIGHT", -10, -271)
     barRight:Hide()
 
     _G.ClassTrainerGreetingText:SetPoint("TOPLEFT", _G.ClassTrainerNameText, "BOTTOMLEFT", 30, 0)
@@ -100,7 +124,7 @@ function private.AddOns.Blizzard_TrainerUI()
     Skin.UIDropDownMenuTemplate(_G.ClassTrainerFrameFilterDropDown)
 
     _G.ClassTrainerSkillHighlight:SetColorTexture(1, 1, 1, 0.5)
-    for i = 1, 11 do
+    for i = 1, _G.CLASS_TRAINER_SKILLS_DISPLAYED do
         Skin.ClassTrainerSkillButtonTemplate(_G["ClassTrainerSkill"..i])
     end
 
@@ -109,8 +133,8 @@ function private.AddOns.Blizzard_TrainerUI()
     local moneyBG = _G.CreateFrame("Frame", nil, ClassTrainerFrame)
     Base.SetBackdrop(moneyBG, Color.frame)
     moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-    moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
-    moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMLEFT", 165, 27)
+    moneyBG:SetPoint("BOTTOMLEFT", trainerBG, 5, 5)
+    moneyBG:SetPoint("TOPRIGHT", trainerBG, "BOTTOMLEFT", 165, 27)
     Skin.SmallMoneyFrameTemplate(_G.ClassTrainerMoneyFrame)
     _G.ClassTrainerMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
 
@@ -123,7 +147,7 @@ function private.AddOns.Blizzard_TrainerUI()
 
     Skin.UIPanelButtonTemplate(_G.ClassTrainerTrainButton)
     Skin.UIPanelButtonTemplate(_G.ClassTrainerCancelButton)
-    Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
+    Util.PositionRelative("BOTTOMRIGHT", trainerBG, "BOTTOMRIGHT", -5, 5, 1, "Left", {
         _G.ClassTrainerCancelButton,
         _G.ClassTrainerTrainButton,
     })
