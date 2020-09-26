@@ -92,11 +92,9 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     footerDelineator:SetPoint("BOTTOMRIGHT", 4, 7)
     footerDelineator:SetHeight(1)
 
-    if private.isRetail then
-        Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleTank)
-        Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
-        Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
-    end
+    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleTank)
+    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
+    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
     for i = 1, 8 do
         Skin.CRFManagerFilterGroupButtonTemplate(filterOptions["filterGroup"..i])
     end
@@ -111,13 +109,8 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     end
 
     local leaderOptions = displayFrame.leaderOptions
-    if private.isRetail then
-        Skin.UIMenuButtonStretchTemplate(leaderOptions.rolePollButton)
-    end
+    Skin.UIMenuButtonStretchTemplate(leaderOptions.rolePollButton)
     Skin.UIMenuButtonStretchTemplate(leaderOptions.readyCheckButton)
-    if private.isRetail then
-        Skin.UIMenuButtonStretchTemplate(_G[leaderOptions:GetName().."RaidWorldMarkerButton"])
-    end
-
+    Skin.UIMenuButtonStretchTemplate(_G[leaderOptions:GetName().."RaidWorldMarkerButton"])
     Skin.UICheckButtonTemplate(displayFrame.everyoneIsAssistButton)
 end

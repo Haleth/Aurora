@@ -337,15 +337,13 @@ end
 function private.FrameXML.UIPanelTemplates()
     _G.hooksecurefunc("SquareButton_SetIcon", Hook.SquareButton_SetIcon)
 
-    if private.isRetail then
-        local HelpPlateTooltip = _G.HelpPlateTooltip
-        Skin.GlowBoxTemplate(HelpPlateTooltip)
-        for direction, dirUpper in next, {Down = "UP", Up = "DOWN", Left = "RIGHT", Right = "LEFT"} do
-            local arrow = HelpPlateTooltip["Arrow"..dirUpper]
-            Base.SetTexture(arrow, "arrow"..direction)
-            arrow:SetVertexColor(1, 1, 0)
+    local HelpPlateTooltip = _G.HelpPlateTooltip
+    Skin.GlowBoxTemplate(HelpPlateTooltip)
+    for direction, dirUpper in next, {Down = "UP", Up = "DOWN", Left = "RIGHT", Right = "LEFT"} do
+        local arrow = HelpPlateTooltip["Arrow"..dirUpper]
+        Base.SetTexture(arrow, "arrow"..direction)
+        arrow:SetVertexColor(1, 1, 0)
 
-            HelpPlateTooltip["ArrowGlow"..dirUpper]:SetAlpha(0)
-        end
+        HelpPlateTooltip["ArrowGlow"..dirUpper]:SetAlpha(0)
     end
 end

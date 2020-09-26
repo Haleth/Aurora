@@ -17,7 +17,7 @@ do --[[ FrameXML\CompactUnitFrame.lua ]]
             if not opts.healthBarColorOverride then
                 local _, classToken = _G.UnitClass(frame.unit)
                 local classColor = classToken and _G.CUSTOM_CLASS_COLORS[classToken]
-                local treatAsPlayer = private.isRetail and _G.UnitTreatAsPlayerForDisplay(frame.unit) or nil
+                local treatAsPlayer = _G.UnitTreatAsPlayerForDisplay(frame.unit)
                 if (frame.optionTable.allowClassColorsForNPCs or _G.UnitIsPlayer(frame.unit) or treatAsPlayer) and classColor and frame.optionTable.useClassColors then
                     frame.healthBar:SetStatusBarColor(classColor.r, classColor.g, classColor.b)
                     if frame.optionTable.colorHealthWithExtendedColors then

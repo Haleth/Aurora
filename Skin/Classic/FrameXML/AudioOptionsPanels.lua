@@ -47,17 +47,10 @@ function private.FrameXML.AudioOptionsPanels()
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelEmoteSounds)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelMusic)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelLoopMusic)
-    if private.isRetail then
-        Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelPetBattleMusic)
-    end
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelAmbientSounds)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelDialogSounds)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelErrorSpeech)
     Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelSoundInBG)
-    if private.isRetail then
-        Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelReverb)
-        Skin.AudioOptionsSmallCheckButtonTemplate(_G.AudioOptionsSoundPanelHRTF)
-    end
 
     -- Hardware
     Skin.OptionsBoxTemplate(_G.AudioOptionsSoundPanelHardware)
@@ -79,9 +72,6 @@ function private.FrameXML.AudioOptionsPanels()
     local AudioOptionsVoicePanel = _G.AudioOptionsVoicePanel
     Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.OutputDeviceDropdown)
     Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatVolume)
-    if private.isRetail then
-        Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatDucking)
-    end
     Skin.OptionsDropdownTemplate(AudioOptionsVoicePanel.MicDeviceDropdown)
     Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicVolume)
     Skin.OptionsSliderTemplate(AudioOptionsVoicePanel.VoiceChatMicSensitivity)

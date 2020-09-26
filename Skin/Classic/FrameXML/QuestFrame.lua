@@ -11,70 +11,38 @@ local Color = Aurora.Color
 
 do --[[ FrameXML\QuestFrame.lua ]]
     function Hook.QuestFrameProgressItems_Update()
-        local numRequiredItems = _G.GetNumQuestItems()
-        local numRequiredCurrencies = private.isClassic and 0 or _G.GetNumQuestCurrencies()
         local moneyToGet = _G.GetQuestMoneyToGet()
-        if numRequiredItems > 0 or moneyToGet > 0 or numRequiredCurrencies > 0 then
-            -- If there's money required then anchor and display it
-            if moneyToGet > 0 then
-                if moneyToGet > _G.GetMoney() then
-                    -- Not enough money
-                    _G.QuestProgressRequiredMoneyText:SetTextColor(Color.grayLight:GetRGB())
-                else
-                    _G.QuestProgressRequiredMoneyText:SetTextColor(Color.white:GetRGB())
-                end
+        -- If there's money required then anchor and display it
+        if moneyToGet > 0 then
+            if moneyToGet > _G.GetMoney() then
+                -- Not enough money
+                _G.QuestProgressRequiredMoneyText:SetTextColor(Color.grayLight:GetRGB())
+            else
+                _G.QuestProgressRequiredMoneyText:SetTextColor(Color.white:GetRGB())
             end
         end
     end
     function Hook.QuestFrameGreetingPanel_OnShow()
-        if private.isRetail then
-            local id, title, lastTitleButton
-            for questTitleButton in _G.QuestFrameGreetingPanel.titleButtonPool:EnumerateActive() do
-                id = questTitleButton:GetID()
-                if questTitleButton.isActive == 1 then
-                    title = _G.GetActiveTitle(id)
-                    if _G.IsActiveQuestTrivial(id) then
-                        questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
-                    else
-                        questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                    end
-                    lastTitleButton = questTitleButton
-                elseif questTitleButton.isActive == 0 then
-                    title = _G.GetAvailableTitle(id)
-                    if _G.GetAvailableQuestInfo(id) then
-                        questTitleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, title)
-                    else
-                        questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                    end
-                end
+        local numActiveQuests = _G.GetNumActiveQuests()
+        if numActiveQuests > 0 then
+            for i = 1, numActiveQuests do
+                local questTitleButton = _G["QuestTitleButton"..i]
+                local title = _G.GetActiveTitle(i)
+                questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
             end
+        end
 
-            if _G.GetNumAvailableQuests() > 0 and _G.GetNumActiveQuests() > 0 then
-                _G.QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", lastTitleButton, "BOTTOMLEFT", 22, -10)
+        local numAvailableQuests = _G.GetNumAvailableQuests()
+        if numAvailableQuests > 0 then
+            if numActiveQuests > 0 then
+                _G.QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "QuestTitleButton"..numActiveQuests, "BOTTOMLEFT",22,-10)
                 _G.AvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10)
             end
-        else
-            local numActiveQuests = _G.GetNumActiveQuests()
-            if numActiveQuests > 0 then
-                for i = 1, numActiveQuests do
-                    local questTitleButton = _G["QuestTitleButton"..i]
-                    local title = _G.GetActiveTitle(i)
-                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                end
-            end
 
-            local numAvailableQuests = _G.GetNumAvailableQuests()
-            if numAvailableQuests > 0 then
-                if numActiveQuests > 0 then
-                    _G.QuestGreetingFrameHorizontalBreak:SetPoint("TOPLEFT", "QuestTitleButton"..numActiveQuests, "BOTTOMLEFT",22,-10)
-                    _G.AvailableQuestsText:SetPoint("TOPLEFT", "QuestGreetingFrameHorizontalBreak", "BOTTOMLEFT", -12, -10)
-                end
-
-                for i = numActiveQuests + 1, numActiveQuests + numAvailableQuests do
-                    local questTitleButton = _G["QuestTitleButton"..i]
-                    local title = _G.GetAvailableTitle(i - numActiveQuests)
-                    questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
-                end
+            for i = numActiveQuests + 1, numActiveQuests + numAvailableQuests do
+                local questTitleButton = _G["QuestTitleButton"..i]
+                local title = _G.GetAvailableTitle(i - numActiveQuests)
+                questTitleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, title)
             end
         end
     end
@@ -106,37 +74,20 @@ do --[[ FrameXML\QuestFrame.lua ]]
     function Hook.QuestFrame_SetTextColor(fontString, material)
         fontString:SetTextColor(Color.white:GetRGB())
     end
-    _G.hooksecurefunc(_G.QuestProgressRequiredMoneyText, "SetTextColor", function(self, r, g, b)
-        if r == 0 then
-            self:SetTextColor(.8, .8, .8)
-        elseif r == 0.2 then
-            self:SetTextColor(1, 1, 1)
-        end
-    end)
 end
 
 do --[[ FrameXML\QuestFrameTemplates.xml ]]
     function Skin.QuestFramePanelTemplate(Frame)
         local name = Frame:GetName()
 
-        if private.isRetail then
-            Frame:SetAllPoints()
-            if Frame:GetNumRegions() > 6 then
-                --BlizzWTF: This region interferes with the ButtonFrameTemplate bg in QuestLogPopupDetailFrame
-                select(6, Frame:GetRegions()):Hide()
-            else
-                _G[name.."Bg"]:Hide()
-            end
-        else
-            local bg = Frame:GetParent():GetBackdropTexture("bg")
-            Frame:SetAllPoints(bg)
+        local bg = Frame:GetParent():GetBackdropTexture("bg")
+        Frame:SetAllPoints(bg)
 
-            local tl, tr, bl, br = Frame:GetRegions()
-            tl:SetAlpha(0)
-            tr:SetAlpha(0)
-            bl:SetAlpha(0)
-            br:SetAlpha(0)
-        end
+        local tl, tr, bl, br = Frame:GetRegions()
+        tl:SetAlpha(0)
+        tr:SetAlpha(0)
+        bl:SetAlpha(0)
+        br:SetAlpha(0)
 
         _G[name.."MaterialTopLeft"]:SetAlpha(0)
         _G[name.."MaterialTopRight"]:SetAlpha(0)
@@ -197,37 +148,29 @@ function private.FrameXML.QuestFrame()
     ----------------
     -- QuestFrame --
     ----------------
-    if private.isRetail then
-        Skin.ButtonFrameTemplate(_G.QuestFrame)
-        -- BlizzWTF: This should use the title text included in the template
-        _G.QuestFrameNpcNameText:SetAllPoints(_G.QuestFrame.TitleText)
-    else
-        local QuestFrame = _G.QuestFrame
-        Base.SetBackdrop(QuestFrame)
-        QuestFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 34,
-            top = 14,
-            bottom = 75,
-        })
+    local QuestFrame = _G.QuestFrame
+    Base.SetBackdrop(QuestFrame)
+    QuestFrame:SetBackdropOption("offsets", {
+        left = 14,
+        right = 34,
+        top = 14,
+        bottom = 75,
+    })
 
-        local portrait = QuestFrame:GetRegions()
-        portrait:Hide()
+    local portrait = QuestFrame:GetRegions()
+    portrait:Hide()
 
-        local bg = QuestFrame:GetBackdropTexture("bg")
-        _G.QuestFrameNpcNameText:ClearAllPoints()
-        _G.QuestFrameNpcNameText:SetPoint("TOPLEFT", bg)
-        _G.QuestFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    local bg = QuestFrame:GetBackdropTexture("bg")
+    _G.QuestFrameNpcNameText:ClearAllPoints()
+    _G.QuestFrameNpcNameText:SetPoint("TOPLEFT", bg)
+    _G.QuestFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-        Skin.UIPanelCloseButton(_G.QuestFrameCloseButton)
-    end
+    Skin.UIPanelCloseButton(_G.QuestFrameCloseButton)
 
 
     Skin.QuestFramePanelTemplate(_G.QuestFrameRewardPanel)
-    if private.isClassic then
-        Skin.UIPanelButtonTemplate(_G.QuestFrameCancelButton)
-        _G.QuestFrameCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
-    end
+    Skin.UIPanelButtonTemplate(_G.QuestFrameCancelButton)
+    _G.QuestFrameCancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteQuestButton)
     _G.QuestFrameCompleteQuestButton:SetPoint("BOTTOMLEFT", 5, 5)
     Skin.QuestScrollFrameTemplate(_G.QuestRewardScrollFrame)
@@ -249,17 +192,11 @@ function private.FrameXML.QuestFrame()
     _G.QuestFrameDeclineButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.UIPanelButtonTemplate(_G.QuestFrameAcceptButton)
     _G.QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
-    if private.isRetail then
-        Skin.QuestScrollFrameTemplate(_G.QuestFrameDetailPanel.ScrollFrame)
-    else
-        Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
-    end
+    Skin.QuestScrollFrameTemplate(_G.QuestDetailScrollFrame)
 
 
     Skin.QuestFramePanelTemplate(_G.QuestFrameGreetingPanel)
-    if private.isClassic then
-        select(10, _G.QuestFrameGreetingPanel:GetRegions()):Hide() -- patch
-    end
+    select(10, _G.QuestFrameGreetingPanel:GetRegions()):Hide() -- patch
     Skin.UIPanelButtonTemplate(_G.QuestFrameGreetingGoodbyeButton)
     _G.QuestFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.QuestScrollFrameTemplate(_G.QuestGreetingScrollFrame)
@@ -269,7 +206,7 @@ function private.FrameXML.QuestFrame()
     -------------------
     -- QuestNPCModel --
     -------------------
-    local QuestModel = private.isRetail and _G.QuestModelScene or _G.QuestNPCModel
+    local QuestModel = _G.QuestNPCModel
 
     local modelBackground = _G.CreateFrame("Frame", nil, QuestModel)
     modelBackground:SetPoint("TOPLEFT", -1, 1)

@@ -79,28 +79,13 @@ function private.FrameXML.HelpFrame()
         local streaks, buttonDiv, vertDivTop, vertDivBottom, vertDivMiddle = select(10, HelpFrame:GetRegions())
         streaks:Hide()
 
-        if private.isRetail then
-            Skin.DialogHeaderTemplate(HelpFrame.Header)
-        else
-            local header = HelpFrame.header
-            header:SetAlpha(0)
-
-            local text = select(10, header:GetRegions())
-            text:SetParent(HelpFrame)
-            text:ClearAllPoints()
-            text:SetPoint("TOPLEFT")
-            text:SetPoint("BOTTOMRIGHT", HelpFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-        end
+        Skin.DialogHeaderTemplate(HelpFrame.Header)
 
         Skin.UIPanelCloseButton(_G.HelpFrameCloseButton)
 
         Skin.InsetFrameTemplate(HelpFrame.leftInset)
         local LeftShadow, RightShadow, TopShadow, BottomShadow
-        if private.isRetail then
-            LeftShadow, RightShadow, TopShadow, BottomShadow = select(2, HelpFrame.leftInset:GetRegions())
-        else
-            LeftShadow, RightShadow, TopShadow, BottomShadow = select(10, HelpFrame.leftInset:GetRegions())
-        end
+        LeftShadow, RightShadow, TopShadow, BottomShadow = select(2, HelpFrame.leftInset:GetRegions())
         LeftShadow:Hide()
         RightShadow:Hide()
         TopShadow:Hide()
@@ -169,11 +154,7 @@ function private.FrameXML.HelpFrame()
     -- ReportCheatingDialog --
     --------------------------
     local ReportCheatingDialog = _G.ReportCheatingDialog
-    if private.isRetail then
-        Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
-    else
-        Skin.DialogBorderTemplate(ReportCheatingDialog)
-    end
+    Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
     Base.CreateBackdrop(ReportCheatingDialog.CommentFrame, private.backdrop, {
         bg = _G.ReportCheatingDialogCommentFrameMiddle,
 

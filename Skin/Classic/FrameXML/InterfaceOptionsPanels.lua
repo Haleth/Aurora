@@ -31,9 +31,6 @@ function private.FrameXML.InterfaceOptionsPanels()
     -- Controls --
     --------------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsControlsPanelStickyTargeting)
-    if private.isRetail then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsControlsPanelAutoDismount)
-    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsControlsPanelAutoClearAFK)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsControlsPanelAutoLootCorpse)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsControlsPanelAutoLootKeyDropDown)
@@ -45,64 +42,40 @@ function private.FrameXML.InterfaceOptionsPanels()
     ------------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelTargetOfTarget)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelFlashLowHealthWarning)
-    if private.isRetail then
-        Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelFocusCastKeyDropDown)
-    end
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelSelfCastKeyDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelAutoSelfCast)
-    if private.isRetail then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelLossOfControl)
-    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableFloatingCombatText)
-    if private.isRetail then
-        Skin.OptionsSliderTemplate(_G.InterfaceOptionsCombatPanelSpellAlertOpacitySlider)
-    else
-        Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelCombatTextFloatModeDropDown)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextLowManaHealth)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextAuras)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextAuraFade)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextState)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextParryDodgeMiss)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextResistances)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextReputation)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextReactives)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextFriendlyNames)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextComboPoints)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextEnergyGains)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextHonorGains)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableCombatDamageText)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePeriodicDamage)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePetDamage)
-    end
+    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelCombatTextFloatModeDropDown)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextLowManaHealth)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextAuras)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextAuraFade)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextState)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextParryDodgeMiss)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextResistances)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextReputation)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextReactives)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextFriendlyNames)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextComboPoints)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextEnergyGains)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextHonorGains)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableCombatDamageText)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePeriodicDamage)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePetDamage)
 
     -------------
     -- Display --
     -------------
-    if private.isRetail then
-        Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelOutlineDropDown)
-    else
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowHelm)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowCloak)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelInstantQuestText)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAutoQuestWatch)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelHideOutdoorWorldState)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowHelm)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowCloak)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelInstantQuestText)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAutoQuestWatch)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelHideOutdoorWorldState)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelRotateMinimap)
-    if private.isRetail then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAJAlerts)
-        if private.isPatch then
-            Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowInGameNavigation)
-        end
-    else
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowMinimapClock)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowDetailedTooltips)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowLoadingScreenTip)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowMinimapClock)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowDetailedTooltips)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowLoadingScreenTip)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowTutorials)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsDisplayPanelResetTutorials)
-    if private.isRetail then
-        Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelSelfHighlightDropDown)
-    end
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelDisplayDropDown)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelChatBubblesDropDown)
 
@@ -111,22 +84,14 @@ function private.FrameXML.InterfaceOptionsPanels()
     ------------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelProfanityFilter)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelSpamFilter)
-    if private.isClassic then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelShowLootSpam)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelShowLootSpam)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelGuildMemberAlert)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockTrades)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockGuildInvites)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockChatChannelInvites)
-    if private.isRetail then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelShowAccountAchievments)
-    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelOnlineFriends)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelOfflineFriends)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBroadcasts)
-    if private.isRetail then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelAutoAcceptQuickJoinRequests)
-    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelFriendRequests)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelShowToastWindow)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelEnableTwitter)
@@ -153,12 +118,8 @@ function private.FrameXML.InterfaceOptionsPanels()
     -- Names --
     -----------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelMyName)
-    if private.isRetail then
-        Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsNamesPanelNPCNamesDropDown)
-    else
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelNPCNames)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelTitles)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelNPCNames)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelTitles)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelNonCombatCreature)
 
     -- Friendly
@@ -170,12 +131,6 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsSmallCheckButtonTemplate(_G.InterfaceOptionsNamesPanelEnemyMinions)
 
     -- UnitNameplates
-    if private.isRetail then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesPersonalResource)
-        Skin.InterfaceOptionsSmallCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesPersonalResourceOnEnemy)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesMakeLarger)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesAggroFlash)
-    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesShowAll)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesEnemies)
     Skin.InterfaceOptionsSmallCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesEnemyMinions)
@@ -188,16 +143,12 @@ function private.FrameXML.InterfaceOptionsPanels()
     -- Camera --
     ------------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelWaterCollision)
-    if private.isClassic then
-        Skin.OptionsSliderTemplate(_G.InterfaceOptionsCameraPanelMaxDistanceSlider)
-    end
+    Skin.OptionsSliderTemplate(_G.InterfaceOptionsCameraPanelMaxDistanceSlider)
     Skin.OptionsSliderTemplate(_G.InterfaceOptionsCameraPanelFollowSpeedSlider)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCameraPanelStyleDropDown)
-    if private.isClassic then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelFollowTerrain)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelHeadBob)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelSmartPivot)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelFollowTerrain)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelHeadBob)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCameraPanelSmartPivot)
 
     -----------
     -- Mouse --
@@ -216,9 +167,6 @@ function private.FrameXML.InterfaceOptionsPanels()
     local Accessibility = _G.InterfaceOptionsAccessibilityPanel
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.MovePad)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelCinematicSubtitles)
-    if private.isPatch then
-        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
-    end
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
 
     local FilterExamples = Accessibility.ColorblindFilterExamples

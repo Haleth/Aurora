@@ -24,16 +24,9 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
                 bottom = 0,
             })
 
-            if private.isRetail then
-                EditBox.left:Hide()
-                _G[EditBox:GetName().."Middle"]:Hide()
-                EditBox.right:Hide()
-            else
-                local name = EditBox:GetName()
-                _G[name.."Left"]:Hide()
-                _G[name.."Middle"]:Hide()
-                _G[name.."Right"]:Hide()
-            end
+            EditBox.left:Hide()
+            _G[EditBox:GetName().."Middle"]:Hide()
+            EditBox.right:Hide()
 
             local bg = EditBox:GetBackdropTexture("bg")
             EditBox.texture:ClearAllPoints()

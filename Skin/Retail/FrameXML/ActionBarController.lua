@@ -22,11 +22,7 @@ local function SetMicroButton(button, file, left, right, top, bottom)
     --print("SetMicroButton", button:GetName(), file)
     if file == "" then
         if not left then
-            if private.isRetail then
-                left, right, top, bottom = .19, .81, .21, .82
-            else
-                left, right, top, bottom = 0.1875, 0.8125, 0.46875, 0.90625
-            end
+            left, right, top, bottom = .19, .81, .21, .82
         end
         SetTexture(button._normal, button, left, right, top, bottom)
         SetTexture(button._pushed, button, left, right, top, bottom)
@@ -358,17 +354,11 @@ do --[[ FrameXML\ActionBarController.xml ]]
         end
         function Skin.HorizontalMultiBar2(Frame)
             local name = Frame:GetName().."Button"
-            if private.isRetail then
-                for i = 1, 6 do
-                    Skin.MultiBar2ButtonNoBackgroundTemplate(_G[name..i])
-                end
-                for i = 7, 12 do
-                    Skin.MultiBar2ButtonTemplate(_G[name..i])
-                end
-            else
-                for i = 1, 12 do
-                    Skin.MultiBar2ButtonTemplate(_G[name..i])
-                end
+            for i = 1, 6 do
+                Skin.MultiBar2ButtonNoBackgroundTemplate(_G[name..i])
+            end
+            for i = 7, 12 do
+                Skin.MultiBar2ButtonTemplate(_G[name..i])
             end
         end
         function Skin.VerticalMultiBar3(Frame)
@@ -430,12 +420,8 @@ function private.FrameXML.ActionBarController()
     --     MainMenuBarMicroButtons     --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
-        if private.isRetail then
-            _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
-            _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButton_OnUpdate)
-        else
-            _G.hooksecurefunc("UpdateMicroButtons", Hook.UpdateMicroButtons)
-        end
+        _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
+        _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButton_OnUpdate)
 
         for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
             local button = _G[name]
@@ -445,11 +431,7 @@ function private.FrameXML.ActionBarController()
             local iconTexture, left, right, top, bottom
             if name == "CharacterMicroButton" then
                 SetTexture(_G.MicroButtonPortrait, button)
-                if private.isRetail then
-                    button:SetPoint("BOTTOMLEFT", _G.MicroButtonAndBagsBar, "BOTTOMLEFT", 11, 3)
-                else
-                    button:SetPoint("BOTTOMLEFT", _G.MainMenuBarArtFrame, "BOTTOMLEFT", 552, 5)
-                end
+                button:SetPoint("BOTTOMLEFT", _G.MicroButtonAndBagsBar, "BOTTOMLEFT", 11, 3)
             elseif name == "SpellbookMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
                 button:SetPoint("BOTTOMLEFT", _G.CharacterMicroButton, "BOTTOMRIGHT", 2, 0)
@@ -461,11 +443,7 @@ function private.FrameXML.ActionBarController()
                 button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "QuestLogMicroButton" then
                 iconTexture = ""
-                if private.isRetail then
-                    button:SetPoint("BOTTOMLEFT", _G.AchievementMicroButton, "BOTTOMRIGHT", 2, 0)
-                else
-                    button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
-                end
+                button:SetPoint("BOTTOMLEFT", _G.AchievementMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "SocialsMicroButton" then
                 iconTexture = ""
                 button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
@@ -493,15 +471,10 @@ function private.FrameXML.ActionBarController()
                 left, right, top, bottom = 0.21875, 0.6875, 0.109375, 0.8125
                 button:SetPoint("BOTTOMLEFT", _G.SocialsMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "MainMenuMicroButton" then
-                if private.isRetail then
-                    iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
-                    SetTexture(_G.MainMenuBarPerformanceBar, button, 0.2, 0.8, 0.08, 0.94)
-                    _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
-                    button:SetPoint("BOTTOMLEFT", _G.StoreMicroButton, "BOTTOMRIGHT", 2, 0)
-                else
-                    iconTexture = ""
-                    button:SetPoint("BOTTOMLEFT", _G.WorldMapMicroButton, "BOTTOMRIGHT", 2, 0)
-                end
+                iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
+                SetTexture(_G.MainMenuBarPerformanceBar, button, 0.2, 0.8, 0.08, 0.94)
+                _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 4)
+                button:SetPoint("BOTTOMLEFT", _G.StoreMicroButton, "BOTTOMRIGHT", 2, 0)
             elseif name == "HelpMicroButton" then
                 iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
                 button:SetPoint("BOTTOMLEFT", _G.MainMenuMicroButton, "BOTTOMRIGHT", 2, 0)
@@ -511,7 +484,7 @@ function private.FrameXML.ActionBarController()
         end
     end
 
-    if private.isRetail and not private.isPatch then
+    if not private.isPatch then
         Skin.MicroButtonAlertTemplate(_G.CharacterMicroButtonAlert)
         Skin.MicroButtonAlertTemplate(_G.TalentMicroButtonAlert)
         Skin.MicroButtonAlertTemplate(_G.CollectionsMicroButtonAlert)
@@ -544,7 +517,7 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --        StatusTrackingBar        --
     ----====####$$$$%%%%%$$$$####====----
-    if not private.disabled.mainmenubar and private.isRetail then
+    if not private.disabled.mainmenubar then
         Skin.StatusTrackingBarManagerTemplate(_G.StatusTrackingBarManager)
     end
 
@@ -552,65 +525,12 @@ function private.FrameXML.ActionBarController()
     --           MainMenuBar           --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
-        if private.isRetail then
-            _G.MicroButtonAndBagsBar.MicroBagBar:Hide()
-            _G.MainMenuBarArtFrameBackground.BackgroundLarge:SetAlpha(0)
-            _G.MainMenuBarArtFrameBackground.BackgroundSmall:SetAlpha(0)
+        _G.MicroButtonAndBagsBar.MicroBagBar:Hide()
+        _G.MainMenuBarArtFrameBackground.BackgroundLarge:SetAlpha(0)
+        _G.MainMenuBarArtFrameBackground.BackgroundSmall:SetAlpha(0)
 
-            _G.MainMenuBarArtFrame.LeftEndCap:Hide()
-            _G.MainMenuBarArtFrame.RightEndCap:Hide()
-        else
-            _G.hooksecurefunc("MainMenuTrackingBar_Configure", Hook.MainMenuTrackingBar_Configure)
-            Skin.FrameTypeStatusBar(_G.MainMenuExpBar)
-            _G.MainMenuExpBar:SetHeight(9)
-            _G.MainMenuExpBar:SetPoint("TOP", 0, 0)
-            Util.PositionBarTicks(_G.MainMenuExpBar, 20)
-            _G.ExhaustionLevelFillBar:SetHeight(9)
-
-            -- MainMenuBarArtFrame
-            _G.MainMenuXPBarTexture0:SetAlpha(0)
-            _G.MainMenuXPBarTexture1:SetAlpha(0)
-            _G.MainMenuXPBarTexture2:SetAlpha(0)
-            _G.MainMenuXPBarTexture3:SetAlpha(0)
-
-            _G.MainMenuBarTexture0:SetAlpha(0)
-            _G.MainMenuBarTexture1:SetAlpha(0)
-            _G.MainMenuBarTexture2:SetAlpha(0)
-            _G.MainMenuBarTexture3:SetAlpha(0)
-
-            _G.MainMenuBarLeftEndCap:Hide()
-            _G.MainMenuBarRightEndCap:Hide()
-
-            -- MainMenuBarPerformanceBarFrame
-            local PerformanceBarFrame = _G.MainMenuBarPerformanceBarFrame
-            Base.SetBackdrop(PerformanceBarFrame, Color.button, Color.frame.a)
-            PerformanceBarFrame:SetBackdropOption("offsets", {
-                left = 1,
-                right = 6,
-                top = 13,
-                bottom = 11,
-            })
-
-            local bg = PerformanceBarFrame:GetBackdropTexture("bg")
-            local PerformanceBar = _G.MainMenuBarPerformanceBar
-            Base.SetTexture(PerformanceBar, "gradientRight")
-            PerformanceBar:ClearAllPoints()
-            PerformanceBar:SetPoint("TOPLEFT", bg, 1, -1)
-            PerformanceBar:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-            do -- Vertical status bar
-                local divHeight = PerformanceBar:GetHeight() / 3
-                local ypos = divHeight
-                for i = 1, 2 do
-                    local texture = PerformanceBarFrame:CreateTexture(nil, "ARTWORK")
-                    texture:SetColorTexture(Color.button:GetRGB())
-                    texture:SetSize(1, 1)
-
-                    texture:SetPoint("BOTTOMLEFT", bg, 0, floor(ypos))
-                    texture:SetPoint("BOTTOMRIGHT", bg, 0, floor(ypos))
-                    ypos = ypos + divHeight
-                end
-            end
-        end
+        _G.MainMenuBarArtFrame.LeftEndCap:Hide()
+        _G.MainMenuBarArtFrame.RightEndCap:Hide()
     end
 
     ----====####$$$$%%%%$$$$####====----
@@ -628,23 +548,14 @@ function private.FrameXML.ActionBarController()
         do -- ActionBarUpButton
             local ActionBarUpButton = _G.ActionBarUpButton
             Skin.FrameTypeButton(ActionBarUpButton)
-            if private.isRetail then
-                ActionBarUpButton:ClearAllPoints()
-                ActionBarUpButton:SetPoint("TOPLEFT", _G.ActionButton12, "TOPRIGHT", 6, 1)
-                ActionBarUpButton:SetBackdropOption("offsets", {
-                    left = 1,
-                    right = 1,
-                    top = 1,
-                    bottom = 1,
-                })
-            else
-                ActionBarUpButton:SetBackdropOption("offsets", {
-                    left = 8,
-                    right = 8,
-                    top = 8,
-                    bottom = 8,
-                })
-            end
+            ActionBarUpButton:ClearAllPoints()
+            ActionBarUpButton:SetPoint("TOPLEFT", _G.ActionButton12, "TOPRIGHT", 6, 1)
+            ActionBarUpButton:SetBackdropOption("offsets", {
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
+            })
 
             local bg = ActionBarUpButton:GetBackdropTexture("bg")
             local arrow = ActionBarUpButton:CreateTexture(nil, "ARTWORK")
@@ -657,23 +568,14 @@ function private.FrameXML.ActionBarController()
         do -- ActionBarDownButton
             local ActionBarDownButton = _G.ActionBarDownButton
             Skin.FrameTypeButton(ActionBarDownButton)
-            if private.isRetail then
-                ActionBarDownButton:ClearAllPoints()
-                ActionBarDownButton:SetPoint("BOTTOMLEFT", _G.ActionButton12, "BOTTOMRIGHT", 6, -1)
-                ActionBarDownButton:SetBackdropOption("offsets", {
-                    left = 1,
-                    right = 1,
-                    top = 1,
-                    bottom = 1,
-                })
-            else
-                ActionBarDownButton:SetBackdropOption("offsets", {
-                    left = 8,
-                    right = 8,
-                    top = 8,
-                    bottom = 8,
-                })
-            end
+            ActionBarDownButton:ClearAllPoints()
+            ActionBarDownButton:SetPoint("BOTTOMLEFT", _G.ActionButton12, "BOTTOMRIGHT", 6, -1)
+            ActionBarDownButton:SetBackdropOption("offsets", {
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
+            })
 
             local bg = ActionBarDownButton:GetBackdropTexture("bg")
             local arrow = ActionBarDownButton:CreateTexture(nil, "ARTWORK")
@@ -714,9 +616,7 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%$$$$####====----
     --         ExtraActionBar         --
     ----====####$$$$%%%%$$$$####====----
-    if private.isRetail then
-        Skin.ExtraActionButtonTemplate(_G.ExtraActionButton1)
-    end
+    Skin.ExtraActionButtonTemplate(_G.ExtraActionButton1)
 
     ----====####$$$$%%%%$$$$####====----
     --        PossessActionBar        --

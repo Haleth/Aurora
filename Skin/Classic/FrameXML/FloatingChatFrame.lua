@@ -82,70 +82,41 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         Skin.FloatingBorderedFrame(ScrollingMessageFrame)
         local buttonFrame = ScrollingMessageFrame.buttonFrame
 
-        if private.isRetail then
-            Skin.FloatingBorderedFrame(buttonFrame)
+        Skin.ChatFrameButton(buttonFrame.downButton)
+        local bg = buttonFrame.downButton:GetBackdropTexture("bg")
+        local arrow = buttonFrame.downButton:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", bg, 5, -8)
+        arrow:SetPoint("BOTTOMRIGHT", bg, -5, 8)
+        Base.SetTexture(arrow, "arrowDown")
 
-            local minimizeButton = buttonFrame.minimizeButton
-            Skin.ChatFrameButton(minimizeButton)
-            local bg = minimizeButton:GetBackdropTexture("bg")
-            minimizeButton:SetPoint("TOP", buttonFrame, 0, -3)
-            local line = minimizeButton:CreateTexture(nil, "ARTWORK")
-            line:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 3, 6)
-            line:SetPoint("BOTTOMRIGHT", bg, -3, 3)
-            line:SetColorTexture(1, 1, 1)
-
-            local bottomButton = ScrollingMessageFrame.ScrollToBottomButton
-            bottomButton:SetPoint("BOTTOMRIGHT", ScrollingMessageFrame.ResizeButton, "TOPRIGHT", -5, 0)
-            Skin.ChatFrameButton(bottomButton)
-            bg = bottomButton:GetBackdropTexture("bg")
-            local arrow = bottomButton:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", bg, 3, -3)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
-            Base.SetTexture(arrow, "arrowDown")
-
-            local bottom = bottomButton:CreateTexture(nil, "ARTWORK")
-            bottom:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 3, 5)
-            bottom:SetPoint("BOTTOMRIGHT", bg, -3, 3)
-            bottom:SetColorTexture(1, 1, 1)
-
-            Skin.ScrollBarThumb(ScrollingMessageFrame.ScrollBar.ThumbTexture)
-        else
-            Skin.ChatFrameButton(buttonFrame.downButton)
-            local bg = buttonFrame.downButton:GetBackdropTexture("bg")
-            local arrow = buttonFrame.downButton:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", bg, 5, -8)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -5, 8)
-            Base.SetTexture(arrow, "arrowDown")
-
-            Skin.ChatFrameButton(buttonFrame.upButton)
-            bg = buttonFrame.upButton:GetBackdropTexture("bg")
-            arrow = buttonFrame.upButton:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", bg, 5, -8)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -5, 8)
-            Base.SetTexture(arrow, "arrowUp")
+        Skin.ChatFrameButton(buttonFrame.upButton)
+        bg = buttonFrame.upButton:GetBackdropTexture("bg")
+        arrow = buttonFrame.upButton:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", bg, 5, -8)
+        arrow:SetPoint("BOTTOMRIGHT", bg, -5, 8)
+        Base.SetTexture(arrow, "arrowUp")
 
 
-            local minimizeButton = buttonFrame.minimizeButton
-            Skin.ChatFrameButton(minimizeButton)
-            minimizeButton:SetPoint("TOP", ScrollingMessageFrame.buttonFrame, 0, -3)
-            local line = minimizeButton:CreateTexture(nil, "ARTWORK")
-            line:SetPoint("TOPLEFT", minimizeButton, "BOTTOMLEFT", 3, 6)
-            line:SetPoint("BOTTOMRIGHT", -3, 3)
-            line:SetColorTexture(1, 1, 1)
+        local minimizeButton = buttonFrame.minimizeButton
+        Skin.ChatFrameButton(minimizeButton)
+        minimizeButton:SetPoint("TOP", ScrollingMessageFrame.buttonFrame, 0, -3)
+        local line = minimizeButton:CreateTexture(nil, "ARTWORK")
+        line:SetPoint("TOPLEFT", minimizeButton, "BOTTOMLEFT", 3, 6)
+        line:SetPoint("BOTTOMRIGHT", -3, 3)
+        line:SetColorTexture(1, 1, 1)
 
-            local bottomButton = buttonFrame.bottomButton
-            Skin.ChatFrameButton(bottomButton)
-            bg = bottomButton:GetBackdropTexture("bg")
-            arrow = bottomButton:CreateTexture(nil, "ARTWORK")
-            arrow:SetPoint("TOPLEFT", bg, 5, -7)
-            arrow:SetPoint("BOTTOMRIGHT", bg, -5, 9)
-            Base.SetTexture(arrow, "arrowDown")
+        local bottomButton = buttonFrame.bottomButton
+        Skin.ChatFrameButton(bottomButton)
+        bg = bottomButton:GetBackdropTexture("bg")
+        arrow = bottomButton:CreateTexture(nil, "ARTWORK")
+        arrow:SetPoint("TOPLEFT", bg, 5, -7)
+        arrow:SetPoint("BOTTOMRIGHT", bg, -5, 9)
+        Base.SetTexture(arrow, "arrowDown")
 
-            local bottom = bottomButton:CreateTexture(nil, "ARTWORK")
-            bottom:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 5, 9)
-            bottom:SetPoint("BOTTOMRIGHT", bg, -5, 7)
-            bottom:SetColorTexture(1, 1, 1)
-        end
+        local bottom = bottomButton:CreateTexture(nil, "ARTWORK")
+        bottom:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 5, 9)
+        bottom:SetPoint("BOTTOMRIGHT", bg, -5, 7)
+        bottom:SetColorTexture(1, 1, 1)
 
         Hook.FCF_SetButtonSide(ScrollingMessageFrame, _G.FCF_GetButtonSide(ScrollingMessageFrame))
         _G.FloatingChatFrame_UpdateBackgroundAnchors(ScrollingMessageFrame)
@@ -216,11 +187,6 @@ function private.FrameXML.FloatingChatFrame()
 
     Skin.ChatFrameButton(_G.ChatFrameMenuButton, [[Interface\GossipFrame\ChatBubbleGossipIcon]])
     Skin.VoiceToggleButtonTemplate(_G.ChatFrameChannelButton)
-    if private.isRetail then
-        _G.ChatFrameChannelButton:SetPoint("TOP", _G.ChatFrame1ButtonFrame, 0, -3)
-        Skin.ToggleVoiceDeafenButtonTemplate(_G.ChatFrameToggleVoiceDeafenButton)
-        Skin.ToggleVoiceMuteButtonTemplate(_G.ChatFrameToggleVoiceMuteButton)
-    end
 
     Skin.UIMenuTemplate(_G.ChatMenu)
     Skin.UIMenuTemplate(_G.EmoteMenu)

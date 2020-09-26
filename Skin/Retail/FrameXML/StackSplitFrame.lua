@@ -36,41 +36,20 @@ end
 
 function private.FrameXML.StackSplitFrame()
     local StackSplitFrame = _G.StackSplitFrame
-    if private.isRetail then
-        Util.Mixin(StackSplitFrame, Hook.StackSplitMixin)
-        Base.SetBackdrop(StackSplitFrame)
+    Util.Mixin(StackSplitFrame, Hook.StackSplitMixin)
+    Base.SetBackdrop(StackSplitFrame)
 
-        local bg = StackSplitFrame:GetBackdropTexture("bg")
-        StackSplitFrame.SingleItemSplitBackground:SetAlpha(0)
-        StackSplitFrame.MultiItemSplitBackground:SetAlpha(0)
+    local bg = StackSplitFrame:GetBackdropTexture("bg")
+    StackSplitFrame.SingleItemSplitBackground:SetAlpha(0)
+    StackSplitFrame.MultiItemSplitBackground:SetAlpha(0)
 
-        local textBG = _G.CreateFrame("Frame", nil, StackSplitFrame)
-        textBG:SetPoint("TOPLEFT", bg, 20, -10)
-        textBG:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", -20, -30)
-        Base.SetBackdrop(textBG, Color.frame)
-        textBG:SetBackdropBorderColor(Color.button)
-        StackSplitFrame.StackSplitText:SetParent(textBG)
+    local textBG = _G.CreateFrame("Frame", nil, StackSplitFrame)
+    textBG:SetPoint("TOPLEFT", bg, 20, -10)
+    textBG:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", -20, -30)
+    Base.SetBackdrop(textBG, Color.frame)
+    textBG:SetBackdropBorderColor(Color.button)
+    StackSplitFrame.StackSplitText:SetParent(textBG)
 
-        Skin.UIPanelButtonTemplate(StackSplitFrame.OkayButton)
-        Skin.UIPanelButtonTemplate(StackSplitFrame.CancelButton)
-    else
-        Base.SetBackdrop(StackSplitFrame)
-        StackSplitFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 12,
-            top = 10,
-            bottom = 15,
-        })
-
-        local bg = StackSplitFrame:GetBackdropTexture("bg")
-        local textBG = _G.CreateFrame("Frame", nil, StackSplitFrame)
-        textBG:SetPoint("TOPLEFT", bg, 20, -10)
-        textBG:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", -20, -30)
-        Base.SetBackdrop(textBG, Color.frame)
-        textBG:SetBackdropBorderColor(Color.button)
-        _G.StackSplitText:SetParent(textBG)
-
-        Skin.UIPanelButtonTemplate(_G.StackSplitOkayButton)
-        Skin.UIPanelButtonTemplate(_G.StackSplitCancelButton)
-    end
+    Skin.UIPanelButtonTemplate(StackSplitFrame.OkayButton)
+    Skin.UIPanelButtonTemplate(StackSplitFrame.CancelButton)
 end

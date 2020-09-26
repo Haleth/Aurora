@@ -6,7 +6,6 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
@@ -28,31 +27,18 @@ do --[[ FrameXML\LootFrame.lua ]]
         local slot = (numLootToShow * (LootFrame.page - 1)) + index
 
         if slot <= numLootItems then
-            local _, isQuestItem, isActive
+            local _, isQuestItem
             if LootFrame.AutoLootTable then
                 local entry = LootFrame.AutoLootTable[slot]
                 if not entry.hide then
                     isQuestItem = entry.isQuestItem
                 end
             else
-                _, _, _, _, _, _, isQuestItem, _, isActive = _G.GetLootSlotInfo(slot)
+                _, _, _, _, _, _, isQuestItem = _G.GetLootSlotInfo(slot)
             end
 
-            local questTexture = button._questTexture
             if isQuestItem then
                 button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
-
-                if private.isClassic then
-                    questTexture:Show()
-
-                    if isActive then
-                        questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BANG)
-                    else
-                        questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
-                    end
-                end
-            else
-                questTexture:Hide()
             end
         end
     end
@@ -67,14 +53,9 @@ do --[[ FrameXML\LootFrame.xml ]]
 
         local name = Frame:GetName()
         _G[name.."NameFrame"]:Hide()
-        Frame._questTexture = _G[name.."IconQuestTexture"]
-        if private.isClassic then
-            Frame._questTexture = Frame:CreateTexture(nil, "ARTWORK")
-            Frame._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
-        end
-
-        Frame._questTexture:SetAllPoints(Frame)
-        Base.CropIcon(Frame._questTexture)
+        local questTexture = _G[name.."IconQuestTexture"]
+        questTexture:SetAllPoints(Frame)
+        Base.CropIcon(questTexture)
 
         --local bg = F.CreateBDFrame(nameFrame, .2)
         --bg:SetPoint("TOPLEFT", Button.icon, "TOPRIGHT", 3, 1)
@@ -160,11 +141,7 @@ function private.FrameXML.LootFrame()
     Skin.ButtonFrameTemplate(LootFrame)
     _G.LootFramePortraitOverlay:Hide()
 
-    if private.isRetail then
-        select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
-    else
-        select(19, LootFrame:GetRegions()):SetAllPoints(LootFrame.TitleText) -- Items text
-    end
+    select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
 
     for index = 1, 4 do
         Skin.LootButtonTemplate(_G["LootButton"..index])
@@ -206,9 +183,7 @@ function private.FrameXML.LootFrame()
     --------------------
     -- BonusRollFrame --
     --------------------
-    if private.isRetail then
-        Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
-    end
+    Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
 
 
     ---------------
@@ -218,56 +193,4 @@ function private.FrameXML.LootFrame()
     Skin.GroupLootFrameTemplate(_G.GroupLootFrame2)
     Skin.GroupLootFrameTemplate(_G.GroupLootFrame3)
     Skin.GroupLootFrameTemplate(_G.GroupLootFrame4)
-
-
-    -----------------------
-    -- MasterLooterFrame --
-    -----------------------
-    if private.isClassic then
-        local MasterLooterFrame = _G.MasterLooterFrame
-        for i = 1, 9 do
-            select(i, MasterLooterFrame:GetRegions()):Hide()
-        end
-        F.CreateBD(MasterLooterFrame)
-        F.ReskinClose(select(3, MasterLooterFrame:GetChildren()))
-
-        local item = MasterLooterFrame.Item
-        item.NameBorderLeft:Hide()
-        item.NameBorderRight:Hide()
-        item.NameBorderMid:Hide()
-        item._auroraIconBorder = F.ReskinIcon(item.Icon)
-
-        MasterLooterFrame:HookScript("OnShow", function(MLFrame)
-            _G.LootFrame:SetAlpha(.4)
-        end)
-
-        MasterLooterFrame:HookScript("OnHide", function(MLFrame)
-            _G.LootFrame:SetAlpha(1)
-        end)
-
-        _G.hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
-            for i = 1, _G.MAX_RAID_MEMBERS do
-                local playerFrame = MasterLooterFrame["player"..i]
-                if playerFrame then
-                    if not playerFrame.styled then
-                        playerFrame.Bg:SetPoint("TOPLEFT", 1, -1)
-                        playerFrame.Bg:SetPoint("BOTTOMRIGHT", -1, 1)
-                        playerFrame.Highlight:SetPoint("TOPLEFT", 1, -1)
-                        playerFrame.Highlight:SetPoint("BOTTOMRIGHT", -1, 1)
-
-                        playerFrame.Highlight:SetTexture(C.media.backdrop)
-
-                        F.CreateBD(playerFrame, 0)
-
-                        playerFrame.styled = true
-                    end
-                    local colour = _G.CUSTOM_CLASS_COLORS[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
-                    playerFrame.Name:SetTextColor(colour.r, colour.g, colour.b)
-                    playerFrame.Highlight:SetVertexColor(colour.r, colour.g, colour.b, .2)
-                else
-                    break
-                end
-            end
-        end)
-    end
 end

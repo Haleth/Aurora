@@ -460,26 +460,28 @@ function commands.test()
                         --"club invite",
                         --"finder invite",
                     }
-                    local BNetAccountInfo = {
-                        bnetAccountID = "number",
-                        accountName = "string",
-                        battleTag = "string",
-                        isFriend = GetBoolen(),
-                        isBattleTagFriend = GetBoolen(),
-                        lastOnlineTime = "number",
-                        isAFK = GetBoolen(),
-                        isDND = GetBoolen(),
-                        isFavorite = GetBoolen(),
-                        appearOffline = GetBoolen(),
-                        customMessage = "string",
-                        customMessageTime = "number",
-                        note = "string",
-                        rafLinkType = "RafLinkType",
-                        gameAccountInfo = "BNetGameAccountInfo",
-                    }
-                    function _G.C_BattleNet.GetAccountInfoByID(bnetAccountID, wowAccountGUID)
-                        local info = CopyTable(BNetAccountInfo)
-                        return info
+                    if private.isRetail then
+                        local BNetAccountInfo = {
+                            bnetAccountID = "number",
+                            accountName = "string",
+                            battleTag = "string",
+                            isFriend = GetBoolen(),
+                            isBattleTagFriend = GetBoolen(),
+                            lastOnlineTime = "number",
+                            isAFK = GetBoolen(),
+                            isDND = GetBoolen(),
+                            isFavorite = GetBoolen(),
+                            appearOffline = GetBoolen(),
+                            customMessage = "string",
+                            customMessageTime = "number",
+                            note = "string",
+                            rafLinkType = "RafLinkType",
+                            gameAccountInfo = "BNetGameAccountInfo",
+                        }
+                        function _G.C_BattleNet.GetAccountInfoByID(bnetAccountID, wowAccountGUID)
+                            local info = CopyTable(BNetAccountInfo)
+                            return info
+                        end
                     end
                     alertArgs.bnetAlerts = {
                         name = "Battle.net Alerts",
@@ -512,7 +514,11 @@ function commands.test()
                                 desc = "BNToastFrame_Show",
                                 type = "execute",
                                 func = function()
-                                    _G.BNToastFrame:AddToast(toastType, toastInfo)
+                                    if private.isRetail then
+                                        _G.BNToastFrame:AddToast(toastType, toastInfo)
+                                    else
+                                        _G.BNToastFrame_AddToast(toastType, toastInfo)
+                                    end
                                 end,
                             },
                         },

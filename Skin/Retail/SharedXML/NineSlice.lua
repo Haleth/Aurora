@@ -23,10 +23,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         "Center",
     }
 
-    local function BasicFrame(Frame)
-        Base.SetBackdrop(Frame)
-    end
-
+    local BasicFrame = Base.SetBackdrop
     local function InsetFrame(Frame)
         Base.SetBackdrop(Frame, Color.frame)
     end
@@ -46,7 +43,15 @@ do --[[ SharedXML\NineSlice.lua ]]
         BFAMissionHorde = BasicFrame,
         BFAMissionAlliance = BasicFrame,
         GenericMetal = BasicFrame,
-        Dialog = BasicFrame,
+        Dialog = function(Frame)
+            BasicFrame(Frame)
+            Frame:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
+        end,
         WoodenNeutralFrameTemplate = BasicFrame,
         Runeforge = BasicFrame,
         AdventuresMissionComplete = InsetFrame,

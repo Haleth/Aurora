@@ -34,13 +34,6 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         local bagID = self:GetID()
         local name = self:GetName()
 
-        if private.isRetail and bagID == 0 then
-            _G.BagItemSearchBox:ClearAllPoints()
-            _G.BagItemSearchBox:SetPoint("TOPLEFT", self, 20, -35)
-            _G.BagItemAutoSortButton:ClearAllPoints()
-            _G.BagItemAutoSortButton:SetPoint("TOPRIGHT", self, -16, -31)
-        end
-
         for i = 1, self.size do
             local itemButton = _G[name.."Item"..i]
             local slotID = itemButton:GetID()
@@ -65,10 +58,6 @@ do --[[ FrameXML\ContainerFrame.lua ]]
 end
 
 do --[[ FrameXML\ContainerFrame.xml ]]
-    function Skin.ContainerFrameHelpBoxTemplate(Frame)
-        Skin.GlowBoxFrame(Frame, "Right")
-    end
-
     function Skin.ContainerFrameItemButtonTemplate(ItemButton)
         Skin.FrameTypeItemButton(ItemButton)
         ItemButton:SetBackdropColor(1, 1, 1, 0.75)
@@ -82,19 +71,13 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 
         local name = ItemButton:GetName()
         ItemButton._questTexture = _G[name.."IconQuestTexture"]
-        if private.isClassic then
-            ItemButton._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
-        end
+        ItemButton._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
         Base.CropIcon(ItemButton._questTexture)
         Base.CropIcon(ItemButton.NewItemTexture)
         ItemButton.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
         ItemButton.BattlepayItemTexture:SetAllPoints()
     end
     function Skin.ContainerFrameTemplate(Frame)
-        if private.isRetail then
-            _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
-        end
-
         Base.SetBackdrop(Frame)
         Frame:SetBackdropOption("offsets", {
             left = 11,
@@ -121,40 +104,11 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Base.SetBackdrop(moneyBG, Color.frame)
         moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
         local moneyFrame = _G[name.."MoneyFrame"]
-        if private.isRetail then
-            moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
-            moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)
-            moneyBG:SetPoint("LEFT", bg, 3, 0)
-            moneyBG:SetPoint("RIGHT", bg, -3, 0)
-        else
-            moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
-            moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 23)
-            moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 3)
-        end
+        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
+        moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 23)
+        moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 3)
 
         Frame.PortraitButton:Hide()
-        if private.isRetail then
-            Frame.FilterIcon:ClearAllPoints()
-            Frame.FilterIcon:SetPoint("TOPLEFT", bg, 5, -5)
-            Frame.FilterIcon:SetSize(17, 17)
-            Frame.FilterIcon.Icon:SetAllPoints()
-
-            Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
-
-            if not private.isPatch then -- ExtraBagSlotsHelpBox
-                -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-                local HelpBox = Frame.ExtraBagSlotsHelpBox
-
-                local Arrow = _G.CreateFrame("Frame", nil, HelpBox)
-                Arrow.Arrow = HelpBox.Arrow
-                Arrow.Arrow:SetParent(Arrow)
-                Arrow.Glow = HelpBox.ArrowGlow
-                Arrow.Glow:SetParent(Arrow)
-                HelpBox.Arrow = Arrow
-
-                Skin.GlowBoxFrame(HelpBox, "Right")
-            end
-        end
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])
         _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
 
@@ -169,34 +123,7 @@ function private.FrameXML.ContainerFrame()
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
     _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
 
-    if not private.isPatch then
-        Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
-        Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
-    end
-
     for i = 1, 12 do
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])
-    end
-
-    if private.isRetail then
-        Skin.BagSearchBoxTemplate(_G.BagItemSearchBox)
-        _G.BagItemSearchBox:SetWidth(120)
-
-        local autoSort = _G.BagItemAutoSortButton
-        autoSort:SetSize(26, 26)
-        autoSort:SetNormalTexture([[Interface\Icons\INV_Pet_Broom]])
-        autoSort:GetNormalTexture():SetTexCoord(.13, .92, .13, .92)
-
-        autoSort:SetPushedTexture([[Interface\Icons\INV_Pet_Broom]])
-        autoSort:GetPushedTexture():SetTexCoord(.08, .87, .08, .87)
-
-        local iconBorder = autoSort:CreateTexture(nil, "BACKGROUND")
-        iconBorder:SetPoint("TOPLEFT", autoSort, -1, 1)
-        iconBorder:SetPoint("BOTTOMRIGHT", autoSort, 1, -1)
-        iconBorder:SetColorTexture(0, 0, 0)
-    end
-
-    if not private.isPatch then
-        Skin.GlowBoxFrame(_G.BagHelpBox, "Right")
     end
 end

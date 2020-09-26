@@ -6,10 +6,16 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\GameTooltip.lua ]]
+    function Hook.GameTooltip_SetBackdropStyle(self, style)
+        if not self.IsEmbedded then
+            Base.SetBackdrop(self)
+        end
+    end
     function Hook.EmbeddedItemTooltip_Clear(self)
         if not self._auroraIconBorder then
             Skin.InternalEmbeddedItemTooltipTemplate(self)
@@ -74,11 +80,6 @@ do --[[ FrameXML\GameTooltip.xml ]]
             bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
             Base.SetBackdrop(bg, Color.black, 0)
             Frame._auroraIconBorder = bg
-
-            if private.isRetail then
-                Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
-                Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
-            end
         end
     end
 end
@@ -86,6 +87,7 @@ end
 function private.FrameXML.GameTooltip()
     if private.disabled.tooltips then return end
 
+    _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
     _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)

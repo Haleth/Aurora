@@ -50,15 +50,15 @@ function private.AddOns.Blizzard_MacroUI()
     MacroFrame:HookScript("OnShow", Hook.MacroFrame_OnShow)
 
     Skin.ButtonFrameTemplate(MacroFrame)
-    local bg = MacroFrame.NineSlice:GetBackdropTexture("bg")
+    local bg = MacroFrame:GetBackdropTexture("bg")
 
     -- BlizzWTF: These should use the widgets included in the template
-    local portrait, title = select(6, MacroFrame:GetRegions())
+    local portrait, title = select(18, MacroFrame:GetRegions())
     portrait:Hide()
     title:SetAllPoints(MacroFrame.TitleText)
 
     _G.MacroHorizontalBarLeft:Hide()
-    select(9, MacroFrame:GetRegions()):Hide()
+    select(21, MacroFrame:GetRegions()):Hide()
 
     _G.MacroFrameSelectedMacroBackground:SetAlpha(0)
     _G.MacroFrameSelectedMacroName:SetPoint("TOPLEFT", _G.MacroFrameSelectedMacroButton, "TOPRIGHT", 9, 5)

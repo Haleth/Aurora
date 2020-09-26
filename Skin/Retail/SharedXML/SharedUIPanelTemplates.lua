@@ -470,72 +470,37 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         end
     end
     function Skin.InsetFrameTemplate(Frame)
-        if private.isRetail then
-            Frame.NineSlice.Center = Frame.Bg
-            Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        else
-            Frame.Bg:Hide()
-
-            Frame.InsetBorderTopLeft:Hide()
-            Frame.InsetBorderTopRight:Hide()
-            Frame.InsetBorderBottomLeft:Hide()
-            Frame.InsetBorderBottomRight:Hide()
-
-            Frame.InsetBorderTop:Hide()
-            Frame.InsetBorderBottom:Hide()
-            Frame.InsetBorderLeft:Hide()
-            Frame.InsetBorderRight:Hide()
-        end
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
     end
     function Skin.DialogBorderNoCenterTemplate(Frame)
         Skin.NineSlicePanelTemplate(Frame)
-        Frame:SetBackdropOption("offsets", {
-            left = 5,
-            right = 5,
-            top = 5,
-            bottom = 5,
-        })
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 0)
     end
     function Skin.DialogBorderTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        end
-
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
         Base.SetBackdrop(Frame)
     end
     function Skin.DialogBorderDarkTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        else
-            Base.SetBackdrop(Frame)
-        end
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 0.87)
     end
     function Skin.DialogBorderTranslucentTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        else
-            Base.SetBackdrop(Frame)
-        end
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 0.8)
     end
     function Skin.DialogBorderOpaqueTemplate(Frame)
-        if private.isRetail then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-        else
-            Base.SetBackdrop(Frame)
-        end
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
 
         local r, g, b = Frame:GetBackdropColor()
         Frame:SetBackdropColor(r, g, b, 1)
@@ -557,67 +522,29 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        if private.isRetail then
-            Util.Mixin(Frame, Hook.PortraitFrameMixin)
+        Util.Mixin(Frame, Hook.PortraitFrameMixin)
 
-            Frame.TitleBg:SetAlpha(0)
-            Frame.portrait:SetAlpha(0)
+        Frame.TitleBg:SetAlpha(0)
+        Frame.portrait:SetAlpha(0)
 
-            local titleText = Frame.TitleText
-            titleText:ClearAllPoints()
-            titleText:SetPoint("TOPLEFT", Frame.Bg)
-            titleText:SetPoint("BOTTOMRIGHT", Frame.Bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+        local titleText = Frame.TitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT", Frame.Bg)
+        titleText:SetPoint("BOTTOMRIGHT", Frame.Bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-            Frame.TopTileStreaks:SetTexture("")
+        Frame.TopTileStreaks:SetTexture("")
 
-            Frame.NineSlice.Center = Frame.Bg
-            Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        else
-            Frame.Bg:Hide()
-
-            Frame.TitleBg:Hide()
-            Frame.portrait:SetAlpha(0)
-            Frame.PortraitFrame:SetTexture("")
-            Frame.TopRightCorner:Hide()
-            Frame.TopLeftCorner:SetTexture("")
-            Frame.TopBorder:SetTexture("")
-
-            local titleText = Frame.TitleText
-            titleText:ClearAllPoints()
-            titleText:SetPoint("TOPLEFT")
-            titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-            Frame.TopTileStreaks:SetTexture("")
-            Frame.BotLeftCorner:Hide()
-            Frame.BotRightCorner:Hide()
-            Frame.BottomBorder:Hide()
-            Frame.LeftBorder:Hide()
-            Frame.RightBorder:Hide()
-
-            Base.SetBackdrop(Frame)
-        end
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
 
-        if private.isRetail then
-            Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
-        else
-            local bg = Frame:GetBackdropTexture("bg")
-            Frame.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
-        end
+        Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
     end
     function Skin.ButtonFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
-
-        if private.isClassic then
-            local name = Frame:GetName()
-            _G[name.."BtnCornerLeft"]:SetAlpha(0)
-            _G[name.."BtnCornerRight"]:SetAlpha(0)
-            _G[name.."ButtonBottomBorder"]:SetAlpha(0)
-        end
-
         Skin.InsetFrameTemplate(Frame.Inset)
     end
 
@@ -885,11 +812,8 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
-    if private.isRetail then
-        _G.hooksecurefunc("UIPanelCloseButton_SetBorderAtlas", Hook.UIPanelCloseButton_SetBorderAtlas)
-
-        Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
-    end
+    _G.hooksecurefunc("UIPanelCloseButton_SetBorderAtlas", Hook.UIPanelCloseButton_SetBorderAtlas)
+    Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
 
     _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)

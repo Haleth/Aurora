@@ -49,22 +49,14 @@ function private.FrameXML.ColorPickerFrame()
     ColorPickerFrame:HookScript("OnShow", Hook.ColorPickerFrame_UpdateDisplay)
     ColorPickerFrame:SetPropagateKeyboardInput(true)
 
-    local bg
-    if private.isRetail then
-        Skin.DialogBorderTemplate(ColorPickerFrame.Border)
-        bg = ColorPickerFrame.Border:GetBackdropTexture("bg")
+    Skin.DialogBorderTemplate(ColorPickerFrame)
+    local bg = ColorPickerFrame:GetBackdropTexture("bg")
 
-        Skin.DialogHeaderTemplate(ColorPickerFrame.Header)
-    else
-        Skin.DialogBorderTemplate(ColorPickerFrame)
-        bg = ColorPickerFrame:GetBackdropTexture("bg")
-
-        local _, header, text = ColorPickerFrame:GetRegions()
-        header:Hide()
-        text:ClearAllPoints()
-        text:SetPoint("TOPLEFT")
-        text:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    end
+    local _, header, text = ColorPickerFrame:GetRegions()
+    header:Hide()
+    text:ClearAllPoints()
+    text:SetPoint("TOPLEFT")
+    text:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
     Skin.GameMenuButtonTemplate(_G.ColorPickerCancelButton)
     Skin.GameMenuButtonTemplate(_G.ColorPickerOkayButton)
@@ -78,10 +70,6 @@ function private.FrameXML.ColorPickerFrame()
     ------------------
     -- OpacityFrame --
     ------------------
-    if private.isRetail then
-        Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
-    else
-        Skin.DialogBorderTemplate(_G.OpacityFrame)
-    end
+    Skin.DialogBorderTemplate(_G.OpacityFrame)
     Skin.OpacitySlider(_G.OpacityFrameSlider)
 end

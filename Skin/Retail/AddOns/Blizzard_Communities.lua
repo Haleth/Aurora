@@ -28,20 +28,18 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 self._iconBG:Hide()
             end
         end
-        if private.isRetail then
-            function Hook.CommunitiesListEntryMixin:SetFindCommunity()
-                self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        function Hook.CommunitiesListEntryMixin:SetFindCommunity()
+            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
 
-                self.CircleMask:Hide()
-                self.Icon:SetTexCoord(0, 1, 0, 1)
-                self.Icon:ClearAllPoints()
-                self.Icon:SetSize(34, 34)
-                self.Icon:SetPoint("CENTER", self._iconBG)
-                self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
+            self.CircleMask:Hide()
+            self.Icon:SetTexCoord(0, 1, 0, 1)
+            self.Icon:ClearAllPoints()
+            self.Icon:SetSize(34, 34)
+            self.Icon:SetPoint("CENTER", self._iconBG)
+            self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
 
-                self._iconBG:Show()
-                self._iconBG:SetColorTexture(Color.black:GetRGB())
-            end
+            self._iconBG:Show()
+            self._iconBG:SetColorTexture(Color.black:GetRGB())
         end
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             self.CircleMask:Hide()
@@ -53,18 +51,16 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self._iconBG:Show()
             self._iconBG:SetColorTexture(Color.black:GetRGB())
         end
-        if private.isRetail then
-            function Hook.CommunitiesListEntryMixin:SetGuildFinder()
-                self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+        function Hook.CommunitiesListEntryMixin:SetGuildFinder()
+            self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
 
-                self.CircleMask:Hide()
-                self.Icon:SetTexCoord(0, 1, 0, 1)
-                self.Icon:ClearAllPoints()
-                self.Icon:SetSize(40, 40)
-                self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
+            self.CircleMask:Hide()
+            self.Icon:SetTexCoord(0, 1, 0, 1)
+            self.Icon:ClearAllPoints()
+            self.Icon:SetSize(40, 40)
+            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
 
-                self._iconBG:Hide()
-            end
+            self._iconBG:Hide()
         end
     end
     do --[[ CommunitiesMemberList ]]
@@ -128,13 +124,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             Button.Selection:SetAllPoints(bg)
 
-            if private.isRetail then
-                Button.GuildTabardBackground:SetSize(60, 60)
-                Button.GuildTabardBackground:SetPoint("TOPLEFT", bg, -1, 1)
-                Button.GuildTabardEmblem:SetSize(36 * 1.3, 42 * 1.3)
-                Button.GuildTabardEmblem:SetPoint("CENTER", Button.GuildTabardBackground, 0, 6)
-                Button.GuildTabardBorder:SetAllPoints(Button.GuildTabardBackground)
-            end
+            Button.GuildTabardBackground:SetSize(60, 60)
+            Button.GuildTabardBackground:SetPoint("TOPLEFT", bg, -1, 1)
+            Button.GuildTabardEmblem:SetSize(36 * 1.3, 42 * 1.3)
+            Button.GuildTabardEmblem:SetPoint("CENTER", Button.GuildTabardBackground, 0, 6)
+            Button.GuildTabardBorder:SetAllPoints(Button.GuildTabardBackground)
 
             Button._iconBG = Button:CreateTexture(nil, "BACKGROUND", nil, 5)
             Button._iconBG:SetPoint("TOPLEFT", bg, 1, -1)
@@ -144,9 +138,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.CircleMask:Hide()
             Button.IconRing:SetAlpha(0)
 
-            if private.isRetail then
-                Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            end
+            Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         end
         function Skin.CommunitiesListFrameTemplate(Frame)
             Frame.Bg:Hide()
@@ -276,9 +268,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     do --[[ CommunitiesTabs ]]
         function Skin.CommunitiesFrameTabTemplate(CheckButton)
             Skin.SideTabTemplate(CheckButton)
-            if private.isRetail then
-                CheckButton.IconOverlay:Hide()
-            end
+            CheckButton.IconOverlay:Hide()
         end
     end
     do --[[ ClubFinderApplicantList ]]
@@ -671,10 +661,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesControlFrameTemplate(Frame)
             Skin.CommunitiesSettingsButtonTemplate(Frame.CommunitiesSettingsButton)
-            if private.isRetail then
-                Skin.UIPanelButtonTemplate(Frame.GuildControlButton)
-                Skin.UIPanelButtonTemplate(Frame.GuildRecruitmentButton)
-            end
+            Skin.UIPanelButtonTemplate(Frame.GuildControlButton)
+            Skin.UIPanelButtonTemplate(Frame.GuildRecruitmentButton)
         end
         function Skin.CommunitiesFrameFriendTabTemplate(Frame)
             Skin.FriendsFrameTabTemplate(Frame)
@@ -748,11 +736,7 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesSettingsDialog = _G.CommunitiesSettingsDialog
     _G.hooksecurefunc(CommunitiesSettingsDialog, "SetClubId", Hook.CommunitiesSettingsDialogMixin.SetClubId)
-    if private.isRetail then
-        Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog.BG)
-    else
-        Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog)
-    end
+    Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog.BG)
 
     CommunitiesSettingsDialog.IconPreview:RemoveMaskTexture(CommunitiesSettingsDialog.CircleMask)
     CommunitiesSettingsDialog._iconBorder = Base.CropIcon(CommunitiesSettingsDialog.IconPreview, CommunitiesSettingsDialog)
@@ -763,17 +747,15 @@ function private.AddOns.Blizzard_Communities()
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.ChangeAvatarButton)
     Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.MessageOfTheDay)
 
-    if private.isRetail then
-        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
-        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
-        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
-        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
-        Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
+    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
+    Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
 
-        Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
-        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
-        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
-    end
+    Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
+    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
+    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
 
     Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Delete)
@@ -821,25 +803,21 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --            GuildInfo            --
     ----====####$$$$%%%%%$$$$####====----
-    if private.isRetail then
-        Skin.TranslucentFrameTemplate(_G.CommunitiesGuildLogFrame)
-        local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
-        Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
-        container:SetBackdrop(nil)
-        Skin.MinimalScrollFrameTemplate(container.ScrollFrame)
-        Skin.UIPanelButtonTemplate(close2)
-    end
+    Skin.TranslucentFrameTemplate(_G.CommunitiesGuildLogFrame)
+    local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
+    Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
+    container:SetBackdrop(nil)
+    Skin.MinimalScrollFrameTemplate(container.ScrollFrame)
+    Skin.UIPanelButtonTemplate(close2)
 
     ----====####$$$$%%%%%$$$$####====----
     --            GuildNews            --
     ----====####$$$$%%%%%$$$$####====----
-    if private.isRetail then
-        local CommunitiesGuildNewsFiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
-        Skin.TranslucentFrameTemplate(CommunitiesGuildNewsFiltersFrame)
-        Skin.UIPanelCloseButton(CommunitiesGuildNewsFiltersFrame.CloseButton)
-        for i, CheckButton in next, CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons do
-            Skin.CommunitiesGuildNewsCheckButtonTemplate(CheckButton)
-        end
+    local CommunitiesGuildNewsFiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
+    Skin.TranslucentFrameTemplate(CommunitiesGuildNewsFiltersFrame)
+    Skin.UIPanelCloseButton(CommunitiesGuildNewsFiltersFrame.CloseButton)
+    for i, CheckButton in next, CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons do
+        Skin.CommunitiesGuildNewsCheckButtonTemplate(CheckButton)
     end
 
     ----====####$$$$%%%%%$$$$####====----
@@ -858,9 +836,6 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesFrame.PortraitOverlay:SetAlpha(0)
 
     Skin.MaximizeMinimizeButtonFrameTemplate(CommunitiesFrame.MaximizeMinimizeFrame)
-    if private.isClassic then
-        CommunitiesFrame.MaximizeMinimizeFrame:GetRegions():Hide()
-    end
     _G.hooksecurefunc(CommunitiesFrame.MaximizeMinimizeFrame, "maximizedCallback", function(...)
         CommunitiesFrame.Chat:SetPoint("BOTTOMRIGHT", CommunitiesFrame.MemberList, "BOTTOMLEFT", -32, 32)
     end)
@@ -868,72 +843,43 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.RosterTab)
-    if private.isRetail then
-        Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.GuildBenefitsTab)
-        Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.GuildInfoTab)
-    end
+    Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.GuildBenefitsTab)
+    Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.GuildInfoTab)
     Util.PositionRelative("TOPLEFT", CommunitiesFrame, "TOPRIGHT", 1, -40, 5, "Down", {
         CommunitiesFrame.ChatTab,
         CommunitiesFrame.RosterTab,
-        private.isRetail and CommunitiesFrame.GuildBenefitsTab or nil,
-        private.isRetail and CommunitiesFrame.GuildInfoTab or nil,
+        CommunitiesFrame.GuildBenefitsTab,
+        CommunitiesFrame.GuildInfoTab,
     })
 
     Skin.StreamDropDownMenuTemplate(CommunitiesFrame.StreamDropDownMenu)
-    if private.isRetail then
-        Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropDownMenu)
-        Skin.CommunityMemberListDropDownMenuTemplate(CommunitiesFrame.CommunityMemberListDropDownMenu)
-    end
+    Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropDownMenu)
+    Skin.CommunityMemberListDropDownMenuTemplate(CommunitiesFrame.CommunityMemberListDropDownMenu)
     Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropDownMenu)
     Skin.CommunitiesCalendarButtonTemplate(CommunitiesFrame.CommunitiesCalendarButton)
     Skin.CommunitiesMemberListFrameTemplate(CommunitiesFrame.MemberList)
-    if private.isRetail then
-        Skin.ClubFinderApplicantListFrameTemplate(CommunitiesFrame.ApplicantList)
-        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.GuildFinderFrame)
-        Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.CommunityFinderFrame)
-    end
+    Skin.ClubFinderApplicantListFrameTemplate(CommunitiesFrame.ApplicantList)
+    Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.GuildFinderFrame)
+    Skin.ClubFinderGuildAndCommunityFrameTemplate(CommunitiesFrame.CommunityFinderFrame)
     Skin.CommunitiesChatTemplate(CommunitiesFrame.Chat)
     Skin.CommunitiesChatEditBoxTemplate(CommunitiesFrame.ChatEditBox)
 
     Skin.CommunitiesInvitationFrameTemplate(CommunitiesFrame.InvitationFrame)
-    if private.isRetail then
-        Skin.ClubFinderInvitationsFrameTemplate(CommunitiesFrame.ClubFinderInvitationFrame)
-    end
+    Skin.ClubFinderInvitationsFrameTemplate(CommunitiesFrame.ClubFinderInvitationFrame)
     Skin.CommunitiesTicketFrameTemplate(CommunitiesFrame.TicketFrame)
-    if private.isRetail then
-        Skin.GuildBenefitsFrameTemplate(CommunitiesFrame.GuildBenefitsFrame)
-        Skin.GuildDetailsFrameTemplate(CommunitiesFrame.GuildDetailsFrame)
-        Skin.GuildNameChangeFrameTemplate(CommunitiesFrame.GuildNameChangeFrame)
-        Skin.CommunityNameChangeFrameTemplate(CommunitiesFrame.CommunityNameChangeFrame)
-        Skin.GuildPostingChangeFrameTemplate(CommunitiesFrame.GuildPostingChangeFrame)
-        Skin.CommunityPostingChangeFrameTemplate(CommunitiesFrame.CommunityPostingChangeFrame)
-    end
+    Skin.GuildBenefitsFrameTemplate(CommunitiesFrame.GuildBenefitsFrame)
+    Skin.GuildDetailsFrameTemplate(CommunitiesFrame.GuildDetailsFrame)
+    Skin.GuildNameChangeFrameTemplate(CommunitiesFrame.GuildNameChangeFrame)
+    Skin.CommunityNameChangeFrameTemplate(CommunitiesFrame.CommunityNameChangeFrame)
+    Skin.GuildPostingChangeFrameTemplate(CommunitiesFrame.GuildPostingChangeFrame)
+    Skin.CommunityPostingChangeFrameTemplate(CommunitiesFrame.CommunityPostingChangeFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
     Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
-    if private.isRetail then
-        Skin.ClubsRecruitmentDialogTemplate(CommunitiesFrame.RecruitmentDialog)
-    end
+    Skin.ClubsRecruitmentDialogTemplate(CommunitiesFrame.RecruitmentDialog)
     Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
     Skin.CommunitiesInviteButtonTemplate(CommunitiesFrame.InviteButton)
     Skin.CommunitiesControlFrameTemplate(CommunitiesFrame.CommunitiesControlFrame)
-    if private.isRetail then
-        Skin.UIPanelButtonTemplate(CommunitiesFrame.GuildLogButton)
-        Skin.CommunitiesGuildMemberDetailFrameTemplate(CommunitiesFrame.GuildMemberDetailFrame)
-    end
-
-    if private.isClassic then
-        Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab1)
-        Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab2)
-        Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab3)
-        Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab4)
-        Skin.CommunitiesFrameFriendTabTemplate(_G.CommunitiesFrameTab5)
-        Util.PositionRelative("TOPLEFT", CommunitiesFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
-            _G.CommunitiesFrameTab1,
-            _G.CommunitiesFrameTab2,
-            _G.CommunitiesFrameTab3,
-            _G.CommunitiesFrameTab4,
-            _G.CommunitiesFrameTab5,
-        })
-    end
+    Skin.UIPanelButtonTemplate(CommunitiesFrame.GuildLogButton)
+    Skin.CommunitiesGuildMemberDetailFrameTemplate(CommunitiesFrame.GuildMemberDetailFrame)
 end

@@ -6,7 +6,6 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -48,54 +47,22 @@ function private.FrameXML.ItemTextFrame()
     local ItemTextFrame = _G.ItemTextFrame
     ItemTextFrame:HookScript("OnEvent", Hook.ItemTextFrame_OnEvent)
 
-    if private.isRetail then
-        Skin.ButtonFrameTemplate(ItemTextFrame)
+    Skin.ButtonFrameTemplate(ItemTextFrame)
 
-        -- BlizzWTF: The portrait in the template is not being used.
-        select(6, ItemTextFrame:GetRegions()):Hide()
-        _G.ItemTextFramePageBg:SetAlpha(0)
-    else
-        Base.SetBackdrop(ItemTextFrame)
-        ItemTextFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 34,
-            top = 14,
-            bottom = 75,
-        })
-
-        local portrait, tl, tr, bl, br = ItemTextFrame:GetRegions()
-        portrait:Hide()
-        tl:Hide()
-        tr:Hide()
-        bl:Hide()
-        br:Hide()
-    end
+    -- BlizzWTF: The portrait in the template is not being used.
+    select(6, ItemTextFrame:GetRegions()):Hide()
+    _G.ItemTextFramePageBg:SetAlpha(0)
 
     _G.ItemTextMaterialTopLeft:SetAlpha(0)
     _G.ItemTextMaterialTopRight:SetAlpha(0)
     _G.ItemTextMaterialBotLeft:SetAlpha(0)
     _G.ItemTextMaterialBotRight:SetAlpha(0)
 
-    if private.isClassic then
-        local bg = ItemTextFrame:GetBackdropTexture("bg")
-        _G.ItemTextTitleText:ClearAllPoints()
-        _G.ItemTextTitleText:SetPoint("TOPLEFT", bg)
-        _G.ItemTextTitleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    end
     _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT * 1.25))
 
-    if private.isRetail then
-        Skin.UIPanelStretchableArtScrollBarTemplate(_G.ItemTextScrollFrame.ScrollBar)
-        _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
-        _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
-    else
-        Skin.UIPanelScrollFrameTemplate(_G.ItemTextScrollFrame)
-        _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
-        _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
-        _G.ItemTextScrollFrameTop:Hide()
-        _G.ItemTextScrollFrameBottom:Hide()
-        _G.ItemTextScrollFrameMiddle:Hide()
-    end
+    Skin.UIPanelStretchableArtScrollBarTemplate(_G.ItemTextScrollFrame.ScrollBar)
+    _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
+    _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
 
     Skin.FrameTypeStatusBar(_G.ItemTextStatusBar)
     _G.ItemTextStatusBar:SetHeight(17)
@@ -113,9 +80,5 @@ function private.FrameXML.ItemTextFrame()
             button:SetPoint("TOPRIGHT", -32, -(private.FRAME_TITLE_HEIGHT * 1.2))
             button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
         end
-    end
-
-    if private.isClassic then
-        Skin.UIPanelCloseButton(_G.ItemTextCloseButton)
     end
 end

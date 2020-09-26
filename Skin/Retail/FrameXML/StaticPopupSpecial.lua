@@ -14,11 +14,7 @@ local Skin = Aurora.Skin
 
 do --[[ FrameXML\StaticPopupSpecial.xml ]]
     function Skin.PlayerReportFrameTemplate(Frame)
-        if private.isRetail then
-            Skin.DialogBorderTemplate(Frame.Border)
-        else
-            Skin.DialogBorderTemplate(Frame)
-        end
+        Skin.DialogBorderTemplate(Frame.Border)
 
         local EditBox = Frame.Comment
         Base.CreateBackdrop(EditBox, private.backdrop, {
@@ -53,14 +49,11 @@ do --[[ FrameXML\StaticPopupSpecial.xml ]]
 end
 
 function private.FrameXML.StaticPopupSpecial()
-    if private.isRetail then
-        local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
-        Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
-        Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.AcceptButton)
-        Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.DeclineButton)
+    local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
+    Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
+    Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.AcceptButton)
+    Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.DeclineButton)
 
-        Skin.PlayerReportFrameTemplate(_G.ClubFinderReportFrame)
-    end
-
+    Skin.PlayerReportFrameTemplate(_G.ClubFinderReportFrame)
     Skin.PlayerReportFrameTemplate(_G.PlayerReportFrame)
 end

@@ -45,10 +45,8 @@ do --[[ FrameXML\GameTooltip.xml ]]
         Base.SetBackdrop(bg, Color.black, 0)
         Frame._auroraIconBorder = bg
 
-        if private.isRetail then
-            Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
-            Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
-        end
+        Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
+        Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
     end
     function Skin.ShoppingTooltipTemplate(GameTooltip)
         Skin.SharedTooltipTemplate(GameTooltip)

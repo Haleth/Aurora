@@ -82,9 +82,6 @@ function private.FrameXML.TradeFrame()
 
     Skin.ButtonFrameTemplate(_G.TradeFrame)
 
-    if private.isClassic then
-        _G.TradeFramePlayerPortrait:Hide()
-    end
     _G.TradeFrameTradeButton:SetPoint("BOTTOMRIGHT", -84, 4)
     F.Reskin(_G.TradeFrameTradeButton)
     F.Reskin(_G.TradeFrameCancelButton)
@@ -101,13 +98,8 @@ function private.FrameXML.TradeFrame()
     SkinTradeItems("Player")
 
     --[[ Recipient ]]--
-    if private.isRetail then
-        _G.TradeFrame.RecipientOverlay.portrait:Hide()
-        _G.TradeFrame.RecipientOverlay.portraitFrame:Hide()
-    else
-        _G.TradeFrameRecipientPortrait:Hide()
-        _G.TradeRecipientPortraitFrame:Hide()
-    end
+    _G.TradeFrame.RecipientOverlay.portrait:Hide()
+    _G.TradeFrame.RecipientOverlay.portraitFrame:Hide()
     _G.TradeRecipientBotLeftCorner:Hide()
     _G.TradeRecipientLeftBorder:Hide()
 

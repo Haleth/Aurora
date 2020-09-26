@@ -41,15 +41,12 @@ do --[[ FrameXML\LootFrame.lua ]]
             local questTexture = button._questTexture
             if isQuestItem then
                 button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
+                questTexture:Show()
 
-                if private.isClassic then
-                    questTexture:Show()
-
-                    if isActive then
-                        questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BANG)
-                    else
-                        questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
-                    end
+                if isActive then
+                    questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BANG)
+                else
+                    questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
                 end
             else
                 questTexture:Hide()
@@ -68,10 +65,8 @@ do --[[ FrameXML\LootFrame.xml ]]
         local name = Frame:GetName()
         _G[name.."NameFrame"]:Hide()
         Frame._questTexture = _G[name.."IconQuestTexture"]
-        if private.isClassic then
-            Frame._questTexture = Frame:CreateTexture(nil, "ARTWORK")
-            Frame._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
-        end
+        Frame._questTexture = Frame:CreateTexture(nil, "ARTWORK")
+        Frame._questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
 
         Frame._questTexture:SetAllPoints(Frame)
         Base.CropIcon(Frame._questTexture)
@@ -159,12 +154,7 @@ function private.FrameXML.LootFrame()
     local LootFrame = _G.LootFrame
     Skin.ButtonFrameTemplate(LootFrame)
     _G.LootFramePortraitOverlay:Hide()
-
-    if private.isRetail then
-        select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
-    else
-        select(19, LootFrame:GetRegions()):SetAllPoints(LootFrame.TitleText) -- Items text
-    end
+    select(19, LootFrame:GetRegions()):SetAllPoints(LootFrame.TitleText) -- Items text
 
     for index = 1, 4 do
         Skin.LootButtonTemplate(_G["LootButton"..index])
@@ -203,14 +193,6 @@ function private.FrameXML.LootFrame()
     end
 
 
-    --------------------
-    -- BonusRollFrame --
-    --------------------
-    if private.isRetail then
-        Skin.BonusRollFrameTemplate(_G.BonusRollFrame)
-    end
-
-
     ---------------
     -- GroupLoot --
     ---------------
@@ -223,51 +205,49 @@ function private.FrameXML.LootFrame()
     -----------------------
     -- MasterLooterFrame --
     -----------------------
-    if private.isClassic then
-        local MasterLooterFrame = _G.MasterLooterFrame
-        for i = 1, 9 do
-            select(i, MasterLooterFrame:GetRegions()):Hide()
-        end
-        F.CreateBD(MasterLooterFrame)
-        F.ReskinClose(select(3, MasterLooterFrame:GetChildren()))
-
-        local item = MasterLooterFrame.Item
-        item.NameBorderLeft:Hide()
-        item.NameBorderRight:Hide()
-        item.NameBorderMid:Hide()
-        item._auroraIconBorder = F.ReskinIcon(item.Icon)
-
-        MasterLooterFrame:HookScript("OnShow", function(MLFrame)
-            _G.LootFrame:SetAlpha(.4)
-        end)
-
-        MasterLooterFrame:HookScript("OnHide", function(MLFrame)
-            _G.LootFrame:SetAlpha(1)
-        end)
-
-        _G.hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
-            for i = 1, _G.MAX_RAID_MEMBERS do
-                local playerFrame = MasterLooterFrame["player"..i]
-                if playerFrame then
-                    if not playerFrame.styled then
-                        playerFrame.Bg:SetPoint("TOPLEFT", 1, -1)
-                        playerFrame.Bg:SetPoint("BOTTOMRIGHT", -1, 1)
-                        playerFrame.Highlight:SetPoint("TOPLEFT", 1, -1)
-                        playerFrame.Highlight:SetPoint("BOTTOMRIGHT", -1, 1)
-
-                        playerFrame.Highlight:SetTexture(C.media.backdrop)
-
-                        F.CreateBD(playerFrame, 0)
-
-                        playerFrame.styled = true
-                    end
-                    local colour = _G.CUSTOM_CLASS_COLORS[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
-                    playerFrame.Name:SetTextColor(colour.r, colour.g, colour.b)
-                    playerFrame.Highlight:SetVertexColor(colour.r, colour.g, colour.b, .2)
-                else
-                    break
-                end
-            end
-        end)
+    local MasterLooterFrame = _G.MasterLooterFrame
+    for i = 1, 9 do
+        select(i, MasterLooterFrame:GetRegions()):Hide()
     end
+    F.CreateBD(MasterLooterFrame)
+    F.ReskinClose(select(3, MasterLooterFrame:GetChildren()))
+
+    local item = MasterLooterFrame.Item
+    item.NameBorderLeft:Hide()
+    item.NameBorderRight:Hide()
+    item.NameBorderMid:Hide()
+    item._auroraIconBorder = F.ReskinIcon(item.Icon)
+
+    MasterLooterFrame:HookScript("OnShow", function(MLFrame)
+        _G.LootFrame:SetAlpha(.4)
+    end)
+
+    MasterLooterFrame:HookScript("OnHide", function(MLFrame)
+        _G.LootFrame:SetAlpha(1)
+    end)
+
+    _G.hooksecurefunc("MasterLooterFrame_UpdatePlayers", function()
+        for i = 1, _G.MAX_RAID_MEMBERS do
+            local playerFrame = MasterLooterFrame["player"..i]
+            if playerFrame then
+                if not playerFrame.styled then
+                    playerFrame.Bg:SetPoint("TOPLEFT", 1, -1)
+                    playerFrame.Bg:SetPoint("BOTTOMRIGHT", -1, 1)
+                    playerFrame.Highlight:SetPoint("TOPLEFT", 1, -1)
+                    playerFrame.Highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+
+                    playerFrame.Highlight:SetTexture(C.media.backdrop)
+
+                    F.CreateBD(playerFrame, 0)
+
+                    playerFrame.styled = true
+                end
+                local colour = _G.CUSTOM_CLASS_COLORS[select(2, _G.UnitClass(playerFrame.Name:GetText()))]
+                playerFrame.Name:SetTextColor(colour.r, colour.g, colour.b)
+                playerFrame.Highlight:SetVertexColor(colour.r, colour.g, colour.b, .2)
+            else
+                break
+            end
+        end
+    end)
 end

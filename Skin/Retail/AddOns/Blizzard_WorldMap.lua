@@ -92,61 +92,33 @@ function private.AddOns.Blizzard_WorldMap()
     ----====####$$$$%%%%%$$$$####====----
     local WorldMapFrame = _G.WorldMapFrame
     Skin.WorldMapFrameTemplate(WorldMapFrame)
-    if private.isRetail then
-        Util.Mixin(WorldMapFrame, Hook.WorldMapMixin)
+    Util.Mixin(WorldMapFrame, Hook.WorldMapMixin)
 
-        Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
-        WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
+    Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
+    WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
 
-        WorldMapFrame.BorderFrame.InsetBorderTop:Hide()
-        Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
-        WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)
-        Skin.MaximizeMinimizeButtonFrameTemplate(WorldMapFrame.BorderFrame.MaximizeMinimizeFrame)
+    WorldMapFrame.BorderFrame.InsetBorderTop:Hide()
+    Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
+    WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)
+    Skin.MaximizeMinimizeButtonFrameTemplate(WorldMapFrame.BorderFrame.MaximizeMinimizeFrame)
 
-        Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
-        Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
-        WorldMapFrame.overlayFrames[2]:SetPoint("TOPRIGHT", WorldMapFrame:GetCanvasContainer(), "TOPRIGHT", 0, 0)
-        if private.isPatch then
-            Skin.WorldMapTrackingPinButtonTemplate(WorldMapFrame.overlayFrames[3])
-            Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[4])
-            Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[5])
-            Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[6])
-        else
-            Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[3])
-            Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[4])
-            Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[5])
-        end
-
-        Skin.WorldMapNavBarTemplate(WorldMapFrame.NavBar)
-        WorldMapFrame.NavBar:SetPoint("BOTTOMRIGHT", WorldMapFrame.TitleCanvasSpacerFrame, -5, 5)
-
-        Skin.WorldMapSidePanelToggleTemplate(WorldMapFrame.SidePanelToggle)
+    Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
+    Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
+    WorldMapFrame.overlayFrames[2]:SetPoint("TOPRIGHT", WorldMapFrame:GetCanvasContainer(), "TOPRIGHT", 0, 0)
+    if private.isPatch then
+        Skin.WorldMapTrackingPinButtonTemplate(WorldMapFrame.overlayFrames[3])
+        Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[4])
+        Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[5])
+        Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[6])
     else
-        Base.SetBackdrop(WorldMapFrame.BorderFrame)
-
-        local top1, top2, top3, top4, mid1, mid2, mid3, mid4, bot1, bot2, bot3, bot4, title = WorldMapFrame.BorderFrame:GetRegions()
-        top1:Hide()
-        top2:Hide()
-        top3:Hide()
-        top4:Hide()
-        mid1:Hide()
-        mid2:Hide()
-        mid3:Hide()
-        mid4:Hide()
-        bot1:Hide()
-        bot2:Hide()
-        bot3:Hide()
-        bot4:Hide()
-
-        local bg = WorldMapFrame.BorderFrame:GetBackdropTexture("bg")
-        title:ClearAllPoints()
-        title:SetPoint("TOPLEFT", bg)
-        title:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-        Skin.UIDropDownMenuTemplate(WorldMapFrame.ContinentDropDown)
-        Skin.UIDropDownMenuTemplate(WorldMapFrame.ZoneDropDown)
-        Skin.UIPanelButtonTemplate(_G.WorldMapZoomOutButton)
-        Skin.UIPanelCloseButton(_G.WorldMapFrameCloseButton)
+        Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[3])
+        Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[4])
+        Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[5])
     end
+
+    Skin.WorldMapNavBarTemplate(WorldMapFrame.NavBar)
+    WorldMapFrame.NavBar:SetPoint("BOTTOMRIGHT", WorldMapFrame.TitleCanvasSpacerFrame, -5, 5)
+
+    Skin.WorldMapSidePanelToggleTemplate(WorldMapFrame.SidePanelToggle)
 end
 

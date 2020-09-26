@@ -16,11 +16,6 @@ do --[[ FrameXML\QuestInfo.lua ]]
         local headerR, headerG, headerB = 1, 1, 1
         local textR, textG, textB = 0.8, 0.8, 0.8
 
-        if template.canHaveSealMaterial then
-            local questFrame = parentFrame:GetParent():GetParent()
-            questFrame.SealMaterialBG:Hide()
-        end
-
         -- headers
         _G.QuestInfoTitleHeader:SetTextColor(headerR, headerG, headerB)
         _G.QuestInfoDescriptionHeader:SetTextColor(headerR, headerG, headerB)
@@ -38,9 +33,6 @@ do --[[ FrameXML\QuestInfo.lua ]]
         rewardsFrame.ItemChooseText:SetTextColor(textR, textG, textB)
         rewardsFrame.ItemReceiveText:SetTextColor(textR, textG, textB)
         rewardsFrame.PlayerTitleText:SetTextColor(textR, textG, textB)
-        if private.isRetail then
-            rewardsFrame.QuestSessionBonusReward:SetTextColor(textR, textG, textB)
-        end
         if not mapView then
             rewardsFrame.XPFrame.ReceiveText:SetTextColor(textR, textG, textB)
         end
@@ -108,99 +100,6 @@ do --[[ FrameXML\QuestInfo.xml ]]
     function Skin.LargeQuestRewardItemButtonTemplate(Button)
         Skin.LargeItemButtonTemplate(Button)
     end
-    function Skin.LargeQuestInfoRewardFollowerTemplate(Button)
-        Base.SetBackdrop(Button, Color.frame)
-        Button:SetBackdropOptions({
-            offsets = {
-                left = 41,
-                right = 0,
-                top = 8,
-                bottom = 8,
-            },
-        })
-
-        Button.BG:SetAlpha(0)
-        Button.BG:SetTexture("")
-
-        local bg = Button:GetBackdropTexture("bg")
-        Button.Class:SetPoint("TOPRIGHT", bg, -1, -1)
-        Button.Class:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-
-        local GarrisonPortrait = Button.PortraitFrame
-        Skin.GarrisonFollowerPortraitTemplate(GarrisonPortrait)
-        GarrisonPortrait:SetScale(1)
-        GarrisonPortrait:SetSize(41.6, 48)
-        GarrisonPortrait:SetBackdropOptions({
-            offsets = {
-                left = 3,
-                right = 4,
-                top = 4,
-                bottom = 10,
-            },
-        })
-
-        local garrisonBG = GarrisonPortrait:GetBackdropTexture("bg")
-        local garrisonLvlBG = GarrisonPortrait._auroraLvlBG
-        garrisonLvlBG:SetPoint("TOPLEFT", garrisonBG, "BOTTOMLEFT", 0, 2)
-        GarrisonPortrait.Level:SetScale(0.8)
-
-        if private.isPatch then
-            local AdventuresPortrait = Button.AdventuresFollowerPortraitFrame
-            Skin.AdventuresLevelPortraitTemplate(AdventuresPortrait)
-            AdventuresPortrait:SetScale(1)
-            AdventuresPortrait:SetSize(43.2, 43.2)
-            AdventuresPortrait:SetBackdropOptions({
-                offsets = {
-                    left = 4,
-                    right = 6,
-                    top = 3,
-                    bottom = 7,
-                },
-            })
-
-            local adventuresBG = AdventuresPortrait:GetBackdropTexture("bg")
-            local adventuresLvlBG = AdventuresPortrait._auroraLvlBG
-            adventuresLvlBG:SetPoint("TOPLEFT", adventuresBG, "BOTTOMLEFT", 0, 2)
-            AdventuresPortrait.LevelDisplayFrame.LevelText:SetScale(0.8)
-        end
-    end
-    function Skin.SmallQuestInfoRewardFollowerTemplate(Button)
-        Base.SetBackdrop(Button, Color.frame)
-        Button:SetBackdropOptions({
-            offsets = {
-                left = 33,
-                right = 0,
-                top = -1,
-                bottom = -2,
-            },
-        })
-
-        Button.BG:SetAlpha(0)
-        Button.BG:SetTexture("")
-
-        local bg = Button:GetBackdropTexture("bg")
-        Button.Class:SetPoint("TOPRIGHT", bg, -1, -1)
-        Button.Class:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-
-        local PortraitFrame = Button.PortraitFrame
-        Skin.GarrisonFollowerPortraitTemplate(PortraitFrame)
-        PortraitFrame:SetScale(1)
-        PortraitFrame:SetSize(33.8, 39)
-        PortraitFrame:SetBackdropOptions({
-            offsets = {
-                left = 1,
-                right = 4,
-                top = 3,
-                bottom = 7,
-            },
-        })
-
-        local portraitBG = PortraitFrame:GetBackdropTexture("bg")
-        local lvlBG = PortraitFrame._auroraLvlBG
-        lvlBG:SetPoint("TOPLEFT", portraitBG, "BOTTOMLEFT", 0, 3)
-        lvlBG:SetPoint("BOTTOMRIGHT", portraitBG, 0, -6)
-        PortraitFrame.Level:SetScale(0.65)
-    end
     function Skin.QuestInfoSpellHeaderTemplate(FontString)
         FontString:SetTextColor(0.8, 0.8, 0.8)
     end
@@ -232,13 +131,6 @@ function private.FrameXML.QuestInfo()
     -- QuestInfoRewardsFrame --
     ---------------------------
     local QuestInfoRewardsFrame = _G.QuestInfoRewardsFrame
-    if private.isRetail then
-        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.HonorFrame)
-        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.SkillPointFrame)
-        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.ArtifactXPFrame)
-        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.WarModeBonusFrame)
-        Skin.LargeItemButtonTemplate(QuestInfoRewardsFrame.HonorFrame)
-    end
 
     local TitleFrame = QuestInfoRewardsFrame.TitleFrame
     Base.CropIcon(TitleFrame.Icon)
@@ -262,45 +154,10 @@ function private.FrameXML.QuestInfo()
     })
 
     Util.Mixin(QuestInfoRewardsFrame.spellRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestInfoRewardsFrame.followerRewardPool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestInfoRewardsFrame.spellHeaderPool, Hook.ObjectPoolMixin)
 
-    ------------------------------
-    -- MapQuestInfoRewardsFrame --
-    ------------------------------
-    if private.isRetail then
-        local MapQuestInfoRewardsFrame = _G.MapQuestInfoRewardsFrame
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.XPFrame)
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.HonorFrame)
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.ArtifactXPFrame)
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.WarModeBonusFrame)
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.MoneyFrame)
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.SkillPointFrame)
-        Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.TitleFrame)
-
-        Util.Mixin(MapQuestInfoRewardsFrame.spellRewardPool, Hook.ObjectPoolMixin)
-        Util.Mixin(MapQuestInfoRewardsFrame.followerRewardPool, Hook.ObjectPoolMixin)
-        Util.Mixin(MapQuestInfoRewardsFrame.spellHeaderPool, Hook.ObjectPoolMixin)
-    end
 
     --------------------
     -- QuestInfoFrame --
     --------------------
-
-    -- QuestInfoSealFrame --
-    if private.isRetail then
-        local mask = _G.QuestInfoSealFrame:CreateMaskTexture(nil, "BACKGROUND")
-        mask:SetTexture([[Interface/SpellBook/UI-SpellbookPanel-Tab-Highlight]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-        mask:SetTexCoord(0, 0.5, 0, 0.5)
-        mask:SetPoint("TOPLEFT", _G.QuestInfoSealFrame.Text, -44, 46)
-        mask:SetPoint("BOTTOMRIGHT", _G.QuestInfoSealFrame.Text, 30, -50)
-
-        local bg = _G.QuestInfoSealFrame:CreateTexture(nil, "BACKGROUND")
-        bg:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.25)
-        bg:SetAllPoints(mask)
-        bg:AddMaskTexture(mask)
-
-        _G.QuestInfoSealFrame.Text:SetShadowColor(Color.grayDark:GetRGB())
-        _G.QuestInfoSealFrame.Text:SetShadowOffset(0.6, -0.6)
-    end
 end

@@ -24,11 +24,7 @@ do --[[ AddOns\Blizzard_RaidUI.lua ]]
                     local color = _G.CUSTOM_CLASS_COLORS[classToken]
                     subframes.name:SetTextColor(color.r, color.g, color.b)
                     subframes.level:SetTextColor(color.r, color.g, color.b)
-                    if private.isRetail then
-                        subframes.class:SetTextColor(color.r, color.g, color.b)
-                    else
-                        subframes.class.text:SetTextColor(color.r, color.g, color.b)
-                    end
+                    subframes.class.text:SetTextColor(color.r, color.g, color.b)
                 end
             end
         end

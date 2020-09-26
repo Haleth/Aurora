@@ -115,7 +115,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
             end
 
             local overlay, overlay2, visual, isRelic
-            if private.isRetail and itemIDOrLink then
+            if itemIDOrLink then
                 if not suppressOverlays then
                     if _G.C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID(itemIDOrLink) then
                         overlay = private.AZERITE_COLORS[1]
@@ -201,10 +201,8 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button.icon:SetPoint("TOPLEFT", bg, 1, -1)
         Button.icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
-        if private.isRetail then
-            Button.ItemContextOverlay:SetPoint("TOPLEFT", Button.icon)
-            Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", Button.icon)
-        end
+        Button.ItemContextOverlay:SetPoint("TOPLEFT", Button.icon)
+        Button.ItemContextOverlay:SetPoint("BOTTOMRIGHT", Button.icon)
 
         Button:SetNormalTexture("")
         Base.CropIcon(Button:GetPushedTexture())

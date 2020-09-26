@@ -138,11 +138,7 @@ function private.AddOns.Blizzard_Channels()
     CreateChannelPopup.Titlebar:Hide()
     CreateChannelPopup.Corner:Hide()
 
-    if private.isRetail then
-        Skin.DialogBorderTemplate(CreateChannelPopup.BG)
-    else
-        Skin.DialogBorderTemplate(CreateChannelPopup)
-    end
+    Skin.DialogBorderTemplate(CreateChannelPopup)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Name)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Password)
     Skin.UICheckButtonTemplate(CreateChannelPopup.UseVoiceChat)
@@ -187,10 +183,6 @@ function private.AddOns.Blizzard_Channels()
     ChannelFrame.ChannelRoster:SetPoint("TOPRIGHT", -20, -(private.FRAME_TITLE_HEIGHT + 20))
     ChannelFrame.ChannelRoster:SetPoint("BOTTOMRIGHT", -20, 28)
     Skin.InsetFrameTemplate(ChannelFrame.RightInset)
-
-    if not private.isPatch then
-        Skin.GlowBoxFrame(ChannelFrame.Tutorial, "Left")
-    end
 
     ----====####$$$$%%%%%$$$$####====----
     --    VoiceActivityNotification    --

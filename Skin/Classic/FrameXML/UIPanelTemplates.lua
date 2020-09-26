@@ -38,23 +38,7 @@ end
 
 
 do --[[ FrameXML\UIPanelTemplates.xml ]]
-    function Skin.BagSearchBoxTemplate(EditBox)
-        Skin.SearchBoxTemplate(EditBox)
-    end
-    function Skin.GameMenuButtonTemplate(Button)
-        Skin.UIPanelButtonTemplate(Button)
-    end
-    function Skin.UIServiceButtonTemplate(Button)
-        Base.SetBackdrop(Button, Color.button)
-        Skin.SmallMoneyFrameTemplate(Button.money)
-        Base.CropIcon(Button.icon, Button)
-
-        Button.selectedTex:SetTexCoord(0.005859375, 0.5703125, 0.853515625, 0.9375)
-        Button.disabledBG:SetAllPoints()
-
-        Button:SetNormalTexture("")
-        Button:GetHighlightTexture():SetTexCoord(0.005859375, 0.5703125, 0.7578125, 0.841796875)
-    end
+    Skin.GameMenuButtonTemplate = Skin.UIPanelButtonTemplate
     function Skin.UIPanelInfoButton(Button)
         Button.texture:SetTexture([[Interface\Common\help-i]])
         Button.texture:SetTexCoord(0.234375, 0.765625, 0.234375, 0.765625)
@@ -77,26 +61,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         if direction then
             Hook.SquareButton_SetIcon(Button, direction)
         end
-    end
-    function Skin.UIPanelLargeSilverButton(Button)
-        local buttonName = Button:GetName()
-        _G[buttonName.."Left"]:Hide()
-        _G[buttonName.."Right"]:Hide()
-        _G[buttonName.."Middle"]:Hide()
-        for i = 3, 6 do
-            _G.select(i, Button:GetRegions()):Hide()
-        end
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button)
-    end
-
-    function Skin.RoleCountNoScriptsTemplate(Frame)
-        Base.SetTexture(Frame.DamagerIcon, "iconDAMAGER")
-        Base.SetTexture(Frame.HealerIcon, "iconHEALER")
-        Base.SetTexture(Frame.TankIcon, "iconTANK")
-    end
-    function Skin.RoleCountTemplate(Frame)
-        Skin.RoleCountNoScriptsTemplate(Frame)
     end
 
     function Skin.GlowBoxTemplate(Frame)
@@ -141,41 +105,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.Arrow:SetVertexColor(1, 1, 0)
         Frame.Glow:Hide()
     end
-
-    --[[
-        SetClampedTextureRotation(self.Arrow.Arrow, 90) -- Left
-        SetClampedTextureRotation(self.Arrow.Arrow, 180) -- Up
-        SetClampedTextureRotation(self.Arrow.Arrow, 270) -- Right
-    ]]
-    -- BlizzWTF: This should be a template
-    function Skin.GlowBoxFrame(Frame, direction)
-        if Frame.BigText then
-            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-            local Arrow = _G.CreateFrame("Frame", nil, Frame)
-            Arrow.Arrow = Frame["Arrow"..direction] or Frame["Arrow"..direction:upper()]
-            Arrow.Arrow:SetParent(Arrow)
-            Arrow.Glow = Frame["ArrowGlow"..direction] or Frame["ArrowGlow"..direction:upper()]
-            Arrow.Glow:SetParent(Arrow)
-
-            Frame.Arrow = Arrow
-            Frame.Text = Frame.BigText
-        end
-        Skin.GlowBoxTemplate(Frame)
-        Skin.UIPanelCloseButton(Frame.CloseButton)
-
-        direction = direction or "Down"
-        local point = direction:upper()
-        if point == "UP" then
-            point = "TOP"
-        elseif point == "DOWN" then
-            point = "BOTTOM"
-        end
-
-        Skin.GlowBoxArrowTemplate(Frame.Arrow, direction)
-        Frame.Arrow:ClearAllPoints()
-        Frame.Arrow:SetPoint(Util.OpposingSide[point], Frame, point)
-    end
-
     function Skin.ThinBorderTemplate(Frame)
         local edge = private.backdrop.edgeSize
         Frame.TopLeft:SetSize(edge, edge)
@@ -187,8 +116,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.TopRight:SetPoint("TOPRIGHT")
         Frame.BottomLeft:SetPoint("BOTTOMLEFT")
         Frame.BottomRight:SetPoint("BOTTOMRIGHT")
-    end
-    function Skin.GlowBorderTemplate(Frame)
     end
 
     function Skin.BaseBasicFrameTemplate(Frame)
@@ -218,54 +145,6 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.TopTileStreaks:SetTexture("")
     end
 
-    function Skin.InsetFrameTemplate2(Frame)
-        Frame.TopLeftCorner:Hide()
-        Frame.TopRightCorner:Hide()
-        Frame.BotLeftCorner:Hide()
-
-        Frame.BotRightCorner:Hide()
-        Frame.TopBorder:Hide()
-        Frame.BottomBorder:Hide()
-
-        Frame.LeftBorder:Hide()
-        Frame.RightBorder:Hide()
-    end
-    function Skin.InsetFrameTemplate3(Frame)
-        Frame.BorderTopRight:Hide()
-        Frame.BorderBottomRight:Hide()
-        Frame.BorderRightMiddle:Hide()
-
-        Frame.BorderTopLeft:Hide()
-        Frame.BorderBottomLeft:Hide()
-        Frame.BorderLeftMiddle:Hide()
-
-        Frame.BorderTopMiddle:Hide()
-        Frame.BorderBottomMiddle:Hide()
-
-        Frame.Bg:Hide()
-    end
-
-    function Skin.EtherealFrameTemplate(Frame)
-        Skin.PortraitFrameTemplate(Frame)
-
-        Frame.CornerTL:Hide()
-        Frame.CornerTR:Hide()
-        Frame.CornerBL:Hide()
-        Frame.CornerBR:Hide()
-
-        local name = Frame:GetName()
-        _G[name.."LeftEdge"]:Hide()
-        _G[name.."RightEdge"]:Hide()
-        _G[name.."TopEdge"]:Hide()
-        _G[name.."BottomEdge"]:Hide()
-
-        local bg = select(14, Frame:GetRegions())
-        bg:SetAllPoints()
-        bg:SetTexture([[Interface\Transmogrify\EtherealLines]], true, true)
-        bg:SetHorizTile(true)
-        bg:SetVertTile(true)
-        bg:SetAlpha(0.5)
-    end
     function Skin.HorizontalBarTemplate(Frame)
         Frame:SetHeight(1)
         local name = Frame:GetName()
@@ -292,10 +171,10 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.RightBorder:Hide()
         Base.SetBackdrop(Frame)
         Frame:SetBackdropOption("offsets", {
-            left = 7,
-            right = 7,
-            top = 7,
-            bottom = 7,
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5,
         })
     end
     function Skin.ThinGoldEdgeTemplate(Frame)
@@ -306,6 +185,8 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
 
         Base.SetBackdrop(Frame, Color.frame)
         Frame:SetBackdropBorderColor(Color.yellow)
+    end
+    function Skin.GlowBorderTemplate(Frame)
     end
 
     function Skin.MainHelpPlateButton(Frame)
@@ -336,16 +217,4 @@ end
 
 function private.FrameXML.UIPanelTemplates()
     _G.hooksecurefunc("SquareButton_SetIcon", Hook.SquareButton_SetIcon)
-
-    if private.isRetail then
-        local HelpPlateTooltip = _G.HelpPlateTooltip
-        Skin.GlowBoxTemplate(HelpPlateTooltip)
-        for direction, dirUpper in next, {Down = "UP", Up = "DOWN", Left = "RIGHT", Right = "LEFT"} do
-            local arrow = HelpPlateTooltip["Arrow"..dirUpper]
-            Base.SetTexture(arrow, "arrow"..direction)
-            arrow:SetVertexColor(1, 1, 0)
-
-            HelpPlateTooltip["ArrowGlow"..dirUpper]:SetAlpha(0)
-        end
-    end
 end

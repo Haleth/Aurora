@@ -6,61 +6,28 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GossipFrame.lua ]]
-    if private.isRetail then
-        Hook.GossipTitleButtonMixin = {}
-        function Hook.GossipTitleButtonMixin:UpdateTitleForQuest(questID, titleText, isIgnored, isTrivial)
-            if isIgnored then
-                self:SetFormattedText(private.IGNORED_QUEST_DISPLAY, titleText)
-            elseif isTrivial then
-                self:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
-            else
-                self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
-            end
+    Hook.GossipTitleButtonMixin = {}
+    function Hook.GossipTitleButtonMixin:UpdateTitleForQuest(questID, titleText, isIgnored, isTrivial)
+        if isIgnored then
+            self:SetFormattedText(private.IGNORED_QUEST_DISPLAY, titleText)
+        elseif isTrivial then
+            self:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
+        else
+            self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
         end
+    end
 
-        function Hook.NPCFriendshipStatusBar_Update(frame, factionID)
-            local statusBar = _G.NPCFriendshipStatusBar
-            local id = statusBar.friendshipFactionID
-            if id and id > 0 then
-                _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 45))
-            else
-                _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-            end
-        end
-    else
-        local availDataPerQuest, activeDataPerQuest = 7, 6
-        function Hook.GossipFrameAvailableQuestsUpdate(...)
-            local numAvailQuestsData = _G.select("#", ...)
-            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numAvailQuestsData / availDataPerQuest)
-            for i = 1, numAvailQuestsData, availDataPerQuest do
-                local titleText, _, isTrivial = _G.select(i, ...)
-                local titleButton = _G["GossipTitleButton" .. buttonIndex]
-                if isTrivial then
-                    titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
-                else
-                    titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
-                end
-                buttonIndex = buttonIndex + 1
-            end
-        end
-        function Hook.GossipFrameActiveQuestsUpdate(...)
-            local numActiveQuestsData = _G.select("#", ...)
-            local buttonIndex = (_G.GossipFrame.buttonIndex - 1) - (numActiveQuestsData / activeDataPerQuest)
-            for i = 1, numActiveQuestsData, activeDataPerQuest do
-                local titleText, _, isTrivial = _G.select(i, ...)
-                local titleButton = _G["GossipTitleButton" .. buttonIndex]
-                if isTrivial then
-                    titleButton:SetFormattedText(private.TRIVIAL_QUEST_DISPLAY, titleText)
-                else
-                    titleButton:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
-                end
-                buttonIndex = buttonIndex + 1
-            end
+    function Hook.NPCFriendshipStatusBar_Update(frame, factionID)
+        local statusBar = _G.NPCFriendshipStatusBar
+        local id = statusBar.friendshipFactionID
+        if id and id > 0 then
+            _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 45))
+        else
+            _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 5))
         end
     end
 
@@ -104,18 +71,7 @@ end
 
 do --[[ FrameXML\GossipFrame.xml ]]
     function Skin.GossipFramePanelTemplate(Frame)
-        if private.isRetail then
-            Frame:SetPoint("BOTTOMRIGHT")
-        else
-            local bg = Frame:GetParent():GetBackdropTexture("bg")
-            Frame:SetAllPoints(bg)
-
-            local top, bottom, left, right = Frame:GetRegions()
-            top:Hide()
-            bottom:Hide()
-            left:Hide()
-            right:Hide()
-        end
+        Frame:SetPoint("BOTTOMRIGHT")
 
         local name = Frame:GetName()
         _G[name.."MaterialTopLeft"]:SetAlpha(0)
@@ -124,9 +80,7 @@ do --[[ FrameXML\GossipFrame.xml ]]
         _G[name.."MaterialBotRight"]:SetAlpha(0)
     end
     function Skin.GossipTitleButtonTemplate(Button)
-        if private.isRetail then
-            Util.Mixin(Button, Hook.GossipTitleButtonMixin)
-        end
+        Util.Mixin(Button, Hook.GossipTitleButtonMixin)
 
         local highlight = Button:GetHighlightTexture()
         local r, g, b = Color.highlight:GetRGB()
@@ -136,52 +90,25 @@ end
 
 function private.FrameXML.GossipFrame()
     _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
+    _G.hooksecurefunc("NPCFriendshipStatusBar_Update", Hook.NPCFriendshipStatusBar_Update)
 
     -----------------
     -- GossipFrame --
     -----------------
     local GossipFrame = _G.GossipFrame
-    local bg
-
-    if private.isRetail then
-        _G.hooksecurefunc("NPCFriendshipStatusBar_Update", Hook.NPCFriendshipStatusBar_Update)
-
-        Skin.ButtonFrameTemplate(GossipFrame)
-        if private.isPatch then
-            Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
-        end
-        bg = GossipFrame.NineSlice:GetBackdropTexture("bg")
-
-        -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-        select(7, GossipFrame:GetRegions()):Hide() -- GossipFrameBg
-
-        -- BlizzWTF: This should use the title text included in the template
-        _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
-    else
-        _G.hooksecurefunc("GossipFrameAvailableQuestsUpdate", Hook.GossipFrameAvailableQuestsUpdate)
-        _G.hooksecurefunc("GossipFrameActiveQuestsUpdate", Hook.GossipFrameActiveQuestsUpdate)
-
-        Base.SetBackdrop(GossipFrame)
-        GossipFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 34,
-            top = 14,
-            bottom = 75,
-        })
-
-        bg = GossipFrame:GetBackdropTexture("bg")
-        _G.GossipFramePortrait:Hide()
-        _G.GossipFrameNpcNameText:ClearAllPoints()
-        _G.GossipFrameNpcNameText:SetPoint("TOPLEFT", bg)
-        _G.GossipFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-        Skin.UIPanelCloseButton(_G.GossipFrameCloseButton)
+    Skin.ButtonFrameTemplate(GossipFrame)
+    if private.isPatch then
+        Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
     end
+    local bg = GossipFrame.NineSlice:GetBackdropTexture("bg")
+
+    -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
+    select(7, GossipFrame:GetRegions()):Hide() -- GossipFrameBg
+
+    -- BlizzWTF: This should use the title text included in the template
+    _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
 
     Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
-    if private.isClassic then
-        select(9, _G.GossipFrameGreetingPanel:GetRegions()):Hide() -- patch
-    end
     Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
     _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
 
@@ -202,17 +129,15 @@ function private.FrameXML.GossipFrame()
     ----------------------------
     -- NPCFriendshipStatusBar --
     ----------------------------
-    if private.isRetail then
-        _G.NPCFriendshipStatusBar:GetRegions():Hide()
-        _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
-        for i = 1, 4 do
-            local notch = _G["NPCFriendshipStatusBarNotch"..i]
-            notch:SetColorTexture(0, 0, 0)
-            notch:SetSize(1, 16)
-        end
-
-        local barFillBG = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
-        barFillBG:SetPoint("TOPLEFT", -1, 1)
-        barFillBG:SetPoint("BOTTOMRIGHT", 1, -1)
+    _G.NPCFriendshipStatusBar:GetRegions():Hide()
+    _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
+    for i = 1, 4 do
+        local notch = _G["NPCFriendshipStatusBarNotch"..i]
+        notch:SetColorTexture(0, 0, 0)
+        notch:SetSize(1, 16)
     end
+
+    local barFillBG = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
+    barFillBG:SetPoint("TOPLEFT", -1, 1)
+    barFillBG:SetPoint("BOTTOMRIGHT", 1, -1)
 end
