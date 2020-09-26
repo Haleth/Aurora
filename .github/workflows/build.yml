@@ -36,8 +36,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/nested-brackets/parse.py -o parse.py
-        curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/nested-brackets/build.sh | bash
+        curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/ssh/parse.py -o parse.py
+        curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/ssh/build.sh | bash
 
     - name: Create Mainline Package
       env:
