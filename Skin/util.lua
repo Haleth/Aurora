@@ -12,55 +12,8 @@ local Util = Aurora.Util
 Helpful functions for layout, widget info, and debugging.
 --]]
 
---[[ Util.GetName(_widget_)
-Iterates through the widget hierarchy, starting with the given widget,
-until a viable global name is found. This is primarily useful when the
-template for a widget that assumes it has a global name, when it
-actually doesn't due to modern naming practices.
 
-**Args:**
-* `widget` - the widget to fine a name for _(Widget)_
-
-**Returns:**
-* `widgetName` - the name of the given widget _(string)_
---]]
-function Util.GetName(widget)
-    local name = widget:GetName()
-
-    while not name do
-        widget = widget:GetParent()
-        name = widget:GetName()
-    end
-
-    return name
-end
-function Util.PositionRelative(point, anchor, relPoint, x, y, gap, direction, widgets)
-    widgets[1]:ClearAllPoints()
-    widgets[1]:SetPoint(point, anchor, relPoint, x, y)
-
-    if direction == "Left" then
-        point = "TOPRIGHT"
-        relPoint = "TOPLEFT"
-        x, y = -gap, 0
-    elseif direction == "Right" then
-        point = "TOPLEFT"
-        relPoint = "TOPRIGHT"
-        x, y = gap, 0
-    elseif direction == "Up" then
-        point = "BOTTOMLEFT"
-        relPoint = "TOPLEFT"
-        x, y = 0, gap
-    elseif direction == "Down" then
-        point = "TOPLEFT"
-        relPoint = "BOTTOMLEFT"
-        x, y = 0, -gap
-    end
-
-    for i = 2, #widgets do
-        widgets[i]:ClearAllPoints()
-        widgets[i]:SetPoint(point, widgets[i - 1], relPoint, x, y)
-    end
-end
+--[[ Layout ]]--
 
 local anchors = {}
 local tickPool = _G.CreateObjectPool(function(pool)
@@ -95,6 +48,7 @@ function Util.PositionBarTicks(anchor, numSegments, color)
         end
     end
 end
+
 function Util.ReleaseBarTicks(anchor)
     if not anchors[anchor] then return end
 
@@ -105,10 +59,58 @@ function Util.ReleaseBarTicks(anchor)
     wipe(anchors[anchor])
 end
 
-function Util.FindUsage(table, func)
-    _G.hooksecurefunc(table, func, function()
-        _G.error("Found usage")
-    end)
+function Util.PositionRelative(point, anchor, relPoint, x, y, gap, direction, widgets)
+    widgets[1]:ClearAllPoints()
+    widgets[1]:SetPoint(point, anchor, relPoint, x, y)
+
+    if direction == "Left" then
+        point = "TOPRIGHT"
+        relPoint = "TOPLEFT"
+        x, y = -gap, 0
+    elseif direction == "Right" then
+        point = "TOPLEFT"
+        relPoint = "TOPRIGHT"
+        x, y = gap, 0
+    elseif direction == "Up" then
+        point = "BOTTOMLEFT"
+        relPoint = "TOPLEFT"
+        x, y = 0, gap
+    elseif direction == "Down" then
+        point = "TOPLEFT"
+        relPoint = "BOTTOMLEFT"
+        x, y = 0, -gap
+    end
+
+    for i = 2, #widgets do
+        widgets[i]:ClearAllPoints()
+        widgets[i]:SetPoint(point, widgets[i - 1], relPoint, x, y)
+    end
+end
+
+
+--[[ Widget Data ]]--
+
+--[[ Util.GetName(_widget_)
+Iterates through the widget hierarchy, starting with the given widget,
+until a viable global name is found. This is primarily useful when the
+template for a widget that assumes it has a global name, when it
+actually doesn't due to modern naming practices.
+
+**Args:**
+* `widget` - the widget to fine a name for _(Widget)_
+
+**Returns:**
+* `widgetName` - the name of the given widget _(string)_
+--]]
+function Util.GetName(widget)
+    local name = widget:GetName()
+
+    while not name do
+        widget = widget:GetParent()
+        name = widget:GetName()
+    end
+
+    return name
 end
 
 Util.NineSliceTextures = {
@@ -158,6 +160,15 @@ function Util.Mixin(table, ...)
     end
 end
 
+
+--[[ Debug and Testing ]]--
+
+function Util.FindUsage(table, func)
+    _G.hooksecurefunc(table, func, function()
+        _G.error("Found usage")
+    end)
+end
+
 function Util.TestHook(table, func, name)
     _G.hooksecurefunc(table, func, function(...)
         _G.print("Test", name, ...)
@@ -171,6 +182,7 @@ function Util.TableInspect(focusedTable)
     end
     _G.DisplayTableInspectorWindow(focusedTable)
 end
+
 function Util.Dump(value)
     if not debugTools then
         debugTools = _G.UIParentLoadAddOn("Blizzard_DebugTools")
