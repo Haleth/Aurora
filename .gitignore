@@ -1,4 +1,5 @@
 .release
+.wiki
 *.ini
 
 ## Sublime Text ##
