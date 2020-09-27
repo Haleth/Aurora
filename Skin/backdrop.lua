@@ -194,7 +194,7 @@ if private.isPatch then
 
         local backdropInfo = self.backdropInfo
         if Base.IsTextureRegistered(backdropInfo.bgFile) then
-            Base.SetTexture(self.Center, backdropInfo.bgFile)
+            Base.SetTexture(Util.GetNineSlicePiece(self, "Center"), backdropInfo.bgFile)
         end
 
         local r, g, b, a = 1, 1, 1, 1
