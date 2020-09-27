@@ -6,7 +6,7 @@ local _, private = ...
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 local backdrop = {
     -- Blizzard options
@@ -82,22 +82,9 @@ local function SanitizeTable(optionDB, parentDB)
     return optionDB
 end
 
-local bgTextures = {
-    bg = "Center",
-
-    l = "LeftEdge",
-    r = "RightEdge",
-    t = "TopEdge",
-    b = "BottomEdge",
-
-    tl = "TopLeftCorner",
-    tr = "TopRightCorner",
-    bl = "BottomLeftCorner",
-    br = "BottomRightCorner",
-}
-local nineSlice = {}
-for old, new in next, bgTextures do
-    nineSlice[new] = old
+local bgTextures = {}
+for new, old in next, Util.NineSliceTextures do
+    bgTextures[old] = new
 end
 local sides = {
     l = {l=0, r=0.125, t=0, b=1, tileV = true, left="tl", right="bl"},
@@ -116,19 +103,6 @@ local corners = {
 local BackdropMixin
 if private.isPatch then
     BackdropMixin = _G.Mixin({}, _G.BackdropTemplateMixin)
-    local function GetNineSlicePiece(container, pieceName, old)
-        if container.GetNineSlicePiece then
-            local piece = container:GetNineSlicePiece(pieceName)
-            if piece then
-                return piece, true
-            end
-        end
-
-        local piece = container[pieceName]
-        if piece then
-            return piece, true
-        end
-    end
     local function GetNineSliceLayout(frame)
         local backdropInfo = frame.backdropInfo
 
@@ -209,7 +183,7 @@ if private.isPatch then
         _G.NineSliceUtil.ApplyLayout(self, userLayout)
         for old, pieceName in next, bgTextures do
             local pieceLayout = userLayout[pieceName]
-            local piece = GetNineSlicePiece(self, pieceName, old)
+            local piece = Util.GetNineSlicePiece(self, pieceName)
 
             if pieceLayout.layer then
                 piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
@@ -241,7 +215,6 @@ if private.isPatch then
     end
 
 
-
     function BackdropMixin:SetBackdrop(backdropInfo, textures)
         if backdropInfo == true then
             if self._backdropInfo then
@@ -256,9 +229,6 @@ if private.isPatch then
 
         if textures and backdropInfo then
             self._textures = textures
-            function self:GetNineSlicePiece(pieceName)
-                return self._textures[nineSlice[pieceName]]
-            end
         end
 
         return _G.BackdropTemplateMixin.SetBackdrop(self, backdropInfo)
@@ -267,7 +237,7 @@ if private.isPatch then
         if not self.backdropInfo then return end
         self.backdropInfo.backdropColor = GetColor(red, green, blue, alpha)
 
-        local center = GetNineSlicePiece(self, "Center")
+        local center = Util.GetNineSlicePiece(self, "Center")
         if center then
             center:SetVertexColor(self.backdropInfo.backdropColor:GetRGBA())
         end
@@ -283,7 +253,7 @@ if private.isPatch then
         local backdropBorderColor = GetColor(red, green, blue, alpha)
         for _, pieceName in next, bgTextures do
             if pieceName ~= "Center" then
-                local region = GetNineSlicePiece(self, pieceName)
+                local region = Util.GetNineSlicePiece(self, pieceName)
                 if region then
                     region:SetVertexColor(backdropBorderColor:GetRGBA());
                 end
@@ -320,7 +290,7 @@ if private.isPatch then
             texture = bgTextures[texture]
         end
 
-        return (GetNineSlicePiece(self, texture))
+        return (Util.GetNineSlicePiece(self, texture))
     end
     function BackdropMixin:SetBackdropOption(optionKey, optionValue)
         if self.backdropInfo then

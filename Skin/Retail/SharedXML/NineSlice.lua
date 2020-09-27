@@ -82,14 +82,6 @@ do --[[ SharedXML\NineSlice.lua ]]
         end
     end
 
-    local function GetNineSlicePiece(container, pieceName)
-        if container.GetNineSlicePiece then
-            return container:GetNineSlicePiece(pieceName)
-        end
-
-        return container[pieceName]
-    end
-
     Hook.NineSliceUtil = {}
     function Hook.NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
         if not container._auroraNineSlice then return end
@@ -102,7 +94,7 @@ do --[[ SharedXML\NineSlice.lua ]]
             if not container._auroraBackdrop then return end
             container:SetBackdrop(private.backdrop)
             for i = 1, #nineSliceSetup do
-                local piece = GetNineSlicePiece(container, nineSliceSetup[i])
+                local piece = Util.GetNineSlicePiece(container, nineSliceSetup[i])
                 if piece then
                     piece:SetTexture("")
                 end

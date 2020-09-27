@@ -111,6 +111,38 @@ function Util.FindUsage(table, func)
     end)
 end
 
+Util.NineSliceTextures = {
+    Center = "bg",
+
+    LeftEdge = "l",
+    RightEdge = "r",
+    TopEdge = "t",
+    BottomEdge = "b",
+
+    TopLeftCorner = "tl",
+    TopRightCorner = "tr",
+    BottomLeftCorner = "bl",
+    BottomRightCorner = "br",
+}
+function Util.GetNineSlicePiece(container, pieceName)
+    if container.GetNineSlicePiece then
+        local piece = container:GetNineSlicePiece(pieceName)
+        if piece then
+            return piece, true
+        end
+    end
+
+    local piece = container[pieceName]
+    if piece then
+        return piece, true
+    end
+
+    piece = container._textures[Util.NineSliceTextures[pieceName]]
+    if piece then
+        return piece, true
+    end
+end
+
 local tempMixin = {}
 function Util.Mixin(table, ...)
     wipe(tempMixin)
