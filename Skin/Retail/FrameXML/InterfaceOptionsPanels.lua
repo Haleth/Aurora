@@ -56,7 +56,9 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelOutlineDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelRotateMinimap)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAJAlerts)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowInGameNavigation)
+    if private.isPatch then
+        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowInGameNavigation)
+    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowTutorials)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsDisplayPanelResetTutorials)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelSelfHighlightDropDown)

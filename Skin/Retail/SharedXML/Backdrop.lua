@@ -81,7 +81,9 @@ do --[[ FrameXML\Backdrop.lua ]]
         local chatbubble = FindChatBubble(self.msg)
         if chatbubble or self.elapsed > 0.3 then
             self:Hide()
-            UpdateChatBubble(chatbubble, self.guid, self.sender)
+            if chatbubble then
+                UpdateChatBubble(chatbubble, self.guid, self.sender)
+            end
         end
     end
 end
