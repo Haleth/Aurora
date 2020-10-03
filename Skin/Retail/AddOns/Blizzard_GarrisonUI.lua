@@ -338,7 +338,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonMissionPageBaseTemplate(Frame)
             Skin.GarrisonMissionPageCloseButtonTemplate(Frame.CloseButton)
             Skin.GarrisonMissionPageStageTemplate(Frame.Stage)
-            Skin.GarrisonMissionPageCostFrameTemplate(Frame.CostFrame)
+            Skin.GarrisonMissionPageCostWithTooltipTemplate(Frame.CostFrame)
 
             Frame.ButtonFrame:SetAtlas("GarrMission_PartyBuffsBG", true)
             Frame.ButtonFrame:SetWidth(400)
@@ -399,7 +399,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonMissionPageCloseButtonTemplate(Frame.CloseButton)
             Frame.CloseButton.CloseButtonBorder:Hide()
             Skin.StartMissionButtonTemplate(Frame.StartMissionButton)
-            Skin.GarrisonMissionPageCostFrameTemplate(Frame.CostFrame)
+            Skin.GarrisonMissionPageCostWithTooltipTemplate(Frame.CostFrame)
         end
     end
 end
@@ -623,7 +623,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonFollowerMissionRewardsFrameTemplate(ZoneSupportMissionPage)
     Skin.GarrisonMissionPageCloseButtonTemplate(ZoneSupportMissionPage.CloseButton)
     ZoneSupportMissionPage.CloseButton:SetPoint("TOPRIGHT", -5, 426)
-    Skin.GarrisonMissionPageCostFrameTemplate(ZoneSupportMissionPage.CostFrame)
+    Skin.GarrisonMissionPageCostWithTooltipTemplate(ZoneSupportMissionPage.CostFrame)
     Skin.GarrisonMissionPageFollowerTemplate(ZoneSupportMissionPage.Follower1)
     Skin.GarrisonFollowerCombatAllySpellTemplate(ZoneSupportMissionPage.CombatAllySpell)
     Skin.StartMissionButtonTemplate(ZoneSupportMissionPage.StartMissionButton)

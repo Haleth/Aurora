@@ -447,6 +447,83 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         disabled:SetAllPoints(check)
     end
 
+    function Skin.GlowBoxArrowTemplate(Frame, direction)
+        direction = direction or "Down"
+        local parent = Frame:GetParent()
+        if not parent.info then
+            if direction == "Left" or direction == "Right" then
+                Frame:SetSize(21, 53)
+            else
+                Frame:SetSize(53, 21)
+            end
+
+            Base.SetTexture(Frame.Arrow, "arrow"..direction)
+        end
+        Frame.Arrow:SetAllPoints()
+        Frame.Arrow:SetVertexColor(1, 1, 0)
+        Frame.Glow:Hide()
+    end
+    function Skin.GlowBoxTemplate(Frame)
+        Frame.BG:Hide()
+
+        Frame.GlowTopLeft:Hide()
+        Frame.GlowTopRight:Hide()
+        Frame.GlowBottomLeft:Hide()
+        Frame.GlowBottomRight:Hide()
+
+        Frame.GlowTop:Hide()
+        Frame.GlowBottom:Hide()
+        Frame.GlowLeft:Hide()
+        Frame.GlowRight:Hide()
+
+        Frame.ShadowTopLeft:Hide()
+        Frame.ShadowTopRight:Hide()
+        Frame.ShadowBottomLeft:Hide()
+        Frame.ShadowBottomRight:Hide()
+
+        Frame.ShadowTop:Hide()
+        Frame.ShadowBottom:Hide()
+        Frame.ShadowLeft:Hide()
+        Frame.ShadowRight:Hide()
+
+        Base.SetBackdrop(Frame, Color.yellow:Lightness(-0.8), 0.75)
+        Frame:SetBackdropBorderColor(Color.yellow)
+    end
+
+    --[[
+        SetClampedTextureRotation(self.Arrow.Arrow, 90) -- Left
+        SetClampedTextureRotation(self.Arrow.Arrow, 180) -- Up
+        SetClampedTextureRotation(self.Arrow.Arrow, 270) -- Right
+    ]]
+    -- BlizzWTF: This should be a template
+    function Skin.GlowBoxFrame(Frame, direction)
+        if Frame.BigText then
+            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+            local Arrow = _G.CreateFrame("Frame", nil, Frame)
+            Arrow.Arrow = Frame["Arrow"..direction] or Frame["Arrow"..direction:upper()]
+            Arrow.Arrow:SetParent(Arrow)
+            Arrow.Glow = Frame["ArrowGlow"..direction] or Frame["ArrowGlow"..direction:upper()]
+            Arrow.Glow:SetParent(Arrow)
+
+            Frame.Arrow = Arrow
+            Frame.Text = Frame.BigText
+        end
+        Skin.GlowBoxTemplate(Frame)
+        Skin.UIPanelCloseButton(Frame.CloseButton)
+
+        direction = direction or "Down"
+        local point = direction:upper()
+        if point == "UP" then
+            point = "TOP"
+        elseif point == "DOWN" then
+            point = "BOTTOM"
+        end
+
+        Skin.GlowBoxArrowTemplate(Frame.Arrow, direction)
+        Frame.Arrow:ClearAllPoints()
+        Frame.Arrow:SetPoint(Util.OpposingSide[point], Frame, point)
+    end
+
     function Skin.NineSlicePanelTemplate(Frame)
         Frame._auroraNineSlice = true
         Base.CreateBackdrop(Frame, private.backdrop, {

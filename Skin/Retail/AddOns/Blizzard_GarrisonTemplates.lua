@@ -206,14 +206,9 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         function Skin.GarrisonAbilityLargeCounterTemplate(Frame)
             Base.CropIcon(Frame.Icon, Frame)
         end
-        function Skin.GarrisonMissionLargeMechanicTemplate(Frame)
-            Skin.GarrisonAbilityLargeCounterTemplate(Frame)
-        end
-        function Skin.GarrisonMissionCheckTemplate(Frame)
-        end
-        function Skin.GarrisonMissionMechanicTemplate(Frame)
-            Skin.GarrisonAbilityCounterTemplate(Frame)
-        end
+        Skin.GarrisonMissionLargeMechanicTemplate = Skin.GarrisonAbilityLargeCounterTemplate
+        Skin.GarrisonMissionCheckTemplate = private.nop
+        Skin.GarrisonMissionMechanicTemplate = Skin.GarrisonAbilityCounterTemplate
         function Skin.GarrisonMissionEnemyMechanicTemplate(Frame)
             Skin.GarrisonMissionMechanicTemplate(Frame)
             Skin.GarrisonMissionCheckTemplate(Frame)
@@ -245,9 +240,8 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         function Skin.GarrisonMissionPageCostFrameTemplate(Button)
             Base.CropIcon(Button.CostIcon, Button)
         end
-        function Skin.GarrisonMissionPageStageTemplate(Frame)
-            Skin.GarrisonMissionStageTemplate(Frame)
-        end
+        Skin.GarrisonMissionPageCostWithTooltipTemplate = Skin.GarrisonMissionPageCostFrameTemplate
+        Skin.GarrisonMissionPageStageTemplate = Skin.GarrisonMissionStageTemplate
         function Skin.GarrisonMissionPageCloseButtonTemplate(Button)
             Skin.UIPanelCloseButton(Button)
             Button:SetSize(32, 32)
@@ -281,8 +275,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             })
             Base.SetBackdrop(Frame, Color.frame)
         end
-        function Skin.GarrisonMissionCompleteStageTemplate(Frame)
-        end
+        Skin.GarrisonMissionCompleteStageTemplate = private.nop
         function Skin.GarrisonMissionCompleteTemplate(Frame)
             Frame.ButtonFrameLeft:Hide()
             Frame.ButtonFrameRight:Hide()
@@ -295,10 +288,8 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             StatusBar.XPLeft:ClearAllPoints()
             StatusBar.XPRight:ClearAllPoints()
         end
-        function Skin.GarrisonFollowerXPGainTemplate(Frame)
-        end
-        function Skin.GarrisonFollowerLevelUpTemplate(Frame)
-        end
+        Skin.GarrisonFollowerXPGainTemplate = private.nop
+        Skin.GarrisonFollowerLevelUpTemplate = private.nop
     end
     do --[[ Blizzard_CovenantMissionTemplates ]]
         function Skin.CovenantMissionBaseFrameTemplate(Frame)
