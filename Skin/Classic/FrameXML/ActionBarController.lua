@@ -18,39 +18,44 @@ local function SetTexture(texture, anchor, left, right, top, bottom)
     texture:SetPoint("TOPLEFT", anchor, 1, -1)
     texture:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
 end
+
+local microButtonPrefix = [[Interface\Buttons\UI-MicroButton-]]
+local microButtonNames = {
+    Quest = true,
+    Socials = true,
+    MainMenu = true,
+}
 local function SetMicroButton(button, file, left, right, top, bottom)
-    --print("SetMicroButton", button:GetName(), file)
-    if file == "" then
-        if not left then
-            left, right, top, bottom = 0.1875, 0.8125, 0.46875, 0.90625
-        end
-        SetTexture(button._normal, button, left, right, top, bottom)
-        SetTexture(button._pushed, button, left, right, top, bottom)
-        SetTexture(button._disabled, button, left, right, top, bottom)
-    elseif file then
+    local bg = button:GetBackdropTexture("bg")
+
+    if microButtonNames[file] then
+        left, right, top, bottom = 0.1875, 0.8125, 0.46875, 0.90625
+
+        button:SetNormalTexture(microButtonPrefix..file.."-Up")
+        SetTexture(button:GetNormalTexture(), bg, left, right, top, bottom)
+
+        button:SetPushedTexture(microButtonPrefix..file.."-Down")
+        SetTexture(button:GetPushedTexture(), bg, left, right, top, bottom)
+
+        button:SetDisabledTexture(microButtonPrefix..file.."-Disabled")
+        SetTexture(button:GetDisabledTexture(), bg, left, right, top, bottom)
+    else
         if not left then
             left, right, top, bottom = 0.2, 0.8, 0.08, 0.92
         end
-        button._normal:SetTexture(file)
-        SetTexture(button._normal, button, left, right - 0.04, top + 0.04, bottom)
 
-        SetTexture(button._pushed, button, left + 0.04, right, top, bottom - 0.04)
-        button._pushed:SetVertexColor(0.5, 0.5, 0.5)
-        button._pushed:SetTexture(file)
+        button:SetNormalTexture(file)
+        SetTexture(button:GetNormalTexture(), bg, left, right - 0.04, top + 0.04, bottom)
 
-        SetTexture(button._disabled, button, left, right, top, bottom)
-        button._disabled:SetDesaturated(true)
-        button._disabled:SetTexture(file)
-    else
-        button._normal:SetTexture("")
-        button._pushed:SetTexture("")
-        if button._disabled then
-            button._disabled:SetTexture("")
-        end
+        button:SetPushedTexture(file)
+        button:GetPushedTexture():SetVertexColor(0.5, 0.5, 0.5)
+        SetTexture(button:GetPushedTexture(), bg, left + 0.04, right, top, bottom - 0.04)
+
+        button:SetDisabledTexture(file)
+        button:GetDisabledTexture():SetDesaturated(true)
+        SetTexture(button:GetDisabledTexture(), bg, left, right, top, bottom)
     end
 end
-SetTexture = Aurora.Profile.trackFunction(SetTexture, "ActionBarController.SetTexture")
-SetMicroButton = Aurora.Profile.trackFunction(SetMicroButton, "ActionBarController.SetMicroButton")
 
 do --[[ FrameXML\ActionBarController.lua ]]
     do --[[ MainMenuBar.lua ]]
@@ -72,21 +77,19 @@ end
 do --[[ FrameXML\ActionBarController.xml ]]
     do --[[ MainMenuBarMicroButtons.xml ]]
         function Skin.MainMenuBarMicroButton(Button)
-            Button:SetSize(24, 34)
+            Button:SetHitRectInsets(0, 5, 24, 0)
+            Skin.FrameTypeButton(Button)
+            Button:SetBackdropOption("offsets", {
+                left = 0,
+                right = 5,
+                top = 24,
+                bottom = 0,
+            })
 
-            Button._normal = Button:GetNormalTexture()
-            Button._pushed = Button:GetPushedTexture()
-            Button._disabled = Button:GetDisabledTexture()
-
-            -- 24 x 34
-            Base.SetBackdrop(Button, Color.button)
-
-            Button:SetHighlightTexture("")
-            Button.Flash:SetPoint("TOPLEFT", 1, -1)
-            Button.Flash:SetPoint("BOTTOMRIGHT", -1, 1)
+            local bg = Button:GetBackdropTexture("bg")
+            Button.Flash:SetPoint("TOPLEFT", bg, 1, -1)
+            Button.Flash:SetPoint("BOTTOMRIGHT", bg, -1, 1)
             Button.Flash:SetTexCoord(.1818, .7879, .175, .875)
-
-            Base.SetHighlight(Button)
         end
         function Skin.MainMenuBarWatchBarTemplate(Frame)
             local StatusBar = Frame.StatusBar
@@ -242,60 +245,27 @@ function private.FrameXML.ActionBarController()
         for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
             local button = _G[name]
             Skin.MainMenuBarMicroButton(button)
-
-            -- TODO: redo this
-            local iconTexture, left, right, top, bottom
-            if name == "CharacterMicroButton" then
-                SetTexture(_G.MicroButtonPortrait, button)
-                button:SetPoint("BOTTOMLEFT", _G.MainMenuBarArtFrame, "BOTTOMLEFT", 552, 5)
-            elseif name == "SpellbookMicroButton" then
-                iconTexture = [[Interface\Icons\INV_Misc_Book_09]]
-                button:SetPoint("BOTTOMLEFT", _G.CharacterMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "TalentMicroButton" then
-                iconTexture = [[Interface\Icons\Ability_Marksmanship]]
-                button:SetPoint("BOTTOMLEFT", _G.SpellbookMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "AchievementMicroButton" then
-                iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "QuestLogMicroButton" then
-                iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "SocialsMicroButton" then
-                iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "GuildMicroButton" then
-                iconTexture = ""
-                SetTexture(_G.GuildMicroButtonTabard.background, button, 0.1428, 0.8571, 0.222, 0.889)
-                button:SetPoint("BOTTOMLEFT", _G.QuestLogMicroButton, "BOTTOMRIGHT", 2, 0)
-
-                button.NotificationOverlay.UnreadNotificationIcon:SetSize(16, 16)
-            elseif name == "LFDMicroButton" then
-                iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.GuildMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "CollectionsMicroButton" then
-                iconTexture = [[Interface\Icons\MountJournalPortrait]]
-                left, right, top, bottom = 0.3, 0.92, 0.08, 0.92
-                button:SetPoint("BOTTOMLEFT", _G.LFDMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "EJMicroButton" then
-                iconTexture = [[Interface\EncounterJournal\UI-EJ-PortraitIcon]]
-                button:SetPoint("BOTTOMLEFT", _G.CollectionsMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "StoreMicroButton" then
-                iconTexture = [[Interface\Icons\WoW_Store]]
-                button:SetPoint("BOTTOMLEFT", _G.EJMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "WorldMapMicroButton" then
-                iconTexture = [[Interface\WorldMap\WorldMap-Icon]]
-                left, right, top, bottom = 0.21875, 0.6875, 0.109375, 0.8125
-                button:SetPoint("BOTTOMLEFT", _G.SocialsMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "MainMenuMicroButton" then
-                iconTexture = ""
-                button:SetPoint("BOTTOMLEFT", _G.WorldMapMicroButton, "BOTTOMRIGHT", 2, 0)
-            elseif name == "HelpMicroButton" then
-                iconTexture = [[Interface\Icons\INV_Misc_QuestionMark]]
-                button:SetPoint("BOTTOMLEFT", _G.MainMenuMicroButton, "BOTTOMRIGHT", 2, 0)
-            end
-
-            SetMicroButton(button, iconTexture, left, right, top, bottom)
         end
+
+        SetTexture(_G.MicroButtonPortrait, _G.CharacterMicroButton:GetBackdropTexture("bg"))
+        SetMicroButton(_G.SpellbookMicroButton, [[Interface\Icons\INV_Misc_Book_09]])
+        SetMicroButton(_G.TalentMicroButton, [[Interface\Icons\Ability_Marksmanship]])
+        SetMicroButton(_G.QuestLogMicroButton, "Quest")
+        SetMicroButton(_G.SocialsMicroButton, "Socials")
+        SetMicroButton(_G.WorldMapMicroButton, [[Interface\WorldMap\WorldMap-Icon]], 0.21875, 0.6875, 0.109375, 0.8125)
+        SetMicroButton(_G.MainMenuMicroButton, "MainMenu")
+        SetMicroButton(_G.HelpMicroButton, [[Interface\Icons\INV_Misc_QuestionMark]])
+
+        Util.PositionRelative("BOTTOMLEFT", _G.MainMenuBarArtFrame, "BOTTOMLEFT", 552, 5, -2, "Right", {
+            _G.CharacterMicroButton,
+            _G.SpellbookMicroButton,
+            _G.TalentMicroButton,
+            _G.QuestLogMicroButton,
+            _G.SocialsMicroButton,
+            _G.WorldMapMicroButton,
+            _G.MainMenuMicroButton,
+            _G.HelpMicroButton,
+        })
     end
 
     ----====####$$$$%%%%%$$$$####====----
