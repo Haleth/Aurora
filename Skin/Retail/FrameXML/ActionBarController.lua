@@ -2,7 +2,7 @@ local _, private = ...
 if private.isClassic then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals floor max ipairs
+-- luacheck: globals floor max ipairs select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -24,6 +24,7 @@ local microButtonNames = {
     Achievement = true,
     Quest = true,
     LFG = true,
+    Socials = true,
 }
 local function SetMicroButton(button, file, left, right, top, bottom)
     local bg = button:GetBackdropTexture("bg")
@@ -73,8 +74,21 @@ do --[[ FrameXML\ActionBarController.lua ]]
             end
         end
 
+        Hook.GuildMicroButtonMixin = {}
+        function Hook.GuildMicroButtonMixin:UpdateTabard(forceUpdate)
+            local emblemFilename = select(10, _G.GetGuildLogoInfo())
+            if emblemFilename then
+                self:SetNormalTexture("")
+                self:SetPushedTexture("")
+                self:SetDisabledTexture("")
+            else
+                SetMicroButton(self, "Socials")
+            end
+        end
+
         local status
-        function Hook.MainMenuMicroButton_OnUpdate(self, elapsed)
+        Hook.MainMenuMicroButtonMixin = {}
+        function Hook.MainMenuMicroButtonMixin:OnUpdate(elapsed)
             if self.updateInterval == _G.PERFORMANCEBAR_UPDATE_INTERVAL then
                 --print("OnUpdate", self.updateInterval)
                 status = _G.GetFileStreamingStatus()
@@ -85,7 +99,9 @@ do --[[ FrameXML\ActionBarController.lua ]]
                 if status == 0 then
                     SetMicroButton(self, [[Interface\Icons\INV_Misc_QuestionMark]])
                 else
-                    SetMicroButton(self, "")
+                    self:SetNormalTexture("")
+                    self:SetPushedTexture("")
+                    self:SetDisabledTexture("")
                 end
             end
         end
@@ -424,7 +440,8 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
         _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
-        _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButton_OnUpdate)
+        Util.Mixin(_G.GuildMicroButton, Hook.GuildMicroButtonMixin)
+        _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButtonMixin.OnUpdate)
 
         for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
             local button = _G[name]
