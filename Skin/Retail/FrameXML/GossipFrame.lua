@@ -97,7 +97,7 @@ function private.FrameXML.GossipFrame()
     -----------------
     local GossipFrame = _G.GossipFrame
     Skin.ButtonFrameTemplate(GossipFrame)
-    if private.isPatch then
+    if private.isBeta then
         Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
         GossipFrame.Background:Hide()
     else
