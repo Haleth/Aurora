@@ -80,7 +80,7 @@ function private.AddOns.Blizzard_CraftUI()
     _G.hooksecurefunc("CraftFrame_Update", Hook.CraftFrame_Update)
     _G.hooksecurefunc("CraftFrame_SetSelection", Hook.CraftFrame_SetSelection)
 
-    Base.SetBackdrop(CraftFrame)
+    Skin.FrameTypeFrame(CraftFrame)
     CraftFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

@@ -79,7 +79,7 @@ function private.AddOns.Blizzard_TrainerUI()
     _G.hooksecurefunc("ClassTrainer_SetToTradeSkillTrainer", Hook.ClassTrainer_SetToTradeSkillTrainer)
     _G.hooksecurefunc("ClassTrainer_SetToClassTrainer", Hook.ClassTrainer_SetToClassTrainer)
 
-    Base.SetBackdrop(ClassTrainerFrame)
+    Skin.FrameTypeFrame(ClassTrainerFrame)
     ClassTrainerFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

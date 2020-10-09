@@ -98,7 +98,7 @@ function private.AddOns.Blizzard_ChallengesUI()
     _G.hooksecurefunc(ChallengesKeystoneFrame, "OnKeystoneSlotted", Hook.ChallengesKeystoneFrameMixin_OnKeystoneSlotted)
 
     ChallengesKeystoneFrame:GetRegions():Hide()
-    Base.SetBackdrop(ChallengesKeystoneFrame)
+    Skin.FrameTypeFrame(ChallengesKeystoneFrame)
     Skin.UIPanelCloseButton(ChallengesKeystoneFrame.CloseButton)
     Skin.UIPanelButtonTemplate(ChallengesKeystoneFrame.StartButton)
 

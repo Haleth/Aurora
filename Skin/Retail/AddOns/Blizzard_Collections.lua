@@ -687,7 +687,7 @@ function private.AddOns.Blizzard_Collections()
     local spellSelect = PetJournal.SpellSelect
     spellSelect.BgEnd:Hide()
     spellSelect.BgTiled:Hide()
-    Base.SetBackdrop(spellSelect)
+    Skin.FrameTypeFrame(spellSelect)
     local spellSelectBG = spellSelect:GetBackdropTexture("bg")
     spellSelectBG:SetPoint("TOPLEFT", -3, -1)
     spellSelectBG:SetPoint("BOTTOMRIGHT", 3, 1)

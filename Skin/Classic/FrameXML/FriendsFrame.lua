@@ -297,7 +297,7 @@ function private.FrameXML.FriendsFrame()
     ------------------
     -- /run GuildControlPopupFrame:Show()
     local GuildControlPopupFrame = _G.GuildControlPopupFrame
-    Base.SetBackdrop(GuildControlPopupFrame)
+    Skin.FrameTypeFrame(GuildControlPopupFrame)
     local TopLeft, TopRight, BotLeft, BotRight = _G.GuildControlPopupFrame:GetRegions()
     TopLeft:Hide()
     TopRight:Hide()
@@ -362,7 +362,7 @@ function private.FrameXML.FriendsFrame()
     -- GuildMisc --
     ---------------
     local GuildInfoFrame = _G.GuildInfoFrame
-    Base.SetBackdrop(GuildInfoFrame)
+    Skin.FrameTypeFrame(GuildInfoFrame)
     local patch, _, corner = GuildInfoFrame:GetRegions()
     patch:SetAlpha(0)
     corner:SetAlpha(0)
@@ -376,7 +376,7 @@ function private.FrameXML.FriendsFrame()
 
 
     local GuildMemberDetailFrame = _G.GuildMemberDetailFrame
-    Base.SetBackdrop(GuildMemberDetailFrame)
+    Skin.FrameTypeFrame(GuildMemberDetailFrame)
 
     patch, corner = select(11, GuildMemberDetailFrame:GetRegions())
     patch:SetAlpha(0)
@@ -411,7 +411,7 @@ function private.FrameXML.FriendsFrame()
     })
 
     if not private.disabled.tooltips then
-        Base.SetBackdrop(_G.FriendsTooltip)
+        Skin.FrameTypeFrame(_G.FriendsTooltip)
     end
 
 

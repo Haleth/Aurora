@@ -19,7 +19,7 @@ do --[[ FrameXML\UIMenu.xml ]]
     function Skin.UIMenuTemplate(Frame)
         Frame:HookScript("OnShow", Hook.UIMenuTemplate_OnShow)
 
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
     end
 end
 

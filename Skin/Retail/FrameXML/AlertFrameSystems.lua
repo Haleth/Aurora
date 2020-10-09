@@ -30,7 +30,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.TemplateAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             -- Called when created: the main skin
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", ContainedAlertFrame.icon, -5, 5)
             bg:SetPoint("BOTTOMRIGHT", 0, 0)
@@ -58,7 +58,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     local heroicTexture = _G.CreateTextureMarkup([[Interface/LFGFrame/UI-LFG-ICON-HEROIC]], 32, 32, 16, 20, 0, 0.5, 0, 0.625, -5, 0)
     function Skin.DungeonCompletionAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", ContainedAlertFrame.dungeonTexture, -5, 5)
             bg:SetPoint("BOTTOMRIGHT", -8, 8)
@@ -106,7 +106,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     end
     function Skin.AchievementAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             ContainedAlertFrame._auroraBG = bg
 
@@ -176,7 +176,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     end
     function Skin.CriteriaAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             ContainedAlertFrame:SetBackdropOption("offsets", {
                 left = 0,
                 right = 0,
@@ -205,7 +205,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     end
     function Skin.GuildChallengeAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", ContainedAlertFrame.EmblemBackground, -5, 5)
             bg:SetPoint("BOTTOMRIGHT", -10, 15)
@@ -233,7 +233,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.ScenarioLegionInvasionAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             local toastFrame, icon, title = ContainedAlertFrame:GetRegions()
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", icon, -5, 5)
             bg:SetPoint("BOTTOMRIGHT", -8, 10)
@@ -262,7 +262,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     end
     function Skin.ScenarioAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", ContainedAlertFrame.dungeonTexture, -5, 5)
             bg:SetPoint("BOTTOMRIGHT", -8, 12)
@@ -298,7 +298,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.MoneyWonAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             -- Called when created: the main skin
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             ContainedAlertFrame:SetBackdropBorderColor(Color.yellow)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, -5, 5)
@@ -318,7 +318,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.HonorAwardedAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             -- Called when created: the main skin
-            Base.SetBackdrop(ContainedAlertFrame)
+            Skin.FrameTypeFrame(ContainedAlertFrame)
             ContainedAlertFrame:SetBackdropBorderColor(Color.yellow)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, -5, 5)

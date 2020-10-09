@@ -384,19 +384,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.NineSlicePanelTemplate(Frame)
         Frame._auroraNineSlice = true
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
-
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Center,
-        })
 
         local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
         --print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
@@ -417,7 +404,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.DialogBorderTemplate(Frame)
         Frame.Center = Frame.Bg
         Skin.DialogBorderNoCenterTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
     end
     function Skin.DialogBorderDarkTemplate(Frame)
         Frame.Center = Frame.Bg
@@ -507,7 +494,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.BorderRight:Hide()
 
         Frame.Background:Hide()
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
     end
 
     function Skin.UIMenuButtonStretchTemplate(Button)

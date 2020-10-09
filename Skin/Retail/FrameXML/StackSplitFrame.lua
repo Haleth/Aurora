@@ -37,7 +37,7 @@ end
 function private.FrameXML.StackSplitFrame()
     local StackSplitFrame = _G.StackSplitFrame
     Util.Mixin(StackSplitFrame, Hook.StackSplitMixin)
-    Base.SetBackdrop(StackSplitFrame)
+    Skin.FrameTypeFrame(StackSplitFrame)
 
     local bg = StackSplitFrame:GetBackdropTexture("bg")
     StackSplitFrame.SingleItemSplitBackground:SetAlpha(0)

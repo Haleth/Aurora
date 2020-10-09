@@ -112,28 +112,19 @@ function private.OnLoad()
     local Base = Aurora.Base
     local Hook = Aurora.Hook
     local Skin = Aurora.Skin
-    function Hook.SharedTooltip_SetBackdropStyle(self, style)
-        if not self.IsEmbedded then
-            Base.SetBackdrop(self, Color.frame, AuroraConfig.alpha)
-        end
-    end
 
-    function Base.SetBackdrop(frame, color, alpha)
-        local backdrop = private.backdrop
-        if not alpha then
-            if AuroraConfig.buttonsHaveGradient and Color.button:IsEqualTo(color) then
-                backdrop = {
-                    bgFile = "gradientUp",
-                }
-            elseif not color then
-                color, alpha = Color.frame, AuroraConfig.alpha
-                _G.tinsert(C.frames, frame)
-            end
-        end
-
-        Base.CreateBackdrop(frame, backdrop)
-        Base.SetBackdropColor(frame, color, alpha)
+    function Skin.FrameTypeFrame(Frame)
+        Base.SetBackdrop(Frame, Color.frame, AuroraConfig.alpha)
     end
+    _G.hooksecurefunc(Skin, "FrameTypeButton", function(Button)
+        if AuroraConfig.buttonsHaveGradient then
+            Button:SetBackdropOption("bgFile", "gradientUp")
+        end
+    end)
+    _G.hooksecurefunc(Skin, "CharacterFrameTabButtonTemplate", function(Button)
+        Button:SetButtonColor(Color.frame, AuroraConfig.alpha, false)
+    end)
+
     _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
         if private.isClassic then return end
 

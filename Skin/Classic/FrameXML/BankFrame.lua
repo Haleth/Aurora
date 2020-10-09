@@ -64,7 +64,7 @@ function private.FrameXML.BankFrame()
 
     --[[ BankFrame ]]--
     local BankFrame = _G.BankFrame
-    Base.SetBackdrop(BankFrame)
+    Skin.FrameTypeFrame(BankFrame)
     BankFrame:SetBackdropOption("offsets", {
         left = 12,
         right = 35,

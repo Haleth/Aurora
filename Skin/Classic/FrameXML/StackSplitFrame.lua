@@ -18,7 +18,7 @@ local Color = Aurora.Color
 
 function private.FrameXML.StackSplitFrame()
     local StackSplitFrame = _G.StackSplitFrame
-    Base.SetBackdrop(StackSplitFrame)
+    Skin.FrameTypeFrame(StackSplitFrame)
     StackSplitFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 12,

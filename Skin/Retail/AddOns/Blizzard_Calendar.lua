@@ -131,7 +131,7 @@ function private.AddOns.Blizzard_Calendar()
     -------------------
     -- CalendarFrame --
     -------------------
-    Base.SetBackdrop(_G.CalendarFrame)
+    Skin.FrameTypeFrame(_G.CalendarFrame)
     local calenderBG = _G.CalendarFrame:GetBackdropTexture("bg")
     calenderBG:SetPoint("TOPLEFT", 11, 0)
     calenderBG:SetPoint("BOTTOMRIGHT", -9, 3)

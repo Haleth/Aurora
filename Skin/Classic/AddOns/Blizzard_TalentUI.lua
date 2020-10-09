@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
@@ -32,7 +31,7 @@ end
 
 function private.AddOns.Blizzard_TalentUI()
     local TalentFrame = _G.TalentFrame
-    Base.SetBackdrop(TalentFrame)
+    Skin.FrameTypeFrame(TalentFrame)
     TalentFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

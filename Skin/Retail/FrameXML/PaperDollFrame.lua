@@ -234,7 +234,7 @@ function private.FrameXML.PaperDollFrame()
     end
 
     local GearManagerDialogPopup = _G.GearManagerDialogPopup
-    Base.SetBackdrop(GearManagerDialogPopup)
+    Skin.FrameTypeFrame(GearManagerDialogPopup)
     GearManagerDialogPopup:SetSize(510, 520)
     GearManagerDialogPopup.BG:Hide()
     Hook.BuildIconArray(GearManagerDialogPopup, "GearManagerDialogPopupButton", "GearSetPopupButtonTemplate", _G.NUM_GEARSET_ICONS_PER_ROW, _G.NUM_GEARSET_ICON_ROWS)
@@ -247,7 +247,7 @@ function private.FrameXML.PaperDollFrame()
     _G.GearManagerDialogPopupEditBoxLeft:Hide()
     _G.GearManagerDialogPopupEditBoxMiddle:Hide()
     _G.GearManagerDialogPopupEditBoxRight:Hide()
-    Base.SetBackdrop(_G.GearManagerDialogPopupEditBox)
+    Skin.FrameTypeFrame(_G.GearManagerDialogPopupEditBox)
 
     Skin.UIPanelButtonTemplate(_G.GearManagerDialogPopupCancel)
     Skin.UIPanelButtonTemplate(_G.GearManagerDialogPopupOkay)

@@ -78,7 +78,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         ItemButton.BattlepayItemTexture:SetAllPoints()
     end
     function Skin.ContainerFrameTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetBackdropOption("offsets", {
             left = 11,
             right = 6,

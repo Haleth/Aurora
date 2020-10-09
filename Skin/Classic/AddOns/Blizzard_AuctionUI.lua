@@ -223,7 +223,7 @@ function private.AddOns.Blizzard_AuctionUI()
     _G.hooksecurefunc("SortButton_UpdateArrow", Hook.SortButton_UpdateArrow)
 
     local AuctionFrame = _G.AuctionFrame
-    Base.SetBackdrop(AuctionFrame)
+    Skin.FrameTypeFrame(AuctionFrame)
     AuctionFrame:SetBackdropOption("offsets", {
         left = 12,
         right = 2,

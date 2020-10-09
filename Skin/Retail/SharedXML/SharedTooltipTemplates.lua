@@ -8,12 +8,11 @@ if private.isClassic then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
 
 do --[[ FrameXML\SharedTooltipTemplates.lua ]]
     function Hook.SharedTooltip_SetBackdropStyle(self, style)
         if not self.IsEmbedded then
-            Base.SetBackdrop(self, Color.frame)
+            Skin.FrameTypeFrame(self)
         end
     end
 end

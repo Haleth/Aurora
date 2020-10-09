@@ -72,7 +72,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Button.RightHighlight:SetAlpha(0)
             Button.MiddleHighlight:SetAlpha(0)
 
-            Base.SetBackdrop(Button)
+            Skin.FrameTypeFrame(Button)
 
             Button.Text:ClearAllPoints()
             Button.Text:SetPoint("CENTER")
@@ -432,10 +432,10 @@ function private.AddOns.Blizzard_GarrisonUI()
     --   Blizzard_GarrisonShipyardUI   --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.tooltips then
-        Base.SetBackdrop(_G.GarrisonBonusAreaTooltip)
+        Skin.FrameTypeFrame(_G.GarrisonBonusAreaTooltip)
         Skin.GarrisonBonusAreaTooltipFrameTemplate(_G.GarrisonBonusAreaTooltip.BonusArea)
 
-        Base.SetBackdrop(_G.GarrisonShipyardMapMissionTooltip)
+        Skin.FrameTypeFrame(_G.GarrisonShipyardMapMissionTooltip)
         Skin.InternalEmbeddedItemTooltipTemplate(_G.GarrisonShipyardMapMissionTooltip.ItemTooltip)
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusEffect)
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusReward)
@@ -466,7 +466,7 @@ function private.AddOns.Blizzard_GarrisonUI()
         borderLayer = "BACKGROUND",
         borderSublevel = -7,
     })
-    Base.SetBackdrop(GarrisonLandingPage)
+    Skin.FrameTypeFrame(GarrisonLandingPage)
     GarrisonLandingPage.HeaderBar:Hide()
 
     Skin.UIPanelCloseButton(GarrisonLandingPage.CloseButton)

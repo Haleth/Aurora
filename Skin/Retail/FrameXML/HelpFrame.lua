@@ -147,7 +147,7 @@ function private.FrameXML.HelpFrame()
     -----------------------
     -- TicketStatusFrame --
     -----------------------
-    Base.SetBackdrop(_G.TicketStatusFrameButton)
+    Skin.FrameTypeFrame(_G.TicketStatusFrameButton)
 
 
     --------------------------

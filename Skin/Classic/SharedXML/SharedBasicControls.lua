@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --do --[[ FrameXML\SharedBasicControls.lua ]]
@@ -25,7 +24,7 @@ do --[[ FrameXML\SharedBasicControls.xml ]]
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
 
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
 
         Frame.Title:ClearAllPoints()
         Frame.Title:SetPoint("TOPLEFT")

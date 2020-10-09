@@ -26,7 +26,7 @@ end
 
 function private.FrameXML.TabardFrame()
     local TabardFrame = _G.TabardFrame
-    Base.SetBackdrop(TabardFrame)
+    Skin.FrameTypeFrame(TabardFrame)
     TabardFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

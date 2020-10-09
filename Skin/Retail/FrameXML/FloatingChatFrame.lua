@@ -125,7 +125,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         Button.rightHighlightTexture:Hide()
         Button.middleHighlightTexture:Hide()
 
-        Base.SetBackdrop(Button)
+        Skin.FrameTypeFrame(Button)
         Base.SetHighlight(Button)
 
         local MaximizeButton = _G[Button:GetName().."MaximizeButton"]

@@ -6,7 +6,6 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
@@ -25,7 +24,7 @@ end
 
 do --[[ FrameXML\WarCampaignTemplates.xml ]]
     function Skin.CampaignTooltipTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Skin.InternalEmbeddedItemTooltipTemplate(Frame.ItemTooltip)
     end
     function Skin.CampaignHeaderDisplayTemplate(Frame)

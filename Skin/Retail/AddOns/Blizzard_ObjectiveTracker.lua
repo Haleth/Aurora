@@ -289,7 +289,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
             bg = ScrollChild.Bg
         })
 
-        Base.SetBackdrop(ScrollChild)
+        Skin.FrameTypeFrame(ScrollChild)
         ScrollChild:SetBackdropBorderColor(Color.yellow:GetRGB())
         ScrollChild:SetBackdropOption("offsets", {
             left = 35,
@@ -419,7 +419,7 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     local ScenarioChallengeModeBlock = _G.ScenarioChallengeModeBlock
     local bg = select(3, ScenarioChallengeModeBlock:GetRegions())
     bg:Hide()
-    Base.SetBackdrop(ScenarioChallengeModeBlock)
+    Skin.FrameTypeFrame(ScenarioChallengeModeBlock)
 
     ScenarioChallengeModeBlock.TimerBGBack:Hide()
     ScenarioChallengeModeBlock.TimerBG:Hide()

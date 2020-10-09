@@ -46,7 +46,7 @@ end
 function private.AddOns.Blizzard_CovenantPreviewUI()
     local CovenantPreviewFrame = _G.CovenantPreviewFrame
     Util.Mixin(CovenantPreviewFrame, Hook.CovenantPreviewFrameMixin)
-    Base.SetBackdrop(CovenantPreviewFrame)
+    Skin.FrameTypeFrame(CovenantPreviewFrame)
 
     CovenantPreviewFrame.ModelSceneContainer.Background:SetTexCoord(0.00970873786408, 0.99029126213592, 0.0092807424594, 0.9907192575406)
 

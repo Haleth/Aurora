@@ -76,7 +76,7 @@ function private.FrameXML.TutorialFrame()
     -------------------
     -- TutorialFrame --
     -------------------
-    Base.SetBackdrop(_G.TutorialFrame)
+    Skin.FrameTypeFrame(_G.TutorialFrame)
 
     local title = _G.TutorialFrameTitle
     title:ClearAllPoints()

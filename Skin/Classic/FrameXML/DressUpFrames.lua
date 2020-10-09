@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
@@ -19,7 +18,7 @@ function private.FrameXML.DressUpFrames()
         - AuctionUI
     ]]
     local SideDressUpFrame = _G.SideDressUpFrame
-    Base.SetBackdrop(SideDressUpFrame)
+    Skin.FrameTypeFrame(SideDressUpFrame)
 
     local top, bottom, left, right = SideDressUpFrame:GetRegions()
     top:Hide()
@@ -40,7 +39,7 @@ function private.FrameXML.DressUpFrames()
     -- DressUpFrame --
     ------------------
     local DressUpFrame = _G.DressUpFrame
-    Base.SetBackdrop(DressUpFrame)
+    Skin.FrameTypeFrame(DressUpFrame)
     DressUpFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

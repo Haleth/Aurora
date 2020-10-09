@@ -59,7 +59,7 @@ function private.FrameXML.PetStable()
     _G.hooksecurefunc("PetStable_Update", Hook.PetStable_Update)
 
     local PetStableFrame = _G.PetStableFrame
-    Base.SetBackdrop(PetStableFrame)
+    Skin.FrameTypeFrame(PetStableFrame)
     PetStableFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

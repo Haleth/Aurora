@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
@@ -18,7 +17,7 @@ local Util = Aurora.Util
 
 function private.FrameXML.CharacterFrame()
     local CharacterFrame = _G.CharacterFrame
-    Base.SetBackdrop(CharacterFrame)
+    Skin.FrameTypeFrame(CharacterFrame)
     CharacterFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

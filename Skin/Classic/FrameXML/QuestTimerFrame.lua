@@ -6,7 +6,7 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
+local Skin = Aurora.Skin
 
 --do --[[ FrameXML\QuestTimerFrame.lua ]]
 --end
@@ -16,7 +16,7 @@ local Base = Aurora.Base
 
 function private.FrameXML.QuestTimerFrame()
     local QuestTimerFrame = _G.QuestTimerFrame
-    Base.SetBackdrop(QuestTimerFrame)
+    Skin.FrameTypeFrame(QuestTimerFrame)
     QuestTimerFrame:SetBackdropOption("offsets", {
         left = 5,
         right = 5,

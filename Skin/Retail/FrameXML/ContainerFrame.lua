@@ -90,7 +90,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     function Skin.ContainerFrameTemplate(Frame)
         _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
 
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetBackdropOption("offsets", {
             left = 11,
             right = 6,

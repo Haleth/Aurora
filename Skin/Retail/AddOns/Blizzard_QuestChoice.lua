@@ -77,7 +77,7 @@ function private.AddOns.Blizzard_QuestChoice()
     QuestChoiceFrame.QuestionText:SetPoint("TOPLEFT", 20, -20)
     QuestChoiceFrame.QuestionText:SetPoint("BOTTOMRIGHT", QuestChoiceFrame, "TOPRIGHT", -20, -80)
 
-    Base.SetBackdrop(QuestChoiceFrame)
+    Skin.FrameTypeFrame(QuestChoiceFrame)
 
     for i = 1, #QuestChoiceFrame.Options do
         Skin.QuestChoiceOptionTemplate(QuestChoiceFrame["Option"..i])

@@ -261,7 +261,7 @@ function private.FrameXML.FriendsFrame()
         Skin.GlowBoxTemplate(FriendsFrame.FriendsFrameQuickJoinHelpTip)
     end
     if not private.disabled.tooltips then
-        Base.SetBackdrop(_G.FriendsTooltip)
+        Skin.FrameTypeFrame(_G.FriendsTooltip)
     end
 
 

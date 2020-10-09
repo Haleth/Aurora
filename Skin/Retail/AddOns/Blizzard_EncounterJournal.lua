@@ -366,7 +366,7 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     local searchPreview = searchBox.searchPreviewContainer
     searchPreview:DisableDrawLayer("ARTWORK")
-    Base.SetBackdrop(searchPreview)
+    Skin.FrameTypeFrame(searchPreview)
     local searchPreviewBG = searchPreview:GetBackdropTexture("bg")
     searchPreviewBG:SetPoint("BOTTOMRIGHT", searchBox.showAllResults, 0, 0)
 
@@ -376,7 +376,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     SkinSearchButton(searchBox.showAllResults)
 
     local searchResults = EncounterJournal.searchResults
-    Base.SetBackdrop(searchResults)
+    Skin.FrameTypeFrame(searchResults)
 
     local titleText = searchResults.TitleText
     titleText:ClearAllPoints()
@@ -550,7 +550,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     -----------------------------
     if not private.disabled.tooltips then
         local tooltip = _G.EncounterJournalTooltip
-        Base.SetBackdrop(tooltip)
+        Skin.FrameTypeFrame(tooltip)
 
         Base.CropIcon(tooltip.Item1.icon)
         Base.SetBackdrop(tooltip.Item1, Color.black, Color.frame.a)

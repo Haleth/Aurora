@@ -89,7 +89,7 @@ do --[[ FrameXML\Blizzard_LookingForGuildUI.xml ]]
         Skin.LookingForGuildRoleTemplate(_G.LookingForGuildDamagerButton)
 
         Skin.LookingForGuildSectionTemplate(_G.LookingForGuildCommentFrame)
-        Base.SetBackdrop(_G.LookingForGuildCommentInputFrame)
+        Skin.FrameTypeFrame(_G.LookingForGuildCommentInputFrame)
         for i = 1, 9 do
             select(i, _G.LookingForGuildCommentInputFrame:GetRegions()):Hide()
         end

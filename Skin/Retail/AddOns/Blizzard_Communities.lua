@@ -232,7 +232,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIMenuButtonStretchTemplate(Button)
         end
         function Skin.CommunitiesEditStreamDialogTemplate(Frame)
-            Base.SetBackdrop(Frame)
+            Skin.FrameTypeFrame(Frame)
 
             Skin.InputBoxTemplate(Frame.NameEdit)
             Skin.InputScrollFrameTemplate(Frame.Description)
@@ -544,7 +544,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             modelBackground:SetPoint("TOPLEFT", -1, 1)
             modelBackground:SetPoint("BOTTOMRIGHT", 1, -2)
             modelBackground:SetFrameLevel(0)
-            Base.SetBackdrop(modelBackground)
+            Skin.FrameTypeFrame(modelBackground)
 
             PlayerModel.Bg:Hide()
             PlayerModel.ShadowOverlay:Hide()
@@ -567,7 +567,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             PlayerModel.CornerBottomRight:Hide()
 
             local TextFrame = PlayerModel.TextFrame
-            Base.SetBackdrop(TextFrame)
+            Skin.FrameTypeFrame(TextFrame)
             TextFrame:SetPoint("TOPLEFT", PlayerModel.Nameplate, "BOTTOMLEFT", -1, 12)
             TextFrame:SetWidth(200)
             TextFrame.TextFrameBg:Hide()
@@ -594,8 +594,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.GroupInviteButton)
             Skin.UIDropDownMenuTemplate(Frame.RankDropdown)
 
-            Base.SetBackdrop(Frame.NoteBackground)
-            Base.SetBackdrop(Frame.OfficerNoteBackground)
+            Skin.FrameTypeFrame(Frame.NoteBackground)
+            Skin.FrameTypeFrame(Frame.OfficerNoteBackground)
         end
     end
     do --[[ GuildNameChange ]]
@@ -772,7 +772,7 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesTicketManagerDialog._iconBorder = Base.CropIcon(CommunitiesTicketManagerDialog.Icon, CommunitiesTicketManagerDialog)
     CommunitiesTicketManagerDialog.IconRing:SetAlpha(0)
 
-    Base.SetBackdrop(CommunitiesTicketManagerDialog)
+    Skin.FrameTypeFrame(CommunitiesTicketManagerDialog)
     CommunitiesTicketManagerDialog.TopLeft:ClearAllPoints()
     CommunitiesTicketManagerDialog.TopRight:ClearAllPoints()
     CommunitiesTicketManagerDialog.BottomLeft:ClearAllPoints()

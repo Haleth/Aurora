@@ -71,7 +71,7 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         Button:SetNormalTexture("")
         Button:SetHighlightTexture("")
 
-        Base.SetBackdrop(Button)
+        Skin.FrameTypeFrame(Button)
         Base.SetHighlight(Button)
     end
     function Skin.SpellButtonTemplate(CheckButton)
@@ -176,7 +176,7 @@ function private.FrameXML.SpellBookFrame()
     _G.hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", Hook.SpellBookFrame_UpdateSkillLineTabs)
 
     local SpellBookFrame = _G.SpellBookFrame
-    Base.SetBackdrop(SpellBookFrame)
+    Skin.FrameTypeFrame(SpellBookFrame)
     SpellBookFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

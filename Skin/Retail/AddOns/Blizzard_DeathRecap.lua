@@ -36,7 +36,7 @@ function private.AddOns.Blizzard_DeathRecap()
         bg = _G.DeathRecapFrame.Background,
 
     })
-    Base.SetBackdrop(DeathRecapFrame)
+    Skin.FrameTypeFrame(DeathRecapFrame)
 
     local titleText = DeathRecapFrame.Title
     titleText:ClearAllPoints()

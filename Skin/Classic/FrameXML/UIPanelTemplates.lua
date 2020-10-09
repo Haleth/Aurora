@@ -133,7 +133,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.BottomBorder:Hide()
         Frame.LeftBorder:Hide()
         Frame.RightBorder:Hide()
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
 
         Skin.UIPanelCloseButton(Frame.CloseButton)
     end
@@ -169,7 +169,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Frame.BottomBorder:Hide()
         Frame.LeftBorder:Hide()
         Frame.RightBorder:Hide()
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetBackdropOption("offsets", {
             left = 5,
             right = 5,

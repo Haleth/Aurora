@@ -135,7 +135,7 @@ F.ReskinTab = function(f, numTabs)
         bg:SetPoint("TOPLEFT", 8, -3)
         bg:SetPoint("BOTTOMRIGHT", -8, 0)
         bg:SetFrameLevel(f:GetFrameLevel()-1)
-        Base.SetBackdrop(bg)
+        Skin.FrameTypeFrame(bg)
 
         f._auroraBDFrame = bg
         Base.SetHighlight(f)
@@ -301,7 +301,7 @@ F.SetBD = function(f, x, y, x2, y2)
         bg:SetPoint("BOTTOMRIGHT", x2, y2)
     end
     bg:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bg)
+    Skin.FrameTypeFrame(bg)
 end
 
 F.ReskinPortraitFrame = function(f, isButtonFrame)
@@ -432,7 +432,7 @@ F.ReskinTooltip = function(f)
     bg:SetPoint("TOPLEFT")
     bg:SetPoint("BOTTOMRIGHT")
 
-    Base.SetBackdrop(bg)
+    Skin.FrameTypeFrame(bg)
 end
 
 F.ReskinItemFrame = function(frame)

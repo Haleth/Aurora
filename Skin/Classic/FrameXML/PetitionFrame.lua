@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --do --[[ FrameXML\PetitionFrame.lua ]]
@@ -18,7 +17,7 @@ local Skin = Aurora.Skin
 function private.FrameXML.PetitionFrame()
     local PetitionFrame = _G.PetitionFrame
 
-    Base.SetBackdrop(PetitionFrame)
+    Skin.FrameTypeFrame(PetitionFrame)
     PetitionFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

@@ -2,7 +2,7 @@ local _, private = ...
 if private.isRetail then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals floor max ipairs
+-- luacheck: globals floor max ipairs select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -106,6 +106,8 @@ do --[[ FrameXML\ActionBarController.xml ]]
             StatusBar.XPBarTexture1:SetAlpha(0)
             StatusBar.XPBarTexture2:SetAlpha(0)
             StatusBar.XPBarTexture3:SetAlpha(0)
+
+            StatusBar.Background:Hide()
 
             Util.PositionBarTicks(StatusBar, 20, Color.frame)
             Frame.OverlayFrame.Text:SetPoint("CENTER")
@@ -274,6 +276,7 @@ function private.FrameXML.ActionBarController()
     if not private.disabled.mainmenubar then
         _G.hooksecurefunc("MainMenuTrackingBar_Configure", Hook.MainMenuTrackingBar_Configure)
 
+        -- MainMenuExpBar
         Skin.FrameTypeStatusBar(_G.MainMenuExpBar)
         Base.SetBackdropColor(_G.MainMenuExpBar, Color.frame)
         Util.PositionBarTicks(_G.MainMenuExpBar, 20, Color.frame)
@@ -281,12 +284,13 @@ function private.FrameXML.ActionBarController()
         _G.MainMenuExpBar:SetPoint("TOP", 0.4, 0)
         _G.ExhaustionLevelFillBar:SetHeight(9)
 
-        -- MainMenuBarArtFrame
         _G.MainMenuXPBarTexture0:SetAlpha(0)
         _G.MainMenuXPBarTexture1:SetAlpha(0)
         _G.MainMenuXPBarTexture2:SetAlpha(0)
         _G.MainMenuXPBarTexture3:SetAlpha(0)
+        select(6, _G.MainMenuExpBar:GetRegions()):Hide()
 
+        -- MainMenuBarArtFrame
         _G.MainMenuBarTexture0:SetAlpha(0)
         _G.MainMenuBarTexture1:SetAlpha(0)
         _G.MainMenuBarTexture2:SetAlpha(0)

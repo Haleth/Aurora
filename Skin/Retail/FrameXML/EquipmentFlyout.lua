@@ -62,10 +62,10 @@ function private.FrameXML.EquipmentFlyout()
     bd:SetPoint("TOPLEFT")
     bd:SetPoint("BOTTOMRIGHT", 3, -1)
     bd:SetFrameLevel(buttonFrame:GetFrameLevel())
-    Base.SetBackdrop(bd)
+    Skin.FrameTypeFrame(bd)
 
     local NavigationFrame = _G.EquipmentFlyoutFrame.NavigationFrame
-    Base.SetBackdrop(NavigationFrame)
+    Skin.FrameTypeFrame(NavigationFrame)
     NavigationFrame:SetPoint("TOPLEFT", bd, "BOTTOMLEFT", 0, 1)
     NavigationFrame:SetPoint("TOPRIGHT", bd, "BOTTOMRIGHT", 0, 1)
     if private.isPatch then

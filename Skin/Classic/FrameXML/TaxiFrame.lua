@@ -6,12 +6,11 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 function private.FrameXML.TaxiFrame()
     local TaxiFrame = _G.TaxiFrame
-    Base.SetBackdrop(TaxiFrame)
+    Skin.FrameTypeFrame(TaxiFrame)
     TaxiFrame:SetBackdropOption("offsets", {
         left = 20,
         right = 46,

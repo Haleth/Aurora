@@ -221,7 +221,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G[name.."MiddleHighlight"]:SetTexture("")
         _G[name.."RightHighlight"]:SetTexture("")
 
-        Base.SetBackdrop(Button)
+        Skin.FrameTypeFrame(Button)
         Base.SetHighlight(Button)
         Button._auroraTabResize = true
     end
@@ -423,7 +423,7 @@ function private.AddOns.Blizzard_AchievementUI()
     -- AchievementFrame --
     ----------------------
     local AchievementFrame = _G.AchievementFrame
-    Base.SetBackdrop(AchievementFrame)
+    Skin.FrameTypeFrame(AchievementFrame)
     local bg = AchievementFrame:GetBackdropTexture("bg")
     AchievementFrame:SetBackdropOption("offsets", {
         left = 0,
@@ -615,7 +615,7 @@ function private.AddOns.Blizzard_AchievementUI()
     prevContainer.rightBorder:Hide()
     prevContainer.topBorder:Hide()
 
-    Base.SetBackdrop(prevContainer)
+    Skin.FrameTypeFrame(prevContainer)
 
     for i = 1, #prevContainer.searchPreviews do
         Skin.AchievementSearchPreviewButton(prevContainer.searchPreviews[i])
@@ -623,7 +623,7 @@ function private.AddOns.Blizzard_AchievementUI()
     SkinSearchButton(prevContainer.showAllSearchResults)
 
     local searchResults = AchievementFrame.searchResults
-    Base.SetBackdrop(searchResults)
+    Skin.FrameTypeFrame(searchResults)
     searchResults:GetRegions():Hide() -- background
 
     local titleText = searchResults.titleText

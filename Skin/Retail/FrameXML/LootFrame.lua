@@ -76,7 +76,7 @@ do --[[ FrameXML\LootFrame.xml ]]
     function Skin.BonusRollFrameTemplate(Frame)
         Frame:HookScript("OnShow", Hook.BonusRollFrame_OnShow)
 
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetSize(270, 60)
 
         Frame.Background:SetAlpha(0)

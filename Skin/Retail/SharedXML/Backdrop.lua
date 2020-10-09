@@ -91,11 +91,11 @@ end
 do --[[ FrameXML\Backdrop.xml ]]
     Skin.TooltipBackdropTemplate = Base.SetBackdrop
     function Skin.TooltipBorderBackdropTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetBackdropColor(Color.frame, 0)
     end
     function Skin.ChatBubbleTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetScale(_G.UIParent:GetScale())
 
         local tail = Frame.Tail

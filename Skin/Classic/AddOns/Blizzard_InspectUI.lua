@@ -80,7 +80,7 @@ end
 
 function private.AddOns.Blizzard_InspectUI()
     local InspectFrame = _G.InspectFrame
-    Base.SetBackdrop(InspectFrame)
+    Skin.FrameTypeFrame(InspectFrame)
     InspectFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

@@ -17,7 +17,7 @@ local Color = Aurora.Color
 
 function private.FrameXML.GuildRegistrarFrame()
     local GuildRegistrarFrame = _G.GuildRegistrarFrame
-    Base.SetBackdrop(GuildRegistrarFrame)
+    Skin.FrameTypeFrame(GuildRegistrarFrame)
     GuildRegistrarFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

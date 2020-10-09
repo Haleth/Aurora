@@ -55,7 +55,7 @@ function private.AddOns.Blizzard_CompactRaidFrames()
 
     local CompactRaidFrameManager = _G.CompactRaidFrameManager
     CompactRaidFrameManager:DisableDrawLayer("ARTWORK")
-    Base.SetBackdrop(CompactRaidFrameManager)
+    Skin.FrameTypeFrame(CompactRaidFrameManager)
 
     local toggleButton = CompactRaidFrameManager.toggleButton
     toggleButton:SetPoint("RIGHT", -1, 0)

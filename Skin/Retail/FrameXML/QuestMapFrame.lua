@@ -243,7 +243,7 @@ function private.FrameXML.QuestMapFrame()
     QuestsFrame.ScrollBar:SetPoint("TOPLEFT", QuestsFrame, "TOPRIGHT", 2, -17)
     QuestsFrame.ScrollBar:SetPoint("BOTTOMLEFT", QuestsFrame, "BOTTOMRIGHT", 2, 17)
 
-    Base.SetBackdrop(QuestsFrame.StoryTooltip)
+    Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
     if not private.isPatch then
         Skin.CampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
     end

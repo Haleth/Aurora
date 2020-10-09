@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
@@ -27,7 +26,7 @@ end
 
 function private.FrameXML.AutoComplete()
     local AutoCompleteBox = _G.AutoCompleteBox
-    Base.SetBackdrop(AutoCompleteBox)
+    Skin.FrameTypeFrame(AutoCompleteBox)
 
     Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton1)
     Skin.AutoCompleteButtonTemplate(_G.AutoCompleteButton2)

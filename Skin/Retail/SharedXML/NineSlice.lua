@@ -7,7 +7,7 @@ if private.isClassic then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Hook = Aurora.Hook
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ SharedXML\NineSlice.lua ]]
@@ -23,13 +23,15 @@ do --[[ SharedXML\NineSlice.lua ]]
         "Center",
     }
 
-    local BasicFrame = Base.SetBackdrop
+    local function BasicFrame(Frame)
+        Skin.FrameTypeFrame(Frame)
+    end
     local function InsetFrame(Frame)
         Base.SetBackdrop(Frame, Color.frame)
     end
 
     local function HideFrame(Frame)
-        Frame:SetBackdropColor(Color.frame, 0)
+        Base.SetBackdrop(Frame, Color.frame, 0)
         Frame:SetBackdropBorderColor(Color.frame, 0)
     end
 
@@ -85,7 +87,9 @@ do --[[ SharedXML\NineSlice.lua ]]
     Hook.NineSliceUtil = {}
     function Hook.NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
         if not container._auroraNineSlice then return end
+        if container._applyLayout then return end
 
+        container._applyLayout = true
         local layoutName = layoutMap[userLayout]
         --print("ApplyLayout", container, layoutName, textureKit)
         if layouts[layoutName] then
@@ -100,6 +104,7 @@ do --[[ SharedXML\NineSlice.lua ]]
                 end
             end
         end
+        container._applyLayout = false
     end
     function Hook.NineSliceUtil.ApplyLayoutByName(container, userLayoutName, textureKit)
         if not container.GetFrameLayoutType then

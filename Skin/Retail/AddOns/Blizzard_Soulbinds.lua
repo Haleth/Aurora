@@ -6,7 +6,6 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --do --[[ AddOns\Blizzard_Soulbinds.lua ]]
@@ -88,7 +87,7 @@ function private.AddOns.Blizzard_Soulbinds()
     --    Blizzard_SoulbindsViewer    --
     ----====####$$$$%%%%$$$$####====----
     local SoulbindViewer = _G.SoulbindViewer
-    Base.SetBackdrop(SoulbindViewer)
+    Skin.FrameTypeFrame(SoulbindViewer)
     SoulbindViewer.Background:Hide()
     SoulbindViewer.Background2:Hide()
 

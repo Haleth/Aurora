@@ -88,7 +88,7 @@ function private.FrameXML.TutorialFrame()
     -------------------
     -- TutorialFrame --
     -------------------
-    Base.SetBackdrop(_G.TutorialFrame)
+    Skin.FrameTypeFrame(_G.TutorialFrame)
     _G.TutorialFrameTop:SetAlpha(0)
     _G.TutorialFrameBottom:SetAlpha(0)
 

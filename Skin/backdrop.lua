@@ -558,7 +558,7 @@ function Base.SetBackdrop(frame, color, alpha)
 end
 function Base.SetBackdropColor(frame, color, alpha)
     if not color then color = Color.frame end
-    if type(color) ~= "table" then error("`color` must be a Color object. See Color.Create") end
+    if type(color) ~= "table" and color.r then error("`color` must be a Color object. See Color.Create") end
 
     frame:SetBackdropColor(Color.Lightness(color, -0.3), alpha or color.a)
     frame:SetBackdropBorderColor(color, 1)

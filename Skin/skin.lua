@@ -10,6 +10,13 @@ local Skin = Aurora.Skin
 local Color = Aurora.Color
 
 
+do -- Frame
+    function Skin.FrameTypeFrame(Frame)
+        Base.SetBackdrop(Frame, Color.frame)
+    end
+end
+
+
 do -- Button
     local DISABLED_COLOR = Color.Lightness(Color.button, -0.3)
     local function Hook_Enable(self)

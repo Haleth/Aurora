@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --do --[[ AddOns\Blizzard_WorldMap.lua ]]
@@ -26,7 +25,7 @@ function private.AddOns.Blizzard_WorldMap()
     ----====####$$$$%%%%%$$$$####====----
     local WorldMapFrame = _G.WorldMapFrame
     Skin.WorldMapFrameTemplate(WorldMapFrame)
-    Base.SetBackdrop(WorldMapFrame.BorderFrame)
+    Skin.FrameTypeFrame(WorldMapFrame.BorderFrame)
 
     local top1, top2, top3, top4, mid1, mid2, mid3, mid4, bot1, bot2, bot3, bot4, title = WorldMapFrame.BorderFrame:GetRegions()
     top1:Hide()

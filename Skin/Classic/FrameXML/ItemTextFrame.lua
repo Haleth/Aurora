@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -48,7 +47,7 @@ function private.FrameXML.ItemTextFrame()
     local ItemTextFrame = _G.ItemTextFrame
     ItemTextFrame:HookScript("OnEvent", Hook.ItemTextFrame_OnEvent)
 
-    Base.SetBackdrop(ItemTextFrame)
+    Skin.FrameTypeFrame(ItemTextFrame)
     ItemTextFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

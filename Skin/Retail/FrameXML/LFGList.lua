@@ -263,7 +263,7 @@ function private.FrameXML.LFGList()
     Skin.UIDropDownMenuTemplate(_G.LFGListLanguageFilterDropDownFrame)
 
     local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
-    Base.SetBackdrop(AutoCompleteFrame)
+    Skin.FrameTypeFrame(AutoCompleteFrame)
     AutoCompleteFrame.BottomLeftBorder:Hide()
     AutoCompleteFrame.BottomRightBorder:Hide()
     AutoCompleteFrame.BottomBorder:Hide()

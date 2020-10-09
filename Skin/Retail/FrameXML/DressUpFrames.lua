@@ -6,7 +6,6 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
@@ -20,7 +19,7 @@ function private.FrameXML.DressUpFrames()
         - VoidStorageUI
     ]]
     local SideDressUpFrame = _G.SideDressUpFrame
-    Base.SetBackdrop(SideDressUpFrame)
+    Skin.FrameTypeFrame(SideDressUpFrame)
 
     local top, bottom, left, right = SideDressUpFrame:GetRegions()
     top:Hide()

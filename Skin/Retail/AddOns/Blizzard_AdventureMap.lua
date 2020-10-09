@@ -44,7 +44,7 @@ function private.AddOns.Blizzard_AdventureMap()
     AdventureMapQuestChoiceDialog.Rewards:SetAlpha(0)
     AdventureMapQuestChoiceDialog.Background:Hide()
 
-    Base.SetBackdrop(AdventureMapQuestChoiceDialog)
+    Skin.FrameTypeFrame(AdventureMapQuestChoiceDialog)
     local bg = AdventureMapQuestChoiceDialog:GetBackdropTexture("bg")
     bg:SetPoint("TOPLEFT", 3, -14)
     bg:SetPoint("BOTTOMRIGHT", -3, -1)

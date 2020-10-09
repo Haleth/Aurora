@@ -80,7 +80,7 @@ function private.AddOns.Blizzard_TradeSkillUI()
     _G.hooksecurefunc("TradeSkillFrame_Update", Hook.TradeSkillFrame_Update)
     _G.hooksecurefunc("TradeSkillFrame_SetSelection", Hook.TradeSkillFrame_SetSelection)
 
-    Base.SetBackdrop(TradeSkillFrame)
+    Skin.FrameTypeFrame(TradeSkillFrame)
     TradeSkillFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

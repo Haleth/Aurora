@@ -21,7 +21,7 @@ end
 
 do --[[ AddOns\Blizzard_IslandsQueueUI.xml ]]
     function Skin.IslandsQueueFrameTutorialTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         local bg = Frame:GetBackdropTexture("bg")
         bg:SetPoint("TOPLEFT", 290, -135)
         bg:SetPoint("BOTTOMRIGHT", -290, 135)
@@ -54,7 +54,7 @@ do --[[ AddOns\Blizzard_IslandsQueueUI.xml ]]
         local QuestReward = Frame.QuestReward
         Base.CropIcon(QuestReward.Icon, QuestReward)
 
-        Base.SetBackdrop(QuestReward.Tooltip)
+        Skin.FrameTypeFrame(QuestReward.Tooltip)
         Skin.InternalEmbeddedItemTooltipTemplate(QuestReward.Tooltip.ItemTooltip)
     end
     function Skin.IslandsQueueFrameDifficultyButtonTemplate(Button)

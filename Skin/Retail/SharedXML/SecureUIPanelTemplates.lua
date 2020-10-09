@@ -132,7 +132,7 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         Skin.UIPanelButtonNoTooltipTemplate(Button)
     end
     function Skin.SelectionFrameTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame.TopLeft:ClearAllPoints()
         Frame.TopRight:ClearAllPoints()
         Frame.BottomLeft:ClearAllPoints()
@@ -166,7 +166,7 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     end
     function Skin.SecureDialogBorderTemplate(Frame)
         Skin.SecureDialogBorderNoCenterTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
     end
 end
 

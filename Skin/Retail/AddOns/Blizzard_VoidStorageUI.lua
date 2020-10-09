@@ -127,7 +127,7 @@ function private.AddOns.Blizzard_VoidStorageUI()
 
         bg = _G.VoidStoragePurchaseFrameMarbleBg,
     })
-    Base.SetBackdrop(_G.VoidStoragePurchaseFrame)
+    Skin.FrameTypeFrame(_G.VoidStoragePurchaseFrame)
 
     Skin.UIPanelButtonTemplate(_G.VoidStoragePurchaseButton)
     if not private.isPatch then

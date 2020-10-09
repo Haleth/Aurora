@@ -189,7 +189,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIMenuButtonStretchTemplate(Button)
         end
         function Skin.CommunitiesEditStreamDialogTemplate(Frame)
-            Base.SetBackdrop(Frame)
+            Skin.FrameTypeFrame(Frame)
 
             Skin.InputBoxTemplate(Frame.NameEdit)
             Skin.InputScrollFrameTemplate(Frame.Description)
@@ -343,7 +343,7 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesTicketManagerDialog._iconBorder = Base.CropIcon(CommunitiesTicketManagerDialog.Icon, CommunitiesTicketManagerDialog)
     CommunitiesTicketManagerDialog.IconRing:SetAlpha(0)
 
-    Base.SetBackdrop(CommunitiesTicketManagerDialog)
+    Skin.FrameTypeFrame(CommunitiesTicketManagerDialog)
     CommunitiesTicketManagerDialog.TopLeft:ClearAllPoints()
     CommunitiesTicketManagerDialog.TopRight:ClearAllPoints()
     CommunitiesTicketManagerDialog.BottomLeft:ClearAllPoints()

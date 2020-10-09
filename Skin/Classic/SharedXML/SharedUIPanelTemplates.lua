@@ -305,28 +305,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         disabled:SetAllPoints(check)
     end
 
-    function Skin.NineSlicePanelTemplate(Frame)
-        Frame._auroraNineSlice = true
-        Base.CreateBackdrop(Frame, private.backdrop, {
-            tl = Frame.TopLeftCorner,
-            tr = Frame.TopRightCorner,
-            bl = Frame.BottomLeftCorner,
-            br = Frame.BottomRightCorner,
-
-            t = Frame.TopEdge,
-            b = Frame.BottomEdge,
-            l = Frame.LeftEdge,
-            r = Frame.RightEdge,
-
-            bg = Frame.Center,
-        })
-
-        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
-        --print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
-        if layout then
-            Hook.NineSliceUtil.ApplyLayout(Frame, layout)
-        end
-    end
     function Skin.InsetFrameTemplate(Frame)
         Frame.Bg:Hide()
 
@@ -341,7 +319,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.InsetBorderRight:Hide()
     end
     function Skin.DialogBorderTemplate(Frame)
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
         Frame:SetBackdropOption("offsets", {
             left = 5,
             right = 5,
@@ -386,12 +364,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
     end
 
-    function Skin.SimplePanelTemplate(Frame)
-        Skin.InsetFrameTemplate(Frame.Inset)
-        Frame.NineSlice.Center = Frame.Bg
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
-    end
-
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Frame.Bg:Hide()
 
@@ -414,7 +386,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.LeftBorder:Hide()
         Frame.RightBorder:Hide()
 
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
@@ -458,7 +430,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.BorderRight:Hide()
 
         Frame.Background:Hide()
-        Base.SetBackdrop(Frame)
+        Skin.FrameTypeFrame(Frame)
     end
 
     function Skin.UIMenuButtonStretchTemplate(Button)

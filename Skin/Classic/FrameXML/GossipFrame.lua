@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -92,7 +91,7 @@ function private.FrameXML.GossipFrame()
     -- GossipFrame --
     -----------------
     local GossipFrame = _G.GossipFrame
-    Base.SetBackdrop(GossipFrame)
+    Skin.FrameTypeFrame(GossipFrame)
     GossipFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,

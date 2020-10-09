@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -61,7 +60,7 @@ function private.FrameXML.QuestLogFrame()
     _G.hooksecurefunc("QuestLog_UpdateQuestDetails", Hook.QuestLog_UpdateQuestDetails)
 
     local QuestLogFrame = _G.QuestLogFrame
-    Base.SetBackdrop(QuestLogFrame)
+    Skin.FrameTypeFrame(QuestLogFrame)
     QuestLogFrame:SetBackdropOption("offsets", {
         left = 14,
         right = 34,
