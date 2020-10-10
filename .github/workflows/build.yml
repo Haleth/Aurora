@@ -11,6 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
     - uses: actions/checkout@v1
 
@@ -40,19 +45,11 @@ jobs:
         curl -s https://raw.githubusercontent.com/Gethe/lua-doc-parser/https/build.sh | bash
 
     - name: Create Mainline Package
-      env:
-        CF_API_KEY: ${{ secrets.CF_API_KEY }}
-        WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
-        GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        sudo apt-get install pandoc
-        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
+      uses: BigWigsMods/packager@master
+      with:
+        args: -o
 
     - name: Create Classic Package
-      env:
-        CF_API_KEY: ${{ secrets.CF_API_KEY }}
-        WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
-        GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        sudo apt-get install pandoc
-        curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash -s -- -g 1.13.3 -m .pkgmeta-classic
+      uses: BigWigsMods/packager@master
+      with:
+        args: -o -g 1.13.3 -m .pkgmeta-classic
