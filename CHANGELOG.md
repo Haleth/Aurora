@@ -1,4 +1,11 @@
-﻿## [9.0.1.0] - 2020-10-09 ##
+﻿## [9.0.1.1] - 2020-10-10 ##
+### Fixed ###
+
+  * Core files missing in the package
+
+
+
+## [9.0.1.0] - 2020-10-09 ##
 ### Added ###
 
   * [classic] CraftUI skin
@@ -162,6 +169,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[9.0.1.1]: https://github.com/Haleth/Aurora/compare/9.0.1.0...9.0.1.1
 [9.0.1.0]: https://github.com/Haleth/Aurora/compare/8.3.0.8...9.0.1.0
 [8.3.0.8]: https://github.com/Haleth/Aurora/compare/8.3.0.7...8.3.0.8
 [8.3.0.7]: https://github.com/Haleth/Aurora/compare/8.3.0.6...8.3.0.7
