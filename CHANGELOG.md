@@ -1,4 +1,11 @@
-﻿## [9.0.1.1] - 2020-10-10 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * Error when entering a pet battle
+
+
+
+## [9.0.1.1] - 2020-10-10 ##
 ### Fixed ###
 
   * Core files missing in the package

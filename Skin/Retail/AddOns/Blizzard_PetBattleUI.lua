@@ -8,7 +8,7 @@ if private.isClassic then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
     function Hook.PetBattleUnitFrame_UpdateDisplay(self)
