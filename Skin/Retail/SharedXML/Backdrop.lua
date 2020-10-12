@@ -6,7 +6,6 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -89,7 +88,9 @@ do --[[ FrameXML\Backdrop.lua ]]
 end
 
 do --[[ FrameXML\Backdrop.xml ]]
-    Skin.TooltipBackdropTemplate = Base.SetBackdrop
+    function Skin.TooltipBackdropTemplate(Frame)
+        Skin.FrameTypeFrame(Frame)
+    end
     function Skin.TooltipBorderBackdropTemplate(Frame)
         Skin.FrameTypeFrame(Frame)
         Frame:SetBackdropColor(Color.frame, 0)

@@ -192,7 +192,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         function Skin.UIDropDownListTemplate(Button)
             local name = Button:GetName()
             Skin.DialogBorderDarkTemplate(_G[name.."Backdrop"])
-            Base.SetBackdrop(_G[name.."MenuBackdrop"])
+            Skin.FrameTypeFrame(_G[name.."MenuBackdrop"])
             Skin.UIDropDownMenuButtonTemplate(_G[name.."Button1"])
         end
         function Skin.UIDropDownMenuTemplate(Frame)
