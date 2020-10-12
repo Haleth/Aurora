@@ -1,14 +1,15 @@
 ﻿## [Unreleased] ##
 ### Fixed ###
 
-  * Some dropdown menus did not use the configured frame alpha
+  * [retail] Some dropdown menus did not use the configured frame alpha
+  * [retail] Error when bounty tutorial is shown
 
 
 
 ## [9.0.1.2] - 2020-10-10 ##
 ### Fixed ###
 
-  * Error when entering a pet battle
+  * [retail] Error when entering a pet battle
 
 
 
