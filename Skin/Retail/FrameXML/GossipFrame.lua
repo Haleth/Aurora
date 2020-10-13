@@ -97,8 +97,11 @@ function private.FrameXML.GossipFrame()
     -----------------
     local GossipFrame = _G.GossipFrame
     Skin.ButtonFrameTemplate(GossipFrame)
-    if private.isBeta then
+    if private.isPatch then
         Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
+    end
+
+    if private.isBeta then
         GossipFrame.Background:Hide()
     else
         -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
