@@ -1,4 +1,8 @@
 ﻿## [Unreleased] ##
+### Added ###
+
+  * [retail] New player guide sign-up skin
+
 ### Fixed ###
 
   * [retail] Chat frame had an extra backdrop

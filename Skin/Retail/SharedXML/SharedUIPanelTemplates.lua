@@ -588,6 +588,16 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Skin.ScrollBarThumb(Slider:GetThumbTexture())
     end
+    function Skin.MinimalScrollBarWithBorderTemplate(Slider)
+        Slider.Track:Hide()
+        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
+        Slider.ScrollUpBorder:Hide()
+        Slider.ScrollDownBorder:Hide()
+        Slider.Border:Hide()
+
+        Skin.ScrollBarThumb(Slider:GetThumbTexture())
+    end
     function Skin.MinimalScrollFrameTemplate(ScrollFrame)
         Skin.MinimalScrollBarTemplate(ScrollFrame.ScrollBar)
     end
