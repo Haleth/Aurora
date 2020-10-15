@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [9.0.1.4] - 2020-10-14 ##
 ### Added ###
 
   * [retail] New player guide sign-up skin
@@ -200,6 +200,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[9.0.1.4]: https://github.com/Haleth/Aurora/compare/9.0.1.3...9.0.1.4
 [9.0.1.3]: https://github.com/Haleth/Aurora/compare/9.0.1.2...9.0.1.3
 [9.0.1.2]: https://github.com/Haleth/Aurora/compare/9.0.1.1...9.0.1.2
 [9.0.1.1]: https://github.com/Haleth/Aurora/compare/9.0.1.0...9.0.1.1
