@@ -13,22 +13,6 @@ private.IGNORED_QUEST_DISPLAY = _G.IGNORED_QUEST_DISPLAY:gsub("ff000000", Color.
 
 private.FRAME_TITLE_HEIGHT = 27
 
-private.AZERITE_COLORS = {
-    Color.Create(0.3765, 0.8157, 0.9098),
-    Color.Create(0.7098, 0.5019, 0.1725),
-}
-
-private.COVENANT_COLORS = {
-    Kyrian = Color.Create(0.5, 0.45, 0.45),
-    Venthyr = Color.Create(0.4, 0.0, 0.0),
-    NightFae = Color.Create(0.2, 0.3, 0.4),
-    Necrolord = Color.Create(0.1, 0.4, 0.15),
-}
-private.FACTION_COLORS = {
-    Alliance = Color.Create(0.0, 0.2, 0.6),
-    Horde = Color.Create(0.5, 0.0, 0.0),
-}
-
 local Enum = {}
 Enum.ItemQuality = {
     Poor = _G.LE_ITEM_QUALITY_POOR or _G.Enum.ItemQuality.Poor,
