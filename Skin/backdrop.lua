@@ -228,7 +228,15 @@ if private.isPatch then
         end
 
         if textures and backdropInfo then
-            self._textures = textures
+            for textureName, texture in next, textures do
+                if bgTextures[textureName] then
+                    textureName = bgTextures[textureName]
+                end
+
+                if not self[textureName] then
+                    self[textureName] = texture
+                end
+            end
         end
 
         return _G.BackdropTemplateMixin.SetBackdrop(self, backdropInfo)

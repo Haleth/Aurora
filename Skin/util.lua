@@ -127,19 +127,15 @@ Util.NineSliceTextures = {
     BottomRightCorner = "br",
 }
 function Util.GetNineSlicePiece(container, pieceName)
+    local piece
     if container.GetNineSlicePiece then
-        local piece = container:GetNineSlicePiece(pieceName)
+        piece = container:GetNineSlicePiece(pieceName)
         if piece then
             return piece, true
         end
     end
 
-    local piece = container[pieceName]
-    if piece then
-        return piece, true
-    end
-
-    piece = container._textures[Util.NineSliceTextures[pieceName]]
+    piece = container[pieceName]
     if piece then
         return piece, true
     end
