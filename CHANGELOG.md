@@ -3,6 +3,10 @@
 
   * [retail] New player guide sign-up skin
 
+### Changed ###
+
+  * [retail] Updated barber shop skin
+
 ### Fixed ###
 
   * [retail] Chat frame had an extra backdrop

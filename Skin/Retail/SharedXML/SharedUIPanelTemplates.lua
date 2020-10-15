@@ -746,11 +746,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             end)
         end)
         Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 5,
+            right = 5,
+            top = 5,
+            bottom = 5
+        })
     end
     function Skin.BigRedThreeSliceButtonTemplate(Button)
         Skin.ThreeSliceButtonTemplate(Button)
     end
-    function Skin.SharedButtonTemplate(Button)
+    function Skin.SharedButtonLargeTemplate(Button)
         Skin.BigRedThreeSliceButtonTemplate(Button)
     end
     function Skin.SharedButtonSmallTemplate(Button)
