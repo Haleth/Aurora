@@ -1,4 +1,12 @@
-﻿## [9.0.1.3] - 2020-10-12 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * [retail] Chat frame had an extra backdrop
+  * [retail] Gossip options were black
+
+
+
+## [9.0.1.3] - 2020-10-12 ##
 ### Fixed ###
 
   * [retail] Some dropdown menus did not use the configured frame alpha
