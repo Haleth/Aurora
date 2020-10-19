@@ -132,10 +132,14 @@ function private.AddOns.Blizzard_Calendar()
     -- CalendarFrame --
     -------------------
     Skin.FrameTypeFrame(_G.CalendarFrame)
-    local calenderBG = _G.CalendarFrame:GetBackdropTexture("bg")
-    calenderBG:SetPoint("TOPLEFT", 11, 0)
-    calenderBG:SetPoint("BOTTOMRIGHT", -9, 3)
+    _G.CalendarFrame:SetBackdropOption("offsets", {
+        left = 11,
+        right = 9,
+        top = 0,
+        bottom = 3
+    })
 
+    local calenderBG = _G.CalendarFrame:GetBackdropTexture("bg")
     _G.CalendarFrameTopLeftTexture:Hide()
     _G.CalendarFrameTopMiddleTexture:Hide()
     _G.CalendarFrameTopRightTexture:Hide()
@@ -162,11 +166,14 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarTodayFrame:SetScript("OnUpdate", nil)
     Base.CreateBackdrop(_G.CalendarTodayFrame, {
         edgeSize = 4,
+        offsets = {
+            left = 24,
+            right = 24,
+            top = 22,
+            bottom = 21
+        },
     })
     Base.SetBackdropColor(_G.CalendarTodayFrame, Color.highlight, 0)
-    local todayBG = _G.CalendarTodayFrame:GetBackdropTexture("bg")
-    todayBG:SetPoint("TOPLEFT", 24, -22)
-    todayBG:SetPoint("BOTTOMRIGHT", -24, 21)
 
     _G.CalendarTodayTextureGlow:Hide()
     _G.CalendarTodayTexture:Hide()

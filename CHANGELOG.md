@@ -1,6 +1,7 @@
 ﻿## [Unreleased] ##
 ### Fixed ###
 
+  * [retail] Display bug with the calendar
   * [retail] Error when entering a pet battle
 
 
