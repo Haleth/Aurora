@@ -267,6 +267,9 @@ function private.AddOns.Blizzard_PetBattleUI()
     xpLeft:Hide()
     xpRight:Hide()
     xpMid:Hide()
+    for i = 1, 6 do
+        _G["PetBattleXPBarDiv"..i]:Hide()
+    end
 
     local TurnTimer = BottomFrame.TurnTimer
     TurnTimer.TimerBG:SetColorTexture(0, 0, 0, 0.5)

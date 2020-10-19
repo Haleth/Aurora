@@ -1,4 +1,11 @@
-﻿## [9.0.1.4] - 2020-10-14 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * [retail] Error when entering a pet battle
+
+
+
+## [9.0.1.4] - 2020-10-14 ##
 ### Added ###
 
   * [retail] New player guide sign-up skin

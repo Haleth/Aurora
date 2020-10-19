@@ -18,7 +18,19 @@ do --[[ FrameXML\FloatingChatFrame.lua ]]
         tr:SetPoint("TOPRIGHT", bg)
         br:SetPoint("BOTTOMRIGHT", bg)
     end
+    local maxTempIndex = _G.NUM_CHAT_WINDOWS + 1
+    function Hook.FCF_OpenTemporaryWindow(chatType, chatTarget, sourceChatFrame, selectWindow)
+        local name = "ChatFrame"..maxTempIndex
+        if _G[name] then
+            maxTempIndex = maxTempIndex + 1
+        end
+    end
     function Hook.FCF_SetWindowColor(frame, r, g, b, doNotSave)
+        if not frame.SetBackdrop then
+            Skin.ChatTabTemplate(_G["ChatFrame"..frame:GetID().."Tab"])
+            Skin.FloatingChatFrameTemplate(frame)
+        end
+
         frame:SetBackdropColor(r, g, b)
         frame:SetBackdropBorderColor(r, g, b)
 
@@ -170,7 +182,7 @@ function private.FrameXML.FloatingChatFrame()
     _G.hooksecurefunc("FCF_SetButtonSide", Hook.FCF_SetButtonSide)
     _G.hooksecurefunc("FCF_CreateMinimizedFrame", Hook.FCF_CreateMinimizedFrame)
 
-    for i = 1, 10 do
+    for i = 1, _G.NUM_CHAT_WINDOWS do
         local name = "ChatFrame"..i
         Skin.ChatTabTemplate(_G[name.."Tab"])
         Skin.FloatingChatFrameTemplate(_G[name])
