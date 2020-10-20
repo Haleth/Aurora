@@ -1,7 +1,8 @@
 ﻿## [Unreleased] ##
 ### Fixed ###
 
-  * [retail] World quest traker wasn't skinned
+  * [retail] Display bug with quest detail
+  * [retail] World quest header wasn't skinned
   * [retail] Display bug with the calendar
   * [retail] Error when entering a pet battle
 

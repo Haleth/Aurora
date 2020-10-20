@@ -123,7 +123,9 @@ function private.FrameXML.QuestMapFrame()
     -- QuestLogPopupDetailFrame --
     ------------------------------
     local QuestLogPopupDetailFrame = _G.QuestLogPopupDetailFrame
+    QuestLogPopupDetailFrame.Bg = QuestLogPopupDetailFrame:GetRegions() -- Bg from ButtonFrameTemplate
     Skin.ButtonFrameTemplate(QuestLogPopupDetailFrame)
+    QuestLogPopupDetailFrame.Bg = select(6, QuestLogPopupDetailFrame:GetRegions()) -- Bg from QuestFramePanelTemplate
     Skin.QuestFramePanelTemplate(QuestLogPopupDetailFrame)
     select(12, QuestLogPopupDetailFrame:GetRegions()):Hide() -- Portrait
 
