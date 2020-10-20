@@ -385,7 +385,7 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_BonusObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
-    local _, _, _, _, bonusObj, worldQuests = _G.ObjectiveTrackerFrame.BlocksFrame:GetChildren()
+    local _, _, _, _, _, bonusObj, worldQuests = _G.ObjectiveTrackerFrame.BlocksFrame:GetChildren()
     Skin.BonusObjectiveTrackerHeaderTemplate(bonusObj)
     Skin.BonusObjectiveTrackerHeaderTemplate(worldQuests)
 
