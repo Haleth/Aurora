@@ -173,15 +173,13 @@ do --[[ AddOns\Blizzard_TalentUI.xml ]]
         topFiligree:Hide()
         bottomFilligree:Hide()
 
-        if not private.isPatch then
-            Skin.MainHelpPlateButton(Frame.MainHelpButton)
-            Frame.MainHelpButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -15, 15)
-        end
+        Skin.MainHelpPlateButton(Frame.MainHelpButton)
+        Frame.MainHelpButton:SetPoint("TOPLEFT", _G.PlayerTalentFrame, "TOPLEFT", -15, 15)
         Skin.MagicButtonTemplate(Frame.learnButton)
         Frame.learnButton.Flash:SetAtlas("GarrMission_FollowerListButton-Select")
         Frame.learnButton.Flash:SetAllPoints()
         Frame.learnButton.Flash:SetTexCoord(0, 0.99568965517241, 0.01785714285714, 0.96428571428571)
-        select(7, Frame:GetChildren()):Hide() -- more border textures are regions on this frame
+        select(8, Frame:GetChildren()):Hide() -- more border textures are regions on this frame
 
         local scrollChild = Frame.spellsScroll.child
         scrollChild.gradient:Hide()
