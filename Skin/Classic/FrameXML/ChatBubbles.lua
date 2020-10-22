@@ -102,7 +102,7 @@ do --[[ FrameXML\ChatBubbles.xml ]]
         name:SetPoint("TOPLEFT", 5, 5)
         name:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", -5, -5)
         name:SetJustifyH("LEFT")
-        name:SetFontObject(Frame.String:GetFontObject())
+        name:SetFontObject(_G.Game12Font_o1)
         Frame._auroraName = name
     end
 end
