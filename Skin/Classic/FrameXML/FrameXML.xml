@@ -5,6 +5,8 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="FrameXML.lua"/>
     @end-non-debug@-->
 
+    <Script file="ChatBubbles.lua"/>
+
     <!--## add C namespace augmentations here-->
     <!--Script file="..\SharedXML\C_TimerAugment.lua"/-->
 

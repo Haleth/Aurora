@@ -1,5 +1,5 @@
 local _, private = ...
-if private.isClassic then return end
+if private.isRetail then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals next
@@ -7,7 +7,6 @@ if private.isClassic then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
 
 local chatBubbleEvents = {
     CHAT_MSG_SAY = "chatBubbles",
@@ -20,7 +19,7 @@ local chatBubbleEvents = {
     CHAT_MSG_MONSTER_PARTY = "chatBubblesParty",
 }
 
-do --[[ FrameXML\Backdrop.lua ]]
+do --[[ FrameXML\ChatBubbles.lua ]]
     local defaultColor = "ffffffff"
     local function FindChatBubble(msg)
         local chatbubble
@@ -87,31 +86,17 @@ do --[[ FrameXML\Backdrop.lua ]]
     end
 end
 
-do --[[ FrameXML\Backdrop.xml ]]
-    function Skin.TooltipBackdropTemplate(Frame)
-        Skin.FrameTypeFrame(Frame)
-    end
-    function Skin.TooltipBorderBackdropTemplate(Frame)
-        Skin.FrameTypeFrame(Frame)
-        Frame:SetBackdropColor(Color.frame, 0)
-    end
+do --[[ FrameXML\ChatBubbles.xml ]]
     function Skin.ChatBubbleTemplate(Frame)
         Skin.FrameTypeFrame(Frame)
         Frame:SetScale(_G.UIParent:GetScale())
 
         local tail = Frame.Tail
         tail:SetColorTexture(0, 0, 0)
-        if private.isPatch then
-            tail:SetVertexOffset(1, 0, -5)
-            tail:SetVertexOffset(2, 16, -5)
-            tail:SetVertexOffset(3, 0, -5)
-            tail:SetVertexOffset(4, 0, -5)
-        else
-            tail:SetVertexOffset(1, 0, -3)
-            tail:SetVertexOffset(2, 16, -3)
-            tail:SetVertexOffset(3, 0, -3)
-            tail:SetVertexOffset(4, 0, -3)
-        end
+        tail:SetVertexOffset(1, 0, -3)
+        tail:SetVertexOffset(2, 16, -3)
+        tail:SetVertexOffset(3, 0, -3)
+        tail:SetVertexOffset(4, 0, -3)
 
         local name = Frame:CreateFontString(nil, "BORDER")
         name:SetPoint("TOPLEFT", 5, 5)
@@ -122,7 +107,7 @@ do --[[ FrameXML\Backdrop.xml ]]
     end
 end
 
-function private.SharedXML.Backdrop()
+function private.FrameXML.ChatBubbles()
     local bubbleHook = _G.CreateFrame("Frame")
     bubbleHook:SetScript("OnEvent", Hook.ChatBubble_OnEvent)
     bubbleHook:SetScript("OnUpdate", Hook.ChatBubble_OnUpdate)

@@ -27,9 +27,4 @@ end
 function private.FrameXML.UIParent()
     _G.hooksecurefunc("SetPortraitToTexture", Hook.SetPortraitToTexture)
     _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
-
-    -- Blizzard doesn't create the chat bubbles in lua, so we're calling it here
-    if private.FrameXML.ChatBubbles then
-        private.FrameXML.ChatBubbles()
-    end
 end
