@@ -5,6 +5,7 @@
 
 ### Fixed ###
 
+  * Error when loot skin is disabled
   * Chat bubble didn't work
   * [retail] Missed some textures on the spec frame
   * [retail] Display bug with quest detail

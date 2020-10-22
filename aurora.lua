@@ -217,7 +217,7 @@ function private.OnLoad()
         Hook.ChatBubble_SetName = private.nop
     end
     if not AuroraConfig.loot then
-        private.FrameXML.LootFrame = nil
+        private.FrameXML.LootFrame = private.nop
     end
 
     function private.AddOns.Aurora()
