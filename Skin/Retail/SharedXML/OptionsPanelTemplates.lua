@@ -32,6 +32,14 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
     end
     function Skin.OptionsSliderTemplate(Slider)
         Skin.HorizontalSliderTemplate(Slider)
+
+        --[[
+            Blizz resets the backdrop for these in BlizzardOptionsPanel_OnEvent, so
+            we set these vars to ensure our skin remains.
+        ]]
+        Slider.backdropColor = Color.frame
+        Slider.backdropColorAlpha = Color.frame.a
+        Slider.backdropBorderColor = Color.button
     end
     function Skin.OptionsDropdownTemplate(Frame)
         Skin.UIDropDownMenuTemplate(Frame)
