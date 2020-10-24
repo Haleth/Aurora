@@ -237,7 +237,6 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
             }
         })
         Base.CropIcon(Button:GetBackdropTexture("bg"))
-        Base.SetBackdrop(Button, Color.black, Color.frame.a)
         Button._auroraIconBorder = Button
 
         Button:SetBackdropColor(1, 1, 1, 0.75)
