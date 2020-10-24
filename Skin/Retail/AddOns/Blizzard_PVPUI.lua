@@ -78,12 +78,14 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
     end
     function Skin.PVPQueueFrameButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 2,
+            right = 0,
+            top = -3,
+            bottom = -5,
+        })
 
         local bg = Button:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", Button.Icon, 0, 1)
-        bg:SetPoint("BOTTOM", Button.Icon, 0, -1)
-        bg:SetPoint("RIGHT")
-
         Button.Background:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         Button.Background:SetAllPoints(bg)
         Button.Background:Hide()
@@ -125,12 +127,14 @@ function private.AddOns.Blizzard_PVPUI()
 
     local PVPQueueFrame = _G.PVPQueueFrame
     Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton1)
+    PVPQueueFrame.CategoryButton1.Icon:SetTexture([[Interface\Icons\Achievement_BG_WinWSG]])
+
     Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton2)
     PVPQueueFrame.CategoryButton2:SetPoint("LEFT", PVPQueueFrame.CategoryButton1)
+    PVPQueueFrame.CategoryButton2.Icon:SetTexture([[Interface\Icons\Achievement_BG_KillXEnemies_GeneralsRoom]])
+
     Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton3)
     PVPQueueFrame.CategoryButton3:SetPoint("LEFT", PVPQueueFrame.CategoryButton2)
-    PVPQueueFrame.CategoryButton1.Icon:SetTexture([[Interface\Icons\Achievement_BG_WinWSG]])
-    PVPQueueFrame.CategoryButton2.Icon:SetTexture([[Interface\Icons\Achievement_BG_KillXEnemies_GeneralsRoom]])
     PVPQueueFrame.CategoryButton3.Icon:SetTexture([[Interface\Icons\Ability_Warrior_OffensiveStance]])
 
     ------------
