@@ -276,21 +276,13 @@ function private.FrameXML.LFGList()
 
     do -- RefreshButton
         local RefreshButton = SearchPanel.RefreshButton
-        RefreshButton:SetNormalTexture("")
-        RefreshButton:SetPushedTexture("")
-        RefreshButton:SetHighlightTexture("")
-
-        local dis = RefreshButton:GetDisabledTexture()
-        dis:SetColorTexture(0, 0, 0, .4)
-        dis:SetDrawLayer("OVERLAY")
-        dis:SetAllPoints(RefreshButton)
-
-        Base.SetBackdrop(RefreshButton, Color.button)
-        local bg = RefreshButton:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 4, -5)
-        bg:SetPoint("BOTTOMRIGHT", -5, 5)
-
-        Base.SetHighlight(RefreshButton)
+        Skin.FrameTypeButton(RefreshButton)
+        RefreshButton:SetBackdropOption("offsets", {
+            left = 4,
+            right = 4,
+            top = 5,
+            bottom = 5,
+        })
     end
 
     Skin.InsetFrameTemplate(SearchPanel.ResultsInset)
@@ -315,21 +307,13 @@ function private.FrameXML.LFGList()
 
     do -- RefreshButton
         local RefreshButton = ApplicationViewer.RefreshButton
-        RefreshButton:SetNormalTexture("")
-        RefreshButton:SetPushedTexture("")
-        RefreshButton:SetHighlightTexture("")
-
-        local dis = RefreshButton:GetDisabledTexture()
-        dis:SetColorTexture(0, 0, 0, .4)
-        dis:SetDrawLayer("OVERLAY")
-        dis:SetAllPoints(RefreshButton)
-
-        Base.SetBackdrop(RefreshButton, Color.button)
-        local bg = RefreshButton:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 4, -5)
-        bg:SetPoint("BOTTOMRIGHT", -5, 5)
-
-        Base.SetHighlight(RefreshButton)
+        Skin.FrameTypeButton(RefreshButton)
+        RefreshButton:SetBackdropOption("offsets", {
+            left = 4,
+            right = 4,
+            top = 5,
+            bottom = 5,
+        })
     end
 
     Skin.HybridScrollBarTemplate(ApplicationViewer.ScrollFrame.scrollBar)

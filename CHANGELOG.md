@@ -7,6 +7,7 @@
 
   * Error when loot skin is disabled
   * Chat bubble didn't work
+  * [retail] Out of place borders on LFG list refresh buttons
   * [retail] Queue status frame wasn't skined properly
   * [retail] Void Storage item background didn't display properly
   * [retail] Optional reagents icons would get stretched when adding an item
