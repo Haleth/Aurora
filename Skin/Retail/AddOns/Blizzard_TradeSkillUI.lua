@@ -65,12 +65,16 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                             hasReagent = false;
                         end
 
-                        if hasReagent then
-                            Base.SetBackdrop(reagentButton, Color.black, Color.frame.a)
-                            Base.CropIcon(reagentButton.Icon)
+                        if reagentButton:IsLocked() then
+                            reagentButton:SetBackdropBorderColor(Color.gray)
                         else
-                            reagentButton:SetBackdrop(nil)
-                            reagentButton.Icon:SetTexCoord(0, 1, 0, 1)
+                            if reagentButton.SelectedTexture:IsShown() then
+                                reagentButton:SetBackdropBorderColor(Color.yellow)
+                            elseif hasReagent then
+                                reagentButton:SetBackdropBorderColor(_G.COMMON_GRAY_COLOR)
+                            else
+                                reagentButton:SetBackdropBorderColor(Color.green)
+                            end
                         end
                     end
                 end
@@ -101,7 +105,9 @@ end
 
 do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
     do --[[ Blizzard_TradeSkillTemplates ]]
-        Skin.OptionalReagentButtonTemplate = Skin.LargeItemButtonTemplate
+        function Skin.OptionalReagentButtonTemplate(Button)
+            Skin.LargeItemButtonTemplate(Button)
+        end
     end
     do --[[ Blizzard_TradeSkillRecipeButton ]]
         function Skin.TradeSkillRowButtonTemplate(Button)
@@ -115,8 +121,14 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
         end
     end
     do --[[ Blizzard_TradeSkillDetails ]]
-        Skin.TradeSkillReagentTemplate = Skin.LargeItemButtonTemplate
-        Skin.TradeSkillOptionalReagentTemplate = Skin.OptionalReagentButtonTemplate
+        function Skin.TradeSkillReagentTemplate(Button)
+            Skin.LargeItemButtonTemplate(Button)
+        end
+        function Skin.TradeSkillOptionalReagentTemplate(Button)
+            Skin.OptionalReagentButtonTemplate(Button)
+            Base.CropIcon(Button.SelectedTexture)
+            Button.SelectedTexture:SetAllPoints(Button.Icon)
+        end
         function Skin.TradeSkillDetailsFrameTemplate(ScrollFrame)
             Util.Mixin(ScrollFrame, Hook.TradeSkillDetailsMixin)
             ScrollFrame.Background:Hide()
@@ -158,7 +170,7 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
                 })
                 Button._auroraIconBorder = Button
 
-                Button.ResultBorder:SetAlpha(0)
+                Button.ResultBorder:Hide()
                 Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
                 Button:SetNormalTexture([[Interface\GuildFrame\GuildEmblemsLG_01]])
@@ -174,6 +186,8 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
                     Skin.TradeSkillOptionalReagentTemplate(Contents.OptionalReagents[i])
                 end
             end
+
+            ScrollFrame.GlowClipFrame:SetPoint("TOP", 0, 10)
         end
     end
     do --[[ Blizzard_TradeSkillRecipeList ]]
