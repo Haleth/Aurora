@@ -22,59 +22,41 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         Fey = {color = private.COVENANT_COLORS.NightFae, atlas = "ShadowlandsMissionsLandingPage-Background-NightFae"},
         Venthyr = {color = private.COVENANT_COLORS.Venthyr, atlas = "ShadowlandsMissionsLandingPage-Background-Venthyr"},
     }
+    uiTextureKits.Oribos = uiTextureKits[_G.UnitFactionGroup("player"):lower()]
+    uiTextureKits.Bastion = uiTextureKits.Kyrian
+    uiTextureKits.Maldraxxus = uiTextureKits.Necrolord
+    uiTextureKits.Ardenweald = uiTextureKits.Fey
+    uiTextureKits.Revendreth = uiTextureKits.Venthyr
 
-    if private.isPatch then
-        uiTextureKits.Oribos = uiTextureKits[_G.UnitFactionGroup("player"):lower()]
-        uiTextureKits.Bastion = uiTextureKits.Kyrian
-        uiTextureKits.Maldraxxus = uiTextureKits.Necrolord
-        uiTextureKits.Ardenweald = uiTextureKits.Fey
-        uiTextureKits.Revendreth = uiTextureKits.Venthyr
-    else
-        uiTextureKits[261] = uiTextureKits.alliance
-        uiTextureKits[262] = uiTextureKits.horde
-    end
     function Hook.QuestLogQuests_Update(poiTable)
-        if private.isPatch then
-            local kit, overlay
-            for campaignHeader in _G.QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
-                local campaign = campaignHeader:GetCampaign()
-                if campaign then
-                    kit = uiTextureKits[campaign.uiTextureKit]
-                    if not kit then
-                        kit = uiTextureKits.Default
-                        private.debug("missing campaign header", campaign.uiTextureKit)
-                    end
-                    campaignHeader.Background:SetTexture("")
-                    campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
-
-                    overlay = campaignHeader._auroraOverlay
-                    overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -50, -5)
-                    if kit.texture then
-                        overlay:SetTexture(kit.texture)
-                        overlay:SetSize(130, 130)
-
-                        overlay:SetBlendMode("ADD")
-                        overlay:SetVertexColor(1, 1, 1)
-                    else
-                        overlay:SetAtlas(kit.atlas)
-                        overlay:SetSize(100, 116)
-
-                        overlay:SetBlendMode("BLEND")
-                        overlay:SetVertexColor(0, 0, 0)
-                    end
-                    campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+        local kit, overlay
+        for campaignHeader in _G.QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
+            local campaign = campaignHeader:GetCampaign()
+            if campaign then
+                kit = uiTextureKits[campaign.uiTextureKit]
+                if not kit then
+                    kit = uiTextureKits.Default
+                    private.debug("missing campaign header", campaign.uiTextureKit)
                 end
-            end
-        else
-            local warCampaignID = _G.C_CampaignInfo.GetCurrentCampaignID()
-            if warCampaignID then
-                local warCampaignInfo = _G.C_CampaignInfo.GetCampaignInfo(warCampaignID)
-                if warCampaignInfo and warCampaignInfo.visibilityConditionMatched then
-                    local kit = uiTextureKits[warCampaignInfo.uiTextureKitID] or uiTextureKits.Default
-                    local campaignHeader = _G.QuestScrollFrame.Contents.WarCampaignHeader
-                    campaignHeader.Background:SetColorTexture(kit.color:GetRGB())
-                    campaignHeader._auroraOverlay:SetTexture(kit.texture)
+                campaignHeader.Background:SetTexture("")
+                campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
+
+                overlay = campaignHeader._auroraOverlay
+                overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -50, -5)
+                if kit.texture then
+                    overlay:SetTexture(kit.texture)
+                    overlay:SetSize(130, 130)
+
+                    overlay:SetBlendMode("ADD")
+                    overlay:SetVertexColor(1, 1, 1)
+                else
+                    overlay:SetAtlas(kit.atlas)
+                    overlay:SetSize(100, 116)
+
+                    overlay:SetBlendMode("BLEND")
+                    overlay:SetVertexColor(0, 0, 0)
                 end
+                campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
             end
         end
 
@@ -170,9 +152,7 @@ function private.FrameXML.QuestMapFrame()
     _G.hooksecurefunc("QuestLogQuests_Update", Hook.QuestLogQuests_Update)
 
     local QuestMapFrame = _G.QuestMapFrame
-    if private.isPatch then
-        QuestMapFrame.Background:Hide()
-    end
+    QuestMapFrame.Background:Hide()
     QuestMapFrame.VerticalSeparator:Hide()
 
 
@@ -180,40 +160,10 @@ function private.FrameXML.QuestMapFrame()
     Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
-    if private.isPatch then
-        Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
-    end
+    Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
 
-    if private.isPatch then
-        QuestsFrame.Contents.Separator:SetSize(260, 10)
-        QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
-    else
-        QuestsFrame.Background:Hide()
-
-        -- WarCampaignHeader
-        local WarCampaignHeader = QuestsFrame.Contents.WarCampaignHeader
-
-        local clipFrame = _G.CreateFrame("Frame", nil, WarCampaignHeader)
-        clipFrame:SetPoint("TOPLEFT", 6, 0)
-        clipFrame:SetPoint("TOPRIGHT", -5, 0)
-        clipFrame:SetHeight(47)
-        clipFrame:SetClipsChildren(true)
-
-        local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
-        overlay:SetDesaturated(true)
-        overlay:SetBlendMode("ADD")
-        overlay:SetAlpha(0.3)
-        overlay:ClearAllPoints()
-        overlay:SetPoint("CENTER", WarCampaignHeader, "RIGHT", -50, -5)
-        overlay:SetSize(130, 130)
-        WarCampaignHeader._auroraOverlay = overlay
-
-        WarCampaignHeader.Background:SetAllPoints(clipFrame)
-        WarCampaignHeader.HighlightTexture:SetAllPoints(clipFrame)
-        WarCampaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
-
-        QuestsFrame.Contents.Separator:SetSize(260, 10)
-    end
+    QuestsFrame.Contents.Separator:SetSize(260, 10)
+    QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
 
     do -- StoryHeader
         local StoryHeader = QuestsFrame.Contents.StoryHeader
@@ -246,9 +196,6 @@ function private.FrameXML.QuestMapFrame()
     QuestsFrame.ScrollBar:SetPoint("BOTTOMLEFT", QuestsFrame, "BOTTOMRIGHT", 2, 17)
 
     Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
-    if not private.isPatch then
-        Skin.CampaignTooltipTemplate(QuestsFrame.WarCampaignTooltip)
-    end
 
 
     local DetailsFrame = QuestMapFrame.DetailsFrame

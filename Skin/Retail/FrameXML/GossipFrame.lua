@@ -31,39 +31,20 @@ do --[[ FrameXML\GossipFrame.lua ]]
         end
     end
 
-    if private.isPatch then
-        function Hook.GossipFrameOptionsUpdate()
-            local gossipOptions = _G.C_GossipInfo.GetOptions()
-            if #gossipOptions == 0 then return end
-            private.debug("GossipFrameOptionsUpdate", #gossipOptions)
+    function Hook.GossipFrameOptionsUpdate()
+        local gossipOptions = _G.C_GossipInfo.GetOptions()
+        if #gossipOptions == 0 then return end
+        private.debug("GossipFrameOptionsUpdate", #gossipOptions)
 
-            for button in _G.GossipFrame.titleButtonPool:EnumerateActive() do
-                if button.type == "Gossip" then
-                    local gossipText = gossipOptions[button:GetID()].name
-                    local color = gossipText:match("|c(%x+)%(")
-                    if color then
-                        _G.print("GossipFrameOptionsUpdate", button:GetID(), ("|"):split(gossipText))
-                        button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
-                    end
-                end
-            end
-        end
-    else
-        local gossipDataPerOption = 2
-        function Hook.GossipFrameOptionsUpdate(...)
-            local numGossipOptions = _G.select("#", ...)
-            local buttonIndex = _G.GossipFrame.buttonIndex - (numGossipOptions / gossipDataPerOption)
-            for i = 1, numGossipOptions, gossipDataPerOption do
-                local gossipText = _G.select(i, ...)
-                local button = _G["GossipTitleButton" .. buttonIndex]
+        for button in _G.GossipFrame.titleButtonPool:EnumerateActive() do
+            if button.type == "Gossip" then
+                local gossipText = gossipOptions[button:GetID()].name
                 local color = gossipText:match("|c(%x+)%(")
                 if color then
-                    -- This is for BfA war campaign related gossip options
-                    -- Alliance: FF0000FF
-                    private.debug("GossipFrameOptionsUpdate", button:GetID(), color, ("|"):split(gossipText))
+                    -- TODO: This was used for BfA war campaign related gossip options, not sure if still is
+                    _G.print("GossipFrameOptionsUpdate", button:GetID(), ("|"):split(gossipText))
                     button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
                 end
-                buttonIndex = buttonIndex + 1
             end
         end
     end
@@ -97,9 +78,7 @@ function private.FrameXML.GossipFrame()
     -----------------
     local GossipFrame = _G.GossipFrame
     Skin.ButtonFrameTemplate(GossipFrame)
-    if private.isPatch then
-        Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
-    end
+    Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
 
     if private.isBeta then
         GossipFrame.Background:Hide()
@@ -124,12 +103,6 @@ function private.FrameXML.GossipFrame()
     _G.GossipGreetingScrollFrameTop:Hide()
     _G.GossipGreetingScrollFrameBottom:Hide()
     _G.GossipGreetingScrollFrameMiddle:Hide()
-
-    if not private.isPatch then
-        for i = 1, _G.NUMGOSSIPBUTTONS do
-            Skin.GossipTitleButtonTemplate(_G["GossipTitleButton"..i])
-        end
-    end
 
     ----------------------------
     -- NPCFriendshipStatusBar --

@@ -384,22 +384,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.NineSlicePanelTemplate(Frame)
         Frame._auroraNineSlice = true
-        if not private.isPatch then
-            Base.CreateBackdrop(Frame, private.backdrop, {
-                tl = Frame.TopLeftCorner,
-                tr = Frame.TopRightCorner,
-                bl = Frame.BottomLeftCorner,
-                br = Frame.BottomRightCorner,
-
-                t = Frame.TopEdge,
-                b = Frame.BottomEdge,
-                l = Frame.LeftEdge,
-                r = Frame.RightEdge,
-
-                bg = Frame.Center,
-            })
-        end
-
         local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
         --print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
         if layout then

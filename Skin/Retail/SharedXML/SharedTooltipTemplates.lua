@@ -25,9 +25,5 @@ end
 function private.SharedXML.SharedTooltipTemplates()
     if private.disabled.tooltips then return end
 
-    if private.isPatch then
-        _G.hooksecurefunc("SharedTooltip_SetBackdropStyle", Hook.SharedTooltip_SetBackdropStyle)
-    else
-        _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.SharedTooltip_SetBackdropStyle)
-    end
+    _G.hooksecurefunc("SharedTooltip_SetBackdropStyle", Hook.SharedTooltip_SetBackdropStyle)
 end

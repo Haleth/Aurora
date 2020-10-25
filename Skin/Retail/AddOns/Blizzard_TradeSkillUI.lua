@@ -54,27 +54,25 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
                     Hook.SetItemButtonQuality(self.Contents.Reagents[reagentIndex], _G.C_Item.GetItemQualityByID(link), link)
                 end
 
-                if private.isPatch then
-                    local optionalReagentSlots, _, _, _, playerReagentCount = _G.C_TradeSkillUI.GetOptionalReagentInfo(self.selectedRecipeID)
-                    for optionalReagentIndex = 1, #optionalReagentSlots do
-                        local reagentButton = self.Contents.OptionalReagents[optionalReagentIndex]
-                        local reagentName = self:GetOptionalReagent(optionalReagentIndex)
+                local optionalReagentSlots, _, _, _, playerReagentCount = _G.C_TradeSkillUI.GetOptionalReagentInfo(self.selectedRecipeID)
+                for optionalReagentIndex = 1, #optionalReagentSlots do
+                    local reagentButton = self.Contents.OptionalReagents[optionalReagentIndex]
+                    local reagentName = self:GetOptionalReagent(optionalReagentIndex)
 
-                        local hasReagent = reagentName ~= nil;
-                        if playerReagentCount == 0 then
-                            hasReagent = false;
-                        end
+                    local hasReagent = reagentName ~= nil;
+                    if playerReagentCount == 0 then
+                        hasReagent = false;
+                    end
 
-                        if reagentButton:IsLocked() then
-                            reagentButton:SetBackdropBorderColor(Color.gray)
+                    if reagentButton:IsLocked() then
+                        reagentButton:SetBackdropBorderColor(Color.gray)
+                    else
+                        if reagentButton.SelectedTexture:IsShown() then
+                            reagentButton:SetBackdropBorderColor(Color.yellow)
+                        elseif hasReagent then
+                            reagentButton:SetBackdropBorderColor(_G.COMMON_GRAY_COLOR)
                         else
-                            if reagentButton.SelectedTexture:IsShown() then
-                                reagentButton:SetBackdropBorderColor(Color.yellow)
-                            elseif hasReagent then
-                                reagentButton:SetBackdropBorderColor(_G.COMMON_GRAY_COLOR)
-                            else
-                                reagentButton:SetBackdropBorderColor(Color.green)
-                            end
+                            reagentButton:SetBackdropBorderColor(Color.green)
                         end
                     end
                 end
@@ -181,10 +179,8 @@ do --[[ AddOns\Blizzard_TradeSkillUI.xml ]]
                 Skin.TradeSkillReagentTemplate(Contents.Reagents[i])
             end
 
-            if private.isPatch then
-                for i = 1, #Contents.OptionalReagents do
-                    Skin.TradeSkillOptionalReagentTemplate(Contents.OptionalReagents[i])
-                end
+            for i = 1, #Contents.OptionalReagents do
+                Skin.TradeSkillOptionalReagentTemplate(Contents.OptionalReagents[i])
             end
 
             ScrollFrame.GlowClipFrame:SetPoint("TOP", 0, 10)
@@ -294,7 +290,5 @@ function private.AddOns.Blizzard_TradeSkillUI()
         Base.SetTexture(arrow, "arrowRight")
     end
 
-    if private.isPatch then
-        Skin.OptionalReagentListTemplate(TradeSkillFrame.OptionalReagentList)
-    end
+    Skin.OptionalReagentListTemplate(TradeSkillFrame.OptionalReagentList)
 end

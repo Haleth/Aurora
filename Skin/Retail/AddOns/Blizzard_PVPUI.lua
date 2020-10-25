@@ -158,9 +158,6 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.PVPCasualStandardButtonTemplate(BonusFrame.Arena1Button)
     Skin.PVPCasualStandardButtonTemplate(BonusFrame.BrawlButton)
     Skin.PVPCasualSpecialEventButtonTemplate(BonusFrame.SpecialEventButton)
-    if not private.isPatch then
-        Skin.GlowBoxFrame(BonusFrame.BrawlHelpBox, "Left")
-    end
     BonusFrame.ShadowOverlay:Hide()
 
     Skin.MagicButtonTemplate(HonorFrame.QueueButton)

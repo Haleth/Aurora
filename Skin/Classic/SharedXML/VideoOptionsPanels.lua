@@ -49,11 +49,6 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_ResolutionDropDown)
     Skin.VideoOptionsSliderTemplate(_G.Display_RenderScaleSlider)
 
-    if private.isPatch then
-        Skin.VideoOptionsSliderTemplate(_G.Display_UIScaleSlider)
-        Skin.VideoOptionsSmallCheckButtonTemplate(_G.Display_UseUIScale)
-    end
-
     -- Column B
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_PrimaryMonitorDropDown)
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_AntiAliasingDropDown)

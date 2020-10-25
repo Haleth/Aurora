@@ -10,7 +10,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\QuestPOI.lua ]]
     function Hook.QuestPOI_GetButton(parent, questID, style, index)
-        if private.isPatch and _G.C_QuestLog.IsQuestCalling(questID) then
+        if _G.C_QuestLog.IsQuestCalling(questID) then
             return
         end
 

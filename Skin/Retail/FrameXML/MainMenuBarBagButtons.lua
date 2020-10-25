@@ -33,8 +33,4 @@ function private.FrameXML.MainMenuBarBagButtons()
     _G.CharacterBag1Slot:SetPoint("RIGHT", _G.CharacterBag0Slot, "LEFT", -4, 0)
     _G.CharacterBag2Slot:SetPoint("RIGHT", _G.CharacterBag1Slot, "LEFT", -4, 0)
     _G.CharacterBag3Slot:SetPoint("RIGHT", _G.CharacterBag2Slot, "LEFT", -4, 0)
-
-    if not private.isPatch then
-        Skin.GlowBoxFrame(_G.AzeriteInBagsHelpBox)
-    end
 end

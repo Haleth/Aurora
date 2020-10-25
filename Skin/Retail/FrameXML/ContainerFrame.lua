@@ -128,20 +128,6 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.FilterIcon.Icon:SetAllPoints()
 
         Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
-
-        if not private.isPatch then -- ExtraBagSlotsHelpBox
-            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
-            local HelpBox = Frame.ExtraBagSlotsHelpBox
-
-            local Arrow = _G.CreateFrame("Frame", nil, HelpBox)
-            Arrow.Arrow = HelpBox.Arrow
-            Arrow.Arrow:SetParent(Arrow)
-            Arrow.Glow = HelpBox.ArrowGlow
-            Arrow.Glow:SetParent(Arrow)
-            HelpBox.Arrow = Arrow
-
-            Skin.GlowBoxFrame(HelpBox, "Right")
-        end
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])
         _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
 
@@ -155,11 +141,6 @@ function private.FrameXML.ContainerFrame()
     if private.disabled.bags then return end
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
     _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
-
-    if not private.isPatch then
-        Skin.ContainerFrameHelpBoxTemplate(_G.ArtifactRelicHelpBox)
-        Skin.ContainerFrameHelpBoxTemplate(_G.AzeriteItemInBagHelpBox)
-    end
 
     for i = 1, 12 do
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])
@@ -180,8 +161,4 @@ function private.FrameXML.ContainerFrame()
     iconBorder:SetPoint("TOPLEFT", autoSort, -1, 1)
     iconBorder:SetPoint("BOTTOMRIGHT", autoSort, 1, -1)
     iconBorder:SetColorTexture(0, 0, 0)
-
-    if not private.isPatch then
-        Skin.GlowBoxFrame(_G.BagHelpBox, "Right")
-    end
 end

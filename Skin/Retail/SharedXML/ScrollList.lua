@@ -6,9 +6,8 @@ if private.isClassic then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
---local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 --do --[[ FrameXML\ScrollList.lua ]]
 --end
@@ -36,8 +35,5 @@ do --[[ FrameXML\ScrollList.xml ]]
     end
 end
 
-function private.SharedXML.ScrollList()
-    if not private.isPatch then
-        Util.Mixin(_G.ScrollListMixin, Hook.TemplatedListMixin)
-    end
-end
+--function private.SharedXML.ScrollList()
+--end

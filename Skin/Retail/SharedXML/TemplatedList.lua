@@ -30,7 +30,5 @@ do --[[ SharedXML\TemplatedList.xml ]]
 end
 
 function private.SharedXML.TemplatedList()
-    if private.isPatch then
-        Util.Mixin(_G.TemplatedListMixin, Hook.TemplatedListMixin)
-    end
+    Util.Mixin(_G.TemplatedListMixin, Hook.TemplatedListMixin)
 end

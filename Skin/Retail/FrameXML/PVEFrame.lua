@@ -12,8 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\PVEFrame.lua ]]
     function Hook.GroupFinderFrame_SelectGroupButton(index)
-        local numButtons = private.isPatch and 3 or 4
-        for i = 1, numButtons do
+        for i = 1, 3 do
             local button = _G.GroupFinderFrame["groupButton"..i]
             if i == index then
                 button.bg:Show()
@@ -83,12 +82,6 @@ function private.FrameXML.PVEFrame()
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton3)
     GroupFinderFrame.groupButton3:SetPoint("LEFT", GroupFinderFrame.groupButton2)
     GroupFinderFrame.groupButton3.icon:SetTexture([[Interface\Icons\INV_Helmet_06]])
-
-    if not private.isPatch then
-        Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton4)
-        GroupFinderFrame.groupButton4:SetPoint("LEFT", GroupFinderFrame.groupButton3)
-        GroupFinderFrame.groupButton4.icon:SetTexture([[Interface\Icons\Achievement_General_StayClassy]])
-    end
 
     _G.LFGListPVEStub:SetWidth(339)
     PVEFrame.shadows:SetAlpha(0)

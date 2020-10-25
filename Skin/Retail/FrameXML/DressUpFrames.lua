@@ -38,14 +38,12 @@ function private.FrameXML.DressUpFrames()
     ----------------------------------
     -- TransmogAndMountDressupFrame --
     ----------------------------------
-    if private.isPatch then
-        local TransmogAndMountDressupFrame = _G.TransmogAndMountDressupFrame
-        Skin.UICheckButtonTemplate(TransmogAndMountDressupFrame.ShowMountCheckButton)
-        TransmogAndMountDressupFrame.ShowMountCheckButton:ClearAllPoints()
-        TransmogAndMountDressupFrame.ShowMountCheckButton:SetPoint("BOTTOMRIGHT", -5, 5)
+    local TransmogAndMountDressupFrame = _G.TransmogAndMountDressupFrame
+    Skin.UICheckButtonTemplate(TransmogAndMountDressupFrame.ShowMountCheckButton)
+    TransmogAndMountDressupFrame.ShowMountCheckButton:ClearAllPoints()
+    TransmogAndMountDressupFrame.ShowMountCheckButton:SetPoint("BOTTOMRIGHT", -5, 5)
 
-        Skin.UIPanelButtonTemplate(TransmogAndMountDressupFrame.ResetButton)
-    end
+    Skin.UIPanelButtonTemplate(TransmogAndMountDressupFrame.ResetButton)
 
 
     ------------------

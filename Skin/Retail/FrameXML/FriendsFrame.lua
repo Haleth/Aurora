@@ -257,9 +257,6 @@ function private.FrameXML.FriendsFrame()
         _G.FriendsFrameTab4,
     })
 
-    if not private.isPatch then
-        Skin.GlowBoxTemplate(FriendsFrame.FriendsFrameQuickJoinHelpTip)
-    end
     if not private.disabled.tooltips then
         Skin.FrameTypeFrame(_G.FriendsTooltip)
     end

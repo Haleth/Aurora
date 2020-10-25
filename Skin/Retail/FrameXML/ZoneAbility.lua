@@ -33,21 +33,5 @@ do --[[ FrameXML\ZoneAbility.xml ]]
 end
 
 function private.FrameXML.ZoneAbility()
-    if private.isPatch then
-        Skin.ZoneAbilityFrameTemplate(_G.ZoneAbilityFrame)
-    else
-        local ZAFButton = _G.ZoneAbilityFrame.SpellButton
-        Base.CropIcon(ZAFButton.Icon, ZAFButton)
-
-        ZAFButton.Count:SetPoint("TOPLEFT", -5, 5)
-        ZAFButton.Style:Hide()
-
-        ZAFButton.Cooldown:SetPoint("TOPLEFT")
-        ZAFButton.Cooldown:SetPoint("BOTTOMRIGHT")
-
-        ZAFButton:SetNormalTexture("")
-        Base.CropIcon(ZAFButton:GetHighlightTexture())
-
-        Skin.MicroButtonAlertTemplate(_G.ZoneAbilityButtonAlert)
-    end
+    Skin.ZoneAbilityFrameTemplate(_G.ZoneAbilityFrame)
 end

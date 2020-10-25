@@ -420,9 +420,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.EncounterTierTabTemplate(instanceSelect.suggestTab)
     Skin.EncounterTierTabTemplate(instanceSelect.dungeonsTab)
     Skin.EncounterTierTabTemplate(instanceSelect.raidsTab)
-    if not private.isPatch then
-        Skin.EncounterTierTabTemplate(instanceSelect.LootJournalTab)
-    end
+    Skin.EncounterTierTabTemplate(instanceSelect.LootJournalTab)
     Skin.UIDropDownMenuTemplate(instanceSelect.tierDropDown)
     Skin.MinimalScrollBarTemplate(instanceSelect.scroll.ScrollBar)
 
@@ -573,13 +571,11 @@ function private.AddOns.Blizzard_EncounterJournal()
     ----====####$$$$%%%%$$$$####====----
     --      Blizzard_LootJournal      --
     ----====####$$$$%%%%$$$$####====----
-    if not private.isPatch then
-        local LootJournal = EncounterJournal.LootJournal
+    local LootJournal = EncounterJournal.LootJournal
 
-        LootJournal:GetRegions():Hide()
+    LootJournal:GetRegions():Hide()
 
-        Util.Mixin(LootJournal.ItemSetsFrame, Hook.LootJournalItemSetsMixin)
-        Skin.MinimalHybridScrollFrameTemplate(LootJournal.ItemSetsFrame)
-        Skin.EJButtonTemplate(LootJournal.ItemSetsFrame.ClassButton)
-    end
+    Util.Mixin(LootJournal.ItemSetsFrame, Hook.LootJournalItemSetsMixin)
+    Skin.MinimalHybridScrollFrameTemplate(LootJournal.ItemSetsFrame)
+    Skin.EJButtonTemplate(LootJournal.ItemSetsFrame.ClassButton)
 end

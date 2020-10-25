@@ -98,9 +98,6 @@ function private.FrameXML.PetStable()
 
     _G.PetStableNameText:SetFontObject("GameFontNormalHuge2")
     _G.PetStableNameText:SetPoint("TOPLEFT", _G.PetStableSelectedPetIcon, "TOPRIGHT", 2, 0)
-    if not private.isPatch then
-        _G.PetStableLevelText:SetPoint("BOTTOMLEFT", _G.PetStableSelectedPetIcon, "BOTTOMRIGHT", 2, 0)
-    end
     _G.PetStableTypeText:SetPoint("BOTTOMRIGHT", -6, 6)
 
     _G.PetStableDiet:SetSize(20, 20)

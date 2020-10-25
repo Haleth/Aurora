@@ -36,12 +36,7 @@ function private.AddOns.Blizzard_DebugTools()
     F.CreateGradient(etraceBG)
 
     if not private.disabled.tooltips then
-        if private.isPatch then
-            Skin.SharedTooltipTemplate(_G.FrameStackTooltip)
-            Skin.SharedTooltipTemplate(_G.EventTraceTooltip)
-        else
-            Skin.GameTooltipTemplate(_G.FrameStackTooltip)
-            Skin.GameTooltipTemplate(_G.EventTraceTooltip)
-        end
+        Skin.GameTooltipTemplate(_G.FrameStackTooltip)
+        Skin.GameTooltipTemplate(_G.EventTraceTooltip)
     end
 end

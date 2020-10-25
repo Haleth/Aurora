@@ -55,28 +55,12 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 progressBar._auroraSkinned = true
             end
         end
-        if not private.isPatch then
-            function Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE:GetBlock(id)
-                local block = self.usedBlocks[id]
-                if not block._auroraSkinned then
-                    if Skin[self.blockTemplate] then
-                        Skin[self.blockTemplate](block)
-                        block._auroraSkinned = true
-                    else
-                        private.debug("DEFAULT_OBJECTIVE_TRACKER_MODULE_GetBlock:", self.blockTemplate, "does not exist.")
-                    end
-                end
-            end
-        end
         function Hook.ObjectiveTracker_Initialize(self)
             Util.Mixin(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
             --Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.QUEST_TRACKER_MODULE)
             Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
-            if not private.isPatch then
-                Util.Mixin(_G.AUTO_QUEST_POPUP_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.AUTO_QUEST_POPUP_TRACKER_MODULE)
-            end
         end
 
         Hook.ObjectiveTrackerMinimizeButtonMixin = {}
@@ -89,12 +73,6 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
 
             self:SetNormalTexture("")
             self:SetPushedTexture("")
-        end
-        function Hook.ObjectiveTracker_Collapse()
-            Hook.ObjectiveTrackerMinimizeButtonMixin.SetCollapsed(_G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton, true)
-        end
-        function Hook.ObjectiveTracker_Expand()
-            Hook.ObjectiveTrackerMinimizeButtonMixin.SetCollapsed(_G.ObjectiveTrackerFrame.HeaderMenu.MinimizeButton, false)
         end
     end
 
@@ -130,9 +108,6 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 progressBar._auroraSkinned = true
             end
         end
-        if not private.isPatch then
-            Hook.SCENARIO_TRACKER_MODULE.GetBlock = private.nop
-        end
 
         -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
         local uiTextureKits = {
@@ -142,10 +117,6 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
             legion = {color = Color.green:Lightness(-0.3), texture = ""},
         }
 
-        if not private.isPatch then
-            uiTextureKits[261] = uiTextureKits.alliance
-            uiTextureKits[5117] = uiTextureKits.horde
-        end
         function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKit)
             -- /dump GetUITextureKitInfo(5117)
             private.debug("ScenarioStage_CustomizeBlock", scenarioType, widgetSetID, textureKit)
@@ -205,9 +176,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$$$$####====----
     Skin.ObjectiveTrackerBlockTemplate = private.nop
     function Skin.ObjectiveTrackerMinimizeButtonTemplate(Button)
-        if private.isPatch then
-            Util.Mixin(Button, Hook.ObjectiveTrackerMinimizeButtonMixin)
-        end
+        Util.Mixin(Button, Hook.ObjectiveTrackerMinimizeButtonMixin)
 
         Skin.FrameTypeButton(Button)
         Button:SetBackdropOption("offsets", {
@@ -236,9 +205,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bg:SetPoint("BOTTOMLEFT", -30, -4)
         bg:SetSize(210, 30)
 
-        if private.isPatch then
-            Skin.ObjectiveTrackerMinimizeButtonTemplate(Frame.MinimizeButton)
-        end
+        Skin.ObjectiveTrackerMinimizeButtonTemplate(Frame.MinimizeButton)
     end
     Skin.ObjectiveTrackerLineTemplate = private.nop
     Skin.ObjectiveTrackerCheckLineTemplate = private.nop
@@ -352,14 +319,8 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     -- Blizzard_ObjectiveTracker --
     ----====####$$$$$$$####====----
     _G.hooksecurefunc("ObjectiveTracker_Initialize", Hook.ObjectiveTracker_Initialize)
-    if not private.isPatch then
-        _G.hooksecurefunc("ObjectiveTracker_Collapse", Hook.ObjectiveTracker_Collapse)
-        _G.hooksecurefunc("ObjectiveTracker_Expand", Hook.ObjectiveTracker_Expand)
-    end
 
-    if private.isPatch then
-        Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame.CampaignQuestHeader)
-    end
+    Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame.CampaignQuestHeader)
     for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
         Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame[headerName])
     end
@@ -428,9 +389,6 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.cyan:GetRGB())
 
     -- ScenarioProvingGroundsBlock
-    if not private.isPatch then
-        Skin.GlowBoxFrame(_G.ScenarioBlocksFrame.WarfrontHelpBox, "Right")
-    end
 
 
     ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----

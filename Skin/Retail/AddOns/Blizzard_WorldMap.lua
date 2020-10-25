@@ -43,9 +43,6 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
         end
         function Skin.WorldMapTrackingPinButtonTemplate(Button)
         end
-        function Skin.WorldMapNavBarButtonTemplate(Frame) -- not isPatch
-            Skin.NavButtonTemplate()
-        end
         function Skin.WorldMapNavBarTemplate(Frame)
             Skin.NavBarTemplate(Frame)  -- this is skinned from hooks in NavigationBar.lua
             Frame.InsetBorderBottomLeft:Hide()
@@ -105,16 +102,10 @@ function private.AddOns.Blizzard_WorldMap()
     Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
     Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
     WorldMapFrame.overlayFrames[2]:SetPoint("TOPRIGHT", WorldMapFrame:GetCanvasContainer(), "TOPRIGHT", 0, 0)
-    if private.isPatch then
-        Skin.WorldMapTrackingPinButtonTemplate(WorldMapFrame.overlayFrames[3])
-        Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[4])
-        Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[5])
-        Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[6])
-    else
-        Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[3])
-        Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[4])
-        Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[5])
-    end
+    Skin.WorldMapTrackingPinButtonTemplate(WorldMapFrame.overlayFrames[3])
+    Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[4])
+    Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[5])
+    Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[6])
 
     Skin.WorldMapNavBarTemplate(WorldMapFrame.NavBar)
     WorldMapFrame.NavBar:SetPoint("BOTTOMRIGHT", WorldMapFrame.TitleCanvasSpacerFrame, -5, 5)

@@ -80,25 +80,15 @@ function private.SharedXML.AddonList()
     _G.AddonListForceLoad:ClearAllPoints()
     _G.AddonListForceLoad:SetPoint("TOPRIGHT", -150, -25)
 
-    if private.isPatch then
-        Skin.SharedButtonSmallTemplate(AddonList.CancelButton)
-        Skin.SharedButtonSmallTemplate(AddonList.OkayButton)
-    else
-        Skin.MagicButtonTemplate(AddonList.CancelButton)
-        Skin.MagicButtonTemplate(AddonList.OkayButton)
-    end
+    Skin.SharedButtonSmallTemplate(AddonList.CancelButton)
+    Skin.SharedButtonSmallTemplate(AddonList.OkayButton)
     Util.PositionRelative("BOTTOMRIGHT", AddonList, "BOTTOMRIGHT", -5, 5, 5, "Left", {
         AddonList.CancelButton,
         AddonList.OkayButton,
     })
 
-    if private.isPatch then
-        Skin.SharedButtonSmallTemplate(AddonList.EnableAllButton)
-        Skin.SharedButtonSmallTemplate(AddonList.DisableAllButton)
-    else
-        Skin.MagicButtonTemplate(AddonList.EnableAllButton)
-        Skin.MagicButtonTemplate(AddonList.DisableAllButton)
-    end
+    Skin.SharedButtonSmallTemplate(AddonList.EnableAllButton)
+    Skin.SharedButtonSmallTemplate(AddonList.DisableAllButton)
     Util.PositionRelative("BOTTOMLEFT", AddonList, "BOTTOMLEFT", 5, 5, 5, "Right", {
         AddonList.EnableAllButton,
         AddonList.DisableAllButton,

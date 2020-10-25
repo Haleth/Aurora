@@ -709,12 +709,6 @@ function private.AddOns.Blizzard_Collections()
     Skin.SearchBoxTemplate(ToyBox.searchBox)
     Skin.UIMenuButtonStretchTemplate(_G.ToyBoxFilterButton)
 
-    if not private.isPatch then
-        Skin.GlowBoxFrame(ToyBox.favoriteHelpBox, "Up")
-        Skin.GlowBoxTemplate(ToyBox.mousewheelPagingHelpBox)
-        Skin.UIPanelCloseButton(ToyBox.mousewheelPagingHelpBox.CloseButton)
-    end
-
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)
     iconsFrame.watermark:SetDesaturated(true)
@@ -756,9 +750,6 @@ function private.AddOns.Blizzard_Collections()
     Skin.TabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
     Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
 
-    if not private.isPatch then
-        Skin.GlowBoxFrame(WardrobeCollectionFrame.SetsTabHelpBox, "Up")
-    end
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
     Skin.UIMenuButtonStretchTemplate(WardrobeCollectionFrame.FilterButton)
@@ -775,11 +766,6 @@ function private.AddOns.Blizzard_Collections()
     for i = 1, #Models do
         Skin.WardrobeItemsModelTemplate(Models[i])
     end
-
-    if not private.isPatch then
-        Skin.GlowBoxFrame(ItemsCollectionFrame.HelpBox, "Up")
-    end
-
 
     -- Sets
     local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
@@ -814,9 +800,6 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
     WardrobeTransmogFrame.Inset.BG:Hide()
     Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
-    if not private.isPatch then
-        Skin.GlowBoxFrame(WardrobeTransmogFrame.OutfitHelpBox, "Left")
-    end
 
     local ModelScene = WardrobeTransmogFrame.ModelScene
     Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
@@ -831,7 +814,4 @@ function private.AddOns.Blizzard_Collections()
     Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
     Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
     Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
-    if not private.isPatch then
-        Skin.GlowBoxFrame(WardrobeTransmogFrame.SpecHelpBox, "Up")
-    end
 end

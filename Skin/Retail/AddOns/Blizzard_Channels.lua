@@ -184,10 +184,6 @@ function private.AddOns.Blizzard_Channels()
     ChannelFrame.ChannelRoster:SetPoint("BOTTOMRIGHT", -20, 28)
     Skin.InsetFrameTemplate(ChannelFrame.RightInset)
 
-    if not private.isPatch then
-        Skin.GlowBoxFrame(ChannelFrame.Tutorial, "Left")
-    end
-
     ----====####$$$$%%%%%$$$$####====----
     --    VoiceActivityNotification    --
     ----====####$$$$%%%%%$$$$####====----

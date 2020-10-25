@@ -142,25 +142,23 @@ do --[[ FrameXML\QuestInfo.xml ]]
         garrisonLvlBG:SetPoint("TOPLEFT", garrisonBG, "BOTTOMLEFT", 0, 2)
         GarrisonPortrait.Level:SetScale(0.8)
 
-        if private.isPatch then
-            local AdventuresPortrait = Button.AdventuresFollowerPortraitFrame
-            Skin.AdventuresLevelPortraitTemplate(AdventuresPortrait)
-            AdventuresPortrait:SetScale(1)
-            AdventuresPortrait:SetSize(43.2, 43.2)
-            AdventuresPortrait:SetBackdropOptions({
-                offsets = {
-                    left = 4,
-                    right = 6,
-                    top = 3,
-                    bottom = 7,
-                },
-            })
+        local AdventuresPortrait = Button.AdventuresFollowerPortraitFrame
+        Skin.AdventuresLevelPortraitTemplate(AdventuresPortrait)
+        AdventuresPortrait:SetScale(1)
+        AdventuresPortrait:SetSize(43.2, 43.2)
+        AdventuresPortrait:SetBackdropOptions({
+            offsets = {
+                left = 4,
+                right = 6,
+                top = 3,
+                bottom = 7,
+            },
+        })
 
-            local adventuresBG = AdventuresPortrait:GetBackdropTexture("bg")
-            local adventuresLvlBG = AdventuresPortrait._auroraLvlBG
-            adventuresLvlBG:SetPoint("TOPLEFT", adventuresBG, "BOTTOMLEFT", 0, 2)
-            AdventuresPortrait.LevelDisplayFrame.LevelText:SetScale(0.8)
-        end
+        local adventuresBG = AdventuresPortrait:GetBackdropTexture("bg")
+        local adventuresLvlBG = AdventuresPortrait._auroraLvlBG
+        adventuresLvlBG:SetPoint("TOPLEFT", adventuresBG, "BOTTOMLEFT", 0, 2)
+        AdventuresPortrait.LevelDisplayFrame.LevelText:SetScale(0.8)
     end
     function Skin.SmallQuestInfoRewardFollowerTemplate(Button)
         Base.SetBackdrop(Button, Color.frame)

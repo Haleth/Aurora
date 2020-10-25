@@ -70,12 +70,6 @@ do --[[ SharedXML\NineSlice.lua ]]
         PartyPoseKit = BasicFrame,
     }
 
-    if not private.isPatch then
-        layouts.BFAMissionNeutral = BasicFrame
-        layouts.WarboardTextureKit = BasicFrame
-        layouts.WarboardTextureKit_FourCorners = BasicFrame
-    end
-
     local layoutMap = {}
     for layoutName in next, layouts do
         local layout = _G.NineSliceUtil.GetLayout(layoutName)

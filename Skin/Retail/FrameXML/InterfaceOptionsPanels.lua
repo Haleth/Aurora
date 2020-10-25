@@ -56,9 +56,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelOutlineDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelRotateMinimap)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAJAlerts)
-    if private.isPatch then
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowInGameNavigation)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowInGameNavigation)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowTutorials)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsDisplayPanelResetTutorials)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelSelfHighlightDropDown)
@@ -153,9 +151,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     local Accessibility = _G.InterfaceOptionsAccessibilityPanel
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.MovePad)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelCinematicSubtitles)
-    if private.isPatch then
-        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
-    end
+    Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
 
     local FilterExamples = Accessibility.ColorblindFilterExamples

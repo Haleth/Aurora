@@ -269,9 +269,6 @@ function private.AddOns.Blizzard_TalentUI()
     PvpTalentFrame.Ring:Hide()
     select(13, PvpTalentFrame:GetRegions()):Hide() -- firecover
 
-    if not private.isPatch then
-        Skin.PvpTalentTrinketSlotTemplate(PvpTalentFrame.TrinketSlot)
-    end
     Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot1)
     Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot2)
     Skin.PvpTalentSlotTemplate(PvpTalentFrame.TalentSlot3)

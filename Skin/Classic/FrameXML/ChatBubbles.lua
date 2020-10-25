@@ -25,22 +25,18 @@ do --[[ FrameXML\ChatBubbles.lua ]]
         local chatbubble
         local chatbubbles = _G.C_ChatBubbles.GetAllChatBubbles()
         for index = 1, #chatbubbles do
-            if private.isPatch then
-                chatbubble = chatbubbles[index]:GetChildren()
-            else
-                chatbubble = chatbubbles[index]
-                if not chatbubble.String then
-                    for i = 1, chatbubble:GetNumRegions() do
-                        local region = _G.select(i, chatbubble:GetRegions())
-                        if region:GetObjectType() == "Texture" then
-                            if region:GetTexture():find("Tail") then
-                                chatbubble.Tail = region
-                            else
-                                region:SetTexture(nil)
-                            end
-                        elseif region:GetObjectType() == "FontString" then
-                            chatbubble.String = region
+            chatbubble = chatbubbles[index]
+            if not chatbubble.String then
+                for i = 1, chatbubble:GetNumRegions() do
+                    local region = _G.select(i, chatbubble:GetRegions())
+                    if region:GetObjectType() == "Texture" then
+                        if region:GetTexture():find("Tail") then
+                            chatbubble.Tail = region
+                        else
+                            region:SetTexture(nil)
                         end
+                    elseif region:GetObjectType() == "FontString" then
+                        chatbubble.String = region
                     end
                 end
             end
