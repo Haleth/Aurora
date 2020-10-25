@@ -7,8 +7,9 @@
 
   * Error when loot skin is disabled
   * Chat bubble didn't work
-  * [retail] Optional reagents had stretched icons
-  * [retail] PvP category buttons had off borders
+  * [retail] Void Storage item background didn't display properly
+  * [retail] Optional reagents icons would get stretched when adding an item
+  * [retail] Out of place borders on the PvP category buttons
   * [retail] Sell item icon had the wrong texture
   * [retail] Volume sliders were white
   * [retail] Missed some textures on the spec frame

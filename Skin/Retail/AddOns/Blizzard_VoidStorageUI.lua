@@ -18,18 +18,23 @@ do --[[ AddOns\Blizzard_VoidStorageUI.xml ]]
         local name = Button:GetName()
 
         local bg = _G[name.."Bg"]
-        bg:SetTexCoord(0.671875, 0.736328125, 0.009765625, 0.07421875)
         Base.CreateBackdrop(Button, {
-            edgeSize = 1,
             bgFile = [[Interface\VoidStorage\VoidStorage]],
-            insets = {left = 1, right = 1, top = 1, bottom = 1}
+            tile = false,
+            offsets = {
+                left = 1,
+                right = 1,
+                top = 1,
+                bottom = 1,
+            }
         }, {bg = bg})
+        bg:SetTexCoord(0.671875, 0.736328125, 0.009765625, 0.07421875)
         Button._auroraIconBorder = Button
 
-        Base.CropIcon(Button.icon)
-        Button.icon:SetPoint("TOPLEFT", 1, -1)
-        Button.icon:SetPoint("BOTTOMRIGHT", -1, 1)
+        Button:SetBackdropColor(1, 1, 1, 0.75)
+        Button:SetBackdropBorderColor(Color.frame, 1)
 
+        Base.CropIcon(Button.icon)
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())
     end
