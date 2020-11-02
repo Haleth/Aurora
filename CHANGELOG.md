@@ -1,4 +1,11 @@
-﻿## [9.0.1.5] - 2020-10-25 ##
+﻿## [Unreleased] ##
+### Added ###
+
+  * Skinned RatingMenuFrame
+
+
+
+## [9.0.1.5] - 2020-10-25 ##
 ### Changed ###
 
   * Tweaked font for chat bubble names
