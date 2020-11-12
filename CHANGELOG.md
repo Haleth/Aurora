@@ -3,6 +3,10 @@
 
   * Skinned RatingMenuFrame
 
+### Fixed ###
+
+  * [retail] Various bugs from 9.0.2
+
 
 
 ## [9.0.1.5] - 2020-10-25 ##
