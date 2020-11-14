@@ -28,11 +28,13 @@ do --[[ AddOns\Blizzard_CovenantPreviewUI.lua ]]
         self.InfoPanel.Parchment:Hide()
         self.InfoPanel._bgCrest:SetAtlas("CovenantChoice-Offering-Sigil-"..self.uiTextureKit, true)
     end
+    function Hook.CovenantPreviewFrameMixin:SetupModelSceneFrame(transmogSetID, mountID)
+        _G.TransmogAndMountDressupFrame:ClearAllPoints()
+        _G.TransmogAndMountDressupFrame:SetAllPoints(_G.CovenantPreviewFrame.ModelSceneContainer)
+    end
     Hook.CovenantAbilityButtonMixin = {}
     function Hook.CovenantAbilityButtonMixin:SetupButton(abilityInfo)
-        self.Background:Hide()
         self.IconBorder:Hide()
-        self.CircleMask:Hide()
     end
 end
 
@@ -48,11 +50,21 @@ function private.AddOns.Blizzard_CovenantPreviewUI()
     Util.Mixin(CovenantPreviewFrame, Hook.CovenantPreviewFrameMixin)
     Skin.FrameTypeFrame(CovenantPreviewFrame)
 
+    CovenantPreviewFrame.Title:SetPoint("LEFT", CovenantPreviewFrame.ModelSceneContainer, "RIGHT", 0, 0)
+    CovenantPreviewFrame.Title:SetPoint("RIGHT")
+
+    CovenantPreviewFrame.ModelSceneContainer:ClearAllPoints()
+    CovenantPreviewFrame.ModelSceneContainer:SetPoint("TOPLEFT", -1, 2)
+    CovenantPreviewFrame.ModelSceneContainer:SetPoint("BOTTOMRIGHT", CovenantPreviewFrame, "BOTTOMLEFT", 485, -1)
     CovenantPreviewFrame.ModelSceneContainer.Background:SetTexCoord(0.00970873786408, 0.99029126213592, 0.0092807424594, 0.9907192575406)
 
     local InfoPanel = CovenantPreviewFrame.InfoPanel
+    InfoPanel.Name:SetTextColor(Color.white:GetRGB())
+    InfoPanel.Location:SetTextColor(Color.white:GetRGB())
     InfoPanel.Description:SetTextColor(Color.grayLight:GetRGB())
-    InfoPanel.AbilitiesLabel:SetTextColor(Color.grayLight:GetRGB())
+    InfoPanel.AbilitiesFrame.AbilitiesLabel:SetTextColor(Color.grayLight:GetRGB())
+    InfoPanel.SoulbindsFrame.SoulbindsLabel:SetTextColor(Color.grayLight:GetRGB())
+    InfoPanel.CovenantFeatureFrame.Label:SetTextColor(Color.grayLight:GetRGB())
 
     local divider = InfoPanel:CreateTexture(nil, "ARTWORK")
     divider:SetColorTexture(1, 1, 1, 0.5)

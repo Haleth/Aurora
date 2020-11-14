@@ -71,6 +71,7 @@ do --[[ AddOns\Blizzard_PlayerChoiceUI.lua ]]
     Hook.PlayerChoiceOptionFrameMixin = {}
     function Hook.PlayerChoiceOptionFrameMixin:SetupArtworkForOption()
         local optionLayout = self:GetOptionLayoutInfo();
+        self.ShadowMask:SetAlpha(0)
         if optionLayout.combineHeaderWithOption then
             self._auroraBG:Show()
         else
@@ -92,6 +93,10 @@ do --[[ AddOns\Blizzard_PlayerChoiceUI.xml ]]
         Button._auroraBG = _G.CreateFrame("Frame", nil, Button)
         Button._auroraBG.ignoreInLayout = true
         Base.SetBackdrop(Button._auroraBG, Color.frame)
+
+        Button.BackgroundShadowSmall:SetTexCoord(0.02371541501976, 0.97628458498024, 0.01284796573876, 0.98715203426124)
+        Button.BackgroundShadowLarge:SetTexCoord(0.02640264026403, 0.97359735973597, 0.01446654611212, 0.98553345388788)
+        Button.ShadowMask:SetAlpha(0)
 
         Button.ArtworkBorderDisabled:SetAllPoints(Button.Artwork)
     end
