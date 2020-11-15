@@ -19,15 +19,6 @@ do --[[ FrameXML\HelpTip.lua ]]
     }
 
     Hook.HelpTipTemplateMixin = {}
-    function Hook.HelpTipTemplateMixin:AnchorArrow(rotationInfo, alignment)
-        local point, anchor, arrowAnchor, offsetX, offsetY = self:GetPoint()
-        if rotationInfo.swapOffsets then
-            offsetX = 4
-        else
-            offsetY = 4
-        end
-        self.Arrow:SetPoint(point, anchor, arrowAnchor, offsetX, offsetY)
-    end
     function Hook.HelpTipTemplateMixin:RotateArrow(rotation)
         local Arrow = self.Arrow
         local direction = directions[rotation]

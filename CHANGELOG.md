@@ -5,6 +5,7 @@
 
 ### Fixed ###
 
+  * [retail] Help tip arrows would sometimes be placed wrong
   * [retail] Various bugs from 9.0.2
 
 
