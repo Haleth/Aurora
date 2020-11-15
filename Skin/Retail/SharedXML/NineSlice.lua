@@ -85,7 +85,9 @@ do --[[ SharedXML\NineSlice.lua ]]
 
         container._applyLayout = true
         local layoutName = layoutMap[userLayout]
-        --print("ApplyLayout", container, layoutName, textureKit)
+        if container.debug then
+            _G.print("ApplyLayout", container.debug, layoutName, textureKit)
+        end
         if layouts[layoutName] then
             layouts[layoutName](container)
         else

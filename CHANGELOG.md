@@ -1,7 +1,7 @@
 ﻿## [Unreleased] ##
 ### Added ###
 
-  * Skinned Covenant Renown
+  * [retail] Skinned Covenant Renown
   * Skinned RatingMenuFrame
 
 ### Fixed ###
