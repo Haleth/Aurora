@@ -385,7 +385,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.NineSlicePanelTemplate(Frame)
         Frame._auroraNineSlice = true
         local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
-        --print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
+        if Frame.debug then
+            _G.print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
+        end
         if layout then
             Hook.NineSliceUtil.ApplyLayout(Frame, layout)
         end

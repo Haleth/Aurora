@@ -42,6 +42,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_Contribution.lua"/>
     <!--Script file="Blizzard_CovenantCallings.lua"/-->
     <Script file="Blizzard_CovenantPreviewUI.lua"/>
+    <Script file="Blizzard_CovenantRenown.lua"/>
     <Script file="Blizzard_CovenantSanctum.lua"/>
     <!--Script file="Blizzard_CovenantToasts.lua"/-->
     <Script file="Blizzard_CUFProfiles.lua"/>
