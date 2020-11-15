@@ -158,9 +158,12 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesChatEditBoxTemplate(EditBox)
             Skin.FrameTypeEditBox(EditBox)
-            local bg = EditBox:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", -5, -5)
-            bg:SetPoint("BOTTOMRIGHT", 5, 5)
+            EditBox:SetBackdropOption("offsets", {
+                left = -5,
+                right = -5,
+                top = 5,
+                bottom = 5,
+            })
 
             EditBox.Left:Hide()
             EditBox.Right:Hide()

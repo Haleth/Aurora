@@ -45,9 +45,12 @@ function private.AddOns.Blizzard_AdventureMap()
     AdventureMapQuestChoiceDialog.Background:Hide()
 
     Skin.FrameTypeFrame(AdventureMapQuestChoiceDialog)
-    local bg = AdventureMapQuestChoiceDialog:GetBackdropTexture("bg")
-    bg:SetPoint("TOPLEFT", 3, -14)
-    bg:SetPoint("BOTTOMRIGHT", -3, -1)
+    AdventureMapQuestChoiceDialog:SetBackdropOption("offsets", {
+        left = 3,
+        right = 3,
+        top = 14,
+        bottom = -1,
+    })
 
     Skin.UIPanelCloseButton(AdventureMapQuestChoiceDialog.CloseButton)
 

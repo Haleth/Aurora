@@ -100,8 +100,12 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
 end
 
 do --[[ FrameXML\SpellBookFrame.xml ]]
-    Skin.SpellBookSkillLineTabTemplate = Skin.SideTabTemplate
-    Skin.SpellBookFrameTabButtonTemplate = Skin.CharacterFrameTabButtonTemplate
+    function Skin.SpellBookSkillLineTabTemplate(CheckButton)
+        Skin.SideTabTemplate(CheckButton)
+    end
+    function Skin.SpellBookFrameTabButtonTemplate(Button)
+        Skin.CharacterFrameTabButtonTemplate(Button)
+    end
     function Skin.SpellButtonTemplate(CheckButton)
         local name = CheckButton:GetName()
 
@@ -112,15 +116,16 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         Base.CreateBackdrop(CheckButton, {
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false,
+            offsets = {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            }
         })
         CheckButton:SetBackdropColor(1, 1, 1, 0.75)
         CheckButton:SetBackdropBorderColor(Color.frame, 1)
-
-        local bg = CheckButton:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
-        bg:SetDesaturated(true)
-        Base.CropIcon(bg)
+        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
 
         _G[name.."SlotFrame"]:SetAlpha(0)
         CheckButton.UnlearnedFrame:SetAlpha(0)

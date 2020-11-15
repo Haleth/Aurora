@@ -22,12 +22,16 @@ end
 do --[[ AddOns\Blizzard_IslandsQueueUI.xml ]]
     function Skin.IslandsQueueFrameTutorialTemplate(Frame)
         Skin.FrameTypeFrame(Frame)
-        local bg = Frame:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", 290, -135)
-        bg:SetPoint("BOTTOMRIGHT", -290, 135)
+        Frame:SetBackdropOption("offsets", {
+            left = 290,
+            right = 290,
+            top = 135,
+            bottom = 135,
+        })
 
         Frame.BlackBackground:SetAllPoints(_G.IslandsQueueFrame)
 
+        local bg = Frame:GetBackdropTexture("bg")
         Frame.Background:SetTexture([[Interface\Icons\INV_Glowing Azerite Spire]])
         Frame.Background:SetSize(64, 64)
         Frame.Background:ClearAllPoints()

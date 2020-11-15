@@ -324,13 +324,17 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
         function Skin.MountListButtonTemplate(Button)
             Button.background:Hide()
             Base.SetBackdrop(Button, Color.frame)
-            local bg = Button:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 0, -1)
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+            Button:SetBackdropOption("offsets", {
+                left = 0,
+                right = 0,
+                top = 1,
+                bottom = 1,
+            })
 
             Base.CropIcon(Button.icon, Button)
             Button.iconBorder:Hide()
 
+            local bg = Button:GetBackdropTexture("bg")
             Button.selectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
             Button.selectedTexture:SetPoint("TOPLEFT", bg, 1, -1)
             Button.selectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
@@ -352,13 +356,17 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
         function Skin.CompanionListButtonTemplate(Button)
             Button.background:Hide()
             Base.SetBackdrop(Button, Color.frame)
-            local bg = Button:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 0, -1)
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+            Button:SetBackdropOption("offsets", {
+                left = 0,
+                right = 0,
+                top = 1,
+                bottom = 1,
+            })
 
             Button._auroraIconBorder = Base.CropIcon(Button.icon, Button)
             Button.iconBorder:SetAlpha(0)
 
+            local bg = Button:GetBackdropTexture("bg")
             Button.selectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
             Button.selectedTexture:SetPoint("TOPLEFT", bg, 1, -1)
             Button.selectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
@@ -488,12 +496,16 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
         function Skin.WardrobeSetsScrollFrameButtonTemplate(Frame)
             Frame.Background:Hide()
             Base.SetBackdrop(Frame, Color.frame)
-            local bg = Frame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 0, -1)
-            bg:SetPoint("BOTTOMRIGHT", 0, 1)
+            Frame:SetBackdropOption("offsets", {
+                left = 0,
+                right = 0,
+                top = 1,
+                bottom = 1,
+            })
 
             Base.CropIcon(Frame.Icon, Frame)
 
+            local bg = Frame:GetBackdropTexture("bg")
             Frame.SelectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
             Frame.SelectedTexture:SetPoint("TOPLEFT", bg, 1, -1)
             Frame.SelectedTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
@@ -688,9 +700,12 @@ function private.AddOns.Blizzard_Collections()
     spellSelect.BgEnd:Hide()
     spellSelect.BgTiled:Hide()
     Skin.FrameTypeFrame(spellSelect)
-    local spellSelectBG = spellSelect:GetBackdropTexture("bg")
-    spellSelectBG:SetPoint("TOPLEFT", -3, -1)
-    spellSelectBG:SetPoint("BOTTOMRIGHT", 3, 1)
+    spellSelect:SetBackdropOption("offsets", {
+        left = -3,
+        right = -3,
+        top = 1,
+        bottom = 1,
+    })
     Skin.PetSpellSelectButtonTemplate(spellSelect.Spell1)
     Skin.PetSpellSelectButtonTemplate(spellSelect.Spell2)
 

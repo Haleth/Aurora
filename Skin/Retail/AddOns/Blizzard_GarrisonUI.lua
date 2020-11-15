@@ -228,9 +228,12 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame:GetRegions():Hide()
 
             Base.SetBackdrop(Frame, Color.button, Color.frame.a)
-            local bg = Frame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", Frame, 3, -2)
-            bg:SetPoint("BOTTOMRIGHT", Frame, 0, -1)
+            Frame:SetBackdropOption("offsets", {
+                left = 3,
+                right = 0,
+                top = 2,
+                bottom = 1,
+            })
 
             Skin.GarrisonFollowerMissionPortraitTemplate(Frame.PortraitFrame)
             Skin.GarrisonMissionAbilityLargeCounterTemplate(Frame.Counters[1])
@@ -246,9 +249,12 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame:GetRegions():Hide()
 
             Base.SetBackdrop(Frame, Color.button, Color.frame.a)
-            local bg = Frame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", Frame, 3, -2)
-            bg:SetPoint("BOTTOMRIGHT", Frame, 0, -1)
+            Frame:SetBackdropOption("offsets", {
+                left = 3,
+                right = 0,
+                top = 2,
+                bottom = 1,
+            })
 
             Skin.GarrisonFollowerPortraitTemplate(Frame.PortraitFrame)
             Skin.GarrisonFollowerXPBarTemplate(Frame.XP)

@@ -67,14 +67,16 @@ function private.FrameXML.WardrobeOutfits()
 
     local EditBox = WardrobeOutfitEditFrame.EditBox
     Skin.FrameTypeEditBox(EditBox)
+    EditBox:SetBackdropOption("offsets", {
+        left = -5,
+        right = 3,
+        top = 3,
+        bottom = 3,
+    })
 
     EditBox.LeftTexture:Hide()
     EditBox.RightTexture:Hide()
     EditBox.MiddleTexture:Hide()
-
-    local bg = EditBox:GetBackdropTexture("bg")
-    bg:SetPoint("TOPLEFT", -5, -3)
-    bg:SetPoint("BOTTOMRIGHT", 5, 3)
 
     Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.AcceptButton)
     Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.CancelButton)

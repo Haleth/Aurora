@@ -84,15 +84,16 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         Base.CreateBackdrop(CheckButton, {
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false,
+            offsets = {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            }
         })
         CheckButton:SetBackdropColor(1, 1, 1, 0.75)
         CheckButton:SetBackdropBorderColor(Color.frame, 1)
-
-        local bg = CheckButton:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", -1, 1)
-        bg:SetPoint("BOTTOMRIGHT", 1, -1)
-        bg:SetDesaturated(true)
-        Base.CropIcon(bg)
+        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
 
         local autoCast = _G[name.."AutoCastable"]
         autoCast:ClearAllPoints()

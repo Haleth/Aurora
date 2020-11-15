@@ -270,9 +270,12 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
         end
         function Skin.AdventureJournal_SecondaryTemplate(Frame)
             Base.SetBackdrop(Frame, Color.frame, Color.frame.a)
-            local bg = Frame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", 0, -12)
-            bg:SetPoint("BOTTOMRIGHT", 0, 0)
+            Frame:SetBackdropOption("offsets", {
+                left = 0,
+                right = 0,
+                top = 12,
+                bottom = 0,
+            })
 
             Frame.bg:Hide()
             Base.CropIcon(Frame.icon, Frame)
@@ -323,9 +326,12 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
             Button.Icon:SetAllPoints()
 
             Base.SetBackdrop(Button, Color.black, Color.frame.a)
-            local bg = Button:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", -1, 1)
-            bg:SetPoint("BOTTOMRIGHT", 1, -1)
+            Button:SetBackdropOption("offsets", {
+                left = -1,
+                right = -1,
+                top = -1,
+                bottom = -1,
+            })
             Button._auroraIconBorder = Button
 
             Button.Border:Hide()
@@ -517,9 +523,12 @@ function private.AddOns.Blizzard_EncounterJournal()
     local Suggestion1 = suggestFrame.Suggestion1
     Suggestion1.bg:Hide()
     Base.SetBackdrop(Suggestion1, Color.frame, Color.frame.a)
-    local suggestion1BG = Suggestion1:GetBackdropTexture("bg")
-    suggestion1BG:SetPoint("TOPLEFT", 0, -12)
-    suggestion1BG:SetPoint("BOTTOMRIGHT", 0, 0)
+    Suggestion1:SetBackdropOption("offsets", {
+        left = 0,
+        right = 0,
+        top = 12,
+        bottom = 0,
+    })
 
     Suggestion1.icon:SetMask("")
     Base.CropIcon(Suggestion1.icon, Suggestion1)

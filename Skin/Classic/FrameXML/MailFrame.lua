@@ -183,15 +183,17 @@ do --[[ FrameXML\MailFrame.xml ]]
     function Skin.SendMailInputBox(EditBox)
         Skin.FrameTypeEditBox(EditBox)
         EditBox:SetHeight(22)
+        EditBox:SetBackdropOption("offsets", {
+            left = -8,
+            right = -8,
+            top = 1,
+            bottom = 1,
+        })
 
         local name = EditBox:GetName()
         _G[name.."Left"]:Hide()
         _G[name.."Middle"]:Hide()
         _G[name.."Right"]:Hide()
-
-        local bg = EditBox:GetBackdropTexture("bg")
-        bg:SetPoint("TOPLEFT", -8, -1)
-        bg:SetPoint("BOTTOMRIGHT", 8, 1)
     end
 end
 

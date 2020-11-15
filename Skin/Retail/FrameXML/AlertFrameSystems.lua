@@ -31,11 +31,14 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             -- Called when created: the main skin
             Skin.FrameTypeFrame(ContainedAlertFrame)
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.icon, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", 0, 0)
-            ContainedAlertFrame._auroraBG = bg
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 11,
+                right = 11,
+                top = 10,
+                bottom = 10,
+            })
 
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             ContainedAlertFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
             ContainedAlertFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
             ContainedAlertFrame.glow:SetAtlas("Toast-Flash")
@@ -60,9 +63,6 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.dungeonTexture, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -8, 8)
-            ContainedAlertFrame._auroraBG = bg
 
             Base.CropIcon(ContainedAlertFrame.dungeonTexture, ContainedAlertFrame)
             ContainedAlertFrame.raidArt:SetAlpha(0)
@@ -78,8 +78,8 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame.instanceName:SetPoint("RIGHT", bg, -5, 0)
             ContainedAlertFrame.heroicIcon:SetAlpha(0)
 
-            ContainedAlertFrame.glowFrame.glow:SetPoint("TOPLEFT", ContainedAlertFrame._auroraBG, -10, 10)
-            ContainedAlertFrame.glowFrame.glow:SetPoint("BOTTOMRIGHT", ContainedAlertFrame._auroraBG, 10, -10)
+            ContainedAlertFrame.glowFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
+            ContainedAlertFrame.glowFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
             ContainedAlertFrame.glowFrame.glow:SetAtlas("Toast-Flash")
             ContainedAlertFrame.glowFrame.glow:SetTexCoord(0, 1, 0, 1)
 
@@ -87,9 +87,19 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         else
             local rewardData = ContainedAlertFrame.rewardData
             if rewardData.subtypeID == _G.LFG_SUBTYPEID_RAID then
-                ContainedAlertFrame._auroraBG:SetPoint("BOTTOMRIGHT", -21, 13)
+                ContainedAlertFrame:SetBackdropOption("offsets", {
+                    left = 20,
+                    right = 20,
+                    top = 11,
+                    bottom = 12,
+                })
             else
-                ContainedAlertFrame._auroraBG:SetPoint("BOTTOMRIGHT", -8, 8)
+                ContainedAlertFrame:SetBackdropOption("offsets", {
+                    left = 7,
+                    right = 7,
+                    top = 16,
+                    bottom = 7,
+                })
             end
 
             for i, button in next, ContainedAlertFrame.RewardFrames do
@@ -108,7 +118,6 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             Skin.FrameTypeFrame(ContainedAlertFrame)
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            ContainedAlertFrame._auroraBG = bg
 
             ContainedAlertFrame.Background:Hide()
             ContainedAlertFrame.Unlocked:SetPoint("LEFT", ContainedAlertFrame.Icon.Texture, "RIGHT", 5, 0)
@@ -167,9 +176,10 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
                 ContainedAlertFrame.shine:SetPoint("BOTTOMLEFT", 0, 16)
 
                 if ContainedAlertFrame.oldCheevo then
-                    ContainedAlertFrame.Unlocked:SetPoint("RIGHT", ContainedAlertFrame._auroraBG, -5, 0)
+                    local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+                    ContainedAlertFrame.Unlocked:SetPoint("RIGHT", bg, -5, 0)
                     ContainedAlertFrame.Name:SetPoint("LEFT", ContainedAlertFrame.Icon.Texture, "RIGHT", 5, 0)
-                    ContainedAlertFrame.Name:SetPoint("RIGHT", ContainedAlertFrame._auroraBG, -5, 0)
+                    ContainedAlertFrame.Name:SetPoint("RIGHT", bg, -5, 0)
                 end
             end
         end
@@ -183,8 +193,8 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
                 top = 2,
                 bottom = 8,
             })
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
 
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             ContainedAlertFrame.Background:Hide()
             ContainedAlertFrame.Unlocked:SetTextColor(Color.white:GetRGB())
             ContainedAlertFrame.Name:SetTextColor(Color.grayLight:GetRGB())
@@ -206,11 +216,14 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
     function Skin.GuildChallengeAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             Skin.FrameTypeFrame(ContainedAlertFrame)
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.EmblemBackground, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -10, 15)
-            ContainedAlertFrame._auroraBG = bg
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 9,
+                right = 10,
+                top = 14,
+                bottom = 15,
+            })
 
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             local line = select(2, ContainedAlertFrame:GetRegions())
             line:SetColorTexture(1, 1, 1, 0.5)
             line:ClearAllPoints()
@@ -234,21 +247,25 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         if not ContainedAlertFrame._auroraTemplate then
             local toastFrame, icon, title = ContainedAlertFrame:GetRegions()
             Skin.FrameTypeFrame(ContainedAlertFrame)
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", icon, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -8, 10)
-            ContainedAlertFrame._auroraBG = bg
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 11,
+                right = 11,
+                top = 10,
+                bottom = 10,
+            })
 
             toastFrame:Hide()
             Base.CropIcon(icon, ContainedAlertFrame)
 
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             title:SetPoint("TOP", bg, 0, -15)
             title:SetPoint("LEFT", icon, "RIGHT", 5, 0)
             title:SetPoint("RIGHT", bg, -5, 0)
+            ContainedAlertFrame._title = title
+
             ContainedAlertFrame.ZoneName:ClearAllPoints()
-            ContainedAlertFrame.ZoneName:SetPoint("TOP", title, "BOTTOM", 0, -2)
-            ContainedAlertFrame.ZoneName:SetPoint("LEFT", icon, "RIGHT", 5, 0)
-            ContainedAlertFrame.ZoneName:SetPoint("RIGHT", bg, -5, 0)
+            ContainedAlertFrame.ZoneName:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -2)
+            ContainedAlertFrame.ZoneName:SetPoint("TOPRIGHT", title, "BOTTOMRIGHT", 0, -2)
 
             ContainedAlertFrame._auroraTemplate = "ScenarioLegionInvasionAlertFrameTemplate"
         else
@@ -258,20 +275,32 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
                     button._auroraSkinned = true
                 end
             end
+
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            if ContainedAlertFrame.BonusStar:IsShown() then
+                ContainedAlertFrame._title:SetPoint("RIGHT", bg, -45, 0)
+            else
+                ContainedAlertFrame._title:SetPoint("RIGHT", bg, -5, 0)
+            end
         end
     end
     function Skin.ScenarioAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
             Skin.FrameTypeFrame(ContainedAlertFrame)
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.dungeonTexture, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -8, 12)
-            ContainedAlertFrame._auroraBG = bg
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 11,
+                right = 20,
+                top = 10,
+                bottom = 11,
+            })
 
             select(1, ContainedAlertFrame:GetRegions()):Hide() -- iconBG
+            ContainedAlertFrame.dungeonTexture:ClearAllPoints()
+            ContainedAlertFrame.dungeonTexture:SetPoint("TOPLEFT", 17, -16)
             Base.CropIcon(ContainedAlertFrame.dungeonTexture, ContainedAlertFrame)
             select(3, ContainedAlertFrame:GetRegions()):Hide() -- toastFrame
 
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             local title = select(4, ContainedAlertFrame:GetRegions())
             title:SetPoint("TOP", bg, 0, -15)
             title:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
@@ -280,8 +309,8 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame.dungeonName:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
             ContainedAlertFrame.dungeonName:SetPoint("RIGHT", bg, -5, 0)
 
-            ContainedAlertFrame.glowFrame.glow:SetPoint("TOPLEFT", ContainedAlertFrame._auroraBG, -10, 10)
-            ContainedAlertFrame.glowFrame.glow:SetPoint("BOTTOMRIGHT", ContainedAlertFrame._auroraBG, 10, -10)
+            ContainedAlertFrame.glowFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
+            ContainedAlertFrame.glowFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
             ContainedAlertFrame.glowFrame.glow:SetAtlas("Toast-Flash")
             ContainedAlertFrame.glowFrame.glow:SetTexCoord(0, 1, 0, 1)
 
@@ -293,17 +322,25 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
                     button._auroraSkinned = true
                 end
             end
+
+            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
+            if ContainedAlertFrame.BonusStar:IsShown() then
+                ContainedAlertFrame._title:SetPoint("RIGHT", bg, -45, 0)
+            else
+                ContainedAlertFrame._title:SetPoint("RIGHT", bg, -5, 0)
+            end
         end
     end
     function Skin.MoneyWonAlertFrameTemplate(ContainedAlertFrame)
         if not ContainedAlertFrame._auroraTemplate then
-            -- Called when created: the main skin
             Skin.FrameTypeFrame(ContainedAlertFrame)
             ContainedAlertFrame:SetBackdropBorderColor(Color.yellow)
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -10, 12)
-            ContainedAlertFrame._auroraBG = bg
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 11,
+                right = 11,
+                top = 10,
+                bottom = 11,
+            })
 
             ContainedAlertFrame.Background:Hide()
             Base.CropIcon(ContainedAlertFrame.Icon, ContainedAlertFrame)
@@ -320,10 +357,12 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             -- Called when created: the main skin
             Skin.FrameTypeFrame(ContainedAlertFrame)
             ContainedAlertFrame:SetBackdropBorderColor(Color.yellow)
-            local bg = ContainedAlertFrame:GetBackdropTexture("bg")
-            bg:SetPoint("TOPLEFT", ContainedAlertFrame.Icon, -5, 5)
-            bg:SetPoint("BOTTOMRIGHT", -10, 12)
-            ContainedAlertFrame._auroraBG = bg
+            ContainedAlertFrame:SetBackdropOption("offsets", {
+                left = 11,
+                right = 11,
+                top = 10,
+                bottom = 11,
+            })
 
             ContainedAlertFrame.Background:Hide()
             Base.CropIcon(ContainedAlertFrame.Icon, ContainedAlertFrame)

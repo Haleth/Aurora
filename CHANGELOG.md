@@ -10,6 +10,7 @@
 
 ### Fixed ###
 
+  * Various backdrops had out of place borders
   * [retail] Help tip arrows would sometimes be placed wrong
   * [retail] Various bugs from 9.0.2
 
@@ -25,7 +26,7 @@
   * Error when loot skin is disabled
   * Chat bubble didn't work
   * [retail] Out of place borders on LFG list refresh buttons
-  * [retail] Queue status frame wasn't skined properly
+  * [retail] Queue status frame wasn't skinned properly
   * [retail] Void Storage item background didn't display properly
   * [retail] Optional reagents icons would get stretched when adding an item
   * [retail] Out of place borders on the PvP category buttons
@@ -95,7 +96,7 @@
   * [retail] Display bugs with the AH favorite button
   * [retail] Error with rep frame
   * [retail] Gossip text overlapping friendship bar
-  * [retail] Display bugs with acheivement alert
+  * [retail] Display bugs with achievement alert
 
 
 
@@ -119,7 +120,7 @@
   * Scroll list error in AH
   * Tooltip skin toggle didn't work
   * Font size was still set even when the font skin is disabled
-  * Backpack money frame border was postioned wrong
+  * Backpack money frame border was positioned wrong
 
 
 
@@ -157,7 +158,7 @@
 
 ### Fixed ###
 
-  * Error when opening commuities UI
+  * Error when opening communities UI
   * Display bug with the send mail money border
   * Button highlights when disabled
   * Friends tooltip is now skinned again
