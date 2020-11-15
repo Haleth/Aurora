@@ -102,6 +102,8 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
             end
         end
         function Hook.UIDropDownMenuButton_OnClick(self)
+            if not self._auroraCheckBox then return end
+
             if self.checked then
                 self._auroraCheckBox.check:Show()
             else
