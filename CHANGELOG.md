@@ -4,6 +4,10 @@
   * [retail] Skinned Covenant Renown
   * Skinned RatingMenuFrame
 
+### Changed ###
+
+  * [retail] Updated gossip frame friendship status bar
+
 ### Fixed ###
 
   * [retail] Help tip arrows would sometimes be placed wrong

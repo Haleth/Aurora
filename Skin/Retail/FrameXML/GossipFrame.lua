@@ -25,6 +25,7 @@ do --[[ FrameXML\GossipFrame.lua ]]
         local statusBar = _G.NPCFriendshipStatusBar
         local id = statusBar.friendshipFactionID
         if id and id > 0 then
+            statusBar:SetPoint("TOPLEFT", 60, -41)
             _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 45))
         else
             _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 5))
@@ -107,15 +108,16 @@ function private.FrameXML.GossipFrame()
     ----------------------------
     -- NPCFriendshipStatusBar --
     ----------------------------
-    _G.NPCFriendshipStatusBar:GetRegions():Hide()
-    _G.NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
+    local NPCFriendshipStatusBar = _G.NPCFriendshipStatusBar
+    Skin.FrameTypeStatusBar(NPCFriendshipStatusBar)
+    NPCFriendshipStatusBar:GetRegions():Hide()
+    NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
     for i = 1, 4 do
         local notch = _G["NPCFriendshipStatusBarNotch"..i]
-        notch:SetColorTexture(0, 0, 0)
+        notch:SetColorTexture(Color.button:GetRGB())
         notch:SetSize(1, 16)
     end
 
-    local barFillBG = _G.select(7, _G.NPCFriendshipStatusBar:GetRegions())
-    barFillBG:SetPoint("TOPLEFT", -1, 1)
-    barFillBG:SetPoint("BOTTOMRIGHT", 1, -1)
+    local barFillBG = _G.select(7, NPCFriendshipStatusBar:GetRegions())
+    barFillBG:Hide()
 end
