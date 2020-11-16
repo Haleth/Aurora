@@ -48,6 +48,121 @@ local function GetBoolen()
 end
 
 local testItem = GetItem(14551)
+
+local GetDungeonTypeIDs, GetDungeonTypeID, SetDungeonTypeID
+local GetDungeonSubTypeIDs, GetDungeonSubTypeID, SetDungeonSubTypeID
+local SetHasResponded, GetDungeonID
+local function LoadLFGFunctions()
+    local dungeonId, hasResponded, totalEncounters, completedEncounters, numMembers = 1778, true, 4, 2, 5
+    local icon = [[Interface\Icons\Achievement_Dungeon_TolDagor]]
+    local lfgBG = [[Interface\LFGFrame\UI-LFG-BACKGROUND-TolDagor]]
+
+    local typeIDs, typeID = {
+        "TYPEID_DUNGEON",
+        "TYPEID_RANDOM_DUNGEON",
+    }, 1
+
+    local subTypeIDs, subTypeID = {
+        "LFG_SUBTYPEID_DUNGEON",
+        "LFG_SUBTYPEID_HEROIC",
+        "LFG_SUBTYPEID_RAID",
+        "LFG_SUBTYPEID_SCENARIO",
+        "LFG_SUBTYPEID_FLEXRAID",
+        "LFG_SUBTYPEID_WORLDPVP",
+    }, 1
+
+
+    -- Overrides --
+    function _G.GetLFGCompletionReward()
+        return subTypeIDs[subTypeID], typeID, subTypeID, icon, 10, 2, 10, 3, 4, 3
+    end
+    function _G.GetLFGDungeonRewards()
+        return false, 123, typeID, 456, subTypeIDs[subTypeID], 1
+    end
+    function _G.GetLFGProposalEncounter(index)
+        return "Boss "..index, nil, (index % 2) == 0
+    end
+    function _G.GetLFGProposal()
+        return true, dungeonId, typeID, subTypeID, subTypeIDs[subTypeID], lfgBG, "DAMAGER", hasResponded, totalEncounters, completedEncounters, numMembers, true, false, nil, false
+    end
+    function _G.GetLFGCompletionRewardItem(rewardIndex)
+        --     texture, quantity, isBonus, bonusQuantity, name, quality, id, objectType
+        return testItem.texture, 1, false,   1, testItem.name,  4, testItem.id, "item"
+    end
+    function _G.GetLFGCompletionRewardItemLink(rewardIndex)
+        return testItem.link
+    end
+
+    local members = {
+        {role = "TANK", responded = true, accepted = false},
+        {role = "HEALER", responded = true, accepted = true},
+        {role = "DAMAGER", responded = false, accepted = false},
+        {role = "DAMAGER", responded = false, accepted = true},
+        {role = "DAMAGER", responded = true, accepted = true},
+    }
+    function _G.GetLFGProposalMember(index)
+        local member = members[index]
+        return false, member.role, 1, member.responded, member.accepted, "Name"
+    end
+
+    local LfgSearchResultData = {
+        searchResultID = dungeonId,
+        activityID = dungeonId,
+        leaderName = "leaderName",
+        name = subTypeIDs[subTypeID],
+        comment = "comment",
+        voiceChat = "voiceChat",
+        requiredItemLevel = 123,
+        requiredHonorLevel = 456,
+        numMembers = numMembers,
+        numBNetFriends = 2,
+        numCharFriends = 1,
+        numGuildMates = 3,
+        isDelisted = false,
+        autoAccept = true,
+        age = 0,
+        questID = 65143,
+    }
+    function _G.C_LFGList.GetSearchResultInfo(searchResultID)
+        LfgSearchResultData.name = subTypeIDs[subTypeID]
+        local info = CopyTable(LfgSearchResultData)
+        return info
+    end
+    function _G.C_LFGList.GetApplicationInfo(searchResultID)
+        return dungeonId, "invited", nil, nil, "TANK"
+    end
+
+
+
+    -- Accessors --
+    function GetDungeonTypeIDs()
+        return typeIDs
+    end
+    function GetDungeonTypeID()
+        return typeID
+    end
+    function SetDungeonTypeID(info, value)
+        typeID = value
+    end
+
+    function GetDungeonSubTypeIDs()
+        return subTypeIDs
+    end
+    function GetDungeonSubTypeID()
+        return subTypeID
+    end
+    function SetDungeonSubTypeID(info, value)
+        subTypeID = value
+    end
+
+    function SetHasResponded(value)
+        hasResponded = value
+    end
+    function GetDungeonID()
+        return dungeonId
+    end
+end
+
 local test, container
 function commands.test()
     local Aurora = _G.Aurora
@@ -56,6 +171,7 @@ function commands.test()
     local Color = Aurora.Color
 
     Aurora.isDev = true
+    LoadLFGFunctions()
 
     local AceConfig = _G.LibStub("AceConfig-3.0", true)
     if AceConfig then
@@ -133,25 +249,38 @@ function commands.test()
                         name = "LFG Alerts",
                         type = "group",
                         args = {
+                            subTypeID = {
+                                name = "subTypeID",
+                                type = "select",
+                                values = GetDungeonSubTypeIDs,
+                                get = GetDungeonSubTypeID,
+                                set = SetDungeonSubTypeID,
+                                order = 1,
+                            },
                             scenario = {
                                 name = "Scenario",
                                 desc = "ScenarioAlertSystem",
-                                disabled = not _G.GetLFGCompletionReward(),
                                 type = "execute",
                                 func = function()
-                                    _G.ScenarioAlertSystem:AddAlert()
+                                    SetDungeonSubTypeID(nil, _G.LFG_SUBTYPEID_SCENARIO)
+                                    _G.ScenarioAlertSystem:AddAlert(_G.AlertFrameMixin:BuildScenarioRewardData())
+                                end,
+                            },
+                            invasion = {
+                                name = "Invasion",
+                                desc = "InvasionAlertSystem",
+                                type = "execute",
+                                func = function()
+                                    local rewardQuestID, alertName, showBonusCompletion, xp, money = 45812, "Alert Name", GetBoolen(), 123, 456
+                                    _G.InvasionAlertSystem:AddAlert(rewardQuestID, alertName, showBonusCompletion, xp, money)
                                 end,
                             },
                             dungeon = {
                                 name = "Dungeon",
                                 desc = "DungeonCompletionAlertSystem",
-                                --disabled = not _G.GetLFGCompletionReward(),
                                 type = "execute",
                                 func = function()
-                                    _G.GetLFGCompletionReward = function()
-                                        return "Test", nil, 2, "Dungeon", 10, 2, 10, 3, 4, 3
-                                    end
-                                    _G.DungeonCompletionAlertSystem:AddAlert()
+                                    _G.DungeonCompletionAlertSystem:AddAlert(_G.AlertFrameMixin:BuildLFGRewardData())
                                 end,
                             },
                             guildDungeon = {
@@ -310,6 +439,15 @@ function commands.test()
                                 type = "execute",
                                 func = function()
                                     _G.LootAlertSystem:AddAlert(824, 100, nil, nil, lootSpec, true, nil, 10)
+                                end,
+                                order = 5,
+                            },
+                            honor = {
+                                name = "Loot Honor",
+                                desc = "HonorAwardedAlertSystem",
+                                type = "execute",
+                                func = function()
+                                    _G.HonorAwardedAlertSystem:AddAlert(123)
                                 end,
                                 order = 5,
                             },
@@ -551,7 +689,7 @@ function commands.test()
                                 desc = "WorldQuestCompleteAlertSystem",
                                 type = "execute",
                                 func = function()
-                                    _G.WorldQuestCompleteAlertSystem:AddAlert(questID)
+                                    _G.WorldQuestCompleteAlertSystem:AddAlert(_G.AlertFrameMixin:BuildQuestData(questID))
                                 end,
                             },
                         },
@@ -733,67 +871,6 @@ function commands.test()
                     }
                 end
                 if private.isRetail then -- lfgPopups
-                    local dungeonId, hasResponded, totalEncounters, completedEncounters, numMembers = 1778, true, 4, 2, 5
-                    local name = "Some Dungeon"
-
-                    local typeIDs, typeID = {
-                        "TYPEID_DUNGEON",
-                        "TYPEID_RANDOM_DUNGEON",
-                    }, 1
-
-                    local subTypeIDs, subTypeID = {
-                        "LFG_SUBTYPEID_DUNGEON",
-                        "LFG_SUBTYPEID_HEROIC",
-                        "LFG_SUBTYPEID_RAID",
-                        "LFG_SUBTYPEID_SCENARIO",
-                        "LFG_SUBTYPEID_FLEXRAID",
-                        "LFG_SUBTYPEID_WORLDPVP",
-                    }, 1
-
-                    function _G.GetLFGDungeonRewards()
-                        return false, 123, typeID, 456, name, 1
-                    end
-                    function _G.GetLFGProposalEncounter(index)
-                        return "Boss "..index, nil, (index % 2) == 0
-                    end
-                    local members = {
-                        {role = "TANK", responded = true, accepted = false},
-                        {role = "HEALER", responded = true, accepted = true},
-                        {role = "DAMAGER", responded = false, accepted = false},
-                        {role = "DAMAGER", responded = false, accepted = true},
-                        {role = "DAMAGER", responded = true, accepted = true},
-                    }
-                    function _G.GetLFGProposalMember(index)
-                        local member = members[index]
-                        return false, member.role, 1, member.responded, member.accepted, "Name"
-                    end
-
-                    local LfgSearchResultData = {
-                        searchResultID = dungeonId,
-                        activityID = dungeonId,
-                        leaderName = "leaderName",
-                        name = name,
-                        comment = "comment",
-                        voiceChat = "voiceChat",
-                        requiredItemLevel = 123,
-                        requiredHonorLevel = 456,
-                        numMembers = numMembers,
-                        numBNetFriends = 2,
-                        numCharFriends = 1,
-                        numGuildMates = 3,
-                        isDelisted = false,
-                        autoAccept = true,
-                        age = 0,
-                        questID = 65143,
-                    }
-                    function _G.C_LFGList.GetSearchResultInfo(searchResultID)
-                        local info = CopyTable(LfgSearchResultData)
-                        return info
-                    end
-                    function _G.C_LFGList.GetApplicationInfo(searchResultID)
-                        return dungeonId, "invited", nil, nil, "TANK"
-                    end
-
                     popupArgs.lfgPopups = {
                         name = "Group Finder Popups",
                         type = "group",
@@ -806,25 +883,17 @@ function commands.test()
                             typeID = {
                                 name = "typeID",
                                 type = "select",
-                                values = typeIDs,
-                                get = function()
-                                    return typeID
-                                end,
-                                set = function(info, value)
-                                    typeID = value
-                                end,
+                                values = GetDungeonTypeIDs,
+                                get = GetDungeonTypeID,
+                                set = SetDungeonTypeID,
                                 order = 1,
                             },
                             subTypeID = {
                                 name = "subTypeID",
                                 type = "select",
-                                values = subTypeIDs,
-                                get = function()
-                                    return subTypeID
-                                end,
-                                set = function(info, value)
-                                    subTypeID = value
-                                end,
+                                values = GetDungeonSubTypeIDs,
+                                get = GetDungeonSubTypeID,
+                                set = SetDungeonSubTypeID,
                                 order = 1,
                             },
                             proposal = {
@@ -832,10 +901,7 @@ function commands.test()
                                 desc = "LFGDungeonReadyDialog",
                                 type = "execute",
                                 func = function()
-                                    hasResponded = false
-                                    function _G.GetLFGProposal()
-                                        return true, dungeonId, _G[typeIDs[typeID]], subTypeID, name, "Interface\\LFGFrame\\UI-LFG-BACKGROUND-TolDagor", "DAMAGER", hasResponded, totalEncounters, completedEncounters, numMembers, true, false, nil, false
-                                    end
+                                    SetHasResponded(false)
                                     if _G.LFGDungeonReadyPopup:IsShown() then
                                         _G.LFGEventFrame_OnEvent(_G.LFGDungeonReadyPopup, "LFG_PROPOSAL_UPDATE")
                                     else
@@ -849,10 +915,7 @@ function commands.test()
                                 desc = "LFGDungeonReadyStatus",
                                 type = "execute",
                                 func = function()
-                                    hasResponded = true
-                                    function _G.GetLFGProposal()
-                                        return true, dungeonId, typeID, subTypeID, name, "Interface\\LFGFrame\\UI-LFG-BACKGROUND-TolDagor", "DAMAGER", hasResponded, totalEncounters, completedEncounters, numMembers, true, false, nil, false
-                                    end
+                                    SetHasResponded(true)
                                     if _G.LFGDungeonReadyPopup:IsShown() then
                                         _G.LFGEventFrame_OnEvent(_G.LFGDungeonReadyPopup, "LFG_PROPOSAL_UPDATE")
                                     else
@@ -877,7 +940,7 @@ function commands.test()
                                 type = "execute",
                                 func = function()
                                     _G.LFGListApplicationDialog.timeOut = 1000000
-                                    _G.LFGListApplicationDialog_Show(_G.LFGListApplicationDialog, dungeonId)
+                                    _G.LFGListApplicationDialog_Show(_G.LFGListApplicationDialog, GetDungeonID())
                                 end,
                                 order = 3,
                             },
@@ -887,7 +950,7 @@ function commands.test()
                                 type = "execute",
                                 func = function()
                                     _G.LFGListInviteDialog.timeOut = 1000000
-                                    _G.LFGListInviteDialog_Show(_G.LFGListInviteDialog, dungeonId)
+                                    _G.LFGListInviteDialog_Show(_G.LFGListInviteDialog, GetDungeonID())
                                 end,
                                 order = 3,
                             },
@@ -1362,17 +1425,6 @@ function commands.test()
                     }
                     function _G.C_PartyPose.GetPartyPoseInfoByMapID(mapID)
                         return CopyTable(PartyPoseInfo)
-                    end
-                    function _G.GetLFGCompletionReward()
-                        --     name, typeID, subtypeID, iconTextureFile, moneyBase, moneyVar, experienceBase, experienceVar, numStrangers, numRewards
-                        return "name", 1,    1,         54343,           12345,     0,        54321,          0,             2,            1
-                    end
-                    function _G.GetLFGCompletionRewardItem(rewardIndex)
-                        --     texture, quantity, isBonus, bonusQuantity, name, quality, id, objectType
-                        return testItem.texture, 1, false,   1, testItem.name,  4, testItem.id, "item"
-                    end
-                    function _G.GetLFGCompletionRewardItemLink(rewardIndex)
-                        return testItem.link
                     end
                 end
 
