@@ -838,7 +838,7 @@ function private.AddOns.Blizzard_Communities()
     --        CommunitiesFrame        --
     ----====####$$$$%%%%$$$$####====----
     local CommunitiesFrame = _G.CommunitiesFrame
-    Skin.ButtonFrameTemplate(CommunitiesFrame)
+    Skin.ButtonFrameTemplateMinimizable(CommunitiesFrame)
     CommunitiesFrame.PortraitOverlay:SetAlpha(0)
 
     Skin.MaximizeMinimizeButtonFrameTemplate(CommunitiesFrame.MaximizeMinimizeFrame)

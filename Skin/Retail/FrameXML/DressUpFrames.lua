@@ -50,7 +50,7 @@ function private.FrameXML.DressUpFrames()
     -- DressUpFrame --
     ------------------
     local DressUpFrame = _G.DressUpFrame
-    Skin.ButtonFrameTemplate(DressUpFrame)
+    Skin.ButtonFrameTemplateMinimizable(DressUpFrame)
     Skin.WardrobeOutfitDropDownTemplate(DressUpFrame.OutfitDropDown)
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
 

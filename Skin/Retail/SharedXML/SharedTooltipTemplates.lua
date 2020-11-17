@@ -18,6 +18,7 @@ end
 
 do --[[ FrameXML\SharedTooltipTemplates.xml ]]
     function Skin.SharedTooltipTemplate(GameTooltip)
+        GameTooltip:SetBackdrop(nil)
         Skin.FrameTypeFrame(GameTooltip)
     end
     function Skin.SharedNoHeaderTooltipTemplate(GameTooltip)

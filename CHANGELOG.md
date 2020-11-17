@@ -10,7 +10,7 @@
 
 ### Fixed ###
 
-  * Various backdrops had out of place borders
+  * Various bugs with backdrops
   * [retail] Help tip arrows would sometimes be placed wrong
   * [retail] Various bugs from 9.0.2
 

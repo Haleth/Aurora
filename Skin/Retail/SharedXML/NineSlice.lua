@@ -11,7 +11,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ SharedXML\NineSlice.lua ]]
-    local nineSliceSetup =    {
+    local nineSliceSetup = {
         "TopLeftCorner",
         "TopRightCorner",
         "BottomLeftCorner",
@@ -26,6 +26,13 @@ do --[[ SharedXML\NineSlice.lua ]]
     local function BasicFrame(Frame)
         Skin.FrameTypeFrame(Frame)
     end
+    local function DelaySkinFrame(Frame)
+        if Frame._delay and Frame._delay > 0 then
+            Skin.FrameTypeFrame(Frame)
+        else
+            Frame._delay = 1
+        end
+    end
     local function InsetFrame(Frame)
         Base.SetBackdrop(Frame, Color.frame)
     end
@@ -38,9 +45,9 @@ do --[[ SharedXML\NineSlice.lua ]]
     local layouts = {
         SimplePanelTemplate = BasicFrame,
         PortraitFrameTemplate = BasicFrame,
-        PortraitFrameTemplateMinimizable = BasicFrame,
+        PortraitFrameTemplateMinimizable = DelaySkinFrame,
         ButtonFrameTemplateNoPortrait = BasicFrame,
-        ButtonFrameTemplateNoPortraitMinimizable = BasicFrame,
+        ButtonFrameTemplateNoPortraitMinimizable = DelaySkinFrame,
         InsetFrameTemplate = HideFrame,
         BFAMissionHorde = BasicFrame,
         BFAMissionAlliance = BasicFrame,

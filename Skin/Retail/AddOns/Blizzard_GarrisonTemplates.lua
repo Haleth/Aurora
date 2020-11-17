@@ -51,22 +51,21 @@ end
 do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     do --[[ Blizzard_GarrisonSharedTemplates ]]
         function Skin.GarrisonUITemplate(Frame)
-            Base.CreateBackdrop(Frame, private.backdrop, {
-                bg = Frame.BackgroundTile,
+            if Frame.debug then
+                _G.print("GarrisonUITemplate", Frame.debug)
+            end
+            Frame.BackgroundTile:SetAlpha(0)
 
-                l = Frame.Left,
-                r = Frame.Right,
-                t = Frame.Top,
-                b = Frame.Bottom,
+            Frame.Top:Hide()
+            Frame.Bottom:Hide()
+            Frame.Left:Hide()
+            Frame.Right:Hide()
 
-                tl = Frame.GarrCorners.TopLeftGarrCorner,
-                tr = Frame.GarrCorners.TopRightGarrCorner,
-                bl = Frame.GarrCorners.BottomLeftGarrCorner,
-                br = Frame.GarrCorners.BottomRightGarrCorner,
+            Frame.GarrCorners.TopLeftGarrCorner:Hide()
+            Frame.GarrCorners.TopRightGarrCorner:Hide()
+            Frame.GarrCorners.BottomLeftGarrCorner:Hide()
+            Frame.GarrCorners.BottomRightGarrCorner:Hide()
 
-                borderLayer = "BACKGROUND",
-                borderSublevel = -7,
-            })
             Skin.BaseBasicFrameTemplate(Frame)
         end
 

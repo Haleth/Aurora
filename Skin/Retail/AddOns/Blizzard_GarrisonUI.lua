@@ -22,6 +22,10 @@ do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
         end
     end
     do --[[ Blizzard_CovenantMissionUI ]]
+        Hook.BFAMission = {}
+        Hook.BFAMission.SetupTabs = Hook.OrderHallMission.SetupTabs
+    end
+    do --[[ Blizzard_CovenantMissionUI ]]
         Hook.CovenantMission = {}
         Hook.CovenantMission.SetupTabs = Hook.OrderHallMission.SetupTabs
         function Hook.CovenantMission:SelectTab(id)
@@ -655,7 +659,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     --      Blizzard_BFAMissionUI      --
     ----====####$$$$%%%%%$$$$####====----
     local BFAMissionFrame = _G.BFAMissionFrame
-    Util.Mixin(BFAMissionFrame, Hook.OrderHallMission)
+    Util.Mixin(BFAMissionFrame, Hook.BFAMission)
     Skin.GarrisonMissionFrameTemplate(BFAMissionFrame)
     Skin.GarrisonUITemplate(BFAMissionFrame)
     BFAMissionFrame.OverlayElements.CloseButtonBorder:Hide()
