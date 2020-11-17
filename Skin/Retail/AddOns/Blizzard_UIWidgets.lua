@@ -23,7 +23,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
                     widgetFrame._auroraSkinned = true
                 end
             else
-                private.debug("UIWidgetContainerMixin:CreateWidget Missing Template", widgetFrame and widgetFrame:GetDebugName(), template)
+                private.debug("Missing template for UIWidgetContainerMixin", widgetFrame and widgetFrame:GetDebugName(), template)
             end
         end
 

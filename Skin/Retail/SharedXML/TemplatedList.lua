@@ -2,7 +2,7 @@ local _, private = ...
 if private.isClassic then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -10,7 +10,30 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ SharedXML\TemplatedList.lua ]]
+    local function CheckTemplate(list, ...)
+        local obj
+        for i = 1, select("#", ...) do
+            local template = select(i, ...)
+            if Skin[template] then
+                for j = 1, list:GetNumElementFrames() do
+                    obj = list:GetElementFrame(j)
+                    if not obj._auroraSkinned then
+                        Skin[template](obj)
+                        obj._auroraSkinned = true
+                    end
+                end
+            elseif private.isDev then
+                private.debug("Missing template for TemplatedListMixin:", template)
+            end
+        end
+    end
+
     Hook.TemplatedListMixin = {}
+    function Hook.TemplatedListMixin:RefreshListDisplay()
+        if not self.elementTemplate then return end
+
+        CheckTemplate(self, self.elementTemplate)
+    end
     function Hook.TemplatedListMixin:UpdatedSelectedHighlight()
         local selectedHighlight = self:GetSelectedHighlight()
         if selectedHighlight:IsShown() then

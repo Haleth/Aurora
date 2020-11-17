@@ -22,7 +22,7 @@ do --[[ SharedXML\Pools.lua ]]
                     end
                 end
             elseif private.isDev then
-                private.debug("Missing template:", template)
+                private.debug("Missing template for ObjectPoolMixin:", template)
             end
         end
     end
