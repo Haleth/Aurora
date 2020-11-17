@@ -21,6 +21,7 @@ do --[[ AddOns\Blizzard_Soulbinds.xml ]]
         end
         function Skin.ConduitListTemplate(Frame)
             --Skin.ScrollBarTemplate(Frame.ScrollBar)
+            Frame.BottomShadowContainer:Hide()
             Frame.ScrollBar.Track:Hide()
             Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Decrease)
             Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Increase)
@@ -30,8 +31,6 @@ do --[[ AddOns\Blizzard_Soulbinds.xml ]]
             for i = 1, #Frame.ScrollBox.ScrollTarget.Lists do
                 Skin.ConduitListSectionTemplate(Frame.ScrollBox.ScrollTarget.Lists[i])
             end
-            local _, strataFrame = Frame.ScrollBox:GetChildren()
-            strataFrame:Hide()
         end
     end
 
@@ -88,25 +87,34 @@ function private.AddOns.Blizzard_Soulbinds()
     ----====####$$$$%%%%$$$$####====----
     local SoulbindViewer = _G.SoulbindViewer
     Skin.FrameTypeFrame(SoulbindViewer)
-    SoulbindViewer.Background:Hide()
+    SoulbindViewer:SetBackdropOption("offsets", {
+        left = 25,
+        right = 24,
+        top = 24,
+        bottom = 24
+    })
+    SoulbindViewer.Background:SetAlpha(0.5)
     SoulbindViewer.Background2:Hide()
+
+    SoulbindViewer.ConduitPreview:Hide()
 
     SoulbindViewer.ShadowTop:Hide()
     SoulbindViewer.ShadowBottom:Hide()
     SoulbindViewer.ShadowLeft:Hide()
     SoulbindViewer.ShadowRight:Hide()
 
-    local scrollBG = select("9", SoulbindViewer:GetRegions())
+    local scrollBG = select(21, SoulbindViewer:GetRegions())
     scrollBG:Hide()
 
+    local bg = SoulbindViewer:GetBackdropTexture("bg")
     SoulbindViewer.Border:Hide()
     Skin.UIPanelCloseButton(SoulbindViewer.CloseButton)
+    SoulbindViewer.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
     --Skin.SoulbindSelectGroupTemplate(SoulbindViewer.SelectGroup)
     --Skin.SoulbindTreeTemplate(SoulbindViewer.Tree)
     Skin.ConduitListTemplate(SoulbindViewer.ConduitList)
     Skin.UIPanelButtonTemplate(SoulbindViewer.ActivateSoulbindButton)
     Skin.UIPanelButtonTemplate(SoulbindViewer.CommitConduitsButton)
-    --Skin.SoulbindsUndoButtonTemplate(SoulbindViewer.ResetConduitsButton)
 
 
     ----====####$$$$%%%%$$$$####====----
