@@ -11,6 +11,7 @@
 ### Fixed ###
 
   * Various bugs with backdrops
+  * [retail] Empty mission spots had the highlight out of place
   * [retail] Help tip arrows would sometimes be placed wrong
   * [retail] Various bugs from 9.0.2
 

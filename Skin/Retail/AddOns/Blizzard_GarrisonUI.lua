@@ -136,13 +136,15 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame.Level:Hide()
 
             Frame.Empty:SetAtlas("Garr_FollowerPortrait_Bg")
+            Frame.Empty:SetDrawLayer("BACKGROUND", 1)
             Frame.Empty:SetAllPoints(Frame.Portrait)
             Frame.Empty:SetTexCoord(0.08620689655172, 0.86206896551724, 0.06896551724138, 0.8448275862069)
 
             Frame.Highlight:SetTexture([[Interface\Buttons\CheckButtonHilight]])
             Frame.Highlight:SetTexCoord(0.0625, 0.9375, 0.0625, 0.9375)
-            Frame.Highlight:SetPoint("TOPLEFT", Frame._auroraPortraitBG)
-            Frame.Highlight:SetPoint("BOTTOMRIGHT", Frame._auroraLvlBG, "TOPRIGHT")
+            Frame.Highlight:ClearAllPoints()
+            Frame.Highlight:SetPoint("TOPLEFT", Frame._auroraPortraitBG, 5, -5)
+            Frame.Highlight:SetPoint("BOTTOMRIGHT", Frame._auroraLvlBG, "TOPRIGHT", -1, 0)
         end
         function Skin.GarrisonMissionListTabTemplate(Button)
             Button.Left:SetAlpha(0)
