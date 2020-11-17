@@ -234,18 +234,12 @@ if private.isRetail then
         end
 
         if backdropInfo == true then
-            if self._backdropInfo then
-                backdropInfo = self._backdropInfo
-            else
-                return
-            end
+            backdropInfo = self._backdropInfo
         end
 
         if self.backdropInfo then
             if backdropInfo then
                 backdropInfo = self.backdropInfo
-            else
-                self._backdropInfo = self.backdropInfo
             end
         end
 
@@ -579,6 +573,11 @@ function Base.CreateBackdrop(frame, options, textures)
     else
         backdropInfo = SanitizeTable(options, backdrop)
     end
+
+    frame._backdropInfo = backdropInfo
+    if frame.backdropInfo then
+        frame.backdropInfo = nil
+    end
     frame:SetBackdrop(backdropInfo, textures)
 end
 
@@ -586,7 +585,7 @@ function Base.SetBackdrop(frame, color, alpha)
     if frame.debug then
         _G.print("Base.SetBackdrop", frame.debug)
     end
-    Base.CreateBackdrop(frame, backdrop)
+    Base.CreateBackdrop(frame, frame._backdropInfo or backdrop)
     Base.SetBackdropColor(frame, color, alpha)
 end
 function Base.SetBackdropColor(frame, color, alpha)
