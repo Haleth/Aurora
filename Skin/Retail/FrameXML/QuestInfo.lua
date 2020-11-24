@@ -13,8 +13,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\QuestInfo.lua ]]
     local templates = {}
     function Hook.QuestInfo_Display(template, parentFrame, acceptButton, material, mapView)
-        local headerR, headerG, headerB = 1, 1, 1
-        local textR, textG, textB = 0.8, 0.8, 0.8
+        local headerR, headerG, headerB = Color.white:GetRGB()
+        local textR, textG, textB = Color.grayLight:GetRGB()
 
         if template.canHaveSealMaterial then
             local questFrame = parentFrame:GetParent():GetParent()
@@ -68,6 +68,14 @@ do --[[ FrameXML\QuestInfo.lua ]]
                     end
                 end
             end
+        end
+    end
+    function Hook.QuestInfo_ShowRewards()
+        local rewardsFrame = _G.QuestInfoFrame.rewardsFrame
+        local textR, textG, textB = Color.grayLight:GetRGB()
+
+        for obj in rewardsFrame.spellHeaderPool:EnumerateActive() do
+            obj:SetVertexColor(textR, textG, textB)
         end
     end
 
@@ -205,6 +213,7 @@ end
 function private.FrameXML.QuestInfo()
     _G.hooksecurefunc("QuestInfo_Display", Hook.QuestInfo_Display)
     _G.hooksecurefunc("QuestInfo_GetRewardButton", Hook.QuestInfo_GetRewardButton)
+    _G.hooksecurefunc("QuestInfo_ShowRewards", Hook.QuestInfo_ShowRewards)
 
     ------------------------------
     -- QuestInfoObjectivesFrame --

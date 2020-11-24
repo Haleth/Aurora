@@ -1,4 +1,11 @@
-﻿## [9.0.1.6] - 2020-11-16 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * [retail] Spell quest rewards had a dark colored header
+
+
+
+## [9.0.1.6] - 2020-11-16 ##
 ### Added ###
 
   * [retail] Skinned Covenant Renown
