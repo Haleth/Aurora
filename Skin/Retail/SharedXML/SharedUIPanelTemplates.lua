@@ -210,7 +210,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         Hook.ThreeSliceButtonMixin = {}
         function Hook.ThreeSliceButtonMixin:UpdateButton(buttonState)
             self.Left:SetTexture("")
-            self.Center:SetTexture(private.textures.plain) -- this is used in the backdrop
             self.Right:SetTexture("")
 
             self:SetButtonColor(self:GetButtonColor())
@@ -734,19 +733,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.ThreeSliceButtonTemplate(Button)
         Util.Mixin(Button, Hook.ThreeSliceButtonMixin)
-        Button:HookScript("OnShow", function()
-            -- Textures re-appear when "OnShow" fires, so wait a frame after to hide them again
-            _G.C_Timer.After(0, function()
-                Hook.ThreeSliceButtonMixin.UpdateButton(Button, "OnShow")
-            end)
-        end)
+        Button:HookScript("OnShow", Hook.ThreeSliceButtonMixin.UpdateButton)
+        Button:HookScript("OnDisable", Hook.ThreeSliceButtonMixin.UpdateButton)
+        Button:HookScript("OnEnable", Hook.ThreeSliceButtonMixin.UpdateButton)
+
         Skin.FrameTypeButton(Button)
-        Button:SetBackdropOption("offsets", {
-            left = 5,
-            right = 5,
-            top = 5,
-            bottom = 5
-        })
     end
     function Skin.BigRedThreeSliceButtonTemplate(Button)
         Skin.ThreeSliceButtonTemplate(Button)

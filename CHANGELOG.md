@@ -1,6 +1,7 @@
 ﻿## [Unreleased] ##
 ### Fixed ###
 
+  * [retail] Barber shop buttons would sometimes be unskinned
   * [retail] Spell quest rewards had a dark colored header
 
 
