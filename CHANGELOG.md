@@ -1,6 +1,7 @@
 ﻿## [Unreleased] ##
 ### Fixed ###
 
+  * [retail] Dressup frame borders were not skinned
   * [retail] Barber shop buttons would sometimes be unskinned
   * [retail] Spell quest rewards had a dark colored header
 

@@ -27,6 +27,9 @@ do --[[ SharedXML\NineSlice.lua ]]
         Skin.FrameTypeFrame(Frame)
     end
     local function DelaySkinFrame(Frame)
+        if Frame.debug then
+            _G.print("DelaySkinFrame", Frame.debug, Frame._delay)
+        end
         if Frame._delay and Frame._delay > 0 then
             Skin.FrameTypeFrame(Frame)
         else
@@ -45,7 +48,7 @@ do --[[ SharedXML\NineSlice.lua ]]
     local layouts = {
         SimplePanelTemplate = BasicFrame,
         PortraitFrameTemplate = BasicFrame,
-        PortraitFrameTemplateMinimizable = DelaySkinFrame,
+        PortraitFrameTemplateMinimizable = BasicFrame,
         ButtonFrameTemplateNoPortrait = BasicFrame,
         ButtonFrameTemplateNoPortraitMinimizable = DelaySkinFrame,
         InsetFrameTemplate = HideFrame,
