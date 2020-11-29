@@ -192,17 +192,19 @@ if private.isRetail then
         for old, pieceName in next, bgTextures do
             local pieceLayout = userLayout[pieceName]
             local piece = Util.GetNineSlicePiece(self, pieceName)
-            if self.debug then
-                _G.print("ApplyBackdrop", piece:GetDebugName(), piece:GetSize())
-                --_G.error("Found usage")
-            end
+            if piece then
+                if self.debug then
+                    _G.print("ApplyBackdrop", piece:GetDebugName(), piece:GetSize())
+                    --_G.error("Found usage")
+                end
 
-            if pieceLayout.layer then
-                piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
+                if pieceLayout.layer then
+                    piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
+                end
+                piece:SetTexelSnappingBias(0.0)
+                piece:SetSnapToPixelGrid(false)
+                piece:Show()
             end
-            piece:SetTexelSnappingBias(0.0)
-            piece:SetSnapToPixelGrid(false)
-            piece:Show()
         end
 
         local backdropInfo = self.backdropInfo

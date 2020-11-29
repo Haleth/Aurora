@@ -561,6 +561,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     ----====####$$$$%%%%%$$$$####====----
     local OrderHallMissionFrame = _G.OrderHallMissionFrame
     Util.Mixin(OrderHallMissionFrame, Hook.OrderHallMission)
+    OrderHallMissionFrame.Center = OrderHallMissionFrame.BackgroundTile
     Skin.GarrisonMissionFrameTemplate(OrderHallMissionFrame)
     Skin.GarrisonUITemplate(OrderHallMissionFrame)
 
@@ -662,6 +663,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     ----====####$$$$%%%%%$$$$####====----
     local BFAMissionFrame = _G.BFAMissionFrame
     Util.Mixin(BFAMissionFrame, Hook.BFAMission)
+    BFAMissionFrame.Center = BFAMissionFrame.BackgroundTile
     Skin.GarrisonMissionFrameTemplate(BFAMissionFrame)
     Skin.GarrisonUITemplate(BFAMissionFrame)
     BFAMissionFrame.OverlayElements.CloseButtonBorder:Hide()
@@ -745,10 +747,12 @@ function private.AddOns.Blizzard_GarrisonUI()
     ----====####$$$$%%%%$$$$####====----
     local CovenantMissionFrame = _G.CovenantMissionFrame
     Util.Mixin(CovenantMissionFrame, Hook.CovenantMission)
+    CovenantMissionFrame.Center = CovenantMissionFrame.BackgroundTile
     Skin.GarrisonMissionFrameTemplate(CovenantMissionFrame)
     Skin.GarrisonUITemplate(CovenantMissionFrame)
 
     CovenantMissionFrame.OverlayElements.CloseButtonBorder:Hide()
+    CovenantMissionFrame.RaisedBorder:Hide()
     Skin.OrderHallFrameTabButtonTemplate(CovenantMissionFrame.Tab1)
     Skin.OrderHallFrameTabButtonTemplate(CovenantMissionFrame.Tab2)
     Skin.OrderHallFrameTabButtonTemplate(CovenantMissionFrame.Tab3)
@@ -765,6 +769,10 @@ function private.AddOns.Blizzard_GarrisonUI()
     ------------
     -- MapTab --
     ------------
+    local CovenantMapTab = CovenantMissionFrame.MapTab
+    CovenantMapTab.ScrollContainer:ClearAllPoints()
+    CovenantMapTab.ScrollContainer:SetPoint("TOPLEFT")
+    CovenantMapTab.ScrollContainer:SetPoint("BOTTOMRIGHT")
 
     ----------------
     -- MissionTab --
