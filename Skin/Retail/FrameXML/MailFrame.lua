@@ -235,7 +235,7 @@ function private.FrameXML.MailFrame()
         if index == 1 then
             item:SetPoint("TOPLEFT", 13, -(private.FRAME_TITLE_HEIGHT + 5))
         else
-            item:SetPoint("TOPLEFT", _G["MailItem"..(index - 1)], "BOTTOMLEFT", 0, -7)
+            item:SetPoint("TOPLEFT", _G["MailItem"..(index - 1)], "BOTTOMLEFT", 0, -6)
         end
     end
 

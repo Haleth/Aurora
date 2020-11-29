@@ -1,4 +1,8 @@
 ﻿## [Unreleased] ##
+### Changed ###
+
+  * [retail] Tweaked mail inbox items to not be so close to the page buttons
+
 ### Fixed ###
 
   * [retail] Dressup frame borders were not skinned
