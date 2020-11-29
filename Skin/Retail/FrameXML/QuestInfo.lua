@@ -81,6 +81,8 @@ do --[[ FrameXML\QuestInfo.lua ]]
 
     local rewardFrames = {}
     function Hook.QuestInfo_GetRewardButton(rewardsFrame, index)
+        if not Skin[rewardsFrame.buttonTemplate] then return end
+
         local numRewardButtons = rewardFrames[rewardsFrame] or 0
 
         while numRewardButtons < #rewardsFrame.RewardButtons do
