@@ -5,6 +5,8 @@
 
 ### Fixed ###
 
+  * [retail] Error when opening PvP frame
+  * [retail] Scouting maps were unusable with high frame opacity
   * [retail] Dressup frame borders were not skinned
   * [retail] Barber shop buttons would sometimes be unskinned
   * [retail] Spell quest rewards had a dark colored header

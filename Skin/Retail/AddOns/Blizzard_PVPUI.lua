@@ -214,5 +214,4 @@ function private.AddOns.Blizzard_PVPUI()
     NewSeasonPopup:SetPoint("TOPLEFT", ConquestFrame, 4, -3)
     NewSeasonPopup:SetPoint("BOTTOMRIGHT", 0, 0)
     Skin.SeasonRewardFrameTemplate(NewSeasonPopup.SeasonRewardFrame)
-    select(3, NewSeasonPopup.SeasonRewardFrame:GetRegions()):SetTextColor(Color.grayLight:GetRGB())
 end
