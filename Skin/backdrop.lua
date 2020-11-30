@@ -295,6 +295,14 @@ if private.isRetail then
     end
 
     -- Custom Methods
+    function BackdropMixin:SetBackdropGradient(red, green, blue, alpha)
+        if not self.backdropInfo then return end
+
+        if red then
+            self.backdropInfo.backdropColor = GetColor(red, green, blue, alpha)
+        end
+        self:SetBackdropOption("bgFile", "gradientUp")
+    end
     function BackdropMixin:SetBackdropLayer(layer, sublevel)
         if not self.backdropInfo then return end
 
@@ -510,6 +518,14 @@ else
     end
 
     -- Custom Methods
+    function BackdropMixin:SetBackdropGradient(red, green, blue, alpha)
+        if not self._auroraBackdrop then return end
+
+        if red then
+            self._auroraBackdrop.backdropColor = GetColor(red, green, blue, alpha)
+        end
+        self:SetBackdropOption("bgFile", "gradientUp")
+    end
     function BackdropMixin:SetBackdropLayer(layer, sublevel)
         local bd = self._auroraBackdrop
         bd.bg:SetDrawLayer(layer, sublevel)

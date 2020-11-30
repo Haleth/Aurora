@@ -118,7 +118,7 @@ function private.OnLoad()
     end
     _G.hooksecurefunc(Skin, "FrameTypeButton", function(Button)
         if AuroraConfig.buttonsHaveGradient then
-            Button:SetBackdropOption("bgFile", "gradientUp")
+            Button:SetBackdropGradient()
         end
     end)
     _G.hooksecurefunc(Skin, "CharacterFrameTabButtonTemplate", function(Button)
