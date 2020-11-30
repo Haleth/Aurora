@@ -115,32 +115,30 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
             alliance = {color = private.FACTION_COLORS.Alliance, texture = [[Interface\Timer\Alliance-Logo]]},
             horde = {color = private.FACTION_COLORS.Horde, texture = [[Interface\Timer\Horde-Logo]]},
             legion = {color = Color.green:Lightness(-0.3), texture = ""},
+            ["jailerstower-scenario"] = {gradient = private.COVENANT_COLORS.Maw, texture = ""},
         }
 
         function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKit)
             -- /dump GetUITextureKitInfo(5117)
             private.debug("ScenarioStage_CustomizeBlock", scenarioType, widgetSetID, textureKit)
 
-            if widgetSetID then
-                stageBlock._auroraOverlay:Hide()
-            else
-                stageBlock._auroraOverlay:Show()
-
-                local kit
-                if textureKit then
-                    kit = uiTextureKits[textureKit]
-                elseif scenarioType == _G.LE_SCENARIO_TYPE_LEGION_INVASION then
-                    kit = uiTextureKits.legion
-                end
-
-                if not kit then
-                    kit = uiTextureKits.Default
-                    private.debug("missing scenario block", textureKit)
-                end
-
-                Base.SetBackdropColor(stageBlock._auroraBG, kit.color, 0.75)
-                stageBlock._auroraOverlay:SetTexture(kit.texture)
+            if scenarioType == _G.LE_SCENARIO_TYPE_LEGION_INVASION then
+                textureKit = uiTextureKits.legion
             end
+
+            local kit = uiTextureKits[textureKit]
+            if not kit then
+                kit = uiTextureKits.Default
+                private.debug("Missing scenario block", textureKit)
+            end
+
+            if kit.gradient then
+                stageBlock._auroraBG:SetBackdropGradient(kit.gradient)
+                stageBlock._auroraBG:SetBackdropBorderColor(kit.gradient)
+            else
+                Base.SetBackdropColor(stageBlock._auroraBG, kit.color, 0.75)
+            end
+            stageBlock._auroraOverlay:SetTexture(kit.texture)
         end
     end
 end
@@ -389,6 +387,9 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ScenarioChallengeModeBlock.StatusBar:SetStatusBarColor(Color.cyan:GetRGB())
 
     -- ScenarioProvingGroundsBlock
+
+    -- MawBuffsBlock --
+    Skin.MawBuffsContainer(_G.ScenarioBlocksFrame.MawBuffsBlock.Container)
 
 
     ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----

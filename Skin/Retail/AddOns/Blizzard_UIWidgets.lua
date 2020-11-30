@@ -55,6 +55,25 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
             Frame.Border:SetAlpha(0)
             Frame.DebuffBorder:SetAlpha(0)
         end
+        function Skin.UIWidgetBaseScenarioHeaderTemplate(Frame)
+            Frame.Frame:SetAlpha(0)
+        end
+    end
+    do --[[ Blizzard_UIWidgetTemplateIconAndText ]]
+        Skin.UIWidgetTemplateIconAndText = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateStatusBar ]]
+        function Skin.UIWidgetTemplateStatusBar(Frame)
+            local StatusBar = Frame.Bar
+            Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
+            StatusBar.BGLeft:SetAlpha(0)
+            StatusBar.BGRight:SetAlpha(0)
+            StatusBar.BGCenter:SetAlpha(0)
+            StatusBar.BorderLeft:SetAlpha(0)
+            StatusBar.BorderRight:SetAlpha(0)
+            StatusBar.BorderCenter:SetAlpha(0)
+            StatusBar.Spark:SetAlpha(0)
+        end
     end
     do --[[ Blizzard_UIWidgetTemplateDoubleStatusBar ]]
         function Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(StatusBar)
@@ -74,27 +93,13 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
             Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.RightBar)
         end
     end
-    do --[[ Blizzard_UIWidgetTemplateIconAndText ]]
-        Skin.UIWidgetTemplateIconAndText = private.nop
-    end
-    do --[[ Blizzard_UIWidgetTemplateStatusBar ]]
-        function Skin.UIWidgetTemplateStatusBar(Frame)
-            local StatusBar = Frame.Bar
-            Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
-            StatusBar.BGLeft:SetAlpha(0)
-            StatusBar.BGRight:SetAlpha(0)
-            StatusBar.BGCenter:SetAlpha(0)
-            StatusBar.BorderLeft:SetAlpha(0)
-            StatusBar.BorderRight:SetAlpha(0)
-            StatusBar.BorderCenter:SetAlpha(0)
-            StatusBar.Spark:SetAlpha(0)
-        end
-    end
-    do --[[ Blizzard_UIWidgetTemplateTextureWithState ]]
-        Skin.UIWidgetTemplateTextureWithState = private.nop
-    end
     do --[[ Blizzard_UIWidgetTemplateTextWithState ]]
         Skin.UIWidgetTemplateTextWithState = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateScenarioHeaderCurrenciesAndBackground ]]
+        function Skin.UIWidgetTemplateScenarioHeaderCurrenciesAndBackground(Frame)
+            Skin.UIWidgetBaseScenarioHeaderTemplate(Frame)
+        end
     end
     do --[[ Blizzard_UIWidgetTemplateSpellDisplay ]]
         function Skin.UIWidgetTemplateSpellDisplay(Frame)

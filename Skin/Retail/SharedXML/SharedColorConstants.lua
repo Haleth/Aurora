@@ -26,6 +26,7 @@ do --[[ SharedXML\SharedColorConstants.lua ]]
         Venthyr = Color.Create(0.4, 0.0, 0.0),
         NightFae = Color.Create(0.2, 0.3, 0.4),
         Necrolord = Color.Create(0.1, 0.4, 0.15),
+        Maw = Color.Create(0.302, 0.525, 0.553),
     }
 end
 

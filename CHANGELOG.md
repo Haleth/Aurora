@@ -1,4 +1,8 @@
 ﻿## [Unreleased] ##
+### Added ###
+
+  * [retail] Skinned Maw Buffs
+
 ### Changed ###
 
   * [retail] Tweaked mail inbox items to not be so close to the page buttons
