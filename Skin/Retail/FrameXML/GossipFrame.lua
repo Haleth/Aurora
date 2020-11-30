@@ -42,8 +42,6 @@ do --[[ FrameXML\GossipFrame.lua ]]
                 local gossipText = gossipOptions[button:GetID()].name
                 local color = gossipText:match("|c(%x+)%(")
                 if color then
-                    -- TODO: This was used for BfA war campaign related gossip options, not sure if still is
-                    _G.print("GossipFrameOptionsUpdate", button:GetID(), ("|"):split(gossipText))
                     button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
                 end
             end
