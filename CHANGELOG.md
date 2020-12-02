@@ -5,7 +5,8 @@
 
 ### Changed ###
 
-  * [retail] Tweaked mail inbox items to not be so close to the page buttons
+  * Tweaked mail inbox items to not be so close to the page buttons
+  * Updated /etrace dev tool skin
 
 ### Fixed ###
 
