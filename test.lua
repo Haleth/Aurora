@@ -16,26 +16,22 @@ local function CopyTable(oldTable)
     return newTable
 end
 local function GetItem(itemID, isCurrency)
-    local data
-    if isCurrency then
-        data = {
-            id = itemID,
-            isCurrency = true,
-        }
-    else
+    local data = {
+        id = itemID,
+        isCurrency = isCurrency,
+    }
+    if not isCurrency then
         local item = _G.Item:CreateFromItemID(itemID)
         item:ContinueOnItemLoad(function(...)
             local itemName, itemLink, itemRarity, _, _, _, _, itemStackCount, _, itemIcon, _, itemClassID = _G.GetItemInfo(itemID)
-            data = {
-                id = itemID,
-                link = itemLink,
-                name = itemName,
-                texture = itemIcon,
-                quality = itemRarity,
-                isQuestItem = itemClassID == _G.LE_ITEM_CLASS_QUESTITEM,
-                locked = false,
-                count = random(1, itemStackCount),
-            }
+
+            data.link = itemLink
+            data.name = itemName
+            data.texture = itemIcon
+            data.quality = itemRarity
+            data.locked = false
+            data.count = random(1, itemStackCount)
+            data.isQuestItem = itemClassID == _G.LE_ITEM_CLASS_QUESTITEM
             data.isQuestActive = data.isQuestItem and (itemID % 2) == 1
         end)
     end
@@ -54,6 +50,7 @@ local GetDungeonSubTypeIDs, GetDungeonSubTypeID, SetDungeonSubTypeID
 local SetHasResponded, GetDungeonID
 local function LoadLFGFunctions()
     if private.isClassic then return end
+
     local dungeonId, hasResponded, totalEncounters, completedEncounters, numMembers = 1778, true, 4, 2, 5
     local icon = [[Interface\Icons\Achievement_Dungeon_TolDagor]]
     local lfgBG = [[Interface\LFGFrame\UI-LFG-BACKGROUND-TolDagor]]
@@ -133,6 +130,10 @@ local function LoadLFGFunctions()
         return dungeonId, "invited", nil, nil, "TANK"
     end
 
+    function _G.C_Scenario.GetInfo()
+            -- scenarioName, currentStage, numStages, flags, hasBonusStep, isBonusStepComplete, completed, xp, money
+        return "LFG_SUBTYPEID_SCENARIO", 1, 3,        nil,   GetBoolen(),  true,         GetBoolen(), 123, 456
+    end
 
 
     -- Accessors --
