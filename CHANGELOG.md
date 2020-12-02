@@ -5,6 +5,7 @@
 
 ### Changed ###
 
+  * Updated Warlords garrison skin
   * Tweaked mail inbox items to not be so close to the page buttons
   * Updated /etrace dev tool skin
 

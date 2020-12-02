@@ -35,100 +35,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
-    do --[[ Blizzard_GarrisonShipyardUI.xml ]]
-        function Skin.GarrisonBonusEffectFrameTemplate(Frame)
-            Base.CropIcon(Frame.Icon, Frame)
-        end
-        function Skin.GarrisonBonusAreaTooltipFrameTemplate(Frame)
-            Skin.GarrisonBonusEffectFrameTemplate(Frame.BonusEffectFrame)
-        end
-    end
-    do --[[ Blizzard_GarrisonLandingPage.xml ]]
-        function Skin.GarrisonLandingPageReportMissionRewardTemplate(Frame)
-            Base.CropIcon(Frame.Icon)
-
-            local bg = _G.CreateFrame("Frame", nil, Frame)
-            bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
-            bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
-            Base.SetBackdrop(bg, Color.black, 0)
-            Frame._auroraIconBorder = bg
-
-            Frame.IconBorder:Hide()
-        end
-        function Skin.GarrisonLandingPageReportMissionTemplate(Button)
-            Button.BG:Hide()
-            Base.SetBackdrop(Button, Color.button)
-
-            Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward1)
-            Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward2)
-            Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward3)
-        end
-        function Skin.GarrisonLandingPageTabTemplate(Button)
-            Button:SetHeight(28)
-
-            Button.LeftDisabled:SetAlpha(0)
-            Button.MiddleDisabled:SetAlpha(0)
-            Button.RightDisabled:SetAlpha(0)
-            Button.Left:SetAlpha(0)
-            Button.Middle:SetAlpha(0)
-            Button.Right:SetAlpha(0)
-            Button.LeftHighlight:SetAlpha(0)
-            Button.RightHighlight:SetAlpha(0)
-            Button.MiddleHighlight:SetAlpha(0)
-
-            Skin.FrameTypeFrame(Button)
-
-            Button.Text:ClearAllPoints()
-            Button.Text:SetPoint("CENTER")
-
-            Button._auroraTabResize = true
-        end
-        function Skin.BaseLandingPageFollowerListTemplate(Frame)
-            Frame.FollowerHeaderBar:Hide()
-            Frame.FollowerScrollFrame:Hide()
-            Skin.SearchBoxTemplate(Frame.SearchBox)
-            Skin.MinimalHybridScrollBarTemplate(Frame.listScroll.scrollBar)
-        end
-    end
-    do --[[ Blizzard_GarrisonCapacitiveDisplay.xml ]]
-        function Skin.GarrisonCapacitiveItemButtonTemplate(Frame)
-            Base.CropIcon(Frame.Icon)
-
-            local iconBG = _G.CreateFrame("Frame", nil, Frame)
-            iconBG:SetFrameLevel(Frame:GetFrameLevel() - 1)
-            iconBG:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
-            iconBG:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
-            Base.SetBackdrop(iconBG, Color.frame)
-            Frame._auroraIconBorder = iconBG
-
-            Frame.NameFrame:SetAlpha(0)
-
-            local nameBG = _G.CreateFrame("Frame", nil, Frame)
-            nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
-            nameBG:SetPoint("BOTTOMRIGHT", -3, 1)
-            Base.SetBackdrop(nameBG, Color.frame)
-            Frame._auroraNameBG = nameBG
-        end
-        function Skin.GarrisonCapacitiveWorkOrderTemplate(Frame)
-            Skin.GarrisonBonusEffectFrameTemplate(Frame.BonusEffectFrame)
-        end
-
-        -- Not templates
-        function Skin.GarrisonCapacitiveInputSpinner(Frame)
-            Frame.DecrementButton = _G.GarrisonCapacitiveDisplayFrame.DecrementButton
-            Frame.DecrementButton:ClearAllPoints()
-
-            local name = Util.GetName(Frame)
-            Frame.Left = _G[name.."Left"]
-            Frame.Right = _G[name.."Right"]
-            Frame.Middle = _G[name.."Middle"]
-
-            Frame.IncrementButton = _G.GarrisonCapacitiveDisplayFrame.IncrementButton
-            Frame.IncrementButton:ClearAllPoints()
-
-            Skin.NumericInputSpinnerTemplate(Frame)
-        end
-    end
     do --[[ Blizzard_GarrisonMissionUI.xml ]]
         function Skin.GarrisonFollowerMissionPortraitTemplate(Frame)
             Skin.GarrisonFollowerPortraitTemplate(Frame)
@@ -320,6 +226,26 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonFollowerCombatAllySpellTemplate(Frame.AbilitiesFrame.CombatAllySpell[1])
             Skin.GarrisonFollowerCombatAllySpellTemplate(Frame.AbilitiesFrame.CombatAllySpell[2])
         end
+        function Skin.FollowerMissionPageTemplate(Frame)
+            Skin.GarrisonMissionPageBaseTemplate(Frame)
+            Skin.MissionPageTemplate(Frame)
+
+            Frame.ButtonFrame:Hide()
+            local coverLeft, coverRight, coverBott, _, _, coverTop, cornerLeft, cornerRight = select(13, Frame:GetRegions())
+            coverLeft:Hide()
+            coverRight:Hide()
+            coverBott:Hide()
+
+            coverTop:Hide()
+            cornerLeft:Hide()
+            cornerRight:Hide()
+
+            Skin.GarrisonFollowerMissionRewardsFrameTemplate(Frame.RewardsFrame)
+            Skin.GarrisonMissionPageRewardTemplate(Frame.RewardsFrame)
+
+            Skin.StartMissionButtonTemplate(Frame.StartMissionButton)
+            Skin.GarrisonMissionPageCostWithTooltipTemplate(Frame.CostFrame)
+        end
         function Skin.GarrisonFollowerMissionCompleteStageTemplate(Frame)
             Skin.GarrisonMissionStageTemplate(Frame)
             Skin.GarrisonMissionCompleteStageTemplate(Frame)
@@ -337,6 +263,100 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             top:Hide()
             tl:Hide()
             tr:Hide()
+        end
+    end
+    do --[[ Blizzard_GarrisonShipyardUI.xml ]]
+        function Skin.GarrisonBonusEffectFrameTemplate(Frame)
+            Base.CropIcon(Frame.Icon, Frame)
+        end
+        function Skin.GarrisonBonusAreaTooltipFrameTemplate(Frame)
+            Skin.GarrisonBonusEffectFrameTemplate(Frame.BonusEffectFrame)
+        end
+    end
+    do --[[ Blizzard_GarrisonLandingPage.xml ]]
+        function Skin.GarrisonLandingPageReportMissionRewardTemplate(Frame)
+            Base.CropIcon(Frame.Icon)
+
+            local bg = _G.CreateFrame("Frame", nil, Frame)
+            bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+            bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+            Base.SetBackdrop(bg, Color.black, 0)
+            Frame._auroraIconBorder = bg
+
+            Frame.IconBorder:Hide()
+        end
+        function Skin.GarrisonLandingPageReportMissionTemplate(Button)
+            Button.BG:Hide()
+            Base.SetBackdrop(Button, Color.button)
+
+            Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward1)
+            Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward2)
+            Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward3)
+        end
+        function Skin.GarrisonLandingPageTabTemplate(Button)
+            Button:SetHeight(28)
+
+            Button.LeftDisabled:SetAlpha(0)
+            Button.MiddleDisabled:SetAlpha(0)
+            Button.RightDisabled:SetAlpha(0)
+            Button.Left:SetAlpha(0)
+            Button.Middle:SetAlpha(0)
+            Button.Right:SetAlpha(0)
+            Button.LeftHighlight:SetAlpha(0)
+            Button.RightHighlight:SetAlpha(0)
+            Button.MiddleHighlight:SetAlpha(0)
+
+            Skin.FrameTypeFrame(Button)
+
+            Button.Text:ClearAllPoints()
+            Button.Text:SetPoint("CENTER")
+
+            Button._auroraTabResize = true
+        end
+        function Skin.BaseLandingPageFollowerListTemplate(Frame)
+            Frame.FollowerHeaderBar:Hide()
+            Frame.FollowerScrollFrame:Hide()
+            Skin.SearchBoxTemplate(Frame.SearchBox)
+            Skin.MinimalHybridScrollBarTemplate(Frame.listScroll.scrollBar)
+        end
+    end
+    do --[[ Blizzard_GarrisonCapacitiveDisplay.xml ]]
+        function Skin.GarrisonCapacitiveItemButtonTemplate(Frame)
+            Base.CropIcon(Frame.Icon)
+
+            local iconBG = _G.CreateFrame("Frame", nil, Frame)
+            iconBG:SetFrameLevel(Frame:GetFrameLevel() - 1)
+            iconBG:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+            iconBG:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+            Base.SetBackdrop(iconBG, Color.frame)
+            Frame._auroraIconBorder = iconBG
+
+            Frame.NameFrame:SetAlpha(0)
+
+            local nameBG = _G.CreateFrame("Frame", nil, Frame)
+            nameBG:SetPoint("TOPLEFT", iconBG, "TOPRIGHT", 1, 0)
+            nameBG:SetPoint("BOTTOMRIGHT", -3, 1)
+            Base.SetBackdrop(nameBG, Color.frame)
+            Frame._auroraNameBG = nameBG
+        end
+        function Skin.GarrisonCapacitiveWorkOrderTemplate(Frame)
+            Skin.GarrisonBonusEffectFrameTemplate(Frame.BonusEffectFrame)
+        end
+
+        -- Not templates
+        function Skin.GarrisonCapacitiveInputSpinner(Frame)
+            Frame.DecrementButton = _G.GarrisonCapacitiveDisplayFrame.DecrementButton
+            Frame.DecrementButton:ClearAllPoints()
+
+            local name = Util.GetName(Frame)
+            Frame.Left = _G[name.."Left"]
+            Frame.Right = _G[name.."Right"]
+            Frame.Middle = _G[name.."Middle"]
+
+            Frame.IncrementButton = _G.GarrisonCapacitiveDisplayFrame.IncrementButton
+            Frame.IncrementButton:ClearAllPoints()
+
+            Skin.NumericInputSpinnerTemplate(Frame)
         end
     end
     do --[[ Blizzard_OrderHallMissionUI.xml ]]
@@ -431,18 +451,91 @@ function private.AddOns.Blizzard_GarrisonUI()
     ----====####$$$$%%%%$$$$####====----
     --   Blizzard_GarrisonMissionUI   --
     ----====####$$$$%%%%$$$$####====----
+    local GarrisonMissionFrame = _G.GarrisonMissionFrame
+    GarrisonMissionFrame.Center = GarrisonMissionFrame.BackgroundTile
+    Skin.GarrisonMissionFrameTemplate(GarrisonMissionFrame)
+    Skin.GarrisonUITemplate(GarrisonMissionFrame)
+
+    Skin.GarrisonMissionFrameTabTemplate(_G.GarrisonMissionFrameTab1)
+    Skin.GarrisonMissionFrameTabTemplate(_G.GarrisonMissionFrameTab2)
+    Util.PositionRelative("TOPLEFT", GarrisonMissionFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.GarrisonMissionFrameTab1,
+        _G.GarrisonMissionFrameTab2,
+    })
+
+    ------------------
+    -- FollowerList --
+    ------------------
+    local GarrFollowerList = GarrisonMissionFrame.FollowerList
+    Skin.GarrisonListTemplateHeader(GarrFollowerList)
+    Skin.MaterialFrameTemplate(GarrFollowerList.MaterialFrame)
+    Skin.SearchBoxTemplate(GarrFollowerList.SearchBox)
+
+    ----------------
+    -- MissionTab --
+    ----------------
+    local GarrMissionTab = GarrisonMissionFrame.MissionTab
+    Skin.GarrisonMissionListTemplate(GarrMissionTab.MissionList)
+    Skin.FollowerMissionPageTemplate(GarrMissionTab.MissionPage)
+
+    -- MissionPage --
+    local GarrMissionPage = GarrMissionTab.MissionPage
+    Skin.GarrisonMissionPageEnemyTemplate(GarrMissionPage.Enemy1)
+    Skin.GarrisonMissionPageEnemyTemplate(GarrMissionPage.Enemy2)
+    Skin.GarrisonMissionPageEnemyTemplate(GarrMissionPage.Enemy3)
+
+    Skin.GarrisonMissionPageFollowerTemplate(GarrMissionPage.Follower1)
+    Skin.GarrisonMissionPageFollowerTemplate(GarrMissionPage.Follower2)
+    Skin.GarrisonMissionPageFollowerTemplate(GarrMissionPage.Follower3)
+
+    -----------------
+    -- FollowerTab --
+    -----------------
+    Skin.GarrisonFollowerTabTemplate(GarrisonMissionFrame.FollowerTab)
+
+    ---------------------
+    -- MissionComplete --
+    ---------------------
+    Skin.GarrisonMissionPageBaseTemplate(GarrisonMissionFrame.MissionComplete)
+    Skin.GarrisonMissionCompleteTemplate(GarrisonMissionFrame.MissionComplete)
+
     Skin.GarrisonFollowerPortraitTemplate(_G.GarrisonFollowerPlacer)
 
     -- BlizzWTF: This should be flagged as hidden in XML
     _G.GarrisonMissionListTooltipThreatsFrame:Hide()
 
-    -------------
-    -- Section --
-    -------------
-
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_GarrisonShipyardUI   --
     ----====####$$$$%%%%%$$$$####====----
+    local GarrisonShipyardFrame = _G.GarrisonShipyardFrame
+    Skin.GarrisonMissionFrameTemplate(GarrisonShipyardFrame)
+
+    GarrisonShipyardFrame.BorderFrame.Center = GarrisonShipyardFrame.BackgroundTile
+    Skin.GarrisonUITemplate(GarrisonShipyardFrame.BorderFrame)
+
+    Skin.GarrisonMissionFrameTabTemplate(_G.GarrisonShipyardFrameTab1)
+    Skin.GarrisonMissionFrameTabTemplate(_G.GarrisonShipyardFrameTab2)
+    Util.PositionRelative("TOPLEFT", GarrisonShipyardFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.GarrisonShipyardFrameTab1,
+        _G.GarrisonShipyardFrameTab2,
+    })
+
+    ------------------
+    -- FollowerList --
+    ------------------
+
+    ----------------
+    -- MissionTab --
+    ----------------
+
+    -----------------
+    -- FollowerTab --
+    -----------------
+
+    ---------------------
+    -- MissionComplete --
+    ---------------------
+
     if not private.disabled.tooltips then
         Skin.FrameTypeFrame(_G.GarrisonBonusAreaTooltip)
         Skin.GarrisonBonusAreaTooltipFrameTemplate(_G.GarrisonBonusAreaTooltip.BonusArea)
@@ -452,10 +545,6 @@ function private.AddOns.Blizzard_GarrisonUI()
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusEffect)
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusReward)
     end
-
-    -------------
-    -- Section --
-    -------------
 
     ----====####$$$$%%%%$$$$####====----
     --  Blizzard_GarrisonLandingPage  --
@@ -509,10 +598,6 @@ function private.AddOns.Blizzard_GarrisonUI()
 
     Skin.BaseLandingPageFollowerListTemplate(GarrisonLandingPage.ShipFollowerList)
 
-    -------------
-    -- Section --
-    -------------
-
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_GarrisonCapacitiveDisplay --
     ----====####$$$$%%%%%%%%$$$$####====----
@@ -536,25 +621,13 @@ function private.AddOns.Blizzard_GarrisonUI()
     GarrisonCapacitiveDisplayFrame.Count:SetPoint("BOTTOM", -10, 4)
     Skin.GarrisonCapacitiveInputSpinner(GarrisonCapacitiveDisplayFrame.Count)
 
-    -------------
-    -- Section --
-    -------------
-
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_GarrisonMonumentUI   --
     ----====####$$$$%%%%%$$$$####====----
 
-    -------------
-    -- Section --
-    -------------
-
     ----====####$$$$%%%%$$$$####====----
     --  Blizzard_GarrisonRecruiterUI  --
     ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
 
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_OrderHallMissionUI   --

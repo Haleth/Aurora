@@ -170,6 +170,25 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         end
     end
     do --[[ Blizzard_GarrisonMissionTemplates ]]
+        function Skin.GarrisonMissionFrameTabTemplate(Button)
+            Skin.FrameTypeButton(Button)
+            Button:SetButtonColor(Color.frame, nil, false)
+            Button:SetHeight(28)
+
+            Button.LeftDisabled:SetTexture("")
+            Button.MiddleDisabled:SetTexture("")
+            Button.RightDisabled:SetTexture("")
+            Button.Left:SetTexture("")
+            Button.Middle:SetTexture("")
+            Button.Right:SetTexture("")
+            Button.LeftHighlight:SetTexture("")
+            Button.RightHighlight:SetTexture("")
+            Button.MiddleHighlight:SetTexture("")
+
+            Button.Text:SetPoint("CENTER", Button, "CENTER")
+
+            Button._auroraTabResize = true
+        end
         function Skin.GarrisonMissionRewardEffectsTemplate(Frame)
             Base.CropIcon(Frame.Icon)
 
@@ -244,6 +263,13 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         function Skin.GarrisonMissionPageCloseButtonTemplate(Button)
             Skin.UIPanelCloseButton(Button)
             Button:SetSize(32, 32)
+        end
+        function Skin.GarrisonMissionPageItemLevelHitboxFrame(Frame)
+        end
+        function Skin.MissionPageTemplate(Button)
+            Skin.GarrisonMissionPageCloseButtonTemplate(Button.CloseButton)
+            Skin.GarrisonMissionPageStageTemplate(Button.Stage)
+            Skin.GarrisonMissionPageItemLevelHitboxFrame(Button.ItemLevelHitboxFrame)
         end
         Skin.GarrisonMissionFrameTemplate = private.nop
         function Skin.GarrisonMissionCompleteDialogTemplate(Frame)
