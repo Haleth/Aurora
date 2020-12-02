@@ -58,6 +58,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         function Hook.ObjectiveTracker_Initialize(self)
             Util.Mixin(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
             Util.Mixin(_G.QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
+            Util.Mixin(_G.CAMPAIGN_QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE)
             Util.Mixin(_G.BONUS_OBJECTIVE_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.WORLD_QUEST_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.BonusObjectiveTrackerModuleMixin)
             Util.Mixin(_G.SCENARIO_TRACKER_MODULE, Hook.DEFAULT_OBJECTIVE_TRACKER_MODULE, Hook.SCENARIO_TRACKER_MODULE)
@@ -217,14 +218,19 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bg:Hide()
     end
     function Skin.ObjectiveTrackerProgressBarTemplate(Frame)
-        Skin.FrameTypeStatusBar(Frame.Bar)
+        local bar = Frame.Bar
+        Skin.FrameTypeStatusBar(bar)
 
-        local left, right, mid, _, bg = Frame.Bar:GetRegions()
-        left:Hide()
-        right:Hide()
-        mid:Hide()
+        local _, _, _, _, bg = bar:GetRegions()
+        bar.BorderLeft:Hide()
+        bar.BorderRight:Hide()
+        bar.BorderMid:Hide()
         bg:Hide()
     end
+
+    ----====####$$$$%%%%%$$$$####====----
+    --   Blizzard_QuestSuperTracking   --
+    ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
@@ -234,6 +240,14 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         Frame.Check:SetAtlas("worldquest-tracker-checkmark")
         Frame.Check:SetSize(18, 16)
     end
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_CampaignQuestObjectiveTracker --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    --  Blizzard_AchievementObjectiveTracker  --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
 
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_AutoQuestPopUpTracker --
@@ -304,6 +318,10 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bar.Icon:SetPoint("RIGHT", 33, 0)
         Base.CropIcon(bar.Icon)
     end
+
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_ObjectiveTrackerUIWidgetContainer --
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
 end
 
 function private.AddOns.Blizzard_ObjectiveTracker()
@@ -332,6 +350,10 @@ function private.AddOns.Blizzard_ObjectiveTracker()
     ----====####$$$$%%%%$$$$####====----
     -- Blizzard_QuestObjectiveTracker --
     ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_CampaignQuestObjectiveTracker --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
 
     ----====####$$$$%%%%%%%%%%$$$$####====----
     -- Blizzard_AchievementObjectiveTracker --
