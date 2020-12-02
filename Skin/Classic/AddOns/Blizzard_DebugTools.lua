@@ -6,34 +6,62 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
-local F = _G.unpack(private.Aurora)
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+
+do --[[ AddOns\Blizzard_DebugTools.lua ]]
+    local numButtonsSkinned = 0
+    function Hook.EventTraceFrame_OnSizeChanged(self, width, height)
+        if numButtonsSkinned < #self.buttons then
+            for i = numButtonsSkinned + 1, #self.buttons do
+                Skin.EventTraceEventTemplate(self.buttons[i])
+            end
+            numButtonsSkinned = #self.buttons
+        end
+    end
+end
+
+do --[[ AddOns\Blizzard_DebugTools.xml ]]
+    function Skin.EventTraceEventTemplate(Button)
+        Skin.UIPanelCloseButton(Button.HideButton)
+        Button.HideButton:ClearAllPoints()
+        Button.HideButton:SetPoint("TOPLEFT", -5, 2)
+        Button.HideButton:SetBackdropOption("offsets", {
+            left = 3,
+            right = 4,
+            top = 4,
+            bottom = 4,
+        })
+    end
+end
 
 function private.AddOns.Blizzard_DebugTools()
     --[[ EventTrace ]]--
-    for i = 1, _G.EventTraceFrame:GetNumRegions() do
-        local region = _G.select(i, _G.EventTraceFrame:GetRegions())
-        if region:GetObjectType() == "Texture" then
-            region:SetTexture(nil)
-        end
-    end
-    _G.EventTraceFrame:SetHeight(600)
-    F.CreateBD(_G.EventTraceFrame)
-    F.ReskinClose(_G.EventTraceFrameCloseButton)
+    _G.EventTraceFrame:HookScript("OnSizeChanged", Hook.EventTraceFrame_OnSizeChanged)
+    Base.CreateBackdrop(_G.EventTraceFrame, private.backdrop, {
+        bg = _G.EventTraceFrameDialogBG,
 
-    _G.EventTraceFrameTitleButton:ClearAllPoints()
-    _G.EventTraceFrameTitleButton:SetPoint("TOPLEFT")
-    _G.EventTraceFrameTitleButton:SetPoint("BOTTOMRIGHT", _G.EventTraceFrame, "TOPRIGHT", 0, -24)
+        l = _G.EventTraceFrameLeft,
+        r = _G.EventTraceFrameRight,
+        t = _G.EventTraceFrameTop,
+        b = _G.EventTraceFrameBottom,
 
-    _G.EventTraceFrameScrollBG:Hide()
-    local thumb = _G.EventTraceFrameScroll.thumb
-    thumb:SetAlpha(0)
-    thumb:SetWidth(17)
-    local etraceBG = _G.CreateFrame("Frame", nil, _G.EventTraceFrameScroll)
-    etraceBG:SetPoint("TOPLEFT", thumb, 0, 0)
-    etraceBG:SetPoint("BOTTOMRIGHT", thumb, 0, 0)
-    F.CreateBD(etraceBG, 0)
-    F.CreateGradient(etraceBG)
+        tl = _G.EventTraceFrameTopLeft,
+        tr = _G.EventTraceFrameTopRight,
+        bl = _G.EventTraceFrameBottomLeft,
+        br = _G.EventTraceFrameBottomRight,
+    })
+    Skin.FrameTypeFrame(_G.EventTraceFrame)
+
+    _G.EventTraceFrameTitleBG:Hide()
+    _G.EventTraceFrameTitle:ClearAllPoints()
+    _G.EventTraceFrameTitle:SetPoint("TOPLEFT")
+    _G.EventTraceFrameTitle:SetPoint("BOTTOMRIGHT", _G.EventTraceFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    Skin.UIPanelCloseButton(_G.EventTraceFrameCloseButton)
+    Skin.ScrollBarThumb(_G.EventTraceFrameScroll.thumb)
+
+    Hook.EventTraceFrame_OnSizeChanged(_G.EventTraceFrame) -- Skin the buttons
 
     if not private.disabled.tooltips then
         Skin.GameTooltipTemplate(_G.FrameStackTooltip)
