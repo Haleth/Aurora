@@ -53,6 +53,7 @@ local GetDungeonTypeIDs, GetDungeonTypeID, SetDungeonTypeID
 local GetDungeonSubTypeIDs, GetDungeonSubTypeID, SetDungeonSubTypeID
 local SetHasResponded, GetDungeonID
 local function LoadLFGFunctions()
+    if private.isClassic then return end
     local dungeonId, hasResponded, totalEncounters, completedEncounters, numMembers = 1778, true, 4, 2, 5
     local icon = [[Interface\Icons\Achievement_Dungeon_TolDagor]]
     local lfgBG = [[Interface\LFGFrame\UI-LFG-BACKGROUND-TolDagor]]
@@ -1518,27 +1519,22 @@ function commands.profile()
             },
         }
 
-        function Aurora.Skin.FriendsFrameWhoButtonTemplate(Button)
-            local name, variable, level, class = Button:GetRegions()
-            name:SetWidth(COLUMN_INFO[1].width)
-            Button.name = name
+        function Aurora.Skin.WhoListButtonTemplate(Button)
+            Button.Name:SetWidth(COLUMN_INFO[1].width)
 
-            variable:SetWidth(COLUMN_INFO[2].width)
-            variable:SetPoint("LEFT", name, "RIGHT", 0, 0)
-            Button.variable = variable
+            Button.Variable:SetWidth(COLUMN_INFO[2].width)
+            Button.Variable:SetPoint("LEFT", Button.Name, "RIGHT", 0, 0)
 
-            level:SetWidth(COLUMN_INFO[3].width)
-            level:SetJustifyH("LEFT")
-            level:SetPoint("LEFT", variable, "RIGHT", 0, 0)
-            Button.level = level
+            Button.Level:SetWidth(COLUMN_INFO[3].width)
+            Button.Level:SetJustifyH("LEFT")
+            Button.Level:SetPoint("LEFT", Button.Variable, "RIGHT", 0, 0)
 
-            class:SetWidth(COLUMN_INFO[4].width)
-            class:SetPoint("LEFT", level, "RIGHT", 0, 0)
-            Button.class = class
+            Button.Class:SetWidth(COLUMN_INFO[4].width)
+            Button.Class:SetPoint("LEFT", Button.Level, "RIGHT", 0, 0)
 
             local highlight = Button:GetHighlightTexture()
             highlight:SetPoint("LEFT")
-            highlight:SetPoint("RIGHT", class)
+            highlight:SetPoint("RIGHT", Button.Class)
         end
 
         local frame = _G.CreateFrame("Frame", nil, _G.UIParent, "ButtonFrameTemplate")
@@ -1584,10 +1580,10 @@ function commands.profile()
                 if index <= numFunctions then
                     --print("info", index)
 
-                    button.name:SetText(info.name)
-                    button.variable:SetFormattedText("%.6f", info.time)
-                    button.level:SetFormattedText("%.6f", info.total)
-                    button.class:SetText(info.num)
+                    button.Name:SetText(info.name)
+                    button.Variable:SetFormattedText("%.6f", info.time)
+                    button.Level:SetFormattedText("%.6f", info.total)
+                    button.Class:SetText(info.num)
 
                     button.tooltip1 = info.name
                     button.tooltip2 = info.time
@@ -1604,7 +1600,7 @@ function commands.profile()
             _G.HybridScrollFrame_Update(self, totalHeight, displayedHeight)
         end
 
-        _G.HybridScrollFrame_CreateButtons(scroll, "FriendsFrameWhoButtonTemplate", 0, 0)
+        _G.HybridScrollFrame_CreateButtons(scroll, "WhoListButtonTemplate", 0, 0)
 
         local columns = _G.CreateFrame("Frame", nil, frame, "ColumnDisplayTemplate")
         columns:SetHeight(26)
