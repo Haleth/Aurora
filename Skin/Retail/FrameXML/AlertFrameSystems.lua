@@ -66,14 +66,12 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
 
             Base.CropIcon(ContainedAlertFrame.dungeonTexture, ContainedAlertFrame)
             ContainedAlertFrame.raidArt:SetAlpha(0)
-            ContainedAlertFrame.dungeonArt1:SetAlpha(0)
-            ContainedAlertFrame.dungeonArt2:SetAlpha(0)
-            ContainedAlertFrame.dungeonArt3:SetAlpha(0)
-            ContainedAlertFrame.dungeonArt4:SetAlpha(0)
+            ContainedAlertFrame.dungeonArt:SetAlpha(0)
 
             local title = select(7, ContainedAlertFrame:GetRegions())
             title:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
             title:SetPoint("RIGHT", bg, -5, 0)
+
             ContainedAlertFrame.instanceName:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
             ContainedAlertFrame.instanceName:SetPoint("RIGHT", bg, -5, 0)
             ContainedAlertFrame.heroicIcon:SetAlpha(0)
@@ -83,6 +81,10 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame.glowFrame.glow:SetAtlas("Toast-Flash")
             ContainedAlertFrame.glowFrame.glow:SetTexCoord(0, 1, 0, 1)
 
+            ContainedAlertFrame.shine:SetHeight(55)
+            ContainedAlertFrame.shine:SetTexCoord(0.794921875, 0.96484375, 0.06640625, 0.23046875)
+            --ContainedAlertFrame.shine:SetTexCoord(0.78125, 0.912109375, 0.06640625, 0.23046875)
+
             ContainedAlertFrame._auroraTemplate = "DungeonCompletionAlertFrameTemplate"
         else
             local rewardData = ContainedAlertFrame.rewardData
@@ -90,16 +92,18 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
                 ContainedAlertFrame:SetBackdropOption("offsets", {
                     left = 20,
                     right = 20,
-                    top = 11,
-                    bottom = 12,
+                    top = 14,
+                    bottom = 9,
                 })
+                ContainedAlertFrame.shine:SetPoint("BOTTOMLEFT", 0, 10)
             else
                 ContainedAlertFrame:SetBackdropOption("offsets", {
                     left = 7,
                     right = 7,
-                    top = 16,
-                    bottom = 7,
+                    top = 11,
+                    bottom = 12,
                 })
+                ContainedAlertFrame.shine:SetPoint("BOTTOMLEFT", 0, 13)
             end
 
             for i, button in next, ContainedAlertFrame.RewardFrames do
@@ -305,6 +309,8 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             title:SetPoint("TOP", bg, 0, -15)
             title:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
             title:SetPoint("RIGHT", bg, -5, 0)
+            ContainedAlertFrame._title = title
+
             ContainedAlertFrame.dungeonName:SetPoint("TOP", title, "BOTTOM", 0, -2)
             ContainedAlertFrame.dungeonName:SetPoint("LEFT", ContainedAlertFrame.dungeonTexture, "RIGHT", 5, 0)
             ContainedAlertFrame.dungeonName:SetPoint("RIGHT", bg, -5, 0)
@@ -313,6 +319,8 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame.glowFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
             ContainedAlertFrame.glowFrame.glow:SetAtlas("Toast-Flash")
             ContainedAlertFrame.glowFrame.glow:SetTexCoord(0, 1, 0, 1)
+
+            ContainedAlertFrame.shine:SetTexCoord(0.794921875, 0.96484375, 0.06640625, 0.23046875)
 
             ContainedAlertFrame._auroraTemplate = "ScenarioAlertFrameTemplate"
         else

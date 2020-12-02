@@ -11,6 +11,7 @@
 
 ### Fixed ###
 
+  * [retail] Error when completing an LFG dungeon
   * [retail] Campaign quest progress bars were not skinned
   * [retail] Error when opening PvP frame
   * [retail] Scouting maps were unusable with high frame opacity
