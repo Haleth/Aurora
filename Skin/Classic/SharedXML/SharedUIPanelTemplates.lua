@@ -69,6 +69,7 @@ do -- BlizzWTF: These are not templates, but they should be
                 plus
             }
             _G.hooksecurefunc(Button, "SetNormalTexture", Hook_SetNormalTexture)
+            _G.hooksecurefunc(Button, "SetPushedTexture", Hook_SetPushedTexture)
             _G.hooksecurefunc(Button, "SetNormalAtlas", Hook_SetNormalTexture)
             _G.hooksecurefunc(Button, "SetPushedAtlas", Hook_SetPushedTexture)
             _G.hooksecurefunc(Button, "SetHighlightTexture", Hook_SetHighlightTexture)

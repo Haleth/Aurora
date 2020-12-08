@@ -14,16 +14,17 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetManager ]]
         Hook.UIWidgetContainerMixin = {}
         function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
-            local template = widgetTypeInfo.templateInfo.frameTemplate
-
             local widgetFrame = self.widgetFrames[widgetID]
+            if not widgetFrame then return end
+
+            local template = widgetTypeInfo.templateInfo.frameTemplate
             if Skin[template] then
-                if widgetFrame and not widgetFrame._auroraSkinned then
+                if not widgetFrame._auroraSkinned then
                     Skin[template](widgetFrame)
                     widgetFrame._auroraSkinned = true
                 end
             else
-                private.debug("Missing template for UIWidgetContainerMixin", widgetFrame and widgetFrame:GetDebugName(), template)
+                private.debug("Missing template for UIWidgetContainerMixin", widgetFrame:GetDebugName(), template)
             end
         end
 

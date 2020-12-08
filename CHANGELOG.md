@@ -11,6 +11,7 @@
 
 ### Fixed ###
 
+  * [classic] Error while exploring the plaguelands
   * [retail] Error when completing an LFG dungeon
   * [retail] Campaign quest progress bars were not skinned
   * [retail] Error when opening PvP frame
