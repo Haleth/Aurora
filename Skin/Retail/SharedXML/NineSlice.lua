@@ -26,16 +26,7 @@ do --[[ SharedXML\NineSlice.lua ]]
     local function BasicFrame(Frame)
         Skin.FrameTypeFrame(Frame)
     end
-    local function DelaySkinFrame(Frame)
-        if Frame.debug then
-            _G.print("DelaySkinFrame", Frame.debug, Frame._delay)
-        end
-        if Frame._delay and Frame._delay > 0 then
-            Skin.FrameTypeFrame(Frame)
-        else
-            Frame._delay = 1
-        end
-    end
+
     local function InsetFrame(Frame)
         Base.SetBackdrop(Frame, Color.frame)
     end
@@ -50,7 +41,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         PortraitFrameTemplate = BasicFrame,
         PortraitFrameTemplateMinimizable = BasicFrame,
         ButtonFrameTemplateNoPortrait = BasicFrame,
-        ButtonFrameTemplateNoPortraitMinimizable = DelaySkinFrame,
+        ButtonFrameTemplateNoPortraitMinimizable = BasicFrame,
         InsetFrameTemplate = HideFrame,
         BFAMissionHorde = BasicFrame,
         BFAMissionAlliance = BasicFrame,

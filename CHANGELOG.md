@@ -1,4 +1,11 @@
-﻿## [9.0.1.7] - 2020-12-07 ##
+﻿## [Unreleased] ##
+### Fixed ###
+
+  * [retail] The world map's close button was out of place when maximized
+
+
+
+## [9.0.1.7] - 2020-12-07 ##
 ### Added ###
 
   * [retail] Skinned Maw Buffs
