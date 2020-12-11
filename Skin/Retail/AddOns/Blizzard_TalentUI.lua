@@ -45,8 +45,16 @@ do --[[ AddOns\Blizzard_TalentUI.lua ]]
         Skin.PlayerSpecSpellTemplate(self.spellsScroll.child["abilityButton"..index])
     end
     function Hook.PlayerTalentFrame_UpdateSpecFrame(self, spec)
+        if not _G.C_SpecializationInfo.IsInitialized() then
+            return;
+        end
+
         local playerTalentSpec = _G.GetSpecialization(nil, self.isPet)
         local shownSpec = spec or playerTalentSpec or 1
+        local numSpecs = _G.GetNumSpecializations(nil, self.isPet)
+        if shownSpec > numSpecs then
+            shownSpec = 1
+        end
 
         local petNotActive = self.isPet and not _G.IsPetActive()
         local sex = self.isPet and _G.UnitSex("pet") or _G.UnitSex("player")

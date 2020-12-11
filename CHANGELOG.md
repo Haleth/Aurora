@@ -2,6 +2,7 @@
 ### Fixed ###
 
   * [retail] The world map's close button was out of place when maximized
+  * [retail] Intermittent errors when opening the talent frame
 
 
 
