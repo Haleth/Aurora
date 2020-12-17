@@ -79,14 +79,7 @@ function private.FrameXML.GossipFrame()
     Skin.ButtonFrameTemplate(GossipFrame)
     Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
 
-    if private.isBeta then
-        GossipFrame.Background:Hide()
-    else
-        -- BlizzWTF: This texture doesn't have a handle because the name it's been given already exists via the template
-        select(7, GossipFrame:GetRegions()):Hide() -- GossipFrameBg
-    end
-
-
+    GossipFrame.Background:Hide()
     local bg = GossipFrame.NineSlice:GetBackdropTexture("bg")
     -- BlizzWTF: This should use the title text included in the template
     _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
