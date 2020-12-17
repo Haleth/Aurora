@@ -168,11 +168,15 @@ end
 local test, container
 function commands.test()
     local Aurora = _G.Aurora
-    local Base = Aurora.Base
-    local Skin = Aurora.Skin
-    local Color = Aurora.Color
+    local Base, Skin, Color
+    if Aurora then
+        Base = Aurora.Base
+        Skin = Aurora.Skin
+        Color = Aurora.Color
 
-    Aurora.isDev = true
+        Aurora.isDev = true
+    end
+
     LoadLFGFunctions()
 
     local AceConfig = _G.LibStub("AceConfig-3.0", true)
@@ -1191,7 +1195,7 @@ function commands.test()
                 }
             end
 
-            do -- Skins
+            if Aurora then -- Skins
                 local bdOptions = {
                     bgFile = "Interface/Tooltips/UI-Tooltip-Background",
                     tile = true,
