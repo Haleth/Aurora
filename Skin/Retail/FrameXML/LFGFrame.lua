@@ -30,10 +30,12 @@ do --[[ FrameXML\LFGFrame.lua ]]
             role = "DAMAGER"
         end
 
-        Base.SetBackdrop(_G.LFGDungeonReadyDialog, Color.frame)
+        _G.LFGDungeonReadyDialog:SetBackdrop(nil)
         if not hasResponded then
             if subtypeID == _G.LFG_SUBTYPEID_RAID then
-                _G.LFGDungeonReadyDialog:SetBackdropBorderColor(Color.yellow)
+                _G.LFGDungeonReadyDialog.Border:SetBackdropBorderColor(Color.yellow, 1)
+            else
+                _G.LFGDungeonReadyDialog.Border:SetBackdropBorderColor(Color.frame, 1)
             end
 
             if _G.LFGDungeonReadyDialogRoleIcon:IsShown() then
@@ -177,15 +179,14 @@ function private.FrameXML.LFGFrame()
     Skin.MinimizeButton(_G.LFGDungeonReadyStatusCloseButton)
 
     local LFGDungeonReadyDialog = _G.LFGDungeonReadyDialog
-    Skin.DialogBorderTemplate(LFGDungeonReadyDialog.Border)
-
     LFGDungeonReadyDialog.background:ClearAllPoints()
-    LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 1, -1)
-    LFGDungeonReadyDialog.background:SetPoint("BOTTOMRIGHT", -1, 64)
+    LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 6, -6)
+    LFGDungeonReadyDialog.background:SetPoint("BOTTOMRIGHT", -6, 64)
 
     LFGDungeonReadyDialog.filigree:Hide()
     LFGDungeonReadyDialog.bottomArt:Hide()
 
+    Skin.DialogBorderTemplate(LFGDungeonReadyDialog.Border)
     Skin.MinimizeButton(_G.LFGDungeonReadyDialogCloseButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.enterButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.leaveButton)
