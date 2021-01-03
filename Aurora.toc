@@ -1,13 +1,13 @@
 #@retail@
-## Interface: 90001
+## Interface: 90002
 #@end-retail@
 #@non-retail@
-# ## Interface: 11303
+# ## Interface: 11306
 #@end-non-retail@
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 9.0.1.7
+## Version: 9.0.2.0
 ## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack
 ## SavedVariables: AuroraConfig

@@ -1,4 +1,4 @@
-﻿## [Unreleased] ##
+﻿## [9.0.2.0] ##
 ### Fixed ###
 
   * [retail] SSAO graphics option was not skinned
@@ -278,6 +278,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[9.0.2.0]: https://github.com/Haleth/Aurora/compare/9.0.1.7...9.0.2.0
 [9.0.1.7]: https://github.com/Haleth/Aurora/compare/9.0.1.6...9.0.1.7
 [9.0.1.6]: https://github.com/Haleth/Aurora/compare/9.0.1.5...9.0.1.6
 [9.0.1.5]: https://github.com/Haleth/Aurora/compare/9.0.1.4...9.0.1.5
