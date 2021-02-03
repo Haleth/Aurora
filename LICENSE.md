@@ -1,4 +1,4 @@
-Copyright (c) 2010-2018 [Haleth/Lightsword](http://www.wowinterface.com/forums/member.php?u=110142), [Gethe](http://www.wowinterface.com/forums/member.php?u=111611). All rights reserved.
+Copyright (c) 2010-2021 [Haleth/Lightsword](http://www.wowinterface.com/forums/member.php?u=110142), [Gethe](http://www.wowinterface.com/forums/member.php?u=111611). All rights reserved.
 
 The contents of this software (the "AddOn"), excluding third-party resources,
 fall under the aforementioned copyright. The author(s) of this AddOn hereby
