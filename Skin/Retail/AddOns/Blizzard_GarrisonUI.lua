@@ -414,7 +414,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
     do --[[ Blizzard_AdventuresCompleteScreen ]]
         function Skin.AdventuresCompleteScreenTemplate(Frame)
             Skin.NineSlicePanelTemplate(Frame.NineSlice)
-            --Skin.AdventuresRewardsScreenTemplate(Frame.RewardsScreen)
+            Skin.AdventuresRewardsScreenTemplate(Frame.RewardsScreen)
             Skin.CombatLogTemplate(Frame.AdventuresCombatLog)
             Skin.UIPanelButtonTemplate(Frame.CompleteFrame.ContinueButton)
             Skin.UIPanelButtonTemplate(Frame.CompleteFrame.SpeedButton)

@@ -1,6 +1,7 @@
 ﻿## [9.0.2.0] ##
 ### Fixed ###
 
+  * [retail] Adventure rewards weren't skinned
   * [retail] SSAO graphics option was not skinned
   * [retail] The dungeon ready popup had two backdrops
   * [retail] The world map's close button was out of place when maximized
@@ -15,7 +16,7 @@
 
 ### Changed ###
 
-  * Updated Warlords garrison skin
+  * [retail] Updated Warlords garrison skin
   * Tweaked mail inbox items to not be so close to the page buttons
   * Updated /etrace dev tool skin
 
