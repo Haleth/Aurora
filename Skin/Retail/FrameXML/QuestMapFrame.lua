@@ -22,7 +22,7 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         Fey = {color = private.COVENANT_COLORS.NightFae, atlas = "ShadowlandsMissionsLandingPage-Background-NightFae"},
         Venthyr = {color = private.COVENANT_COLORS.Venthyr, atlas = "ShadowlandsMissionsLandingPage-Background-Venthyr"},
     }
-    uiTextureKits.Oribos = uiTextureKits[_G.UnitFactionGroup("player"):lower()]
+    --uiTextureKits.Oribos = uiTextureKits[_G.UnitFactionGroup("player"):lower()]
     uiTextureKits.Bastion = uiTextureKits.Kyrian
     uiTextureKits.Maldraxxus = uiTextureKits.Necrolord
     uiTextureKits.Ardenweald = uiTextureKits.Fey
@@ -42,7 +42,7 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
                 campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
 
                 overlay = campaignHeader._auroraOverlay
-                overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -50, -5)
+                overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -25, 0)
                 if kit.texture then
                     overlay:SetTexture(kit.texture)
                     overlay:SetSize(130, 130)
@@ -51,12 +51,36 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
                     overlay:SetVertexColor(1, 1, 1)
                 else
                     overlay:SetAtlas(kit.atlas)
-                    overlay:SetSize(100, 116)
+                    overlay:SetSize(66.33, 76.56)
 
                     overlay:SetBlendMode("BLEND")
                     overlay:SetVertexColor(0, 0, 0)
                 end
                 campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+            end
+        end
+
+        for callingHeader in _G.QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do
+            if kit then
+                callingHeader.Background:SetTexture("")
+                callingHeader._auroraBG:SetColorTexture(uiTextureKits.Default.color:GetRGB())
+
+                overlay = callingHeader._auroraOverlay
+                overlay:SetPoint("CENTER", callingHeader._auroraBG, "RIGHT", -25, 0)
+                if kit.texture then
+                    overlay:SetTexture(kit.texture)
+                    overlay:SetSize(130, 130)
+
+                    overlay:SetBlendMode("ADD")
+                    overlay:SetVertexColor(1, 1, 1)
+                else
+                    overlay:SetAtlas(kit.atlas)
+                    overlay:SetSize(66.33, 76.56)
+
+                    overlay:SetBlendMode("BLEND")
+                    overlay:SetVertexColor(0, 0, 0)
+                end
+                callingHeader.HighlightBackground:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
             end
         end
 
@@ -93,6 +117,29 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
             top = 3,
             bottom = 3,
         })
+    end
+    function Skin.CovenantCallingsHeaderTemplate(Button)
+        Skin.QuestLogHeaderTemplate(Button)
+
+        local clipFrame = _G.CreateFrame("Frame", nil, Button)
+        clipFrame:SetFrameLevel(Button:GetFrameLevel())
+        clipFrame:SetPoint("TOPLEFT", -12, 7)
+        clipFrame:SetPoint("TOPRIGHT", 217, 7)
+        clipFrame:SetHeight(31)
+        clipFrame:SetClipsChildren(true)
+        Button._clipFrame = clipFrame
+
+        local BG = clipFrame:CreateTexture(nil, "BACKGROUND")
+        BG:SetAllPoints()
+        Button._auroraBG = BG
+
+        local overlay = clipFrame:CreateTexture(nil, "OVERLAY")
+        overlay:SetDesaturated(true)
+        overlay:SetAlpha(0.3)
+        Button._auroraOverlay = overlay
+
+        Button.Divider:Hide()
+        Button.HighlightBackground:SetAllPoints(clipFrame)
     end
     function Skin.QuestLogTitleTemplate(Button)
     end
@@ -161,6 +208,7 @@ function private.FrameXML.QuestMapFrame()
     Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
+    Util.Mixin(QuestsFrame.covenantCallingsHeaderFramePool, Hook.ObjectPoolMixin)
 
     QuestsFrame.Contents.Separator:SetSize(260, 10)
     QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)

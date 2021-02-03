@@ -1,4 +1,8 @@
 ﻿## [9.0.2.0] ##
+### Changed ###
+
+  * [retail] Tweak campaign headers
+
 ### Fixed ###
 
   * [retail] Adventure rewards weren't skinned
