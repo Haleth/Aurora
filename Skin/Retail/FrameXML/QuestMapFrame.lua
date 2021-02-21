@@ -231,6 +231,19 @@ function private.FrameXML.QuestMapFrame()
 
     Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
 
+    do -- QuestSessionManagement
+        local QuestSessionManagement = QuestMapFrame.QuestSessionManagement
+        Util.Mixin(QuestSessionManagement, Hook.QuestSessionManagementMixin)
+
+        local ExecuteSessionCommand = QuestSessionManagement.ExecuteSessionCommand
+        Skin.FrameTypeButton(ExecuteSessionCommand)
+        local icon = ExecuteSessionCommand:CreateTexture(nil, "ARTWORK")
+        icon:SetPoint("TOPLEFT", 0, 0)
+        icon:SetPoint("BOTTOMRIGHT", 0, 0)
+        ExecuteSessionCommand._auroraIcon = icon
+
+        QuestSessionManagement.BG:SetColorTexture(Color.frame.r, Color.frame.g, Color.frame.b, 0.5)
+    end
 
     local DetailsFrame = QuestMapFrame.DetailsFrame
     local bg, overlay, _, tile = DetailsFrame:GetRegions()
@@ -260,18 +273,5 @@ function private.FrameXML.QuestMapFrame()
     right:Hide()
     Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
 
-    do
-        local QuestSessionManagement = QuestMapFrame.QuestSessionManagement
-        Util.Mixin(QuestSessionManagement, Hook.QuestSessionManagementMixin)
-
-        local ExecuteSessionCommand = QuestSessionManagement.ExecuteSessionCommand
-        Skin.FrameTypeButton(ExecuteSessionCommand)
-        local icon = ExecuteSessionCommand:CreateTexture(nil, "ARTWORK")
-        icon:SetPoint("TOPLEFT", 0, 0)
-        icon:SetPoint("BOTTOMRIGHT", 0, 0)
-        ExecuteSessionCommand._auroraIcon = icon
-
-
-        QuestSessionManagement.BG:SetColorTexture(Color.frame.r, Color.frame.g, Color.frame.b, 0.5)
-    end
+    Skin.CampaignOverviewTemplate(QuestMapFrame.CampaignOverview)
 end

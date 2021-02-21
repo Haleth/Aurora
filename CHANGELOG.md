@@ -1,4 +1,8 @@
 ﻿## [9.0.2.0] ##
+### Added ###
+
+  * [retail] Campaign recap skin
+
 ### Changed ###
 
   * [retail] Tweak campaign headers
