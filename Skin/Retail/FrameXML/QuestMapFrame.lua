@@ -12,21 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\QuestMapFrame.lua ]]
     -- /dump C_CampaignInfo.GetCampaignInfo(C_CampaignInfo.GetCurrentCampaignID())
-    local uiTextureKits = {
-        Default = {color = Color.button, overlay = ""},
-        alliance = {color = private.FACTION_COLORS.Alliance, texture = [[Interface\Timer\Alliance-Logo]]},
-        horde = {color = private.FACTION_COLORS.Horde, texture = [[Interface\Timer\Horde-Logo]]},
-
-        Kyrian = {color = private.COVENANT_COLORS.Kyrian, atlas = "ShadowlandsMissionsLandingPage-Background-Kyrian"},
-        Necrolord = {color = private.COVENANT_COLORS.Necrolord, atlas = "ShadowlandsMissionsLandingPage-Background-Necrolord"},
-        Fey = {color = private.COVENANT_COLORS.NightFae, atlas = "ShadowlandsMissionsLandingPage-Background-NightFae"},
-        Venthyr = {color = private.COVENANT_COLORS.Venthyr, atlas = "ShadowlandsMissionsLandingPage-Background-Venthyr"},
-    }
-    --uiTextureKits.Oribos = uiTextureKits[_G.UnitFactionGroup("player"):lower()]
-    uiTextureKits.Bastion = uiTextureKits.Kyrian
-    uiTextureKits.Maldraxxus = uiTextureKits.Necrolord
-    uiTextureKits.Ardenweald = uiTextureKits.Fey
-    uiTextureKits.Revendreth = uiTextureKits.Venthyr
+    local uiTextureKits = private.uiTextureKits
 
     function Hook.QuestLogQuests_Update(poiTable)
         local kit, overlay

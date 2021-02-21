@@ -111,13 +111,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
 
         -- /dump Aurora.Color.blue:Hue(-0.333):GetRGB()
-        local uiTextureKits = {
-            Default = {color = Color.button, texture = ""},
-            alliance = {color = private.FACTION_COLORS.Alliance, texture = [[Interface\Timer\Alliance-Logo]]},
-            horde = {color = private.FACTION_COLORS.Horde, texture = [[Interface\Timer\Horde-Logo]]},
-            legion = {color = Color.green:Lightness(-0.3), texture = ""},
-            ["jailerstower-scenario"] = {gradient = private.COVENANT_COLORS.Maw, texture = ""},
-        }
+        local uiTextureKits = private.uiTextureKits
 
         function Hook.ScenarioStage_CustomizeBlock(stageBlock, scenarioType, widgetSetID, textureKit)
             -- /dump GetUITextureKitInfo(5117)
