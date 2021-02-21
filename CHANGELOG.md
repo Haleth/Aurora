@@ -1,7 +1,8 @@
 ﻿## [9.0.2.0] ##
 ### Added ###
 
-  * [retail] Campaign recap skin
+  * [retail] Campaign Recap
+  * [retail] Torghast Level Picker
 
 ### Changed ###
 
