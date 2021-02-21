@@ -5,6 +5,7 @@
 
 ### Fixed ###
 
+  * [retail] Achievement search preview backdrop was broken
   * [retail] Adventure rewards weren't skinned
   * [retail] SSAO graphics option was not skinned
   * [retail] The dungeon ready popup had two backdrops

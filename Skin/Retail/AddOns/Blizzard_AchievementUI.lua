@@ -149,11 +149,23 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
 
     Hook.AchievementFrameComparisonStats_SetStat = Hook.AchievementFrameStats_SetStat
     Hook.AchievementFrameComparisonStats_SetHeader = Hook.AchievementFrameStats_SetHeader
+
+    local SearchPreviewButtonHieght = 27
+    function Hook.AchievementFrame_ShowSearchPreviewResults()
+        local numResults = _G.GetNumFilteredAchievements()
+        if numResults > 5 then
+            numResults = 6
+        end
+
+        _G.AchievementFrame.searchPreviewContainer:SetPoint("BOTTOM", _G.AchievementFrame.searchBox, 0, -(numResults * SearchPreviewButtonHieght))
+    end
 end
 
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Skin.AchievementSearchPreviewButton(Button)
         SkinSearchButton(Button)
+        Button.selectedTexture:SetPoint("TOPLEFT", 1, -1)
+        Button.selectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
 
         Button.iconFrame:SetAlpha(0)
         Base.CropIcon(Button.icon, Button)
@@ -403,6 +415,7 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
     _G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
     _G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
+    _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
 
     _G.hooksecurefunc("AchievementComparisonPlayerButton_Saturate", function(self)
         if not self._auroraSkinned then
@@ -606,21 +619,20 @@ function private.AddOns.Blizzard_AchievementUI()
     searchBox:ClearAllPoints()
     searchBox:SetPoint("TOPRIGHT", bg, -148, 0)
 
-    local prevContainer = AchievementFrame.searchPreviewContainer
-    prevContainer.background:Hide()
-    prevContainer.borderAnchor:Hide()
-    prevContainer.botRightCorner:Hide()
-    prevContainer.bottomBorder:Hide()
-    prevContainer.leftBorder:Hide()
-    prevContainer.rightBorder:Hide()
-    prevContainer.topBorder:Hide()
+    local searchPreview = AchievementFrame.searchPreviewContainer
+    searchPreview.background:Hide()
+    searchPreview.borderAnchor:Hide()
+    searchPreview.botRightCorner:Hide()
+    searchPreview.bottomBorder:Hide()
+    searchPreview.leftBorder:Hide()
+    searchPreview.rightBorder:Hide()
+    searchPreview.topBorder:Hide()
+    Skin.FrameTypeFrame(searchPreview)
 
-    Skin.FrameTypeFrame(prevContainer)
-
-    for i = 1, #prevContainer.searchPreviews do
-        Skin.AchievementSearchPreviewButton(prevContainer.searchPreviews[i])
+    for i = 1, #searchPreview.searchPreviews do
+        Skin.AchievementSearchPreviewButton(searchPreview.searchPreviews[i])
     end
-    SkinSearchButton(prevContainer.showAllSearchResults)
+    SkinSearchButton(searchPreview.showAllSearchResults)
 
     local searchResults = AchievementFrame.searchResults
     Skin.FrameTypeFrame(searchResults)
