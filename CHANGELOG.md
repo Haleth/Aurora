@@ -3,6 +3,7 @@
 
   * [retail] Campaign Recap
   * [retail] Torghast Level Picker
+  * [retail] Anima Diversion
 
 ### Changed ###
 
