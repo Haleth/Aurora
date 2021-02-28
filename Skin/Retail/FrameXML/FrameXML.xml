@@ -65,6 +65,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="..\SharedXML\ScrollBox.lua"/>
     <Script file="..\SharedXML\ScrollBar.lua"/>
     <!--Script file="..\SharedXML\ScrollUtil.lua"/-->
+    <!--Script file="..\SharedXML\StringUtil.lua"/-->
     <!--Script file="..\SharedXML\Dump.lua"/-->
     <!--Script file="MixinUtil.lua"/-->
 
@@ -346,6 +347,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="GuildUtil.lua"/-->
     <!--Script file="QuestSession.lua"/-->
     <!--Script file="ActionStatus.lua"/-->
+    <!--Script file="WeeklyReward.lua"/-->
 
     <!--#Save off whatever we need available unmodified.-->
     <!--Script file="SecureCapsule.lua"/-->

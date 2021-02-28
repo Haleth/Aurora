@@ -8,6 +8,8 @@ private.API_MAJOR, private.API_MINOR = 0, 8
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 
+private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90005
+
 private.uiScale = 1
 private.disabled = {
     bags = false,

@@ -54,7 +54,7 @@ function private.AddOns.Blizzard_CovenantSanctum()
     ----====####$$$$%%%%%%$$$$####====----
     local UpgradesTab = CovenantSanctumFrame.UpgradesTab
 
-    UpgradesTab.Background:SetPoint("TOPLEFT", 13, -8)
+    UpgradesTab.Background:SetPoint("TOPLEFT", 13, -9)
     UpgradesTab.Background:SetPoint("BOTTOMRIGHT", -310, 18)
     UpgradesTab.Background:SetAlpha(0.75)
 
