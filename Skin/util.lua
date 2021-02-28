@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals wipe select next type floor tinsert
+-- luacheck: globals wipe select next type floor tinsert xpcall
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -177,6 +177,10 @@ function Util.TableInspect(focusedTable)
         debugTools = _G.UIParentLoadAddOn("Blizzard_DebugTools")
     end
     _G.DisplayTableInspectorWindow(focusedTable)
+end
+
+function Util.SafeCall(func, ...)
+    return xpcall(func, private.nop, ...)
 end
 
 function Util.Dump(value)

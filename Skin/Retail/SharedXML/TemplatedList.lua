@@ -2,7 +2,7 @@ local _, private = ...
 if private.isClassic then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals select
+-- luacheck: globals select xpcall
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -15,11 +15,15 @@ do --[[ SharedXML\TemplatedList.lua ]]
         for i = 1, select("#", ...) do
             local template = select(i, ...)
             if Skin[template] then
-                for j = 1, list:GetNumElementFrames() do
-                    obj = list:GetElementFrame(j)
-                    if not obj._auroraSkinned then
-                        Skin[template](obj)
-                        obj._auroraSkinned = true
+                -- Not sure why, but might sometimes get called before element frames are created
+                local isOK, numFrames = Util.SafeCall(list.GetNumElementFrames, list)
+                if isOK then
+                    for j = 1, numFrames do
+                        obj = list:GetElementFrame(j)
+                        if not obj._auroraSkinned then
+                            Skin[template](obj)
+                            obj._auroraSkinned = true
+                        end
                     end
                 end
             elseif private.isDev then
