@@ -80,9 +80,6 @@ function private.FrameXML.QuestLogFrame()
     _G.QuestLogTitleText:SetPoint("TOPLEFT", bg)
     _G.QuestLogTitleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    _G.QuestLogCountRight:Hide()
-    _G.QuestLogCountMiddle:Hide()
-    _G.QuestLogCountLeft:Hide()
 
     _G.QuestLogExpandButtonFrame:SetPoint("TOPLEFT", 20, -48)
     Skin.QuestLogTitleButtonTemplate(_G.QuestLogCollapseAllButton)
@@ -104,6 +101,22 @@ function private.FrameXML.QuestLogFrame()
     TopRight:Hide()
     BotLeft:Hide()
     BotRight:Hide()
+
+    if private.isBC then
+        _G.QuestLogCountTopRight:Hide()
+        _G.QuestLogCountBottomRight:Hide()
+        _G.QuestLogCountRight:Hide()
+        _G.QuestLogCountTopLeft:Hide()
+        _G.QuestLogCountBottomLeft:Hide()
+        _G.QuestLogCountLeft:Hide()
+        _G.QuestLogCountTopMiddle:Hide()
+        _G.QuestLogCountMiddleMiddle:Hide()
+        _G.QuestLogCountBottomMiddle:Hide()
+    else
+        _G.QuestLogCountRight:Hide()
+        _G.QuestLogCountMiddle:Hide()
+        _G.QuestLogCountLeft:Hide()
+    end
 
     Skin.UIPanelCloseButton(_G.QuestLogFrameCloseButton)
     Skin.UIPanelButtonTemplate(_G.QuestLogFrameAbandonButton)

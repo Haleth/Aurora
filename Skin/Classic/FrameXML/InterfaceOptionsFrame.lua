@@ -40,7 +40,9 @@ function private.FrameXML.InterfaceOptionsFrame()
     Skin.OptionsFrameTabButtonTemplate(_G.InterfaceOptionsFrameTab1)
     Skin.OptionsFrameTabButtonTemplate(_G.InterfaceOptionsFrameTab2)
 
-    _G.InterfaceOptionsFrameTab1TabSpacer:SetAlpha(0)
-    _G.InterfaceOptionsFrameTab2TabSpacer1:SetAlpha(0)
-    _G.InterfaceOptionsFrameTab2TabSpacer2:SetAlpha(0)
+    if not private.isBC then
+        _G.InterfaceOptionsFrameTab1TabSpacer:SetAlpha(0)
+        _G.InterfaceOptionsFrameTab2TabSpacer1:SetAlpha(0)
+        _G.InterfaceOptionsFrameTab2TabSpacer2:SetAlpha(0)
+    end
 end

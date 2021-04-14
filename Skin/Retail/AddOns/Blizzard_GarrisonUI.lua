@@ -13,6 +13,15 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
     do --[[ Blizzard_OrderHallMissionUI ]]
         Hook.OrderHallMission = {}
+        function Hook.GarrisonMissionButton_SetReward(frame, reward, currencyMultipliers)
+            if not frame._auroraSkinned then
+                Skin.GarrisonMissionListButtonRewardTemplate(frame)
+                frame._auroraSkinned = true
+            end
+        end
+    end
+    do --[[ Blizzard_OrderHallMissionUI ]]
+        Hook.OrderHallMission = {}
         function Hook.OrderHallMission:SetupTabs()
             Util.PositionRelative("TOPLEFT", self, "BOTTOMLEFT", 20, -1, 1, "Right", {
                 self.Tab1,
@@ -114,7 +123,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Button.Highlight:SetTexture("")
             Button:DisableDrawLayer("HIGHLIGHT")
             Base.SetHighlight(Button)
-            Skin.GarrisonMissionListButtonRewardTemplate(Button.Rewards[1])
         end
         function Skin.GarrisonFollowerMissionRewardsFrameTemplate(Frame)
             local bg, l, r, t, b, tl, tr, bl, br = Frame:GetRegions()
@@ -429,7 +437,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
         function Skin.CovenantMissionPageTemplate(Frame)
             Skin.NineSlicePanelTemplate(Frame.NineSlice)
             Skin.GarrisonMissionPageCloseButtonTemplate(Frame.CloseButton)
-            Frame.CloseButton.CloseButtonBorder:Hide()
+            Frame.CloseButton.CloseButtonBorder:SetAlpha(0)
             Skin.StartMissionButtonTemplate(Frame.StartMissionButton)
             Skin.GarrisonMissionPageCostWithTooltipTemplate(Frame.CostFrame)
         end
@@ -444,13 +452,11 @@ function private.AddOns.Blizzard_GarrisonUI()
         Skin.TooltipBorderedFrameTemplate(_G.GarrisonBuildingFrame.BuildingLevelTooltip)
     end
 
-    -------------
-    -- Section --
-    -------------
-
     ----====####$$$$%%%%$$$$####====----
     --   Blizzard_GarrisonMissionUI   --
     ----====####$$$$%%%%$$$$####====----
+    _G.hooksecurefunc("GarrisonMissionButton_SetReward", Hook.GarrisonMissionButton_SetReward)
+
     local GarrisonMissionFrame = _G.GarrisonMissionFrame
     GarrisonMissionFrame.Center = GarrisonMissionFrame.BackgroundTile
     Skin.GarrisonMissionFrameTemplate(GarrisonMissionFrame)
@@ -838,6 +844,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.MaterialFrameTemplate(CovenantFollowerList.MaterialFrame)
     CovenantFollowerList.MaterialFrame:SetPoint("TOPLEFT", CovenantFollowerList, "BOTTOMLEFT", 0, -2)
     CovenantFollowerList.MaterialFrame:SetPoint("BOTTOMRIGHT", 0, -30)
+    Skin.UIPanelButtonTemplate(CovenantFollowerList.HealAllButton)
 
     ------------
     -- MapTab --

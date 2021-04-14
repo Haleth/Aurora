@@ -54,6 +54,9 @@ function private.FrameXML.PaperDollFrame()
     br:Hide()
 
     _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterNameText, "BOTTOM", 0, -4)
+    if private.isBC then
+        Skin.UIDropDownMenuTemplate(_G.PlayerTitleDropDown)
+    end
 
     Skin.NavButtonNext(_G.CharacterModelFrameRotateRightButton)
     Skin.NavButtonPrevious(_G.CharacterModelFrameRotateLeftButton)
@@ -80,15 +83,27 @@ function private.FrameXML.PaperDollFrame()
     end
 
     -- Stats
-    _G.PlayerStatBackgroundTop:Hide()
-    _G.PlayerStatBackgroundMiddle:Hide()
-    _G.PlayerStatBackgroundBottom:Hide()
-    _G.MeleeAttackBackgroundTop:Hide()
-    _G.MeleeAttackBackgroundMiddle:Hide()
-    _G.MeleeAttackBackgroundBottom:Hide()
-    _G.RangedAttackBackgroundTop:Hide()
-    _G.RangedAttackBackgroundMiddle:Hide()
-    _G.RangedAttackBackgroundBottom:Hide()
+    if private.isBC then
+        _G.PlayerStatLeftTop:Hide()
+        _G.PlayerStatLeftMiddle:Hide()
+        _G.PlayerStatLeftBottom:Hide()
+        _G.PlayerStatRightTop:Hide()
+        _G.PlayerStatRightMiddle:Hide()
+        _G.PlayerStatRightBottom:Hide()
+
+        Skin.UIDropDownMenuTemplate(_G.PlayerStatFrameLeftDropDown)
+        Skin.UIDropDownMenuTemplate(_G.PlayerStatFrameRightDropDown)
+    else
+        _G.PlayerStatBackgroundTop:Hide()
+        _G.PlayerStatBackgroundMiddle:Hide()
+        _G.PlayerStatBackgroundBottom:Hide()
+        _G.MeleeAttackBackgroundTop:Hide()
+        _G.MeleeAttackBackgroundMiddle:Hide()
+        _G.MeleeAttackBackgroundBottom:Hide()
+        _G.RangedAttackBackgroundTop:Hide()
+        _G.RangedAttackBackgroundMiddle:Hide()
+        _G.RangedAttackBackgroundBottom:Hide()
+    end
 
 
     local EquipmentSlots = {

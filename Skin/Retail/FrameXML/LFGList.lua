@@ -286,12 +286,7 @@ function private.FrameXML.LFGList()
     end
 
     Skin.InsetFrameTemplate(SearchPanel.ResultsInset)
-
-    if private.isPatch then
-        Skin.UIPanelButtonTemplate(SearchPanel.ScrollFrame.ScrollChild.StartGroupButton)
-    else
-        Skin.UIPanelButtonTemplate(SearchPanel.ScrollFrame.StartGroupButton)
-    end
+    Skin.UIPanelButtonTemplate(SearchPanel.ScrollFrame.ScrollChild.StartGroupButton)
     Skin.HybridScrollBarTrimTemplate(SearchPanel.ScrollFrame.scrollBar)
 
     Skin.LFGListMagicButtonTemplate(SearchPanel.BackButton)

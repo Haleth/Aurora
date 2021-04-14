@@ -390,12 +390,19 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Frame.MaterialFrame.RightFiligree:Hide()
         end
         function Skin.CovenantMissionListButtonTemplate(Button)
-            Button.ButtonBG:SetTexture("")
-            Button.Highlight:SetTexture("")
+            Button.ButtonBG:Hide()
+            Button.Highlight:Hide()
+            --[[
+            Button.LocBG:SetTexture("")
+            ]]
             Base.SetBackdrop(Button, Color.button)
+            Button:SetBackdropOption("offsets", {
+                left = 1,
+                right = 9,
+                top = 5,
+                bottom = 5,
+            })
             Base.SetHighlight(Button)
-
-            Skin.GarrisonMissionListButtonRewardTemplate(Button.Rewards[1])
         end
     end
 end
