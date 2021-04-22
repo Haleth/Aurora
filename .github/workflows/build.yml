@@ -52,4 +52,4 @@ jobs:
     - name: Create Classic Package
       uses: BigWigsMods/packager@master
       with:
-        args: -o -g 1.13.3 -m .pkgmeta-classic
+        args: -o -g classic -m .pkgmeta-classic
