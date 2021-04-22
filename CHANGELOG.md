@@ -1,6 +1,8 @@
 ﻿## [9.0.5.0] ##
 ### Fixed ###
 
+  * [retail] Call to Arms reward role icons were misaligned
+
 
 
 ## [9.0.2.1] ##

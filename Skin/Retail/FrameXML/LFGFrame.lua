@@ -60,6 +60,9 @@ do --[[ FrameXML\LFGFrame.lua ]]
             Skin.LFGRewardsLootTemplate(frame)
         end
 
+        Base.SetTexture(frame.roleIcon1.texture, "icon"..(frame.roleIcon1.role or "GUIDE"))
+        Base.SetTexture(frame.roleIcon2.texture, "icon"..(frame.roleIcon2.role or "GUIDE"))
+
         if shortageIndex then
             frame._auroraIconBorder:SetBackdropBorderColor(Color.yellow)
         end
@@ -129,15 +132,10 @@ do --[[ FrameXML\LFGFrame.xml ]]
     end
 
 
-    function Skin.LFGRewardsLootShortageTemplate(Frame)
-        Base.SetTexture(Frame.texture, "icon"..(Frame.role or "GUIDE"))
-    end
     function Skin.LFGRewardsLootTemplate(Button)
         Skin.LargeItemButtonTemplate(Button)
         Button.shortageBorder:SetAlpha(0)
         Button.IconBorder:SetAlpha(0)
-        Skin.LFGRewardsLootShortageTemplate(Button.roleIcon1)
-        Skin.LFGRewardsLootShortageTemplate(Button.roleIcon2)
     end
     function Skin.LFGRewardFrameTemplate(Frame)
         local name = Frame:GetName()
