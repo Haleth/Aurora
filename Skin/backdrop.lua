@@ -101,7 +101,7 @@ local corners = {
 
 -- Blizzard methods
 local BackdropMixin
-if private.isRetail or private.isBC then
+if private.isRetail or private.isBCC then
     BackdropMixin = _G.Mixin({}, _G.BackdropTemplateMixin)
     local function GetNineSliceLayout(frame)
         local backdropInfo = frame.backdropInfo

@@ -66,7 +66,7 @@ function private.SharedXML.VideoOptionsPanels()
 
     -- Textures
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_TextureResolutionDropDown)
-    if not private.isBC then
+    if not private.isBCC then
         Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_FilteringDropDown)
     end
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ProjectedTexturesDropDown)
@@ -91,7 +91,7 @@ function private.SharedXML.VideoOptionsPanels()
 
     -- General
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_TextureResolutionDropDown)
-    if not private.isBC then
+    if not private.isBCC then
         Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_FilteringDropDown)
     end
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ProjectedTexturesDropDown)
@@ -116,7 +116,7 @@ function private.SharedXML.VideoOptionsPanels()
     --------------------
     -- Column A
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_BufferingDropDown)
-    if private.isBC then
+    if private.isBCC then
         Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_FilteringDropDown)
         Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_RTShadowQualityDropDown)
     else
@@ -126,7 +126,7 @@ function private.SharedXML.VideoOptionsPanels()
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_ResampleQualityDropDown)
-    if private.isBC then
+    if private.isBCC then
         Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
     end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)

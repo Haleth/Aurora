@@ -6,7 +6,7 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 0, 8
 
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
-private.isBC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+private.isBCC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90100

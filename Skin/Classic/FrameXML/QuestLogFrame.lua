@@ -102,7 +102,7 @@ function private.FrameXML.QuestLogFrame()
     BotLeft:Hide()
     BotRight:Hide()
 
-    if private.isBC then
+    if private.isBCC then
         _G.QuestLogCountTopRight:Hide()
         _G.QuestLogCountBottomRight:Hide()
         _G.QuestLogCountRight:Hide()

@@ -54,7 +54,7 @@ function private.FrameXML.PaperDollFrame()
     br:Hide()
 
     _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterNameText, "BOTTOM", 0, -4)
-    if private.isBC then
+    if private.isBCC then
         Skin.UIDropDownMenuTemplate(_G.PlayerTitleDropDown)
     end
 
@@ -83,7 +83,7 @@ function private.FrameXML.PaperDollFrame()
     end
 
     -- Stats
-    if private.isBC then
+    if private.isBCC then
         _G.PlayerStatLeftTop:Hide()
         _G.PlayerStatLeftMiddle:Hide()
         _G.PlayerStatLeftBottom:Hide()
