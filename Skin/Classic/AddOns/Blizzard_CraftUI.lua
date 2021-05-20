@@ -49,6 +49,8 @@ do --[[ AddOns\Blizzard_CraftUI.lua ]]
         hadScroll = hasScroll
     end
     function Hook.CraftFrame_SetSelection(id)
+        if not id then return end
+
         local _, _, skillType = _G.GetCraftInfo(id)
         if skillType == "header" then return end
 
@@ -57,15 +59,17 @@ do --[[ AddOns\Blizzard_CraftUI.lua ]]
         end
 
         local link = _G.GetCraftItemLink(id)
-        local _, _, quality = _G.GetItemInfo(link)
-        Hook.SetItemButtonQuality(_G.CraftIcon, quality, link)
-        Base.CropIcon(_G.CraftIcon:GetNormalTexture())
+        if link then
+            local _, _, quality = _G.GetItemInfo(link)
+            Hook.SetItemButtonQuality(_G.CraftIcon, quality, link)
+            Base.CropIcon(_G.CraftIcon:GetNormalTexture())
 
-        local numReagents = _G.GetCraftNumReagents(id)
-        for i = 1, numReagents do
-            link = _G.GetCraftReagentItemLink(id, i)
-            _, _, quality = _G.GetItemInfo(link)
-            Hook.SetItemButtonQuality(_G["CraftReagent"..i], quality, link)
+            local numReagents = _G.GetCraftNumReagents(id)
+            for i = 1, numReagents do
+                link = _G.GetCraftReagentItemLink(id, i)
+                _, _, quality = _G.GetItemInfo(link)
+                Hook.SetItemButtonQuality(_G["CraftReagent"..i], quality, link)
+            end
         end
     end
 end
