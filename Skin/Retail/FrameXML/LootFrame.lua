@@ -42,6 +42,32 @@ do --[[ FrameXML\LootFrame.lua ]]
             end
         end
     end
+    function Hook.LootFrame_Show(self)
+        if _G.GetCVar("lootUnderMouse") == "1" then
+            self:Show()
+            -- position loot window under mouse cursor
+            local x, y = _G.GetCursorPosition()
+            x = x / self:GetEffectiveScale()
+            y = y / self:GetEffectiveScale()
+
+            local posX = x - 80
+            local posY = y + 15
+
+            if self.numLootItems > 0 then
+                posX = x - 30
+                posY = y + 50
+            end
+
+            if posY < 350 then
+                posY = 350
+            end
+
+            self:ClearAllPoints()
+            self:SetPoint("TOPLEFT", nil, "BOTTOMLEFT", posX, posY)
+            self:GetCenter()
+            self:Raise()
+        end
+    end
     function Hook.BonusRollFrame_OnShow(self)
         self.PromptFrame.Timer:SetFrameLevel(self:GetFrameLevel())
     end
@@ -133,6 +159,7 @@ end
 
 function private.FrameXML.LootFrame()
     _G.hooksecurefunc("LootFrame_UpdateButton", Hook.LootFrame_UpdateButton)
+    _G.hooksecurefunc("LootFrame_Show", Hook.LootFrame_Show)
 
     ---------------
     -- LootFrame --
@@ -140,8 +167,7 @@ function private.FrameXML.LootFrame()
     local LootFrame = _G.LootFrame
     Skin.ButtonFrameTemplate(LootFrame)
     _G.LootFramePortraitOverlay:Hide()
-
-    select(7, _G.LootFrame:GetRegions()):SetPoint("TOP", _G.LootFrame, "TOP", 0, -7)
+    select(7, LootFrame:GetRegions()):SetAllPoints(LootFrame.TitleText) -- Items text
 
     for index = 1, 4 do
         Skin.LootButtonTemplate(_G["LootButton"..index])

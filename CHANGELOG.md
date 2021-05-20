@@ -1,6 +1,8 @@
 ﻿## [9.0.5.0] ##
 ### Fixed ###
 
+  * Loot frame misplaced when set under mouse
+  * [classic] Error when opening Beast Training
   * [retail] Call to Arms reward role icons were misaligned
 
 
