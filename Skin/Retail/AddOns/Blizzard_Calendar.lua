@@ -1,5 +1,5 @@
 local _, private = ...
-if private.isClassic then return end
+if not private.isRetail then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals select ipairs pairs

@@ -1,5 +1,5 @@
 local _, private = ...
-if private.isRetail then return end
+if not private.isClassic then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals next select
