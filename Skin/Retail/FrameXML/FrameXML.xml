@@ -5,6 +5,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="FrameXML.lua"/>
     @end-non-debug@-->
 
+
+
+
     <!--Script file="..\SharedXML\SharedConstants.lua"/-->
 
     <!--## add C namespace augmentations here -->
@@ -14,6 +17,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="..\SharedXML\ErrorUtil.lua"/-->
     <!--Script file="..\SharedXML\Mixin.lua"/-->
     <!--Script file="..\SharedXML\TableUtil.lua"/-->
+    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
     <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
     <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\Rectangle.lua"/-->
@@ -40,6 +44,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="..\SharedXML\FrameUtil.lua"/-->
     <!--Script file="..\SharedXML\RegionUtil.lua"/-->
     <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
+    <!--Script file="..\SharedXML\GridLayoutUtil.lua"/-->
     <!--Script file="..\SharedXML\ScriptAnimationUtil.lua"/-->
     <Script file="..\SharedXML\Pools.lua"/>
     <!--Script file="..\SharedXML\LoopingSoundEffect.lua"/-->
@@ -60,11 +65,16 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="..\SharedXML\GlobalCallbackRegistry.lua"/-->
     <!--Script file="..\SharedXML\SelectableButton.lua"/-->
     <!--Script file="..\SharedXML\ButtonGroup.lua"/-->
-    <!--Script file="..\SharedXML\EventButton.lua"/-->
-    <!--Script file="..\SharedXML\ScrollController.lua"/-->
-    <Script file="..\SharedXML\ScrollBox.lua"/>
-    <Script file="..\SharedXML\ScrollBar.lua"/>
-    <!--Script file="..\SharedXML\ScrollUtil.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventFrame.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventButton.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventEditBox.lua"/-->
+    <!--Script file="..\SharedXML\DataProvider.lua"/-->
+    <!--Script file="..\SharedXML\Interpolator.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ScrollUtil.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ScrollController.lua"/-->
+    <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
+    <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
+    <!--Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/-->
     <!--Script file="..\SharedXML\StringUtil.lua"/-->
     <!--Script file="..\SharedXML\Dump.lua"/-->
     <!--Script file="MixinUtil.lua"/-->
@@ -113,6 +123,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 
     <!--## add new modules below here-->
     <Script file="..\SharedXML\Backdrop.lua"/>
+    <Script file="ChatBubbleTemplates.lua"/>
     <!--Script file="WorldFrame.lua"/-->
     <Script file="UIParent.lua"/>
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptedAnimationEffects.lua"/-->
@@ -138,6 +149,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="DifficultyUtil.lua"/-->
     <!--Script file="CovenantUtil.lua"/-->
     <!--Script file="TitleUtil.lua"/-->
+    <!--Script file="CollectionsUtil.lua"/-->
     <!--Script file="ItemDisplay.lua"/-->
     <Script file="..\SharedXML\HelpTip.lua"/>
     <!--Script file="ExtraAbilityContainer.lua"/-->
@@ -145,7 +157,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--## IME.lua needs to be loaded after UIParent.lua-->
     <!--Script file="..\SharedXML\IME.lua"/-->
     <Script file="MoneyFrame.lua"/>
+
     <Script file="MoneyInputFrame.lua"/>
+
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
@@ -161,6 +175,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="UIMenu.lua"/>
     <Script file="..\SharedXML\UIDropDownMenu.lua"/>
     <Script file="UIPanelTemplates.lua"/>
+
     <!--Script file="SecureTemplates.lua"/-->
     <!--Script file="SecureHandlerTemplates.lua"/-->
     <!--Script file="SecureGroupHeaders.lua"/-->
@@ -185,6 +200,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="GameMenuFrame.lua"/>
     <Script file="CharacterFrameTemplates.lua"/>
     <!--Script file="TextStatusBar.lua"/-->
+
     <!--Script file="UIErrorsFrame.lua"/-->
     <Script file="AutoComplete.lua"/>
     <Script file="StaticPopup.lua"/>
@@ -226,6 +242,8 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="CombatFeedback.lua"/-->
     <!--Script file="UnitPowerBarAlt.lua"/-->
     <Script file="CastingBarFrame.lua"/>
+    <!--Script file="VoiceChatDots.lua"/-->
+    <!--Script file="VoiceChatTranscriptionButton.lua"/-->
     <!--Script file="VoiceChatHeadsetButton.lua"/-->
     <Script file="VoiceToggleButton.lua"/>
     <Script file="UnitPopupSlider.lua"/>
@@ -234,6 +252,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="HistoryKeeper.lua"/-->
     <Script file="ChatFrame.lua"/>
     <Script file="FloatingChatFrame.lua"/>
+    <!--Script file="VoiceChatTranscriptionFrame.lua"/-->
     <Script file="BNet.lua"/>
     <Script file="ReadyCheck.lua"/>
     <!--Script file="PlayerFrame.lua"/-->
@@ -261,6 +280,8 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="ItemRef.lua"/>
     <!--Script file="SocialQueue.lua"/-->
     <Script file="QuickJoinToast.lua"/>
+    <!--Script file="TextToSpeechFrame.lua"/-->
+    <!--Script file="TextToSpeech.lua"/-->
     <Script file="FriendsFrame.lua"/>
     <Script file="QuickJoin.lua"/>
     <Script file="RaidFrame.lua"/>
@@ -309,7 +330,8 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="MovieFrame.lua"/>
     <!--Script file="AlternatePowerBar.lua"/-->
     <!--Script file="MonkStaggerBar.lua"/-->
-    <Script file="LevelUpDisplay.lua"/>
+    <Script file="BossBannerToast.lua"/>
+    <!--Script file="EventToastManager.lua"/-->
     <!--Script file="AnimationSystem.lua"/-->
     <!--Script file="EquipmentManager.lua"/-->
     <Script file="CompactUnitFrame.lua"/>
