@@ -67,7 +67,9 @@ function private.FrameXML.InterfaceOptionsPanels()
     -- Social --
     ------------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelProfanityFilter)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelSpamFilter)
+    if not private.isPatch then
+        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelSpamFilter)
+    end
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelGuildMemberAlert)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockTrades)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockGuildInvites)
@@ -153,32 +155,64 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelCinematicSubtitles)
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
     if private.isPatch then
+        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelQuestTextContrast)
         Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelSpeechToText)
         Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelTextToSpeech)
+        Skin.UIPanelButtonTemplate(_G.InterfaceOptionsAccessibilityPanelConfigureTextToSpeech)
         Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelRemoteTextToSpeech)
+        Skin.UIDropDownMenuTemplate(Accessibility.RemoteTextToSpeechVoiceDropdown)
+        Skin.UIPanelButtonTemplate(_G.InterfaceOptionsAccessibilityPanelRemoteTextToSpeechVoicePlaySample)
     end
     Skin.UIDropDownMenuTemplate(Accessibility.MotionSicknessDropdown)
     Skin.UIDropDownMenuTemplate(Accessibility.ShakeIntensityDropdown)
-    Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
 
-    local FilterExamples = Accessibility.ColorblindFilterExamples
-    FilterExamples.Hostile:SetTexCoord(0.2, 0.8, 0.4, 0.6)
-    FilterExamples.Hostile:SetPoint("BOTTOMLEFT", 9, 158)
-    FilterExamples.Hostile:SetSize(103, 10)
-    FilterExamples.HostileLabel:SetPoint("BOTTOMLEFT", FilterExamples.Hostile, "TOPLEFT", 1, 7)
+    ----------------
+    -- Colorblind --
+    ----------------
+    if private.isPatch then
+        local Colorblind = _G.InterfaceOptionsColorblindPanel
+        Skin.InterfaceOptionsCheckButtonTemplate(Colorblind.ColorblindMode)
 
-    FilterExamples.Neutral:SetTexCoord(0.2, 0.8, 0.4, 0.6)
-    FilterExamples.Neutral:SetPoint("TOPLEFT", FilterExamples.Hostile, "BOTTOMLEFT", 0, -37)
-    FilterExamples.Neutral:SetSize(103, 10)
-    FilterExamples.NeutralLabel:SetPoint("BOTTOMLEFT", FilterExamples.Neutral, "TOPLEFT", 1, 7)
+        local FilterExamples = Colorblind.ColorblindFilterExamples
+        FilterExamples.Hostile:SetTexCoord(0.2, 0.8, 0.4, 0.6)
+        FilterExamples.Hostile:SetPoint("BOTTOMLEFT", 9, 158)
+        FilterExamples.Hostile:SetSize(103, 10)
+        FilterExamples.HostileLabel:SetPoint("BOTTOMLEFT", FilterExamples.Hostile, "TOPLEFT", 1, 7)
 
-    FilterExamples.Friendly:SetTexCoord(0.2, 0.8, 0.4, 0.6)
-    FilterExamples.Friendly:SetPoint("TOPLEFT", FilterExamples.Neutral, "BOTTOMLEFT", 0, -37)
-    FilterExamples.Friendly:SetSize(103, 10)
-    FilterExamples.FriendlyLabel:SetPoint("BOTTOMLEFT", FilterExamples.Friendly, "TOPLEFT", 1, 7)
+        FilterExamples.Neutral:SetTexCoord(0.2, 0.8, 0.4, 0.6)
+        FilterExamples.Neutral:SetPoint("TOPLEFT", FilterExamples.Hostile, "BOTTOMLEFT", 0, -37)
+        FilterExamples.Neutral:SetSize(103, 10)
+        FilterExamples.NeutralLabel:SetPoint("BOTTOMLEFT", FilterExamples.Neutral, "TOPLEFT", 1, 7)
 
-    Skin.UIDropDownMenuTemplate(Accessibility.ColorblindFilterDropDown)
-    Skin.OptionsSliderTemplate(_G.InterfaceOptionsAccessibilityPanelColorblindStrengthSlider)
+        FilterExamples.Friendly:SetTexCoord(0.2, 0.8, 0.4, 0.6)
+        FilterExamples.Friendly:SetPoint("TOPLEFT", FilterExamples.Neutral, "BOTTOMLEFT", 0, -37)
+        FilterExamples.Friendly:SetSize(103, 10)
+        FilterExamples.FriendlyLabel:SetPoint("BOTTOMLEFT", FilterExamples.Friendly, "TOPLEFT", 1, 7)
+
+        Skin.UIDropDownMenuTemplate(Colorblind.ColorblindFilterDropDown)
+        Skin.OptionsSliderTemplate(_G.InterfaceOptionsColorblindPanelColorblindStrengthSlider)
+    else
+        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
+
+        local FilterExamples = Accessibility.ColorblindFilterExamples
+        FilterExamples.Hostile:SetTexCoord(0.2, 0.8, 0.4, 0.6)
+        FilterExamples.Hostile:SetPoint("BOTTOMLEFT", 9, 158)
+        FilterExamples.Hostile:SetSize(103, 10)
+        FilterExamples.HostileLabel:SetPoint("BOTTOMLEFT", FilterExamples.Hostile, "TOPLEFT", 1, 7)
+
+        FilterExamples.Neutral:SetTexCoord(0.2, 0.8, 0.4, 0.6)
+        FilterExamples.Neutral:SetPoint("TOPLEFT", FilterExamples.Hostile, "BOTTOMLEFT", 0, -37)
+        FilterExamples.Neutral:SetSize(103, 10)
+        FilterExamples.NeutralLabel:SetPoint("BOTTOMLEFT", FilterExamples.Neutral, "TOPLEFT", 1, 7)
+
+        FilterExamples.Friendly:SetTexCoord(0.2, 0.8, 0.4, 0.6)
+        FilterExamples.Friendly:SetPoint("TOPLEFT", FilterExamples.Neutral, "BOTTOMLEFT", 0, -37)
+        FilterExamples.Friendly:SetSize(103, 10)
+        FilterExamples.FriendlyLabel:SetPoint("BOTTOMLEFT", FilterExamples.Friendly, "TOPLEFT", 1, 7)
+
+        Skin.UIDropDownMenuTemplate(Accessibility.ColorblindFilterDropDown)
+        Skin.OptionsSliderTemplate(_G.InterfaceOptionsAccessibilityPanelColorblindStrengthSlider)
+    end
 
     -------------
     -- Section --
