@@ -49,7 +49,12 @@ jobs:
       with:
         args: -o
 
+    - name: Create BCC Package
+      uses: BigWigsMods/packager@master
+      with:
+        args: -o -g bcc -m .pkgmeta-bcc
+
     - name: Create Classic Package
       uses: BigWigsMods/packager@master
       with:
-        args: -o -g classic -m .pkgmeta-classic
+        args: -o -g classic -w 26042 -m .pkgmeta-classic

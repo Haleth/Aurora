@@ -126,7 +126,7 @@ function private.OnLoad()
     end)
 
     _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
-        if private.isClassic then return end
+        if not private.isRetail then return end
 
         _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
         _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()

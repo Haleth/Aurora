@@ -1,0 +1,17 @@
+package-as: Aurora
+
+ignore:
+    - *.sublime*
+    - *.bat
+    - test.lua
+    - Skin/Retail
+    - Skin/Classic
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+move-folders:
+    Aurora/Skin/BCC/AddOns: Aurora/Skin/AddOns
+    Aurora/Skin/BCC/FrameXML: Aurora/Skin/FrameXML
+    Aurora/Skin/BCC/SharedXML: Aurora/Skin/SharedXML

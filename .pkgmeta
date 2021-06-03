@@ -5,6 +5,7 @@ ignore:
     - *.bat
     - test.lua
     - Skin/Classic
+    - Skin/BCC
 
 manual-changelog:
   filename: CHANGELOG.md

@@ -3,6 +3,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
     <Script file="FrameXML.lua"/>
 
-    <Include file="..\Classic\FrameXML\FrameXML.xml"/>
     <Include file="..\Retail\FrameXML\FrameXML.xml"/>
+    <Include file="..\Classic\FrameXML\FrameXML.xml"/>
+    <Include file="..\BCC\FrameXML\FrameXML.xml"/>
 </Ui>

@@ -1,0 +1,255 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <!--@non-debug@
+    <Script file="FrameXML.lua"/>
+    @end-non-debug@-->
+
+
+
+
+    <!--## add C namespace augmentations here-->
+    <!--Script file="..\SharedXML\C_TimerAugment.lua"/-->
+
+    <!--## add snippets independent of modules here-->
+    <!--Script file="GlueCheck.lua"/-->
+    <!--Script file="Localization.lua"/-->
+    <Script file="Fonts.lua"/>
+    <!--Script file="FontStyles.lua"/-->
+    <!--Script file="..\SharedXML\Mixin.lua"/-->
+    <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
+    <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
+    <Script file="..\SharedXML\NineSlice.lua"/>
+    <Script file="..\SharedXML\Backdrop.lua"/>
+    <!--Script file="..\SharedXML\TextureUtil.lua"/-->
+    <!--Script file="..\SharedXML\Util.lua"/-->
+    <!--Script file="..\SharedXML\Constants.lua"/-->
+    <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
+    <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
+    <Script file="..\SharedXML\SharedBasicControls.lua"/>
+
+    <!--Script file="..\SharedXML\TableUtil.lua"/-->
+    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
+    <!--Script file="..\SharedXML\MathUtil.lua"/-->
+    <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
+    <!--Script file="..\SharedXML\CvarUtil.lua"/-->
+    <!--Script file="..\SharedXML\TimeUtil.lua"/-->
+    <!--Script file="..\SharedXML\EasingUtil.lua"/-->
+    <!--Script file="..\SharedXML\BindingUtil.lua"/-->
+    <!--Script file="..\SharedXML\FrameUtil.lua"/-->
+    <Script file="..\SharedXML\Pools.lua"/>
+    <!--Script file="..\SharedXML\LoopingSoundEffect.lua"/-->
+    <!--Script file="..\SharedXML\CircularBuffer.lua"/-->
+    <!--Script file="..\SharedXML\FontableFrameMixin.lua"/-->
+    <!--Script file="..\SharedXML\Vector2D.lua"/-->
+    <!--Script file="..\SharedXML\Vector3D.lua"/-->
+    <!--Script file="..\SharedXML\Spline.lua"/-->
+    <!--Script file="..\SharedXML\LayoutFrame.lua"/-->
+    <!--Script file="..\SharedXML\ManagedLayoutFrame.lua"/-->
+    <!--Script file="..\SharedXML\BulletPoint.lua"/-->
+    <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
+    <!--Script file="..\SharedXML\TransformTree\TransformTree.lua"/-->
+    <!--Script file="..\SharedXML\KeyCommand.lua"/-->
+    <!--Script file="..\SharedXML\CustomBindingButtonMixin.lua"/-->
+    <!--Script file="..\SharedXML\PixelUtil.lua"/-->
+    <!--Script file="..\SharedXML\Dump.lua"/-->
+    <!--Script file="MixinUtil.lua"/-->
+    <!--Script file="..\SharedXML\LinkUtil.lua"/-->
+    <!--Script file="..\SharedXML\ScriptAnimationUtil.lua"/-->
+
+    <!--Script file="..\SharedXML\GlobalCallbackRegistry.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventFrame.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventButton.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventEditBox.lua"/-->
+    <!--Script file="..\SharedXML\DataProvider.lua"/-->
+    <!--Script file="..\SharedXML\Interpolator.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ScrollUtil.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ScrollController.lua"/-->
+    <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
+    <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
+    <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
+
+    <!--## intrinsics-->
+    <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
+    <!--Script file="..\SharedXML\DropDownToggleButton.lua"/-->
+
+    <!--Script file="..\SharedXML\AnimationTemplates.lua"/-->
+    <Script file="..\SharedXML\ModelSceneTemplates.lua"/>
+    <!--Script file="..\SharedXML\ModelSceneMixin.lua"/-->
+    <!--Script file="..\SharedXML\ModelSceneActorMixin.lua"/-->
+    <!--Script file="..\SharedXML\FrameStack.lua"/-->
+
+    <!--Script file="AnimatedStatusBar.lua"/-->
+    <!--Script file="FlowContainer.lua"/-->
+    <!--Script file="FrameLocks.lua"/-->
+    <!--Script file="PlayerMovementFrameFader.lua"/-->
+
+    <!--Script file="..\SharedXML\SoundKitConstants.lua"/-->
+    <Script file="Constants.lua"/>
+
+    <!--Script file="..\SharedXML\PropertyBindingMixin.lua"/-->
+    <Script file="..\SharedXML\PropertyButton.lua"/>
+    <!--Script file="..\SharedXML\PropertyFontString.lua"/-->
+    <Script file="..\SharedXML\PropertySlider.lua"/>
+
+    <!--Script file="ObjectAPI\ContinuableContainer.lua"/-->
+    <!--Script file="ObjectAPI\ItemLocation.lua"/-->
+    <!--Script file="ObjectAPI\Item.lua"/-->
+    <!--Script file="ObjectAPI\Spell.lua"/-->
+    <!--Script file="ObjectAPI\PlayerLocation.lua"/-->
+
+    <!--## add new modules below here-->
+    <Script file="ChatBubbleTemplates.lua"/>
+    <!--Script file="WorldFrame.lua"/-->
+    <Script file="UIParent.lua"/>
+    <!--Script file="..\SharedXML\ScriptedAnimations\ScriptedAnimationEffects.lua"/-->
+    <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
+    <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
+    <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelScene.lua"/-->
+    <!--Script file="QuestUtils.lua"/-->
+    <!--Script file="MapUtil.lua"/-->
+    <!--Script file="AuraUtil.lua"/-->
+    <!--Script file="CommunitiesUtil.lua"/-->
+    <!--## IME.lua needs to be loaded after UIParent.lua-->
+    <!--Script file="..\SharedXML\IME.lua"/-->
+    <Script file="MoneyFrame.lua"/>
+
+    <Script file="MoneyInputFrame.lua"/>
+
+    <!--Script file="..\SharedXML\CustomBindingButtonTemplate.lua"/-->
+    <!--Script file="CustomBindingManager.lua"/-->
+    <!--Script file="CustomBindingHandler.lua"/-->
+    <Script file="GameTooltip.lua"/>
+    <Script file="UIMenu.lua"/>
+    <Script file="UIDropDownMenu.lua"/>
+    <Script file="UIPanelTemplates.lua"/>
+
+    <!--Script file="SecureTemplates.lua"/-->
+    <!--Script file="SecureHandlerTemplates.lua"/-->
+    <!--Script file="SecureGroupHeaders.lua"/-->
+    <!--Script file="..\SharedXML\ModelFrames.lua"/-->
+    <Script file="DressUpFrames.lua"/>
+    <Script file="ItemButtonTemplate.lua"/>
+    <Script file="NavigationBar.lua"/>
+    <Script file="..\SharedXML\HybridScrollFrame.lua"/>
+
+    <Script file="GameMenuFrame.lua"/>
+    <Script file="CharacterFrameTemplates.lua"/>
+    <!--Script file="TextStatusBar.lua"/-->
+
+    <!--Script file="UIErrorsFrame.lua"/-->
+    <Script file="AutoComplete.lua"/>
+    <Script file="StaticPopup.lua"/>
+    <!--Script file="Sound.lua"/-->
+    <Script file="OptionsFrameTemplates.lua"/>
+    <Script file="OptionsPanelTemplates.lua"/>
+    <Script file="UIOptions.lua"/>
+    <Script file="VideoOptionsFrame.lua"/>
+    <Script file="..\SharedXML\VideoOptionsPanels.lua"/>
+    <!--Script file="MacOptionsPanel.lua"/-->
+    <!--Script file="AudioOptionsFrame.lua"/-->
+    <Script file="AudioOptionsPanels.lua"/>
+    <Script file="InterfaceOptionsFrame.lua"/>
+    <Script file="InterfaceOptionsPanels.lua"/>
+    <Script file="..\SharedXML\AddonList.lua"/>
+    <!--Script file="AlertFrameIntrinsic.lua"/-->
+    <!--Script file="AlertFrames.lua"/-->
+    <!--Script file="AlertFrameSystems.lua"/-->
+    <Script file="SocialToast.lua"/>
+    <Script file="MirrorTimer.lua"/>
+    <!--Script file="CoinPickupFrame.lua"/-->
+    <Script file="StackSplitFrame.lua"/>
+    <!--Script file="FadingFrame.lua"/-->
+    <!--Script file="ZoneText.lua"/-->
+    <!--Script file="UnitFrame.lua"/-->
+    <!--Script file="Cooldown.lua"/-->
+    <Script file="ActionBarController.lua"/>
+    <Script file="TutorialFrame.lua"/>
+    <!--Script file="Minimap.lua"/-->
+    <!--Script file="GameTime.lua"/-->
+    <!--Script file="BuffFrame.lua"/-->
+    <!--Script file="LowHealthFrame.lua"/-->
+    <!--Script file="CombatFeedback.lua"/-->
+    <Script file="CastingBarFrame.lua"/>
+    <!--Script file="VoiceChatHeadsetButton.lua"/-->
+    <Script file="VoiceToggleButton.lua"/>
+    <Script file="UnitPopupSlider.lua"/>
+    <Script file="UnitPopupCustomControls.lua"/>
+    <!--Script file="UnitPopup.lua"/-->
+    <!--Script file="HistoryKeeper.lua"/-->
+    <Script file="ChatFrame.lua"/>
+    <Script file="FloatingChatFrame.lua"/>
+    <Script file="BNet.lua"/>
+    <Script file="ReadyCheck.lua"/>
+    <!--Script file="PlayerFrame.lua"/-->
+    <!--Script file="PartyFrame.lua"/-->
+    <!--Script file="TargetFrame.lua"/-->
+    <!--Script file="TotemFrame.lua"/-->
+    <!--Script file="PetFrame.lua"/-->
+    <!--Script file="StatsFrame.lua"/-->
+    <Script file="SpellBookFrame.lua"/>
+    <Script file="CharacterFrame.lua"/>
+    <Script file="PaperDollFrame.lua"/>
+    <Script file="PetPaperDollFrame.lua"/>
+    <Script file="SkillFrame.lua"/>
+    <Script file="ReputationFrame.lua"/>
+    <Script file="QuestFrame.lua"/>
+    <Script file="QuestLogFrame.lua"/>
+    <Script file="QuestTimerFrame.lua"/>
+    <Script file="QuestInfo.lua"/>
+    <Script file="MerchantFrame.lua"/>
+    <Script file="TradeFrame.lua"/>
+    <Script file="ContainerFrame.lua"/>
+    <Script file="LootFrame.lua"/>
+    <Script file="ItemTextFrame.lua"/>
+    <Script file="TaxiFrame.lua"/>
+    <Script file="BankFrame.lua"/>
+    <Script file="ItemRef.lua"/>
+    <Script file="FriendsFrame.lua"/>
+    <Script file="RaidFrame.lua"/>
+    <Script file="PetActionBarFrame.lua"/>
+    <Script file="MainMenuBarBagButtons.lua"/>
+    <!--Script file="UnitPositionFrameTemplates.lua"/-->
+    <!--Script file="RaidWarning.lua"/-->
+    <Script file="CinematicFrame.lua"/>
+    <!--Script file="ComboFrame.lua"/-->
+    <Script file="TabardFrame.lua"/>
+    <Script file="GuildRegistrarFrame.lua"/>
+    <Script file="PetitionFrame.lua"/>
+    <Script file="HelpFrame.lua"/>
+    <Script file="ColorPickerFrame.lua"/>
+    <Script file="GossipFrame.lua"/>
+    <Script file="MailFrame.lua"/>
+    <Script file="PetStable.lua"/>
+    <!--Script file="DurabilityFrame.lua"/-->
+    <!--Script file="BattlegroundChatFilters.lua"/-->
+    <!--Script file="WorldStateFrame.lua"/-->
+    <Script file="RatingMenuFrame.lua"/>
+    <!--Script file="TalentFrameBase.lua"/-->
+    <!--Script file="Blizzard_TalentUITemplates.lua"/-->
+    <!--Script file="EasyMenu.lua"/-->
+    <Script file="ChatConfigFrame.lua"/>
+    <Script file="MovieFrame.lua"/>
+    <!--Script file="AnimationSystem.lua"/-->
+    <Script file="CompactUnitFrame.lua"/>
+    <!--Script file="CompactRaidGroup.lua"/-->
+    <!--Script file="CompactPartyFrame.lua"/-->
+    <!--Script file="StreamingFrame.lua"/-->
+    <Script file="LootHistory.lua"/>
+    <Script file="StaticPopupSpecial.lua"/>
+    <Script file="PVPHelper.lua"/>
+    <!--Script file="ProductChoice.lua"/-->
+    <Script file="..\SharedXML\ModelPreviewFrame.lua"/>
+    <Script file="ClassTrainerFrameTemplates.lua"/>
+    <!--Script file="BattlefieldFrame.lua"/-->
+    <!--Script file="ArenaFrame.lua"/-->
+    <!--Script file="ArenaRegistrarFrame.lua"/-->
+    <Script file="PVPFrame.lua"/>
+
+
+    <!--#Save off whatever we need available unmodified.-->
+    <!--Script file="SecureCapsule.lua"/-->
+
+    <!--## add new modules above here-->
+    <!--Script file="LocalizationPost.lua"/-->
+</Ui>
