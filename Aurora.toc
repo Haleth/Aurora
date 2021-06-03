@@ -1,6 +1,7 @@
 ## Interface: 90005
 ## Interface-Retail: 90005
-## Interface-Classic: 11306
+## Interface-Classic: 11307
+## Interface-BCC: 20501
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
