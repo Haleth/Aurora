@@ -20,14 +20,12 @@ do --[[ AddOns\Blizzard_Soulbinds.xml ]]
             bg2:SetAlpha(0)
         end
         function Skin.ConduitListTemplate(Frame)
-            --Skin.ScrollBarTemplate(Frame.ScrollBar)
             Frame.BottomShadowContainer:Hide()
             Frame.ScrollBar.Track:Hide()
             Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Decrease)
             Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Increase)
             Skin.FrameTypeScrollBarButton(Frame.ScrollBar.Thumb)
 
-            --Skin.ScrollBoxTemplate(Frame.ScrollBox)
             for i = 1, #Frame.ScrollBox.ScrollTarget.Lists do
                 Skin.ConduitListSectionTemplate(Frame.ScrollBox.ScrollTarget.Lists[i])
             end

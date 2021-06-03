@@ -7,12 +7,16 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 
     <Script file="ChatBubbles.lua"/>
 
+
     <!--## add C namespace augmentations here-->
     <!--Script file="..\SharedXML\C_TimerAugment.lua"/-->
 
     <!--## add snippets independent of modules here-->
     <!--Script file="..\SharedXML\Util.lua"/-->
+    <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
     <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
+    <!--Script file="..\SharedXML\NineSlice.lua"/-->
+    <!--Script file="..\SharedXML\TextureUtil.lua"/-->
     <!--Script file="..\SharedXML\EasingUtil.lua"/-->
     <!--Script file="..\SharedXML\BindingUtil.lua"/-->
     <!--Script file="..\SharedXML\FrameUtil.lua"/-->
@@ -30,10 +34,30 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="..\SharedXML\KeyCommand.lua"/-->
     <!--Script file="..\SharedXML\CustomBindingButtonMixin.lua"/-->
     <!--Script file="MixinUtil.lua"/-->
+    <!--Script file="..\SharedXML\LinkUtil.lua"/-->
+    <!--Script file="..\SharedXML\TableUtil.lua"/-->
+    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
+    <!--Script file="..\SharedXML\MathUtil.lua"/-->
+    <!--Script file="..\SharedXML\TimeUtil.lua"/-->
+    <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
+    <!--Script file="..\SharedXML\GlobalCallbackRegistry.lua"/-->
+
+    <!--Script file="..\SharedXML\Frame\EventFrame.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventButton.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventEditBox.lua"/-->
+    <!--Script file="..\SharedXML\DataProvider.lua"/-->
+    <!--Script file="..\SharedXML\Interpolator.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ScrollUtil.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ScrollController.lua"/-->
+    <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
+    <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
+    <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
 
     <!--## intrinsics-->
     <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
+    <!--Script file="..\SharedXML\DropDownToggleButton.lua"/-->
 
+    <!--Script file="..\SharedXML\AnimationTemplates.lua"/-->
     <Script file="..\SharedXML\ModelSceneTemplates.lua"/>
     <!--Script file="..\SharedXML\ModelSceneMixin.lua"/-->
     <!--Script file="..\SharedXML\ModelSceneActorMixin.lua"/-->

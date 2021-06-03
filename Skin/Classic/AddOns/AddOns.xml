@@ -21,6 +21,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="Blizzard_CraftUI.lua"/>
     <Script file="Blizzard_CUFProfiles.lua"/>
     <Script file="Blizzard_DebugTools.lua"/>
+    <Script file="Blizzard_EventTrace.lua"/>
     <!--Script file="Blizzard_FlightMap.lua"/-->
     <!--Script file="Blizzard_GMChatUI.lua"/-->
     <!--Script file="Blizzard_GMSurveyUI.lua"/-->
