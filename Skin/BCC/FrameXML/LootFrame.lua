@@ -28,14 +28,15 @@ do --[[ FrameXML\LootFrame.lua ]]
         local slot = (numLootToShow * (LootFrame.page - 1)) + index
 
         if slot <= numLootItems then
-            local _, isQuestItem, isActive
+            local _, quality, isQuestItem, isActive
             if LootFrame.AutoLootTable then
                 local entry = LootFrame.AutoLootTable[slot]
                 if not entry.hide then
                     isQuestItem = entry.isQuestItem
+                    quality = entry.quality
                 end
             else
-                _, _, _, _, _, _, isQuestItem, _, isActive = _G.GetLootSlotInfo(slot)
+                _, _, _, _, quality, _, isQuestItem, _, isActive = _G.GetLootSlotInfo(slot)
             end
 
             local questTexture = button._questTexture
@@ -49,6 +50,7 @@ do --[[ FrameXML\LootFrame.lua ]]
                     questTexture:SetTexture(_G.TEXTURE_ITEM_QUEST_BORDER)
                 end
             else
+                Hook.SetItemButtonQuality(button, quality)
                 questTexture:Hide()
             end
         end
