@@ -1,4 +1,10 @@
 ﻿## [9.0.5.0] ##
+### Added ###
+
+  * [bcc] Support for BC Classic
+  * [classic] Items in the loot frame now have quality colored borders
+  * Skin for upgraded event trace frame
+
 ### Fixed ###
 
   * Loot frame misplaced when set under mouse
