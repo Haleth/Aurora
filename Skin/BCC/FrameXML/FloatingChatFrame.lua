@@ -22,10 +22,8 @@ do --[[ FrameXML\FloatingChatFrame.lua ]]
         frame:SetBackdropColor(r, g, b)
         frame:SetBackdropBorderColor(r, g, b)
 
-        if private.isBCC then
-            frame.buttonFrame:SetBackdropColor(r, g, b)
-            frame.buttonFrame:SetBackdropBorderColor(r, g, b)
-        end
+        frame.buttonFrame:SetBackdropColor(r, g, b)
+        frame.buttonFrame:SetBackdropBorderColor(r, g, b)
     end
     function Hook.FCF_SetButtonSide(chatFrame, buttonSide, forceUpdate)
         if buttonSide == "left" then

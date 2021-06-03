@@ -102,21 +102,9 @@ function private.FrameXML.QuestLogFrame()
     BotLeft:Hide()
     BotRight:Hide()
 
-    if private.isBCC then
-        _G.QuestLogCountTopRight:Hide()
-        _G.QuestLogCountBottomRight:Hide()
-        _G.QuestLogCountRight:Hide()
-        _G.QuestLogCountTopLeft:Hide()
-        _G.QuestLogCountBottomLeft:Hide()
-        _G.QuestLogCountLeft:Hide()
-        _G.QuestLogCountTopMiddle:Hide()
-        _G.QuestLogCountMiddleMiddle:Hide()
-        _G.QuestLogCountBottomMiddle:Hide()
-    else
-        _G.QuestLogCountRight:Hide()
-        _G.QuestLogCountMiddle:Hide()
-        _G.QuestLogCountLeft:Hide()
-    end
+    _G.QuestLogCountRight:Hide()
+    _G.QuestLogCountMiddle:Hide()
+    _G.QuestLogCountLeft:Hide()
 
     Skin.UIPanelCloseButton(_G.QuestLogFrameCloseButton)
     Skin.UIPanelButtonTemplate(_G.QuestLogFrameAbandonButton)

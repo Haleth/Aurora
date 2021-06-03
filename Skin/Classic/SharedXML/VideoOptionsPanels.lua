@@ -116,19 +116,11 @@ function private.SharedXML.VideoOptionsPanels()
     --------------------
     -- Column A
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_BufferingDropDown)
-    if private.isBCC then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_FilteringDropDown)
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_RTShadowQualityDropDown)
-    else
-        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
-    end
+    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_LagDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_ResampleQualityDropDown)
-    if private.isBCC then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
-    end
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
 
     Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)
