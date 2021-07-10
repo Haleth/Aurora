@@ -137,7 +137,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             guildBG:SetSize(340, 64)
             ContainedAlertFrame._auroraGuildBG = guildBG
 
-            ContainedAlertFrame.OldAchievement:SetAlpha(0)
+            -- ContainedAlertFrame.OldAchievement:SetAlpha(0)
             ContainedAlertFrame.glow:SetPoint("TOPLEFT", bg, -10, 10)
             ContainedAlertFrame.glow:SetPoint("BOTTOMRIGHT", bg, 10, -10)
             ContainedAlertFrame.glow:SetAtlas("Toast-Flash")
