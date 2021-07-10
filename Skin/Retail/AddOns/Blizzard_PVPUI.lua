@@ -55,8 +55,8 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Frame.TopRightFiligree:Hide()
 
         Frame.NewSeason:SetTextColor(Color.white:GetRGB())
-        Frame.SeasonDescription:SetTextColor(Color.grayLight:GetRGB())
-        Frame.SeasonDescription2:SetTextColor(Color.grayLight:GetRGB())
+        -- Frame.SeasonDescription:SetTextColor(Color.grayLight:GetRGB())
+        -- Frame.SeasonDescription2:SetTextColor(Color.grayLight:GetRGB())
 
         Skin.UIPanelButtonTemplate(Frame.Leave)
     end
