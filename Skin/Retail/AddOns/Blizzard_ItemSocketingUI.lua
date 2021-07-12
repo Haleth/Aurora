@@ -53,6 +53,10 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
             coords = defaultCoords,
             color = Color.blue,
         },
+        Domination = {
+            coords = defaultCoords,
+            color = Color.white,
+        },
     }
 
     function Hook.ItemSocketingFrame_Update()

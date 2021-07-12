@@ -110,7 +110,7 @@ function private.AddOns.Blizzard_Soulbinds()
     SoulbindViewer.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
     --Skin.SoulbindSelectGroupTemplate(SoulbindViewer.SelectGroup)
     --Skin.SoulbindTreeTemplate(SoulbindViewer.Tree)
-    Skin.ConduitListTemplate(SoulbindViewer.ConduitList)
+    --Skin.ConduitListTemplate(SoulbindViewer.ConduitList)
     Skin.UIPanelButtonTemplate(SoulbindViewer.ActivateSoulbindButton)
     Skin.UIPanelButtonTemplate(SoulbindViewer.CommitConduitsButton)
 

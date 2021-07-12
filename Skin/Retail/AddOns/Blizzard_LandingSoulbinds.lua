@@ -24,7 +24,7 @@ do --[[ AddOns\Blizzard_LandingSoulbinds.xml ]]
         divider:SetColorTexture(1, 1, 1, 0.2)
         divider:SetSize(261, 1)
         divider:SetPoint("TOPLEFT", 50, 0)
-        --Skin.LandingPageSoulbindButtonTemplate(Frame.SoulbindButton)
+        -- Skin.LandingPageSoulbindButtonTemplate(Frame.SoulbindButton)
     end
 end
 
