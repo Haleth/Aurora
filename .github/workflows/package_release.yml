@@ -1,0 +1,53 @@
+name: Create Release Package
+
+on:
+  create:
+
+jobs:
+  is_release:
+    if: contains(github.ref, 'beta') != true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check
+      run: |
+        echo ${{ github.event }}
+        echo ${{ github.event_name }}
+        echo ${{ github.event_path }}
+        echo ${{ github.ref }}
+
+  mainline:
+    needs: is_release
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Create Mainline Package
+      uses: BigWigsMods/packager@master
+      with:
+        args: -o
+
+  bcc:
+    needs: is_release
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Create BCC Package
+      uses: BigWigsMods/packager@master
+      with:
+        args: -o -g bcc -m .pkgmeta-bcc
+
+  classic:
+    needs: is_release
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Create Classic Package
+      uses: BigWigsMods/packager@master
+      with:
+        args: -o -g classic -m .pkgmeta-classic

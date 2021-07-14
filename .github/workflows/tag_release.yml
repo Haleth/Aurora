@@ -1,0 +1,53 @@
+name: Tag Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Run Luacheck
+      uses: nebularg/actions-luacheck@v1
+      with:
+        args: --no-color -q
+        annotate: warning
+
+    - name: Check variables
+      run: |
+        echo ${{ github.event }}
+        echo ${{ github.event.head_commit.message }}
+        echo ${{ github.event_name }}
+        echo ${{ github.event_path }}
+        echo ${{ github.ref }}
+
+    - name: Check for release version
+      uses: actions/github-script@v2
+      id: check
+      with:
+        script: |
+          const { owner, repo } = context.repo
+          const regex = /\d+\.\d+\.\d+\.\d+/g;
+          if (regex.test(${{ github.event.head_commit.message }})) {
+            return 'build'
+          } else {
+            console.log('Beta build, cancelling ...');
+            const run_id = "${{ github.run_id }}";
+            await github.actions.cancelWorkflowRun({ owner, repo, run_id });
+            return 'stop'
+          }
+        result-encoding: string
+
+    - name: Set release
+      if: steps.check.outputs.result == 'build'
+      uses: mathieudutour/github-tag-action@v5.5
+      with:
+        github_token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
+        custom_tag: ${{ github.event.head_commit.message }}
+        create_annotated_tag: true
