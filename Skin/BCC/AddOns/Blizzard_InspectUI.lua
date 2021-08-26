@@ -13,54 +13,10 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_InspectUI.lua ]]
     do --[[ InspectPaperDollFrame.lua ]]
-        function Hook.InspectPaperDollFrame_OnShow()
-            local _, classToken = _G.UnitClass(_G.InspectFrame.unit)
-            _G.InspectPaperDollFrame._classBG:SetAtlas("dressingroom-background-"..classToken)
-        end
         function Hook.InspectPaperDollItemSlotButton_Update(button)
             local unit = _G.InspectFrame.unit
             local quality = _G.GetInventoryItemQuality(unit, button:GetID())
             Hook.SetItemButtonQuality(button, quality, _G.GetInventoryItemID(unit, button:GetID()))
-        end
-    end
-    do --[[ InspectPVPFrame.lua ]]
-        Hook.InspectPvpTalentSlotMixin = {}
-        function Hook.InspectPvpTalentSlotMixin:Update()
-            if not self._auroraBG then return end
-
-            local selectedTalentID = _G.C_SpecializationInfo.GetInspectSelectedPvpTalent(_G.INSPECTED_UNIT, self.slotIndex)
-            if selectedTalentID then
-                local _, _, texture = _G.GetPvpTalentInfoByID(selectedTalentID)
-                self.Texture:SetTexture(texture)
-                self._auroraBG:SetColorTexture(Color.black:GetRGB())
-                self.Texture:SetDesaturated(false)
-            else
-                self.Texture:Show()
-                self._auroraBG:SetColorTexture(Color.gray:GetRGB())
-                self.Texture:SetDesaturated(true)
-            end
-        end
-    end
-    do --[[ InspectHonorFrame.lua ]]
-        function Hook.InspectHonorFrame_Update()
-            local xOffset = _G.InspectHonorFrameCurrentPVPRank:GetWidth()/2
-            _G.InspectHonorFrameCurrentPVPTitle:SetPoint("TOP", _G.InspectFrame:GetBackdropTexture("bg"), -xOffset, -30)
-        end
-    end
-    do --[[ InspectTalentFrame.lua ]]
-        function Hook.InspectTalentFrameSpec_OnShow(self)
-            local spec
-            if _G.INSPECTED_UNIT ~= nil then
-                spec = _G.GetInspectSpecialization(_G.INSPECTED_UNIT)
-            end
-            if spec ~= nil and spec > 0 then
-                local role1 = _G.GetSpecializationRoleByID(spec)
-                if role1 ~= nil then
-                    local _, _, _, icon = _G.GetSpecializationInfoByID(spec)
-                    self.specIcon:SetTexture(icon)
-                    Base.SetTexture(self.roleIcon, "icon"..role1)
-                end
-            end
         end
     end
 end
@@ -97,9 +53,11 @@ function private.AddOns.Blizzard_InspectUI()
     Skin.UIPanelCloseButton(_G.InspectFrameCloseButton)
     Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab1)
     Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab2)
+    Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab3)
     Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.InspectFrameTab1,
         _G.InspectFrameTab2,
+        _G.InspectFrameTab3,
     })
 
     ----====####$$$$%%%%%$$$$####====----
@@ -127,21 +85,80 @@ function private.AddOns.Blizzard_InspectUI()
     end
 
     ----====####$$$$%%%%%$$$$####====----
-    --         InspectHonorFrame         --
+    --         InspectHonorFrame       --
     ----====####$$$$%%%%%$$$$####====----
-    _G.hooksecurefunc("InspectHonorFrame_Update", Hook.InspectHonorFrame_Update)
-
-    -- /run InspectHonorFramePvPIcon:SetTexture("Interface\\PvPRankBadges\\PvPRank05"); InspectHonorFramePvPIcon:Show()
-    local tl2, tr2, bl2, br2
-    tl, tr, bl, br, tl2, tr2, bl2, br2 = _G.InspectHonorFrame:GetRegions()
+    
+    tl, tr, bl, br, bg = _G.InspectPVPFrame:GetRegions()
     tl:Hide()
     tr:Hide()
     bl:Hide()
     br:Hide()
-    tl2:Hide()
-    tr2:Hide()
-    bl2:Hide()
-    br2:Hide()
+    bg:Hide()
 
-    _G.InspectHonorFrameCurrentSessionTitle:SetPoint("TOPLEFT", 36, -90)
+    ----====####$$$$%%%%%$$$$####====----
+    --         InspectTalentFrame      --
+    ----====####$$$$%%%%%$$$$####====----
+    local TalentFrame = _G.InspectTalentFrame
+    Skin.FrameTypeFrame(TalentFrame)
+    TalentFrame:SetBackdropOption("offsets", {
+        left = 14,
+        right = 34,
+        top = 14,
+        bottom = 75,
+    })
+
+    local bg = TalentFrame:GetBackdropTexture("bg")
+    local tl, tr, bl, br = TalentFrame:GetRegions()
+    tl:Hide()
+    tr:Hide()
+    bl:Hide()
+    br:Hide()
+	
+	local textures = {
+        TopLeft = {
+            point = "TOPLEFT",
+            x = 286, -- textureSize * (frameSize / fullBGSize)
+            y = 327,
+        },
+        TopRight = {
+            x = 72,
+            y = 327,
+        },
+        BottomLeft = {
+            x = 286,
+            y = 163,
+        },
+        BottomRight = {
+            x = 72,
+            y = 163,
+        },
+    }
+    for name, info in next, textures do
+        local tex = _G["InspectTalentFrameBackground"..name]
+        if info.point then
+            tex:SetPoint(info.point, bg)
+        end
+        tex:SetSize(info.x, info.y)
+        tex:SetDrawLayer("BACKGROUND", 3)
+        tex:SetAlpha(0.7)
+    end
+
+    Skin.UIPanelCloseButton(_G.InspectTalentFrameCloseButton)
+    Skin.UIPanelButtonTemplate(_G.InspectTalentFrameCancelButton)
+
+    Skin.TalentTabTemplate(_G.InspectTalentFrameTab1)
+    Skin.TalentTabTemplate(_G.InspectTalentFrameTab2)
+    Skin.TalentTabTemplate(_G.InspectTalentFrameTab3)
+
+    _G.InspectTalentFrameScrollFrame:ClearAllPoints()
+    _G.InspectTalentFrameScrollFrame:SetPoint("TOPLEFT", bg, 5, -57)
+    _G.InspectTalentFrameScrollFrame:SetPoint("BOTTOMRIGHT", bg, -25, 30)
+    Skin.UIPanelScrollFrameTemplate(_G.InspectTalentFrameScrollFrame)
+    local top, bottom = _G.InspectTalentFrameScrollFrame:GetRegions()
+    top:Hide()
+    bottom:Hide()
+
+    for i = 1, _G.MAX_NUM_TALENTS do
+        Skin.TalentButtonTemplate(_G["InspectTalentFrameTalent"..i])
+    end
 end
